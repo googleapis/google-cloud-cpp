@@ -94,11 +94,9 @@ class InstancesConnectionImpl : public InstancesConnection {
       google::appengine::v1::ListInstancesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<InstancesRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListInstances(request);
+    auto retry = std::shared_ptr<InstancesRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListInstances(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::appengine::v1::Instance>>(
@@ -126,8 +124,8 @@ class InstancesConnectionImpl : public InstancesConnection {
   StatusOr<google::appengine::v1::Instance> GetInstance(
       google::appengine::v1::GetInstanceRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetInstance(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetInstance(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::GetInstanceRequest const& request) {
           return stub_->GetInstance(context, request);
@@ -158,9 +156,9 @@ class InstancesConnectionImpl : public InstancesConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::appengine::v1::OperationMetadataV1>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
@@ -186,12 +184,44 @@ class InstancesConnectionImpl : public InstancesConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DebugInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DebugInstance(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<InstancesRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<InstancesRetryPolicyOption>()) {
+      return options.get<InstancesRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<InstancesBackoffPolicyOption>()) {
+      return options.get<InstancesBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<InstancesPollingPolicyOption>()) {
+      return options.get<InstancesPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<InstancesConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<InstancesConnectionIdempotencyPolicyOption>()) {
+      return options.get<InstancesConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::InstancesStub> stub_;
   std::unique_ptr<InstancesRetryPolicy const> retry_policy_prototype_;

@@ -152,8 +152,8 @@ class ProjectsConnectionImpl : public ProjectsConnection {
       google::cloud::resourcemanager::v3::GetProjectRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetProject(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetProject(request),
         [this](grpc::ClientContext& context,
                google::cloud::resourcemanager::v3::GetProjectRequest const&
                    request) { return stub_->GetProject(context, request); },
@@ -165,11 +165,9 @@ class ProjectsConnectionImpl : public ProjectsConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ProjectsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListProjects(request);
+    auto retry = std::shared_ptr<ProjectsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListProjects(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::resourcemanager::v3::Project>>(
@@ -198,11 +196,9 @@ class ProjectsConnectionImpl : public ProjectsConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ProjectsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->SearchProjects(request);
+    auto retry = std::shared_ptr<ProjectsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->SearchProjects(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::resourcemanager::v3::Project>>(
@@ -253,9 +249,9 @@ class ProjectsConnectionImpl : public ProjectsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Project>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateProject(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
@@ -283,9 +279,9 @@ class ProjectsConnectionImpl : public ProjectsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Project>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateProject(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
@@ -313,9 +309,8 @@ class ProjectsConnectionImpl : public ProjectsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Project>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->MoveProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->MoveProject(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
@@ -343,9 +338,9 @@ class ProjectsConnectionImpl : public ProjectsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Project>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteProject(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
@@ -373,16 +368,16 @@ class ProjectsConnectionImpl : public ProjectsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Project>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UndeleteProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UndeleteProject(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -393,8 +388,8 @@ class ProjectsConnectionImpl : public ProjectsConnection {
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -405,8 +400,8 @@ class ProjectsConnectionImpl : public ProjectsConnection {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TestIamPermissions(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TestIamPermissions(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -415,6 +410,38 @@ class ProjectsConnectionImpl : public ProjectsConnection {
   }
 
  private:
+  std::unique_ptr<ProjectsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProjectsRetryPolicyOption>()) {
+      return options.get<ProjectsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProjectsBackoffPolicyOption>()) {
+      return options.get<ProjectsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProjectsPollingPolicyOption>()) {
+      return options.get<ProjectsPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ProjectsConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProjectsConnectionIdempotencyPolicyOption>()) {
+      return options.get<ProjectsConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::ProjectsStub> stub_;
   std::unique_ptr<ProjectsRetryPolicy const> retry_policy_prototype_;

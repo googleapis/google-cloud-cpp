@@ -71,11 +71,10 @@ class AuthorizedDomainsConnectionImpl : public AuthorizedDomainsConnection {
       google::appengine::v1::ListAuthorizedDomainsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AuthorizedDomainsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListAuthorizedDomains(request);
+    auto retry =
+        std::shared_ptr<AuthorizedDomainsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListAuthorizedDomains(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::appengine::v1::AuthorizedDomain>>(
@@ -101,6 +100,32 @@ class AuthorizedDomainsConnectionImpl : public AuthorizedDomainsConnection {
   }
 
  private:
+  std::unique_ptr<AuthorizedDomainsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AuthorizedDomainsRetryPolicyOption>()) {
+      return options.get<AuthorizedDomainsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AuthorizedDomainsBackoffPolicyOption>()) {
+      return options.get<AuthorizedDomainsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
+      return options.get<AuthorizedDomainsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::AuthorizedDomainsStub> stub_;
   std::unique_ptr<AuthorizedDomainsRetryPolicy const> retry_policy_prototype_;

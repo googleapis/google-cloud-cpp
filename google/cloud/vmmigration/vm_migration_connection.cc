@@ -443,11 +443,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::ListSourcesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListSources(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListSources(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::Source>>(
@@ -476,8 +474,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::GetSourceRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetSource(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetSource(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vmmigration::v1::GetSourceRequest const& request) {
@@ -511,9 +509,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::Source>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateSource(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateSource(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
@@ -541,9 +539,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::Source>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateSource(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateSource(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -571,17 +569,17 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vmmigration::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteSource(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteSource(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
   FetchInventory(google::cloud::vmmigration::v1::FetchInventoryRequest const&
                      request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->FetchInventory(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->FetchInventory(request),
         [this](grpc::ClientContext& context,
                google::cloud::vmmigration::v1::FetchInventoryRequest const&
                    request) { return stub_->FetchInventory(context, request); },
@@ -594,11 +592,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListUtilizationReports(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListUtilizationReports(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::UtilizationReport>>(
@@ -629,8 +625,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetUtilizationReport(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetUtilizationReport(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
@@ -667,9 +663,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::UtilizationReport>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateUtilizationReport(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateUtilizationReport(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -699,9 +695,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vmmigration::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteUtilizationReport(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteUtilizationReport(request),
+        polling_policy(), __func__);
   }
 
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -710,11 +706,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListDatacenterConnectors(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListDatacenterConnectors(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>>(
@@ -745,8 +739,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDatacenterConnector(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDatacenterConnector(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
@@ -783,9 +777,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::DatacenterConnector>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateDatacenterConnector(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateDatacenterConnector(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -815,9 +809,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vmmigration::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteDatacenterConnector(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteDatacenterConnector(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -846,9 +840,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::MigratingVm>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateMigratingVm(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateMigratingVm(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
@@ -856,11 +850,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListMigratingVms(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListMigratingVms(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::MigratingVm>>(
@@ -890,8 +882,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::GetMigratingVmRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetMigratingVm(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetMigratingVm(request),
         [this](grpc::ClientContext& context,
                google::cloud::vmmigration::v1::GetMigratingVmRequest const&
                    request) { return stub_->GetMigratingVm(context, request); },
@@ -924,9 +916,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::MigratingVm>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateMigratingVm(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateMigratingVm(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -955,9 +947,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vmmigration::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteMigratingVm(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteMigratingVm(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
@@ -985,9 +977,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::StartMigrationResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StartMigration(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StartMigration(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
@@ -1015,9 +1007,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::ResumeMigrationResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ResumeMigration(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ResumeMigration(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
@@ -1045,9 +1037,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::PauseMigrationResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PauseMigration(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PauseMigration(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
@@ -1076,9 +1068,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::FinalizeMigrationResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->FinalizeMigration(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->FinalizeMigration(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
@@ -1106,9 +1098,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::CloneJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateCloneJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateCloneJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
@@ -1136,20 +1128,18 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::CancelCloneJobResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CancelCloneJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CancelCloneJob(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
       google::cloud::vmmigration::v1::ListCloneJobsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListCloneJobs(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListCloneJobs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::CloneJob>>(
@@ -1178,8 +1168,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::GetCloneJobRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetCloneJob(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetCloneJob(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
@@ -1213,9 +1203,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::CutoverJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateCutoverJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateCutoverJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
@@ -1244,20 +1234,18 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::CancelCutoverJobResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CancelCutoverJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CancelCutoverJob(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
       google::cloud::vmmigration::v1::ListCutoverJobsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListCutoverJobs(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListCutoverJobs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::CutoverJob>>(
@@ -1287,8 +1275,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::GetCutoverJobRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetCutoverJob(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetCutoverJob(request),
         [this](grpc::ClientContext& context,
                google::cloud::vmmigration::v1::GetCutoverJobRequest const&
                    request) { return stub_->GetCutoverJob(context, request); },
@@ -1299,11 +1287,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::ListGroupsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListGroups(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListGroups(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::Group>>(
@@ -1331,8 +1317,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
   StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
       google::cloud::vmmigration::v1::GetGroupRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetGroup(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetGroup(request),
         [this](grpc::ClientContext& context,
                google::cloud::vmmigration::v1::GetGroupRequest const& request) {
           return stub_->GetGroup(context, request);
@@ -1365,9 +1351,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::Group>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateGroup(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateGroup(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
@@ -1395,9 +1380,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::Group>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateGroup(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateGroup(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1425,9 +1409,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vmmigration::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteGroup(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteGroup(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
@@ -1456,9 +1439,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::AddGroupMigrationResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->AddGroupMigration(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->AddGroupMigration(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
@@ -1489,9 +1472,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RemoveGroupMigration(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RemoveGroupMigration(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
@@ -1499,11 +1482,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListTargetProjects(request);
+    auto retry = std::shared_ptr<VmMigrationRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListTargetProjects(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vmmigration::v1::TargetProject>>(
@@ -1533,8 +1514,8 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
       google::cloud::vmmigration::v1::GetTargetProjectRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetTargetProject(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetTargetProject(request),
         [this](grpc::ClientContext& context,
                google::cloud::vmmigration::v1::GetTargetProjectRequest const&
                    request) {
@@ -1570,9 +1551,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::TargetProject>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateTargetProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateTargetProject(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -1602,9 +1583,9 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vmmigration::v1::TargetProject>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateTargetProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateTargetProject(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1634,12 +1615,45 @@ class VmMigrationConnectionImpl : public VmMigrationConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vmmigration::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteTargetProject(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteTargetProject(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<VmMigrationRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VmMigrationRetryPolicyOption>()) {
+      return options.get<VmMigrationRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VmMigrationBackoffPolicyOption>()) {
+      return options.get<VmMigrationBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VmMigrationPollingPolicyOption>()) {
+      return options.get<VmMigrationPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<VmMigrationConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VmMigrationConnectionIdempotencyPolicyOption>()) {
+      return options.get<VmMigrationConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vmmigration_internal::VmMigrationStub> stub_;
   std::unique_ptr<VmMigrationRetryPolicy const> retry_policy_prototype_;

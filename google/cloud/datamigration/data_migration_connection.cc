@@ -206,11 +206,10 @@ class DataMigrationServiceConnectionImpl
       google::cloud::clouddms::v1::ListMigrationJobsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DataMigrationServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListMigrationJobs(request);
+    auto retry =
+        std::shared_ptr<DataMigrationServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListMigrationJobs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
@@ -240,8 +239,8 @@ class DataMigrationServiceConnectionImpl
       google::cloud::clouddms::v1::GetMigrationJobRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetMigrationJob(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetMigrationJob(request),
         [this](grpc::ClientContext& context,
                google::cloud::clouddms::v1::GetMigrationJobRequest const&
                    request) {
@@ -276,9 +275,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -307,9 +306,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -338,9 +337,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::clouddms::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
@@ -368,9 +367,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StartMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StartMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
@@ -398,9 +397,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StopMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StopMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -429,9 +428,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ResumeMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ResumeMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -461,9 +460,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PromoteMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PromoteMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -492,9 +491,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->VerifyMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->VerifyMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -524,17 +523,17 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::MigrationJob>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RestartMigrationJob(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RestartMigrationJob(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GenerateSshScript(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GenerateSshScript(request),
         [this](grpc::ClientContext& context,
                google::cloud::clouddms::v1::GenerateSshScriptRequest const&
                    request) {
@@ -549,11 +548,10 @@ class DataMigrationServiceConnectionImpl
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DataMigrationServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListConnectionProfiles(request);
+    auto retry =
+        std::shared_ptr<DataMigrationServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListConnectionProfiles(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>(
@@ -583,8 +581,8 @@ class DataMigrationServiceConnectionImpl
       google::cloud::clouddms::v1::GetConnectionProfileRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetConnectionProfile(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetConnectionProfile(request),
         [this](grpc::ClientContext& context,
                google::cloud::clouddms::v1::GetConnectionProfileRequest const&
                    request) {
@@ -621,9 +619,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::ConnectionProfile>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateConnectionProfile(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateConnectionProfile(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -654,9 +652,9 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::clouddms::v1::ConnectionProfile>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateConnectionProfile(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateConnectionProfile(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -687,12 +685,47 @@ class DataMigrationServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::clouddms::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteConnectionProfile(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteConnectionProfile(request),
+        polling_policy(), __func__);
   }
 
  private:
+  std::unique_ptr<DataMigrationServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DataMigrationServiceRetryPolicyOption>()) {
+      return options.get<DataMigrationServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DataMigrationServiceBackoffPolicyOption>()) {
+      return options.get<DataMigrationServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DataMigrationServicePollingPolicyOption>()) {
+      return options.get<DataMigrationServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<DataMigrationServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub_;
   std::unique_ptr<DataMigrationServiceRetryPolicy const>

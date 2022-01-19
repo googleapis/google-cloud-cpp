@@ -154,11 +154,9 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
       google::cloud::tasks::v2::ListQueuesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<CloudTasksRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListQueues(request);
+    auto retry = std::shared_ptr<CloudTasksRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListQueues(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::tasks::v2::Queue>>(
@@ -186,8 +184,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
       google::cloud::tasks::v2::GetQueueRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetQueue(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetQueue(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::GetQueueRequest const& request) {
           return stub_->GetQueue(context, request);
@@ -198,8 +196,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
       google::cloud::tasks::v2::CreateQueueRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateQueue(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateQueue(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::CreateQueueRequest const& request) {
           return stub_->CreateQueue(context, request);
@@ -210,8 +208,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
       google::cloud::tasks::v2::UpdateQueueRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateQueue(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateQueue(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::UpdateQueueRequest const& request) {
           return stub_->UpdateQueue(context, request);
@@ -222,8 +220,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   Status DeleteQueue(
       google::cloud::tasks::v2::DeleteQueueRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteQueue(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteQueue(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::DeleteQueueRequest const& request) {
           return stub_->DeleteQueue(context, request);
@@ -234,8 +232,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
       google::cloud::tasks::v2::PurgeQueueRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PurgeQueue(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PurgeQueue(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::PurgeQueueRequest const& request) {
           return stub_->PurgeQueue(context, request);
@@ -246,8 +244,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
       google::cloud::tasks::v2::PauseQueueRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PauseQueue(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PauseQueue(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::PauseQueueRequest const& request) {
           return stub_->PauseQueue(context, request);
@@ -258,8 +256,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
       google::cloud::tasks::v2::ResumeQueueRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ResumeQueue(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ResumeQueue(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::ResumeQueueRequest const& request) {
           return stub_->ResumeQueue(context, request);
@@ -270,8 +268,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -282,8 +280,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -294,8 +292,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TestIamPermissions(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TestIamPermissions(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -307,11 +305,9 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
       google::cloud::tasks::v2::ListTasksRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<CloudTasksRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListTasks(request);
+    auto retry = std::shared_ptr<CloudTasksRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListTasks(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::tasks::v2::Task>>(
@@ -338,8 +334,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Task> GetTask(
       google::cloud::tasks::v2::GetTaskRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetTask(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetTask(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::GetTaskRequest const& request) {
           return stub_->GetTask(context, request);
@@ -350,8 +346,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateTask(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateTask(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::CreateTaskRequest const& request) {
           return stub_->CreateTask(context, request);
@@ -362,8 +358,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   Status DeleteTask(
       google::cloud::tasks::v2::DeleteTaskRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteTask(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteTask(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::DeleteTaskRequest const& request) {
           return stub_->DeleteTask(context, request);
@@ -374,8 +370,8 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RunTask(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RunTask(request),
         [this](grpc::ClientContext& context,
                google::cloud::tasks::v2::RunTaskRequest const& request) {
           return stub_->RunTask(context, request);
@@ -384,6 +380,31 @@ class CloudTasksConnectionImpl : public CloudTasksConnection {
   }
 
  private:
+  std::unique_ptr<CloudTasksRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudTasksRetryPolicyOption>()) {
+      return options.get<CloudTasksRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudTasksBackoffPolicyOption>()) {
+      return options.get<CloudTasksBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<CloudTasksConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudTasksConnectionIdempotencyPolicyOption>()) {
+      return options.get<CloudTasksConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<tasks_internal::CloudTasksStub> stub_;
   std::unique_ptr<CloudTasksRetryPolicy const> retry_policy_prototype_;

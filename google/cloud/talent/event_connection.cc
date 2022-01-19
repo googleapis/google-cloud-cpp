@@ -62,8 +62,8 @@ class EventServiceConnectionImpl : public EventServiceConnection {
       google::cloud::talent::v4::CreateClientEventRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateClientEvent(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateClientEvent(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::CreateClientEventRequest const&
                    request) {
@@ -73,6 +73,32 @@ class EventServiceConnectionImpl : public EventServiceConnection {
   }
 
  private:
+  std::unique_ptr<EventServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EventServiceRetryPolicyOption>()) {
+      return options.get<EventServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EventServiceBackoffPolicyOption>()) {
+      return options.get<EventServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EventServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<EventServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::EventServiceStub> stub_;
   std::unique_ptr<EventServiceRetryPolicy const> retry_policy_prototype_;

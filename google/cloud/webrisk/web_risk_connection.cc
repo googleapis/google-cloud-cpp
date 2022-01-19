@@ -81,8 +81,8 @@ class WebRiskServiceConnectionImpl : public WebRiskServiceConnection {
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ComputeThreatListDiff(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ComputeThreatListDiff(request),
         [this](grpc::ClientContext& context,
                google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
                    request) {
@@ -94,8 +94,8 @@ class WebRiskServiceConnectionImpl : public WebRiskServiceConnection {
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
       google::cloud::webrisk::v1::SearchUrisRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SearchUris(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SearchUris(request),
         [this](grpc::ClientContext& context,
                google::cloud::webrisk::v1::SearchUrisRequest const& request) {
           return stub_->SearchUris(context, request);
@@ -106,8 +106,8 @@ class WebRiskServiceConnectionImpl : public WebRiskServiceConnection {
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
       google::cloud::webrisk::v1::SearchHashesRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SearchHashes(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SearchHashes(request),
         [this](grpc::ClientContext& context,
                google::cloud::webrisk::v1::SearchHashesRequest const& request) {
           return stub_->SearchHashes(context, request);
@@ -119,8 +119,8 @@ class WebRiskServiceConnectionImpl : public WebRiskServiceConnection {
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateSubmission(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateSubmission(request),
         [this](grpc::ClientContext& context,
                google::cloud::webrisk::v1::CreateSubmissionRequest const&
                    request) {
@@ -130,6 +130,32 @@ class WebRiskServiceConnectionImpl : public WebRiskServiceConnection {
   }
 
  private:
+  std::unique_ptr<WebRiskServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<WebRiskServiceRetryPolicyOption>()) {
+      return options.get<WebRiskServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<WebRiskServiceBackoffPolicyOption>()) {
+      return options.get<WebRiskServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<WebRiskServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<WebRiskServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub_;
   std::unique_ptr<WebRiskServiceRetryPolicy const> retry_policy_prototype_;

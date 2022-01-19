@@ -104,11 +104,10 @@ class DomainMappingsConnectionImpl : public DomainMappingsConnection {
       google::appengine::v1::ListDomainMappingsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DomainMappingsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListDomainMappings(request);
+    auto retry =
+        std::shared_ptr<DomainMappingsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListDomainMappings(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::appengine::v1::DomainMapping>>(
@@ -136,8 +135,8 @@ class DomainMappingsConnectionImpl : public DomainMappingsConnection {
   StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
       google::appengine::v1::GetDomainMappingRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDomainMapping(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDomainMapping(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::GetDomainMappingRequest const& request) {
           return stub_->GetDomainMapping(context, request);
@@ -171,9 +170,9 @@ class DomainMappingsConnectionImpl : public DomainMappingsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::DomainMapping>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateDomainMapping(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateDomainMapping(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
@@ -202,9 +201,9 @@ class DomainMappingsConnectionImpl : public DomainMappingsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::DomainMapping>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateDomainMapping(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateDomainMapping(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
@@ -233,12 +232,46 @@ class DomainMappingsConnectionImpl : public DomainMappingsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::appengine::v1::OperationMetadataV1>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteDomainMapping(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteDomainMapping(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<DomainMappingsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DomainMappingsRetryPolicyOption>()) {
+      return options.get<DomainMappingsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DomainMappingsBackoffPolicyOption>()) {
+      return options.get<DomainMappingsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DomainMappingsPollingPolicyOption>()) {
+      return options.get<DomainMappingsPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DomainMappingsConnectionIdempotencyPolicyOption>()) {
+      return options.get<DomainMappingsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::DomainMappingsStub> stub_;
   std::unique_ptr<DomainMappingsRetryPolicy const> retry_policy_prototype_;

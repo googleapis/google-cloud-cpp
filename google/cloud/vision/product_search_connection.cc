@@ -207,8 +207,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::CreateProductSetRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateProductSet(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateProductSet(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vision::v1::CreateProductSetRequest const& request) {
@@ -221,11 +221,10 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::ListProductSetsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ProductSearchRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListProductSets(request);
+    auto retry =
+        std::shared_ptr<ProductSearchRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListProductSets(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vision::v1::ProductSet>>(
@@ -253,8 +252,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
   StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
       google::cloud::vision::v1::GetProductSetRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetProductSet(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetProductSet(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::GetProductSetRequest const& request) {
           return stub_->GetProductSet(context, request);
@@ -266,8 +265,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::UpdateProductSetRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateProductSet(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateProductSet(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vision::v1::UpdateProductSetRequest const& request) {
@@ -280,8 +279,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::DeleteProductSetRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteProductSet(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteProductSet(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vision::v1::DeleteProductSetRequest const& request) {
@@ -293,8 +292,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
   StatusOr<google::cloud::vision::v1::Product> CreateProduct(
       google::cloud::vision::v1::CreateProductRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateProduct(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateProduct(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::CreateProductRequest const& request) {
           return stub_->CreateProduct(context, request);
@@ -306,11 +305,10 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::ListProductsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ProductSearchRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListProducts(request);
+    auto retry =
+        std::shared_ptr<ProductSearchRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListProducts(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vision::v1::Product>>(
@@ -338,8 +336,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
   StatusOr<google::cloud::vision::v1::Product> GetProduct(
       google::cloud::vision::v1::GetProductRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetProduct(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetProduct(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::GetProductRequest const& request) {
           return stub_->GetProduct(context, request);
@@ -350,8 +348,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::UpdateProductRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateProduct(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateProduct(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::UpdateProductRequest const& request) {
           return stub_->UpdateProduct(context, request);
@@ -362,8 +360,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
   Status DeleteProduct(
       google::cloud::vision::v1::DeleteProductRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteProduct(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteProduct(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::DeleteProductRequest const& request) {
           return stub_->DeleteProduct(context, request);
@@ -375,8 +373,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::CreateReferenceImageRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateReferenceImage(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateReferenceImage(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::CreateReferenceImageRequest const&
                    request) {
@@ -389,8 +387,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::DeleteReferenceImageRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteReferenceImage(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteReferenceImage(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::DeleteReferenceImageRequest const&
                    request) {
@@ -403,11 +401,10 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::ListReferenceImagesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ProductSearchRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListReferenceImages(request);
+    auto retry =
+        std::shared_ptr<ProductSearchRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListReferenceImages(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vision::v1::ReferenceImage>>(
@@ -437,8 +434,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::GetReferenceImageRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetReferenceImage(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetReferenceImage(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::GetReferenceImageRequest const&
                    request) {
@@ -451,8 +448,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::AddProductToProductSetRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->AddProductToProductSet(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->AddProductToProductSet(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::AddProductToProductSetRequest const&
                    request) {
@@ -465,8 +462,8 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RemoveProductFromProductSet(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RemoveProductFromProductSet(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
@@ -481,11 +478,10 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ProductSearchRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListProductsInProductSet(request);
+    auto retry =
+        std::shared_ptr<ProductSearchRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListProductsInProductSet(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vision::v1::Product>>(
@@ -536,9 +532,9 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vision::v1::ImportProductSetsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ImportProductSets(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ImportProductSets(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
@@ -565,12 +561,46 @@ class ProductSearchConnectionImpl : public ProductSearchConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vision::v1::BatchOperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PurgeProducts(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PurgeProducts(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<ProductSearchRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProductSearchRetryPolicyOption>()) {
+      return options.get<ProductSearchRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProductSearchBackoffPolicyOption>()) {
+      return options.get<ProductSearchBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProductSearchPollingPolicyOption>()) {
+      return options.get<ProductSearchPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ProductSearchConnectionIdempotencyPolicyOption>()) {
+      return options.get<ProductSearchConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_internal::ProductSearchStub> stub_;
   std::unique_ptr<ProductSearchRetryPolicy const> retry_policy_prototype_;

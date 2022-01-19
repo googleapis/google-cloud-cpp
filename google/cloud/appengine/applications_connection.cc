@@ -88,8 +88,8 @@ class ApplicationsConnectionImpl : public ApplicationsConnection {
   StatusOr<google::appengine::v1::Application> GetApplication(
       google::appengine::v1::GetApplicationRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetApplication(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetApplication(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::GetApplicationRequest const& request) {
           return stub_->GetApplication(context, request);
@@ -120,9 +120,9 @@ class ApplicationsConnectionImpl : public ApplicationsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::Application>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateApplication(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateApplication(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
@@ -148,9 +148,9 @@ class ApplicationsConnectionImpl : public ApplicationsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::Application>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateApplication(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateApplication(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
@@ -176,12 +176,46 @@ class ApplicationsConnectionImpl : public ApplicationsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::Application>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RepairApplication(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RepairApplication(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<ApplicationsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApplicationsRetryPolicyOption>()) {
+      return options.get<ApplicationsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApplicationsBackoffPolicyOption>()) {
+      return options.get<ApplicationsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApplicationsPollingPolicyOption>()) {
+      return options.get<ApplicationsPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ApplicationsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApplicationsConnectionIdempotencyPolicyOption>()) {
+      return options.get<ApplicationsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::ApplicationsStub> stub_;
   std::unique_ptr<ApplicationsRetryPolicy const> retry_policy_prototype_;

@@ -118,8 +118,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   GenerateAccessToken(
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GenerateAccessToken(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GenerateAccessToken(request),
         [this](grpc::ClientContext& context,
             google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
           return stub_->GenerateAccessToken(context, request);
@@ -131,8 +131,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   GenerateIdToken(
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GenerateIdToken(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GenerateIdToken(request),
         [this](grpc::ClientContext& context,
             google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
           return stub_->GenerateIdToken(context, request);
@@ -144,8 +144,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   WriteLogEntries(
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->WriteLogEntries(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->WriteLogEntries(request),
         [this](grpc::ClientContext& context,
             google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
           return stub_->WriteLogEntries(context, request);
@@ -158,10 +158,10 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<GoldenKitchenSinkRetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<GoldenKitchenSinkRetryPolicy const>(retry_policy());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListLogs(request);
+        backoff_policy());
+    auto idempotency = idempotency_policy()->ListLogs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<StreamRange<
         std::string>>(
@@ -187,11 +187,11 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   StreamRange<google::test::admin::database::v1::TailLogEntriesResponse> TailLogEntries(
       google::test::admin::database::v1::TailLogEntriesRequest const& request) override {
     auto stub = stub_;
-    auto retry_policy =
+    auto retry =
         std::shared_ptr<GoldenKitchenSinkRetryPolicy const>(
-            retry_policy_prototype_->clone());
-    auto backoff_policy = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
+            retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(
+        backoff_policy());
 
     auto factory = [stub](
         google::test::admin::database::v1::TailLogEntriesRequest const& request) {
@@ -203,7 +203,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
         internal::MakeResumableStreamingReadRpc<
             google::test::admin::database::v1::TailLogEntriesResponse,
             google::test::admin::database::v1::TailLogEntriesRequest>(
-                retry_policy->clone(), backoff_policy->clone(),
+                retry->clone(), backoff->clone(),
                 [](std::chrono::milliseconds) {}, factory,
                 GoldenKitchenSinkTailLogEntriesStreamingUpdater,
                 request);
@@ -217,8 +217,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   ListServiceAccountKeys(
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ListServiceAccountKeys(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ListServiceAccountKeys(request),
         [this](grpc::ClientContext& context,
             google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
           return stub_->ListServiceAccountKeys(context, request);
@@ -230,8 +230,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   DoNothing(
       google::protobuf::Empty const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DoNothing(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DoNothing(request),
         [this](grpc::ClientContext& context,
             google::protobuf::Empty const& request) {
           return stub_->DoNothing(context, request);
@@ -248,6 +248,30 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   }
 
  private:
+  std::unique_ptr<GoldenKitchenSinkRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GoldenKitchenSinkRetryPolicyOption>()) {
+      return options.get<GoldenKitchenSinkRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GoldenKitchenSinkBackoffPolicyOption>()) {
+      return options.get<GoldenKitchenSinkBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
+      return options.get<GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub_;
   std::unique_ptr<GoldenKitchenSinkRetryPolicy const> retry_policy_prototype_;

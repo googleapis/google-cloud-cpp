@@ -115,11 +115,10 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AccessApprovalRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListApprovalRequests(request);
+    auto retry =
+        std::shared_ptr<AccessApprovalRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListApprovalRequests(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>(
@@ -150,8 +149,8 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
       google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetApprovalRequest(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetApprovalRequest(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
@@ -166,8 +165,8 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
       google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ApproveApprovalRequest(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ApproveApprovalRequest(request),
         [this](grpc::ClientContext& context,
                google::cloud::accessapproval::v1::
                    ApproveApprovalRequestMessage const& request) {
@@ -181,8 +180,8 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DismissApprovalRequest(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DismissApprovalRequest(request),
         [this](grpc::ClientContext& context,
                google::cloud::accessapproval::v1::
                    DismissApprovalRequestMessage const& request) {
@@ -196,8 +195,8 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetAccessApprovalSettings(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetAccessApprovalSettings(request),
         [this](grpc::ClientContext& context,
                google::cloud::accessapproval::v1::
                    GetAccessApprovalSettingsMessage const& request) {
@@ -211,8 +210,8 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
       google::cloud::accessapproval::v1::
           UpdateAccessApprovalSettingsMessage const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateAccessApprovalSettings(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateAccessApprovalSettings(request),
         [this](grpc::ClientContext& context,
                google::cloud::accessapproval::v1::
                    UpdateAccessApprovalSettingsMessage const& request) {
@@ -225,8 +224,8 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteAccessApprovalSettings(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteAccessApprovalSettings(request),
         [this](grpc::ClientContext& context,
                google::cloud::accessapproval::v1::
                    DeleteAccessApprovalSettingsMessage const& request) {
@@ -236,6 +235,32 @@ class AccessApprovalConnectionImpl : public AccessApprovalConnection {
   }
 
  private:
+  std::unique_ptr<AccessApprovalRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AccessApprovalRetryPolicyOption>()) {
+      return options.get<AccessApprovalRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AccessApprovalBackoffPolicyOption>()) {
+      return options.get<AccessApprovalBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AccessApprovalConnectionIdempotencyPolicyOption>()) {
+      return options.get<AccessApprovalConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub_;
   std::unique_ptr<AccessApprovalRetryPolicy const> retry_policy_prototype_;

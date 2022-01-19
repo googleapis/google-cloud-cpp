@@ -209,11 +209,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DatabaseAdminRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListDatabases(request);
+    auto retry =
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListDatabases(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::spanner::admin::database::v1::Database>>(
@@ -266,17 +265,17 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::spanner::admin::database::v1::Database>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateDatabase(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateDatabase(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDatabase(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDatabase(request),
         [this](grpc::ClientContext& context,
                google::spanner::admin::database::v1::GetDatabaseRequest const&
                    request) { return stub_->GetDatabase(context, request); },
@@ -310,17 +309,17 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateDatabaseDdl(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateDatabaseDdl(request), polling_policy(),
+        __func__);
   }
 
   Status DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DropDatabase(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DropDatabase(request),
         [this](grpc::ClientContext& context,
                google::spanner::admin::database::v1::DropDatabaseRequest const&
                    request) { return stub_->DropDatabase(context, request); },
@@ -332,8 +331,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDatabaseDdl(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDatabaseDdl(request),
         [this](
             grpc::ClientContext& context,
             google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
@@ -344,8 +343,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -356,8 +355,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -368,8 +367,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TestIamPermissions(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TestIamPermissions(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -402,17 +401,17 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::spanner::admin::database::v1::Backup>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateBackup(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateBackup(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetBackup(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetBackup(request),
         [this](grpc::ClientContext& context,
                google::spanner::admin::database::v1::GetBackupRequest const&
                    request) { return stub_->GetBackup(context, request); },
@@ -423,8 +422,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       google::spanner::admin::database::v1::UpdateBackupRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateBackup(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateBackup(request),
         [this](grpc::ClientContext& context,
                google::spanner::admin::database::v1::UpdateBackupRequest const&
                    request) { return stub_->UpdateBackup(context, request); },
@@ -435,8 +434,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       google::spanner::admin::database::v1::DeleteBackupRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteBackup(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteBackup(request),
         [this](grpc::ClientContext& context,
                google::spanner::admin::database::v1::DeleteBackupRequest const&
                    request) { return stub_->DeleteBackup(context, request); },
@@ -448,11 +447,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DatabaseAdminRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListBackups(request);
+    auto retry =
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListBackups(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::spanner::admin::database::v1::Backup>>(
@@ -504,9 +502,9 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::spanner::admin::database::v1::Database>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RestoreDatabase(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RestoreDatabase(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
@@ -514,11 +512,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DatabaseAdminRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListDatabaseOperations(request);
+    auto retry =
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListDatabaseOperations(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::longrunning::Operation>>(
@@ -550,11 +547,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DatabaseAdminRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListBackupOperations(request);
+    auto retry =
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListBackupOperations(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::longrunning::Operation>>(
@@ -582,6 +578,40 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   }
 
  private:
+  std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DatabaseAdminRetryPolicyOption>()) {
+      return options.get<DatabaseAdminRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DatabaseAdminBackoffPolicyOption>()) {
+      return options.get<DatabaseAdminBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DatabaseAdminPollingPolicyOption>()) {
+      return options.get<DatabaseAdminPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DatabaseAdminConnectionIdempotencyPolicyOption>()) {
+      return options.get<DatabaseAdminConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub_;
   std::unique_ptr<DatabaseAdminRetryPolicy const> retry_policy_prototype_;

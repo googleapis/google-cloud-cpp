@@ -122,11 +122,9 @@ class RecommenderConnectionImpl : public RecommenderConnection {
       google::cloud::recommender::v1::ListInsightsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<RecommenderRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListInsights(request);
+    auto retry = std::shared_ptr<RecommenderRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListInsights(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::recommender::v1::Insight>>(
@@ -155,8 +153,8 @@ class RecommenderConnectionImpl : public RecommenderConnection {
       google::cloud::recommender::v1::GetInsightRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetInsight(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetInsight(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::recommender::v1::GetInsightRequest const& request) {
@@ -169,8 +167,8 @@ class RecommenderConnectionImpl : public RecommenderConnection {
       google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->MarkInsightAccepted(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->MarkInsightAccepted(request),
         [this](grpc::ClientContext& context,
                google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
                    request) {
@@ -184,11 +182,9 @@ class RecommenderConnectionImpl : public RecommenderConnection {
                           request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<RecommenderRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListRecommendations(request);
+    auto retry = std::shared_ptr<RecommenderRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListRecommendations(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::recommender::v1::Recommendation>>(
@@ -218,8 +214,8 @@ class RecommenderConnectionImpl : public RecommenderConnection {
       google::cloud::recommender::v1::GetRecommendationRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetRecommendation(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetRecommendation(request),
         [this](grpc::ClientContext& context,
                google::cloud::recommender::v1::GetRecommendationRequest const&
                    request) {
@@ -233,8 +229,8 @@ class RecommenderConnectionImpl : public RecommenderConnection {
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->MarkRecommendationClaimed(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->MarkRecommendationClaimed(request),
         [this](grpc::ClientContext& context,
                google::cloud::recommender::v1::
                    MarkRecommendationClaimedRequest const& request) {
@@ -248,8 +244,8 @@ class RecommenderConnectionImpl : public RecommenderConnection {
       google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->MarkRecommendationSucceeded(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->MarkRecommendationSucceeded(request),
         [this](grpc::ClientContext& context,
                google::cloud::recommender::v1::
                    MarkRecommendationSucceededRequest const& request) {
@@ -263,8 +259,8 @@ class RecommenderConnectionImpl : public RecommenderConnection {
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->MarkRecommendationFailed(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->MarkRecommendationFailed(request),
         [this](grpc::ClientContext& context,
                google::cloud::recommender::v1::
                    MarkRecommendationFailedRequest const& request) {
@@ -274,6 +270,31 @@ class RecommenderConnectionImpl : public RecommenderConnection {
   }
 
  private:
+  std::unique_ptr<RecommenderRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<RecommenderRetryPolicyOption>()) {
+      return options.get<RecommenderRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<RecommenderBackoffPolicyOption>()) {
+      return options.get<RecommenderBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<RecommenderConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<RecommenderConnectionIdempotencyPolicyOption>()) {
+      return options.get<RecommenderConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<recommender_internal::RecommenderStub> stub_;
   std::unique_ptr<RecommenderRetryPolicy const> retry_policy_prototype_;

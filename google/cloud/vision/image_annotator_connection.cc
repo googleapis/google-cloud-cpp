@@ -88,8 +88,8 @@ class ImageAnnotatorConnectionImpl : public ImageAnnotatorConnection {
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchAnnotateImages(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchAnnotateImages(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::BatchAnnotateImagesRequest const&
                    request) {
@@ -102,8 +102,8 @@ class ImageAnnotatorConnectionImpl : public ImageAnnotatorConnection {
   BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const&
                          request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchAnnotateFiles(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchAnnotateFiles(request),
         [this](grpc::ClientContext& context,
                google::cloud::vision::v1::BatchAnnotateFilesRequest const&
                    request) {
@@ -139,9 +139,9 @@ class ImageAnnotatorConnectionImpl : public ImageAnnotatorConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->AsyncBatchAnnotateImages(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->AsyncBatchAnnotateImages(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
@@ -171,12 +171,46 @@ class ImageAnnotatorConnectionImpl : public ImageAnnotatorConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->AsyncBatchAnnotateFiles(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->AsyncBatchAnnotateFiles(request),
+        polling_policy(), __func__);
   }
 
  private:
+  std::unique_ptr<ImageAnnotatorRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ImageAnnotatorRetryPolicyOption>()) {
+      return options.get<ImageAnnotatorRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ImageAnnotatorBackoffPolicyOption>()) {
+      return options.get<ImageAnnotatorBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ImageAnnotatorPollingPolicyOption>()) {
+      return options.get<ImageAnnotatorPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
+      return options.get<ImageAnnotatorConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_internal::ImageAnnotatorStub> stub_;
   std::unique_ptr<ImageAnnotatorRetryPolicy const> retry_policy_prototype_;

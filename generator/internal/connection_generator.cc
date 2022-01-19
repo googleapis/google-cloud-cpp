@@ -407,8 +407,8 @@ $connection_class_name$::Async$method_name$(
    {"  $method_name$(\n"
     "      $request_type$ const& request) override {\n"
     "    return google::cloud::internal::RetryLoop(\n"
-    "        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),\n"
-    "        idempotency_policy_->$method_name$(request),\n"
+    "        retry_policy(), backoff_policy(),\n"
+    "        idempotency_policy()->$method_name$(request),\n"
     "        [this](grpc::ClientContext& context,\n"
     "            $request_type$ const& request) {\n"
     "          return stub_->$method_name$(context, request);\n"
@@ -448,9 +448,9 @@ $connection_class_name$::Async$method_name$(
                R"""(
           &google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)"""},
               {R"""(
-          retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-          idempotency_policy_->$method_name$(request),
-          polling_policy_prototype_->clone(), __func__))"""},
+          retry_policy(), backoff_policy(),
+          idempotency_policy()->$method_name$(request),
+          polling_policy(), __func__))"""},
               {IsResponseTypeEmpty, R"""(
           .then([](future<StatusOr<google::protobuf::Empty>> f) {
             return f.get().status();
@@ -469,10 +469,10 @@ $connection_class_name$::Async$method_name$(
     "    request.clear_page_token();\n"
     "    auto stub = stub_;\n"
     "    auto retry =\n"
-    "        std::shared_ptr<$retry_policy_name$ const>(retry_policy_prototype_->clone());\n"
+    "        std::shared_ptr<$retry_policy_name$ const>(retry_policy());\n"
     "    auto backoff = std::shared_ptr<BackoffPolicy const>(\n"
-    "        backoff_policy_prototype_->clone());\n"
-    "    auto idempotency = idempotency_policy_->$method_name$(request);\n"
+    "        backoff_policy());\n"
+    "    auto idempotency = idempotency_policy()->$method_name$(request);\n"
     "    char const* function_name = __func__;\n"
     "    return google::cloud::internal::MakePaginationRange<StreamRange<\n"
     "        $range_output_type$>>(\n"
@@ -505,11 +505,11 @@ $connection_class_name$::Async$method_name$(
     "  StreamRange<$response_type$> $method_name$(\n"
     "      $request_type$ const& request) override {\n"
     "    auto stub = stub_;\n"
-    "    auto retry_policy =\n"
+    "    auto retry =\n"
     "        std::shared_ptr<$retry_policy_name$ const>(\n"
-    "            retry_policy_prototype_->clone());\n"
-    "    auto backoff_policy = std::shared_ptr<BackoffPolicy const>(\n"
-    "        backoff_policy_prototype_->clone());\n"
+    "            retry_policy());\n"
+    "    auto backoff = std::shared_ptr<BackoffPolicy const>(\n"
+    "        backoff_policy());\n"
     "\n"
     "    auto factory = [stub](\n"
     "        $request_type$ const& request) {\n"
@@ -521,7 +521,7 @@ $connection_class_name$::Async$method_name$(
     "        internal::MakeResumableStreamingReadRpc<\n"
     "            $response_type$,\n"
     "            $request_type$>(\n"
-    "                retry_policy->clone(), backoff_policy->clone(),\n"
+    "                retry->clone(), backoff->clone(),\n"
     "                [](std::chrono::milliseconds) {}, factory,\n"
     "                $service_name$$method_name$StreamingUpdater,\n"
     "                request);\n"
@@ -550,8 +550,8 @@ $connection_class_name$::Async$method_name$(
     "      $request_type$ const& request) override {\n"
     "    auto& stub = stub_;\n"
     "    return google::cloud::internal::AsyncRetryLoop(\n"
-    "        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),\n"
-    "        idempotency_policy_->$method_name$(request),\n"
+    "        retry_policy(), backoff_policy(),\n"
+    "        idempotency_policy()->$method_name$(request),\n"
     "        background_->cq(),\n"
     "        [stub](CompletionQueue& cq,\n"
     "               std::unique_ptr<grpc::ClientContext> context,\n"
@@ -567,23 +567,57 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
-  CcPrint("\n private:\n");
-
-  CcPrint(
-      {// clang-format off
-   {"  std::unique_ptr<google::cloud::BackgroundThreads> background_;\n"
-    "  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;\n"
-    "  std::unique_ptr<$retry_policy_name$ const> retry_policy_prototype_;\n"
-    "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"},
-   {[this]{return HasLongrunningMethod();},
-    "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n", ""},
-   {"  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
-    "};\n"}});
-  // clang-format on
-
-  CcPrint("}  // namespace\n");
-
   CcPrint(R"""(
+ private:
+  std::unique_ptr<$retry_policy_name$> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<$retry_policy_name$Option>()) {
+      return options.get<$retry_policy_name$Option>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<$service_name$BackoffPolicyOption>()) {
+      return options.get<$service_name$BackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+)""");
+  if (HasLongrunningMethod()) {
+    CcPrint(R"""(
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<$service_name$PollingPolicyOption>()) {
+      return options.get<$service_name$PollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+)""");
+  }
+  CcPrint(R"""(
+  std::unique_ptr<$idempotency_class_name$> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<$idempotency_class_name$Option>()) {
+      return options.get<$idempotency_class_name$Option>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;
+  std::unique_ptr<$retry_policy_name$ const> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;)""");
+  if (HasLongrunningMethod()) {
+    CcPrint(R"""(
+  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;)""");
+  }
+  CcPrint(R"""(
+  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;
+};
+}  // namespace
+
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

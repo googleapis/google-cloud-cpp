@@ -94,11 +94,9 @@ class ExecutionsConnectionImpl : public ExecutionsConnection {
                      request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ExecutionsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListExecutions(request);
+    auto retry = std::shared_ptr<ExecutionsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListExecutions(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::workflows::executions::v1::Execution>>(
@@ -128,8 +126,8 @@ class ExecutionsConnectionImpl : public ExecutionsConnection {
       google::cloud::workflows::executions::v1::CreateExecutionRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateExecution(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateExecution(request),
         [this](grpc::ClientContext& context,
                google::cloud::workflows::executions::v1::
                    CreateExecutionRequest const& request) {
@@ -142,8 +140,8 @@ class ExecutionsConnectionImpl : public ExecutionsConnection {
       google::cloud::workflows::executions::v1::GetExecutionRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetExecution(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetExecution(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::workflows::executions::v1::GetExecutionRequest const&
@@ -155,8 +153,8 @@ class ExecutionsConnectionImpl : public ExecutionsConnection {
       google::cloud::workflows::executions::v1::CancelExecutionRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CancelExecution(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CancelExecution(request),
         [this](grpc::ClientContext& context,
                google::cloud::workflows::executions::v1::
                    CancelExecutionRequest const& request) {
@@ -166,6 +164,31 @@ class ExecutionsConnectionImpl : public ExecutionsConnection {
   }
 
  private:
+  std::unique_ptr<ExecutionsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ExecutionsRetryPolicyOption>()) {
+      return options.get<ExecutionsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ExecutionsBackoffPolicyOption>()) {
+      return options.get<ExecutionsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ExecutionsConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ExecutionsConnectionIdempotencyPolicyOption>()) {
+      return options.get<ExecutionsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<workflows_internal::ExecutionsStub> stub_;
   std::unique_ptr<ExecutionsRetryPolicy const> retry_policy_prototype_;

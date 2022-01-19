@@ -84,11 +84,9 @@ class CloudCatalogConnectionImpl : public CloudCatalogConnection {
       google::cloud::billing::v1::ListServicesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<CloudCatalogRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListServices(request);
+    auto retry = std::shared_ptr<CloudCatalogRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListServices(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::billing::v1::Service>>(
@@ -117,11 +115,9 @@ class CloudCatalogConnectionImpl : public CloudCatalogConnection {
       google::cloud::billing::v1::ListSkusRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<CloudCatalogRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListSkus(request);
+    auto retry = std::shared_ptr<CloudCatalogRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListSkus(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::billing::v1::Sku>>(
@@ -146,6 +142,32 @@ class CloudCatalogConnectionImpl : public CloudCatalogConnection {
   }
 
  private:
+  std::unique_ptr<CloudCatalogRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudCatalogRetryPolicyOption>()) {
+      return options.get<CloudCatalogRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudCatalogBackoffPolicyOption>()) {
+      return options.get<CloudCatalogBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudCatalogConnectionIdempotencyPolicyOption>()) {
+      return options.get<CloudCatalogConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_internal::CloudCatalogStub> stub_;
   std::unique_ptr<CloudCatalogRetryPolicy const> retry_policy_prototype_;

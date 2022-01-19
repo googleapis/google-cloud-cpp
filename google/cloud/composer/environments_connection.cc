@@ -138,17 +138,17 @@ class EnvironmentsConnectionImpl : public EnvironmentsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::orchestration::airflow::service::v1::Environment>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateEnvironment(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateEnvironment(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(google::cloud::orchestration::airflow::service::v1::
                      GetEnvironmentRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetEnvironment(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetEnvironment(request),
         [this](grpc::ClientContext& context,
                google::cloud::orchestration::airflow::service::v1::
                    GetEnvironmentRequest const& request) {
@@ -162,11 +162,9 @@ class EnvironmentsConnectionImpl : public EnvironmentsConnection {
                        ListEnvironmentsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<EnvironmentsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListEnvironments(request);
+    auto retry = std::shared_ptr<EnvironmentsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListEnvironments(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<StreamRange<
         google::cloud::orchestration::airflow::service::v1::Environment>>(
@@ -220,9 +218,9 @@ class EnvironmentsConnectionImpl : public EnvironmentsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::orchestration::airflow::service::v1::Environment>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateEnvironment(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateEnvironment(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<
@@ -252,12 +250,46 @@ class EnvironmentsConnectionImpl : public EnvironmentsConnection {
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::orchestration::airflow::service::v1::
                 OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteEnvironment(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteEnvironment(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<EnvironmentsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EnvironmentsRetryPolicyOption>()) {
+      return options.get<EnvironmentsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EnvironmentsBackoffPolicyOption>()) {
+      return options.get<EnvironmentsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EnvironmentsPollingPolicyOption>()) {
+      return options.get<EnvironmentsPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EnvironmentsConnectionIdempotencyPolicyOption>()) {
+      return options.get<EnvironmentsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<composer_internal::EnvironmentsStub> stub_;
   std::unique_ptr<EnvironmentsRetryPolicy const> retry_policy_prototype_;

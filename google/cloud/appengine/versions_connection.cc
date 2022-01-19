@@ -102,11 +102,9 @@ class VersionsConnectionImpl : public VersionsConnection {
       google::appengine::v1::ListVersionsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VersionsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListVersions(request);
+    auto retry = std::shared_ptr<VersionsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListVersions(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::appengine::v1::Version>>(
@@ -134,8 +132,8 @@ class VersionsConnectionImpl : public VersionsConnection {
   StatusOr<google::appengine::v1::Version> GetVersion(
       google::appengine::v1::GetVersionRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetVersion(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetVersion(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::GetVersionRequest const& request) {
           return stub_->GetVersion(context, request);
@@ -166,9 +164,9 @@ class VersionsConnectionImpl : public VersionsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::Version>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateVersion(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateVersion(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
@@ -194,9 +192,9 @@ class VersionsConnectionImpl : public VersionsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::Version>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateVersion(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateVersion(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
@@ -222,12 +220,44 @@ class VersionsConnectionImpl : public VersionsConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::appengine::v1::OperationMetadataV1>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteVersion(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteVersion(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<VersionsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VersionsRetryPolicyOption>()) {
+      return options.get<VersionsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VersionsBackoffPolicyOption>()) {
+      return options.get<VersionsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VersionsPollingPolicyOption>()) {
+      return options.get<VersionsPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<VersionsConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VersionsConnectionIdempotencyPolicyOption>()) {
+      return options.get<VersionsConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::VersionsStub> stub_;
   std::unique_ptr<VersionsRetryPolicy const> retry_policy_prototype_;

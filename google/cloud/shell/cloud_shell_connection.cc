@@ -96,8 +96,8 @@ class CloudShellServiceConnectionImpl : public CloudShellServiceConnection {
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetEnvironment(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetEnvironment(request),
         [this](grpc::ClientContext& context,
                google::cloud::shell::v1::GetEnvironmentRequest const& request) {
           return stub_->GetEnvironment(context, request);
@@ -130,9 +130,9 @@ class CloudShellServiceConnectionImpl : public CloudShellServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::shell::v1::StartEnvironmentResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StartEnvironment(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StartEnvironment(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
@@ -162,9 +162,9 @@ class CloudShellServiceConnectionImpl : public CloudShellServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::shell::v1::AuthorizeEnvironmentResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->AuthorizeEnvironment(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->AuthorizeEnvironment(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
@@ -190,9 +190,9 @@ class CloudShellServiceConnectionImpl : public CloudShellServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::shell::v1::AddPublicKeyResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->AddPublicKey(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->AddPublicKey(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
@@ -220,12 +220,46 @@ class CloudShellServiceConnectionImpl : public CloudShellServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::shell::v1::RemovePublicKeyResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RemovePublicKey(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RemovePublicKey(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<CloudShellServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudShellServiceRetryPolicyOption>()) {
+      return options.get<CloudShellServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudShellServiceBackoffPolicyOption>()) {
+      return options.get<CloudShellServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudShellServicePollingPolicyOption>()) {
+      return options.get<CloudShellServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CloudShellServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<CloudShellServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<shell_internal::CloudShellServiceStub> stub_;
   std::unique_ptr<CloudShellServiceRetryPolicy const> retry_policy_prototype_;
