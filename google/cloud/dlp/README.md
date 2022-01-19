@@ -3,7 +3,10 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Data Loss Prevention (DLP) API][cloud-service-docs], a service to Provides methods for detection, risk analysis, and de-identification of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.
+[Cloud Data Loss Prevention (DLP) API][cloud-service-docs], a service that
+orovides methods for detection, risk analysis, and de-identification of
+privacy-sensitive fragments in text, images, and Google Cloud Platform storage
+repositories.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +28,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/dlp
+[cloud-service-docs]: https://cloud.google.com/dlp/docs/
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-dlp/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/dlp
 
@@ -38,22 +41,22 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/dlp/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/dlp/dlp_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace dlp = ::google::cloud::dlp;
-  auto client = dlp::Client(dlp::MakeConnection(/* EDIT HERE */));
+  auto client = dlp::DlpServiceClient(dlp::MakeDlpServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const location =
+      "projects/" + std::string(argv[1]) + "/locations/" + std::string(argv[2]);
+  for (auto r : client.ListStoredInfoTypes(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

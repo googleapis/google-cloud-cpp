@@ -12,22 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/dlp/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/dlp/dlp_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace dlp = ::google::cloud::dlp;
-  auto client = dlp::Client(dlp::MakeConnection(/* EDIT HERE */));
+  auto client = dlp::DlpServiceClient(dlp::MakeDlpServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const location =
+      "projects/" + std::string(argv[1]) + "/locations/" + std::string(argv[2]);
+  for (auto r : client.ListStoredInfoTypes(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

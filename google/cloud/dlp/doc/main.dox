@@ -2,8 +2,11 @@
 
 @mainpage Cloud Data Loss Prevention (DLP) API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Data Loss Prevention (DLP) API][cloud-service-docs], a service
-to Provides methods for detection, risk analysis, and de-identification of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.
+An idiomatic C++ client library for the
+[Cloud Data Loss Prevention (DLP) API][cloud-service-docs], a service that
+provides methods for detection, risk analysis, and de-identification of
+privacy-sensitive fragments in text, images, and Google Cloud Platform storage
+repositories.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +84,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/dlp
+[cloud-service-docs]: https://cloud.google.com/dlp/docs/
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
