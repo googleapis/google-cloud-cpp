@@ -45,7 +45,7 @@ this library.
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
+  if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
