@@ -79,6 +79,19 @@ DefaultStorageStub::QueryWriteStatus(
   return response;
 }
 
+StatusOr<google::storage::v2::ServiceAccount>
+DefaultStorageStub::GetServiceAccount(
+    grpc::ClientContext& client_context,
+    google::storage::v2::GetServiceAccountRequest const& request) {
+  google::storage::v2::ServiceAccount response;
+  auto status =
+      grpc_stub_->GetServiceAccount(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

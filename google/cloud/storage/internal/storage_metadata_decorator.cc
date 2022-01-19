@@ -65,6 +65,14 @@ StorageMetadata::QueryWriteStatus(
   return child_->QueryWriteStatus(context, request);
 }
 
+StatusOr<google::storage::v2::ServiceAccount>
+StorageMetadata::GetServiceAccount(
+    grpc::ClientContext& context,
+    google::storage::v2::GetServiceAccountRequest const& request) {
+  SetMetadata(context, {});
+  return child_->GetServiceAccount(context, request);
+}
+
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,
                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

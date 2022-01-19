@@ -25,6 +25,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct ServiceAccountParser;
+struct GrpcServiceAccountParser;
 }  // namespace internal
 
 /**
@@ -39,6 +40,7 @@ class ServiceAccount {
 
  private:
   friend struct internal::ServiceAccountParser;
+  friend struct internal::GrpcServiceAccountParser;
 
   std::string email_address_;
   std::string kind_;

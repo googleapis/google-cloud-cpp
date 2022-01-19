@@ -48,6 +48,13 @@ StorageRoundRobin::QueryWriteStatus(
   return Child()->QueryWriteStatus(context, request);
 }
 
+StatusOr<google::storage::v2::ServiceAccount>
+StorageRoundRobin::GetServiceAccount(
+    grpc::ClientContext& context,
+    google::storage::v2::GetServiceAccountRequest const& request) {
+  return Child()->GetServiceAccount(context, request);
+}
+
 std::shared_ptr<StorageStub> StorageRoundRobin::Child() {
   std::lock_guard<std::mutex> lk(mu_);
   auto child = children_[current_];

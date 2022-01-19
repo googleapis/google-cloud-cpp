@@ -45,6 +45,10 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::QueryWriteStatusRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::ServiceAccount>, GetServiceAccount,
+              (grpc::ClientContext&,
+               google::storage::v2::GetServiceAccountRequest const&),
+              (override));
 };
 
 class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<

@@ -337,6 +337,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_resumable_upload_session.h
         internal/grpc_resumable_upload_session_url.cc
         internal/grpc_resumable_upload_session_url.h
+        internal/grpc_service_account_parser.cc
+        internal/grpc_service_account_parser.h
         internal/hybrid_client.cc
         internal/hybrid_client.h
         internal/storage_auth_decorator.cc
@@ -607,6 +609,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             internal/grpc_owner_parser_test.cc
             internal/grpc_resumable_upload_session_test.cc
             internal/grpc_resumable_upload_session_url_test.cc
+            internal/grpc_service_account_parser_test.cc
             internal/storage_round_robin_test.cc
             internal/storage_stub_factory_test.cc)
 
