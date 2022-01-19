@@ -25,40 +25,59 @@ namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GameServerConfigsServiceClient::GameServerConfigsServiceClient(std::shared_ptr<GameServerConfigsServiceConnection> connection, Options options) : connection_(std::move(connection)), options_(gameservices_internal::GameServerConfigsServiceDefaultOptions(std::move(options))) {}
+GameServerConfigsServiceClient::GameServerConfigsServiceClient(
+    std::shared_ptr<GameServerConfigsServiceConnection> connection,
+    Options options)
+    : connection_(std::move(connection)),
+      options_(gameservices_internal::GameServerConfigsServiceDefaultOptions(
+          std::move(options))) {}
 GameServerConfigsServiceClient::~GameServerConfigsServiceClient() = default;
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
-GameServerConfigsServiceClient::ListGameServerConfigs(std::string const& parent, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::ListGameServerConfigs(std::string const& parent,
+                                                      Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::gaming::v1::ListGameServerConfigsRequest request;
   request.set_parent(parent);
   return connection_->ListGameServerConfigs(request);
 }
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
-GameServerConfigsServiceClient::ListGameServerConfigs(google::cloud::gaming::v1::ListGameServerConfigsRequest request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::ListGameServerConfigs(
+    google::cloud::gaming::v1::ListGameServerConfigsRequest request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->ListGameServerConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerConfig>
-GameServerConfigsServiceClient::GetGameServerConfig(std::string const& name, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::GetGameServerConfig(std::string const& name,
+                                                    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::gaming::v1::GetGameServerConfigRequest request;
   request.set_name(name);
   return connection_->GetGameServerConfig(request);
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerConfig>
-GameServerConfigsServiceClient::GetGameServerConfig(google::cloud::gaming::v1::GetGameServerConfigRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::GetGameServerConfig(
+    google::cloud::gaming::v1::GetGameServerConfigRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->GetGameServerConfig(request);
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-GameServerConfigsServiceClient::CreateGameServerConfig(std::string const& parent, google::cloud::gaming::v1::GameServerConfig const& game_server_config, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::CreateGameServerConfig(
+    std::string const& parent,
+    google::cloud::gaming::v1::GameServerConfig const& game_server_config,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::gaming::v1::CreateGameServerConfigRequest request;
   request.set_parent(parent);
   *request.mutable_game_server_config() = game_server_config;
@@ -66,22 +85,30 @@ GameServerConfigsServiceClient::CreateGameServerConfig(std::string const& parent
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-GameServerConfigsServiceClient::CreateGameServerConfig(google::cloud::gaming::v1::CreateGameServerConfigRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::CreateGameServerConfig(
+    google::cloud::gaming::v1::CreateGameServerConfigRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->CreateGameServerConfig(request);
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-GameServerConfigsServiceClient::DeleteGameServerConfig(std::string const& name, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::DeleteGameServerConfig(std::string const& name,
+                                                       Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   google::cloud::gaming::v1::DeleteGameServerConfigRequest request;
   request.set_name(name);
   return connection_->DeleteGameServerConfig(request);
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-GameServerConfigsServiceClient::DeleteGameServerConfig(google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request, Options options) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(options), options_));
+GameServerConfigsServiceClient::DeleteGameServerConfig(
+    google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request,
+    Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteGameServerConfig(request);
 }
 

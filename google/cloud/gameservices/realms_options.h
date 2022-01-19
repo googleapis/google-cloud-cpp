@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/gameservices/realms_connection.h"
 #include "google/cloud/gameservices/realms_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -52,8 +52,7 @@ struct RealmsServiceConnectionIdempotencyPolicyOption {
 };
 
 using RealmsServicePolicyOptionList =
-    OptionList<RealmsServiceRetryPolicyOption,
-               RealmsServiceBackoffPolicyOption,
+    OptionList<RealmsServiceRetryPolicyOption, RealmsServiceBackoffPolicyOption,
                RealmsServicePollingPolicyOption,
                RealmsServiceConnectionIdempotencyPolicyOption>;
 

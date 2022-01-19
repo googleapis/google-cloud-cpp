@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/gameservices/game_server_configs_connection.h"
 #include "google/cloud/gameservices/game_server_configs_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -48,7 +48,8 @@ struct GameServerConfigsServicePollingPolicyOption {
 
 /// Option to use with `google::cloud::Options`.
 struct GameServerConfigsServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>;
 };
 
 using GameServerConfigsServicePolicyOptionList =

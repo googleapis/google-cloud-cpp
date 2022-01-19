@@ -32,35 +32,32 @@ RealmsServiceStub::~RealmsServiceStub() = default;
 
 StatusOr<google::cloud::gaming::v1::ListRealmsResponse>
 DefaultRealmsServiceStub::ListRealms(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::ListRealmsRequest const& request) {
-    google::cloud::gaming::v1::ListRealmsResponse response;
-    auto status =
-        grpc_stub_->ListRealms(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::ListRealmsRequest const& request) {
+  google::cloud::gaming::v1::ListRealmsResponse response;
+  auto status = grpc_stub_->ListRealms(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::gaming::v1::Realm>
-DefaultRealmsServiceStub::GetRealm(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::GetRealmRequest const& request) {
-    google::cloud::gaming::v1::Realm response;
-    auto status =
-        grpc_stub_->GetRealm(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::gaming::v1::Realm> DefaultRealmsServiceStub::GetRealm(
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::GetRealmRequest const& request) {
+  google::cloud::gaming::v1::Realm response;
+  auto status = grpc_stub_->GetRealm(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRealmsServiceStub::AsyncCreateRealm(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateRealmRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateRealmRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
              google::cloud::gaming::v1::CreateRealmRequest const& request,
@@ -72,9 +69,9 @@ DefaultRealmsServiceStub::AsyncCreateRealm(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRealmsServiceStub::AsyncDeleteRealm(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteRealmRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteRealmRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
              google::cloud::gaming::v1::DeleteRealmRequest const& request,
@@ -86,9 +83,9 @@ DefaultRealmsServiceStub::AsyncDeleteRealm(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRealmsServiceStub::AsyncUpdateRealm(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateRealmRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::UpdateRealmRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
              google::cloud::gaming::v1::UpdateRealmRequest const& request,
@@ -100,15 +97,15 @@ DefaultRealmsServiceStub::AsyncUpdateRealm(
 
 StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
 DefaultRealmsServiceStub::PreviewRealmUpdate(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) {
-    google::cloud::gaming::v1::PreviewRealmUpdateResponse response;
-    auto status =
-        grpc_stub_->PreviewRealmUpdate(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) {
+  google::cloud::gaming::v1::PreviewRealmUpdateResponse response;
+  auto status =
+      grpc_stub_->PreviewRealmUpdate(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,13 +126,14 @@ future<Status> DefaultRealmsServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+  return cq
+      .MakeUnaryRpc(
+          [this](grpc::ClientContext* context,
+                 google::longrunning::CancelOperationRequest const& request,
+                 grpc::CompletionQueue* cq) {
+            return operations_->AsyncCancelOperation(context, request, cq);
+          },
+          request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -36,12 +36,12 @@ class RealmsServiceMetadata : public RealmsServiceStub {
   explicit RealmsServiceMetadata(std::shared_ptr<RealmsServiceStub> child);
 
   StatusOr<google::cloud::gaming::v1::ListRealmsResponse> ListRealms(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::ListRealmsRequest const& request) override;
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::ListRealmsRequest const& request) override;
 
   StatusOr<google::cloud::gaming::v1::Realm> GetRealm(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetRealmRequest const& request) override;
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::GetRealmRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRealm(
       google::cloud::CompletionQueue& cq,
@@ -58,9 +58,10 @@ class RealmsServiceMetadata : public RealmsServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateRealmRequest const& request) override;
 
-  StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse> PreviewRealmUpdate(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) override;
+  StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
+  PreviewRealmUpdate(grpc::ClientContext& context,
+                     google::cloud::gaming::v1::PreviewRealmUpdateRequest const&
+                         request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

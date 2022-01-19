@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/game_server_configs_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -62,23 +62,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GameServerConfigsServiceClient {
  public:
-  explicit GameServerConfigsServiceClient(std::shared_ptr<GameServerConfigsServiceConnection> connection, Options options = {});
+  explicit GameServerConfigsServiceClient(
+      std::shared_ptr<GameServerConfigsServiceConnection> connection,
+      Options options = {});
   ~GameServerConfigsServiceClient();
 
   //@{
   // @name Copy and move support
-  GameServerConfigsServiceClient(GameServerConfigsServiceClient const&) = default;
-  GameServerConfigsServiceClient& operator=(GameServerConfigsServiceClient const&) = default;
+  GameServerConfigsServiceClient(GameServerConfigsServiceClient const&) =
+      default;
+  GameServerConfigsServiceClient& operator=(
+      GameServerConfigsServiceClient const&) = default;
   GameServerConfigsServiceClient(GameServerConfigsServiceClient&&) = default;
-  GameServerConfigsServiceClient& operator=(GameServerConfigsServiceClient&&) = default;
+  GameServerConfigsServiceClient& operator=(GameServerConfigsServiceClient&&) =
+      default;
   //@}
 
   //@{
   // @name Equality
-  friend bool operator==(GameServerConfigsServiceClient const& a, GameServerConfigsServiceClient const& b) {
+  friend bool operator==(GameServerConfigsServiceClient const& a,
+                         GameServerConfigsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GameServerConfigsServiceClient const& a, GameServerConfigsServiceClient const& b) {
+  friend bool operator!=(GameServerConfigsServiceClient const& a,
+                         GameServerConfigsServiceClient const& b) {
     return !(a == b);
   }
   //@}
@@ -90,10 +97,13 @@ class GameServerConfigsServiceClient {
   /// @param parent  Required. The parent resource name, in the following form:
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/*`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L30}
-  /// [google.cloud.gaming.v1.GameServerConfig]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L30}
+  /// [google.cloud.gaming.v1.GameServerConfig]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerConfig>
   ListGameServerConfigs(std::string const& parent, Options options = {});
@@ -102,42 +112,57 @@ class GameServerConfigsServiceClient {
   /// Lists game server configs in a given project, location, and game server
   /// deployment.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::ListGameServerConfigsRequest,google/cloud/gaming/v1/game_server_configs.proto#L30}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::ListGameServerConfigsRequest,google/cloud/gaming/v1/game_server_configs.proto#L30}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L30}
-  /// [google.cloud.gaming.v1.GameServerConfig]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L30}
+  /// [google.cloud.gaming.v1.GameServerConfig]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerConfig>
-  ListGameServerConfigs(google::cloud::gaming::v1::ListGameServerConfigsRequest request, Options options = {});
+  ListGameServerConfigs(
+      google::cloud::gaming::v1::ListGameServerConfigsRequest request,
+      Options options = {});
 
   ///
   /// Gets details of a single game server config.
   ///
-  /// @param name  Required. The name of the game server config to retrieve, in the following form:
+  /// @param name  Required. The name of the game server config to retrieve, in
+  /// the following form:
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L72}
-  /// [google.cloud.gaming.v1.GameServerConfig]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L72}
+  /// [google.cloud.gaming.v1.GameServerConfig]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  StatusOr<google::cloud::gaming::v1::GameServerConfig>
-  GetGameServerConfig(std::string const& name, Options options = {});
+  StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
+      std::string const& name, Options options = {});
 
   ///
   /// Gets details of a single game server config.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::GetGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L72}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::GetGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L72}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L72}
-  /// [google.cloud.gaming.v1.GameServerConfig]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L72}
+  /// [google.cloud.gaming.v1.GameServerConfig]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  StatusOr<google::cloud::gaming::v1::GameServerConfig>
-  GetGameServerConfig(google::cloud::gaming::v1::GetGameServerConfigRequest const& request, Options options = {});
+  StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a new game server config in a given project, location, and game
@@ -146,42 +171,59 @@ class GameServerConfigsServiceClient {
   ///
   /// @param parent  Required. The parent resource name, in the following form:
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/`.
-  /// @param game_server_config  Required. The game server config resource to be created.
+  /// @param game_server_config  Required. The game server config resource to be
+  /// created.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  /// [google.cloud.gaming.v1.CreateGameServerConfigRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L84}
-  /// [google.cloud.gaming.v1.GameServerConfig]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// [google.cloud.gaming.v1.CreateGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L84}
+  /// [google.cloud.gaming.v1.GameServerConfig]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-  CreateGameServerConfig(std::string const& parent, google::cloud::gaming::v1::GameServerConfig const& game_server_config, Options options = {});
+  CreateGameServerConfig(
+      std::string const& parent,
+      google::cloud::gaming::v1::GameServerConfig const& game_server_config,
+      Options options = {});
 
   ///
   /// Creates a new game server config in a given project, location, and game
   /// server deployment. Game server configs are immutable, and are not applied
   /// until referenced in the game server deployment rollout resource.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::CreateGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L84}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::CreateGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L84}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
-  /// [google.cloud.gaming.v1.CreateGameServerConfigRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L84}
-  /// [google.cloud.gaming.v1.GameServerConfig]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
+  /// [google.cloud.gaming.v1.CreateGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L84}
+  /// [google.cloud.gaming.v1.GameServerConfig]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-  CreateGameServerConfig(google::cloud::gaming::v1::CreateGameServerConfigRequest const& request, Options options = {});
+  CreateGameServerConfig(
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a single game server config. The deletion will fail if the game
   /// server config is referenced in a game server deployment rollout.
   ///
-  /// @param name  Required. The name of the game server config to delete, in the following form:
+  /// @param name  Required. The name of the game server config to delete, in
+  /// the following form:
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
-  /// [google.cloud.gaming.v1.DeleteGameServerConfigRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L102}
-  /// [google.cloud.gaming.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// [google.cloud.gaming.v1.DeleteGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L102}
+  /// [google.cloud.gaming.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
   DeleteGameServerConfig(std::string const& name, Options options = {});
@@ -190,15 +232,21 @@ class GameServerConfigsServiceClient {
   /// Deletes a single game server config. The deletion will fail if the game
   /// server config is referenced in a game server deployment rollout.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::DeleteGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L102}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::DeleteGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L102}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
-  /// [google.cloud.gaming.v1.DeleteGameServerConfigRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L102}
-  /// [google.cloud.gaming.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// [google.cloud.gaming.v1.DeleteGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L102}
+  /// [google.cloud.gaming.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerConfig(google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request, Options options = {});
+  DeleteGameServerConfig(
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<GameServerConfigsServiceConnection> connection_;

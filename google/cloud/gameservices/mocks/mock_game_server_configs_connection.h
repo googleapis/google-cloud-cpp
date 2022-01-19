@@ -27,23 +27,31 @@ namespace cloud {
 namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockGameServerConfigsServiceConnection : public gameservices::GameServerConfigsServiceConnection {
+class MockGameServerConfigsServiceConnection
+    : public gameservices::GameServerConfigsServiceConnection {
  public:
   MOCK_METHOD(StreamRange<google::cloud::gaming::v1::GameServerConfig>,
-  ListGameServerConfigs,
-  (google::cloud::gaming::v1::ListGameServerConfigsRequest request), (override));
+              ListGameServerConfigs,
+              (google::cloud::gaming::v1::ListGameServerConfigsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::GameServerConfig>,
-  GetGameServerConfig,
-  (google::cloud::gaming::v1::GetGameServerConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::gaming::v1::GameServerConfig>,
+      GetGameServerConfig,
+      (google::cloud::gaming::v1::GetGameServerConfigRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>,
-  CreateGameServerConfig,
-  (google::cloud::gaming::v1::CreateGameServerConfigRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>,
+      CreateGameServerConfig,
+      (google::cloud::gaming::v1::CreateGameServerConfigRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
-  DeleteGameServerConfig,
-  (google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
+      DeleteGameServerConfig,
+      (google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

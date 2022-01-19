@@ -17,10 +17,10 @@
 // source: google/cloud/gaming/v1/game_server_configs_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_configs_option_defaults.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/gameservices/game_server_configs_connection.h"
 #include "google/cloud/gameservices/game_server_configs_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -38,8 +38,10 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GameServerConfigsServiceDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GAME_SERVER_CONFIGS_SERVICE_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "gameservices.googleapis.com");
+    auto env = internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_GAME_SERVER_CONFIGS_SERVICE_ENDPOINT");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "gameservices.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -56,25 +58,38 @@ Options GameServerConfigsServiceDefaultOptions(Options options) {
   if (!options.has<gameservices::GameServerConfigsServiceRetryPolicyOption>()) {
     options.set<gameservices::GameServerConfigsServiceRetryPolicyOption>(
         gameservices::GameServerConfigsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<gameservices::GameServerConfigsServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<gameservices::GameServerConfigsServiceBackoffPolicyOption>()) {
     options.set<gameservices::GameServerConfigsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<gameservices::GameServerConfigsServicePollingPolicyOption>()) {
+  if (!options
+           .has<gameservices::GameServerConfigsServicePollingPolicyOption>()) {
     options.set<gameservices::GameServerConfigsServicePollingPolicyOption>(
         GenericPollingPolicy<
             gameservices::GameServerConfigsServiceRetryPolicyOption::Type,
             gameservices::GameServerConfigsServiceBackoffPolicyOption::Type>(
-            options.get<gameservices::GameServerConfigsServiceRetryPolicyOption>()->clone(),
-            options.get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()->clone())
+            options
+                .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<
+                    gameservices::GameServerConfigsServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<gameservices::GameServerConfigsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<gameservices::GameServerConfigsServiceConnectionIdempotencyPolicyOption>(
-        gameservices::MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          gameservices::
+              GameServerConfigsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<gameservices::
+                    GameServerConfigsServiceConnectionIdempotencyPolicyOption>(
+        gameservices::
+            MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

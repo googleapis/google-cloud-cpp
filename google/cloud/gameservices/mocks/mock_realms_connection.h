@@ -27,31 +27,35 @@ namespace cloud {
 namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockRealmsServiceConnection : public gameservices::RealmsServiceConnection {
+class MockRealmsServiceConnection
+    : public gameservices::RealmsServiceConnection {
  public:
-  MOCK_METHOD(StreamRange<google::cloud::gaming::v1::Realm>,
-  ListRealms,
-  (google::cloud::gaming::v1::ListRealmsRequest request), (override));
+  MOCK_METHOD(StreamRange<google::cloud::gaming::v1::Realm>, ListRealms,
+              (google::cloud::gaming::v1::ListRealmsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::Realm>,
-  GetRealm,
-  (google::cloud::gaming::v1::GetRealmRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::Realm>, GetRealm,
+              (google::cloud::gaming::v1::GetRealmRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::Realm>>,
-  CreateRealm,
-  (google::cloud::gaming::v1::CreateRealmRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::Realm>>, CreateRealm,
+              (google::cloud::gaming::v1::CreateRealmRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
-  DeleteRealm,
-  (google::cloud::gaming::v1::DeleteRealmRequest const& request), (override));
+              DeleteRealm,
+              (google::cloud::gaming::v1::DeleteRealmRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::Realm>>,
-  UpdateRealm,
-  (google::cloud::gaming::v1::UpdateRealmRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::Realm>>, UpdateRealm,
+              (google::cloud::gaming::v1::UpdateRealmRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>,
-  PreviewRealmUpdate,
-  (google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>,
+      PreviewRealmUpdate,
+      (google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

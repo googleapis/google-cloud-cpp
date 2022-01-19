@@ -27,43 +27,67 @@ namespace cloud {
 namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockGameServerDeploymentsServiceConnection : public gameservices::GameServerDeploymentsServiceConnection {
+class MockGameServerDeploymentsServiceConnection
+    : public gameservices::GameServerDeploymentsServiceConnection {
  public:
-  MOCK_METHOD(StreamRange<google::cloud::gaming::v1::GameServerDeployment>,
-  ListGameServerDeployments,
-  (google::cloud::gaming::v1::ListGameServerDeploymentsRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::gaming::v1::GameServerDeployment>,
+      ListGameServerDeployments,
+      (google::cloud::gaming::v1::ListGameServerDeploymentsRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::gaming::v1::GameServerDeployment>,
-  GetGameServerDeployment,
-  (google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request), (override));
+              GetGameServerDeployment,
+              (google::cloud::gaming::v1::GetGameServerDeploymentRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
+      CreateGameServerDeployment,
+      (google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
+      DeleteGameServerDeployment,
+      (google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
+      UpdateGameServerDeployment,
+      (google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>,
+      GetGameServerDeploymentRollout,
+      (google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
-  CreateGameServerDeployment,
-  (google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request), (override));
+              UpdateGameServerDeploymentRollout,
+              (google::cloud::gaming::v1::
+                   UpdateGameServerDeploymentRolloutRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
-  DeleteGameServerDeployment,
-  (google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::
+                           PreviewGameServerDeploymentRolloutResponse>,
+              PreviewGameServerDeploymentRollout,
+              (google::cloud::gaming::v1::
+                   PreviewGameServerDeploymentRolloutRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
-  UpdateGameServerDeployment,
-  (google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>,
-  GetGameServerDeploymentRollout,
-  (google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
-  UpdateGameServerDeploymentRollout,
-  (google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>,
-  PreviewGameServerDeploymentRollout,
-  (google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>,
-  FetchDeploymentState,
-  (google::cloud::gaming::v1::FetchDeploymentStateRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>,
+      FetchDeploymentState,
+      (google::cloud::gaming::v1::FetchDeploymentStateRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

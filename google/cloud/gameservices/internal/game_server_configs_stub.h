@@ -36,23 +36,30 @@ class GameServerConfigsServiceStub {
  public:
   virtual ~GameServerConfigsServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse> ListGameServerConfigs(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
+  ListGameServerConfigs(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::ListGameServerConfigsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetGameServerConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gaming::v1::GameServerConfig>
+  GetGameServerConfig(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateGameServerConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) = 0;
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteGameServerConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) = 0;
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -65,33 +72,39 @@ class GameServerConfigsServiceStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultGameServerConfigsServiceStub : public GameServerConfigsServiceStub {
+class DefaultGameServerConfigsServiceStub
+    : public GameServerConfigsServiceStub {
  public:
   DefaultGameServerConfigsServiceStub(
-      std::unique_ptr<google::cloud::gaming::v1::GameServerConfigsService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<
+          google::cloud::gaming::v1::GameServerConfigsService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
   ListGameServerConfigs(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::ListGameServerConfigsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gaming::v1::GameServerConfig>
-  GetGameServerConfig(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::GetGameServerConfigRequest const& request) override;
+  StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) override;
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) override;
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -104,7 +117,9 @@ class DefaultGameServerConfigsServiceStub : public GameServerConfigsServiceStub 
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::gaming::v1::GameServerConfigsService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::gaming::v1::GameServerConfigsService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_INTERNAL_GAME_SERVER_DEPLOYMENTS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_INTERNAL_GAME_SERVER_DEPLOYMENTS_STUB_FACTORY_H
 
+#include "google/cloud/gameservices/internal/game_server_deployments_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/gameservices/internal/game_server_deployments_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -31,8 +31,9 @@ namespace cloud {
 namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<GameServerDeploymentsServiceStub> CreateDefaultGameServerDeploymentsServiceStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+std::shared_ptr<GameServerDeploymentsServiceStub>
+CreateDefaultGameServerDeploymentsServiceStub(google::cloud::CompletionQueue cq,
+                                              Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

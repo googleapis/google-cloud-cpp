@@ -30,7 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RealmsServiceMetadata::RealmsServiceMetadata(
     std::shared_ptr<RealmsServiceStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::gaming::v1::ListRealmsResponse>
 RealmsServiceMetadata::ListRealms(
@@ -40,8 +41,7 @@ RealmsServiceMetadata::ListRealms(
   return child_->ListRealms(context, request);
 }
 
-StatusOr<google::cloud::gaming::v1::Realm>
-RealmsServiceMetadata::GetRealm(
+StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceMetadata::GetRealm(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::GetRealmRequest const& request) {
   SetMetadata(context, "name=" + request.name());

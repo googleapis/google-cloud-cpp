@@ -62,9 +62,10 @@ class RealmsServiceAuth : public RealmsServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateRealmRequest const& request) override;
 
-  StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse> PreviewRealmUpdate(
-      grpc::ClientContext& context,
-      google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) override;
+  StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
+  PreviewRealmUpdate(grpc::ClientContext& context,
+                     google::cloud::gaming::v1::PreviewRealmUpdateRequest const&
+                         request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -75,6 +76,7 @@ class RealmsServiceAuth : public RealmsServiceStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<RealmsServiceStub> child_;

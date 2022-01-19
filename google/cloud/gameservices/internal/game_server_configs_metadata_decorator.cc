@@ -30,7 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GameServerConfigsServiceMetadata::GameServerConfigsServiceMetadata(
     std::shared_ptr<GameServerConfigsServiceStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
 GameServerConfigsServiceMetadata::ListGameServerConfigs(
@@ -83,8 +84,8 @@ future<Status> GameServerConfigsServiceMetadata::AsyncCancelOperation(
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-void GameServerConfigsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+void GameServerConfigsServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }

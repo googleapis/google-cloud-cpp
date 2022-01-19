@@ -27,39 +27,62 @@ namespace cloud {
 namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockGameServerClustersServiceConnection : public gameservices::GameServerClustersServiceConnection {
+class MockGameServerClustersServiceConnection
+    : public gameservices::GameServerClustersServiceConnection {
  public:
-  MOCK_METHOD(StreamRange<google::cloud::gaming::v1::GameServerCluster>,
-  ListGameServerClusters,
-  (google::cloud::gaming::v1::ListGameServerClustersRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::gaming::v1::GameServerCluster>,
+      ListGameServerClusters,
+      (google::cloud::gaming::v1::ListGameServerClustersRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::GameServerCluster>,
-  GetGameServerCluster,
-  (google::cloud::gaming::v1::GetGameServerClusterRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::gaming::v1::GameServerCluster>,
+      GetGameServerCluster,
+      (google::cloud::gaming::v1::GetGameServerClusterRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>,
-  CreateGameServerCluster,
-  (google::cloud::gaming::v1::CreateGameServerClusterRequest const& request), (override));
+              CreateGameServerCluster,
+              (google::cloud::gaming::v1::CreateGameServerClusterRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>,
-  PreviewCreateGameServerCluster,
-  (google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>,
+      PreviewCreateGameServerCluster,
+      (google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
-  DeleteGameServerCluster,
-  (google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request), (override));
+              DeleteGameServerCluster,
+              (google::cloud::gaming::v1::DeleteGameServerClusterRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>,
-  PreviewDeleteGameServerCluster,
-  (google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>,
+      PreviewDeleteGameServerCluster,
+      (google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>,
-  UpdateGameServerCluster,
-  (google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request), (override));
+              UpdateGameServerCluster,
+              (google::cloud::gaming::v1::UpdateGameServerClusterRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>,
-  PreviewUpdateGameServerCluster,
-  (google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>,
+      PreviewUpdateGameServerCluster,
+      (google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

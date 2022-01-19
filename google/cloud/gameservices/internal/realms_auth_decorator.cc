@@ -30,7 +30,8 @@ RealmsServiceAuth::RealmsServiceAuth(
     std::shared_ptr<RealmsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::gaming::v1::ListRealmsResponse> RealmsServiceAuth::ListRealms(
+StatusOr<google::cloud::gaming::v1::ListRealmsResponse>
+RealmsServiceAuth::ListRealms(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::ListRealmsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -48,14 +49,15 @@ StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceAuth::GetRealm(
 
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceAuth::AsyncCreateRealm(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateRealmRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateRealmRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -66,14 +68,15 @@ RealmsServiceAuth::AsyncCreateRealm(
 
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceAuth::AsyncDeleteRealm(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteRealmRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteRealmRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -84,14 +87,15 @@ RealmsServiceAuth::AsyncDeleteRealm(
 
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceAuth::AsyncUpdateRealm(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateRealmRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::UpdateRealmRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -100,7 +104,8 @@ RealmsServiceAuth::AsyncUpdateRealm(
       });
 }
 
-StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse> RealmsServiceAuth::PreviewRealmUpdate(
+StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
+RealmsServiceAuth::PreviewRealmUpdate(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -115,9 +120,10 @@ RealmsServiceAuth::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -131,9 +137,10 @@ future<Status> RealmsServiceAuth::AsyncCancelOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

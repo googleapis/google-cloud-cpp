@@ -36,23 +36,26 @@ class GameServerConfigsServiceConnectionIdempotencyPolicy {
   virtual ~GameServerConfigsServiceConnectionIdempotencyPolicy() = 0;
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
+  clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency
-  ListGameServerConfigs(google::cloud::gaming::v1::ListGameServerConfigsRequest request) = 0;
+  virtual google::cloud::internal::Idempotency ListGameServerConfigs(
+      google::cloud::gaming::v1::ListGameServerConfigsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  GetGameServerConfig(google::cloud::gaming::v1::GetGameServerConfigRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency GetGameServerConfig(
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  CreateGameServerConfig(google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency CreateGameServerConfig(
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const&
+          request) = 0;
 
-  virtual google::cloud::internal::Idempotency
-  DeleteGameServerConfig(google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) = 0;
+  virtual google::cloud::internal::Idempotency DeleteGameServerConfig(
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
-    MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy();
+MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

@@ -35,37 +35,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GameServerConfigsServiceLogging : public GameServerConfigsServiceStub {
  public:
   ~GameServerConfigsServiceLogging() override = default;
-  GameServerConfigsServiceLogging(std::shared_ptr<GameServerConfigsServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+  GameServerConfigsServiceLogging(
+      std::shared_ptr<GameServerConfigsServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> components);
 
-  StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse> ListGameServerConfigs(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) override;
+  StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
+  ListGameServerConfigs(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::ListGameServerConfigsRequest const& request)
+      override;
 
   StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetGameServerConfigRequest const& request) override;
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) override;
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) override;
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::longrunning::GetOperationRequest const& request) override;
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::longrunning::CancelOperationRequest const& request) override;
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<GameServerConfigsServiceStub> child_;

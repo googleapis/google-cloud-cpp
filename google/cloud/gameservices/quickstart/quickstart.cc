@@ -24,11 +24,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace gameservices = ::google::cloud::gameservices;
-  auto client = gameservices::Client(
-      gameservices::MakeConnection(/* EDIT HERE */));
+  auto client =
+      gameservices::Client(gameservices::MakeConnection(/* EDIT HERE */));
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
+  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

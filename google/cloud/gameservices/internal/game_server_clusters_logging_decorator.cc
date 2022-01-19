@@ -29,9 +29,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GameServerClustersServiceLogging::GameServerClustersServiceLogging(
     std::shared_ptr<GameServerClustersServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::gaming::v1::ListGameServerClustersResponse>
@@ -40,7 +40,8 @@ GameServerClustersServiceLogging::ListGameServerClusters(
     google::cloud::gaming::v1::ListGameServerClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::ListGameServerClustersRequest const& request) {
+             google::cloud::gaming::v1::ListGameServerClustersRequest const&
+                 request) {
         return child_->ListGameServerClusters(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -52,7 +53,8 @@ GameServerClustersServiceLogging::GetGameServerCluster(
     google::cloud::gaming::v1::GetGameServerClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::GetGameServerClusterRequest const& request) {
+             google::cloud::gaming::v1::GetGameServerClusterRequest const&
+                 request) {
         return child_->GetGameServerCluster(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -60,14 +62,16 @@ GameServerClustersServiceLogging::GetGameServerCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceLogging::AsyncCreateGameServerCluster(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
-        return child_->AsyncCreateGameServerCluster(cq, std::move(context), request);
+             google::cloud::gaming::v1::CreateGameServerClusterRequest const&
+                 request) {
+        return child_->AsyncCreateGameServerCluster(cq, std::move(context),
+                                                    request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
@@ -75,10 +79,12 @@ GameServerClustersServiceLogging::AsyncCreateGameServerCluster(
 StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
 GameServerClustersServiceLogging::PreviewCreateGameServerCluster(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const& request) {
+    google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const& request) {
+             google::cloud::gaming::v1::
+                 PreviewCreateGameServerClusterRequest const& request) {
         return child_->PreviewCreateGameServerCluster(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -86,14 +92,16 @@ GameServerClustersServiceLogging::PreviewCreateGameServerCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceLogging::AsyncDeleteGameServerCluster(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
-        return child_->AsyncDeleteGameServerCluster(cq, std::move(context), request);
+             google::cloud::gaming::v1::DeleteGameServerClusterRequest const&
+                 request) {
+        return child_->AsyncDeleteGameServerCluster(cq, std::move(context),
+                                                    request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
@@ -101,10 +109,12 @@ GameServerClustersServiceLogging::AsyncDeleteGameServerCluster(
 StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
 GameServerClustersServiceLogging::PreviewDeleteGameServerCluster(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const& request) {
+    google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const& request) {
+             google::cloud::gaming::v1::
+                 PreviewDeleteGameServerClusterRequest const& request) {
         return child_->PreviewDeleteGameServerCluster(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -112,14 +122,16 @@ GameServerClustersServiceLogging::PreviewDeleteGameServerCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceLogging::AsyncUpdateGameServerCluster(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
-        return child_->AsyncUpdateGameServerCluster(cq, std::move(context), request);
+             google::cloud::gaming::v1::UpdateGameServerClusterRequest const&
+                 request) {
+        return child_->AsyncUpdateGameServerCluster(cq, std::move(context),
+                                                    request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
@@ -127,10 +139,12 @@ GameServerClustersServiceLogging::AsyncUpdateGameServerCluster(
 StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
 GameServerClustersServiceLogging::PreviewUpdateGameServerCluster(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const& request) {
+    google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const& request) {
+             google::cloud::gaming::v1::
+                 PreviewUpdateGameServerClusterRequest const& request) {
         return child_->PreviewUpdateGameServerCluster(context, request);
       },
       context, request, __func__, tracing_options_);

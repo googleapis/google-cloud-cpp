@@ -17,10 +17,10 @@
 // source: google/cloud/gaming/v1/realms_service.proto
 
 #include "google/cloud/gameservices/internal/realms_option_defaults.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/gameservices/realms_connection.h"
 #include "google/cloud/gameservices/realms_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -39,7 +39,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options RealmsServiceDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REALMS_SERVICE_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "gameservices.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "gameservices.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -56,23 +57,28 @@ Options RealmsServiceDefaultOptions(Options options) {
   if (!options.has<gameservices::RealmsServiceRetryPolicyOption>()) {
     options.set<gameservices::RealmsServiceRetryPolicyOption>(
         gameservices::RealmsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<gameservices::RealmsServiceBackoffPolicyOption>()) {
     options.set<gameservices::RealmsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
   if (!options.has<gameservices::RealmsServicePollingPolicyOption>()) {
     options.set<gameservices::RealmsServicePollingPolicyOption>(
         GenericPollingPolicy<
             gameservices::RealmsServiceRetryPolicyOption::Type,
             gameservices::RealmsServiceBackoffPolicyOption::Type>(
-            options.get<gameservices::RealmsServiceRetryPolicyOption>()->clone(),
-            options.get<gameservices::RealmsServiceBackoffPolicyOption>()->clone())
+            options.get<gameservices::RealmsServiceRetryPolicyOption>()
+                ->clone(),
+            options.get<gameservices::RealmsServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()) {
     options.set<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>(
         gameservices::MakeDefaultRealmsServiceConnectionIdempotencyPolicy());
   }

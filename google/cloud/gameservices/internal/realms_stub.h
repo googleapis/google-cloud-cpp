@@ -37,12 +37,12 @@ class RealmsServiceStub {
   virtual ~RealmsServiceStub() = 0;
 
   virtual StatusOr<google::cloud::gaming::v1::ListRealmsResponse> ListRealms(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::ListRealmsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::ListRealmsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gaming::v1::Realm> GetRealm(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetRealmRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::GetRealmRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRealm(
       google::cloud::CompletionQueue& cq,
@@ -59,9 +59,10 @@ class RealmsServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateRealmRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse> PreviewRealmUpdate(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
+  PreviewRealmUpdate(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -77,20 +78,19 @@ class RealmsServiceStub {
 class DefaultRealmsServiceStub : public RealmsServiceStub {
  public:
   DefaultRealmsServiceStub(
-      std::unique_ptr<google::cloud::gaming::v1::RealmsService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::gaming::v1::RealmsService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
-  StatusOr<google::cloud::gaming::v1::ListRealmsResponse>
-  ListRealms(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::ListRealmsRequest const& request) override;
+  StatusOr<google::cloud::gaming::v1::ListRealmsResponse> ListRealms(
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::ListRealmsRequest const& request) override;
 
-  StatusOr<google::cloud::gaming::v1::Realm>
-  GetRealm(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::GetRealmRequest const& request) override;
+  StatusOr<google::cloud::gaming::v1::Realm> GetRealm(
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::GetRealmRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRealm(
       google::cloud::CompletionQueue& cq,
@@ -108,9 +108,9 @@ class DefaultRealmsServiceStub : public RealmsServiceStub {
       google::cloud::gaming::v1::UpdateRealmRequest const& request) override;
 
   StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
-  PreviewRealmUpdate(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) override;
+  PreviewRealmUpdate(grpc::ClientContext& client_context,
+                     google::cloud::gaming::v1::PreviewRealmUpdateRequest const&
+                         request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -123,7 +123,8 @@ class DefaultRealmsServiceStub : public RealmsServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::gaming::v1::RealmsService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::gaming::v1::RealmsService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

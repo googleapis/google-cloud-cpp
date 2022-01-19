@@ -36,45 +36,64 @@ class GameServerDeploymentsServiceStub {
  public:
   virtual ~GameServerDeploymentsServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::ListGameServerDeploymentsResponse> ListGameServerDeployments(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::ListGameServerDeploymentsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gaming::v1::ListGameServerDeploymentsResponse>
+  ListGameServerDeployments(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::ListGameServerDeploymentsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::GameServerDeployment> GetGameServerDeployment(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gaming::v1::GameServerDeployment>
+  GetGameServerDeployment(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::GetGameServerDeploymentRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateGameServerDeployment(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGameServerDeployment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request) = 0;
+      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteGameServerDeployment(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGameServerDeployment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request) = 0;
+      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateGameServerDeployment(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGameServerDeployment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request) = 0;
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout> GetGameServerDeploymentRollout(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
+  GetGameServerDeploymentRollout(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateGameServerDeploymentRollout(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGameServerDeploymentRollout(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request) = 0;
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse> PreviewGameServerDeploymentRollout(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
+  PreviewGameServerDeploymentRollout(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::
+          PreviewGameServerDeploymentRolloutRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse> FetchDeploymentState(
-    grpc::ClientContext& context,
-    google::cloud::gaming::v1::FetchDeploymentStateRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
+  FetchDeploymentState(
+      grpc::ClientContext& context,
+      google::cloud::gaming::v1::FetchDeploymentStateRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -87,58 +106,75 @@ class GameServerDeploymentsServiceStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultGameServerDeploymentsServiceStub : public GameServerDeploymentsServiceStub {
+class DefaultGameServerDeploymentsServiceStub
+    : public GameServerDeploymentsServiceStub {
  public:
   DefaultGameServerDeploymentsServiceStub(
-      std::unique_ptr<google::cloud::gaming::v1::GameServerDeploymentsService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::gaming::v1::GameServerDeploymentsService::
+                          StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::gaming::v1::ListGameServerDeploymentsResponse>
   ListGameServerDeployments(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::ListGameServerDeploymentsRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::ListGameServerDeploymentsRequest const&
+          request) override;
 
   StatusOr<google::cloud::gaming::v1::GameServerDeployment>
   GetGameServerDeployment(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request)
+      override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateGameServerDeployment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGameServerDeployment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request) override;
+      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteGameServerDeployment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGameServerDeployment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request) override;
+      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateGameServerDeployment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGameServerDeployment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request) override;
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+          request) override;
 
   StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
   GetGameServerDeploymentRollout(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateGameServerDeploymentRollout(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGameServerDeploymentRollout(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request) override;
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
+          request) override;
 
-  StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
+  StatusOr<
+      google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
   PreviewGameServerDeploymentRollout(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::
+          PreviewGameServerDeploymentRolloutRequest const& request) override;
 
   StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
   FetchDeploymentState(
-    grpc::ClientContext& client_context,
-    google::cloud::gaming::v1::FetchDeploymentStateRequest const& request) override;
+      grpc::ClientContext& client_context,
+      google::cloud::gaming::v1::FetchDeploymentStateRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -151,7 +187,9 @@ class DefaultGameServerDeploymentsServiceStub : public GameServerDeploymentsServ
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::gaming::v1::GameServerDeploymentsService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::gaming::v1::GameServerDeploymentsService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

@@ -17,11 +17,11 @@
 // source: google/cloud/gaming/v1/game_server_clusters_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_clusters_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_auth_decorator.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_logging_decorator.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_metadata_decorator.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
@@ -35,29 +35,28 @@ namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GameServerClustersServiceStub>
-CreateDefaultGameServerClustersServiceStub(
-    google::cloud::CompletionQueue cq, Options const& options) {
+CreateDefaultGameServerClustersServiceStub(google::cloud::CompletionQueue cq,
+                                           Options const& options) {
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::gaming::v1::GameServerClustersService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::gaming::v1::GameServerClustersService::NewStub(channel);
   std::shared_ptr<GameServerClustersServiceStub> stub =
-    std::make_shared<DefaultGameServerClustersServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultGameServerClustersServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<GameServerClustersServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<GameServerClustersServiceAuth>(std::move(auth),
+                                                           std::move(stub));
   }
   stub = std::make_shared<GameServerClustersServiceMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<GameServerClustersServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

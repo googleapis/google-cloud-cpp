@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/game_server_clusters_connection_idempotency_policy.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_retry_traits.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_stub.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,11 +37,13 @@ namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GameServerClustersServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    gameservices_internal::GameServerClustersServiceRetryTraits>;
+using GameServerClustersServiceRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        gameservices_internal::GameServerClustersServiceRetryTraits>;
 
-using GameServerClustersServiceLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    gameservices_internal::GameServerClustersServiceRetryTraits>;
+using GameServerClustersServiceLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        gameservices_internal::GameServerClustersServiceRetryTraits>;
 
 using GameServerClustersServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -52,32 +54,46 @@ class GameServerClustersServiceConnection {
   virtual ~GameServerClustersServiceConnection() = 0;
 
   virtual StreamRange<google::cloud::gaming::v1::GameServerCluster>
-  ListGameServerClusters(google::cloud::gaming::v1::ListGameServerClustersRequest request);
+  ListGameServerClusters(
+      google::cloud::gaming::v1::ListGameServerClustersRequest request);
 
   virtual StatusOr<google::cloud::gaming::v1::GameServerCluster>
-  GetGameServerCluster(google::cloud::gaming::v1::GetGameServerClusterRequest const& request);
+  GetGameServerCluster(
+      google::cloud::gaming::v1::GetGameServerClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  CreateGameServerCluster(google::cloud::gaming::v1::CreateGameServerClusterRequest const& request);
+  CreateGameServerCluster(
+      google::cloud::gaming::v1::CreateGameServerClusterRequest const& request);
 
-  virtual StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
-  PreviewCreateGameServerCluster(google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const& request);
+  virtual StatusOr<
+      google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
+  PreviewCreateGameServerCluster(
+      google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerCluster(google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request);
+  DeleteGameServerCluster(
+      google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request);
 
-  virtual StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
-  PreviewDeleteGameServerCluster(google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const& request);
+  virtual StatusOr<
+      google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
+  PreviewDeleteGameServerCluster(
+      google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  UpdateGameServerCluster(google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request);
+  UpdateGameServerCluster(
+      google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request);
 
-  virtual StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
-  PreviewUpdateGameServerCluster(google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const& request);
+  virtual StatusOr<
+      google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
+  PreviewUpdateGameServerCluster(
+      google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
+          request);
 };
 
-std::shared_ptr<GameServerClustersServiceConnection> MakeGameServerClustersServiceConnection(
-    Options options = {});
+std::shared_ptr<GameServerClustersServiceConnection>
+MakeGameServerClustersServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
@@ -91,8 +107,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<gameservices::GameServerClustersServiceConnection>
 MakeGameServerClustersServiceConnection(
-    std::shared_ptr<GameServerClustersServiceStub> stub,
-    Options options);
+    std::shared_ptr<GameServerClustersServiceStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

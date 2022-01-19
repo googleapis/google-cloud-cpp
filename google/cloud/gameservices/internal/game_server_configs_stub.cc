@@ -32,38 +32,39 @@ GameServerConfigsServiceStub::~GameServerConfigsServiceStub() = default;
 
 StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
 DefaultGameServerConfigsServiceStub::ListGameServerConfigs(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) {
-    google::cloud::gaming::v1::ListGameServerConfigsResponse response;
-    auto status =
-        grpc_stub_->ListGameServerConfigs(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) {
+  google::cloud::gaming::v1::ListGameServerConfigsResponse response;
+  auto status =
+      grpc_stub_->ListGameServerConfigs(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerConfig>
 DefaultGameServerConfigsServiceStub::GetGameServerConfig(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
-    google::cloud::gaming::v1::GameServerConfig response;
-    auto status =
-        grpc_stub_->GetGameServerConfig(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
+  google::cloud::gaming::v1::GameServerConfig response;
+  auto status =
+      grpc_stub_->GetGameServerConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerConfigsServiceStub::AsyncCreateGameServerConfig(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::gaming::v1::CreateGameServerConfigRequest const& request,
+             google::cloud::gaming::v1::CreateGameServerConfigRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateGameServerConfig(context, request, cq);
       },
@@ -72,12 +73,13 @@ DefaultGameServerConfigsServiceStub::AsyncCreateGameServerConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerConfigsServiceStub::AsyncDeleteGameServerConfig(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request,
+             google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteGameServerConfig(context, request, cq);
       },
@@ -102,13 +104,14 @@ future<Status> DefaultGameServerConfigsServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+  return cq
+      .MakeUnaryRpc(
+          [this](grpc::ClientContext* context,
+                 google::longrunning::CancelOperationRequest const& request,
+                 grpc::CompletionQueue* cq) {
+            return operations_->AsyncCancelOperation(context, request, cq);
+          },
+          request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

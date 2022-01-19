@@ -17,10 +17,10 @@
 // source: google/cloud/gaming/v1/game_server_deployments_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_deployments_option_defaults.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/gameservices/game_server_deployments_connection.h"
 #include "google/cloud/gameservices/game_server_deployments_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -38,8 +38,10 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GameServerDeploymentsServiceDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GAME_SERVER_DEPLOYMENTS_SERVICE_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "gameservices.googleapis.com");
+    auto env = internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_GAME_SERVER_DEPLOYMENTS_SERVICE_ENDPOINT");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "gameservices.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -53,28 +55,45 @@ Options GameServerDeploymentsServiceDefaultOptions(Options options) {
   auto& products = options.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 
-  if (!options.has<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()) {
+  if (!options.has<
+          gameservices::GameServerDeploymentsServiceRetryPolicyOption>()) {
     options.set<gameservices::GameServerDeploymentsServiceRetryPolicyOption>(
         gameservices::GameServerDeploymentsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()) {
+  if (!options.has<
+          gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()) {
     options.set<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<gameservices::GameServerDeploymentsServicePollingPolicyOption>()) {
+  if (!options.has<
+          gameservices::GameServerDeploymentsServicePollingPolicyOption>()) {
     options.set<gameservices::GameServerDeploymentsServicePollingPolicyOption>(
         GenericPollingPolicy<
             gameservices::GameServerDeploymentsServiceRetryPolicyOption::Type,
-            gameservices::GameServerDeploymentsServiceBackoffPolicyOption::Type>(
-            options.get<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()->clone(),
-            options.get<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()->clone())
+            gameservices::GameServerDeploymentsServiceBackoffPolicyOption::
+                Type>(
+            options
+                .get<gameservices::
+                         GameServerDeploymentsServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<gameservices::
+                         GameServerDeploymentsServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>(
-        gameservices::MakeDefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          gameservices::
+              GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        gameservices::
+            GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>(
+        gameservices::
+            MakeDefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

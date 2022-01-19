@@ -30,7 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GameServerClustersServiceMetadata::GameServerClustersServiceMetadata(
     std::shared_ptr<GameServerClustersServiceStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::gaming::v1::ListGameServerClustersResponse>
 GameServerClustersServiceMetadata::ListGameServerClusters(
@@ -60,7 +61,8 @@ GameServerClustersServiceMetadata::AsyncCreateGameServerCluster(
 StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
 GameServerClustersServiceMetadata::PreviewCreateGameServerCluster(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const& request) {
+    google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
+        request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->PreviewCreateGameServerCluster(context, request);
 }
@@ -77,7 +79,8 @@ GameServerClustersServiceMetadata::AsyncDeleteGameServerCluster(
 StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
 GameServerClustersServiceMetadata::PreviewDeleteGameServerCluster(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const& request) {
+    google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
+        request) {
   SetMetadata(context, "name=" + request.name());
   return child_->PreviewDeleteGameServerCluster(context, request);
 }
@@ -87,15 +90,18 @@ GameServerClustersServiceMetadata::AsyncUpdateGameServerCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
-  SetMetadata(*context, "game_server_cluster.name=" + request.game_server_cluster().name());
+  SetMetadata(*context, "game_server_cluster.name=" +
+                            request.game_server_cluster().name());
   return child_->AsyncUpdateGameServerCluster(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
 GameServerClustersServiceMetadata::PreviewUpdateGameServerCluster(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const& request) {
-  SetMetadata(context, "game_server_cluster.name=" + request.game_server_cluster().name());
+    google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
+        request) {
+  SetMetadata(context, "game_server_cluster.name=" +
+                           request.game_server_cluster().name());
   return child_->PreviewUpdateGameServerCluster(context, request);
 }
 
@@ -116,8 +122,8 @@ future<Status> GameServerClustersServiceMetadata::AsyncCancelOperation(
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-void GameServerClustersServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+void GameServerClustersServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }

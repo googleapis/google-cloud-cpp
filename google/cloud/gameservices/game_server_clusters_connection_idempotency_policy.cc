@@ -27,63 +27,75 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::Idempotency;
 
-GameServerClustersServiceConnectionIdempotencyPolicy::~GameServerClustersServiceConnectionIdempotencyPolicy() = default;
+GameServerClustersServiceConnectionIdempotencyPolicy::
+    ~GameServerClustersServiceConnectionIdempotencyPolicy() = default;
 
 namespace {
-class DefaultGameServerClustersServiceConnectionIdempotencyPolicy : public GameServerClustersServiceConnectionIdempotencyPolicy {
+class DefaultGameServerClustersServiceConnectionIdempotencyPolicy
+    : public GameServerClustersServiceConnectionIdempotencyPolicy {
  public:
-  ~DefaultGameServerClustersServiceConnectionIdempotencyPolicy() override = default;
+  ~DefaultGameServerClustersServiceConnectionIdempotencyPolicy() override =
+      default;
 
   /// Create a new copy of this object.
-  std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultGameServerClustersServiceConnectionIdempotencyPolicy>(*this);
+  std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy> clone()
+      const override {
+    return absl::make_unique<
+        DefaultGameServerClustersServiceConnectionIdempotencyPolicy>(*this);
   }
 
-  Idempotency
-  ListGameServerClusters(google::cloud::gaming::v1::ListGameServerClustersRequest) override {
+  Idempotency ListGameServerClusters(
+      google::cloud::gaming::v1::ListGameServerClustersRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  GetGameServerCluster(google::cloud::gaming::v1::GetGameServerClusterRequest const&) override {
+  Idempotency GetGameServerCluster(
+      google::cloud::gaming::v1::GetGameServerClusterRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency
-  CreateGameServerCluster(google::cloud::gaming::v1::CreateGameServerClusterRequest const&) override {
+  Idempotency CreateGameServerCluster(
+      google::cloud::gaming::v1::CreateGameServerClusterRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  PreviewCreateGameServerCluster(google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&) override {
+  Idempotency PreviewCreateGameServerCluster(
+      google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  DeleteGameServerCluster(google::cloud::gaming::v1::DeleteGameServerClusterRequest const&) override {
+  Idempotency DeleteGameServerCluster(
+      google::cloud::gaming::v1::DeleteGameServerClusterRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  PreviewDeleteGameServerCluster(google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&) override {
+  Idempotency PreviewDeleteGameServerCluster(
+      google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  UpdateGameServerCluster(google::cloud::gaming::v1::UpdateGameServerClusterRequest const&) override {
+  Idempotency UpdateGameServerCluster(
+      google::cloud::gaming::v1::UpdateGameServerClusterRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency
-  PreviewUpdateGameServerCluster(google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&) override {
+  Idempotency PreviewUpdateGameServerCluster(
+      google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&)
+      override {
     return Idempotency::kNonIdempotent;
   }
 };
 }  // namespace
 
 std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
-    MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultGameServerClustersServiceConnectionIdempotencyPolicy>();
+MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy() {
+  return absl::make_unique<
+      DefaultGameServerClustersServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

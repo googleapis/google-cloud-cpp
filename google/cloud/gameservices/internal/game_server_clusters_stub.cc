@@ -32,38 +32,39 @@ GameServerClustersServiceStub::~GameServerClustersServiceStub() = default;
 
 StatusOr<google::cloud::gaming::v1::ListGameServerClustersResponse>
 DefaultGameServerClustersServiceStub::ListGameServerClusters(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::ListGameServerClustersRequest const& request) {
-    google::cloud::gaming::v1::ListGameServerClustersResponse response;
-    auto status =
-        grpc_stub_->ListGameServerClusters(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::ListGameServerClustersRequest const& request) {
+  google::cloud::gaming::v1::ListGameServerClustersResponse response;
+  auto status =
+      grpc_stub_->ListGameServerClusters(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerCluster>
 DefaultGameServerClustersServiceStub::GetGameServerCluster(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::GetGameServerClusterRequest const& request) {
-    google::cloud::gaming::v1::GameServerCluster response;
-    auto status =
-        grpc_stub_->GetGameServerCluster(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::GetGameServerClusterRequest const& request) {
+  google::cloud::gaming::v1::GameServerCluster response;
+  auto status =
+      grpc_stub_->GetGameServerCluster(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerClustersServiceStub::AsyncCreateGameServerCluster(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::gaming::v1::CreateGameServerClusterRequest const& request,
+             google::cloud::gaming::v1::CreateGameServerClusterRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateGameServerCluster(context, request, cq);
       },
@@ -72,25 +73,27 @@ DefaultGameServerClustersServiceStub::AsyncCreateGameServerCluster(
 
 StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
 DefaultGameServerClustersServiceStub::PreviewCreateGameServerCluster(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const& request) {
-    google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse response;
-    auto status =
-        grpc_stub_->PreviewCreateGameServerCluster(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
+        request) {
+  google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse response;
+  auto status = grpc_stub_->PreviewCreateGameServerCluster(&client_context,
+                                                           request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerClustersServiceStub::AsyncDeleteGameServerCluster(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request,
+             google::cloud::gaming::v1::DeleteGameServerClusterRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteGameServerCluster(context, request, cq);
       },
@@ -99,25 +102,27 @@ DefaultGameServerClustersServiceStub::AsyncDeleteGameServerCluster(
 
 StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
 DefaultGameServerClustersServiceStub::PreviewDeleteGameServerCluster(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const& request) {
-    google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse response;
-    auto status =
-        grpc_stub_->PreviewDeleteGameServerCluster(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
+        request) {
+  google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse response;
+  auto status = grpc_stub_->PreviewDeleteGameServerCluster(&client_context,
+                                                           request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerClustersServiceStub::AsyncUpdateGameServerCluster(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request,
+             google::cloud::gaming::v1::UpdateGameServerClusterRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateGameServerCluster(context, request, cq);
       },
@@ -126,15 +131,16 @@ DefaultGameServerClustersServiceStub::AsyncUpdateGameServerCluster(
 
 StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
 DefaultGameServerClustersServiceStub::PreviewUpdateGameServerCluster(
-  grpc::ClientContext& client_context,
-  google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const& request) {
-    google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse response;
-    auto status =
-        grpc_stub_->PreviewUpdateGameServerCluster(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
+        request) {
+  google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse response;
+  auto status = grpc_stub_->PreviewUpdateGameServerCluster(&client_context,
+                                                           request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -155,13 +161,14 @@ future<Status> DefaultGameServerClustersServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+  return cq
+      .MakeUnaryRpc(
+          [this](grpc::ClientContext* context,
+                 google::longrunning::CancelOperationRequest const& request,
+                 grpc::CompletionQueue* cq) {
+            return operations_->AsyncCancelOperation(context, request, cq);
+          },
+          request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

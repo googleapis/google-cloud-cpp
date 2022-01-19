@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/realms_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RealmsServiceClient {
  public:
-  explicit RealmsServiceClient(std::shared_ptr<RealmsServiceConnection> connection, Options options = {});
+  explicit RealmsServiceClient(
+      std::shared_ptr<RealmsServiceConnection> connection,
+      Options options = {});
   ~RealmsServiceClient();
 
   //@{
@@ -76,10 +78,12 @@ class RealmsServiceClient {
 
   //@{
   // @name Equality
-  friend bool operator==(RealmsServiceClient const& a, RealmsServiceClient const& b) {
+  friend bool operator==(RealmsServiceClient const& a,
+                         RealmsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RealmsServiceClient const& a, RealmsServiceClient const& b) {
+  friend bool operator!=(RealmsServiceClient const& a,
+                         RealmsServiceClient const& b) {
     return !(a == b);
   }
   //@}
@@ -90,53 +94,70 @@ class RealmsServiceClient {
   /// @param parent  Required. The parent resource name, in the following form:
   ///  `projects/{project}/locations/{location}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.ListRealmsRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L31}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.ListRealmsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L31}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  StreamRange<google::cloud::gaming::v1::Realm>
-  ListRealms(std::string const& parent, Options options = {});
+  StreamRange<google::cloud::gaming::v1::Realm> ListRealms(
+      std::string const& parent, Options options = {});
 
   ///
   /// Lists realms in a given project and location.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::ListRealmsRequest,google/cloud/gaming/v1/realms.proto#L31}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::ListRealmsRequest,google/cloud/gaming/v1/realms.proto#L31}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.ListRealmsRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L31}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.ListRealmsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L31}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  StreamRange<google::cloud::gaming::v1::Realm>
-  ListRealms(google::cloud::gaming::v1::ListRealmsRequest request, Options options = {});
+  StreamRange<google::cloud::gaming::v1::Realm> ListRealms(
+      google::cloud::gaming::v1::ListRealmsRequest request,
+      Options options = {});
 
   ///
   /// Gets details of a single realm.
   ///
-  /// @param name  Required. The name of the realm to retrieve, in the following form:
+  /// @param name  Required. The name of the realm to retrieve, in the following
+  /// form:
   ///  `projects/{project}/locations/{location}/realms/{realm}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.GetRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L74}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.GetRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L74}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  StatusOr<google::cloud::gaming::v1::Realm>
-  GetRealm(std::string const& name, Options options = {});
+  StatusOr<google::cloud::gaming::v1::Realm> GetRealm(std::string const& name,
+                                                      Options options = {});
 
   ///
   /// Gets details of a single realm.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::GetRealmRequest,google/cloud/gaming/v1/realms.proto#L74}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::GetRealmRequest,google/cloud/gaming/v1/realms.proto#L74}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.GetRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L74}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.GetRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L74}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  StatusOr<google::cloud::gaming::v1::Realm>
-  GetRealm(google::cloud::gaming::v1::GetRealmRequest const& request, Options options = {});
+  StatusOr<google::cloud::gaming::v1::Realm> GetRealm(
+      google::cloud::gaming::v1::GetRealmRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a new realm in a given project and location.
@@ -146,96 +167,130 @@ class RealmsServiceClient {
   /// @param realm  Required. The realm resource to be created.
   /// @param realm_id  Required. The ID of the realm resource to be created.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.CreateRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L86}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.CreateRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L86}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  CreateRealm(std::string const& parent, google::cloud::gaming::v1::Realm const& realm, std::string const& realm_id, Options options = {});
+  future<StatusOr<google::cloud::gaming::v1::Realm>> CreateRealm(
+      std::string const& parent, google::cloud::gaming::v1::Realm const& realm,
+      std::string const& realm_id, Options options = {});
 
   ///
   /// Creates a new realm in a given project and location.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::CreateRealmRequest,google/cloud/gaming/v1/realms.proto#L86}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::CreateRealmRequest,google/cloud/gaming/v1/realms.proto#L86}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.CreateRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L86}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.CreateRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L86}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  CreateRealm(google::cloud::gaming::v1::CreateRealmRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gaming::v1::Realm>> CreateRealm(
+      google::cloud::gaming::v1::CreateRealmRequest const& request,
+      Options options = {});
 
   ///
   /// Deletes a single realm.
   ///
-  /// @param name  Required. The name of the realm to delete, in the following form:
+  /// @param name  Required. The name of the realm to delete, in the following
+  /// form:
   ///  `projects/{project}/locations/{location}/realms/{realm}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
-  /// [google.cloud.gaming.v1.DeleteRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L104}
-  /// [google.cloud.gaming.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// [google.cloud.gaming.v1.DeleteRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L104}
+  /// [google.cloud.gaming.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
-  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteRealm(std::string const& name, Options options = {});
+  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>> DeleteRealm(
+      std::string const& name, Options options = {});
 
   ///
   /// Deletes a single realm.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::DeleteRealmRequest,google/cloud/gaming/v1/realms.proto#L104}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::DeleteRealmRequest,google/cloud/gaming/v1/realms.proto#L104}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
-  /// [google.cloud.gaming.v1.DeleteRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L104}
-  /// [google.cloud.gaming.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// [google.cloud.gaming.v1.DeleteRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L104}
+  /// [google.cloud.gaming.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
-  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteRealm(google::cloud::gaming::v1::DeleteRealmRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>> DeleteRealm(
+      google::cloud::gaming::v1::DeleteRealmRequest const& request,
+      Options options = {});
 
   ///
   /// Patches a single realm.
   ///
   /// @param realm  Required. The realm to be updated.
   ///  Only fields specified in update_mask are updated.
-  /// @param update_mask  Required. The update mask applies to the resource. For the `FieldMask`
+  /// @param update_mask  Required. The update mask applies to the resource. For
+  /// the `FieldMask`
   ///  definition, see
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.UpdateRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L116}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.UpdateRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L116}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  UpdateRealm(google::cloud::gaming::v1::Realm const& realm, google::protobuf::FieldMask const& update_mask, Options options = {});
+  future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
+      google::cloud::gaming::v1::Realm const& realm,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Patches a single realm.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::UpdateRealmRequest,google/cloud/gaming/v1/realms.proto#L116}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::UpdateRealmRequest,google/cloud/gaming/v1/realms.proto#L116}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
   ///
-  /// [google.cloud.gaming.v1.UpdateRealmRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L116}
-  /// [google.cloud.gaming.v1.Realm]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// [google.cloud.gaming.v1.UpdateRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L116}
+  /// [google.cloud.gaming.v1.Realm]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
   ///
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  UpdateRealm(google::cloud::gaming::v1::UpdateRealmRequest const& request, Options options = {});
+  future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
+      google::cloud::gaming::v1::UpdateRealmRequest const& request,
+      Options options = {});
 
   ///
   /// Previews patches to a single realm.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateRequest,google/cloud/gaming/v1/realms.proto#L128}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateRequest,google/cloud/gaming/v1/realms.proto#L128}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateResponse,google/cloud/gaming/v1/realms.proto#L143}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateResponse,google/cloud/gaming/v1/realms.proto#L143}
   ///
-  /// [google.cloud.gaming.v1.PreviewRealmUpdateRequest]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L128}
-  /// [google.cloud.gaming.v1.PreviewRealmUpdateResponse]: @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L143}
+  /// [google.cloud.gaming.v1.PreviewRealmUpdateRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L128}
+  /// [google.cloud.gaming.v1.PreviewRealmUpdateResponse]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L143}
   ///
   StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
-  PreviewRealmUpdate(google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request, Options options = {});
+  PreviewRealmUpdate(
+      google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request,
+      Options options = {});
 
  private:
   std::shared_ptr<RealmsServiceConnection> connection_;

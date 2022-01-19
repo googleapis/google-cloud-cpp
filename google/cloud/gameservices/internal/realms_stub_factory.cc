@@ -17,11 +17,11 @@
 // source: google/cloud/gaming/v1/realms_service.proto
 
 #include "google/cloud/gameservices/internal/realms_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/gameservices/internal/realms_auth_decorator.h"
 #include "google/cloud/gameservices/internal/realms_logging_decorator.h"
 #include "google/cloud/gameservices/internal/realms_metadata_decorator.h"
 #include "google/cloud/gameservices/internal/realms_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
@@ -34,30 +34,28 @@ namespace cloud {
 namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RealmsServiceStub>
-CreateDefaultRealmsServiceStub(
+std::shared_ptr<RealmsServiceStub> CreateDefaultRealmsServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::gaming::v1::RealmsService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::gaming::v1::RealmsService::NewStub(channel);
   std::shared_ptr<RealmsServiceStub> stub =
-    std::make_shared<DefaultRealmsServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultRealmsServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<RealmsServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub =
+        std::make_shared<RealmsServiceAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<RealmsServiceMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<RealmsServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

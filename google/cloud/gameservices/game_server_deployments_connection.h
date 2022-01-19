@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_DEPLOYMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_DEPLOYMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/game_server_deployments_connection_idempotency_policy.h"
 #include "google/cloud/gameservices/internal/game_server_deployments_retry_traits.h"
 #include "google/cloud/gameservices/internal/game_server_deployments_stub.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,11 +37,13 @@ namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GameServerDeploymentsServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
+using GameServerDeploymentsServiceRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
 
-using GameServerDeploymentsServiceLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
+using GameServerDeploymentsServiceLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
 
 using GameServerDeploymentsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -52,35 +54,51 @@ class GameServerDeploymentsServiceConnection {
   virtual ~GameServerDeploymentsServiceConnection() = 0;
 
   virtual StreamRange<google::cloud::gaming::v1::GameServerDeployment>
-  ListGameServerDeployments(google::cloud::gaming::v1::ListGameServerDeploymentsRequest request);
+  ListGameServerDeployments(
+      google::cloud::gaming::v1::ListGameServerDeploymentsRequest request);
 
   virtual StatusOr<google::cloud::gaming::v1::GameServerDeployment>
-  GetGameServerDeployment(google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request);
+  GetGameServerDeployment(
+      google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  CreateGameServerDeployment(google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request);
+  CreateGameServerDeployment(
+      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerDeployment(google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request);
+  DeleteGameServerDeployment(
+      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  UpdateGameServerDeployment(google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request);
+  UpdateGameServerDeployment(
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
-  GetGameServerDeploymentRollout(google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request);
+  GetGameServerDeploymentRollout(
+      google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  UpdateGameServerDeploymentRollout(google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request);
+  UpdateGameServerDeploymentRollout(
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
-  PreviewGameServerDeploymentRollout(google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request);
+  virtual StatusOr<
+      google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
+  PreviewGameServerDeploymentRollout(
+      google::cloud::gaming::v1::
+          PreviewGameServerDeploymentRolloutRequest const& request);
 
   virtual StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
-  FetchDeploymentState(google::cloud::gaming::v1::FetchDeploymentStateRequest const& request);
+  FetchDeploymentState(
+      google::cloud::gaming::v1::FetchDeploymentStateRequest const& request);
 };
 
-std::shared_ptr<GameServerDeploymentsServiceConnection> MakeGameServerDeploymentsServiceConnection(
-    Options options = {});
+std::shared_ptr<GameServerDeploymentsServiceConnection>
+MakeGameServerDeploymentsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
@@ -94,8 +112,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<gameservices::GameServerDeploymentsServiceConnection>
 MakeGameServerDeploymentsServiceConnection(
-    std::shared_ptr<GameServerDeploymentsServiceStub> stub,
-    Options options);
+    std::shared_ptr<GameServerDeploymentsServiceStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

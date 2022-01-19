@@ -30,12 +30,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GameServerDeploymentsServiceMetadata::GameServerDeploymentsServiceMetadata(
     std::shared_ptr<GameServerDeploymentsServiceStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::gaming::v1::ListGameServerDeploymentsResponse>
 GameServerDeploymentsServiceMetadata::ListGameServerDeployments(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::ListGameServerDeploymentsRequest const& request) {
+    google::cloud::gaming::v1::ListGameServerDeploymentsRequest const&
+        request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListGameServerDeployments(context, request);
 }
@@ -52,33 +54,41 @@ future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceMetadata::AsyncCreateGameServerDeployment(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request) {
+    google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+        request) {
   SetMetadata(*context, "parent=" + request.parent());
-  return child_->AsyncCreateGameServerDeployment(cq, std::move(context), request);
+  return child_->AsyncCreateGameServerDeployment(cq, std::move(context),
+                                                 request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceMetadata::AsyncDeleteGameServerDeployment(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request) {
+    google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+        request) {
   SetMetadata(*context, "name=" + request.name());
-  return child_->AsyncDeleteGameServerDeployment(cq, std::move(context), request);
+  return child_->AsyncDeleteGameServerDeployment(cq, std::move(context),
+                                                 request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceMetadata::AsyncUpdateGameServerDeployment(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request) {
-  SetMetadata(*context, "game_server_deployment.name=" + request.game_server_deployment().name());
-  return child_->AsyncUpdateGameServerDeployment(cq, std::move(context), request);
+    google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+        request) {
+  SetMetadata(*context, "game_server_deployment.name=" +
+                            request.game_server_deployment().name());
+  return child_->AsyncUpdateGameServerDeployment(cq, std::move(context),
+                                                 request);
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
 GameServerDeploymentsServiceMetadata::GetGameServerDeploymentRollout(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request) {
+    google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
+        request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetGameServerDeploymentRollout(context, request);
 }
@@ -87,15 +97,18 @@ future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceMetadata::AsyncUpdateGameServerDeploymentRollout(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request) {
+    google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
+        request) {
   SetMetadata(*context, "rollout.name=" + request.rollout().name());
-  return child_->AsyncUpdateGameServerDeploymentRollout(cq, std::move(context), request);
+  return child_->AsyncUpdateGameServerDeploymentRollout(cq, std::move(context),
+                                                        request);
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
 GameServerDeploymentsServiceMetadata::PreviewGameServerDeploymentRollout(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request) {
+    google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const&
+        request) {
   SetMetadata(context, "rollout.name=" + request.rollout().name());
   return child_->PreviewGameServerDeploymentRollout(context, request);
 }
@@ -125,8 +138,8 @@ future<Status> GameServerDeploymentsServiceMetadata::AsyncCancelOperation(
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-void GameServerDeploymentsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+void GameServerDeploymentsServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }

@@ -39,23 +39,28 @@ class GameServerConfigsServiceAuth : public GameServerConfigsServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<GameServerConfigsServiceStub> child);
 
-  StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse> ListGameServerConfigs(
+  StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
+  ListGameServerConfigs(
       grpc::ClientContext& context,
-      google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) override;
+      google::cloud::gaming::v1::ListGameServerConfigsRequest const& request)
+      override;
 
   StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
       grpc::ClientContext& context,
-      google::cloud::gaming::v1::GetGameServerConfigRequest const& request) override;
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) override;
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGameServerConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) override;
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -66,6 +71,7 @@ class GameServerConfigsServiceAuth : public GameServerConfigsServiceStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<GameServerConfigsServiceStub> child_;

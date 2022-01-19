@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/game_server_clusters_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -63,23 +63,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GameServerClustersServiceClient {
  public:
-  explicit GameServerClustersServiceClient(std::shared_ptr<GameServerClustersServiceConnection> connection, Options options = {});
+  explicit GameServerClustersServiceClient(
+      std::shared_ptr<GameServerClustersServiceConnection> connection,
+      Options options = {});
   ~GameServerClustersServiceClient();
 
   //@{
   // @name Copy and move support
-  GameServerClustersServiceClient(GameServerClustersServiceClient const&) = default;
-  GameServerClustersServiceClient& operator=(GameServerClustersServiceClient const&) = default;
+  GameServerClustersServiceClient(GameServerClustersServiceClient const&) =
+      default;
+  GameServerClustersServiceClient& operator=(
+      GameServerClustersServiceClient const&) = default;
   GameServerClustersServiceClient(GameServerClustersServiceClient&&) = default;
-  GameServerClustersServiceClient& operator=(GameServerClustersServiceClient&&) = default;
+  GameServerClustersServiceClient& operator=(
+      GameServerClustersServiceClient&&) = default;
   //@}
 
   //@{
   // @name Equality
-  friend bool operator==(GameServerClustersServiceClient const& a, GameServerClustersServiceClient const& b) {
+  friend bool operator==(GameServerClustersServiceClient const& a,
+                         GameServerClustersServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GameServerClustersServiceClient const& a, GameServerClustersServiceClient const& b) {
+  friend bool operator!=(GameServerClustersServiceClient const& a,
+                         GameServerClustersServiceClient const& b) {
     return !(a == b);
   }
   //@}
@@ -90,10 +97,13 @@ class GameServerClustersServiceClient {
   /// @param parent  Required. The parent resource name, in the following form:
   ///  "projects/{project}/locations/{location}/realms/{realm}".
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerClustersRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L46}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.ListGameServerClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L46}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerCluster>
   ListGameServerClusters(std::string const& parent, Options options = {});
@@ -101,96 +111,136 @@ class GameServerClustersServiceClient {
   ///
   /// Lists game server clusters in a given project and location.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::ListGameServerClustersRequest,google/cloud/gaming/v1/game_server_clusters.proto#L46}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::ListGameServerClustersRequest,google/cloud/gaming/v1/game_server_clusters.proto#L46}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerClustersRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L46}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.ListGameServerClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L46}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerCluster>
-  ListGameServerClusters(google::cloud::gaming::v1::ListGameServerClustersRequest request, Options options = {});
+  ListGameServerClusters(
+      google::cloud::gaming::v1::ListGameServerClustersRequest request,
+      Options options = {});
 
   ///
   /// Gets details of a single game server cluster.
   ///
-  /// @param name  Required. The name of the game server cluster to retrieve, in the following form:
+  /// @param name  Required. The name of the game server cluster to retrieve, in
+  /// the following form:
   ///  `projects/{project}/locations/{location}/realms/{realm-id}/gameServerClusters/{cluster}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L96}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.GetGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L96}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  StatusOr<google::cloud::gaming::v1::GameServerCluster>
-  GetGameServerCluster(std::string const& name, Options options = {});
+  StatusOr<google::cloud::gaming::v1::GameServerCluster> GetGameServerCluster(
+      std::string const& name, Options options = {});
 
   ///
   /// Gets details of a single game server cluster.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::GetGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L96}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::GetGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L96}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L96}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.GetGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L96}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  StatusOr<google::cloud::gaming::v1::GameServerCluster>
-  GetGameServerCluster(google::cloud::gaming::v1::GetGameServerClusterRequest const& request, Options options = {});
+  StatusOr<google::cloud::gaming::v1::GameServerCluster> GetGameServerCluster(
+      google::cloud::gaming::v1::GetGameServerClusterRequest const& request,
+      Options options = {});
 
   ///
   /// Creates a new game server cluster in a given project and location.
   ///
   /// @param parent  Required. The parent resource name, in the following form:
   ///  `projects/{project}/locations/{location}/realms/{realm-id}`.
-  /// @param game_server_cluster  Required. The game server cluster resource to be created.
-  /// @param game_server_cluster_id  Required. The ID of the game server cluster resource to be created.
+  /// @param game_server_cluster  Required. The game server cluster resource to
+  /// be created.
+  /// @param game_server_cluster_id  Required. The ID of the game server cluster
+  /// resource to be created.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.CreateGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L116}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.CreateGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L116}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  CreateGameServerCluster(std::string const& parent, google::cloud::gaming::v1::GameServerCluster const& game_server_cluster, std::string const& game_server_cluster_id, Options options = {});
+  CreateGameServerCluster(
+      std::string const& parent,
+      google::cloud::gaming::v1::GameServerCluster const& game_server_cluster,
+      std::string const& game_server_cluster_id, Options options = {});
 
   ///
   /// Creates a new game server cluster in a given project and location.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::CreateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L116}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::CreateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L116}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.CreateGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L116}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.CreateGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L116}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  CreateGameServerCluster(google::cloud::gaming::v1::CreateGameServerClusterRequest const& request, Options options = {});
+  CreateGameServerCluster(
+      google::cloud::gaming::v1::CreateGameServerClusterRequest const& request,
+      Options options = {});
 
   ///
   /// Previews creation of a new game server cluster in a given project and
   /// location.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L134}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L134}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L163}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L163}
   ///
-  /// [google.cloud.gaming.v1.PreviewCreateGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L134}
-  /// [google.cloud.gaming.v1.PreviewCreateGameServerClusterResponse]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L163}
+  /// [google.cloud.gaming.v1.PreviewCreateGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L134}
+  /// [google.cloud.gaming.v1.PreviewCreateGameServerClusterResponse]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L163}
   ///
   StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
-  PreviewCreateGameServerCluster(google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const& request, Options options = {});
+  PreviewCreateGameServerCluster(
+      google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
+          request,
+      Options options = {});
 
   ///
   /// Deletes a single game server cluster.
   ///
-  /// @param name  Required. The name of the game server cluster to delete, in the following form:
+  /// @param name  Required. The name of the game server cluster to delete, in
+  /// the following form:
   ///  `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
-  /// [google.cloud.gaming.v1.DeleteGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L176}
-  /// [google.cloud.gaming.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// [google.cloud.gaming.v1.DeleteGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L176}
+  /// [google.cloud.gaming.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
   DeleteGameServerCluster(std::string const& name, Options options = {});
@@ -198,71 +248,104 @@ class GameServerClustersServiceClient {
   ///
   /// Deletes a single game server cluster.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::DeleteGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L176}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::DeleteGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L176}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
-  /// [google.cloud.gaming.v1.DeleteGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L176}
-  /// [google.cloud.gaming.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// [google.cloud.gaming.v1.DeleteGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L176}
+  /// [google.cloud.gaming.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerCluster(google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request, Options options = {});
+  DeleteGameServerCluster(
+      google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request,
+      Options options = {});
 
   ///
   /// Previews deletion of a single game server cluster.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L188}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L188}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L204}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L204}
   ///
-  /// [google.cloud.gaming.v1.PreviewDeleteGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L188}
-  /// [google.cloud.gaming.v1.PreviewDeleteGameServerClusterResponse]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L204}
+  /// [google.cloud.gaming.v1.PreviewDeleteGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L188}
+  /// [google.cloud.gaming.v1.PreviewDeleteGameServerClusterResponse]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L204}
   ///
   StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
-  PreviewDeleteGameServerCluster(google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const& request, Options options = {});
+  PreviewDeleteGameServerCluster(
+      google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
+          request,
+      Options options = {});
 
   ///
   /// Patches a single game server cluster.
   ///
-  /// @param game_server_cluster  Required. The game server cluster to be updated.
+  /// @param game_server_cluster  Required. The game server cluster to be
+  /// updated.
   ///  Only fields specified in update_mask are updated.
-  /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
+  /// @param update_mask  Required. Mask of fields to update. At least one path
+  /// must be supplied in
   ///  this field. For the `FieldMask` definition, see
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.UpdateGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L213}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.UpdateGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L213}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  UpdateGameServerCluster(google::cloud::gaming::v1::GameServerCluster const& game_server_cluster, google::protobuf::FieldMask const& update_mask, Options options = {});
+  UpdateGameServerCluster(
+      google::cloud::gaming::v1::GameServerCluster const& game_server_cluster,
+      google::protobuf::FieldMask const& update_mask, Options options = {});
 
   ///
   /// Patches a single game server cluster.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::UpdateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L213}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::UpdateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L213}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
-  /// [google.cloud.gaming.v1.UpdateGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L213}
-  /// [google.cloud.gaming.v1.GameServerCluster]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
+  /// [google.cloud.gaming.v1.UpdateGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L213}
+  /// [google.cloud.gaming.v1.GameServerCluster]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  UpdateGameServerCluster(google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request, Options options = {});
+  UpdateGameServerCluster(
+      google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request,
+      Options options = {});
 
   ///
   /// Previews updating a GameServerCluster.
   ///
-  /// @param request @googleapis_link{google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L225}
+  /// @param request
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L225}
   /// @param options  Optional. Operation options.
-  /// @return @googleapis_link{google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L240}
+  /// @return
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L240}
   ///
-  /// [google.cloud.gaming.v1.PreviewUpdateGameServerClusterRequest]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L225}
-  /// [google.cloud.gaming.v1.PreviewUpdateGameServerClusterResponse]: @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L240}
+  /// [google.cloud.gaming.v1.PreviewUpdateGameServerClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L225}
+  /// [google.cloud.gaming.v1.PreviewUpdateGameServerClusterResponse]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L240}
   ///
   StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
-  PreviewUpdateGameServerCluster(google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const& request, Options options = {});
+  PreviewUpdateGameServerCluster(
+      google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
+          request,
+      Options options = {});
 
  private:
   std::shared_ptr<GameServerClustersServiceConnection> connection_;

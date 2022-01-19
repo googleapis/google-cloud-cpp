@@ -17,10 +17,10 @@
 // source: google/cloud/gaming/v1/game_server_clusters_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_clusters_option_defaults.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/gameservices/game_server_clusters_connection.h"
 #include "google/cloud/gameservices/game_server_clusters_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -38,8 +38,10 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GameServerClustersServiceDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GAME_SERVER_CLUSTERS_SERVICE_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "gameservices.googleapis.com");
+    auto env = internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_GAME_SERVER_CLUSTERS_SERVICE_ENDPOINT");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "gameservices.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -53,28 +55,42 @@ Options GameServerClustersServiceDefaultOptions(Options options) {
   auto& products = options.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 
-  if (!options.has<gameservices::GameServerClustersServiceRetryPolicyOption>()) {
+  if (!options
+           .has<gameservices::GameServerClustersServiceRetryPolicyOption>()) {
     options.set<gameservices::GameServerClustersServiceRetryPolicyOption>(
         gameservices::GameServerClustersServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<gameservices::GameServerClustersServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<gameservices::GameServerClustersServiceBackoffPolicyOption>()) {
     options.set<gameservices::GameServerClustersServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<gameservices::GameServerClustersServicePollingPolicyOption>()) {
+  if (!options
+           .has<gameservices::GameServerClustersServicePollingPolicyOption>()) {
     options.set<gameservices::GameServerClustersServicePollingPolicyOption>(
         GenericPollingPolicy<
             gameservices::GameServerClustersServiceRetryPolicyOption::Type,
             gameservices::GameServerClustersServiceBackoffPolicyOption::Type>(
-            options.get<gameservices::GameServerClustersServiceRetryPolicyOption>()->clone(),
-            options.get<gameservices::GameServerClustersServiceBackoffPolicyOption>()->clone())
+            options
+                .get<gameservices::GameServerClustersServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<gameservices::
+                         GameServerClustersServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<gameservices::GameServerClustersServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<gameservices::GameServerClustersServiceConnectionIdempotencyPolicyOption>(
-        gameservices::MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          gameservices::
+              GameServerClustersServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<gameservices::
+                    GameServerClustersServiceConnectionIdempotencyPolicyOption>(
+        gameservices::
+            MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy());
   }
 
   return options;

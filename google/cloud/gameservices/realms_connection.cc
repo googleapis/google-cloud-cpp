@@ -17,11 +17,11 @@
 // source: google/cloud/gaming/v1/realms_service.proto
 
 #include "google/cloud/gameservices/realms_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/gameservices/internal/realms_option_defaults.h"
 #include "google/cloud/gameservices/internal/realms_stub_factory.h"
 #include "google/cloud/gameservices/realms_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -35,21 +35,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RealmsServiceConnection::~RealmsServiceConnection() = default;
 
-StreamRange<google::cloud::gaming::v1::Realm> RealmsServiceConnection::ListRealms(
+StreamRange<google::cloud::gaming::v1::Realm>
+RealmsServiceConnection::ListRealms(
     google::cloud::gaming::v1::ListRealmsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::cloud::gaming::v1::Realm>>(
-    std::move(request),
-    [](google::cloud::gaming::v1::ListRealmsRequest const&) {
-      return StatusOr<google::cloud::gaming::v1::ListRealmsResponse>{};
-    },
-    [](google::cloud::gaming::v1::ListRealmsResponse const&) {
-      return std::vector<google::cloud::gaming::v1::Realm>();
-    });
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gaming::v1::Realm>>(
+      std::move(request),
+      [](google::cloud::gaming::v1::ListRealmsRequest const&) {
+        return StatusOr<google::cloud::gaming::v1::ListRealmsResponse>{};
+      },
+      [](google::cloud::gaming::v1::ListRealmsResponse const&) {
+        return std::vector<google::cloud::gaming::v1::Realm>();
+      });
 }
 
-StatusOr<google::cloud::gaming::v1::Realm>
-RealmsServiceConnection::GetRealm(
+StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceConnection::GetRealm(
     google::cloud::gaming::v1::GetRealmRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -58,24 +58,24 @@ future<StatusOr<google::cloud::gaming::v1::Realm>>
 RealmsServiceConnection::CreateRealm(
     google::cloud::gaming::v1::CreateRealmRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::gaming::v1::Realm>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::gaming::v1::Realm>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 RealmsServiceConnection::DeleteRealm(
     google::cloud::gaming::v1::DeleteRealmRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::gaming::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::gaming::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gaming::v1::Realm>>
 RealmsServiceConnection::UpdateRealm(
     google::cloud::gaming::v1::UpdateRealmRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::gaming::v1::Realm>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::gaming::v1::Realm>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
@@ -91,11 +91,17 @@ class RealmsServiceConnectionImpl : public RealmsServiceConnection {
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<gameservices_internal::RealmsServiceStub> stub,
       Options const& options)
-      : background_(std::move(background)), stub_(std::move(stub)),
-        retry_policy_prototype_(options.get<RealmsServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(options.get<RealmsServiceBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(options.get<RealmsServicePollingPolicyOption>()->clone()),
-        idempotency_policy_(options.get<RealmsServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+      : background_(std::move(background)),
+        stub_(std::move(stub)),
+        retry_policy_prototype_(
+            options.get<RealmsServiceRetryPolicyOption>()->clone()),
+        backoff_policy_prototype_(
+            options.get<RealmsServiceBackoffPolicyOption>()->clone()),
+        polling_policy_prototype_(
+            options.get<RealmsServicePollingPolicyOption>()->clone()),
+        idempotency_policy_(
+            options.get<RealmsServiceConnectionIdempotencyPolicyOption>()
+                ->clone()) {}
 
   ~RealmsServiceConnectionImpl() override = default;
 
@@ -105,130 +111,134 @@ class RealmsServiceConnectionImpl : public RealmsServiceConnection {
     auto stub = stub_;
     auto retry =
         std::shared_ptr<RealmsServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
     auto idempotency = idempotency_policy()->ListRealms(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<StreamRange<
-        google::cloud::gaming::v1::Realm>>(
+    return google::cloud::internal::MakePaginationRange<
+        StreamRange<google::cloud::gaming::v1::Realm>>(
         std::move(request),
-        [stub, retry, backoff, idempotency, function_name]
-          (google::cloud::gaming::v1::ListRealmsRequest const& r) {
+        [stub, retry, backoff, idempotency,
+         function_name](google::cloud::gaming::v1::ListRealmsRequest const& r) {
           return google::cloud::internal::RetryLoop(
               retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::gaming::v1::ListRealmsRequest const& request) {
+              [stub](
+                  grpc::ClientContext& context,
+                  google::cloud::gaming::v1::ListRealmsRequest const& request) {
                 return stub->ListRealms(context, request);
               },
               r, function_name);
         },
         [](google::cloud::gaming::v1::ListRealmsResponse r) {
-          std::vector<google::cloud::gaming::v1::Realm> result(r.realms().size());
+          std::vector<google::cloud::gaming::v1::Realm> result(
+              r.realms().size());
           auto& messages = *r.mutable_realms();
           std::move(messages.begin(), messages.end(), result.begin());
           return result;
         });
   }
 
-  StatusOr<google::cloud::gaming::v1::Realm>
-  GetRealm(
+  StatusOr<google::cloud::gaming::v1::Realm> GetRealm(
       google::cloud::gaming::v1::GetRealmRequest const& request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy(), backoff_policy(),
         idempotency_policy()->GetRealm(request),
         [this](grpc::ClientContext& context,
-            google::cloud::gaming::v1::GetRealmRequest const& request) {
+               google::cloud::gaming::v1::GetRealmRequest const& request) {
           return stub_->GetRealm(context, request);
         },
         request, __func__);
   }
 
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  CreateRealm(google::cloud::gaming::v1::CreateRealmRequest const& request) override {
+  future<StatusOr<google::cloud::gaming::v1::Realm>> CreateRealm(
+      google::cloud::gaming::v1::CreateRealmRequest const& request) override {
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gaming::v1::Realm>(
-          background_->cq(), request,
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::cloud::gaming::v1::CreateRealmRequest const& request) {
-            return stub->AsyncCreateRealm(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::GetOperationRequest const& request) {
-            return stub->AsyncGetOperation(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::CancelOperationRequest const& request) {
-            return stub->AsyncCancelOperation(cq, std::move(context), request);
-          },
-          &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gaming::v1::Realm>,
-          retry_policy(), backoff_policy(),
-          idempotency_policy()->CreateRealm(request),
-          polling_policy(), __func__);
+    return google::cloud::internal::AsyncLongRunningOperation<
+        google::cloud::gaming::v1::Realm>(
+        background_->cq(), request,
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::cloud::gaming::v1::CreateRealmRequest const& request) {
+          return stub->AsyncCreateRealm(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            google::cloud::gaming::v1::Realm>,
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateRealm(request), polling_policy(), __func__);
   }
 
-  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteRealm(google::cloud::gaming::v1::DeleteRealmRequest const& request) override {
+  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>> DeleteRealm(
+      google::cloud::gaming::v1::DeleteRealmRequest const& request) override {
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gaming::v1::OperationMetadata>(
-          background_->cq(), request,
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::cloud::gaming::v1::DeleteRealmRequest const& request) {
-            return stub->AsyncDeleteRealm(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::GetOperationRequest const& request) {
-            return stub->AsyncGetOperation(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::CancelOperationRequest const& request) {
-            return stub->AsyncCancelOperation(cq, std::move(context), request);
-          },
-          &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::gaming::v1::OperationMetadata>,
-          retry_policy(), backoff_policy(),
-          idempotency_policy()->DeleteRealm(request),
-          polling_policy(), __func__);
+    return google::cloud::internal::AsyncLongRunningOperation<
+        google::cloud::gaming::v1::OperationMetadata>(
+        background_->cq(), request,
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::cloud::gaming::v1::DeleteRealmRequest const& request) {
+          return stub->AsyncDeleteRealm(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultMetadata<
+            google::cloud::gaming::v1::OperationMetadata>,
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteRealm(request), polling_policy(), __func__);
   }
 
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  UpdateRealm(google::cloud::gaming::v1::UpdateRealmRequest const& request) override {
+  future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
+      google::cloud::gaming::v1::UpdateRealmRequest const& request) override {
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gaming::v1::Realm>(
-          background_->cq(), request,
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::cloud::gaming::v1::UpdateRealmRequest const& request) {
-            return stub->AsyncUpdateRealm(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::GetOperationRequest const& request) {
-            return stub->AsyncGetOperation(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::CancelOperationRequest const& request) {
-            return stub->AsyncCancelOperation(cq, std::move(context), request);
-          },
-          &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gaming::v1::Realm>,
-          retry_policy(), backoff_policy(),
-          idempotency_policy()->UpdateRealm(request),
-          polling_policy(), __func__);
+    return google::cloud::internal::AsyncLongRunningOperation<
+        google::cloud::gaming::v1::Realm>(
+        background_->cq(), request,
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::cloud::gaming::v1::UpdateRealmRequest const& request) {
+          return stub->AsyncUpdateRealm(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::GetOperationRequest const& request) {
+          return stub->AsyncGetOperation(cq, std::move(context), request);
+        },
+        [stub](google::cloud::CompletionQueue& cq,
+               std::unique_ptr<grpc::ClientContext> context,
+               google::longrunning::CancelOperationRequest const& request) {
+          return stub->AsyncCancelOperation(cq, std::move(context), request);
+        },
+        &google::cloud::internal::ExtractLongRunningResultResponse<
+            google::cloud::gaming::v1::Realm>,
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateRealm(request), polling_policy(), __func__);
   }
 
   StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
-  PreviewRealmUpdate(
-      google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) override {
+  PreviewRealmUpdate(google::cloud::gaming::v1::PreviewRealmUpdateRequest const&
+                         request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy(), backoff_policy(),
         idempotency_policy()->PreviewRealmUpdate(request),
         [this](grpc::ClientContext& context,
-            google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) {
+               google::cloud::gaming::v1::PreviewRealmUpdateRequest const&
+                   request) {
           return stub_->PreviewRealmUpdate(context, request);
         },
         request, __func__);
@@ -259,10 +269,12 @@ class RealmsServiceConnectionImpl : public RealmsServiceConnection {
     return polling_policy_prototype_->clone();
   }
 
-  std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<RealmsServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<RealmsServiceConnectionIdempotencyPolicyOption>()->clone();
+      return options.get<RealmsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -279,12 +291,13 @@ class RealmsServiceConnectionImpl : public RealmsServiceConnection {
 std::shared_ptr<RealmsServiceConnection> MakeRealmsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      RealmsServicePolicyOptionList>(options, __func__);
-  options = gameservices_internal::RealmsServiceDefaultOptions(
-      std::move(options));
+                                 RealmsServicePolicyOptionList>(options,
+                                                                __func__);
+  options =
+      gameservices_internal::RealmsServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gameservices_internal::CreateDefaultRealmsServiceStub(
-    background->cq(), options);
+      background->cq(), options);
   return std::make_shared<RealmsServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
@@ -300,12 +313,12 @@ namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<gameservices::RealmsServiceConnection>
-MakeRealmsServiceConnection(
-    std::shared_ptr<RealmsServiceStub> stub, Options options) {
+MakeRealmsServiceConnection(std::shared_ptr<RealmsServiceStub> stub,
+                            Options options) {
   options = RealmsServiceDefaultOptions(std::move(options));
   return std::make_shared<gameservices::RealmsServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(),
-      std::move(stub), std::move(options));
+      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
+      std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

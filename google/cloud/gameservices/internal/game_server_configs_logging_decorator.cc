@@ -29,9 +29,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GameServerConfigsServiceLogging::GameServerConfigsServiceLogging(
     std::shared_ptr<GameServerConfigsServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
@@ -40,7 +40,8 @@ GameServerConfigsServiceLogging::ListGameServerConfigs(
     google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) {
+             google::cloud::gaming::v1::ListGameServerConfigsRequest const&
+                 request) {
         return child_->ListGameServerConfigs(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -52,7 +53,8 @@ GameServerConfigsServiceLogging::GetGameServerConfig(
     google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
+             google::cloud::gaming::v1::GetGameServerConfigRequest const&
+                 request) {
         return child_->GetGameServerConfig(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -60,28 +62,32 @@ GameServerConfigsServiceLogging::GetGameServerConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceLogging::AsyncCreateGameServerConfig(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
-        return child_->AsyncCreateGameServerConfig(cq, std::move(context), request);
+             google::cloud::gaming::v1::CreateGameServerConfigRequest const&
+                 request) {
+        return child_->AsyncCreateGameServerConfig(cq, std::move(context),
+                                                   request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceLogging::AsyncDeleteGameServerConfig(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
-        return child_->AsyncDeleteGameServerConfig(cq, std::move(context), request);
+             google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
+                 request) {
+        return child_->AsyncDeleteGameServerConfig(cq, std::move(context),
+                                                   request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }

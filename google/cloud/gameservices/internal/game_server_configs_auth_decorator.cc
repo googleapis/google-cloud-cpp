@@ -30,7 +30,8 @@ GameServerConfigsServiceAuth::GameServerConfigsServiceAuth(
     std::shared_ptr<GameServerConfigsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse> GameServerConfigsServiceAuth::ListGameServerConfigs(
+StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
+GameServerConfigsServiceAuth::ListGameServerConfigs(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -38,7 +39,8 @@ StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse> GameServerCon
   return child_->ListGameServerConfigs(context, request);
 }
 
-StatusOr<google::cloud::gaming::v1::GameServerConfig> GameServerConfigsServiceAuth::GetGameServerConfig(
+StatusOr<google::cloud::gaming::v1::GameServerConfig>
+GameServerConfigsServiceAuth::GetGameServerConfig(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -48,37 +50,41 @@ StatusOr<google::cloud::gaming::v1::GameServerConfig> GameServerConfigsServiceAu
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceAuth::AsyncCreateGameServerConfig(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateGameServerConfig(cq, *std::move(context), request);
+        return child->AsyncCreateGameServerConfig(cq, *std::move(context),
+                                                  request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceAuth::AsyncDeleteGameServerConfig(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteGameServerConfig(cq, *std::move(context), request);
+        return child->AsyncDeleteGameServerConfig(cq, *std::move(context),
+                                                  request);
       });
 }
 
@@ -89,9 +95,10 @@ GameServerConfigsServiceAuth::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -105,9 +112,10 @@ future<Status> GameServerConfigsServiceAuth::AsyncCancelOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::unique_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

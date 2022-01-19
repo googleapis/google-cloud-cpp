@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/game_server_configs_connection_idempotency_policy.h"
 #include "google/cloud/gameservices/internal/game_server_configs_retry_traits.h"
 #include "google/cloud/gameservices/internal/game_server_configs_stub.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,11 +37,13 @@ namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GameServerConfigsServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    gameservices_internal::GameServerConfigsServiceRetryTraits>;
+using GameServerConfigsServiceRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        gameservices_internal::GameServerConfigsServiceRetryTraits>;
 
-using GameServerConfigsServiceLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    gameservices_internal::GameServerConfigsServiceRetryTraits>;
+using GameServerConfigsServiceLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        gameservices_internal::GameServerConfigsServiceRetryTraits>;
 
 using GameServerConfigsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -52,20 +54,24 @@ class GameServerConfigsServiceConnection {
   virtual ~GameServerConfigsServiceConnection() = 0;
 
   virtual StreamRange<google::cloud::gaming::v1::GameServerConfig>
-  ListGameServerConfigs(google::cloud::gaming::v1::ListGameServerConfigsRequest request);
+  ListGameServerConfigs(
+      google::cloud::gaming::v1::ListGameServerConfigsRequest request);
 
   virtual StatusOr<google::cloud::gaming::v1::GameServerConfig>
-  GetGameServerConfig(google::cloud::gaming::v1::GetGameServerConfigRequest const& request);
+  GetGameServerConfig(
+      google::cloud::gaming::v1::GetGameServerConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-  CreateGameServerConfig(google::cloud::gaming::v1::CreateGameServerConfigRequest const& request);
+  CreateGameServerConfig(
+      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerConfig(google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request);
+  DeleteGameServerConfig(
+      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request);
 };
 
-std::shared_ptr<GameServerConfigsServiceConnection> MakeGameServerConfigsServiceConnection(
-    Options options = {});
+std::shared_ptr<GameServerConfigsServiceConnection>
+MakeGameServerConfigsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
@@ -79,8 +85,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<gameservices::GameServerConfigsServiceConnection>
 MakeGameServerConfigsServiceConnection(
-    std::shared_ptr<GameServerConfigsServiceStub> stub,
-    Options options);
+    std::shared_ptr<GameServerConfigsServiceStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

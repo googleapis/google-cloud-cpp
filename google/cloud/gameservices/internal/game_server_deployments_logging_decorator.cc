@@ -29,18 +29,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GameServerDeploymentsServiceLogging::GameServerDeploymentsServiceLogging(
     std::shared_ptr<GameServerDeploymentsServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::gaming::v1::ListGameServerDeploymentsResponse>
 GameServerDeploymentsServiceLogging::ListGameServerDeployments(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::ListGameServerDeploymentsRequest const& request) {
+    google::cloud::gaming::v1::ListGameServerDeploymentsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::ListGameServerDeploymentsRequest const& request) {
+             google::cloud::gaming::v1::ListGameServerDeploymentsRequest const&
+                 request) {
         return child_->ListGameServerDeployments(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -52,7 +54,8 @@ GameServerDeploymentsServiceLogging::GetGameServerDeployment(
     google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request) {
+             google::cloud::gaming::v1::GetGameServerDeploymentRequest const&
+                 request) {
         return child_->GetGameServerDeployment(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -60,42 +63,51 @@ GameServerDeploymentsServiceLogging::GetGameServerDeployment(
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceLogging::AsyncCreateGameServerDeployment(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request) {
-        return child_->AsyncCreateGameServerDeployment(cq, std::move(context), request);
+             google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+                 request) {
+        return child_->AsyncCreateGameServerDeployment(cq, std::move(context),
+                                                       request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceLogging::AsyncDeleteGameServerDeployment(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request) {
-        return child_->AsyncDeleteGameServerDeployment(cq, std::move(context), request);
+             google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+                 request) {
+        return child_->AsyncDeleteGameServerDeployment(cq, std::move(context),
+                                                       request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceLogging::AsyncUpdateGameServerDeployment(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request) {
-        return child_->AsyncUpdateGameServerDeployment(cq, std::move(context), request);
+             google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+                 request) {
+        return child_->AsyncUpdateGameServerDeployment(cq, std::move(context),
+                                                       request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
@@ -103,10 +115,12 @@ GameServerDeploymentsServiceLogging::AsyncUpdateGameServerDeployment(
 StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
 GameServerDeploymentsServiceLogging::GetGameServerDeploymentRollout(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request) {
+    google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request) {
+             google::cloud::gaming::v1::
+                 GetGameServerDeploymentRolloutRequest const& request) {
         return child_->GetGameServerDeploymentRollout(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -114,14 +128,17 @@ GameServerDeploymentsServiceLogging::GetGameServerDeploymentRollout(
 
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceLogging::AsyncUpdateGameServerDeploymentRollout(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::unique_ptr<grpc::ClientContext> context,
-             google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request) {
-        return child_->AsyncUpdateGameServerDeploymentRollout(cq, std::move(context), request);
+             google::cloud::gaming::v1::
+                 UpdateGameServerDeploymentRolloutRequest const& request) {
+        return child_->AsyncUpdateGameServerDeploymentRollout(
+            cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
@@ -129,10 +146,12 @@ GameServerDeploymentsServiceLogging::AsyncUpdateGameServerDeploymentRollout(
 StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
 GameServerDeploymentsServiceLogging::PreviewGameServerDeploymentRollout(
     grpc::ClientContext& context,
-    google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request) {
+    google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request) {
+             google::cloud::gaming::v1::
+                 PreviewGameServerDeploymentRolloutRequest const& request) {
         return child_->PreviewGameServerDeploymentRollout(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -144,7 +163,8 @@ GameServerDeploymentsServiceLogging::FetchDeploymentState(
     google::cloud::gaming::v1::FetchDeploymentStateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::cloud::gaming::v1::FetchDeploymentStateRequest const& request) {
+             google::cloud::gaming::v1::FetchDeploymentStateRequest const&
+                 request) {
         return child_->FetchDeploymentState(context, request);
       },
       context, request, __func__, tracing_options_);
