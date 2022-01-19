@@ -64,8 +64,6 @@
 ./include/google/cloud/gkehub/internal
 ./include/google/cloud/gkehub/mocks
 ./include/google/cloud/gkehub/v1
-./include/google/cloud/gkehub/v1/configmanagement
-./include/google/cloud/gkehub/v1/multiclusteringress
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
