@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/subscriber_auth.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
