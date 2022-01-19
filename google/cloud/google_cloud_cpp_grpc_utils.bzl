@@ -18,6 +18,7 @@
 
 google_cloud_cpp_grpc_utils_hdrs = [
     "async_operation.h",
+    "async_streaming_read_write_rpc.h",
     "background_threads.h",
     "completion_queue.h",
     "connection_options.h",
