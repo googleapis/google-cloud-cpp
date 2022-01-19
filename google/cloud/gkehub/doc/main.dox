@@ -3,7 +3,7 @@
 @mainpage GKE Hub C++ Client Library
 
 An idiomatic C++ client library for the [GKE Hub][cloud-service-docs], a service
-to handle the registration of many Kubernetes clusters to Google Cloud, and the\
+to handle the registration of many Kubernetes clusters to Google Cloud, and the
 management of multi-cluster features over those clusters.
 
 This library is **experimental**. Its APIs are subject to change without notice.
@@ -82,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/gkehub
+[cloud-service-docs]: https://cloud.google.com/anthos
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
