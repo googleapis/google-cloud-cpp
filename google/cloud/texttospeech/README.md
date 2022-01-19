@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Text-to-Speech API][cloud-service-docs], a service to Synthesizes natural-sounding speech by applying powerful neural network models.
+[Cloud Text-to-Speech API][cloud-service-docs], a service to synthesize
+natural-sounding speech by applying powerful neural network models.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -67,7 +68,7 @@ int main(int argc, char* argv[]) try {
   auto response = client.SynthesizeSpeech(input, voice, audio);
   if (!response) throw std::runtime_error(response.status().message());
   // Normally one would play the results (response->audio_content()) over some
-  // audio device, for this quickstart, we just print some information.
+  // audio device. For this quickstart, we just print some information.
   auto constexpr kWavHeaderSize = 48;
   auto constexpr kBytesPerSample = 2;  // we asked for LINEAR16
   auto const sample_count =
