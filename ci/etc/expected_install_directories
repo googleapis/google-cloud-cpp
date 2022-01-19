@@ -136,6 +136,10 @@
 ./include/google/cloud/tasks/internal
 ./include/google/cloud/tasks/mocks
 ./include/google/cloud/tasks/v2
+./include/google/cloud/texttospeech
+./include/google/cloud/texttospeech/internal
+./include/google/cloud/texttospeech/mocks
+./include/google/cloud/texttospeech/v1
 ./include/google/cloud/tpu
 ./include/google/cloud/tpu/internal
 ./include/google/cloud/tpu/mocks
@@ -229,6 +233,7 @@
 ./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
+./lib64/cmake/google_cloud_cpp_texttospeech
 ./lib64/cmake/google_cloud_cpp_tpu
 ./lib64/cmake/google_cloud_cpp_translate
 ./lib64/cmake/google_cloud_cpp_videointelligence
