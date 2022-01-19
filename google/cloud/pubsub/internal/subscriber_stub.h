@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/version.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 
@@ -71,7 +71,7 @@ class SubscriberStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::ModifyPushConfigRequest const& request) = 0;
 
-  using AsyncPullStream = ::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  using AsyncPullStream = ::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;
 

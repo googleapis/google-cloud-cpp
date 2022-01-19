@@ -19,7 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_ASSIGNMENT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_ASSIGNMENT_STUB_H
 
-#include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
@@ -34,7 +35,7 @@ class PartitionAssignmentServiceStub {
  public:
   virtual ~PartitionAssignmentServiceStub() = 0;
 
-  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>
   AsyncAssignPartitions(google::cloud::CompletionQueue const& cq,
@@ -50,7 +51,7 @@ class DefaultPartitionAssignmentServiceStub
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>
   AsyncAssignPartitions(google::cloud::CompletionQueue const& cq,

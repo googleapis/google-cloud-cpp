@@ -58,7 +58,7 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
   (google::protobuf::Empty const& request), (override));
 
   MOCK_METHOD((std::unique_ptr<
-      ::google::cloud::internal::AsyncStreamingReadWriteRpc<
+      ::google::cloud::AsyncStreamingReadWriteRpc<
           google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>>),
       AsyncAppendRows, (), (override));
 };

@@ -96,7 +96,7 @@ LoggingServiceV2Logging::ListLogs(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Logging::AsyncTailLogEntries(

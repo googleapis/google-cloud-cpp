@@ -74,7 +74,7 @@ class GoldenKitchenSinkConnection {
   virtual Status
   DoNothing(google::protobuf::Empty const& request);
 
-  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
   AsyncAppendRows();

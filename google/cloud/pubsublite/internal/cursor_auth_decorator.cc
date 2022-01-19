@@ -31,7 +31,7 @@ CursorServiceAuth::CursorServiceAuth(
     std::shared_ptr<CursorServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
     google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
 CursorServiceAuth::AsyncStreamingCommitCursor(

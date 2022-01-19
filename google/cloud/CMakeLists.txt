@@ -327,6 +327,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     add_library(
         google_cloud_cpp_grpc_utils # cmake-format: sort
         async_operation.h
+        async_streaming_read_write_rpc.h
         background_threads.h
         completion_queue.cc
         completion_queue.h

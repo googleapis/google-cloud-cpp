@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_WRITE_STREAM_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_WRITE_STREAM_IMPL_H
 
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/completion_queue_impl.h"
@@ -29,19 +30,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-template <typename Request, typename Response>
-class AsyncStreamingReadWriteRpc {
- public:
-  virtual ~AsyncStreamingReadWriteRpc() = default;
-
-  virtual void Cancel() = 0;
-  virtual future<bool> Start() = 0;
-  virtual future<absl::optional<Response>> Read() = 0;
-  virtual future<bool> Write(Request const&, grpc::WriteOptions) = 0;
-  virtual future<bool> WritesDone() = 0;
-  virtual future<Status> Finish() = 0;
-};
 
 /**
  * Wrapper for Asynchronous Streaming Read/Write RPCs.

@@ -31,7 +31,7 @@ SubscriberServiceAuth::SubscriberServiceAuth(
     std::shared_ptr<SubscriberServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::SubscribeRequest,
     google::cloud::pubsublite::v1::SubscribeResponse>>
 SubscriberServiceAuth::AsyncSubscribe(

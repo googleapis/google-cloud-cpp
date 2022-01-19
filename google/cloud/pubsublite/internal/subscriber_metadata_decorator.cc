@@ -33,7 +33,7 @@ SubscriberServiceMetadata::SubscriberServiceMetadata(
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::SubscribeRequest,
     google::cloud::pubsublite::v1::SubscribeResponse>>
 SubscriberServiceMetadata::AsyncSubscribe(

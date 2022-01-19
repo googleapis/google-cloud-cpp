@@ -130,7 +130,7 @@ GoldenKitchenSinkLogging::DoNothing(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::AppendRowsRequest,
     google::test::admin::database::v1::AppendRowsResponse>>
 GoldenKitchenSinkLogging::AsyncAppendRows(

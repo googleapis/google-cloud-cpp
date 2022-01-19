@@ -51,11 +51,10 @@ class MockLoggingServiceV2Connection
   MOCK_METHOD(StreamRange<std::string>, ListLogs,
               (google::logging::v2::ListLogsRequest request), (override));
 
-  MOCK_METHOD(
-      (std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
-           google::logging::v2::TailLogEntriesRequest,
-           google::logging::v2::TailLogEntriesResponse>>),
-      AsyncTailLogEntries, (), (override));
+  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+                   google::logging::v2::TailLogEntriesRequest,
+                   google::logging::v2::TailLogEntriesResponse>>),
+              AsyncTailLogEntries, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,7 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CURSOR_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CURSOR_STUB_H
 
-#include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
@@ -34,7 +35,7 @@ class CursorServiceStub {
  public:
   virtual ~CursorServiceStub() = 0;
 
-  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(google::cloud::CompletionQueue const& cq,
@@ -60,7 +61,7 @@ class DefaultCursorServiceStub : public CursorServiceStub {
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(

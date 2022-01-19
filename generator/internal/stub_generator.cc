@@ -58,8 +58,9 @@ Status StubGenerator::GenerateHeader() {
        HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
                                  : "",
        HasBidirStreamingMethod()
-           ? "google/cloud/internal/async_read_write_stream_impl.h"
+           ? "google/cloud/async_streaming_read_write_rpc.h"
            : "",
+       HasBidirStreamingMethod() ? "google/cloud/completion_queue.h" : "",
        "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
@@ -95,7 +96,7 @@ Status StubGenerator::GenerateHeader() {
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__,
                         R"""(
-  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$(
@@ -214,7 +215,7 @@ Status StubGenerator::GenerateHeader() {
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__,
                         R"""(
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$(
@@ -321,6 +322,9 @@ Status StubGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes({vars("stub_header_path"),
                    HasStreamingReadMethod() ? "absl/memory/memory.h" : "",
+                   HasBidirStreamingMethod()
+                       ? "google/cloud/internal/async_read_write_stream_impl.h"
+                       : "",
                    "google/cloud/grpc_error_delegate.h",
                    "google/cloud/status_or.h"});
   CcSystemIncludes(
@@ -358,7 +362,7 @@ Default$stub_class_name$::$method_name$(
     if (IsBidirStreaming(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
 Default$stub_class_name$::Async$method_name$(

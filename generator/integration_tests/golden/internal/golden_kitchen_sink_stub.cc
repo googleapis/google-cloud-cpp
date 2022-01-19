@@ -19,6 +19,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
 #include "absl/memory/memory.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -118,7 +119,7 @@ DefaultGoldenKitchenSinkStub::DoNothing(
     return google::cloud::Status();
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::AppendRowsRequest,
     google::test::admin::database::v1::AppendRowsResponse>>
 DefaultGoldenKitchenSinkStub::AsyncAppendRows(

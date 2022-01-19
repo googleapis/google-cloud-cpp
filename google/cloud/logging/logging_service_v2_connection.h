@@ -67,7 +67,7 @@ class LoggingServiceV2Connection {
   virtual StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request);
 
-  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries();

@@ -18,6 +18,7 @@
 
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
@@ -91,7 +92,7 @@ DefaultLoggingServiceV2Stub::ListLogs(
   return response;
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
 DefaultLoggingServiceV2Stub::AsyncTailLogEntries(

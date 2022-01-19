@@ -31,7 +31,7 @@ PublisherServiceAuth::PublisherServiceAuth(
     std::shared_ptr<PublisherServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PublishRequest,
     google::cloud::pubsublite::v1::PublishResponse>>
 PublisherServiceAuth::AsyncPublish(

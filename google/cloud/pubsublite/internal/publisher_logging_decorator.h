@@ -38,7 +38,7 @@ class PublisherServiceLogging : public PublisherServiceStub {
                           TracingOptions tracing_options,
                           std::set<std::string> components);
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,

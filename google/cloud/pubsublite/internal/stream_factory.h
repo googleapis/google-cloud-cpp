@@ -28,7 +28,8 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 template <class Request, class Response>
-using BidiStream = internal::AsyncStreamingReadWriteRpc<Request, Response>;
+using BidiStream =
+    ::google::cloud::AsyncStreamingReadWriteRpc<Request, Response>;
 
 template <class Request, class Response>
 using StreamFactory =

@@ -33,7 +33,7 @@ PublisherServiceMetadata::PublisherServiceMetadata(
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PublishRequest,
     google::cloud::pubsublite::v1::PublishResponse>>
 PublisherServiceMetadata::AsyncPublish(

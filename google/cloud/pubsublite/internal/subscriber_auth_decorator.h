@@ -38,7 +38,7 @@ class SubscriberServiceAuth : public SubscriberServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<SubscriberServiceStub> child);
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>
   AsyncSubscribe(google::cloud::CompletionQueue const& cq,

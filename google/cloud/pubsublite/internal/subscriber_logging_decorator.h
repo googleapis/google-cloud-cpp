@@ -38,7 +38,7 @@ class SubscriberServiceLogging : public SubscriberServiceStub {
                            TracingOptions tracing_options,
                            std::set<std::string> components);
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>
   AsyncSubscribe(google::cloud::CompletionQueue const& cq,

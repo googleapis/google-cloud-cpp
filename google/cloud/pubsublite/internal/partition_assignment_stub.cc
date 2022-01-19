@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
 #include <memory>
@@ -29,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PartitionAssignmentServiceStub::~PartitionAssignmentServiceStub() = default;
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PartitionAssignmentRequest,
     google::cloud::pubsublite::v1::PartitionAssignment>>
 DefaultPartitionAssignmentServiceStub::AsyncAssignPartitions(
