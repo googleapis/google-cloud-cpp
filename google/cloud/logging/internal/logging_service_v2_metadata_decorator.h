@@ -57,7 +57,7 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
       grpc::ClientContext& context,
       google::logging::v2::ListLogsRequest const& request) override;
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,

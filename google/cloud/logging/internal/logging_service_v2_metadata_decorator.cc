@@ -73,7 +73,7 @@ LoggingServiceV2Metadata::ListLogs(
   return child_->ListLogs(context, request);
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Metadata::AsyncTailLogEntries(

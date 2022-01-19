@@ -86,7 +86,7 @@ StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
       });
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Connection::AsyncTailLogEntries() {
@@ -238,7 +238,7 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
         });
   }
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries() override {
