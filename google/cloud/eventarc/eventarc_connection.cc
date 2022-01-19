@@ -102,8 +102,8 @@ class EventarcConnectionImpl : public EventarcConnection {
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
       google::cloud::eventarc::v1::GetTriggerRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetTrigger(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetTrigger(request),
         [this](grpc::ClientContext& context,
                google::cloud::eventarc::v1::GetTriggerRequest const& request) {
           return stub_->GetTrigger(context, request);
@@ -115,11 +115,9 @@ class EventarcConnectionImpl : public EventarcConnection {
       google::cloud::eventarc::v1::ListTriggersRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<EventarcRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListTriggers(request);
+    auto retry = std::shared_ptr<EventarcRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListTriggers(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::eventarc::v1::Trigger>>(
@@ -169,9 +167,9 @@ class EventarcConnectionImpl : public EventarcConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::eventarc::v1::Trigger>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateTrigger(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateTrigger(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
@@ -199,9 +197,9 @@ class EventarcConnectionImpl : public EventarcConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::eventarc::v1::Trigger>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateTrigger(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateTrigger(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
@@ -229,12 +227,44 @@ class EventarcConnectionImpl : public EventarcConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::eventarc::v1::Trigger>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteTrigger(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteTrigger(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<EventarcRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EventarcRetryPolicyOption>()) {
+      return options.get<EventarcRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EventarcBackoffPolicyOption>()) {
+      return options.get<EventarcBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EventarcPollingPolicyOption>()) {
+      return options.get<EventarcPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<EventarcConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<EventarcConnectionIdempotencyPolicyOption>()) {
+      return options.get<EventarcConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<eventarc_internal::EventarcStub> stub_;
   std::unique_ptr<EventarcRetryPolicy const> retry_policy_prototype_;

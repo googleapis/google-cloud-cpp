@@ -75,8 +75,8 @@ class TopicStatsServiceConnectionImpl : public TopicStatsServiceConnection {
       google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ComputeMessageStats(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ComputeMessageStats(request),
         [this](grpc::ClientContext& context,
                google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
                    request) {
@@ -90,8 +90,8 @@ class TopicStatsServiceConnectionImpl : public TopicStatsServiceConnection {
       google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ComputeHeadCursor(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ComputeHeadCursor(request),
         [this](grpc::ClientContext& context,
                google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
                    request) {
@@ -105,8 +105,8 @@ class TopicStatsServiceConnectionImpl : public TopicStatsServiceConnection {
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ComputeTimeCursor(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ComputeTimeCursor(request),
         [this](grpc::ClientContext& context,
                google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
                    request) {
@@ -116,6 +116,32 @@ class TopicStatsServiceConnectionImpl : public TopicStatsServiceConnection {
   }
 
  private:
+  std::unique_ptr<TopicStatsServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TopicStatsServiceRetryPolicyOption>()) {
+      return options.get<TopicStatsServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TopicStatsServiceBackoffPolicyOption>()) {
+      return options.get<TopicStatsServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<TopicStatsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub_;
   std::unique_ptr<TopicStatsServiceRetryPolicy const> retry_policy_prototype_;

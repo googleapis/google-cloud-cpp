@@ -193,11 +193,10 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
       google::cloud::apigateway::v1::ListGatewaysRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ApiGatewayServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListGateways(request);
+    auto retry =
+        std::shared_ptr<ApiGatewayServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListGateways(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::apigateway::v1::Gateway>>(
@@ -226,8 +225,8 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
       google::cloud::apigateway::v1::GetGatewayRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetGateway(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetGateway(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::apigateway::v1::GetGatewayRequest const& request) {
@@ -261,9 +260,9 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::apigateway::v1::Gateway>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateGateway(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateGateway(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
@@ -291,9 +290,9 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::apigateway::v1::Gateway>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateGateway(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateGateway(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -321,20 +320,19 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::apigateway::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteGateway(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteGateway(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
       google::cloud::apigateway::v1::ListApisRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ApiGatewayServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListApis(request);
+    auto retry =
+        std::shared_ptr<ApiGatewayServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListApis(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::apigateway::v1::Api>>(
@@ -360,8 +358,7 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(
       google::cloud::apigateway::v1::GetApiRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetApi(request),
+        retry_policy(), backoff_policy(), idempotency_policy()->GetApi(request),
         [this](grpc::ClientContext& context,
                google::cloud::apigateway::v1::GetApiRequest const& request) {
           return stub_->GetApi(context, request);
@@ -392,9 +389,8 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::apigateway::v1::Api>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateApi(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateApi(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
@@ -420,9 +416,8 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::apigateway::v1::Api>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateApi(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateApi(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
@@ -448,20 +443,18 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::apigateway::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteApi(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteApi(request), polling_policy(), __func__);
   }
 
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
       google::cloud::apigateway::v1::ListApiConfigsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ApiGatewayServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListApiConfigs(request);
+    auto retry =
+        std::shared_ptr<ApiGatewayServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListApiConfigs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::apigateway::v1::ApiConfig>>(
@@ -490,8 +483,8 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
       google::cloud::apigateway::v1::GetApiConfigRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetApiConfig(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetApiConfig(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
@@ -525,9 +518,9 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::apigateway::v1::ApiConfig>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateApiConfig(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateApiConfig(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
@@ -555,9 +548,9 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::apigateway::v1::ApiConfig>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateApiConfig(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateApiConfig(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -585,12 +578,46 @@ class ApiGatewayServiceConnectionImpl : public ApiGatewayServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::apigateway::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteApiConfig(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteApiConfig(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<ApiGatewayServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApiGatewayServiceRetryPolicyOption>()) {
+      return options.get<ApiGatewayServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApiGatewayServiceBackoffPolicyOption>()) {
+      return options.get<ApiGatewayServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApiGatewayServicePollingPolicyOption>()) {
+      return options.get<ApiGatewayServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<ApiGatewayServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub_;
   std::unique_ptr<ApiGatewayServiceRetryPolicy const> retry_policy_prototype_;

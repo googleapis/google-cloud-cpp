@@ -100,10 +100,10 @@ class AuthorizedCertificatesConnectionImpl
     request.clear_page_token();
     auto stub = stub_;
     auto retry = std::shared_ptr<AuthorizedCertificatesRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListAuthorizedCertificates(request);
+        retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency =
+        idempotency_policy()->ListAuthorizedCertificates(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::appengine::v1::AuthorizedCertificate>>(
@@ -133,8 +133,8 @@ class AuthorizedCertificatesConnectionImpl
       google::appengine::v1::GetAuthorizedCertificateRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetAuthorizedCertificate(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetAuthorizedCertificate(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::GetAuthorizedCertificateRequest const&
                    request) {
@@ -148,8 +148,8 @@ class AuthorizedCertificatesConnectionImpl
       google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateAuthorizedCertificate(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateAuthorizedCertificate(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::CreateAuthorizedCertificateRequest const&
                    request) {
@@ -163,8 +163,8 @@ class AuthorizedCertificatesConnectionImpl
       google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateAuthorizedCertificate(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateAuthorizedCertificate(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::UpdateAuthorizedCertificateRequest const&
                    request) {
@@ -177,8 +177,8 @@ class AuthorizedCertificatesConnectionImpl
       google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteAuthorizedCertificate(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteAuthorizedCertificate(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::DeleteAuthorizedCertificateRequest const&
                    request) {
@@ -188,6 +188,34 @@ class AuthorizedCertificatesConnectionImpl
   }
 
  private:
+  std::unique_ptr<AuthorizedCertificatesRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AuthorizedCertificatesRetryPolicyOption>()) {
+      return options.get<AuthorizedCertificatesRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AuthorizedCertificatesBackoffPolicyOption>()) {
+      return options.get<AuthorizedCertificatesBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub_;
   std::unique_ptr<AuthorizedCertificatesRetryPolicy const>

@@ -128,8 +128,8 @@ class JobServiceConnectionImpl : public JobServiceConnection {
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       google::cloud::talent::v4::CreateJobRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateJob(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateJob(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::CreateJobRequest const& request) {
           return stub_->CreateJob(context, request);
@@ -162,16 +162,15 @@ class JobServiceConnectionImpl : public JobServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::talent::v4::BatchCreateJobsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchCreateJobs(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchCreateJobs(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::talent::v4::Job> GetJob(
       google::cloud::talent::v4::GetJobRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetJob(request),
+        retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::GetJobRequest const& request) {
           return stub_->GetJob(context, request);
@@ -182,8 +181,8 @@ class JobServiceConnectionImpl : public JobServiceConnection {
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
       google::cloud::talent::v4::UpdateJobRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateJob(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateJob(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::UpdateJobRequest const& request) {
           return stub_->UpdateJob(context, request);
@@ -216,16 +215,16 @@ class JobServiceConnectionImpl : public JobServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::talent::v4::BatchUpdateJobsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchUpdateJobs(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchUpdateJobs(request), polling_policy(),
+        __func__);
   }
 
   Status DeleteJob(
       google::cloud::talent::v4::DeleteJobRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteJob(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteJob(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::DeleteJobRequest const& request) {
           return stub_->DeleteJob(context, request);
@@ -258,20 +257,18 @@ class JobServiceConnectionImpl : public JobServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::talent::v4::BatchDeleteJobsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BatchDeleteJobs(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BatchDeleteJobs(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
       google::cloud::talent::v4::ListJobsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<JobServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListJobs(request);
+    auto retry = std::shared_ptr<JobServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListJobs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::talent::v4::Job>>(
@@ -298,8 +295,8 @@ class JobServiceConnectionImpl : public JobServiceConnection {
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
       google::cloud::talent::v4::SearchJobsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SearchJobs(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SearchJobs(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::SearchJobsRequest const& request) {
           return stub_->SearchJobs(context, request);
@@ -310,8 +307,8 @@ class JobServiceConnectionImpl : public JobServiceConnection {
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
       google::cloud::talent::v4::SearchJobsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SearchJobsForAlert(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SearchJobsForAlert(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::SearchJobsRequest const& request) {
           return stub_->SearchJobsForAlert(context, request);
@@ -320,6 +317,39 @@ class JobServiceConnectionImpl : public JobServiceConnection {
   }
 
  private:
+  std::unique_ptr<JobServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<JobServiceRetryPolicyOption>()) {
+      return options.get<JobServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<JobServiceBackoffPolicyOption>()) {
+      return options.get<JobServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<JobServicePollingPolicyOption>()) {
+      return options.get<JobServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<JobServiceConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<JobServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<JobServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::JobServiceStub> stub_;
   std::unique_ptr<JobServiceRetryPolicy const> retry_policy_prototype_;

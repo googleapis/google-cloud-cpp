@@ -329,11 +329,10 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
       google::cloud::notebooks::v1::ListInstancesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<NotebookServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListInstances(request);
+    auto retry =
+        std::shared_ptr<NotebookServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListInstances(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::notebooks::v1::Instance>>(
@@ -362,8 +361,8 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
       google::cloud::notebooks::v1::GetInstanceRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetInstance(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetInstance(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::notebooks::v1::GetInstanceRequest const& request) {
@@ -397,9 +396,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RegisterInstance(
@@ -427,9 +426,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RegisterInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RegisterInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -460,9 +459,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetInstanceAccelerator(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetInstanceAccelerator(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -493,9 +492,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetInstanceMachineType(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetInstanceMachineType(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> UpdateInstanceConfig(
@@ -524,9 +523,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateInstanceConfig(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateInstanceConfig(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -556,9 +555,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateShieldedInstanceConfig(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateShieldedInstanceConfig(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> SetInstanceLabels(
@@ -586,9 +585,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetInstanceLabels(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetInstanceLabels(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -616,9 +615,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::notebooks::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StartInstance(
@@ -646,9 +645,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StartInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StartInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StopInstance(
@@ -676,9 +675,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->StopInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->StopInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ResetInstance(
@@ -706,9 +705,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ResetInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ResetInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ReportInstanceInfo(
@@ -736,9 +735,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ReportInstanceInfo(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ReportInstanceInfo(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
@@ -746,8 +745,8 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
       google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->IsInstanceUpgradeable(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->IsInstanceUpgradeable(request),
         [this](grpc::ClientContext& context,
                google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const&
                    request) {
@@ -761,8 +760,8 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
       google::cloud::notebooks::v1::GetInstanceHealthRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetInstanceHealth(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetInstanceHealth(request),
         [this](grpc::ClientContext& context,
                google::cloud::notebooks::v1::GetInstanceHealthRequest const&
                    request) {
@@ -796,9 +795,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpgradeInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpgradeInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RollbackInstance(
@@ -826,9 +825,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->RollbackInstance(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->RollbackInstance(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -859,20 +858,19 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Instance>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpgradeInstanceInternal(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpgradeInstanceInternal(request),
+        polling_policy(), __func__);
   }
 
   StreamRange<google::cloud::notebooks::v1::Environment> ListEnvironments(
       google::cloud::notebooks::v1::ListEnvironmentsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<NotebookServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListEnvironments(request);
+    auto retry =
+        std::shared_ptr<NotebookServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListEnvironments(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::notebooks::v1::Environment>>(
@@ -902,8 +900,8 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
       google::cloud::notebooks::v1::GetEnvironmentRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetEnvironment(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetEnvironment(request),
         [this](grpc::ClientContext& context,
                google::cloud::notebooks::v1::GetEnvironmentRequest const&
                    request) { return stub_->GetEnvironment(context, request); },
@@ -935,9 +933,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Environment>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateEnvironment(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateEnvironment(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -966,20 +964,19 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::notebooks::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteEnvironment(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteEnvironment(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::notebooks::v1::Schedule> ListSchedules(
       google::cloud::notebooks::v1::ListSchedulesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<NotebookServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListSchedules(request);
+    auto retry =
+        std::shared_ptr<NotebookServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListSchedules(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::notebooks::v1::Schedule>>(
@@ -1008,8 +1005,8 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
       google::cloud::notebooks::v1::GetScheduleRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetSchedule(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetSchedule(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::notebooks::v1::GetScheduleRequest const& request) {
@@ -1043,9 +1040,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::notebooks::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteSchedule(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteSchedule(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Schedule>> CreateSchedule(
@@ -1073,9 +1070,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Schedule>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateSchedule(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateSchedule(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Schedule>> TriggerSchedule(
@@ -1103,20 +1100,19 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Schedule>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TriggerSchedule(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TriggerSchedule(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::cloud::notebooks::v1::Execution> ListExecutions(
       google::cloud::notebooks::v1::ListExecutionsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<NotebookServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListExecutions(request);
+    auto retry =
+        std::shared_ptr<NotebookServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListExecutions(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::notebooks::v1::Execution>>(
@@ -1145,8 +1141,8 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
       google::cloud::notebooks::v1::GetExecutionRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetExecution(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetExecution(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::notebooks::v1::GetExecutionRequest const& request) {
@@ -1180,9 +1176,9 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::notebooks::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteExecution(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteExecution(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::notebooks::v1::Execution>> CreateExecution(
@@ -1210,12 +1206,46 @@ class NotebookServiceConnectionImpl : public NotebookServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::notebooks::v1::Execution>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateExecution(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateExecution(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<NotebookServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<NotebookServiceRetryPolicyOption>()) {
+      return options.get<NotebookServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<NotebookServiceBackoffPolicyOption>()) {
+      return options.get<NotebookServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<NotebookServicePollingPolicyOption>()) {
+      return options.get<NotebookServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<NotebookServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<NotebookServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<notebooks_internal::NotebookServiceStub> stub_;
   std::unique_ptr<NotebookServiceRetryPolicy const> retry_policy_prototype_;

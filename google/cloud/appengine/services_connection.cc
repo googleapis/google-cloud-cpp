@@ -94,11 +94,9 @@ class ServicesConnectionImpl : public ServicesConnection {
       google::appengine::v1::ListServicesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ServicesRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListServices(request);
+    auto retry = std::shared_ptr<ServicesRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListServices(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::appengine::v1::Service>>(
@@ -126,8 +124,8 @@ class ServicesConnectionImpl : public ServicesConnection {
   StatusOr<google::appengine::v1::Service> GetService(
       google::appengine::v1::GetServiceRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetService(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetService(request),
         [this](grpc::ClientContext& context,
                google::appengine::v1::GetServiceRequest const& request) {
           return stub_->GetService(context, request);
@@ -158,9 +156,9 @@ class ServicesConnectionImpl : public ServicesConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::appengine::v1::Service>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateService(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateService(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
@@ -186,12 +184,44 @@ class ServicesConnectionImpl : public ServicesConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::appengine::v1::OperationMetadataV1>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteService(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteService(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<ServicesRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ServicesRetryPolicyOption>()) {
+      return options.get<ServicesRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ServicesBackoffPolicyOption>()) {
+      return options.get<ServicesBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ServicesPollingPolicyOption>()) {
+      return options.get<ServicesPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ServicesConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ServicesConnectionIdempotencyPolicyOption>()) {
+      return options.get<ServicesConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::ServicesStub> stub_;
   std::unique_ptr<ServicesRetryPolicy const> retry_policy_prototype_;

@@ -119,8 +119,8 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
   Status DeleteLog(
       google::logging::v2::DeleteLogRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteLog(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteLog(request),
         [this](grpc::ClientContext& context,
                google::logging::v2::DeleteLogRequest const& request) {
           return stub_->DeleteLog(context, request);
@@ -131,8 +131,8 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->WriteLogEntries(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->WriteLogEntries(request),
         [this](grpc::ClientContext& context,
                google::logging::v2::WriteLogEntriesRequest const& request) {
           return stub_->WriteLogEntries(context, request);
@@ -144,11 +144,10 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
       google::logging::v2::ListLogEntriesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<LoggingServiceV2RetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListLogEntries(request);
+    auto retry =
+        std::shared_ptr<LoggingServiceV2RetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListLogEntries(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::logging::v2::LogEntry>>(
@@ -178,12 +177,11 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<LoggingServiceV2RetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
+    auto retry =
+        std::shared_ptr<LoggingServiceV2RetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
     auto idempotency =
-        idempotency_policy_->ListMonitoredResourceDescriptors(request);
+        idempotency_policy()->ListMonitoredResourceDescriptors(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::api::MonitoredResourceDescriptor>>(
@@ -214,11 +212,10 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
       google::logging::v2::ListLogsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<LoggingServiceV2RetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListLogs(request);
+    auto retry =
+        std::shared_ptr<LoggingServiceV2RetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListLogs(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<std::string>>(
@@ -250,6 +247,32 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
   }
 
  private:
+  std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<LoggingServiceV2RetryPolicyOption>()) {
+      return options.get<LoggingServiceV2RetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<LoggingServiceV2BackoffPolicyOption>()) {
+      return options.get<LoggingServiceV2BackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
+      return options.get<LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub_;
   std::unique_ptr<LoggingServiceV2RetryPolicy const> retry_policy_prototype_;

@@ -81,8 +81,8 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
       google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GenerateAccessToken(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GenerateAccessToken(request),
         [this](grpc::ClientContext& context,
                google::iam::credentials::v1::GenerateAccessTokenRequest const&
                    request) {
@@ -95,8 +95,8 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const&
                       request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GenerateIdToken(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GenerateIdToken(request),
         [this](grpc::ClientContext& context,
                google::iam::credentials::v1::GenerateIdTokenRequest const&
                    request) {
@@ -108,8 +108,8 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       google::iam::credentials::v1::SignBlobRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SignBlob(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SignBlob(request),
         [this](grpc::ClientContext& context,
                google::iam::credentials::v1::SignBlobRequest const& request) {
           return stub_->SignBlob(context, request);
@@ -120,8 +120,8 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       google::iam::credentials::v1::SignJwtRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SignJwt(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SignJwt(request),
         [this](grpc::ClientContext& context,
                google::iam::credentials::v1::SignJwtRequest const& request) {
           return stub_->SignJwt(context, request);
@@ -130,6 +130,32 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   }
 
  private:
+  std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IAMCredentialsRetryPolicyOption>()) {
+      return options.get<IAMCredentialsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IAMCredentialsBackoffPolicyOption>()) {
+      return options.get<IAMCredentialsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IAMCredentialsConnectionIdempotencyPolicyOption>()) {
+      return options.get<IAMCredentialsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMCredentialsStub> stub_;
   std::unique_ptr<IAMCredentialsRetryPolicy const> retry_policy_prototype_;

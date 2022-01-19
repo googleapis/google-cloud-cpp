@@ -92,8 +92,8 @@ class TenantServiceConnectionImpl : public TenantServiceConnection {
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       google::cloud::talent::v4::CreateTenantRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateTenant(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateTenant(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::CreateTenantRequest const& request) {
           return stub_->CreateTenant(context, request);
@@ -104,8 +104,8 @@ class TenantServiceConnectionImpl : public TenantServiceConnection {
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
       google::cloud::talent::v4::GetTenantRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetTenant(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetTenant(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::GetTenantRequest const& request) {
           return stub_->GetTenant(context, request);
@@ -116,8 +116,8 @@ class TenantServiceConnectionImpl : public TenantServiceConnection {
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::UpdateTenantRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateTenant(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateTenant(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::UpdateTenantRequest const& request) {
           return stub_->UpdateTenant(context, request);
@@ -128,8 +128,8 @@ class TenantServiceConnectionImpl : public TenantServiceConnection {
   Status DeleteTenant(
       google::cloud::talent::v4::DeleteTenantRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteTenant(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteTenant(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::DeleteTenantRequest const& request) {
           return stub_->DeleteTenant(context, request);
@@ -141,11 +141,10 @@ class TenantServiceConnectionImpl : public TenantServiceConnection {
       google::cloud::talent::v4::ListTenantsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<TenantServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListTenants(request);
+    auto retry =
+        std::shared_ptr<TenantServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListTenants(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::talent::v4::Tenant>>(
@@ -171,6 +170,32 @@ class TenantServiceConnectionImpl : public TenantServiceConnection {
   }
 
  private:
+  std::unique_ptr<TenantServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TenantServiceRetryPolicyOption>()) {
+      return options.get<TenantServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TenantServiceBackoffPolicyOption>()) {
+      return options.get<TenantServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<TenantServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<TenantServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::TenantServiceStub> stub_;
   std::unique_ptr<TenantServiceRetryPolicy const> retry_policy_prototype_;

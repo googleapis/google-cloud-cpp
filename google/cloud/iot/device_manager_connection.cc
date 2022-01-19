@@ -180,8 +180,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::CreateDeviceRegistryRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateDeviceRegistry(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateDeviceRegistry(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::CreateDeviceRegistryRequest const&
                    request) {
@@ -194,8 +194,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::GetDeviceRegistryRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDeviceRegistry(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDeviceRegistry(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::iot::v1::GetDeviceRegistryRequest const& request) {
@@ -208,8 +208,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateDeviceRegistry(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateDeviceRegistry(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::UpdateDeviceRegistryRequest const&
                    request) {
@@ -222,8 +222,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteDeviceRegistry(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteDeviceRegistry(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::DeleteDeviceRegistryRequest const&
                    request) {
@@ -236,11 +236,10 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::ListDeviceRegistriesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DeviceManagerRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListDeviceRegistries(request);
+    auto retry =
+        std::shared_ptr<DeviceManagerRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListDeviceRegistries(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::iot::v1::DeviceRegistry>>(
@@ -268,8 +267,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   StatusOr<google::cloud::iot::v1::Device> CreateDevice(
       google::cloud::iot::v1::CreateDeviceRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateDevice(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateDevice(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::CreateDeviceRequest const& request) {
           return stub_->CreateDevice(context, request);
@@ -280,8 +279,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   StatusOr<google::cloud::iot::v1::Device> GetDevice(
       google::cloud::iot::v1::GetDeviceRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetDevice(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetDevice(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::GetDeviceRequest const& request) {
           return stub_->GetDevice(context, request);
@@ -292,8 +291,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   StatusOr<google::cloud::iot::v1::Device> UpdateDevice(
       google::cloud::iot::v1::UpdateDeviceRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateDevice(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateDevice(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::UpdateDeviceRequest const& request) {
           return stub_->UpdateDevice(context, request);
@@ -304,8 +303,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   Status DeleteDevice(
       google::cloud::iot::v1::DeleteDeviceRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteDevice(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteDevice(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::DeleteDeviceRequest const& request) {
           return stub_->DeleteDevice(context, request);
@@ -317,11 +316,10 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::ListDevicesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<DeviceManagerRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListDevices(request);
+    auto retry =
+        std::shared_ptr<DeviceManagerRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListDevices(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::iot::v1::Device>>(
@@ -350,8 +348,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ModifyCloudToDeviceConfig(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ModifyCloudToDeviceConfig(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const&
                    request) {
@@ -365,8 +363,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ListDeviceConfigVersions(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ListDeviceConfigVersions(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::ListDeviceConfigVersionsRequest const&
                    request) {
@@ -378,8 +376,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse> ListDeviceStates(
       google::cloud::iot::v1::ListDeviceStatesRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ListDeviceStates(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ListDeviceStates(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::ListDeviceStatesRequest const& request) {
           return stub_->ListDeviceStates(context, request);
@@ -390,8 +388,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -402,8 +400,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -414,8 +412,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TestIamPermissions(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TestIamPermissions(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -427,8 +425,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   SendCommandToDevice(google::cloud::iot::v1::SendCommandToDeviceRequest const&
                           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SendCommandToDevice(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SendCommandToDevice(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::iot::v1::SendCommandToDeviceRequest const& request) {
@@ -441,8 +439,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   BindDeviceToGateway(google::cloud::iot::v1::BindDeviceToGatewayRequest const&
                           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->BindDeviceToGateway(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->BindDeviceToGateway(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) {
@@ -456,8 +454,8 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
       google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UnbindDeviceFromGateway(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UnbindDeviceFromGateway(request),
         [this](grpc::ClientContext& context,
                google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const&
                    request) {
@@ -467,6 +465,32 @@ class DeviceManagerConnectionImpl : public DeviceManagerConnection {
   }
 
  private:
+  std::unique_ptr<DeviceManagerRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DeviceManagerRetryPolicyOption>()) {
+      return options.get<DeviceManagerRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DeviceManagerBackoffPolicyOption>()) {
+      return options.get<DeviceManagerBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<DeviceManagerConnectionIdempotencyPolicyOption>()) {
+      return options.get<DeviceManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iot_internal::DeviceManagerStub> stub_;
   std::unique_ptr<DeviceManagerRetryPolicy const> retry_policy_prototype_;

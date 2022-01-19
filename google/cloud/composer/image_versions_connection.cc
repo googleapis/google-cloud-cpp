@@ -77,11 +77,10 @@ class ImageVersionsConnectionImpl : public ImageVersionsConnection {
                         ListImageVersionsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<ImageVersionsRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListImageVersions(request);
+    auto retry =
+        std::shared_ptr<ImageVersionsRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListImageVersions(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<StreamRange<
         google::cloud::orchestration::airflow::service::v1::ImageVersion>>(
@@ -110,6 +109,32 @@ class ImageVersionsConnectionImpl : public ImageVersionsConnection {
   }
 
  private:
+  std::unique_ptr<ImageVersionsRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ImageVersionsRetryPolicyOption>()) {
+      return options.get<ImageVersionsRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ImageVersionsBackoffPolicyOption>()) {
+      return options.get<ImageVersionsBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<ImageVersionsConnectionIdempotencyPolicyOption>()) {
+      return options.get<ImageVersionsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<composer_internal::ImageVersionsStub> stub_;
   std::unique_ptr<ImageVersionsRetryPolicy const> retry_policy_prototype_;

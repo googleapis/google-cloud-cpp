@@ -117,17 +117,17 @@ class VpcAccessServiceConnectionImpl : public VpcAccessServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::vpcaccess::v1::Connector>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateConnector(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateConnector(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetConnector(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetConnector(request),
         [this](
             grpc::ClientContext& context,
             google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
@@ -140,11 +140,10 @@ class VpcAccessServiceConnectionImpl : public VpcAccessServiceConnection {
       google::cloud::vpcaccess::v1::ListConnectorsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<VpcAccessServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListConnectors(request);
+    auto retry =
+        std::shared_ptr<VpcAccessServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListConnectors(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::vpcaccess::v1::Connector>>(
@@ -194,12 +193,46 @@ class VpcAccessServiceConnectionImpl : public VpcAccessServiceConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::vpcaccess::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteConnector(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteConnector(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<VpcAccessServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VpcAccessServiceRetryPolicyOption>()) {
+      return options.get<VpcAccessServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VpcAccessServiceBackoffPolicyOption>()) {
+      return options.get<VpcAccessServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VpcAccessServicePollingPolicyOption>()) {
+      return options.get<VpcAccessServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<VpcAccessServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub_;
   std::unique_ptr<VpcAccessServiceRetryPolicy const> retry_policy_prototype_;

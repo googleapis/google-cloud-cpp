@@ -151,8 +151,8 @@ class FoldersConnectionImpl : public FoldersConnection {
       google::cloud::resourcemanager::v3::GetFolderRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetFolder(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetFolder(request),
         [this](grpc::ClientContext& context,
                google::cloud::resourcemanager::v3::GetFolderRequest const&
                    request) { return stub_->GetFolder(context, request); },
@@ -163,11 +163,9 @@ class FoldersConnectionImpl : public FoldersConnection {
       google::cloud::resourcemanager::v3::ListFoldersRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<FoldersRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListFolders(request);
+    auto retry = std::shared_ptr<FoldersRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListFolders(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::resourcemanager::v3::Folder>>(
@@ -196,11 +194,9 @@ class FoldersConnectionImpl : public FoldersConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<FoldersRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->SearchFolders(request);
+    auto retry = std::shared_ptr<FoldersRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->SearchFolders(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::resourcemanager::v3::Folder>>(
@@ -250,9 +246,9 @@ class FoldersConnectionImpl : public FoldersConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Folder>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateFolder(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateFolder(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
@@ -280,9 +276,9 @@ class FoldersConnectionImpl : public FoldersConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Folder>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateFolder(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateFolder(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
@@ -310,9 +306,8 @@ class FoldersConnectionImpl : public FoldersConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Folder>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->MoveFolder(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->MoveFolder(request), polling_policy(), __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
@@ -340,9 +335,9 @@ class FoldersConnectionImpl : public FoldersConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Folder>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteFolder(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteFolder(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
@@ -370,16 +365,16 @@ class FoldersConnectionImpl : public FoldersConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::resourcemanager::v3::Folder>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UndeleteFolder(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UndeleteFolder(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -390,8 +385,8 @@ class FoldersConnectionImpl : public FoldersConnection {
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -402,8 +397,8 @@ class FoldersConnectionImpl : public FoldersConnection {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TestIamPermissions(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TestIamPermissions(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -412,6 +407,38 @@ class FoldersConnectionImpl : public FoldersConnection {
   }
 
  private:
+  std::unique_ptr<FoldersRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<FoldersRetryPolicyOption>()) {
+      return options.get<FoldersRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<FoldersBackoffPolicyOption>()) {
+      return options.get<FoldersBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<FoldersPollingPolicyOption>()) {
+      return options.get<FoldersPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<FoldersConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<FoldersConnectionIdempotencyPolicyOption>()) {
+      return options.get<FoldersConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::FoldersStub> stub_;
   std::unique_ptr<FoldersRetryPolicy const> retry_policy_prototype_;

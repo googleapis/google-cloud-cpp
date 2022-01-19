@@ -229,11 +229,9 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::ListServiceAccountsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<IAMRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListServiceAccounts(request);
+    auto retry = std::shared_ptr<IAMRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListServiceAccounts(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::iam::admin::v1::ServiceAccount>>(
@@ -262,8 +260,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::GetServiceAccountRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetServiceAccount(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetServiceAccount(request),
         [this](
             grpc::ClientContext& context,
             google::iam::admin::v1::GetServiceAccountRequest const& request) {
@@ -276,8 +274,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::CreateServiceAccountRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateServiceAccount(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateServiceAccount(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::CreateServiceAccountRequest const&
                    request) {
@@ -290,8 +288,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::PatchServiceAccountRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PatchServiceAccount(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PatchServiceAccount(request),
         [this](
             grpc::ClientContext& context,
             google::iam::admin::v1::PatchServiceAccountRequest const& request) {
@@ -304,8 +302,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::DeleteServiceAccountRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteServiceAccount(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteServiceAccount(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::DeleteServiceAccountRequest const&
                    request) {
@@ -319,8 +317,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::UndeleteServiceAccountRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UndeleteServiceAccount(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UndeleteServiceAccount(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::UndeleteServiceAccountRequest const&
                    request) {
@@ -333,8 +331,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::EnableServiceAccountRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->EnableServiceAccount(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->EnableServiceAccount(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::EnableServiceAccountRequest const&
                    request) {
@@ -347,8 +345,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::DisableServiceAccountRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DisableServiceAccount(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DisableServiceAccount(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::DisableServiceAccountRequest const&
                    request) {
@@ -362,8 +360,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::ListServiceAccountKeysRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ListServiceAccountKeys(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ListServiceAccountKeys(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::ListServiceAccountKeysRequest const&
                    request) {
@@ -376,8 +374,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::GetServiceAccountKeyRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetServiceAccountKey(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetServiceAccountKey(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::GetServiceAccountKeyRequest const&
                    request) {
@@ -390,8 +388,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::CreateServiceAccountKeyRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateServiceAccountKey(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateServiceAccountKey(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::CreateServiceAccountKeyRequest const&
                    request) {
@@ -404,8 +402,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::UploadServiceAccountKeyRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UploadServiceAccountKey(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UploadServiceAccountKey(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::UploadServiceAccountKeyRequest const&
                    request) {
@@ -418,8 +416,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteServiceAccountKey(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteServiceAccountKey(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
                    request) {
@@ -431,8 +429,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -443,8 +441,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->SetIamPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->SetIamPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -455,8 +453,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->TestIamPermissions(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->TestIamPermissions(request),
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -468,11 +466,9 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::QueryGrantableRolesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<IAMRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->QueryGrantableRoles(request);
+    auto retry = std::shared_ptr<IAMRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->QueryGrantableRoles(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::iam::admin::v1::Role>>(
@@ -500,11 +496,9 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::ListRolesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<IAMRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListRoles(request);
+    auto retry = std::shared_ptr<IAMRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListRoles(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::iam::admin::v1::Role>>(
@@ -530,8 +524,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::admin::v1::Role> GetRole(
       google::iam::admin::v1::GetRoleRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetRole(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetRole(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::GetRoleRequest const& request) {
           return stub_->GetRole(context, request);
@@ -542,8 +536,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::admin::v1::Role> CreateRole(
       google::iam::admin::v1::CreateRoleRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateRole(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateRole(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::CreateRoleRequest const& request) {
           return stub_->CreateRole(context, request);
@@ -554,8 +548,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::admin::v1::Role> UpdateRole(
       google::iam::admin::v1::UpdateRoleRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateRole(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateRole(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::UpdateRoleRequest const& request) {
           return stub_->UpdateRole(context, request);
@@ -566,8 +560,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
       google::iam::admin::v1::DeleteRoleRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteRole(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteRole(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::DeleteRoleRequest const& request) {
           return stub_->DeleteRole(context, request);
@@ -578,8 +572,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::admin::v1::Role> UndeleteRole(
       google::iam::admin::v1::UndeleteRoleRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UndeleteRole(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UndeleteRole(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::UndeleteRoleRequest const& request) {
           return stub_->UndeleteRole(context, request);
@@ -592,11 +586,9 @@ class IAMConnectionImpl : public IAMConnection {
       override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<IAMRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->QueryTestablePermissions(request);
+    auto retry = std::shared_ptr<IAMRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->QueryTestablePermissions(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::iam::admin::v1::Permission>>(
@@ -627,8 +619,8 @@ class IAMConnectionImpl : public IAMConnection {
       google::iam::admin::v1::QueryAuditableServicesRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->QueryAuditableServices(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->QueryAuditableServices(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::QueryAuditableServicesRequest const&
                    request) {
@@ -640,8 +632,8 @@ class IAMConnectionImpl : public IAMConnection {
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
       google::iam::admin::v1::LintPolicyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->LintPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->LintPolicy(request),
         [this](grpc::ClientContext& context,
                google::iam::admin::v1::LintPolicyRequest const& request) {
           return stub_->LintPolicy(context, request);
@@ -650,6 +642,30 @@ class IAMConnectionImpl : public IAMConnection {
   }
 
  private:
+  std::unique_ptr<IAMRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IAMRetryPolicyOption>()) {
+      return options.get<IAMRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IAMBackoffPolicyOption>()) {
+      return options.get<IAMBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<IAMConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IAMConnectionIdempotencyPolicyOption>()) {
+      return options.get<IAMConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMStub> stub_;
   std::unique_ptr<IAMRetryPolicy const> retry_policy_prototype_;

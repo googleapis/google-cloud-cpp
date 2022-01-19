@@ -66,8 +66,8 @@ class PublisherConnectionImpl : public PublisherConnection {
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->PublishChannelConnectionEvents(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->PublishChannelConnectionEvents(request),
         [this](grpc::ClientContext& context,
                google::cloud::eventarc::publishing::v1::
                    PublishChannelConnectionEventsRequest const& request) {
@@ -77,6 +77,30 @@ class PublisherConnectionImpl : public PublisherConnection {
   }
 
  private:
+  std::unique_ptr<PublisherRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PublisherRetryPolicyOption>()) {
+      return options.get<PublisherRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PublisherBackoffPolicyOption>()) {
+      return options.get<PublisherBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PublisherConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<PublisherConnectionIdempotencyPolicyOption>()) {
+      return options.get<PublisherConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<eventarc_internal::PublisherStub> stub_;
   std::unique_ptr<PublisherRetryPolicy const> retry_policy_prototype_;

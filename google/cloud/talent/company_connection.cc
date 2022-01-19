@@ -93,8 +93,8 @@ class CompanyServiceConnectionImpl : public CompanyServiceConnection {
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       google::cloud::talent::v4::CreateCompanyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateCompany(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateCompany(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::CreateCompanyRequest const& request) {
           return stub_->CreateCompany(context, request);
@@ -105,8 +105,8 @@ class CompanyServiceConnectionImpl : public CompanyServiceConnection {
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
       google::cloud::talent::v4::GetCompanyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetCompany(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetCompany(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::GetCompanyRequest const& request) {
           return stub_->GetCompany(context, request);
@@ -117,8 +117,8 @@ class CompanyServiceConnectionImpl : public CompanyServiceConnection {
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
       google::cloud::talent::v4::UpdateCompanyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateCompany(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateCompany(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::UpdateCompanyRequest const& request) {
           return stub_->UpdateCompany(context, request);
@@ -129,8 +129,8 @@ class CompanyServiceConnectionImpl : public CompanyServiceConnection {
   Status DeleteCompany(
       google::cloud::talent::v4::DeleteCompanyRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteCompany(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteCompany(request),
         [this](grpc::ClientContext& context,
                google::cloud::talent::v4::DeleteCompanyRequest const& request) {
           return stub_->DeleteCompany(context, request);
@@ -142,11 +142,10 @@ class CompanyServiceConnectionImpl : public CompanyServiceConnection {
       google::cloud::talent::v4::ListCompaniesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<CompanyServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListCompanies(request);
+    auto retry =
+        std::shared_ptr<CompanyServiceRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListCompanies(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::talent::v4::Company>>(
@@ -172,6 +171,32 @@ class CompanyServiceConnectionImpl : public CompanyServiceConnection {
   }
 
  private:
+  std::unique_ptr<CompanyServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CompanyServiceRetryPolicyOption>()) {
+      return options.get<CompanyServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CompanyServiceBackoffPolicyOption>()) {
+      return options.get<CompanyServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<CompanyServiceConnectionIdempotencyPolicyOption>()) {
+      return options.get<CompanyServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::CompanyServiceStub> stub_;
   std::unique_ptr<CompanyServiceRetryPolicy const> retry_policy_prototype_;

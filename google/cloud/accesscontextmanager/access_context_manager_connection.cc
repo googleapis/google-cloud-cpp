@@ -316,11 +316,10 @@ class AccessContextManagerConnectionImpl
           request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AccessContextManagerRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListAccessPolicies(request);
+    auto retry =
+        std::shared_ptr<AccessContextManagerRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListAccessPolicies(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>(
@@ -352,8 +351,8 @@ class AccessContextManagerConnectionImpl
       google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetAccessPolicy(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetAccessPolicy(request),
         [this](grpc::ClientContext& context,
                google::identity::accesscontextmanager::v1::
                    GetAccessPolicyRequest const& request) {
@@ -388,9 +387,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::AccessPolicy>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateAccessPolicy(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateAccessPolicy(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
@@ -418,9 +417,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::AccessPolicy>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateAccessPolicy(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateAccessPolicy(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -451,9 +450,9 @@ class AccessContextManagerConnectionImpl
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::identity::accesscontextmanager::v1::
                 AccessContextManagerOperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteAccessPolicy(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteAccessPolicy(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
@@ -462,11 +461,10 @@ class AccessContextManagerConnectionImpl
           request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AccessContextManagerRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListAccessLevels(request);
+    auto retry =
+        std::shared_ptr<AccessContextManagerRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListAccessLevels(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>(
@@ -498,8 +496,8 @@ class AccessContextManagerConnectionImpl
       google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
           request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetAccessLevel(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetAccessLevel(request),
         [this](grpc::ClientContext& context,
                google::identity::accesscontextmanager::v1::
                    GetAccessLevelRequest const& request) {
@@ -533,9 +531,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::AccessLevel>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateAccessLevel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateAccessLevel(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
@@ -563,9 +561,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::AccessLevel>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateAccessLevel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateAccessLevel(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -596,9 +594,9 @@ class AccessContextManagerConnectionImpl
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::identity::accesscontextmanager::v1::
                 AccessContextManagerOperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteAccessLevel(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteAccessLevel(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<
@@ -630,9 +628,9 @@ class AccessContextManagerConnectionImpl
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::
                 ReplaceAccessLevelsResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ReplaceAccessLevels(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ReplaceAccessLevels(request), polling_policy(),
+        __func__);
   }
 
   StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
@@ -641,11 +639,10 @@ class AccessContextManagerConnectionImpl
           request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AccessContextManagerRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListServicePerimeters(request);
+    auto retry =
+        std::shared_ptr<AccessContextManagerRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListServicePerimeters(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<StreamRange<
         google::identity::accesscontextmanager::v1::ServicePerimeter>>(
@@ -677,8 +674,8 @@ class AccessContextManagerConnectionImpl
   GetServicePerimeter(google::identity::accesscontextmanager::v1::
                           GetServicePerimeterRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetServicePerimeter(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetServicePerimeter(request),
         [this](grpc::ClientContext& context,
                google::identity::accesscontextmanager::v1::
                    GetServicePerimeterRequest const& request) {
@@ -714,9 +711,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::ServicePerimeter>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateServicePerimeter(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateServicePerimeter(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
@@ -746,9 +743,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::ServicePerimeter>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateServicePerimeter(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateServicePerimeter(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -781,9 +778,9 @@ class AccessContextManagerConnectionImpl
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::identity::accesscontextmanager::v1::
                 AccessContextManagerOperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteServicePerimeter(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteServicePerimeter(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -816,9 +813,9 @@ class AccessContextManagerConnectionImpl
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::
                 ReplaceServicePerimetersResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->ReplaceServicePerimeters(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->ReplaceServicePerimeters(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -851,9 +848,9 @@ class AccessContextManagerConnectionImpl
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::
                 CommitServicePerimetersResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CommitServicePerimeters(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CommitServicePerimeters(request),
+        polling_policy(), __func__);
   }
 
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
@@ -862,11 +859,10 @@ class AccessContextManagerConnectionImpl
           ListGcpUserAccessBindingsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry = std::shared_ptr<AccessContextManagerRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListGcpUserAccessBindings(request);
+    auto retry =
+        std::shared_ptr<AccessContextManagerRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListGcpUserAccessBindings(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<StreamRange<
         google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
@@ -899,8 +895,8 @@ class AccessContextManagerConnectionImpl
       google::identity::accesscontextmanager::v1::
           GetGcpUserAccessBindingRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetGcpUserAccessBinding(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetGcpUserAccessBinding(request),
         [this](grpc::ClientContext& context,
                google::identity::accesscontextmanager::v1::
                    GetGcpUserAccessBindingRequest const& request) {
@@ -937,9 +933,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::GcpUserAccessBinding>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateGcpUserAccessBinding(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateGcpUserAccessBinding(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<
@@ -970,9 +966,9 @@ class AccessContextManagerConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::identity::accesscontextmanager::v1::GcpUserAccessBinding>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateGcpUserAccessBinding(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateGcpUserAccessBinding(request),
+        polling_policy(), __func__);
   }
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -1005,12 +1001,47 @@ class AccessContextManagerConnectionImpl
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::identity::accesscontextmanager::v1::
                 GcpUserAccessBindingOperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteGcpUserAccessBinding(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteGcpUserAccessBinding(request),
+        polling_policy(), __func__);
   }
 
  private:
+  std::unique_ptr<AccessContextManagerRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AccessContextManagerRetryPolicyOption>()) {
+      return options.get<AccessContextManagerRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AccessContextManagerBackoffPolicyOption>()) {
+      return options.get<AccessContextManagerBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AccessContextManagerPollingPolicyOption>()) {
+      return options.get<AccessContextManagerPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AccessContextManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<AccessContextManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
       stub_;

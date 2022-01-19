@@ -96,12 +96,50 @@ class VideoIntelligenceServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::videointelligence::v1::AnnotateVideoResponse>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->AnnotateVideo(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->AnnotateVideo(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<VideoIntelligenceServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VideoIntelligenceServiceRetryPolicyOption>()) {
+      return options.get<VideoIntelligenceServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VideoIntelligenceServiceBackoffPolicyOption>()) {
+      return options.get<VideoIntelligenceServiceBackoffPolicyOption>()
+          ->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<VideoIntelligenceServicePollingPolicyOption>()) {
+      return options.get<VideoIntelligenceServicePollingPolicyOption>()
+          ->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
       stub_;

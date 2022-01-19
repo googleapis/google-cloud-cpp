@@ -126,17 +126,17 @@ class AssuredWorkloadsServiceConnectionImpl
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::assuredworkloads::v1::Workload>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateWorkload(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateWorkload(request), polling_policy(),
+        __func__);
   }
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->UpdateWorkload(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->UpdateWorkload(request),
         [this](grpc::ClientContext& context,
                google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
                    request) { return stub_->UpdateWorkload(context, request); },
@@ -147,8 +147,8 @@ class AssuredWorkloadsServiceConnectionImpl
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteWorkload(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteWorkload(request),
         [this](grpc::ClientContext& context,
                google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
                    request) { return stub_->DeleteWorkload(context, request); },
@@ -159,8 +159,8 @@ class AssuredWorkloadsServiceConnectionImpl
       google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetWorkload(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetWorkload(request),
         [this](grpc::ClientContext& context,
                google::cloud::assuredworkloads::v1::GetWorkloadRequest const&
                    request) { return stub_->GetWorkload(context, request); },
@@ -173,10 +173,9 @@ class AssuredWorkloadsServiceConnectionImpl
     request.clear_page_token();
     auto stub = stub_;
     auto retry = std::shared_ptr<AssuredWorkloadsServiceRetryPolicy const>(
-        retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListWorkloads(request);
+        retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListWorkloads(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::assuredworkloads::v1::Workload>>(
@@ -203,6 +202,42 @@ class AssuredWorkloadsServiceConnectionImpl
   }
 
  private:
+  std::unique_ptr<AssuredWorkloadsServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AssuredWorkloadsServiceRetryPolicyOption>()) {
+      return options.get<AssuredWorkloadsServiceRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AssuredWorkloadsServiceBackoffPolicyOption>()) {
+      return options.get<AssuredWorkloadsServiceBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<AssuredWorkloadsServicePollingPolicyOption>()) {
+      return options.get<AssuredWorkloadsServicePollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub> stub_;
   std::unique_ptr<AssuredWorkloadsServiceRetryPolicy const>

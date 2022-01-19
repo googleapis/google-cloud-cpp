@@ -91,11 +91,9 @@ class IDSConnectionImpl : public IDSConnection {
       google::cloud::ids::v1::ListEndpointsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
-    auto retry =
-        std::shared_ptr<IDSRetryPolicy const>(retry_policy_prototype_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy_prototype_->clone());
-    auto idempotency = idempotency_policy_->ListEndpoints(request);
+    auto retry = std::shared_ptr<IDSRetryPolicy const>(retry_policy());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+    auto idempotency = idempotency_policy()->ListEndpoints(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
         StreamRange<google::cloud::ids::v1::Endpoint>>(
@@ -123,8 +121,8 @@ class IDSConnectionImpl : public IDSConnection {
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
       google::cloud::ids::v1::GetEndpointRequest const& request) override {
     return google::cloud::internal::RetryLoop(
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->GetEndpoint(request),
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->GetEndpoint(request),
         [this](grpc::ClientContext& context,
                google::cloud::ids::v1::GetEndpointRequest const& request) {
           return stub_->GetEndpoint(context, request);
@@ -155,9 +153,9 @@ class IDSConnectionImpl : public IDSConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
             google::cloud::ids::v1::Endpoint>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->CreateEndpoint(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->CreateEndpoint(request), polling_policy(),
+        __func__);
   }
 
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
@@ -183,12 +181,44 @@ class IDSConnectionImpl : public IDSConnection {
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
             google::cloud::ids::v1::OperationMetadata>,
-        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-        idempotency_policy_->DeleteEndpoint(request),
-        polling_policy_prototype_->clone(), __func__);
+        retry_policy(), backoff_policy(),
+        idempotency_policy()->DeleteEndpoint(request), polling_policy(),
+        __func__);
   }
 
  private:
+  std::unique_ptr<IDSRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IDSRetryPolicyOption>()) {
+      return options.get<IDSRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IDSBackoffPolicyOption>()) {
+      return options.get<IDSBackoffPolicyOption>()->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IDSPollingPolicyOption>()) {
+      return options.get<IDSPollingPolicyOption>()->clone();
+    }
+    return polling_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<IDSConnectionIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<IDSConnectionIdempotencyPolicyOption>()) {
+      return options.get<IDSConnectionIdempotencyPolicyOption>()->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<ids_internal::IDSStub> stub_;
   std::unique_ptr<IDSRetryPolicy const> retry_policy_prototype_;
