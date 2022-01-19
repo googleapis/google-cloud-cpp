@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
+#include "google/cloud/storage/internal/grpc_service_account_parser.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/grpc_options.h"
@@ -437,8 +438,13 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
 }
 
 StatusOr<ServiceAccount> GrpcClient::GetServiceAccount(
-    GetProjectServiceAccountRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetProjectServiceAccountRequest const& request) {
+  auto proto = GrpcServiceAccountParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "");
+  auto response = stub_->GetServiceAccount(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcServiceAccountParser::FromProto(*response);
 }
 
 StatusOr<ListHmacKeysResponse> GrpcClient::ListHmacKeys(
