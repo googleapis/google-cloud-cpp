@@ -76,6 +76,8 @@ expected_dirs+=(
   ./include/google/cloud/clouddms/logging/v1
   ./include/google/cloud/dialogflow
   ./include/google/cloud/dialogflow/v2
+  ./include/google/cloud/gkehub/v1/configmanagement
+  ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
   # no RPC services in google/cloud/oslogin/common

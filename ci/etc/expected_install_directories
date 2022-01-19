@@ -60,6 +60,10 @@
 ./include/google/cloud/eventarc/publishing
 ./include/google/cloud/eventarc/publishing/v1
 ./include/google/cloud/eventarc/v1
+./include/google/cloud/gkehub
+./include/google/cloud/gkehub/internal
+./include/google/cloud/gkehub/mocks
+./include/google/cloud/gkehub/v1
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
@@ -211,6 +215,7 @@
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_eventarc
+./lib64/cmake/google_cloud_cpp_gkehub
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_ids
 ./lib64/cmake/google_cloud_cpp_iot

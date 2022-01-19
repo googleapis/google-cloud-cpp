@@ -10,6 +10,7 @@ billing
 composer
 datamigration
 eventarc
+gkehub
 iam
 ids
 iot
