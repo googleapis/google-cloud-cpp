@@ -172,6 +172,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-cloudbuild",
+    deps = [
+        "//google/cloud/cloudbuild:google_cloud_cpp_cloudbuild",
+    ],
+)
+
+cc_library(
+    name = "experimental-cloudbuild_mocks",
+    deps = [
+        "//google/cloud/cloudbuild:google_cloud_cpp_cloudbuild_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-composer",
     deps = [
         "//google/cloud/composer:google_cloud_cpp_composer",
