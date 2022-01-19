@@ -39,7 +39,7 @@ class PartitionAssignmentServiceLogging
       std::shared_ptr<PartitionAssignmentServiceStub> child,
       TracingOptions tracing_options, std::set<std::string> components);
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>
   AsyncAssignPartitions(google::cloud::CompletionQueue const& cq,

@@ -31,7 +31,7 @@ PartitionAssignmentServiceAuth::PartitionAssignmentServiceAuth(
     std::shared_ptr<PartitionAssignmentServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PartitionAssignmentRequest,
     google::cloud::pubsublite::v1::PartitionAssignment>>
 PartitionAssignmentServiceAuth::AsyncAssignPartitions(

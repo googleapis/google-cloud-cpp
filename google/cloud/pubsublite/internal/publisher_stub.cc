@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsublite/internal/publisher_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
 #include <memory>
@@ -29,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PublisherServiceStub::~PublisherServiceStub() = default;
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PublishRequest,
     google::cloud::pubsublite::v1::PublishResponse>>
 DefaultPublisherServiceStub::AsyncPublish(

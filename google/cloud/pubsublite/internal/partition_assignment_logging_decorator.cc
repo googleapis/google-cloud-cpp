@@ -35,7 +35,7 @@ PartitionAssignmentServiceLogging::PartitionAssignmentServiceLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PartitionAssignmentRequest,
     google::cloud::pubsublite::v1::PartitionAssignment>>
 PartitionAssignmentServiceLogging::AsyncAssignPartitions(

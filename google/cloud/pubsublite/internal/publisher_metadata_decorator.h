@@ -35,7 +35,7 @@ class PublisherServiceMetadata : public PublisherServiceStub {
   explicit PublisherServiceMetadata(
       std::shared_ptr<PublisherServiceStub> child);
 
-  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,
