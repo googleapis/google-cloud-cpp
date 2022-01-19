@@ -21,6 +21,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "internal/grpc_bucket_access_control_parser.h",
     "internal/grpc_bucket_metadata_parser.h",
     "internal/grpc_client.h",
+    "internal/grpc_common_request_params.h",
     "internal/grpc_configure_client_context.h",
     "internal/grpc_object_access_control_parser.h",
     "internal/grpc_object_metadata_parser.h",
