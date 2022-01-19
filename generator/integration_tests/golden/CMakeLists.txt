@@ -151,7 +151,8 @@ function (google_cloud_cpp_generator_define_golden_tests)
         tests/golden_thing_admin_metadata_decorator_test.cc
         tests/golden_thing_admin_option_defaults_test.cc
         tests/golden_thing_admin_stub_factory_test.cc
-        tests/golden_thing_admin_stub_test.cc)
+        tests/golden_thing_admin_stub_test.cc
+        tests/plumbing_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
