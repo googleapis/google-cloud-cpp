@@ -303,7 +303,8 @@ endforeach ()
 # This is purely for backwards compatibility. rpc/status.proto does not depend
 # on rpc/error_details.proto, but we have published libraries with this
 # dependency in place.
-target_link_libraries(google_cloud_cpp_rpc_status_protos PUBLIC google-cloud-cpp::rpc_error_details_protos)
+target_link_libraries(google_cloud_cpp_rpc_status_protos
+                      PUBLIC google-cloud-cpp::rpc_error_details_protos)
 
 external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)
