@@ -24,6 +24,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
+
 static_assert(std::is_copy_constructible<NativeExpression>::value,
               "NativeExpression should be copy constructible");
 static_assert(std::is_move_constructible<NativeExpression>::value,
@@ -368,6 +370,11 @@ TEST(NativeIamPolicy, ParseBindingsFailures) {
   ASSERT_FALSE(policy);
   EXPECT_THAT(policy.status().message(),
               HasSubstr("expected string for 'members' entry"));
+
+  policy =
+      NativeIamPolicy::CreateFromJson(R"js("valid-json-but-not-an-object")js");
+  ASSERT_THAT(policy, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("top level node")));
 }
 
 // Check that policies are parsed correctly.

@@ -27,7 +27,7 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
   // JSON array. At minimum, for the request to succeed, the instance must
   // have been granted the scope that allows it to retrieve info from the
   // metadata server.
-  if (response_body.is_discarded() || response_body.count("email") == 0 ||
+  if (!response_body.is_object() || response_body.count("email") == 0 ||
       response_body.count("scopes") == 0) {
     auto payload =
         response.payload +
@@ -52,7 +52,7 @@ ParseComputeEngineRefreshResponse(
   // Response should have the attributes "access_token", "expires_in", and
   // "token_type".
   auto access_token = nlohmann::json::parse(response.payload, nullptr, false);
-  if (access_token.is_discarded() || access_token.count("access_token") == 0 or
+  if (!access_token.is_object() || access_token.count("access_token") == 0 or
       access_token.count("expires_in") == 0 or
       access_token.count("token_type") == 0) {
     auto payload =

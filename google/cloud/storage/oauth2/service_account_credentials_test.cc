@@ -235,17 +235,6 @@ TEST_F(ServiceAccountCredentialsTest,
             credentials.AuthorizationHeader().value());
 }
 
-/// @test Verify that `nlohmann::json::parse()` failures are reported as
-/// is_discarded.
-TEST_F(ServiceAccountCredentialsTest, JsonParsingFailure) {
-  std::string config = R"""( not-a-valid-json-string )""";
-  // The documentation for `nlohmann::json::parse()` is a bit ambiguous, so
-  // wrote a little test to verify it works as I expected.
-  auto parsed = nlohmann::json::parse(config, nullptr, false);
-  EXPECT_TRUE(parsed.is_discarded());
-  EXPECT_FALSE(parsed.is_null());
-}
-
 /// @test Verify that parsing a service account JSON string works.
 TEST_F(ServiceAccountCredentialsTest, ParseSimple) {
   std::string contents = R"""({
@@ -305,10 +294,14 @@ TEST_F(ServiceAccountCredentialsTest, ParseUsesImplicitDefaultTokenUri) {
 
 /// @test Verify that invalid contents result in a readable error.
 TEST_F(ServiceAccountCredentialsTest, ParseInvalidContentsFails) {
-  std::string config = R"""( not-a-valid-json-string )""";
+  EXPECT_THAT(ParseServiceAccountCredentials(R"""( not-a-valid-json-string )""",
+                                             "test-as-a-source"),
+              StatusIs(Not(StatusCode::kOk),
+                       AllOf(HasSubstr("Invalid ServiceAccountCredentials"),
+                             HasSubstr("test-as-a-source"))));
 
-  auto actual = ParseServiceAccountCredentials(config, "test-as-a-source");
-  EXPECT_THAT(actual,
+  EXPECT_THAT(ParseServiceAccountCredentials(
+                  R"""("valid-json-but-not-an-object")""", "test-as-a-source"),
               StatusIs(Not(StatusCode::kOk),
                        AllOf(HasSubstr("Invalid ServiceAccountCredentials"),
                              HasSubstr("test-as-a-source"))));
@@ -745,7 +738,7 @@ TEST_F(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
 
 /// @test Parsing a refresh response with missing fields results in failure.
 TEST_F(ServiceAccountCredentialsTest,
-       ParseServiceAccountRefreshResponseMissingFields) {
+       ParseServiceAccountRefreshResponseInvalid) {
   std::string r1 = R"""({})""";
   // Does not have access_token.
   std::string r2 = R"""({
@@ -766,6 +759,13 @@ TEST_F(ServiceAccountCredentialsTest,
   EXPECT_THAT(status,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Could not find all required fields")));
+
+  EXPECT_THAT(
+      ParseServiceAccountRefreshResponse(
+          HttpResponse{400, R"js("valid-json-but-not-an-object")js", {}},
+          FakeClock::now()),
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("Could not find all required fields")));
 }
 
 /// @test Parsing a refresh response yields a TemporaryToken.

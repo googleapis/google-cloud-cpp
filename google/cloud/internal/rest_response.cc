@@ -169,17 +169,20 @@ ErrorInfo MakeErrorInfo(nlohmann::json const& details) {
 Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
   auto const status_code = MapHttpCodeToStatus(http_status_code);
   if (status_code == StatusCode::kOk) return {};
-  if (payload.empty())
+  if (payload.empty()) {
     // If there's no payload, create one to make sure the original http status
     // code received is available.
     payload = absl::StrCat(
         R"""({"error": {"message": "Received HTTP status code: )""",
         std::to_string(http_status_code), R"""("}})""");
+  }
   // We try to parse the payload as JSON, which may allow us to provide a more
-  // structured and useful error Status. If the payload fails to parse as JSON,
-  // we simply attach the full error payload as the Status's message string.
+  // structured and useful error Status. If the payload fails to parse as a JSON
+  // object (e.g. it parses as a JSON string, or a JSON array, or does not parse
+  // as JSON at all), we simply attach the full error payload as the Status's
+  // message string.
   auto json = nlohmann::json::parse(payload, nullptr, false);
-  if (json.is_discarded()) return Status(status_code, std::move(payload));
+  if (!json.is_object()) return Status(status_code, std::move(payload));
 
   // We expect JSON that looks like the following:
   //   {

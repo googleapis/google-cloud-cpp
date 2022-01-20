@@ -445,17 +445,23 @@ TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), "invalid-credentials.json");
-  std::ofstream os(filename);
-  std::string contents_str = R"""( not-a-json-object-string )""";
-  os << contents_str;
-  os.close();
-  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
+  char const* const test_cases[] = {
+      R"""( not-a-json-object-string )""",
+      R"js("valid-json-but-not-an-object")js",
+  };
+  for (auto const* contents : test_cases) {
+    SCOPED_TRACE("Testing with: " + std::string{contents});
+    std::string filename = google::cloud::internal::PathAppend(
+        ::testing::TempDir(), "invalid-credentials.json");
+    std::ofstream os(filename);
+    os << contents;
+    os.close();
+    ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
-  auto creds = GoogleDefaultCredentials();
-  EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument,
-                              HasSubstr("credentials file " + filename)));
+    auto creds = GoogleDefaultCredentials();
+    EXPECT_THAT(creds, StatusIs(StatusCode::kInvalidArgument,
+                                HasSubstr("credentials file " + filename)));
+  }
 }
 
 TEST_F(GoogleCredentialsTest, LoadInvalidAuthorizedUserCredentialsViaADC) {

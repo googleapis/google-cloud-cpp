@@ -57,7 +57,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   }
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nlohmann::json::parse(contents, nullptr, false);
-  if (cred_json.is_discarded()) {
+  if (!cred_json.is_object()) {
     // This is not a JSON file, try to load it as a P12 service account.
     auto info = ParseServiceAccountP12File(path);
     if (!info) {

@@ -122,8 +122,7 @@ TEST_F(ComputeEngineCredentialsTest,
 }
 
 /// @test Parsing a refresh response with missing fields results in failure.
-TEST_F(ComputeEngineCredentialsTest,
-       ParseComputeEngineRefreshResponseMissingFields) {
+TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponseInvalid) {
   std::string token_info_resp = R"""({})""";
   // Does not have access_token.
   std::string token_info_resp2 = R"""({
@@ -141,6 +140,12 @@ TEST_F(ComputeEngineCredentialsTest,
   status = ParseComputeEngineRefreshResponse(
       HttpResponse{400, token_info_resp2, {}}, FakeClock::now());
   EXPECT_THAT(status,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Could not find all required fields")));
+
+  EXPECT_THAT(ParseComputeEngineRefreshResponse(
+                  HttpResponse{400, R"js("valid-json-but-not-object")js", {}},
+                  FakeClock::now()),
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Could not find all required fields")));
 }
@@ -171,7 +176,7 @@ TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
 
 /// @test Parsing a metadata server response with missing fields results in
 /// failure.
-TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponseMissingFields) {
+TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponseInvalid) {
   std::string email = "foo@bar.baz";
   std::string svc_acct_info_resp = R"""({})""";
   std::string svc_acct_info_resp2 = R"""({
@@ -189,6 +194,10 @@ TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponseMissingFields) {
   EXPECT_THAT(status,
               StatusIs(Not(StatusCode::kOk),
                        HasSubstr("Could not find all required fields")));
+
+  EXPECT_THAT(ParseMetadataServerResponse(HttpResponse{
+                  400, R"js("valid-json-but-not-an-object")js", {}}),
+              StatusIs(Not(StatusCode::kOk)));
 }
 
 /// @test Parsing a metadata server response yields a ServiceAccountMetadata.

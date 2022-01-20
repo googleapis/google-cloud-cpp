@@ -94,6 +94,13 @@ TEST(AsStatus, HttpStatusCodeIsNotOkNoPayload) {
   EXPECT_THAT(status.message(), Eq("Received HTTP status code: 403"));
 }
 
+TEST(AsStatus, HttpStatusCodeValidJsonButNotErrorCode) {
+  auto status =
+      AsStatus(HttpStatusCode::kForbidden, R"""("valid-but-not-error-code")""");
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_THAT(status.message(), Eq(R"""("valid-but-not-error-code")"""));
+}
+
 TEST(AsStatus, HttpStatusCodeNotFoundPayload) {
   std::string error = R"""(
   {
