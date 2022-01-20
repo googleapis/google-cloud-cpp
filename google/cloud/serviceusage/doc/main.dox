@@ -2,8 +2,9 @@
 
 @mainpage Service Usage API C++ Client Library
 
-An idiomatic C++ client library for the [Service Usage API][cloud-service-docs], a service
-to Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.
+An idiomatic C++ client library for the [Service Usage API][cloud-service],
+an infrastructure service of Google Cloud that lets you list and manage APIs
+and Services in your Cloud projects.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/serviceusage
+[cloud-service]: https://cloud.google.com/service-usage
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

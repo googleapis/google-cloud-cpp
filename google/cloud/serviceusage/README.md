@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Service Usage API][cloud-service-docs], a service to Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.
+[Service Usage API][cloud-service], an infrastructure service of Google
+Cloud that lets you list and manage APIs and Services in your Cloud projects.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/serviceusage
+[cloud-service]: https://cloud.google.com/service-usage
+[cloud-service-docs]: https://cloud.google.com/service-usage/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-serviceusage/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/serviceusage
 
@@ -38,7 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/serviceusage/ EDIT HERE .h"
+#include "google/cloud/serviceusage/service_usage_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,13 +52,16 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace serviceusage = ::google::cloud::serviceusage;
-  auto client =
-      serviceusage::Client(serviceusage::MakeConnection(/* EDIT HERE */));
+  auto client = serviceusage::ServiceUsageClient(
+      serviceusage::MakeServiceUsageConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  google::api::serviceusage::v1::ListServicesRequest request;
+  request.set_parent(project.FullName());
+  request.set_filter("state:ENABLED");
+  for (auto s : client.ListServices(request)) {
+    if (!s) throw std::runtime_error(s.status().message());
+    std::cout << s->DebugString() << "\n";
   }
 
   return 0;

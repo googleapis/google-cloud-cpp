@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/serviceusage/ EDIT HERE .h"
+#include "google/cloud/serviceusage/service_usage_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,13 +24,16 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace serviceusage = ::google::cloud::serviceusage;
-  auto client =
-      serviceusage::Client(serviceusage::MakeConnection(/* EDIT HERE */));
+  auto client = serviceusage::ServiceUsageClient(
+      serviceusage::MakeServiceUsageConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  google::api::serviceusage::v1::ListServicesRequest request;
+  request.set_parent(project.FullName());
+  request.set_filter("state:ENABLED");
+  for (auto s : client.ListServices(request)) {
+    if (!s) throw std::runtime_error(s.status().message());
+    std::cout << s->DebugString() << "\n";
   }
 
   return 0;
