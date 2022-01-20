@@ -252,8 +252,17 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     # cmake-format: sort
     "google/api/annotations.proto"
     "google/api/auth.proto"
+    "google/api/billing.proto"
+    "google/api/distribution.proto"
+    "google/api/endpoint.proto"
+    "google/api/log.proto"
+    "google/api/logging.proto"
     "google/api/metric.proto"
     "google/api/monitored_resource.proto"
+    "google/api/monitoring.proto"
+    "google/api/quota.proto"
+    "google/api/service.proto"
+    "google/api/usage.proto"
     "google/rpc/status.proto")
 
 # For some directories *most* (but not all) the proto files are simple enough
@@ -277,8 +286,45 @@ external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
 external_googleapis_add_library("google/api/auth.proto" api_annotations_protos)
 external_googleapis_add_library("google/api/metric.proto"
                                 api_launch_stage_protos api_label_protos)
+external_googleapis_add_library("google/api/billing.proto"
+                                api_annotations_protos api_metric_protos)
+external_googleapis_add_library("google/api/distribution.proto"
+                                api_annotations_protos)
+external_googleapis_add_library("google/api/endpoint.proto"
+                                api_annotations_protos)
+external_googleapis_add_library("google/api/log.proto" api_label_protos)
+external_googleapis_add_library("google/api/logging.proto"
+                                api_annotations_protos api_label_protos)
 external_googleapis_add_library("google/api/monitored_resource.proto"
                                 api_launch_stage_protos api_label_protos)
+external_googleapis_add_library("google/api/monitoring.proto"
+                                api_annotations_protos)
+external_googleapis_add_library("google/api/quota.proto" api_annotations_protos)
+external_googleapis_add_library("google/api/usage.proto" api_annotations_protos
+                                api_visibility_protos)
+external_googleapis_add_library(
+    "google/api/service.proto"
+    api_annotations_protos
+    api_auth_protos
+    api_backend_protos
+    api_billing_protos
+    api_context_protos
+    api_control_protos
+    api_documentation_protos
+    api_endpoint_protos
+    api_http_protos
+    api_label_protos
+    api_log_protos
+    api_logging_protos
+    api_metric_protos
+    api_monitored_resource_protos
+    api_monitoring_protos
+    api_quota_protos
+    api_resource_protos
+    api_source_info_protos
+    api_system_parameter_protos
+    api_usage_protos)
+
 external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)
 external_googleapis_add_library("google/iam/v1/policy.proto"
