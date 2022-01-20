@@ -214,6 +214,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-dlp",
+    deps = [
+        "//google/cloud/dlp:google_cloud_cpp_dlp",
+    ],
+)
+
+cc_library(
+    name = "experimental-dlp_mocks",
+    deps = [
+        "//google/cloud/dlp:google_cloud_cpp_dlp_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-eventarc",
     deps = [
         "//google/cloud/eventarc:google_cloud_cpp_eventarc",

@@ -10,6 +10,7 @@ billing
 cloudbuild
 composer
 datamigration
+dlp
 eventarc
 gkehub
 gameservices
