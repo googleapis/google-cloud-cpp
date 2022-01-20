@@ -1,0 +1,3 @@
+@com_google_googleapis//google/api:label.proto
+@com_google_googleapis//google/api:launch_stage.proto
+@com_google_googleapis//google/api:metric.proto

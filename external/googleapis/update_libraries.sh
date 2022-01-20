@@ -137,6 +137,23 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/workflows/type:type_cc_grpc" \
       "@com_google_googleapis//google/cloud/workflows/executions/v1:executions_cc_grpc"
   )"
+  # Basic Infrastructure Protos: these proto files are used in the definition
+  # of more complex services, as annotations or common types. They are sufficiently
+  # complex that they benefit from automatic maintenance, as opposed to simple
+  # proto files that have no dependencies.
+  ["api_annotations"]="@com_google_googleapis//google/api:annotations_proto"
+  ["api_auth"]="@com_google_googleapis//google/api:auth_proto"
+  ["api_metric"]="@com_google_googleapis//google/api:metric_proto"
+  ["api_billing"]="@com_google_googleapis//google/api:billing_proto"
+  ["api_distribution"]="@com_google_googleapis//google/api:distribution_proto"
+  ["api_endpoint"]="@com_google_googleapis//google/api:endpoint_proto"
+  ["api_log"]="@com_google_googleapis//google/api:log_proto"
+  ["api_logging"]="@com_google_googleapis//google/api:logging_proto"
+  ["api_monitored_resource"]="@com_google_googleapis//google/api:monitored_resource_proto"
+  ["api_monitoring"]="@com_google_googleapis//google/api:monitoring_proto"
+  ["api_quota"]="@com_google_googleapis//google/api:quota_proto"
+  ["api_usage"]="@com_google_googleapis//google/api:usage_proto"
+  ["api_service"]="@com_google_googleapis//google/api:service_proto"
 )
 
 for library in "${!LIBRARIES[@]}"; do

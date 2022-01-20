@@ -1,0 +1,4 @@
+@com_google_googleapis//google/api:annotations.proto
+@com_google_googleapis//google/api:http.proto
+@com_google_googleapis//google/api:usage.proto
+@com_google_googleapis//google/api:visibility.proto

@@ -1,0 +1,6 @@
+@com_google_googleapis//google/api:annotations.proto
+@com_google_googleapis//google/api:billing.proto
+@com_google_googleapis//google/api:http.proto
+@com_google_googleapis//google/api:label.proto
+@com_google_googleapis//google/api:launch_stage.proto
+@com_google_googleapis//google/api:metric.proto

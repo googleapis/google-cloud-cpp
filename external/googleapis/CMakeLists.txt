@@ -132,6 +132,11 @@ endforeach ()
 file(GLOB protolists "protolists/*.list")
 foreach (file IN LISTS protolists)
     google_cloud_cpp_load_protolist(protos "${file}")
+    # Skip these for now. Some of them need to be listed manually, some can be
+    # automatically loaded, I have chosen to list them manually
+    if (file MATCHES "/protolists/api_" OR file MATCHES "/protolists/rpc_")
+        continue()
+    endif ()
     foreach (proto IN LISTS protos)
         list(APPEND EXTERNAL_GOOGLEAPIS_BYPRODUCTS "${proto}")
     endforeach ()
@@ -249,27 +254,27 @@ set(external_googleapis_installed_libraries_list
 # These proto files cannot be added in the foreach() loop because they have
 # dependencies.
 set(PROTO_FILES_WITH_DEPENDENCIES
-    # cmake-format: sort
+    # Keep in the current order, they need to be processed in topological order
+    # based on their interdependencies.
     "google/api/annotations.proto"
     "google/api/auth.proto"
+    "google/api/metric.proto"
     "google/api/billing.proto"
     "google/api/distribution.proto"
     "google/api/endpoint.proto"
     "google/api/log.proto"
     "google/api/logging.proto"
-    "google/api/metric.proto"
     "google/api/monitored_resource.proto"
     "google/api/monitoring.proto"
     "google/api/quota.proto"
-    "google/api/service.proto"
     "google/api/usage.proto"
-    "google/rpc/status.proto")
+    "google/api/service.proto")
 
 # For some directories *most* (but not all) the proto files are simple enough
 # that the libraries can be generated with a foreach() loop.
 foreach (proto IN LISTS EXTERNAL_GOOGLEAPIS_PROTO_FILES)
     if (proto MATCHES "^google/api/"
-        OR proto MATCHES "^google/type"
+        OR proto MATCHES "^google/type/"
         OR proto MATCHES "^google/rpc/")
         external_googleapis_short_name(short_name "${proto}")
         list(APPEND external_googleapis_installed_libraries_list
@@ -281,56 +286,29 @@ foreach (proto IN LISTS EXTERNAL_GOOGLEAPIS_PROTO_FILES)
     endif ()
 endforeach ()
 
-# Out of order because they have dependencies.
-external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
-external_googleapis_add_library("google/api/auth.proto" api_annotations_protos)
-external_googleapis_add_library("google/api/metric.proto"
-                                api_launch_stage_protos api_label_protos)
-external_googleapis_add_library("google/api/billing.proto"
-                                api_annotations_protos api_metric_protos)
-external_googleapis_add_library("google/api/distribution.proto"
-                                api_annotations_protos)
-external_googleapis_add_library("google/api/endpoint.proto"
-                                api_annotations_protos)
-external_googleapis_add_library("google/api/log.proto" api_label_protos)
-external_googleapis_add_library("google/api/logging.proto"
-                                api_annotations_protos api_label_protos)
-external_googleapis_add_library("google/api/monitored_resource.proto"
-                                api_launch_stage_protos api_label_protos)
-external_googleapis_add_library("google/api/monitoring.proto"
-                                api_annotations_protos)
-external_googleapis_add_library("google/api/quota.proto" api_annotations_protos)
-external_googleapis_add_library("google/api/usage.proto" api_annotations_protos
-                                api_visibility_protos)
-external_googleapis_add_library(
-    "google/api/service.proto"
-    api_annotations_protos
-    api_auth_protos
-    api_backend_protos
-    api_billing_protos
-    api_context_protos
-    api_control_protos
-    api_documentation_protos
-    api_endpoint_protos
-    api_http_protos
-    api_label_protos
-    api_log_protos
-    api_logging_protos
-    api_metric_protos
-    api_monitored_resource_protos
-    api_monitoring_protos
-    api_quota_protos
-    api_resource_protos
-    api_source_info_protos
-    api_system_parameter_protos
-    api_usage_protos)
+# Load the list of protos and dependencies for these complex proto libraries and
+# then create them.
+foreach (proto IN LISTS PROTO_FILES_WITH_DEPENDENCIES)
+    external_googleapis_short_name(short_name "${proto}")
+    string(REPLACE "_protos" "" filename "${short_name}")
+    google_cloud_cpp_load_protolist(p_list "protolists/${filename}.list")
+    google_cloud_cpp_load_protodeps(p_deps "protodeps/${filename}.deps")
+    google_cloud_cpp_grpcpp_library(
+        google_cloud_cpp_${short_name} ${p_list} PROTO_PATH_DIRECTORIES
+        "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+    external_googleapis_set_version_and_alias(${short_name})
+    target_link_libraries(google_cloud_cpp_${short_name} PUBLIC ${p_deps})
+endforeach ()
+
+# This is purely for backwards compatibility. rpc/status.proto does not depend
+# on rpc/error_details.proto, but we have published libraries with this
+# dependency in place.
+target_link_libraries(google_cloud_cpp_rpc_status_protos PUBLIC google-cloud-cpp::rpc_error_details_protos)
 
 external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)
 external_googleapis_add_library("google/iam/v1/policy.proto"
                                 api_annotations_protos type_expr_protos)
-external_googleapis_add_library("google/rpc/status.proto"
-                                rpc_error_details_protos)
 
 external_googleapis_add_library(
     "google/iam/v1/iam_policy.proto"
