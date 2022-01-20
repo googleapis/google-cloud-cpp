@@ -27,16 +27,35 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # cmake-format: sort
     "google/api/annotations.proto"
     "google/api/auth.proto"
+    "google/api/backend.proto"
+    "google/api/billing.proto"
     "google/api/client.proto"
+    "google/api/config_change.proto"
+    "google/api/consumer.proto"
+    "google/api/context.proto"
+    "google/api/control.proto"
     "google/api/distribution.proto"
+    "google/api/documentation.proto"
+    "google/api/endpoint.proto"
+    "google/api/error_reason.proto"
     "google/api/field_behavior.proto"
     "google/api/http.proto"
     "google/api/httpbody.proto"
     "google/api/label.proto"
     "google/api/launch_stage.proto"
+    "google/api/log.proto"
+    "google/api/logging.proto"
     "google/api/metric.proto"
     "google/api/monitored_resource.proto"
+    "google/api/monitoring.proto"
+    "google/api/quota.proto"
     "google/api/resource.proto"
+    "google/api/routing.proto"
+    "google/api/service.proto"
+    "google/api/source_info.proto"
+    "google/api/system_parameter.proto"
+    "google/api/usage.proto"
+    "google/api/visibility.proto"
     "google/devtools/cloudtrace/v2/trace.proto"
     "google/devtools/cloudtrace/v2/tracing.proto"
     "google/iam/v1/iam_policy.proto"
@@ -210,18 +229,6 @@ endfunction ()
 
 set(external_googleapis_installed_libraries_list
     # cmake-format: sort
-    google_cloud_cpp_api_annotations_protos
-    google_cloud_cpp_api_auth_protos
-    google_cloud_cpp_api_client_protos
-    google_cloud_cpp_api_distribution_protos
-    google_cloud_cpp_api_field_behavior_protos
-    google_cloud_cpp_api_http_protos
-    google_cloud_cpp_api_httpbody_protos
-    google_cloud_cpp_api_label_protos
-    google_cloud_cpp_api_launch_stage_protos
-    google_cloud_cpp_api_metric_protos
-    google_cloud_cpp_api_monitored_resource_protos
-    google_cloud_cpp_api_resource_protos
     google_cloud_cpp_bigtable_protos
     google_cloud_cpp_cloud_bigquery_protos
     google_cloud_cpp_cloud_speech_protos
@@ -236,55 +243,34 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_longrunning_operations_protos
     google_cloud_cpp_monitoring_protos
     google_cloud_cpp_pubsub_protos
-    google_cloud_cpp_rpc_code_protos
-    google_cloud_cpp_rpc_error_details_protos
-    google_cloud_cpp_rpc_status_protos
     google_cloud_cpp_spanner_protos
-    google_cloud_cpp_storage_protos
-    google_cloud_cpp_type_calendar_period_protos
-    google_cloud_cpp_type_color_protos
-    google_cloud_cpp_type_date_protos
-    google_cloud_cpp_type_datetime_protos
-    google_cloud_cpp_type_dayofweek_protos
-    google_cloud_cpp_type_expr_protos
-    google_cloud_cpp_type_fraction_protos
-    google_cloud_cpp_type_interval_protos
-    google_cloud_cpp_type_latlng_protos
-    google_cloud_cpp_type_localized_text_protos
-    google_cloud_cpp_type_money_protos
-    google_cloud_cpp_type_month_protos
-    google_cloud_cpp_type_phone_number_protos
-    google_cloud_cpp_type_postal_address_protos
-    google_cloud_cpp_type_quaternion_protos
-    google_cloud_cpp_type_timeofday_protos)
+    google_cloud_cpp_storage_protos)
 
-# Keep these sorted to simplify maintenance
-external_googleapis_add_library("google/api/client.proto")
-external_googleapis_add_library("google/api/distribution.proto")
-external_googleapis_add_library("google/api/field_behavior.proto")
-external_googleapis_add_library("google/api/http.proto")
-external_googleapis_add_library("google/api/httpbody.proto")
-external_googleapis_add_library("google/api/label.proto")
-external_googleapis_add_library("google/api/launch_stage.proto")
-external_googleapis_add_library("google/api/resource.proto")
-external_googleapis_add_library("google/type/calendar_period.proto")
-external_googleapis_add_library("google/type/color.proto")
-external_googleapis_add_library("google/type/date.proto")
-external_googleapis_add_library("google/type/datetime.proto")
-external_googleapis_add_library("google/type/dayofweek.proto")
-external_googleapis_add_library("google/type/expr.proto")
-external_googleapis_add_library("google/type/fraction.proto")
-external_googleapis_add_library("google/type/interval.proto")
-external_googleapis_add_library("google/type/latlng.proto")
-external_googleapis_add_library("google/type/localized_text.proto")
-external_googleapis_add_library("google/type/money.proto")
-external_googleapis_add_library("google/type/month.proto")
-external_googleapis_add_library("google/type/phone_number.proto")
-external_googleapis_add_library("google/type/postal_address.proto")
-external_googleapis_add_library("google/type/quaternion.proto")
-external_googleapis_add_library("google/type/timeofday.proto")
-external_googleapis_add_library("google/rpc/code.proto")
-external_googleapis_add_library("google/rpc/error_details.proto")
+# These proto files cannot be added in the foreach() loop because they have
+# dependencies.
+set(PROTO_FILES_WITH_DEPENDENCIES
+    # cmake-format: sort
+    "google/api/annotations.proto"
+    "google/api/auth.proto"
+    "google/api/metric.proto"
+    "google/api/monitored_resource.proto"
+    "google/rpc/status.proto")
+
+# For some directories *most* (but not all) the proto files are simple enough
+# that the libraries can be generated with a foreach() loop.
+foreach (proto IN LISTS EXTERNAL_GOOGLEAPIS_PROTO_FILES)
+    if (proto MATCHES "^google/api/"
+        OR proto MATCHES "^google/type"
+        OR proto MATCHES "^google/rpc/")
+        external_googleapis_short_name(short_name "${proto}")
+        list(APPEND external_googleapis_installed_libraries_list
+             google_cloud_cpp_${short_name})
+        list(FIND PROTO_FILES_WITH_DEPENDENCIES "${proto}" has_dependency)
+        if (has_dependency EQUAL -1)
+            external_googleapis_add_library("${proto}")
+        endif ()
+    endif ()
+endforeach ()
 
 # Out of order because they have dependencies.
 external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
