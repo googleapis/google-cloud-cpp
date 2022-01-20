@@ -24,13 +24,14 @@ set(EXTERNAL_GOOGLEAPIS_SOURCE
     "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 
 set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
-    "google/api/http.proto"
-    "google/api/httpbody.proto"
+    # cmake-format: sort
     "google/api/annotations.proto"
     "google/api/auth.proto"
     "google/api/client.proto"
     "google/api/distribution.proto"
     "google/api/field_behavior.proto"
+    "google/api/http.proto"
+    "google/api/httpbody.proto"
     "google/api/label.proto"
     "google/api/launch_stage.proto"
     "google/api/metric.proto"
@@ -38,13 +39,13 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/resource.proto"
     "google/devtools/cloudtrace/v2/trace.proto"
     "google/devtools/cloudtrace/v2/tracing.proto"
+    "google/iam/v1/iam_policy.proto"
+    "google/iam/v1/options.proto"
+    "google/iam/v1/policy.proto"
+    "google/longrunning/operations.proto"
     "google/rpc/code.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
-    "google/iam/v1/options.proto"
-    "google/iam/v1/policy.proto"
-    "google/iam/v1/iam_policy.proto"
-    "google/longrunning/operations.proto"
     "google/type/calendar_period.proto"
     "google/type/color.proto"
     "google/type/date.proto"
@@ -208,37 +209,38 @@ function (external_googleapis_set_version_and_alias short_name)
 endfunction ()
 
 set(external_googleapis_installed_libraries_list
-    google_cloud_cpp_bigtable_protos
-    google_cloud_cpp_cloud_bigquery_protos
-    google_cloud_cpp_cloud_speech_protos
-    google_cloud_cpp_cloud_texttospeech_protos
-    google_cloud_cpp_iam_protos
-    google_cloud_cpp_pubsub_protos
-    google_cloud_cpp_spanner_protos
-    google_cloud_cpp_storage_protos
-    google_cloud_cpp_longrunning_operations_protos
-    google_cloud_cpp_api_http_protos
-    google_cloud_cpp_api_httpbody_protos
+    # cmake-format: sort
     google_cloud_cpp_api_annotations_protos
     google_cloud_cpp_api_auth_protos
     google_cloud_cpp_api_client_protos
     google_cloud_cpp_api_distribution_protos
     google_cloud_cpp_api_field_behavior_protos
+    google_cloud_cpp_api_http_protos
+    google_cloud_cpp_api_httpbody_protos
     google_cloud_cpp_api_label_protos
     google_cloud_cpp_api_launch_stage_protos
     google_cloud_cpp_api_metric_protos
     google_cloud_cpp_api_monitored_resource_protos
     google_cloud_cpp_api_resource_protos
+    google_cloud_cpp_bigtable_protos
+    google_cloud_cpp_cloud_bigquery_protos
+    google_cloud_cpp_cloud_speech_protos
+    google_cloud_cpp_cloud_texttospeech_protos
     google_cloud_cpp_devtools_cloudtrace_v2_trace_protos
     google_cloud_cpp_devtools_cloudtrace_v2_tracing_protos
-    google_cloud_cpp_logging_protos
-    google_cloud_cpp_monitoring_protos
+    google_cloud_cpp_iam_protos
+    google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
     google_cloud_cpp_iam_v1_policy_protos
-    google_cloud_cpp_iam_v1_iam_policy_protos
+    google_cloud_cpp_logging_protos
+    google_cloud_cpp_longrunning_operations_protos
+    google_cloud_cpp_monitoring_protos
+    google_cloud_cpp_pubsub_protos
     google_cloud_cpp_rpc_code_protos
     google_cloud_cpp_rpc_error_details_protos
     google_cloud_cpp_rpc_status_protos
+    google_cloud_cpp_spanner_protos
+    google_cloud_cpp_storage_protos
     google_cloud_cpp_type_calendar_period_protos
     google_cloud_cpp_type_color_protos
     google_cloud_cpp_type_date_protos
@@ -256,21 +258,15 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_type_quaternion_protos
     google_cloud_cpp_type_timeofday_protos)
 
-external_googleapis_add_library("google/api/http.proto")
-external_googleapis_add_library("google/api/httpbody.proto")
-external_googleapis_add_library("google/api/metric.proto"
-                                api_launch_stage_protos api_label_protos)
-external_googleapis_add_library("google/api/monitored_resource.proto"
-                                api_launch_stage_protos api_label_protos)
-external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
-external_googleapis_add_library("google/api/auth.proto" api_annotations_protos)
+# Keep these sorted to simplify maintenance
 external_googleapis_add_library("google/api/client.proto")
 external_googleapis_add_library("google/api/distribution.proto")
 external_googleapis_add_library("google/api/field_behavior.proto")
+external_googleapis_add_library("google/api/http.proto")
+external_googleapis_add_library("google/api/httpbody.proto")
 external_googleapis_add_library("google/api/label.proto")
 external_googleapis_add_library("google/api/launch_stage.proto")
 external_googleapis_add_library("google/api/resource.proto")
-
 external_googleapis_add_library("google/type/calendar_period.proto")
 external_googleapis_add_library("google/type/color.proto")
 external_googleapis_add_library("google/type/date.proto")
@@ -287,16 +283,22 @@ external_googleapis_add_library("google/type/phone_number.proto")
 external_googleapis_add_library("google/type/postal_address.proto")
 external_googleapis_add_library("google/type/quaternion.proto")
 external_googleapis_add_library("google/type/timeofday.proto")
-
 external_googleapis_add_library("google/rpc/code.proto")
 external_googleapis_add_library("google/rpc/error_details.proto")
-external_googleapis_add_library("google/rpc/status.proto"
-                                rpc_error_details_protos)
 
+# Out of order because they have dependencies.
+external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
+external_googleapis_add_library("google/api/auth.proto" api_annotations_protos)
+external_googleapis_add_library("google/api/metric.proto"
+                                api_launch_stage_protos api_label_protos)
+external_googleapis_add_library("google/api/monitored_resource.proto"
+                                api_launch_stage_protos api_label_protos)
 external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)
 external_googleapis_add_library("google/iam/v1/policy.proto"
                                 api_annotations_protos type_expr_protos)
+external_googleapis_add_library("google/rpc/status.proto"
+                                rpc_error_details_protos)
 
 external_googleapis_add_library(
     "google/iam/v1/iam_policy.proto"
