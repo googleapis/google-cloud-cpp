@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Organization Policy API][cloud-service-docs], a service to The Org Policy API allows users to configure governance rules on their GCP resources across the Cloud Resource Hierarchy.
+[Organization Policy API][cloud-service-docs]. Allows users to configure
+governance rules on their GCP resources across the Cloud Resource Hierarchy.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/orgpolicy
+[cloud-service-docs]: https://cloud.google.com/resource-manager/docs/organization-policy/overview
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-orgpolicy/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/orgpolicy
 
@@ -38,7 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/orgpolicy/ EDIT HERE .h"
+#include "google/cloud/orgpolicy/org_policy_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,12 +51,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace orgpolicy = ::google::cloud::orgpolicy;
-  auto client = orgpolicy::Client(orgpolicy::MakeConnection(/* EDIT HERE */));
+  auto client =
+      orgpolicy::OrgPolicyClient(orgpolicy::MakeOrgPolicyConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto p : client.ListPolicies(project.FullName())) {
+    if (!p) throw std::runtime_error(p.status().message());
+    std::cout << p->DebugString() << "\n";
   }
 
   return 0;

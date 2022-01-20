@@ -363,6 +363,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-orgpolicy",
+    deps = [
+        "//google/cloud/orgpolicy:google_cloud_cpp_orgpolicy",
+    ],
+)
+
+cc_library(
+    name = "experimental-orgpolicy_mocks",
+    deps = [
+        "//google/cloud/orgpolicy:google_cloud_cpp_orgpolicy_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-oslogin",
     deps = [
         "//google/cloud/oslogin:google_cloud_cpp_oslogin",

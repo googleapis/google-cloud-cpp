@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/orgpolicy/ EDIT HERE .h"
+#include "google/cloud/orgpolicy/org_policy_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,12 +24,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace orgpolicy = ::google::cloud::orgpolicy;
-  auto client = orgpolicy::Client(orgpolicy::MakeConnection(/* EDIT HERE */));
+  auto client =
+      orgpolicy::OrgPolicyClient(orgpolicy::MakeOrgPolicyConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto p : client.ListPolicies(project.FullName())) {
+    if (!p) throw std::runtime_error(p.status().message());
+    std::cout << p->DebugString() << "\n";
   }
 
   return 0;
