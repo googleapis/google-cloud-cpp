@@ -456,6 +456,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-retail",
+    deps = [
+        "//google/cloud/retail:google_cloud_cpp_retail",
+    ],
+)
+
+cc_library(
+    name = "experimental-retail_mocks",
+    deps = [
+        "//google/cloud/retail:google_cloud_cpp_retail_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-scheduler",
     deps = [
         "//google/cloud/scheduler:google_cloud_cpp_scheduler",

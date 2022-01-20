@@ -123,6 +123,10 @@
 ./include/google/cloud/resourcemanager/internal
 ./include/google/cloud/resourcemanager/mocks
 ./include/google/cloud/resourcemanager/v3
+./include/google/cloud/retail
+./include/google/cloud/retail/internal
+./include/google/cloud/retail/mocks
+./include/google/cloud/retail/v2
 ./include/google/cloud/scheduler
 ./include/google/cloud/scheduler/internal
 ./include/google/cloud/scheduler/mocks
@@ -250,6 +254,7 @@
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_recommender
 ./lib64/cmake/google_cloud_cpp_resourcemanager
+./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
 ./lib64/cmake/google_cloud_cpp_shell

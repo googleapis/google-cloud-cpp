@@ -509,6 +509,10 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Platforms.")
 # Note the use of spaces, `string(JOIN)` is not available in cmake-3.5, so we
 # need to add the separator ourselves.
+#
+# This list is for backwards compatibility purposes only. DO NOT add new
+# libraries to it.
+#
 string(
     CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
            "google_cloud_cpp_bigtable_protos"
