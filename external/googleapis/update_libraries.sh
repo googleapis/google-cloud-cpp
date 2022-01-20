@@ -69,7 +69,7 @@ declare -A -r LIBRARIES=(
   ["gkehub"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/gkehub/v1:gkehub_cc_grpc" \
-      "@com_google_googleapis//google/cloud/gkehub/v1/multiclusteringress:multiclusteringres_cc_grpc" \
+      "@com_google_googleapis//google/cloud/gkehub/v1/multiclusteringress:multiclusteringress_cc_grpc" \
       "@com_google_googleapis//google/cloud/gkehub/v1/configmanagement:configmanagement_cc_grpc"
   )"
   ["iam"]="$(
@@ -104,7 +104,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
   )"
   ["retail"]="@com_google_googleapis//google/cloud/retail/v2:retail_cc_grpc"
-  ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_cc_grp"
+  ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_cc_grpc"
   ["secretmanager"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_cc_grpc" \
