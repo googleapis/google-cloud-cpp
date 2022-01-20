@@ -84,6 +84,7 @@ declare -A -r LIBRARIES=(
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc"
   ["notebooks"]="@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc"
+  ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"
   ["oslogin"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc" \
@@ -98,11 +99,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/recommender/v1:recommender_cc_grpc" \
       "@com_google_googleapis//google/cloud/recommender/logging/v1:logging_cc_grpc"
   )"
-  ["resourcemanager"]="$(
-    printf ",%s" \
-      "@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc" \
-      "@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
-  )"
+  ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
   ["retail"]="@com_google_googleapis//google/cloud/retail/v2:retail_cc_grpc"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_cc_grpc"
   ["secretmanager"]="$(
