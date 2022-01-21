@@ -32,7 +32,7 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 using ::google::cloud::internal::RetryLoop;
 
 class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {

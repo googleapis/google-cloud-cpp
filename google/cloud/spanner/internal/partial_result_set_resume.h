@@ -41,7 +41,7 @@ using PartialResultSetReaderFactory =
 class PartialResultSetResume : public PartialResultSetReader {
  public:
   PartialResultSetResume(PartialResultSetReaderFactory factory,
-                         google::cloud::internal::Idempotency idempotency,
+                         google::cloud::Idempotency idempotency,
                          std::unique_ptr<spanner::RetryPolicy> retry_policy,
                          std::unique_ptr<spanner::BackoffPolicy> backoff_policy)
       : factory_(std::move(factory)),
@@ -58,7 +58,7 @@ class PartialResultSetResume : public PartialResultSetReader {
 
  private:
   PartialResultSetReaderFactory factory_;
-  google::cloud::internal::Idempotency idempotency_;
+  google::cloud::Idempotency idempotency_;
   std::unique_ptr<spanner::RetryPolicy> retry_policy_prototype_;
   std::unique_ptr<spanner::BackoffPolicy> backoff_policy_prototype_;
   std::string last_resume_token_;

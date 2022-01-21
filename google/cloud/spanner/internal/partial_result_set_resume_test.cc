@@ -32,7 +32,7 @@ namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
