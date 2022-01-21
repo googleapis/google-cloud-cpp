@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
@@ -39,16 +38,16 @@ class ServicesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ServicesConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListServices(
+  virtual google::cloud::Idempotency ListServices(
       google::appengine::v1::ListServicesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetService(
+  virtual google::cloud::Idempotency GetService(
       google::appengine::v1::GetServiceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateService(
+  virtual google::cloud::Idempotency UpdateService(
       google::appengine::v1::UpdateServiceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteService(
+  virtual google::cloud::Idempotency DeleteService(
       google::appengine::v1::DeleteServiceRequest const& request) = 0;
 };
 

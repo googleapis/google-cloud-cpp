@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_CHECKER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_CHECKER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/policytroubleshooter/v1/checker.grpc.pb.h>
 #include <memory>
@@ -38,7 +38,7 @@ class IamCheckerConnectionIdempotencyPolicy {
   virtual std::unique_ptr<IamCheckerConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency TroubleshootIamPolicy(
+  virtual google::cloud::Idempotency TroubleshootIamPolicy(
       google::cloud::policytroubleshooter::v1::
           TroubleshootIamPolicyRequest const& request) = 0;
 };

@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
@@ -39,19 +38,19 @@ class VersionsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListVersions(
+  virtual google::cloud::Idempotency ListVersions(
       google::appengine::v1::ListVersionsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetVersion(
+  virtual google::cloud::Idempotency GetVersion(
       google::appengine::v1::GetVersionRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateVersion(
+  virtual google::cloud::Idempotency CreateVersion(
       google::appengine::v1::CreateVersionRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateVersion(
+  virtual google::cloud::Idempotency UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteVersion(
+  virtual google::cloud::Idempotency DeleteVersion(
       google::appengine::v1::DeleteVersionRequest const& request) = 0;
 };
 

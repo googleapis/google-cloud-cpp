@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_CLOUD_SHELL_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_CLOUD_SHELL_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
 #include <memory>
@@ -39,19 +38,19 @@ class CloudShellServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency GetEnvironment(
+  virtual google::cloud::Idempotency GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency StartEnvironment(
+  virtual google::cloud::Idempotency StartEnvironment(
       google::cloud::shell::v1::StartEnvironmentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AuthorizeEnvironment(
+  virtual google::cloud::Idempotency AuthorizeEnvironment(
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AddPublicKey(
+  virtual google::cloud::Idempotency AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency RemovePublicKey(
+  virtual google::cloud::Idempotency RemovePublicKey(
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) = 0;
 };
 

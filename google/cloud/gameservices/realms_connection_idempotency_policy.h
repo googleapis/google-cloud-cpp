@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/gaming/v1/realms_service.grpc.pb.h>
 #include <memory>
@@ -39,22 +38,22 @@ class RealmsServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListRealms(
+  virtual google::cloud::Idempotency ListRealms(
       google::cloud::gaming::v1::ListRealmsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetRealm(
+  virtual google::cloud::Idempotency GetRealm(
       google::cloud::gaming::v1::GetRealmRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateRealm(
+  virtual google::cloud::Idempotency CreateRealm(
       google::cloud::gaming::v1::CreateRealmRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteRealm(
+  virtual google::cloud::Idempotency DeleteRealm(
       google::cloud::gaming::v1::DeleteRealmRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateRealm(
+  virtual google::cloud::Idempotency UpdateRealm(
       google::cloud::gaming::v1::UpdateRealmRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency PreviewRealmUpdate(
+  virtual google::cloud::Idempotency PreviewRealmUpdate(
       google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) = 0;
 };
 

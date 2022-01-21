@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_JOB_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_JOB_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/job_service.grpc.pb.h>
 #include <memory>
@@ -39,34 +38,34 @@ class JobServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<JobServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateJob(
+  virtual google::cloud::Idempotency CreateJob(
       google::cloud::talent::v4::CreateJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchCreateJobs(
+  virtual google::cloud::Idempotency BatchCreateJobs(
       google::cloud::talent::v4::BatchCreateJobsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetJob(
+  virtual google::cloud::Idempotency GetJob(
       google::cloud::talent::v4::GetJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateJob(
+  virtual google::cloud::Idempotency UpdateJob(
       google::cloud::talent::v4::UpdateJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchUpdateJobs(
+  virtual google::cloud::Idempotency BatchUpdateJobs(
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteJob(
+  virtual google::cloud::Idempotency DeleteJob(
       google::cloud::talent::v4::DeleteJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchDeleteJobs(
+  virtual google::cloud::Idempotency BatchDeleteJobs(
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListJobs(
+  virtual google::cloud::Idempotency ListJobs(
       google::cloud::talent::v4::ListJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency SearchJobs(
+  virtual google::cloud::Idempotency SearchJobs(
       google::cloud::talent::v4::SearchJobsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SearchJobsForAlert(
+  virtual google::cloud::Idempotency SearchJobsForAlert(
       google::cloud::talent::v4::SearchJobsRequest const& request) = 0;
 };
 

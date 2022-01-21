@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_SEARCH_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_SEARCH_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/search_service.grpc.pb.h>
 #include <memory>
@@ -38,7 +38,7 @@ class SearchServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<SearchServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency Search(
+  virtual google::cloud::Idempotency Search(
       google::cloud::retail::v2::SearchRequest request) = 0;
 };
 

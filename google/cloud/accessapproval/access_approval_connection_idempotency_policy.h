@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_ACCESS_APPROVAL_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_ACCESS_APPROVAL_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/accessapproval/v1/accessapproval.grpc.pb.h>
 #include <memory>
@@ -38,31 +38,31 @@ class AccessApprovalConnectionIdempotencyPolicy {
   virtual std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListApprovalRequests(
+  virtual google::cloud::Idempotency ListApprovalRequests(
       google::cloud::accessapproval::v1::ListApprovalRequestsMessage
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetApprovalRequest(
+  virtual google::cloud::Idempotency GetApprovalRequest(
       google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ApproveApprovalRequest(
+  virtual google::cloud::Idempotency ApproveApprovalRequest(
       google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DismissApprovalRequest(
+  virtual google::cloud::Idempotency DismissApprovalRequest(
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetAccessApprovalSettings(
+  virtual google::cloud::Idempotency GetAccessApprovalSettings(
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateAccessApprovalSettings(
+  virtual google::cloud::Idempotency UpdateAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           UpdateAccessApprovalSettingsMessage const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteAccessApprovalSettings(
+  virtual google::cloud::Idempotency DeleteAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request) = 0;
 };

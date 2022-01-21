@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_TABLE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_TABLE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <memory>
@@ -39,57 +38,57 @@ class BigtableTableAdminConnectionIdempotencyPolicy {
   virtual std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateTable(
+  virtual google::cloud::Idempotency CreateTable(
       google::bigtable::admin::v2::CreateTableRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListTables(
+  virtual google::cloud::Idempotency ListTables(
       google::bigtable::admin::v2::ListTablesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetTable(
+  virtual google::cloud::Idempotency GetTable(
       google::bigtable::admin::v2::GetTableRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteTable(
+  virtual google::cloud::Idempotency DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ModifyColumnFamilies(
+  virtual google::cloud::Idempotency ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DropRowRange(
+  virtual google::cloud::Idempotency DropRowRange(
       google::bigtable::admin::v2::DropRowRangeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GenerateConsistencyToken(
+  virtual google::cloud::Idempotency GenerateConsistencyToken(
       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CheckConsistency(
+  virtual google::cloud::Idempotency CheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateBackup(
+  virtual google::cloud::Idempotency CreateBackup(
       google::bigtable::admin::v2::CreateBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetBackup(
+  virtual google::cloud::Idempotency GetBackup(
       google::bigtable::admin::v2::GetBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateBackup(
+  virtual google::cloud::Idempotency UpdateBackup(
       google::bigtable::admin::v2::UpdateBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteBackup(
+  virtual google::cloud::Idempotency DeleteBackup(
       google::bigtable::admin::v2::DeleteBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListBackups(
+  virtual google::cloud::Idempotency ListBackups(
       google::bigtable::admin::v2::ListBackupsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency RestoreTable(
+  virtual google::cloud::Idempotency RestoreTable(
       google::bigtable::admin::v2::RestoreTableRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 

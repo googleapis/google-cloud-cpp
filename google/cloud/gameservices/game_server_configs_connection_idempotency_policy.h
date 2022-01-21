@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/gaming/v1/game_server_configs_service.grpc.pb.h>
 #include <memory>
@@ -39,17 +38,17 @@ class GameServerConfigsServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListGameServerConfigs(
+  virtual google::cloud::Idempotency ListGameServerConfigs(
       google::cloud::gaming::v1::ListGameServerConfigsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetGameServerConfig(
+  virtual google::cloud::Idempotency GetGameServerConfig(
       google::cloud::gaming::v1::GetGameServerConfigRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateGameServerConfig(
+  virtual google::cloud::Idempotency CreateGameServerConfig(
       google::cloud::gaming::v1::CreateGameServerConfigRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteGameServerConfig(
+  virtual google::cloud::Idempotency DeleteGameServerConfig(
       google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
           request) = 0;
 };

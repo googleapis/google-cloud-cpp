@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
 #include <memory>
@@ -38,17 +38,17 @@ class WebRiskServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ComputeThreatListDiff(
+  virtual google::cloud::Idempotency ComputeThreatListDiff(
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency SearchUris(
+  virtual google::cloud::Idempotency SearchUris(
       google::cloud::webrisk::v1::SearchUrisRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SearchHashes(
+  virtual google::cloud::Idempotency SearchHashes(
       google::cloud::webrisk::v1::SearchHashesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateSubmission(
+  virtual google::cloud::Idempotency CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request) = 0;
 };
 

@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_VM_MIGRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_VM_MIGRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
 #include <memory>
@@ -39,153 +38,153 @@ class VmMigrationConnectionIdempotencyPolicy {
   virtual std::unique_ptr<VmMigrationConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListSources(
+  virtual google::cloud::Idempotency ListSources(
       google::cloud::vmmigration::v1::ListSourcesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetSource(
+  virtual google::cloud::Idempotency GetSource(
       google::cloud::vmmigration::v1::GetSourceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateSource(
+  virtual google::cloud::Idempotency CreateSource(
       google::cloud::vmmigration::v1::CreateSourceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateSource(
+  virtual google::cloud::Idempotency UpdateSource(
       google::cloud::vmmigration::v1::UpdateSourceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteSource(
+  virtual google::cloud::Idempotency DeleteSource(
       google::cloud::vmmigration::v1::DeleteSourceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency FetchInventory(
+  virtual google::cloud::Idempotency FetchInventory(
       google::cloud::vmmigration::v1::FetchInventoryRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListUtilizationReports(
+  virtual google::cloud::Idempotency ListUtilizationReports(
       google::cloud::vmmigration::v1::ListUtilizationReportsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetUtilizationReport(
+  virtual google::cloud::Idempotency GetUtilizationReport(
       google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateUtilizationReport(
+  virtual google::cloud::Idempotency CreateUtilizationReport(
       google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteUtilizationReport(
+  virtual google::cloud::Idempotency DeleteUtilizationReport(
       google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListDatacenterConnectors(
+  virtual google::cloud::Idempotency ListDatacenterConnectors(
       google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDatacenterConnector(
+  virtual google::cloud::Idempotency GetDatacenterConnector(
       google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateDatacenterConnector(
+  virtual google::cloud::Idempotency CreateDatacenterConnector(
       google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteDatacenterConnector(
+  virtual google::cloud::Idempotency DeleteDatacenterConnector(
       google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateMigratingVm(
+  virtual google::cloud::Idempotency CreateMigratingVm(
       google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListMigratingVms(
+  virtual google::cloud::Idempotency ListMigratingVms(
       google::cloud::vmmigration::v1::ListMigratingVmsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetMigratingVm(
+  virtual google::cloud::Idempotency GetMigratingVm(
       google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateMigratingVm(
+  virtual google::cloud::Idempotency UpdateMigratingVm(
       google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteMigratingVm(
+  virtual google::cloud::Idempotency DeleteMigratingVm(
       google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency StartMigration(
+  virtual google::cloud::Idempotency StartMigration(
       google::cloud::vmmigration::v1::StartMigrationRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ResumeMigration(
+  virtual google::cloud::Idempotency ResumeMigration(
       google::cloud::vmmigration::v1::ResumeMigrationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency PauseMigration(
+  virtual google::cloud::Idempotency PauseMigration(
       google::cloud::vmmigration::v1::PauseMigrationRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency FinalizeMigration(
+  virtual google::cloud::Idempotency FinalizeMigration(
       google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateCloneJob(
+  virtual google::cloud::Idempotency CreateCloneJob(
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CancelCloneJob(
+  virtual google::cloud::Idempotency CancelCloneJob(
       google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListCloneJobs(
+  virtual google::cloud::Idempotency ListCloneJobs(
       google::cloud::vmmigration::v1::ListCloneJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetCloneJob(
+  virtual google::cloud::Idempotency GetCloneJob(
       google::cloud::vmmigration::v1::GetCloneJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateCutoverJob(
+  virtual google::cloud::Idempotency CreateCutoverJob(
       google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CancelCutoverJob(
+  virtual google::cloud::Idempotency CancelCutoverJob(
       google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListCutoverJobs(
+  virtual google::cloud::Idempotency ListCutoverJobs(
       google::cloud::vmmigration::v1::ListCutoverJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetCutoverJob(
+  virtual google::cloud::Idempotency GetCutoverJob(
       google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListGroups(
+  virtual google::cloud::Idempotency ListGroups(
       google::cloud::vmmigration::v1::ListGroupsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetGroup(
+  virtual google::cloud::Idempotency GetGroup(
       google::cloud::vmmigration::v1::GetGroupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateGroup(
+  virtual google::cloud::Idempotency CreateGroup(
       google::cloud::vmmigration::v1::CreateGroupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateGroup(
+  virtual google::cloud::Idempotency UpdateGroup(
       google::cloud::vmmigration::v1::UpdateGroupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteGroup(
+  virtual google::cloud::Idempotency DeleteGroup(
       google::cloud::vmmigration::v1::DeleteGroupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AddGroupMigration(
+  virtual google::cloud::Idempotency AddGroupMigration(
       google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency RemoveGroupMigration(
+  virtual google::cloud::Idempotency RemoveGroupMigration(
       google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListTargetProjects(
+  virtual google::cloud::Idempotency ListTargetProjects(
       google::cloud::vmmigration::v1::ListTargetProjectsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetTargetProject(
+  virtual google::cloud::Idempotency GetTargetProject(
       google::cloud::vmmigration::v1::GetTargetProjectRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateTargetProject(
+  virtual google::cloud::Idempotency CreateTargetProject(
       google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateTargetProject(
+  virtual google::cloud::Idempotency UpdateTargetProject(
       google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteTargetProject(
+  virtual google::cloud::Idempotency DeleteTargetProject(
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
           request) = 0;
 };

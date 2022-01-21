@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_COMPLETION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_COMPLETION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/completion_service.grpc.pb.h>
 #include <memory>
@@ -39,10 +38,10 @@ class CompletionServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CompleteQuery(
+  virtual google::cloud::Idempotency CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ImportCompletionData(
+  virtual google::cloud::Idempotency ImportCompletionData(
       google::cloud::retail::v2::ImportCompletionDataRequest const&
           request) = 0;
 };

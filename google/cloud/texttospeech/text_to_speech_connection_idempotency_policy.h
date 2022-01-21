@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_TEXT_TO_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_TEXT_TO_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
@@ -38,10 +38,10 @@ class TextToSpeechConnectionIdempotencyPolicy {
   virtual std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListVoices(
+  virtual google::cloud::Idempotency ListVoices(
       google::cloud::texttospeech::v1::ListVoicesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SynthesizeSpeech(
+  virtual google::cloud::Idempotency SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
           request) = 0;
 };

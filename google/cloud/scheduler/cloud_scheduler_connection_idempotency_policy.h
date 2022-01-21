@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
 #include <memory>
@@ -38,28 +38,28 @@ class CloudSchedulerConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListJobs(
+  virtual google::cloud::Idempotency ListJobs(
       google::cloud::scheduler::v1::ListJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetJob(
+  virtual google::cloud::Idempotency GetJob(
       google::cloud::scheduler::v1::GetJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateJob(
+  virtual google::cloud::Idempotency CreateJob(
       google::cloud::scheduler::v1::CreateJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateJob(
+  virtual google::cloud::Idempotency UpdateJob(
       google::cloud::scheduler::v1::UpdateJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteJob(
+  virtual google::cloud::Idempotency DeleteJob(
       google::cloud::scheduler::v1::DeleteJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency PauseJob(
+  virtual google::cloud::Idempotency PauseJob(
       google::cloud::scheduler::v1::PauseJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ResumeJob(
+  virtual google::cloud::Idempotency ResumeJob(
       google::cloud::scheduler::v1::ResumeJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency RunJob(
+  virtual google::cloud::Idempotency RunJob(
       google::cloud::scheduler::v1::RunJobRequest const& request) = 0;
 };
 

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_READ_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_READ_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>
@@ -38,11 +38,11 @@ class BigQueryReadConnectionIdempotencyPolicy {
   virtual std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateReadSession(
+  virtual google::cloud::Idempotency CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency SplitReadStream(
+  virtual google::cloud::Idempotency SplitReadStream(
       google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request) = 0;
 };

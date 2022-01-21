@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_FIREWALL_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_FIREWALL_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
@@ -38,22 +38,22 @@ class FirewallConnectionIdempotencyPolicy {
   virtual std::unique_ptr<FirewallConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListIngressRules(
+  virtual google::cloud::Idempotency ListIngressRules(
       google::appengine::v1::ListIngressRulesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchUpdateIngressRules(
+  virtual google::cloud::Idempotency BatchUpdateIngressRules(
       google::appengine::v1::BatchUpdateIngressRulesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateIngressRule(
+  virtual google::cloud::Idempotency CreateIngressRule(
       google::appengine::v1::CreateIngressRuleRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIngressRule(
+  virtual google::cloud::Idempotency GetIngressRule(
       google::appengine::v1::GetIngressRuleRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateIngressRule(
+  virtual google::cloud::Idempotency UpdateIngressRule(
       google::appengine::v1::UpdateIngressRuleRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteIngressRule(
+  virtual google::cloud::Idempotency DeleteIngressRule(
       google::appengine::v1::DeleteIngressRuleRequest const& request) = 0;
 };
 
