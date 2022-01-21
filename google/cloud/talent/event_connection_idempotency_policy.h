@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/event_service.grpc.pb.h>
 #include <memory>
@@ -38,7 +38,7 @@ class EventServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<EventServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateClientEvent(
+  virtual google::cloud::Idempotency CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request) = 0;
 };
 

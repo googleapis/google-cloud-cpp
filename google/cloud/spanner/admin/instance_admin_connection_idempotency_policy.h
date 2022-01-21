@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
 #include <memory>
@@ -39,40 +38,40 @@ class InstanceAdminConnectionIdempotencyPolicy {
   virtual std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListInstanceConfigs(
+  virtual google::cloud::Idempotency ListInstanceConfigs(
       google::spanner::admin::instance::v1::ListInstanceConfigsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetInstanceConfig(
+  virtual google::cloud::Idempotency GetInstanceConfig(
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListInstances(
+  virtual google::cloud::Idempotency ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetInstance(
+  virtual google::cloud::Idempotency GetInstance(
       google::spanner::admin::instance::v1::GetInstanceRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateInstance(
+  virtual google::cloud::Idempotency CreateInstance(
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateInstance(
+  virtual google::cloud::Idempotency UpdateInstance(
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteInstance(
+  virtual google::cloud::Idempotency DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 

@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_ENVIRONMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_ENVIRONMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
 #include <memory>
@@ -39,23 +38,23 @@ class EnvironmentsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateEnvironment(
+  virtual google::cloud::Idempotency CreateEnvironment(
       google::cloud::orchestration::airflow::service::v1::
           CreateEnvironmentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetEnvironment(
+  virtual google::cloud::Idempotency GetEnvironment(
       google::cloud::orchestration::airflow::service::v1::
           GetEnvironmentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListEnvironments(
+  virtual google::cloud::Idempotency ListEnvironments(
       google::cloud::orchestration::airflow::service::v1::
           ListEnvironmentsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateEnvironment(
+  virtual google::cloud::Idempotency UpdateEnvironment(
       google::cloud::orchestration::airflow::service::v1::
           UpdateEnvironmentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteEnvironment(
+  virtual google::cloud::Idempotency DeleteEnvironment(
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request) = 0;
 };

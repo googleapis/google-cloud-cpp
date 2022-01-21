@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_MANAGED_NOTEBOOK_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_MANAGED_NOTEBOOK_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/notebooks/v1/managed_service.grpc.pb.h>
 #include <memory>
@@ -39,31 +38,31 @@ class ManagedNotebookServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListRuntimes(
+  virtual google::cloud::Idempotency ListRuntimes(
       google::cloud::notebooks::v1::ListRuntimesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetRuntime(
+  virtual google::cloud::Idempotency GetRuntime(
       google::cloud::notebooks::v1::GetRuntimeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateRuntime(
+  virtual google::cloud::Idempotency CreateRuntime(
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteRuntime(
+  virtual google::cloud::Idempotency DeleteRuntime(
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency StartRuntime(
+  virtual google::cloud::Idempotency StartRuntime(
       google::cloud::notebooks::v1::StartRuntimeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency StopRuntime(
+  virtual google::cloud::Idempotency StopRuntime(
       google::cloud::notebooks::v1::StopRuntimeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SwitchRuntime(
+  virtual google::cloud::Idempotency SwitchRuntime(
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ResetRuntime(
+  virtual google::cloud::Idempotency ResetRuntime(
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ReportRuntimeEvent(
+  virtual google::cloud::Idempotency ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
           request) = 0;
 };

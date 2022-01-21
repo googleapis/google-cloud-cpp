@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
 #include <memory>
@@ -39,7 +38,7 @@ class VideoIntelligenceServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency AnnotateVideo(
+  virtual google::cloud::Idempotency AnnotateVideo(
       google::cloud::videointelligence::v1::AnnotateVideoRequest const&
           request) = 0;
 };

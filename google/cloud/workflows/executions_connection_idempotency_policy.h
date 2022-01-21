@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/workflows/executions/v1/executions.grpc.pb.h>
 #include <memory>
@@ -38,19 +38,19 @@ class ExecutionsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ExecutionsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListExecutions(
+  virtual google::cloud::Idempotency ListExecutions(
       google::cloud::workflows::executions::v1::ListExecutionsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateExecution(
+  virtual google::cloud::Idempotency CreateExecution(
       google::cloud::workflows::executions::v1::CreateExecutionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetExecution(
+  virtual google::cloud::Idempotency GetExecution(
       google::cloud::workflows::executions::v1::GetExecutionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CancelExecution(
+  virtual google::cloud::Idempotency CancelExecution(
       google::cloud::workflows::executions::v1::CancelExecutionRequest const&
           request) = 0;
 };

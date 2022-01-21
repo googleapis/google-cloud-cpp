@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INSTANCES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INSTANCES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
@@ -39,16 +38,16 @@ class InstancesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<InstancesConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListInstances(
+  virtual google::cloud::Idempotency ListInstances(
       google::appengine::v1::ListInstancesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetInstance(
+  virtual google::cloud::Idempotency GetInstance(
       google::appengine::v1::GetInstanceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteInstance(
+  virtual google::cloud::Idempotency DeleteInstance(
       google::appengine::v1::DeleteInstanceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DebugInstance(
+  virtual google::cloud::Idempotency DebugInstance(
       google::appengine::v1::DebugInstanceRequest const& request) = 0;
 };
 

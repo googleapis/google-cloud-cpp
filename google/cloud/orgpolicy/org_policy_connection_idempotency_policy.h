@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
 #include <memory>
@@ -38,26 +38,26 @@ class OrgPolicyConnectionIdempotencyPolicy {
   virtual std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListConstraints(
+  virtual google::cloud::Idempotency ListConstraints(
       google::cloud::orgpolicy::v2::ListConstraintsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListPolicies(
+  virtual google::cloud::Idempotency ListPolicies(
       google::cloud::orgpolicy::v2::ListPoliciesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetPolicy(
+  virtual google::cloud::Idempotency GetPolicy(
       google::cloud::orgpolicy::v2::GetPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetEffectivePolicy(
+  virtual google::cloud::Idempotency GetEffectivePolicy(
       google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreatePolicy(
+  virtual google::cloud::Idempotency CreatePolicy(
       google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdatePolicy(
+  virtual google::cloud::Idempotency UpdatePolicy(
       google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeletePolicy(
+  virtual google::cloud::Idempotency DeletePolicy(
       google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) = 0;
 };
 

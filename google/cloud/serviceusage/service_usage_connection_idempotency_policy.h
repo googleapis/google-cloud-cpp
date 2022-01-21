@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_SERVICE_USAGE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_SERVICE_USAGE_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
 #include <memory>
@@ -39,23 +38,23 @@ class ServiceUsageConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency EnableService(
+  virtual google::cloud::Idempotency EnableService(
       google::api::serviceusage::v1::EnableServiceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DisableService(
+  virtual google::cloud::Idempotency DisableService(
       google::api::serviceusage::v1::DisableServiceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetService(
+  virtual google::cloud::Idempotency GetService(
       google::api::serviceusage::v1::GetServiceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListServices(
+  virtual google::cloud::Idempotency ListServices(
       google::api::serviceusage::v1::ListServicesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchEnableServices(
+  virtual google::cloud::Idempotency BatchEnableServices(
       google::api::serviceusage::v1::BatchEnableServicesRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchGetServices(
+  virtual google::cloud::Idempotency BatchGetServices(
       google::api::serviceusage::v1::BatchGetServicesRequest const&
           request) = 0;
 };

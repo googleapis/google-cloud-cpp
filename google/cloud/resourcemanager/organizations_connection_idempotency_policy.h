@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORGANIZATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORGANIZATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/resourcemanager/v3/organizations.grpc.pb.h>
 #include <memory>
@@ -38,21 +38,21 @@ class OrganizationsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<OrganizationsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency GetOrganization(
+  virtual google::cloud::Idempotency GetOrganization(
       google::cloud::resourcemanager::v3::GetOrganizationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency SearchOrganizations(
+  virtual google::cloud::Idempotency SearchOrganizations(
       google::cloud::resourcemanager::v3::SearchOrganizationsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 

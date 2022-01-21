@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_STORAGE_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_STORAGE_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/storagetransfer/v1/transfer.grpc.pb.h>
 #include <memory>
@@ -39,31 +38,31 @@ class StorageTransferServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency GetGoogleServiceAccount(
+  virtual google::cloud::Idempotency GetGoogleServiceAccount(
       google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateTransferJob(
+  virtual google::cloud::Idempotency CreateTransferJob(
       google::storagetransfer::v1::CreateTransferJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateTransferJob(
+  virtual google::cloud::Idempotency UpdateTransferJob(
       google::storagetransfer::v1::UpdateTransferJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetTransferJob(
+  virtual google::cloud::Idempotency GetTransferJob(
       google::storagetransfer::v1::GetTransferJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListTransferJobs(
+  virtual google::cloud::Idempotency ListTransferJobs(
       google::storagetransfer::v1::ListTransferJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency PauseTransferOperation(
+  virtual google::cloud::Idempotency PauseTransferOperation(
       google::storagetransfer::v1::PauseTransferOperationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ResumeTransferOperation(
+  virtual google::cloud::Idempotency ResumeTransferOperation(
       google::storagetransfer::v1::ResumeTransferOperationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency RunTransferJob(
+  virtual google::cloud::Idempotency RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
 };
 

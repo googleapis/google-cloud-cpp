@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CREDENTIALS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CREDENTIALS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 #include <memory>
@@ -38,17 +38,17 @@ class IAMCredentialsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency GenerateAccessToken(
+  virtual google::cloud::Idempotency GenerateAccessToken(
       google::iam::credentials::v1::GenerateAccessTokenRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GenerateIdToken(
+  virtual google::cloud::Idempotency GenerateIdToken(
       google::iam::credentials::v1::GenerateIdTokenRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SignBlob(
+  virtual google::cloud::Idempotency SignBlob(
       google::iam::credentials::v1::SignBlobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SignJwt(
+  virtual google::cloud::Idempotency SignJwt(
       google::iam::credentials::v1::SignJwtRequest const& request) = 0;
 };
 

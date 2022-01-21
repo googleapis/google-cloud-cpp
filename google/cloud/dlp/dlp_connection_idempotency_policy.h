@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_DLP_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_DLP_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/privacy/dlp/v2/dlp.grpc.pb.h>
 #include <memory>
@@ -38,114 +38,114 @@ class DlpServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<DlpServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency InspectContent(
+  virtual google::cloud::Idempotency InspectContent(
       google::privacy::dlp::v2::InspectContentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency RedactImage(
+  virtual google::cloud::Idempotency RedactImage(
       google::privacy::dlp::v2::RedactImageRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeidentifyContent(
+  virtual google::cloud::Idempotency DeidentifyContent(
       google::privacy::dlp::v2::DeidentifyContentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ReidentifyContent(
+  virtual google::cloud::Idempotency ReidentifyContent(
       google::privacy::dlp::v2::ReidentifyContentRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListInfoTypes(
+  virtual google::cloud::Idempotency ListInfoTypes(
       google::privacy::dlp::v2::ListInfoTypesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateInspectTemplate(
+  virtual google::cloud::Idempotency CreateInspectTemplate(
       google::privacy::dlp::v2::CreateInspectTemplateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateInspectTemplate(
+  virtual google::cloud::Idempotency UpdateInspectTemplate(
       google::privacy::dlp::v2::UpdateInspectTemplateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetInspectTemplate(
+  virtual google::cloud::Idempotency GetInspectTemplate(
       google::privacy::dlp::v2::GetInspectTemplateRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListInspectTemplates(
+  virtual google::cloud::Idempotency ListInspectTemplates(
       google::privacy::dlp::v2::ListInspectTemplatesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteInspectTemplate(
+  virtual google::cloud::Idempotency DeleteInspectTemplate(
       google::privacy::dlp::v2::DeleteInspectTemplateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateDeidentifyTemplate(
+  virtual google::cloud::Idempotency CreateDeidentifyTemplate(
       google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateDeidentifyTemplate(
+  virtual google::cloud::Idempotency UpdateDeidentifyTemplate(
       google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDeidentifyTemplate(
+  virtual google::cloud::Idempotency GetDeidentifyTemplate(
       google::privacy::dlp::v2::GetDeidentifyTemplateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListDeidentifyTemplates(
+  virtual google::cloud::Idempotency ListDeidentifyTemplates(
       google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteDeidentifyTemplate(
+  virtual google::cloud::Idempotency DeleteDeidentifyTemplate(
       google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateJobTrigger(
+  virtual google::cloud::Idempotency CreateJobTrigger(
       google::privacy::dlp::v2::CreateJobTriggerRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateJobTrigger(
+  virtual google::cloud::Idempotency UpdateJobTrigger(
       google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency HybridInspectJobTrigger(
+  virtual google::cloud::Idempotency HybridInspectJobTrigger(
       google::privacy::dlp::v2::HybridInspectJobTriggerRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetJobTrigger(
+  virtual google::cloud::Idempotency GetJobTrigger(
       google::privacy::dlp::v2::GetJobTriggerRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListJobTriggers(
+  virtual google::cloud::Idempotency ListJobTriggers(
       google::privacy::dlp::v2::ListJobTriggersRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteJobTrigger(
+  virtual google::cloud::Idempotency DeleteJobTrigger(
       google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ActivateJobTrigger(
+  virtual google::cloud::Idempotency ActivateJobTrigger(
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateDlpJob(
+  virtual google::cloud::Idempotency CreateDlpJob(
       google::privacy::dlp::v2::CreateDlpJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListDlpJobs(
+  virtual google::cloud::Idempotency ListDlpJobs(
       google::privacy::dlp::v2::ListDlpJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDlpJob(
+  virtual google::cloud::Idempotency GetDlpJob(
       google::privacy::dlp::v2::GetDlpJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteDlpJob(
+  virtual google::cloud::Idempotency DeleteDlpJob(
       google::privacy::dlp::v2::DeleteDlpJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CancelDlpJob(
+  virtual google::cloud::Idempotency CancelDlpJob(
       google::privacy::dlp::v2::CancelDlpJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateStoredInfoType(
+  virtual google::cloud::Idempotency CreateStoredInfoType(
       google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateStoredInfoType(
+  virtual google::cloud::Idempotency UpdateStoredInfoType(
       google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetStoredInfoType(
+  virtual google::cloud::Idempotency GetStoredInfoType(
       google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListStoredInfoTypes(
+  virtual google::cloud::Idempotency ListStoredInfoTypes(
       google::privacy::dlp::v2::ListStoredInfoTypesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteStoredInfoType(
+  virtual google::cloud::Idempotency DeleteStoredInfoType(
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency HybridInspectDlpJob(
+  virtual google::cloud::Idempotency HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency FinishDlpJob(
+  virtual google::cloud::Idempotency FinishDlpJob(
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) = 0;
 };
 

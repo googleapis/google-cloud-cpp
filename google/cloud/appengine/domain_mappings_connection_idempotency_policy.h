@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_DOMAIN_MAPPINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_DOMAIN_MAPPINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
@@ -39,19 +38,19 @@ class DomainMappingsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListDomainMappings(
+  virtual google::cloud::Idempotency ListDomainMappings(
       google::appengine::v1::ListDomainMappingsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDomainMapping(
+  virtual google::cloud::Idempotency GetDomainMapping(
       google::appengine::v1::GetDomainMappingRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateDomainMapping(
+  virtual google::cloud::Idempotency CreateDomainMapping(
       google::appengine::v1::CreateDomainMappingRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateDomainMapping(
+  virtual google::cloud::Idempotency UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteDomainMapping(
+  virtual google::cloud::Idempotency DeleteDomainMapping(
       google::appengine::v1::DeleteDomainMappingRequest const& request) = 0;
 };
 

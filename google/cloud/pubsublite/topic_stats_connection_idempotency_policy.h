@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_STATS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_STATS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/topic_stats.grpc.pb.h>
 #include <memory>
@@ -38,15 +38,15 @@ class TopicStatsServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ComputeMessageStats(
+  virtual google::cloud::Idempotency ComputeMessageStats(
       google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ComputeHeadCursor(
+  virtual google::cloud::Idempotency ComputeHeadCursor(
       google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ComputeTimeCursor(
+  virtual google::cloud::Idempotency ComputeTimeCursor(
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
           request) = 0;
 };

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_COMPANY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_COMPANY_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
 #include <memory>
@@ -38,19 +38,19 @@ class CompanyServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateCompany(
+  virtual google::cloud::Idempotency CreateCompany(
       google::cloud::talent::v4::CreateCompanyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetCompany(
+  virtual google::cloud::Idempotency GetCompany(
       google::cloud::talent::v4::GetCompanyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateCompany(
+  virtual google::cloud::Idempotency UpdateCompany(
       google::cloud::talent::v4::UpdateCompanyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteCompany(
+  virtual google::cloud::Idempotency DeleteCompany(
       google::cloud::talent::v4::DeleteCompanyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListCompanies(
+  virtual google::cloud::Idempotency ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request) = 0;
 };
 

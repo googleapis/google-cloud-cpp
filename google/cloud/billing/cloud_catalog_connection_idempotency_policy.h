@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_CLOUD_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_CLOUD_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
 #include <memory>
@@ -38,10 +38,10 @@ class CloudCatalogConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListServices(
+  virtual google::cloud::Idempotency ListServices(
       google::cloud::billing::v1::ListServicesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListSkus(
+  virtual google::cloud::Idempotency ListSkus(
       google::cloud::billing::v1::ListSkusRequest request) = 0;
 };
 

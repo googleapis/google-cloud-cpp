@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_CLOUD_TASKS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_CLOUD_TASKS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
 #include <memory>
@@ -38,52 +38,52 @@ class CloudTasksConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CloudTasksConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListQueues(
+  virtual google::cloud::Idempotency ListQueues(
       google::cloud::tasks::v2::ListQueuesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetQueue(
+  virtual google::cloud::Idempotency GetQueue(
       google::cloud::tasks::v2::GetQueueRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateQueue(
+  virtual google::cloud::Idempotency CreateQueue(
       google::cloud::tasks::v2::CreateQueueRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateQueue(
+  virtual google::cloud::Idempotency UpdateQueue(
       google::cloud::tasks::v2::UpdateQueueRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteQueue(
+  virtual google::cloud::Idempotency DeleteQueue(
       google::cloud::tasks::v2::DeleteQueueRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency PurgeQueue(
+  virtual google::cloud::Idempotency PurgeQueue(
       google::cloud::tasks::v2::PurgeQueueRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency PauseQueue(
+  virtual google::cloud::Idempotency PauseQueue(
       google::cloud::tasks::v2::PauseQueueRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ResumeQueue(
+  virtual google::cloud::Idempotency ResumeQueue(
       google::cloud::tasks::v2::ResumeQueueRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListTasks(
+  virtual google::cloud::Idempotency ListTasks(
       google::cloud::tasks::v2::ListTasksRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetTask(
+  virtual google::cloud::Idempotency GetTask(
       google::cloud::tasks::v2::GetTaskRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateTask(
+  virtual google::cloud::Idempotency CreateTask(
       google::cloud::tasks::v2::CreateTaskRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteTask(
+  virtual google::cloud::Idempotency DeleteTask(
       google::cloud::tasks::v2::DeleteTaskRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency RunTask(
+  virtual google::cloud::Idempotency RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request) = 0;
 };
 

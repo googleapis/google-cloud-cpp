@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_TRANSLATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_TRANSLATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/translate/v3/translation_service.grpc.pb.h>
 #include <memory>
@@ -39,38 +38,38 @@ class TranslationServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency TranslateText(
+  virtual google::cloud::Idempotency TranslateText(
       google::cloud::translation::v3::TranslateTextRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DetectLanguage(
+  virtual google::cloud::Idempotency DetectLanguage(
       google::cloud::translation::v3::DetectLanguageRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetSupportedLanguages(
+  virtual google::cloud::Idempotency GetSupportedLanguages(
       google::cloud::translation::v3::GetSupportedLanguagesRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency TranslateDocument(
+  virtual google::cloud::Idempotency TranslateDocument(
       google::cloud::translation::v3::TranslateDocumentRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchTranslateText(
+  virtual google::cloud::Idempotency BatchTranslateText(
       google::cloud::translation::v3::BatchTranslateTextRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchTranslateDocument(
+  virtual google::cloud::Idempotency BatchTranslateDocument(
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateGlossary(
+  virtual google::cloud::Idempotency CreateGlossary(
       google::cloud::translation::v3::CreateGlossaryRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListGlossaries(
+  virtual google::cloud::Idempotency ListGlossaries(
       google::cloud::translation::v3::ListGlossariesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetGlossary(
+  virtual google::cloud::Idempotency GetGlossary(
       google::cloud::translation::v3::GetGlossaryRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteGlossary(
+  virtual google::cloud::Idempotency DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request) = 0;
 };
 

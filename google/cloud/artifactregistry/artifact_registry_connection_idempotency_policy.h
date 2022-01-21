@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_ARTIFACT_REGISTRY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_ARTIFACT_REGISTRY_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/devtools/artifactregistry/v1/service.grpc.pb.h>
 #include <memory>
@@ -38,15 +38,15 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListDockerImages(
+  virtual google::cloud::Idempotency ListDockerImages(
       google::devtools::artifactregistry::v1::ListDockerImagesRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListRepositories(
+  virtual google::cloud::Idempotency ListRepositories(
       google::devtools::artifactregistry::v1::ListRepositoriesRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetRepository(
+  virtual google::cloud::Idempotency GetRepository(
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&
           request) = 0;
 };

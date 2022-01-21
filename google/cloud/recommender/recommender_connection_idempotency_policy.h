@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_RECOMMENDER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_RECOMMENDER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/recommender/v1/recommender_service.grpc.pb.h>
 #include <memory>
@@ -38,32 +38,32 @@ class RecommenderConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RecommenderConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListInsights(
+  virtual google::cloud::Idempotency ListInsights(
       google::cloud::recommender::v1::ListInsightsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetInsight(
+  virtual google::cloud::Idempotency GetInsight(
       google::cloud::recommender::v1::GetInsightRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency MarkInsightAccepted(
+  virtual google::cloud::Idempotency MarkInsightAccepted(
       google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListRecommendations(
+  virtual google::cloud::Idempotency ListRecommendations(
       google::cloud::recommender::v1::ListRecommendationsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetRecommendation(
+  virtual google::cloud::Idempotency GetRecommendation(
       google::cloud::recommender::v1::GetRecommendationRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency MarkRecommendationClaimed(
+  virtual google::cloud::Idempotency MarkRecommendationClaimed(
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency MarkRecommendationSucceeded(
+  virtual google::cloud::Idempotency MarkRecommendationSucceeded(
       google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency MarkRecommendationFailed(
+  virtual google::cloud::Idempotency MarkRecommendationFailed(
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request) = 0;
 };

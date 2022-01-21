@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_DOMAINS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_DOMAINS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
@@ -38,7 +38,7 @@ class AuthorizedDomainsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListAuthorizedDomains(
+  virtual google::cloud::Idempotency ListAuthorizedDomains(
       google::appengine::v1::ListAuthorizedDomainsRequest request) = 0;
 };
 

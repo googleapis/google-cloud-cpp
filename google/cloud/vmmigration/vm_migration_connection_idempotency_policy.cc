@@ -25,7 +25,7 @@ namespace cloud {
 namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 
 VmMigrationConnectionIdempotencyPolicy::
     ~VmMigrationConnectionIdempotencyPolicy() = default;

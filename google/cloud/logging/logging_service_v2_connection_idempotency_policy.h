@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
@@ -38,19 +38,19 @@ class LoggingServiceV2ConnectionIdempotencyPolicy {
   virtual std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteLog(
+  virtual google::cloud::Idempotency DeleteLog(
       google::logging::v2::DeleteLogRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency WriteLogEntries(
+  virtual google::cloud::Idempotency WriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListLogEntries(
+  virtual google::cloud::Idempotency ListLogEntries(
       google::logging::v2::ListLogEntriesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListMonitoredResourceDescriptors(
+  virtual google::cloud::Idempotency ListMonitoredResourceDescriptors(
       google::logging::v2::ListMonitoredResourceDescriptorsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListLogs(
+  virtual google::cloud::Idempotency ListLogs(
       google::logging::v2::ListLogsRequest request) = 0;
 };
 

@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/gaming/v1/game_server_clusters_service.grpc.pb.h>
 #include <memory>
@@ -39,34 +38,34 @@ class GameServerClustersServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListGameServerClusters(
+  virtual google::cloud::Idempotency ListGameServerClusters(
       google::cloud::gaming::v1::ListGameServerClustersRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetGameServerCluster(
+  virtual google::cloud::Idempotency GetGameServerCluster(
       google::cloud::gaming::v1::GetGameServerClusterRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateGameServerCluster(
+  virtual google::cloud::Idempotency CreateGameServerCluster(
       google::cloud::gaming::v1::CreateGameServerClusterRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency PreviewCreateGameServerCluster(
+  virtual google::cloud::Idempotency PreviewCreateGameServerCluster(
       google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteGameServerCluster(
+  virtual google::cloud::Idempotency DeleteGameServerCluster(
       google::cloud::gaming::v1::DeleteGameServerClusterRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency PreviewDeleteGameServerCluster(
+  virtual google::cloud::Idempotency PreviewDeleteGameServerCluster(
       google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateGameServerCluster(
+  virtual google::cloud::Idempotency UpdateGameServerCluster(
       google::cloud::gaming::v1::UpdateGameServerClusterRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency PreviewUpdateGameServerCluster(
+  virtual google::cloud::Idempotency PreviewUpdateGameServerCluster(
       google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
           request) = 0;
 };
