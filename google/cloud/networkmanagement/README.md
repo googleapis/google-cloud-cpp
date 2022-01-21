@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Network Management API][cloud-service-docs], a service to The Network Management API provides a collection of network performance monitoring and diagnostic capabilities.
+[Network Management API][cloud-service-docs]. Provides a collection of network
+performance monitoring and diagnostic capabilities.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/networkmanagement
+[cloud-service-docs]: https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-networkmanagement/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/networkmanagement
 
@@ -38,8 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/networkmanagement/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/networkmanagement/reachability_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -50,13 +50,14 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace networkmanagement = ::google::cloud::networkmanagement;
-  auto client = networkmanagement::Client(
-      networkmanagement::MakeConnection(/* EDIT HERE */));
+  auto client = networkmanagement::ReachabilityServiceClient(
+      networkmanagement::MakeReachabilityServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+
+  for (auto t : client.ListConnectivityTests(parent)) {
+    if (!t) throw std::runtime_error(t.status().message());
+    std::cout << t->DebugString() << "\n";
   }
 
   return 0;

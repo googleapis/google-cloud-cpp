@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/networkmanagement/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/networkmanagement/reachability_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -24,13 +23,14 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace networkmanagement = ::google::cloud::networkmanagement;
-  auto client = networkmanagement::Client(
-      networkmanagement::MakeConnection(/* EDIT HERE */));
+  auto client = networkmanagement::ReachabilityServiceClient(
+      networkmanagement::MakeReachabilityServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+
+  for (auto t : client.ListConnectivityTests(parent)) {
+    if (!t) throw std::runtime_error(t.status().message());
+    std::cout << t->DebugString() << "\n";
   }
 
   return 0;

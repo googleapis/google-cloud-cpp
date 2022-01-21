@@ -2,8 +2,9 @@
 
 @mainpage Network Management API C++ Client Library
 
-An idiomatic C++ client library for the [Network Management API][cloud-service-docs], a service
-to The Network Management API provides a collection of network performance monitoring and diagnostic capabilities.
+An idiomatic C++ client library for the [Network Management API][cloud-service-docs].
+Provides a collection of network performance monitoring and diagnostic
+capabilities.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/networkmanagement
+[cloud-service-docs]: https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
