@@ -122,10 +122,12 @@ class WriteVector {
   std::vector<absl::Span<char const>> writev_;
 };
 
+// This helper function assumes there is sufficient space available in
+// destination.
 template <typename T>
 absl::Span<T> WriteToBuffer(absl::Span<T> destination,
                             absl::Span<T> const& source) {
-  std::memcpy(destination.data(), source.data(), source.size());
+  std::copy(source.data(), source.data() + source.size(), destination.data());
   return absl::Span<T>(destination.data() + source.size(),
                        destination.size() - source.size());
 }
@@ -268,6 +270,9 @@ std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
     return CURL_WRITEFUNC_PAUSE;
   }
 
+  // TODO(#8059): Consider refactoring moving bytes around between the source
+  // buffer, spill buffer, and user buffer by defining all such buffers in terms
+  // of absl::Span<char>.
   // Use the spill buffer first, if there is any...
   (void)DrainSpillBuffer();
   std::size_t free = buffer_.size();
