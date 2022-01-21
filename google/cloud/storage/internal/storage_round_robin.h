@@ -31,6 +31,10 @@ class StorageRoundRobin : public StorageStub {
       : children_(std::move(children)) {}
   ~StorageRoundRobin() override = default;
 
+  StatusOr<google::storage::v2::Object> GetObject(
+      grpc::ClientContext& context,
+      google::storage::v2::GetObjectRequest const& request) override;
+
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
   ReadObject(std::unique_ptr<grpc::ClientContext> context,
