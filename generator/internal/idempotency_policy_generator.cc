@@ -49,9 +49,9 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({HasLongrunningMethod() ? "google/cloud/future.h" : "",
+  HeaderLocalIncludes({"google/cloud/idempotency.h",
                        "google/cloud/internal/retry_policy.h",
-                       "google/cloud/status_or.h", "google/cloud/version.h"});
+                       "google/cloud/version.h"});
   HeaderSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
   auto result = HeaderOpenNamespaces();
@@ -78,7 +78,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
              {
                  // clang-format off
    {"\n"
-    "  virtual google::cloud::internal::Idempotency\n"
+    "  virtual google::cloud::Idempotency\n"
     "  $method_name$($request_type$ const& request) = 0;\n"}
                  // clang-format on
              },
@@ -87,7 +87,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
              {
                  // clang-format off
    {"\n"
-    "  virtual google::cloud::internal::Idempotency\n"
+    "  virtual google::cloud::Idempotency\n"
     "  $method_name$($request_type$ request) = 0;\n"}
                  // clang-format on
              },
@@ -130,7 +130,7 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  CcPrint("\nusing ::google::cloud::internal::Idempotency;\n");
+  CcPrint("\nusing ::google::cloud::Idempotency;\n");
 
   CcPrint(  // clang-format off
     "\n$idempotency_class_name$::~$idempotency_class_name$() = default;\n");
