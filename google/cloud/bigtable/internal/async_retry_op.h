@@ -40,17 +40,14 @@ namespace internal {
  */
 class ConstantIdempotencyPolicy {
  public:
-  explicit ConstantIdempotencyPolicy(
-      google::cloud::Idempotency idempotency)
+  explicit ConstantIdempotencyPolicy(google::cloud::Idempotency idempotency)
       : idempotency_(idempotency) {}
 
   bool is_idempotent() const {
     return idempotency_ == google::cloud::Idempotency::kIdempotent;
   }
 
-  google::cloud::Idempotency idempotency() const {
-    return idempotency_;
-  }
+  google::cloud::Idempotency idempotency() const { return idempotency_; }
 
  private:
   google::cloud::Idempotency idempotency_;
