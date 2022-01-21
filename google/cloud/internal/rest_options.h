@@ -26,6 +26,8 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// Configure the UserIp query parameter.
+/// For use with GPC services that manage quota per ip address.
 struct UserIpOption {
   using Type = std::string;
 };
@@ -34,6 +36,7 @@ struct UserIpOption {
 struct RestEndpointOption {
   using Type = std::string;
 };
+
 /**
  * Sets the transfer stall timeout.
  *

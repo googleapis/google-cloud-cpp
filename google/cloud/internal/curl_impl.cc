@@ -340,7 +340,7 @@ void CurlImpl::SetHeader(std::string const& header) {
   request_headers_.reset(new_headers);
 }
 
-void CurlImpl::SetHeader(const std::pair<std::string, std::string>& header) {
+void CurlImpl::SetHeader(std::pair<std::string, std::string> const& header) {
   SetHeader(absl::StrCat(header.first, ": ", header.second));
 }
 
@@ -351,10 +351,7 @@ void CurlImpl::SetHeaders(RestRequest const& request) {
   for (auto const& header : request.headers()) {
     std::string formatted_header =
         absl::StrCat(header.first, ": ", absl::StrJoin(header.second, ","));
-    auto* new_headers =
-        curl_slist_append(request_headers_.get(), formatted_header.c_str());
-    (void)request_headers_.release();
-    request_headers_.reset(new_headers);
+    SetHeader(formatted_header);
   }
 }
 
@@ -369,10 +366,9 @@ void CurlImpl::SetUrl(
   const char* query_parameter_separator = InitialQueryParameterSeparator(url_);
   auto append_params = [&](RestRequest::HttpParameters const& parameters) {
     for (auto const& param : parameters) {
-      absl::StrAppend(
-          &url_, absl::StrCat(query_parameter_separator,
-                              handle_.MakeEscapedString(param.first).get(), "=",
-                              handle_.MakeEscapedString(param.second).get()));
+      absl::StrAppend(&url_, query_parameter_separator,
+                      handle_.MakeEscapedString(param.first).get(), "=",
+                      handle_.MakeEscapedString(param.second).get());
       query_parameter_separator = "&";
     }
   };
@@ -381,18 +377,7 @@ void CurlImpl::SetUrl(
 }
 
 void CurlImpl::OnTransferDone() {
-  // Retrieve the response code for a closed stream. Note the use of
-  // `.value()`, this is equivalent to: assert(http_code.ok());
-  // The only way the previous call can fail indicates a bug in our code (or
-  // corrupted memory), the documentation for CURLINFO_RESPONSE_CODE:
-  //   https://curl.haxx.se/libcurl/c/CURLINFO_RESPONSE_CODE.html
-  // says:
-  //   Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION
-  //   if not.
-  // if the option is not supported then we cannot use HTTP at all in libcurl
-  // and the whole library would be unusable.
   http_code_ = handle_.GetResponseCode();
-
   // Capture the peer (the HTTP server), used for troubleshooting.
   received_headers_.emplace(":curl-peer", handle_.GetPeer());
   TRACE_STATE() << "\n";
@@ -553,16 +538,16 @@ Status CurlImpl::AsStatus(CURLMcode result, char const* where) {
   return Status(StatusCode::kUnknown, std::move(os).str());
 }
 
-StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> buf) {
-  if (buf.empty())
+StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
+  if (output.empty())
     return Status(StatusCode::kInvalidArgument,
-                  "Read buffer size must be non-zero", {});
-  return ReadImpl(std::move(buf));
+                  "Read output size must be non-zero", {});
+  return ReadImpl(std::move(output));
 }
 
-StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> buf) {
+StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   TRACE_STATE() << "begin\n";
-  buffer_ = buf;
+  buffer_ = output;
   // Before calling `Wait()` copy any data from the spill buffer into the
   // application buffer. It is possible that `Wait()` will never call
   // `WriteCallback()`, for example, because the Read() or Peek() closed the
@@ -596,7 +581,7 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> buf) {
 
   TRACE_STATE() << ", status=" << status << "\n";
   if (!status.ok()) return OnTransferError(std::move(status));
-  bytes_read = buf.size() - buffer_.size();
+  bytes_read = output.size() - buffer_.size();
 
   if (curl_closed_) {
     OnTransferDone();

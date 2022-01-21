@@ -77,7 +77,7 @@ class CurlImpl {
   }
   Status MakeRequest(CurlImpl::HttpMethod method,
                      std::vector<absl::Span<char const>> payload = {});
-  StatusOr<std::size_t> Read(absl::Span<char> buf);
+  StatusOr<std::size_t> Read(absl::Span<char> output);
 
  private:
   friend std::size_t CurlRequestWrite(char* ptr, size_t size, size_t nmemb,
@@ -95,7 +95,7 @@ class CurlImpl {
                                          std::size_t nmemb);
 
   void ApplyOptions(Options const& options);
-  StatusOr<std::size_t> ReadImpl(absl::Span<char> buf);
+  StatusOr<std::size_t> ReadImpl(absl::Span<char> output);
   Status MakeRequestImpl();
 
   // Cleanup the CURL handles, leaving them ready for reuse.
