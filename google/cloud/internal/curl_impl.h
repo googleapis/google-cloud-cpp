@@ -90,7 +90,7 @@ class CurlImpl {
   std::size_t HeaderCallback(char* contents, std::size_t size,
                              std::size_t nitems);
 
-  std::size_t WriteToBuffer(void* ptr, std::size_t size, std::size_t nmemb);
+  std::size_t WriteToUserBuffer(void* ptr, std::size_t size, std::size_t nmemb);
   std::size_t WriteAllBytesToSpillBuffer(void* ptr, std::size_t size,
                                          std::size_t nmemb);
 
@@ -101,7 +101,7 @@ class CurlImpl {
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
   // Copy any available data from the spill buffer to `buffer_`
-  void DrainSpillBuffer();
+  std::size_t DrainSpillBuffer();
   // Use libcurl to perform at least part of the request.
   StatusOr<int> PerformWork();
   // Use libcurl to wait until the underlying data can perform work.
@@ -151,7 +151,6 @@ class CurlImpl {
 
   // Track the usage of the buffer provided to Read.
   absl::Span<char> buffer_;
-  std::size_t buffer_offset_;
 
   // libcurl(1) will never pass a block larger than CURLOPT_BUFFERSIZE to the
   // WriteCallback. However, the callback *must* save all the bytes, returning

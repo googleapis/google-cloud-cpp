@@ -29,7 +29,6 @@
 // troubleshooting this class.
 #define TRACE_STATE()                                                       \
   GCP_LOG(TRACE) << __func__ << "(), buffer_.size()=" << buffer_.size()     \
-                 << ", buffer_offset_=" << buffer_offset_                   \
                  << ", spill_.max_size()=" << spill_.max_size()             \
                  << ", spill_offset_=" << spill_offset_                     \
                  << ", closing=" << closing_ << ", closed=" << curl_closed_ \
@@ -123,6 +122,14 @@ class WriteVector {
   std::vector<absl::Span<char const>> writev_;
 };
 
+template <typename T>
+absl::Span<T> WriteToBuffer(absl::Span<T> destination,
+                            absl::Span<T> const& source) {
+  std::memcpy(destination.data(), source.data(), source.size());
+  return absl::Span<T>(destination.data() + source.size(),
+                       destination.size() - source.size());
+}
+
 }  // namespace
 
 extern "C" std::size_t CurlRequestWrite(char* ptr, size_t size, size_t nmemb,
@@ -173,7 +180,6 @@ CurlImpl::CurlImpl(CurlHandle handle,
       in_multi_(false),
       paused_(false),
       buffer_({nullptr, 0}),
-      buffer_offset_(0),
       spill_offset_(0),
       options_(std::move(options)) {
   CurlInitializeOnce(options_);
@@ -253,9 +259,9 @@ std::size_t CurlImpl::WriteAllBytesToSpillBuffer(void* ptr, std::size_t size,
   return size * nmemb;
 }
 
-std::size_t CurlImpl::WriteToBuffer(void* ptr, std::size_t size,
-                                    std::size_t nmemb) {
-  if (buffer_offset_ >= buffer_.size()) {
+std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
+                                        std::size_t nmemb) {
+  if (buffer_.empty()) {
     TRACE_STATE()
         << " buffer_offset_ >= buffer_size_ *** PAUSING HANDLE *** << \n";
     paused_ = true;
@@ -263,8 +269,8 @@ std::size_t CurlImpl::WriteToBuffer(void* ptr, std::size_t size,
   }
 
   // Use the spill buffer first, if there is any...
-  DrainSpillBuffer();
-  std::size_t free = buffer_.size() - buffer_offset_;
+  (void)DrainSpillBuffer();
+  std::size_t free = buffer_.size();
   if (free == 0) {
     TRACE_STATE()
         << " (buffer_size_ - buffer_offset_) == 0 *** PAUSING HANDLE *** \n";
@@ -276,18 +282,20 @@ std::size_t CurlImpl::WriteToBuffer(void* ptr, std::size_t size,
 
   // Copy the full contents of `ptr` into the application buffer.
   if (size * nmemb < free) {
-    std::memcpy(buffer_.data() + buffer_offset_, ptr, size * nmemb);
-    buffer_offset_ += size * nmemb;
+    buffer_ =
+        WriteToBuffer(std::move(buffer_),
+                      absl::Span<char>(static_cast<char*>(ptr), size * nmemb));
+
     TRACE_STATE() << ", copy full"
                   << ", n=" << size * nmemb << "\n";
     return size * nmemb;
   }
 
   // Copy as much as possible from `ptr` into the application buffer.
-  std::memcpy(buffer_.data() + buffer_offset_, ptr, free);
-  buffer_offset_ += free;
-  spill_offset_ = size * nmemb - free;
+  buffer_ = WriteToBuffer(std::move(buffer_),
+                          absl::Span<char>(static_cast<char*>(ptr), free));
   // The rest goes into the spill buffer.
+  spill_offset_ = size * nmemb - free;
   std::memcpy(spill_.data(), static_cast<char*>(ptr) + free, spill_offset_);
   TRACE_STATE() << ", copy as much"
                 << ", n=" << size * nmemb << ", free=" << free << "\n";
@@ -318,7 +326,7 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
   if (buffer_.empty()) {
     return WriteAllBytesToSpillBuffer(ptr, size, nmemb);
   }
-  return WriteToBuffer(ptr, size, nmemb);
+  return WriteToUserBuffer(ptr, size, nmemb);
 }
 
 std::size_t CurlImpl::HeaderCallback(char* contents, std::size_t size,
@@ -412,19 +420,18 @@ Status CurlImpl::OnTransferError(Status status) {
   return status;
 }
 
-void CurlImpl::DrainSpillBuffer() {
+std::size_t CurlImpl::DrainSpillBuffer() {
   handle_.FlushDebug(__func__);
-  std::size_t free = buffer_.size() - buffer_offset_;
+  std::size_t free = buffer_.size();
   auto copy_count = (std::min)(free, spill_offset_);
   TRACE_STATE() << ", drain n=" << copy_count << " from spill\n";
-  std::copy(spill_.data(), spill_.data() + copy_count,
-            buffer_.data() + buffer_offset_);
-  buffer_offset_ += copy_count;
+  buffer_ = WriteToBuffer(buffer_, absl::Span<char>(spill_.data(), copy_count));
   // TODO(#7958): Consider making the spill buffer a circular buffer and then
   // we could remove this memmove step.
   std::memmove(spill_.data(), spill_.data() + copy_count,
                spill_.size() - copy_count);
   spill_offset_ -= copy_count;
+  return copy_count;
 }
 
 Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
@@ -555,15 +562,14 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> buf) {
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> buf) {
   TRACE_STATE() << "begin\n";
-  buffer_ = {buf.data(), buf.size()};
-  buffer_offset_ = 0;
+  buffer_ = buf;
   // Before calling `Wait()` copy any data from the spill buffer into the
   // application buffer. It is possible that `Wait()` will never call
   // `WriteCallback()`, for example, because the Read() or Peek() closed the
   // connection, but if there is any data left in the spill buffer we need
   // to return it.
-  DrainSpillBuffer();
-  if (curl_closed_) return buffer_offset_;
+  auto bytes_read = DrainSpillBuffer();
+  if (curl_closed_) return bytes_read;
 
   handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestWrite);
   handle_.SetOption(CURLOPT_WRITEDATA, this);
@@ -584,14 +590,13 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> buf) {
       return curl_closed_ || paused_ || spill_offset_ >= spill_.max_size();
     });
   } else {
-    status = PerformWorkUntil([this] {
-      return curl_closed_ || paused_ || buffer_offset_ >= buffer_.size();
-    });
+    status = PerformWorkUntil(
+        [this] { return curl_closed_ || paused_ || buffer_.empty(); });
   }
 
   TRACE_STATE() << ", status=" << status << "\n";
   if (!status.ok()) return OnTransferError(std::move(status));
-  auto bytes_read = buffer_offset_;
+  bytes_read = buf.size() - buffer_.size();
 
   if (curl_closed_) {
     OnTransferDone();
