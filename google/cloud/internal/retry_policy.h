@@ -26,9 +26,6 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-// TODO(#....) - cleanup once the code is merged.
-using Idempotency = ::google::cloud::Idempotency;
-
 /**
  * Define the interface for retry policies.
  */
