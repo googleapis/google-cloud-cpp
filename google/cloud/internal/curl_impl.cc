@@ -181,9 +181,10 @@ CurlImpl::CurlImpl(CurlHandle handle,
 }
 
 void CurlImpl::CleanupHandles() {
-  if (!multi_ != !handle_.handle_)
+  if (!multi_ != !handle_.handle_) {
     GCP_LOG(FATAL) << "handles are inconsistent, multi_=" << multi_.get()
                    << ", handle_.handle_=" << handle_.handle_.get();
+  }
   if (curl_closed_ || !multi_) return;
 
   if (paused_) {
@@ -236,12 +237,11 @@ std::size_t CurlImpl::WriteAllBytesToSpillBuffer(void* ptr, std::size_t size,
   // CURLOPT_BUFFERSIZE. If it does, this is an error in libcurl, and we
   // cannot reliably recover from it.
   if (size * nmemb > spill_.max_size()) {
-    google::cloud::internal::ThrowStatus(Status(
-        StatusCode::kInternal,
-        absl::StrCat(
-            "libcurl attempted to write ", std::to_string(size * nmemb),
-            "bytes into spill buffer size ", std::to_string(spill_.max_size())),
-        {}));
+    GCP_LOG(FATAL) << absl::StrCat("libcurl attempted to write ",
+                                   std::to_string(size * nmemb),
+                                   "bytes into spill buffer size ",
+                                   std::to_string(spill_.max_size()))
+                   << "\n";
   }
   // As this function is only called on the first Read, the spill buffer should
   // be empty so we can always copy the full contents of `ptr` into the spill
@@ -623,10 +623,12 @@ Status CurlImpl::MakeRequestImpl() {
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
   // This indicates that we are using the API incorrectly, the application
-  // can not recover from these problems, raising an exception is the
-  // "Right Thing"[tm] here.
-  if (error != CURLM_OK)
-    google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
+  // can not recover from these problems, terminating is the "Right Thing"[tm]
+  // here.
+  if (error != CURLM_OK) {
+    GCP_LOG(FATAL) << AsStatus(error, __func__) << "\n";
+  }
+
   in_multi_ = true;
 
   // This call to Read should send the request, get the response, and thus make
