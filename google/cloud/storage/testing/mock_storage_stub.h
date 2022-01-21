@@ -25,6 +25,10 @@ namespace testing {
 
 class MockStorageStub : public storage_internal::StorageStub {
  public:
+  MOCK_METHOD(Status, DeleteObject,
+              (grpc::ClientContext&,
+               google::storage::v2::DeleteObjectRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, GetObject,
               (grpc::ClientContext&,
                google::storage::v2::GetObjectRequest const&),

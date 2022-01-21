@@ -19,6 +19,12 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+Status StorageRoundRobin::DeleteObject(
+    grpc::ClientContext& context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  return Child()->DeleteObject(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageRoundRobin::GetObject(
     grpc::ClientContext& context,
     google::storage::v2::GetObjectRequest const& request) {
