@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/convert_policies.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_options.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
+#include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/grpc_options.h"
 #include <gmock/gmock.h>
 
@@ -23,6 +24,10 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::bigtable::testing::MockBackoffPolicy;
+using ::google::cloud::bigtable::testing::MockPollingPolicy;
+using ::google::cloud::bigtable::testing::MockRetryPolicy;
 
 TEST(ConvertPolicies, InstanceAdmin) {
   auto r = DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits);
@@ -55,36 +60,6 @@ TEST(ConvertPolicies, TableAdmin) {
   EXPECT_TRUE(
       options.has<bigtable_admin::BigtableTableAdminPollingPolicyOption>());
 }
-
-class MockRetryPolicy : public RPCRetryPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<RPCRetryPolicy>, clone, (), (const, override));
-  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
-  MOCK_METHOD(bool, OnFailure, (grpc::Status const& status), (override));
-  MOCK_METHOD(bool, OnFailure, (Status const& status), (override));
-};
-
-class MockBackoffPolicy : public RPCBackoffPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<RPCBackoffPolicy>, clone, (), (const, override));
-  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (Status const&),
-              (override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (grpc::Status const&),
-              (override));
-};
-
-class MockPollingPolicy : public PollingPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<PollingPolicy>, clone, (), (const));
-  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (override));
-  //    MOCK_METHOD(bool, IsPermanentError, (grpc::Status const&), (override));
-  MOCK_METHOD(bool, IsPermanentError, (Status const&), (override));
-  //    MOCK_METHOD(bool, OnFailure, (grpc::Status const&), (override));
-  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
-  MOCK_METHOD(bool, Exhausted, (), (override));
-  MOCK_METHOD(std::chrono::milliseconds, WaitPeriod, (), (override));
-};
 
 /**
  * This test converts policies into options, then invokes the `GrpcSetupOption`

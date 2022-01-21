@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
-#include "google/cloud/bigtable/testing/mock_backoff_policy.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
+#include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/api_client_header.h"
