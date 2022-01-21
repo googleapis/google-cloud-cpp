@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_KITCHEN_SINK_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_KITCHEN_SINK_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -37,22 +37,22 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   ListLogs(google::test::admin::database::v1::ListLogsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   DoNothing(google::protobuf::Empty const& request) = 0;
 };
 
