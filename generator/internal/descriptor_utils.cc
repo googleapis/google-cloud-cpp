@@ -38,28 +38,20 @@
 #include <regex>
 #include <string>
 
-// #include <google/protobuf/compiler/cpp/cpp_helpers.h> doesn't work with the
-// existing cmake support because it includes other files that are not part of
-// ${libprotoc_headers}. So, we just directly declare what we want to use.
-namespace google {
-namespace protobuf {
-namespace compiler {
-namespace cpp {
-std::string ResolveKeyword(std::string const&);
-}  // namespace cpp
-}  // namespace compiler
-}  // namespace protobuf
-}  // namespace google
-
 using ::google::protobuf::FieldDescriptor;
 using ::google::protobuf::MethodDescriptor;
 using ::google::protobuf::ServiceDescriptor;
-using ::google::protobuf::compiler::cpp::ResolveKeyword;
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+
+// Mimic the keyword mapping of the protocol compiler.
+std::string ResolveKeyword(std::string const& name) {
+  if (name == "namespace") return name + '_';
+  return name;
+}
 
 std::string CppTypeToString(FieldDescriptor const* field) {
   switch (field->cpp_type()) {
