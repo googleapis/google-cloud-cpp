@@ -40,6 +40,13 @@ StorageRoundRobin::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
   return Child()->WriteObject(std::move(context));
 }
 
+StatusOr<google::storage::v2::ListObjectsResponse>
+StorageRoundRobin::ListObjects(
+    grpc::ClientContext& context,
+    google::storage::v2::ListObjectsRequest const& request) {
+  return Child()->ListObjects(context, request);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageRoundRobin::StartResumableWrite(
     grpc::ClientContext& context,
