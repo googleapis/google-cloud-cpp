@@ -61,6 +61,14 @@ StorageAuth::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
   return child_->WriteObject(std::move(context));
 }
 
+StatusOr<google::storage::v2::ListObjectsResponse> StorageAuth::ListObjects(
+    grpc::ClientContext& context,
+    google::storage::v2::ListObjectsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListObjects(context, request);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageAuth::StartResumableWrite(
     grpc::ClientContext& context,

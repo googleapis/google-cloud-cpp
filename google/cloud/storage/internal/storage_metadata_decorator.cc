@@ -56,6 +56,13 @@ StorageMetadata::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
   return child_->WriteObject(std::move(context));
 }
 
+StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(
+    grpc::ClientContext& context,
+    google::storage::v2::ListObjectsRequest const& request) {
+  SetMetadata(context, {});
+  return child_->ListObjects(context, request);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageMetadata::StartResumableWrite(
     grpc::ClientContext& context,

@@ -64,6 +64,18 @@ DefaultStorageStub::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
       std::move(context), std::move(response), std::move(stream));
 }
 
+StatusOr<google::storage::v2::ListObjectsResponse>
+DefaultStorageStub::ListObjects(
+    grpc::ClientContext& client_context,
+    google::storage::v2::ListObjectsRequest const& request) {
+  google::storage::v2::ListObjectsResponse response;
+  auto status = grpc_stub_->ListObjects(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 DefaultStorageStub::StartResumableWrite(
     grpc::ClientContext& client_context,
