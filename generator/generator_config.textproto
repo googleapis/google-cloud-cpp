@@ -289,6 +289,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Network Management
+service {
+  service_proto_path: "google/cloud/networkmanagement/v1/reachability.proto"
+  product_path: "google/cloud/networkmanagement"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Notebooks
 service {
   service_proto_path: "google/cloud/notebooks/v1/managed_service.proto"
