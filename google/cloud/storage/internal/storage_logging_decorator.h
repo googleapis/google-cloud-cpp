@@ -38,6 +38,10 @@ class StorageLogging : public StorageStub {
                  TracingOptions tracing_options,
                  std::set<std::string> components);
 
+  Status DeleteObject(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteObjectRequest const& request) override;
+
   StatusOr<google::storage::v2::Object> GetObject(
       grpc::ClientContext& context,
       google::storage::v2::GetObjectRequest const& request) override;
