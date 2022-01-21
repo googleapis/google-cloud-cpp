@@ -40,8 +40,8 @@ using LimitedErrorCountRetryPolicyForTest =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         TestRetryablePolicy>;
 
-auto const kLimitedTimeTestPeriod = ms(50);
-auto const kLimitedTimeTolerance = ms(10);
+auto const kLimitedTimeTestPeriod = ms(100);
+auto const kLimitedTimeTolerance = ms(20);
 
 /**
  * @test Verify that a polling policy configured to run for 50ms works

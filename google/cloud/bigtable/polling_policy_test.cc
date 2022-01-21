@@ -44,8 +44,8 @@ grpc::Status GrpcTransientError() {
 }
 
 using testing_util::chrono_literals::operator"" _ms;
-auto const kLimitedTimeTestPeriod = 50_ms;
-auto const kLimitedTimeTolerance = 10_ms;
+auto const kLimitedTimeTestPeriod = 100_ms;
+auto const kLimitedTimeTolerance = 20_ms;
 
 /**
  * @test Verify that a polling policy configured to run for 50ms
