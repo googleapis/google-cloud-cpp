@@ -141,7 +141,7 @@ TEST(StorageRoundRobinTest, ListObjects) {
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     google::storage::v2::ListObjectsRequest request;
     grpc::ClientContext ctx;
-    auto response = under_test.ListObjectsctx, request);
+    auto response = under_test.ListObjects(ctx, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
   }
 }
