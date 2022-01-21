@@ -107,7 +107,7 @@ class GrpcClient : public RawClient,
   StatusOr<ObjectMetadata> CopyObject(
       CopyObjectRequest const& request) override;
   StatusOr<ObjectMetadata> GetObjectMetadata(
-      GetObjectMetadataRequest const& r) override;
+      GetObjectMetadataRequest const& request) override;
 
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
