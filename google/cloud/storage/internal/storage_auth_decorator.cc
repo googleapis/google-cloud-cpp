@@ -30,6 +30,14 @@ StorageAuth::StorageAuth(
     std::shared_ptr<StorageStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+StatusOr<google::storage::v2::Object> StorageAuth::GetObject(
+    grpc::ClientContext& context,
+    google::storage::v2::GetObjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetObject(context, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageAuth::ReadObject(std::unique_ptr<grpc::ClientContext> context,

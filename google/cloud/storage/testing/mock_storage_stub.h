@@ -25,6 +25,10 @@ namespace testing {
 
 class MockStorageStub : public storage_internal::StorageStub {
  public:
+  MOCK_METHOD(StatusOr<google::storage::v2::Object>, GetObject,
+              (grpc::ClientContext&,
+               google::storage::v2::GetObjectRequest const&),
+              (override));
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::storage::v2::ReadObjectResponse>>,
               ReadObject,

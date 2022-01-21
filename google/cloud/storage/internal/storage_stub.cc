@@ -30,6 +30,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageStub::~StorageStub() = default;
 
+StatusOr<google::storage::v2::Object> DefaultStorageStub::GetObject(
+    grpc::ClientContext& client_context,
+    google::storage::v2::GetObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->GetObject(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 DefaultStorageStub::ReadObject(

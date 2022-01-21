@@ -19,6 +19,12 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+StatusOr<google::storage::v2::Object> StorageRoundRobin::GetObject(
+    grpc::ClientContext& context,
+    google::storage::v2::GetObjectRequest const& request) {
+  return Child()->GetObject(context, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageRoundRobin::ReadObject(

@@ -41,6 +41,9 @@ struct GrpcObjectRequestParser {
 
   static StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
       ReadObjectRangeRequest const& request);
+
+  static google::storage::v2::GetObjectRequest ToProto(
+      GetObjectMetadataRequest const& request);
 };
 
 }  // namespace internal

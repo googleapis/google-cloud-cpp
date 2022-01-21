@@ -511,7 +511,6 @@ service {
     "ListNotifications",
     "ComposeObject",
     "DeleteObject",
-    "GetObject",
     "UpdateObject",
     "ListObjects",
     "RewriteObject",

@@ -261,8 +261,13 @@ StatusOr<ObjectMetadata> GrpcClient::CopyObject(CopyObjectRequest const&) {
 }
 
 StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
-    GetObjectMetadataRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetObjectMetadataRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "");
+  auto response = stub_->GetObject(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcObjectMetadataParser::FromProto(*response, options_);
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
