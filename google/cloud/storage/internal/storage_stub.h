@@ -35,6 +35,10 @@ class StorageStub {
  public:
   virtual ~StorageStub() = 0;
 
+  virtual StatusOr<google::storage::v2::Object> GetObject(
+      grpc::ClientContext& context,
+      google::storage::v2::GetObjectRequest const& request) = 0;
+
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
   ReadObject(std::unique_ptr<grpc::ClientContext> context,
@@ -65,6 +69,10 @@ class DefaultStorageStub : public StorageStub {
   explicit DefaultStorageStub(
       std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
+
+  StatusOr<google::storage::v2::Object> GetObject(
+      grpc::ClientContext& client_context,
+      google::storage::v2::GetObjectRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
