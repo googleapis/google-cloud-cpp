@@ -29,6 +29,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_policy.h"
+#include "google/cloud/project.h"
 #include "google/cloud/status_or.h"
 #include <future>
 #include <memory>
@@ -128,7 +129,8 @@ class InstanceAdmin {
    */
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : client_(std::move(client)),
-        project_name_("projects/" + project_id()),
+        project_id_(client_->project()),
+        project_name_(Project(project_id_).FullName()),
         rpc_retry_policy_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
         rpc_backoff_policy_prototype_(
@@ -170,24 +172,24 @@ class InstanceAdmin {
   /// The full name (`projects/<project_id>`) of the project.
   std::string const& project_name() const { return project_name_; }
   /// The project id, i.e., `project_name()` without the `projects/` prefix.
-  std::string const& project_id() const { return client_->project(); }
+  std::string const& project_id() const { return project_id_; }
 
   /// Return the fully qualified name of the given instance_id.
   std::string InstanceName(std::string const& instance_id) const {
-    return google::cloud::bigtable::InstanceName(project_id(), instance_id);
+    return google::cloud::bigtable::InstanceName(project_id_, instance_id);
   }
 
   /// Return the fully qualified name of the given cluster_id in give
   /// instance_id.
   std::string ClusterName(std::string const& instance_id,
                           std::string const& cluster_id) const {
-    return google::cloud::bigtable::ClusterName(project_id(), instance_id,
+    return google::cloud::bigtable::ClusterName(project_id_, instance_id,
                                                 cluster_id);
   }
 
   std::string AppProfileName(std::string const& instance_id,
                              std::string const& profile_id) const {
-    return google::cloud::bigtable::AppProfileName(project_id(), instance_id,
+    return google::cloud::bigtable::AppProfileName(project_id_, instance_id,
                                                    profile_id);
   }
 
@@ -772,6 +774,7 @@ class InstanceAdmin {
                             AppProfileUpdateConfig config);
 
   std::shared_ptr<InstanceAdminClient> client_;
+  std::string project_id_;
   std::string project_name_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
