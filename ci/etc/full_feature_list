@@ -19,6 +19,7 @@ ids
 iot
 kms
 logging
+networkmanagement
 notebooks
 orgpolicy
 oslogin

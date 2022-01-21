@@ -1,0 +1,3 @@
+@com_google_googleapis//google/cloud/networkmanagement/v1:connectivity_test.proto
+@com_google_googleapis//google/cloud/networkmanagement/v1:reachability.proto
+@com_google_googleapis//google/cloud/networkmanagement/v1:trace.proto

@@ -349,6 +349,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-networkmanagement",
+    deps = [
+        "//google/cloud/networkmanagement:google_cloud_cpp_networkmanagement",
+    ],
+)
+
+cc_library(
+    name = "experimental-networkmanagement_mocks",
+    deps = [
+        "//google/cloud/networkmanagement:google_cloud_cpp_networkmanagement_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-notebooks",
     deps = [
         "//google/cloud/notebooks:google_cloud_cpp_notebooks",
