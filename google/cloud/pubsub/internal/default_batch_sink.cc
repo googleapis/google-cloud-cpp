@@ -33,7 +33,7 @@ DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
   auto& stub = stub_;
   return internal::AsyncRetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(),
-      internal::Idempotency::kIdempotent, cq_,
+      Idempotency::kIdempotent, cq_,
       [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              google::pubsub::v1::PublishRequest const& request) {
         return stub->AsyncPublish(cq, std::move(context), request);

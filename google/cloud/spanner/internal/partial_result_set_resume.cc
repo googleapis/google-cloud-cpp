@@ -33,7 +33,7 @@ PartialResultSetResume::Read() {
     }
     auto status = Finish();
     if (status.ok()) return {};
-    if (idempotency_ == google::cloud::internal::Idempotency::kNonIdempotent ||
+    if (idempotency_ == google::cloud::Idempotency::kNonIdempotent ||
         !retry_policy_prototype_->OnFailure(status)) {
       return {};
     }

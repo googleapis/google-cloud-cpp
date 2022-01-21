@@ -22,7 +22,7 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 namespace gtab = ::google::test::admin::database::v1;
 
 class GoldenIdempotencyPolicyTest : public ::testing::Test {

@@ -35,7 +35,7 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 
 class DefaultPartialResultSetReader : public PartialResultSetReader {
  public:

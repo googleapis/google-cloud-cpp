@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 using ::google::cloud::storage::internal::raw_client_wrapper_utils::Signature;
 
 /**

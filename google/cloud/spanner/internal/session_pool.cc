@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace spanner_proto = ::google::spanner::v1;
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
@@ -366,7 +366,7 @@ Status SessionPool::CreateSessionsSync(
   auto const& stub = channel->stub;
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      google::cloud::internal::Idempotency::kIdempotent,
+      google::cloud::Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::BatchCreateSessionsRequest const& request) {
         return stub->BatchCreateSessions(context, request);
