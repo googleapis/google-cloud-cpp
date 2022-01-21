@@ -297,8 +297,12 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
-    ListObjectsRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListObjectsRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  auto response = stub_->ListObjects(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcObjectRequestParser::FromProto(*response, options_);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteObject(DeleteObjectRequest const&) {
