@@ -445,9 +445,7 @@ TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
       internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
   if (using_emulator) {
     options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-                      "test-only-invalid", std::chrono::system_clock::now() +
-                                               std::chrono::minutes(15)))
+                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                   .set<internal::UseInsecureChannelOption>(true);
   }
   auto publisher = Publisher(MakePublisherConnection(topic_, options));
