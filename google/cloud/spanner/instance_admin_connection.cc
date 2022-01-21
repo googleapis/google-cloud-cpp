@@ -30,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = ::google::iam::v1;
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 
 namespace {
 

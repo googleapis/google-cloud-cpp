@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_USER_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_USER_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/user_event_service.grpc.pb.h>
 #include <memory>
@@ -39,19 +38,19 @@ class UserEventServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency WriteUserEvent(
+  virtual google::cloud::Idempotency WriteUserEvent(
       google::cloud::retail::v2::WriteUserEventRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CollectUserEvent(
+  virtual google::cloud::Idempotency CollectUserEvent(
       google::cloud::retail::v2::CollectUserEventRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency PurgeUserEvents(
+  virtual google::cloud::Idempotency PurgeUserEvents(
       google::cloud::retail::v2::PurgeUserEventsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ImportUserEvents(
+  virtual google::cloud::Idempotency ImportUserEvents(
       google::cloud::retail::v2::ImportUserEventsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency RejoinUserEvents(
+  virtual google::cloud::Idempotency RejoinUserEvents(
       google::cloud::retail::v2::RejoinUserEventsRequest const& request) = 0;
 };
 

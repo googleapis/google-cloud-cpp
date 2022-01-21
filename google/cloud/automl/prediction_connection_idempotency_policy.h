@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_PREDICTION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_PREDICTION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/automl/v1/prediction_service.grpc.pb.h>
 #include <memory>
@@ -39,10 +38,10 @@ class PredictionServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency Predict(
+  virtual google::cloud::Idempotency Predict(
       google::cloud::automl::v1::PredictRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchPredict(
+  virtual google::cloud::Idempotency BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request) = 0;
 };
 

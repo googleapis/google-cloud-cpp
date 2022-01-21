@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/catalog_service.grpc.pb.h>
 #include <memory>
@@ -38,16 +38,16 @@ class CatalogServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListCatalogs(
+  virtual google::cloud::Idempotency ListCatalogs(
       google::cloud::retail::v2::ListCatalogsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateCatalog(
+  virtual google::cloud::Idempotency UpdateCatalog(
       google::cloud::retail::v2::UpdateCatalogRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetDefaultBranch(
+  virtual google::cloud::Idempotency SetDefaultBranch(
       google::cloud::retail::v2::SetDefaultBranchRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDefaultBranch(
+  virtual google::cloud::Idempotency GetDefaultBranch(
       google::cloud::retail::v2::GetDefaultBranchRequest const& request) = 0;
 };
 

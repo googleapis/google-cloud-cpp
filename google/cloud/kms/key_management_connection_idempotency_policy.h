@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_KEY_MANAGEMENT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_KEY_MANAGEMENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/kms/v1/service.grpc.pb.h>
 #include <memory>
@@ -38,85 +38,85 @@ class KeyManagementServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListKeyRings(
+  virtual google::cloud::Idempotency ListKeyRings(
       google::cloud::kms::v1::ListKeyRingsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListCryptoKeys(
+  virtual google::cloud::Idempotency ListCryptoKeys(
       google::cloud::kms::v1::ListCryptoKeysRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListCryptoKeyVersions(
+  virtual google::cloud::Idempotency ListCryptoKeyVersions(
       google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListImportJobs(
+  virtual google::cloud::Idempotency ListImportJobs(
       google::cloud::kms::v1::ListImportJobsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetKeyRing(
+  virtual google::cloud::Idempotency GetKeyRing(
       google::cloud::kms::v1::GetKeyRingRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetCryptoKey(
+  virtual google::cloud::Idempotency GetCryptoKey(
       google::cloud::kms::v1::GetCryptoKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetCryptoKeyVersion(
+  virtual google::cloud::Idempotency GetCryptoKeyVersion(
       google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetPublicKey(
+  virtual google::cloud::Idempotency GetPublicKey(
       google::cloud::kms::v1::GetPublicKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetImportJob(
+  virtual google::cloud::Idempotency GetImportJob(
       google::cloud::kms::v1::GetImportJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateKeyRing(
+  virtual google::cloud::Idempotency CreateKeyRing(
       google::cloud::kms::v1::CreateKeyRingRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateCryptoKey(
+  virtual google::cloud::Idempotency CreateCryptoKey(
       google::cloud::kms::v1::CreateCryptoKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateCryptoKeyVersion(
+  virtual google::cloud::Idempotency CreateCryptoKeyVersion(
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ImportCryptoKeyVersion(
+  virtual google::cloud::Idempotency ImportCryptoKeyVersion(
       google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateImportJob(
+  virtual google::cloud::Idempotency CreateImportJob(
       google::cloud::kms::v1::CreateImportJobRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateCryptoKey(
+  virtual google::cloud::Idempotency UpdateCryptoKey(
       google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateCryptoKeyVersion(
+  virtual google::cloud::Idempotency UpdateCryptoKeyVersion(
       google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateCryptoKeyPrimaryVersion(
+  virtual google::cloud::Idempotency UpdateCryptoKeyPrimaryVersion(
       google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DestroyCryptoKeyVersion(
+  virtual google::cloud::Idempotency DestroyCryptoKeyVersion(
       google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency RestoreCryptoKeyVersion(
+  virtual google::cloud::Idempotency RestoreCryptoKeyVersion(
       google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency Encrypt(
+  virtual google::cloud::Idempotency Encrypt(
       google::cloud::kms::v1::EncryptRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency Decrypt(
+  virtual google::cloud::Idempotency Decrypt(
       google::cloud::kms::v1::DecryptRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AsymmetricSign(
+  virtual google::cloud::Idempotency AsymmetricSign(
       google::cloud::kms::v1::AsymmetricSignRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AsymmetricDecrypt(
+  virtual google::cloud::Idempotency AsymmetricDecrypt(
       google::cloud::kms::v1::AsymmetricDecryptRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency MacSign(
+  virtual google::cloud::Idempotency MacSign(
       google::cloud::kms::v1::MacSignRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency MacVerify(
+  virtual google::cloud::Idempotency MacVerify(
       google::cloud::kms::v1::MacVerifyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GenerateRandomBytes(
+  virtual google::cloud::Idempotency GenerateRandomBytes(
       google::cloud::kms::v1::GenerateRandomBytesRequest const& request) = 0;
 };
 

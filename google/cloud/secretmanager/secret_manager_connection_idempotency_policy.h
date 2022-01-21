@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_SECRET_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_SECRET_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/secretmanager/v1/service.grpc.pb.h>
 #include <memory>
@@ -38,55 +38,55 @@ class SecretManagerServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListSecrets(
+  virtual google::cloud::Idempotency ListSecrets(
       google::cloud::secretmanager::v1::ListSecretsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateSecret(
+  virtual google::cloud::Idempotency CreateSecret(
       google::cloud::secretmanager::v1::CreateSecretRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AddSecretVersion(
+  virtual google::cloud::Idempotency AddSecretVersion(
       google::cloud::secretmanager::v1::AddSecretVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetSecret(
+  virtual google::cloud::Idempotency GetSecret(
       google::cloud::secretmanager::v1::GetSecretRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateSecret(
+  virtual google::cloud::Idempotency UpdateSecret(
       google::cloud::secretmanager::v1::UpdateSecretRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteSecret(
+  virtual google::cloud::Idempotency DeleteSecret(
       google::cloud::secretmanager::v1::DeleteSecretRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListSecretVersions(
+  virtual google::cloud::Idempotency ListSecretVersions(
       google::cloud::secretmanager::v1::ListSecretVersionsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetSecretVersion(
+  virtual google::cloud::Idempotency GetSecretVersion(
       google::cloud::secretmanager::v1::GetSecretVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency AccessSecretVersion(
+  virtual google::cloud::Idempotency AccessSecretVersion(
       google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DisableSecretVersion(
+  virtual google::cloud::Idempotency DisableSecretVersion(
       google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency EnableSecretVersion(
+  virtual google::cloud::Idempotency EnableSecretVersion(
       google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DestroySecretVersion(
+  virtual google::cloud::Idempotency DestroySecretVersion(
       google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 

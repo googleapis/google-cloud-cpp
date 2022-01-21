@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PRODUCT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PRODUCT_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/product_service.grpc.pb.h>
 #include <memory>
@@ -39,32 +38,32 @@ class ProductServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ProductServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateProduct(
+  virtual google::cloud::Idempotency CreateProduct(
       google::cloud::retail::v2::CreateProductRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetProduct(
+  virtual google::cloud::Idempotency GetProduct(
       google::cloud::retail::v2::GetProductRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListProducts(
+  virtual google::cloud::Idempotency ListProducts(
       google::cloud::retail::v2::ListProductsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateProduct(
+  virtual google::cloud::Idempotency UpdateProduct(
       google::cloud::retail::v2::UpdateProductRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteProduct(
+  virtual google::cloud::Idempotency DeleteProduct(
       google::cloud::retail::v2::DeleteProductRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ImportProducts(
+  virtual google::cloud::Idempotency ImportProducts(
       google::cloud::retail::v2::ImportProductsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetInventory(
+  virtual google::cloud::Idempotency SetInventory(
       google::cloud::retail::v2::SetInventoryRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AddFulfillmentPlaces(
+  virtual google::cloud::Idempotency AddFulfillmentPlaces(
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency RemoveFulfillmentPlaces(
+  virtual google::cloud::Idempotency RemoveFulfillmentPlaces(
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
           request) = 0;
 };

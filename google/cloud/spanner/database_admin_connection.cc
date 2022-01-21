@@ -33,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 using ::google::cloud::internal::RetryLoop;
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>

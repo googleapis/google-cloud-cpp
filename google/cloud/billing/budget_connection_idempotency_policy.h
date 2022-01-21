@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGET_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGET_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/billing/budgets/v1/budget_service.grpc.pb.h>
 #include <memory>
@@ -38,21 +38,21 @@ class BudgetServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateBudget(
+  virtual google::cloud::Idempotency CreateBudget(
       google::cloud::billing::budgets::v1::CreateBudgetRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateBudget(
+  virtual google::cloud::Idempotency UpdateBudget(
       google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetBudget(
+  virtual google::cloud::Idempotency GetBudget(
       google::cloud::billing::budgets::v1::GetBudgetRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListBudgets(
+  virtual google::cloud::Idempotency ListBudgets(
       google::cloud::billing::budgets::v1::ListBudgetsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteBudget(
+  virtual google::cloud::Idempotency DeleteBudget(
       google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
           request) = 0;
 };

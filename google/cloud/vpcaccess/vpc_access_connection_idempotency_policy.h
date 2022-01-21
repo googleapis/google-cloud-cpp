@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_VPC_ACCESS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_VPC_ACCESS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
 #include <memory>
@@ -39,16 +38,16 @@ class VpcAccessServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateConnector(
+  virtual google::cloud::Idempotency CreateConnector(
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetConnector(
+  virtual google::cloud::Idempotency GetConnector(
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListConnectors(
+  virtual google::cloud::Idempotency ListConnectors(
       google::cloud::vpcaccess::v1::ListConnectorsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteConnector(
+  virtual google::cloud::Idempotency DeleteConnector(
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) = 0;
 };
 

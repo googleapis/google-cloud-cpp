@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_CERTIFICATES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_CERTIFICATES_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
@@ -38,22 +38,22 @@ class AuthorizedCertificatesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListAuthorizedCertificates(
+  virtual google::cloud::Idempotency ListAuthorizedCertificates(
       google::appengine::v1::ListAuthorizedCertificatesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetAuthorizedCertificate(
+  virtual google::cloud::Idempotency GetAuthorizedCertificate(
       google::appengine::v1::GetAuthorizedCertificateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateAuthorizedCertificate(
+  virtual google::cloud::Idempotency CreateAuthorizedCertificate(
       google::appengine::v1::CreateAuthorizedCertificateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateAuthorizedCertificate(
+  virtual google::cloud::Idempotency UpdateAuthorizedCertificate(
       google::appengine::v1::UpdateAuthorizedCertificateRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteAuthorizedCertificate(
+  virtual google::cloud::Idempotency DeleteAuthorizedCertificate(
       google::appengine::v1::DeleteAuthorizedCertificateRequest const&
           request) = 0;
 };

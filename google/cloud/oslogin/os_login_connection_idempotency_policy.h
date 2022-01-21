@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_OS_LOGIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_OS_LOGIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
 #include <memory>
@@ -38,22 +38,22 @@ class OsLoginServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency DeletePosixAccount(
+  virtual google::cloud::Idempotency DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteSshPublicKey(
+  virtual google::cloud::Idempotency DeleteSshPublicKey(
       google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetLoginProfile(
+  virtual google::cloud::Idempotency GetLoginProfile(
       google::cloud::oslogin::v1::GetLoginProfileRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetSshPublicKey(
+  virtual google::cloud::Idempotency GetSshPublicKey(
       google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ImportSshPublicKey(
+  virtual google::cloud::Idempotency ImportSshPublicKey(
       google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateSshPublicKey(
+  virtual google::cloud::Idempotency UpdateSshPublicKey(
       google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) = 0;
 };
 

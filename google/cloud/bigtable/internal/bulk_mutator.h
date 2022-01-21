@@ -88,7 +88,7 @@ class BulkMutatorState {
      * request provided by the application.
      */
     int original_index;
-    google::cloud::internal::Idempotency idempotency;
+    google::cloud::Idempotency idempotency;
     /// Set to `false` if the result is unknown.
     bool has_mutation_result;
   };

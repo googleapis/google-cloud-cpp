@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_THING_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_THING_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -38,58 +37,58 @@ class GoldenThingAdminConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   GetBackup(google::test::admin::database::v1::GetBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   ListBackups(google::test::admin::database::v1::ListBackupsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency
+  virtual google::cloud::Idempotency
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 };
 

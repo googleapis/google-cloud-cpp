@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
 #include <memory>
@@ -38,7 +38,7 @@ class ImageVersionsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListImageVersions(
+  virtual google::cloud::Idempotency ListImageVersions(
       google::cloud::orchestration::airflow::service::v1::
           ListImageVersionsRequest request) = 0;
 };

@@ -40,20 +40,17 @@ namespace internal {
  */
 class ConstantIdempotencyPolicy {
  public:
-  explicit ConstantIdempotencyPolicy(
-      google::cloud::internal::Idempotency idempotency)
+  explicit ConstantIdempotencyPolicy(google::cloud::Idempotency idempotency)
       : idempotency_(idempotency) {}
 
   bool is_idempotent() const {
-    return idempotency_ == google::cloud::internal::Idempotency::kIdempotent;
+    return idempotency_ == google::cloud::Idempotency::kIdempotent;
   }
 
-  google::cloud::internal::Idempotency idempotency() const {
-    return idempotency_;
-  }
+  google::cloud::Idempotency idempotency() const { return idempotency_; }
 
  private:
-  google::cloud::internal::Idempotency idempotency_;
+  google::cloud::Idempotency idempotency_;
 };
 
 }  // namespace internal

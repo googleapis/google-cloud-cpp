@@ -25,7 +25,7 @@ namespace cloud {
 namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 
 BigtableInstanceAdminConnectionIdempotencyPolicy::
     ~BigtableInstanceAdminConnectionIdempotencyPolicy() = default;

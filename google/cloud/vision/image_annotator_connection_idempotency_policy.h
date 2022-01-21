@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_IMAGE_ANNOTATOR_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_IMAGE_ANNOTATOR_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
 #include <memory>
@@ -39,17 +38,17 @@ class ImageAnnotatorConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency BatchAnnotateImages(
+  virtual google::cloud::Idempotency BatchAnnotateImages(
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency BatchAnnotateFiles(
+  virtual google::cloud::Idempotency BatchAnnotateFiles(
       google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency AsyncBatchAnnotateImages(
+  virtual google::cloud::Idempotency AsyncBatchAnnotateImages(
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency AsyncBatchAnnotateFiles(
+  virtual google::cloud::Idempotency AsyncBatchAnnotateFiles(
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
           request) = 0;
 };

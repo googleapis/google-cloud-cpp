@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <memory>
@@ -39,66 +38,66 @@ class DatabaseAdminConnectionIdempotencyPolicy {
   virtual std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListDatabases(
+  virtual google::cloud::Idempotency ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateDatabase(
+  virtual google::cloud::Idempotency CreateDatabase(
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDatabase(
+  virtual google::cloud::Idempotency GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateDatabaseDdl(
+  virtual google::cloud::Idempotency UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DropDatabase(
+  virtual google::cloud::Idempotency DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDatabaseDdl(
+  virtual google::cloud::Idempotency GetDatabaseDdl(
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateBackup(
+  virtual google::cloud::Idempotency CreateBackup(
       google::spanner::admin::database::v1::CreateBackupRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetBackup(
+  virtual google::cloud::Idempotency GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateBackup(
+  virtual google::cloud::Idempotency UpdateBackup(
       google::spanner::admin::database::v1::UpdateBackupRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteBackup(
+  virtual google::cloud::Idempotency DeleteBackup(
       google::spanner::admin::database::v1::DeleteBackupRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListBackups(
+  virtual google::cloud::Idempotency ListBackups(
       google::spanner::admin::database::v1::ListBackupsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency RestoreDatabase(
+  virtual google::cloud::Idempotency RestoreDatabase(
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListDatabaseOperations(
+  virtual google::cloud::Idempotency ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListBackupOperations(
+  virtual google::cloud::Idempotency ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest
           request) = 0;
 };

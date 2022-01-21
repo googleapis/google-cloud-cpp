@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_WORKFLOWS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_WORKFLOWS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/workflows/v1/workflows.grpc.pb.h>
 #include <memory>
@@ -39,19 +38,19 @@ class WorkflowsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<WorkflowsConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListWorkflows(
+  virtual google::cloud::Idempotency ListWorkflows(
       google::cloud::workflows::v1::ListWorkflowsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetWorkflow(
+  virtual google::cloud::Idempotency GetWorkflow(
       google::cloud::workflows::v1::GetWorkflowRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateWorkflow(
+  virtual google::cloud::Idempotency CreateWorkflow(
       google::cloud::workflows::v1::CreateWorkflowRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteWorkflow(
+  virtual google::cloud::Idempotency DeleteWorkflow(
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateWorkflow(
+  virtual google::cloud::Idempotency UpdateWorkflow(
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request) = 0;
 };
 

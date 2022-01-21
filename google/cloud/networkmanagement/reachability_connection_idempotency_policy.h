@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_REACHABILITY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_REACHABILITY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/networkmanagement/v1/reachability.grpc.pb.h>
 #include <memory>
@@ -39,27 +38,27 @@ class ReachabilityServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListConnectivityTests(
+  virtual google::cloud::Idempotency ListConnectivityTests(
       google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetConnectivityTest(
+  virtual google::cloud::Idempotency GetConnectivityTest(
       google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateConnectivityTest(
+  virtual google::cloud::Idempotency CreateConnectivityTest(
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateConnectivityTest(
+  virtual google::cloud::Idempotency UpdateConnectivityTest(
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency RerunConnectivityTest(
+  virtual google::cloud::Idempotency RerunConnectivityTest(
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteConnectivityTest(
+  virtual google::cloud::Idempotency DeleteConnectivityTest(
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request) = 0;
 };

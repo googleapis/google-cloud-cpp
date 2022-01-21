@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_ASSURED_WORKLOADS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_ASSURED_WORKLOADS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
 #include <memory>
@@ -39,23 +38,23 @@ class AssuredWorkloadsServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateWorkload(
+  virtual google::cloud::Idempotency CreateWorkload(
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateWorkload(
+  virtual google::cloud::Idempotency UpdateWorkload(
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteWorkload(
+  virtual google::cloud::Idempotency DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetWorkload(
+  virtual google::cloud::Idempotency GetWorkload(
       google::cloud::assuredworkloads::v1::GetWorkloadRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListWorkloads(
+  virtual google::cloud::Idempotency ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) = 0;
 };
 

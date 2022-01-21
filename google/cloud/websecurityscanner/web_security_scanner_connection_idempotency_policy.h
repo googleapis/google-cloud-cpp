@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_WEB_SECURITY_SCANNER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_WEB_SECURITY_SCANNER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h>
 #include <memory>
@@ -38,53 +38,53 @@ class WebSecurityScannerConnectionIdempotencyPolicy {
   virtual std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateScanConfig(
+  virtual google::cloud::Idempotency CreateScanConfig(
       google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteScanConfig(
+  virtual google::cloud::Idempotency DeleteScanConfig(
       google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetScanConfig(
+  virtual google::cloud::Idempotency GetScanConfig(
       google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListScanConfigs(
+  virtual google::cloud::Idempotency ListScanConfigs(
       google::cloud::websecurityscanner::v1::ListScanConfigsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateScanConfig(
+  virtual google::cloud::Idempotency UpdateScanConfig(
       google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency StartScanRun(
+  virtual google::cloud::Idempotency StartScanRun(
       google::cloud::websecurityscanner::v1::StartScanRunRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetScanRun(
+  virtual google::cloud::Idempotency GetScanRun(
       google::cloud::websecurityscanner::v1::GetScanRunRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListScanRuns(
+  virtual google::cloud::Idempotency ListScanRuns(
       google::cloud::websecurityscanner::v1::ListScanRunsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency StopScanRun(
+  virtual google::cloud::Idempotency StopScanRun(
       google::cloud::websecurityscanner::v1::StopScanRunRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListCrawledUrls(
+  virtual google::cloud::Idempotency ListCrawledUrls(
       google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetFinding(
+  virtual google::cloud::Idempotency GetFinding(
       google::cloud::websecurityscanner::v1::GetFindingRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListFindings(
+  virtual google::cloud::Idempotency ListFindings(
       google::cloud::websecurityscanner::v1::ListFindingsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListFindingTypeStats(
+  virtual google::cloud::Idempotency ListFindingTypeStats(
       google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
           request) = 0;
 };

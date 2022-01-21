@@ -37,7 +37,7 @@ static_assert(std::is_copy_assignable<bigtable::InstanceAdmin>::value,
               "bigtable::InstanceAdmin must be CopyAssignable");
 
 using ClientUtils = bigtable::internal::UnaryClientUtils<InstanceAdminClient>;
-using ::google::cloud::internal::Idempotency;
+using ::google::cloud::Idempotency;
 
 StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   grpc::Status status;

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_CLOUD_BILLING_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_CLOUD_BILLING_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/billing/v1/cloud_billing.grpc.pb.h>
 #include <memory>
@@ -38,38 +38,38 @@ class CloudBillingConnectionIdempotencyPolicy {
   virtual std::unique_ptr<CloudBillingConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency GetBillingAccount(
+  virtual google::cloud::Idempotency GetBillingAccount(
       google::cloud::billing::v1::GetBillingAccountRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListBillingAccounts(
+  virtual google::cloud::Idempotency ListBillingAccounts(
       google::cloud::billing::v1::ListBillingAccountsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateBillingAccount(
+  virtual google::cloud::Idempotency UpdateBillingAccount(
       google::cloud::billing::v1::UpdateBillingAccountRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateBillingAccount(
+  virtual google::cloud::Idempotency CreateBillingAccount(
       google::cloud::billing::v1::CreateBillingAccountRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListProjectBillingInfo(
+  virtual google::cloud::Idempotency ListProjectBillingInfo(
       google::cloud::billing::v1::ListProjectBillingInfoRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetProjectBillingInfo(
+  virtual google::cloud::Idempotency GetProjectBillingInfo(
       google::cloud::billing::v1::GetProjectBillingInfoRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateProjectBillingInfo(
+  virtual google::cloud::Idempotency UpdateProjectBillingInfo(
       google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 

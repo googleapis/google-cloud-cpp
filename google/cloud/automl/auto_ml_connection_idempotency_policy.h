@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_AUTO_ML_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_AUTO_ML_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/automl/v1/service.grpc.pb.h>
 #include <memory>
@@ -38,58 +37,58 @@ class AutoMlConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AutoMlConnectionIdempotencyPolicy> clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateDataset(
+  virtual google::cloud::Idempotency CreateDataset(
       google::cloud::automl::v1::CreateDatasetRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetDataset(
+  virtual google::cloud::Idempotency GetDataset(
       google::cloud::automl::v1::GetDatasetRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListDatasets(
+  virtual google::cloud::Idempotency ListDatasets(
       google::cloud::automl::v1::ListDatasetsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateDataset(
+  virtual google::cloud::Idempotency UpdateDataset(
       google::cloud::automl::v1::UpdateDatasetRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteDataset(
+  virtual google::cloud::Idempotency DeleteDataset(
       google::cloud::automl::v1::DeleteDatasetRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ImportData(
+  virtual google::cloud::Idempotency ImportData(
       google::cloud::automl::v1::ImportDataRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ExportData(
+  virtual google::cloud::Idempotency ExportData(
       google::cloud::automl::v1::ExportDataRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetAnnotationSpec(
+  virtual google::cloud::Idempotency GetAnnotationSpec(
       google::cloud::automl::v1::GetAnnotationSpecRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateModel(
+  virtual google::cloud::Idempotency CreateModel(
       google::cloud::automl::v1::CreateModelRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetModel(
+  virtual google::cloud::Idempotency GetModel(
       google::cloud::automl::v1::GetModelRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListModels(
+  virtual google::cloud::Idempotency ListModels(
       google::cloud::automl::v1::ListModelsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteModel(
+  virtual google::cloud::Idempotency DeleteModel(
       google::cloud::automl::v1::DeleteModelRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateModel(
+  virtual google::cloud::Idempotency UpdateModel(
       google::cloud::automl::v1::UpdateModelRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeployModel(
+  virtual google::cloud::Idempotency DeployModel(
       google::cloud::automl::v1::DeployModelRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UndeployModel(
+  virtual google::cloud::Idempotency UndeployModel(
       google::cloud::automl::v1::UndeployModelRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ExportModel(
+  virtual google::cloud::Idempotency ExportModel(
       google::cloud::automl::v1::ExportModelRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetModelEvaluation(
+  virtual google::cloud::Idempotency GetModelEvaluation(
       google::cloud::automl::v1::GetModelEvaluationRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListModelEvaluations(
+  virtual google::cloud::Idempotency ListModelEvaluations(
       google::cloud::automl::v1::ListModelEvaluationsRequest request) = 0;
 };
 

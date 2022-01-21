@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_TENANT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_TENANT_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
 #include <memory>
@@ -38,19 +38,19 @@ class TenantServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<TenantServiceConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateTenant(
+  virtual google::cloud::Idempotency CreateTenant(
       google::cloud::talent::v4::CreateTenantRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetTenant(
+  virtual google::cloud::Idempotency GetTenant(
       google::cloud::talent::v4::GetTenantRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateTenant(
+  virtual google::cloud::Idempotency UpdateTenant(
       google::cloud::talent::v4::UpdateTenantRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteTenant(
+  virtual google::cloud::Idempotency DeleteTenant(
       google::cloud::talent::v4::DeleteTenantRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListTenants(
+  virtual google::cloud::Idempotency ListTenants(
       google::cloud::talent::v4::ListTenantsRequest request) = 0;
 };
 

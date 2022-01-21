@@ -19,9 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_INSTANCE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_INSTANCE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/future.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>
@@ -39,66 +38,66 @@ class BigtableInstanceAdminConnectionIdempotencyPolicy {
   virtual std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency CreateInstance(
+  virtual google::cloud::Idempotency CreateInstance(
       google::bigtable::admin::v2::CreateInstanceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetInstance(
+  virtual google::cloud::Idempotency GetInstance(
       google::bigtable::admin::v2::GetInstanceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListInstances(
+  virtual google::cloud::Idempotency ListInstances(
       google::bigtable::admin::v2::ListInstancesRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateInstance(
+  virtual google::cloud::Idempotency UpdateInstance(
       google::bigtable::admin::v2::Instance const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency PartialUpdateInstance(
+  virtual google::cloud::Idempotency PartialUpdateInstance(
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteInstance(
+  virtual google::cloud::Idempotency DeleteInstance(
       google::bigtable::admin::v2::DeleteInstanceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateCluster(
+  virtual google::cloud::Idempotency CreateCluster(
       google::bigtable::admin::v2::CreateClusterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetCluster(
+  virtual google::cloud::Idempotency GetCluster(
       google::bigtable::admin::v2::GetClusterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListClusters(
+  virtual google::cloud::Idempotency ListClusters(
       google::bigtable::admin::v2::ListClustersRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateCluster(
+  virtual google::cloud::Idempotency UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency PartialUpdateCluster(
+  virtual google::cloud::Idempotency PartialUpdateCluster(
       google::bigtable::admin::v2::PartialUpdateClusterRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteCluster(
+  virtual google::cloud::Idempotency DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateAppProfile(
+  virtual google::cloud::Idempotency CreateAppProfile(
       google::bigtable::admin::v2::CreateAppProfileRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetAppProfile(
+  virtual google::cloud::Idempotency GetAppProfile(
       google::bigtable::admin::v2::GetAppProfileRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListAppProfiles(
+  virtual google::cloud::Idempotency ListAppProfiles(
       google::bigtable::admin::v2::ListAppProfilesRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateAppProfile(
+  virtual google::cloud::Idempotency UpdateAppProfile(
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteAppProfile(
+  virtual google::cloud::Idempotency DeleteAppProfile(
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetIamPolicy(
+  virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetIamPolicy(
+  virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency TestIamPermissions(
+  virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
