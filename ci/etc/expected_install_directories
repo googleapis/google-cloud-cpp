@@ -1,6 +1,9 @@
 .
 ./include
 ./include/google
+./include/google/api
+./include/google/api/serviceusage
+./include/google/api/serviceusage/v1
 ./include/google/appengine
 ./include/google/appengine/v1
 ./include/google/bigtable
@@ -143,6 +146,9 @@
 ./include/google/cloud/security
 ./include/google/cloud/security/privateca
 ./include/google/cloud/security/privateca/v1
+./include/google/cloud/serviceusage
+./include/google/cloud/serviceusage/internal
+./include/google/cloud/serviceusage/mocks
 ./include/google/cloud/shell
 ./include/google/cloud/shell/internal
 ./include/google/cloud/shell/mocks
@@ -267,6 +273,7 @@
 ./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
+./lib64/cmake/google_cloud_cpp_serviceusage
 ./lib64/cmake/google_cloud_cpp_shell
 ./lib64/cmake/google_cloud_cpp_storage
 ./lib64/cmake/google_cloud_cpp_storagetransfer

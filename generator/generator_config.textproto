@@ -442,6 +442,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Service Usage
+service {
+  service_proto_path: "google/api/serviceusage/v1/serviceusage.proto"
+  product_path: "google/cloud/serviceusage"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Shell
 service {
   service_proto_path: "google/cloud/shell/v1/cloudshell.proto"

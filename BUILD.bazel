@@ -540,6 +540,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-serviceusage",
+    deps = [
+        "//google/cloud/serviceusage:google_cloud_cpp_serviceusage",
+    ],
+)
+
+cc_library(
+    name = "experimental-serviceusage_mocks",
+    deps = [
+        "//google/cloud/serviceusage:google_cloud_cpp_serviceusage_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-shell",
     deps = [
         "//google/cloud/shell:google_cloud_cpp_shell",
