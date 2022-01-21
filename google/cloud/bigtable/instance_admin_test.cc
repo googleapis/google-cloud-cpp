@@ -54,7 +54,7 @@ using MockAdminClient =
 std::string const kProjectId = "the-project";
 
 /// A fixture for the bigtable::InstanceAdmin tests.
-class InstanceAdminTest : public ::testing::Test {
+class InstanceAdminLegacyTest : public ::testing::Test {
  protected:
   void SetUp() override {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
@@ -202,60 +202,9 @@ struct MockRpcFactory {
   }
 };
 
-/// @test Verify basic functionality in the `bigtable::InstanceAdmin` class.
-TEST_F(InstanceAdminTest, Default) {
-  InstanceAdmin tested(client_);
-  EXPECT_EQ("the-project", tested.project_id());
-}
-
-TEST_F(InstanceAdminTest, CopyConstructor) {
-  InstanceAdmin source(client_);
-  std::string const& expected = source.project_id();
-  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
-  InstanceAdmin copy(source);
-  EXPECT_EQ(expected, copy.project_id());
-}
-
-TEST_F(InstanceAdminTest, MoveConstructor) {
-  InstanceAdmin source(client_);
-  std::string expected = source.project_id();
-  InstanceAdmin copy(std::move(source));
-  EXPECT_EQ(expected, copy.project_id());
-}
-
-TEST_F(InstanceAdminTest, CopyAssignment) {
-  std::shared_ptr<MockAdminClient> other_client =
-      std::make_shared<MockAdminClient>();
-  std::string other_project = "other-project";
-  EXPECT_CALL(*other_client, project())
-      .WillRepeatedly(ReturnRef(other_project));
-
-  InstanceAdmin source(client_);
-  std::string const& expected = source.project_id();
-  InstanceAdmin dest(other_client);
-  EXPECT_NE(expected, dest.project_id());
-  dest = source;
-  EXPECT_EQ(expected, dest.project_id());
-}
-
-TEST_F(InstanceAdminTest, MoveAssignment) {
-  std::shared_ptr<MockAdminClient> other_client =
-      std::make_shared<MockAdminClient>();
-  std::string other_project = "other-project";
-  EXPECT_CALL(*other_client, project())
-      .WillRepeatedly(ReturnRef(other_project));
-
-  InstanceAdmin source(client_);
-  std::string expected = source.project_id();
-  InstanceAdmin dest(other_client);
-  EXPECT_NE(expected, dest.project_id());
-  dest = std::move(source);
-  EXPECT_EQ(expected, dest.project_id());
-}
-
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` works in the easy
 /// case.
-TEST_F(InstanceAdminTest, ListInstances) {
+TEST_F(InstanceAdminLegacyTest, ListInstances) {
   InstanceAdmin tested(client_);
   auto mock_list_instances = create_list_instances_lambda("", "", {"t0", "t1"});
   EXPECT_CALL(*client_, ListInstances).WillOnce(mock_list_instances);
@@ -271,7 +220,7 @@ TEST_F(InstanceAdminTest, ListInstances) {
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListInstances` handles failures.
-TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
+TEST_F(InstanceAdminLegacyTest, ListInstancesRecoverableFailures) {
   InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListInstancesRequest const&,
@@ -307,7 +256,7 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
  * @test Verify that `bigtable::InstanceAdmin::ListInstances` handles
  * unrecoverable failures.
  */
-TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
+TEST_F(InstanceAdminLegacyTest, ListInstancesUnrecoverableFailures) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListInstances)
       .WillRepeatedly(
@@ -321,7 +270,7 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
  * @test Verify that `bigtable::InstanceAdmin::ListInstances` handles
  * too many transient failures.
  */
-TEST_F(InstanceAdminTest, ListInstancesTooManyTransients) {
+TEST_F(InstanceAdminLegacyTest, ListInstancesTooManyTransients) {
   using ms = std::chrono::milliseconds;
   InstanceAdmin tested(client_, LimitedErrorCountRetryPolicy(3),
                        ExponentialBackoffPolicy(ms(1), ms(2)));
@@ -336,7 +285,7 @@ TEST_F(InstanceAdminTest, ListInstancesTooManyTransients) {
 }
 
 /// @test Verify that `bigtable::DeleteInstance` works in the positive case.
-TEST_F(InstanceAdminTest, DeleteInstance) {
+TEST_F(InstanceAdminLegacyTest, DeleteInstance) {
   using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -351,7 +300,7 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
 }
 
 /// @test Verify unrecoverable error for DeleteInstance
-TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, DeleteInstanceUnrecoverableError) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance)
       .WillRepeatedly(
@@ -361,7 +310,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
 }
 
 /// @test Verify that recoverable error for DeleteInstance
-TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, DeleteInstanceRecoverableError) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance)
       .WillRepeatedly(
@@ -373,7 +322,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` works in the easy
 /// case.
-TEST_F(InstanceAdminTest, ListClusters) {
+TEST_F(InstanceAdminLegacyTest, ListClusters) {
   InstanceAdmin tested(client_);
   std::string const& instance_id = "the-instance";
   auto mock_list_clusters =
@@ -390,7 +339,7 @@ TEST_F(InstanceAdminTest, ListClusters) {
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` handles failures.
-TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
+TEST_F(InstanceAdminLegacyTest, ListClustersRecoverableFailures) {
   InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListClustersRequest const&,
@@ -428,7 +377,7 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
  * @test Verify that `bigtable::InstanceAdmin::ListClusters` handles
  * unrecoverable failures.
  */
-TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
+TEST_F(InstanceAdminLegacyTest, ListClustersUnrecoverableFailures) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListClusters)
       .WillRepeatedly(
@@ -440,7 +389,7 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
 }
 
 /// @test Verify positive scenario for `bigtable::GetCluster`
-TEST_F(InstanceAdminTest, GetCluster) {
+TEST_F(InstanceAdminLegacyTest, GetCluster) {
   InstanceAdmin tested(client_);
   auto mock = create_get_cluster_mock();
   EXPECT_CALL(*client_, GetCluster).WillOnce(mock);
@@ -452,7 +401,7 @@ TEST_F(InstanceAdminTest, GetCluster) {
 }
 
 /// @test Verify unrecoverable error for GetCluster
-TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, GetClusterUnrecoverableError) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetCluster)
       .WillRepeatedly(
@@ -461,7 +410,7 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
 }
 
 /// @test Verify recoverable errors for GetCluster
-TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, GetClusterRecoverableError) {
   InstanceAdmin tested(client_);
   auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::GetClusterRequest const&,
@@ -486,7 +435,7 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
 }
 
 /// @test Verify that DeleteCluster works in the positive case.
-TEST_F(InstanceAdminTest, DeleteCluster) {
+TEST_F(InstanceAdminLegacyTest, DeleteCluster) {
   using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -501,7 +450,7 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
 }
 
 /// @test Verify unrecoverable error for DeleteCluster
-TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, DeleteClusterUnrecoverableError) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster)
       .WillRepeatedly(
@@ -512,7 +461,7 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
 }
 
 /// @test Verify that recoverable error for DeleteCluster
-TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, DeleteClusterRecoverableError) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster)
       .WillRepeatedly(
@@ -524,7 +473,7 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
 }
 
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.
-TEST_F(InstanceAdminTest, GetIamPolicy) {
+TEST_F(InstanceAdminLegacyTest, GetIamPolicy) {
   InstanceAdmin tested(client_);
   auto mock_policy = create_get_policy_mock();
   EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
@@ -534,7 +483,7 @@ TEST_F(InstanceAdminTest, GetIamPolicy) {
 }
 
 /// @test Verify that IamPolicies with conditions cause failures.
-TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
+TEST_F(InstanceAdminLegacyTest, GetIamPolicyWithConditionsFails) {
   InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetIamPolicy)
       .WillOnce([](grpc::ClientContext* context,
@@ -562,7 +511,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::GetIamPolicy.
-TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, GetIamPolicyUnrecoverableError) {
   InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, GetIamPolicy)
@@ -575,7 +524,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
 }
 
 /// @test Verify recoverable errors for InstanceAdmin::GetIamPolicy.
-TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, GetIamPolicyRecoverableError) {
   namespace iamproto = ::google::iam::v1;
 
   InstanceAdmin tested(client_);
@@ -599,7 +548,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
 }
 
 /// @test Verify positive scenario for InstanceAdmin::GetNativeIamPolicy.
-TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
+TEST_F(InstanceAdminLegacyTest, GetNativeIamPolicy) {
   InstanceAdmin tested(client_);
   auto mock_policy = create_get_policy_mock();
   EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
@@ -612,7 +561,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::GetNativeIamPolicy.
-TEST_F(InstanceAdminTest, GetNativeIamPolicyUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, GetNativeIamPolicyUnrecoverableError) {
   InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, GetIamPolicy)
@@ -625,7 +574,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyUnrecoverableError) {
 }
 
 /// @test Verify recoverable errors for InstanceAdmin::GetNativeIamPolicy.
-TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, GetNativeIamPolicyRecoverableError) {
   namespace iamproto = ::google::iam::v1;
 
   InstanceAdmin tested(client_);
@@ -652,7 +601,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
 }
 
 /// @test Verify positive scenario for InstanceAdmin::SetIamPolicy.
-TEST_F(InstanceAdminTest, SetIamPolicy) {
+TEST_F(InstanceAdminLegacyTest, SetIamPolicy) {
   InstanceAdmin tested(client_);
   auto mock_policy = create_policy_with_params();
   EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
@@ -668,7 +617,7 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy.
-TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, SetIamPolicyUnrecoverableError) {
   InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, SetIamPolicy)
@@ -682,7 +631,7 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
 }
 
 /// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy.
-TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, SetIamPolicyRecoverableError) {
   namespace iamproto = ::google::iam::v1;
 
   InstanceAdmin tested(client_);
@@ -712,7 +661,7 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
 }
 
 /// @test Verify positive scenario for InstanceAdmin::SetIamPolicy (native).
-TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
+TEST_F(InstanceAdminLegacyTest, SetNativeIamPolicy) {
   InstanceAdmin tested(client_);
   auto mock_policy = create_policy_with_params();
   EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
@@ -729,7 +678,7 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy (native).
-TEST_F(InstanceAdminTest, SetNativeIamPolicyUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, SetNativeIamPolicyUnrecoverableError) {
   InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, SetIamPolicy)
@@ -744,7 +693,7 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyUnrecoverableError) {
 }
 
 /// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy (native).
-TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, SetNativeIamPolicyRecoverableError) {
   namespace iamproto = ::google::iam::v1;
 
   InstanceAdmin tested(client_);
@@ -774,7 +723,7 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
   EXPECT_EQ("test-tag", policy->etag());
 }
 /// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.
-TEST_F(InstanceAdminTest, TestIamPermissions) {
+TEST_F(InstanceAdminLegacyTest, TestIamPermissions) {
   namespace iamproto = ::google::iam::v1;
   InstanceAdmin tested(client_);
 
@@ -804,7 +753,7 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
 }
 
 /// @test Test for unrecoverable errors for InstanceAdmin::TestIamPermissions.
-TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
+TEST_F(InstanceAdminLegacyTest, TestIamPermissionsUnrecoverableError) {
   InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, TestIamPermissions)
@@ -818,7 +767,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
 }
 
 /// @test Test for recoverable errors for InstanceAdmin::TestIamPermissions.
-TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
+TEST_F(InstanceAdminLegacyTest, TestIamPermissionsRecoverableError) {
   namespace iamproto = ::google::iam::v1;
   InstanceAdmin tested(client_);
 
@@ -978,7 +927,7 @@ TEST_F(ValidContextMdAsyncTest, UpdateInstance) {
       InstanceUpdateConfig(std::move(instance))));
 }
 
-TEST_F(InstanceAdminTest, CreateAppProfile) {
+TEST_F(InstanceAdminLegacyTest, CreateAppProfile) {
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
       parent: "projects/the-project/instances/the-instance"
@@ -994,7 +943,7 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
       "the-instance", AppProfileConfig::MultiClusterUseAny("prof")));
 }
 
-TEST_F(InstanceAdminTest, DeleteAppProfile) {
+TEST_F(InstanceAdminLegacyTest, DeleteAppProfile) {
   using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -1008,7 +957,7 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
   ASSERT_STATUS_OK(tested.DeleteAppProfile("the-instance", "the-profile"));
 }
 
-TEST_F(InstanceAdminTest, GetAppProfile) {
+TEST_F(InstanceAdminLegacyTest, GetAppProfile) {
   using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
@@ -1023,7 +972,7 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
   ASSERT_STATUS_OK(tested.GetAppProfile("the-instance", "the-profile"));
 }
 
-TEST_F(InstanceAdminTest, GetInstance) {
+TEST_F(InstanceAdminLegacyTest, GetInstance) {
   using ::google::protobuf::Empty;
   InstanceAdmin tested(client_);
   std::string expected_text = R"""(
