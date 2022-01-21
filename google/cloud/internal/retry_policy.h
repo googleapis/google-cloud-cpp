@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -25,7 +26,8 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-enum class Idempotency { kIdempotent, kNonIdempotent };
+// TODO(#....) - cleanup once the code is merged.
+using Idempotency = ::google::cloud::Idempotency;
 
 /**
  * Define the interface for retry policies.
