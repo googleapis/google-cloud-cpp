@@ -16,20 +16,20 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#include "google/cloud/resourcemanager/org_policy_client.h"
-#include "google/cloud/resourcemanager/internal/org_policy_option_defaults.h"
+#include "google/cloud/orgpolicy/org_policy_client.h"
+#include "google/cloud/orgpolicy/internal/org_policy_option_defaults.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
+namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OrgPolicyClient::OrgPolicyClient(
     std::shared_ptr<OrgPolicyConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(resourcemanager_internal::OrgPolicyDefaultOptions(
-          std::move(options))) {}
+      options_(
+          orgpolicy_internal::OrgPolicyDefaultOptions(std::move(options))) {}
 OrgPolicyClient::~OrgPolicyClient() = default;
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
@@ -155,6 +155,6 @@ Status OrgPolicyClient::DeletePolicy(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager
+}  // namespace orgpolicy
 }  // namespace cloud
 }  // namespace google

@@ -102,6 +102,8 @@
 ./include/google/cloud/orchestration/airflow/service
 ./include/google/cloud/orchestration/airflow/service/v1
 ./include/google/cloud/orgpolicy
+./include/google/cloud/orgpolicy/internal
+./include/google/cloud/orgpolicy/mocks
 ./include/google/cloud/orgpolicy/v2
 ./include/google/cloud/oslogin
 ./include/google/cloud/oslogin/internal
@@ -255,6 +257,7 @@
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_notebooks
+./lib64/cmake/google_cloud_cpp_orgpolicy
 ./lib64/cmake/google_cloud_cpp_oslogin
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter
 ./lib64/cmake/google_cloud_cpp_privateca

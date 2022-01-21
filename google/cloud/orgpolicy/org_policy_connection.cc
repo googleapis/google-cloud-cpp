@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#include "google/cloud/resourcemanager/org_policy_connection.h"
-#include "google/cloud/resourcemanager/internal/org_policy_option_defaults.h"
-#include "google/cloud/resourcemanager/internal/org_policy_stub_factory.h"
-#include "google/cloud/resourcemanager/org_policy_options.h"
+#include "google/cloud/orgpolicy/org_policy_connection.h"
+#include "google/cloud/orgpolicy/internal/org_policy_option_defaults.h"
+#include "google/cloud/orgpolicy/internal/org_policy_stub_factory.h"
+#include "google/cloud/orgpolicy/org_policy_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
+namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OrgPolicyConnection::~OrgPolicyConnection() = default;
@@ -96,7 +96,7 @@ class OrgPolicyConnectionImpl : public OrgPolicyConnection {
  public:
   OrgPolicyConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<resourcemanager_internal::OrgPolicyStub> stub,
+      std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub,
       Options const& options)
       : background_(std::move(background)),
         stub_(std::move(stub)),
@@ -265,7 +265,7 @@ class OrgPolicyConnectionImpl : public OrgPolicyConnection {
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcemanager_internal::OrgPolicyStub> stub_;
+  std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub_;
   std::unique_ptr<OrgPolicyRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy> idempotency_policy_;
@@ -275,34 +275,33 @@ class OrgPolicyConnectionImpl : public OrgPolicyConnection {
 std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  OrgPolicyPolicyOptionList>(options, __func__);
-  options =
-      resourcemanager_internal::OrgPolicyDefaultOptions(std::move(options));
+  options = orgpolicy_internal::OrgPolicyDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = resourcemanager_internal::CreateDefaultOrgPolicyStub(
-      background->cq(), options);
+  auto stub =
+      orgpolicy_internal::CreateDefaultOrgPolicyStub(background->cq(), options);
   return std::make_shared<OrgPolicyConnectionImpl>(std::move(background),
                                                    std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager
+}  // namespace orgpolicy
 }  // namespace cloud
 }  // namespace google
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<resourcemanager::OrgPolicyConnection> MakeOrgPolicyConnection(
+std::shared_ptr<orgpolicy::OrgPolicyConnection> MakeOrgPolicyConnection(
     std::shared_ptr<OrgPolicyStub> stub, Options options) {
   options = OrgPolicyDefaultOptions(std::move(options));
-  return std::make_shared<resourcemanager::OrgPolicyConnectionImpl>(
+  return std::make_shared<orgpolicy::OrgPolicyConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google

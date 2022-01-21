@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#include "google/cloud/resourcemanager/internal/org_policy_logging_decorator.h"
+#include "google/cloud/orgpolicy/internal/org_policy_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OrgPolicyLogging::OrgPolicyLogging(std::shared_ptr<OrgPolicyStub> child,
@@ -117,6 +117,6 @@ Status OrgPolicyLogging::DeletePolicy(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google

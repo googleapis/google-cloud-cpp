@@ -16,80 +16,81 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#include "google/cloud/resourcemanager/internal/org_policy_auth_decorator.h"
+#include "google/cloud/orgpolicy/internal/org_policy_metadata_decorator.h"
+#include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/status_or.h"
 #include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-OrgPolicyAuth::OrgPolicyAuth(
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<OrgPolicyStub> child)
-    : auth_(std::move(auth)), child_(std::move(child)) {}
+OrgPolicyMetadata::OrgPolicyMetadata(std::shared_ptr<OrgPolicyStub> child)
+    : child_(std::move(child)),
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
-OrgPolicyAuth::ListConstraints(
+OrgPolicyMetadata::ListConstraints(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListConstraints(context, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
-OrgPolicyAuth::ListPolicies(
+OrgPolicyMetadata::ListPolicies(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListPolicies(context, request);
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyAuth::GetPolicy(
+StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyMetadata::GetPolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetPolicy(context, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyAuth::GetEffectivePolicy(
+OrgPolicyMetadata::GetEffectivePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetEffectivePolicy(context, request);
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyAuth::CreatePolicy(
+StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyMetadata::CreatePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->CreatePolicy(context, request);
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyAuth::UpdatePolicy(
+StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyMetadata::UpdatePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "policy.name=" + request.policy().name());
   return child_->UpdatePolicy(context, request);
 }
 
-Status OrgPolicyAuth::DeletePolicy(
+Status OrgPolicyMetadata::DeletePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->DeletePolicy(context, request);
 }
 
+void OrgPolicyMetadata::SetMetadata(grpc::ClientContext& context,
+                                    std::string const& request_params) {
+  context.AddMetadata("x-goog-request-params", request_params);
+  context.AddMetadata("x-goog-api-client", api_client_header_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google

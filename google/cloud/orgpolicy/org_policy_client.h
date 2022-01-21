@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CLIENT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CLIENT_H
 
-#include "google/cloud/resourcemanager/org_policy_connection.h"
+#include "google/cloud/orgpolicy/org_policy_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
+namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
@@ -410,8 +410,8 @@ class OrgPolicyClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager
+}  // namespace orgpolicy
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CLIENT_H

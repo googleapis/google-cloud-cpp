@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
+namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class OrgPolicyConnectionIdempotencyPolicy {
@@ -65,8 +65,8 @@ std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
 MakeDefaultOrgPolicyConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager
+}  // namespace orgpolicy
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H

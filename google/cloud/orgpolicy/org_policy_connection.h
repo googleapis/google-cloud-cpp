@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_H
 
-#include "google/cloud/resourcemanager/internal/org_policy_retry_traits.h"
-#include "google/cloud/resourcemanager/internal/org_policy_stub.h"
-#include "google/cloud/resourcemanager/org_policy_connection_idempotency_policy.h"
+#include "google/cloud/orgpolicy/internal/org_policy_retry_traits.h"
+#include "google/cloud/orgpolicy/internal/org_policy_stub.h"
+#include "google/cloud/orgpolicy/org_policy_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
+namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using OrgPolicyRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    resourcemanager_internal::OrgPolicyRetryTraits>;
+    orgpolicy_internal::OrgPolicyRetryTraits>;
 
 using OrgPolicyLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        resourcemanager_internal::OrgPolicyRetryTraits>;
+        orgpolicy_internal::OrgPolicyRetryTraits>;
 
 using OrgPolicyLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        resourcemanager_internal::OrgPolicyRetryTraits>;
+        orgpolicy_internal::OrgPolicyRetryTraits>;
 
 class OrgPolicyConnection {
  public:
@@ -75,21 +75,21 @@ std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager
+}  // namespace orgpolicy
 }  // namespace cloud
 }  // namespace google
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<resourcemanager::OrgPolicyConnection> MakeOrgPolicyConnection(
+std::shared_ptr<orgpolicy::OrgPolicyConnection> MakeOrgPolicyConnection(
     std::shared_ptr<OrgPolicyStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_ORG_POLICY_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_H

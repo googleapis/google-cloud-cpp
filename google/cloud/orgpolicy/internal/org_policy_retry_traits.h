@@ -16,15 +16,15 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_RETRY_TRAITS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_RETRY_TRAITS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_RETRY_TRAITS_H
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Define the gRPC status code semantics for retrying requests.
@@ -37,8 +37,8 @@ struct OrgPolicyRetryTraits {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_RETRY_TRAITS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_RETRY_TRAITS_H

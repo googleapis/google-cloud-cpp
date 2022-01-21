@@ -16,27 +16,23 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_METADATA_DECORATOR_H
 
-#include "google/cloud/resourcemanager/internal/org_policy_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/orgpolicy/internal/org_policy_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
-#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class OrgPolicyLogging : public OrgPolicyStub {
+class OrgPolicyMetadata : public OrgPolicyStub {
  public:
-  ~OrgPolicyLogging() override = default;
-  OrgPolicyLogging(std::shared_ptr<OrgPolicyStub> child,
-                   TracingOptions tracing_options,
-                   std::set<std::string> components);
+  ~OrgPolicyMetadata() override = default;
+  explicit OrgPolicyMetadata(std::shared_ptr<OrgPolicyStub> child);
 
   StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
   ListConstraints(grpc::ClientContext& context,
@@ -72,14 +68,15 @@ class OrgPolicyLogging : public OrgPolicyStub {
                           request) override;
 
  private:
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
   std::shared_ptr<OrgPolicyStub> child_;
-  TracingOptions tracing_options_;
-  std::set<std::string> components_;
-};  // OrgPolicyLogging
+  std::string api_client_header_;
+};  // OrgPolicyMetadata
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_METADATA_DECORATOR_H

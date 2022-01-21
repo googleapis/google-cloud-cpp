@@ -1,5 +1,3 @@
-@com_google_googleapis//google/cloud/orgpolicy/v2:constraint.proto
-@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy.proto
 @com_google_googleapis//google/cloud/resourcemanager/v3:folders.proto
 @com_google_googleapis//google/cloud/resourcemanager/v3:organizations.proto
 @com_google_googleapis//google/cloud/resourcemanager/v3:projects.proto

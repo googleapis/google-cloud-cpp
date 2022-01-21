@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_LOGGING_DECORATOR_H
 
-#include "google/cloud/resourcemanager/internal/org_policy_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/orgpolicy/internal/org_policy_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -28,15 +28,15 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class OrgPolicyAuth : public OrgPolicyStub {
+class OrgPolicyLogging : public OrgPolicyStub {
  public:
-  ~OrgPolicyAuth() override = default;
-  OrgPolicyAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<OrgPolicyStub> child);
+  ~OrgPolicyLogging() override = default;
+  OrgPolicyLogging(std::shared_ptr<OrgPolicyStub> child,
+                   TracingOptions tracing_options,
+                   std::set<std::string> components);
 
   StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
   ListConstraints(grpc::ClientContext& context,
@@ -72,13 +72,14 @@ class OrgPolicyAuth : public OrgPolicyStub {
                           request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<OrgPolicyStub> child_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // OrgPolicyLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORG_POLICY_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_LOGGING_DECORATOR_H

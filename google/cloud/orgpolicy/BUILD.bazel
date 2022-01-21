@@ -25,7 +25,7 @@ HEADER_GLOB = "**/*.h"
 MOCK_HEADER_GLOB = "mocks/*.h"
 
 cc_library(
-    name = "google_cloud_cpp_resourcemanager",
+    name = "google_cloud_cpp_orgpolicy",
     srcs = glob(
         include = [SOURCE_GLOB],
         exclude = [MOCK_SOURCE_GLOB],
@@ -38,12 +38,12 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc",
+        "@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc",
     ],
 )
 
 cc_library(
-    name = "google_cloud_cpp_resourcemanager_mocks",
+    name = "google_cloud_cpp_orgpolicy_mocks",
     srcs = glob(
         include = [MOCK_SOURCE_GLOB],
     ),
@@ -52,7 +52,7 @@ cc_library(
     ),
     visibility = ["//:__pkg__"],
     deps = [
-        ":google_cloud_cpp_resourcemanager",
+        ":google_cloud_cpp_orgpolicy",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
     ],

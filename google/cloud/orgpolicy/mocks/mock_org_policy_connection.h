@@ -16,18 +16,18 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_MOCKS_MOCK_ORG_POLICY_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_MOCKS_MOCK_ORG_POLICY_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_MOCKS_MOCK_ORG_POLICY_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_MOCKS_MOCK_ORG_POLICY_CONNECTION_H
 
-#include "google/cloud/resourcemanager/org_policy_connection.h"
+#include "google/cloud/orgpolicy/org_policy_connection.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_mocks {
+namespace orgpolicy_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockOrgPolicyConnection : public resourcemanager::OrgPolicyConnection {
+class MockOrgPolicyConnection : public orgpolicy::OrgPolicyConnection {
  public:
   MOCK_METHOD(StreamRange<google::cloud::orgpolicy::v2::Constraint>,
               ListConstraints,
@@ -64,8 +64,8 @@ class MockOrgPolicyConnection : public resourcemanager::OrgPolicyConnection {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_mocks
+}  // namespace orgpolicy_mocks
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_MOCKS_MOCK_ORG_POLICY_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_MOCKS_MOCK_ORG_POLICY_CONNECTION_H

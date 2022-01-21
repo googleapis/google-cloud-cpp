@@ -16,9 +16,9 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#include "google/cloud/resourcemanager/internal/org_policy_option_defaults.h"
-#include "google/cloud/resourcemanager/org_policy_connection.h"
-#include "google/cloud/resourcemanager/org_policy_options.h"
+#include "google/cloud/orgpolicy/internal/org_policy_option_defaults.h"
+#include "google/cloud/orgpolicy/org_policy_connection.h"
+#include "google/cloud/orgpolicy/org_policy_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
+namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -54,28 +54,26 @@ Options OrgPolicyDefaultOptions(Options options) {
   auto& products = options.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 
-  if (!options.has<resourcemanager::OrgPolicyRetryPolicyOption>()) {
-    options.set<resourcemanager::OrgPolicyRetryPolicyOption>(
-        resourcemanager::OrgPolicyLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+  if (!options.has<orgpolicy::OrgPolicyRetryPolicyOption>()) {
+    options.set<orgpolicy::OrgPolicyRetryPolicyOption>(
+        orgpolicy::OrgPolicyLimitedTimeRetryPolicy(std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<resourcemanager::OrgPolicyBackoffPolicyOption>()) {
-    options.set<resourcemanager::OrgPolicyBackoffPolicyOption>(
+  if (!options.has<orgpolicy::OrgPolicyBackoffPolicyOption>()) {
+    options.set<orgpolicy::OrgPolicyBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          resourcemanager::OrgPolicyConnectionIdempotencyPolicyOption>()) {
-    options.set<resourcemanager::OrgPolicyConnectionIdempotencyPolicyOption>(
-        resourcemanager::MakeDefaultOrgPolicyConnectionIdempotencyPolicy());
+  if (!options.has<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()) {
+    options.set<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>(
+        orgpolicy::MakeDefaultOrgPolicyConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
+}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google
