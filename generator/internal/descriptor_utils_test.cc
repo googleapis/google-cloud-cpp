@@ -352,8 +352,8 @@ char const* const kServiceProto =
     "import \"google/longrunning/operation.proto\";\n"
     "// Leading comments about message Foo.\n"
     "message Foo {\n"
-    "  // baz field$ comment.\n"
-    "  string baz = 1;\n"
+    "  // name field$ comment.\n"
+    "  string name = 1;\n"
     "  // labels $field comment.\n"
     "  map<string, string> labels = 2;\n"
     "}\n"
@@ -370,6 +370,7 @@ char const* const kServiceProto =
     "  bool toggle = 4;\n"
     "  string title = 5;\n"
     "  repeated SwallowType swallow_types = 6;\n"
+    "  string parent = 7;\n"
     "}\n"
     "// Leading comments about message Empty.\n"
     "message Empty {}\n"
@@ -377,11 +378,19 @@ char const* const kServiceProto =
     "message PaginatedInput {\n"
     "  int32 page_size = 1;\n"
     "  string page_token = 2;\n"
+    "  string name = 3;\n"
     "}\n"
     "// Leading comments about message PaginatedOutput.\n"
     "message PaginatedOutput {\n"
     "  string next_page_token = 1;\n"
     "  repeated Bar repeated_field = 2;\n"
+    "}\n"
+    "message Namespace {\n"
+    "  string name = 1;\n"
+    "}\n"
+    "message NamespaceRequest {\n"
+    "  // namespace $field comment.\n"
+    "  Namespace namespace = 1;\n"
     "}\n"
     "// Leading comments about service Service.\n"
     "service Service {\n"
@@ -440,7 +449,7 @@ char const* const kServiceProto =
     "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
     "    };\n"
     "    option (google.api.method_signature) = \"labels\";\n"
-    "    option (google.api.method_signature) = \"baz,labels\";\n"
+    "    option (google.api.method_signature) = \"name,labels\";\n"
     "  }\n"
     "  // Leading comments about rpc Method7.\n"
     "  rpc Method7(Bar) returns (google.longrunning.Operation) {\n"
@@ -452,6 +461,15 @@ char const* const kServiceProto =
     "      response_type: \"Bar\"\n"
     "      metadata_type: \"google.protobuf.Method2Metadata\"\n"
     "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method8.\n"
+    "  rpc Method8(NamespaceRequest) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "      patch: "
+    "\"/v1/{namespace.name=projects/*/locations/*/namespaces/*}\"\n"
+    "      body: \"namespace\"\n"
+    "    };\n"
+    "    option (google.api.method_signature) = \"namespace\";\n"
     "  }\n"
     "}\n";
 
@@ -539,11 +557,11 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
 )"""));
   EXPECT_THAT(
       FormatMethodCommentsMethodSignature(
-          *service_file_descriptor->service(0)->method(6), "baz,labels"),
+          *service_file_descriptor->service(0)->method(6), "name,labels"),
       HasSubstr(R"""(  ///
   /// Leading comments about rpc $$Method6.
   ///
-  /// @param baz  baz field$$ comment.
+  /// @param name  name field$$ comment.
   /// @param labels  labels $$field comment.
   /// @param options  Optional. Operation options.
   ///
@@ -579,7 +597,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
-                             "foo/v1/service.proto#L29}"),
+                             "foo/v1/service.proto#L30}"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -740,7 +758,19 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L15}")),
+                             "foo/v1/service.proto#L15}"),
+        // Method8
+        MethodVarsTestValues("google.protobuf.Service.Method8",
+                             "method_signature0",
+                             "google::protobuf::Namespace const& namespace_, "),
+        MethodVarsTestValues("google.protobuf.Service.Method8",
+                             "method_request_setters0",
+                             "  *request.mutable_namespace_() = namespace_;\n"),
+        MethodVarsTestValues("google.protobuf.Service.Method8",
+                             "method_request_param_key", "namespace.name"),
+        MethodVarsTestValues("google.protobuf.Service.Method8",
+                             "method_request_param_value",
+                             "namespace_().name()")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
