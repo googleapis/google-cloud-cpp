@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_connection_impl.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,8 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
-#include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
 
 namespace google {
@@ -100,186 +99,6 @@ GoldenKitchenSinkConnection::AsyncAppendRows() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-namespace {
-class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
- public:
-  GoldenKitchenSinkConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
-      Options const& options)
-      : background_(std::move(background)), stub_(std::move(stub)),
-        retry_policy_prototype_(options.get<GoldenKitchenSinkRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(options.get<GoldenKitchenSinkBackoffPolicyOption>()->clone()),
-        idempotency_policy_(options.get<GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone()) {}
-
-  ~GoldenKitchenSinkConnectionImpl() override = default;
-
-  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(
-      google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GenerateAccessToken(request),
-        [this](grpc::ClientContext& context,
-            google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-          return stub_->GenerateAccessToken(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(
-      google::test::admin::database::v1::GenerateIdTokenRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GenerateIdToken(request),
-        [this](grpc::ClientContext& context,
-            google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-          return stub_->GenerateIdToken(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(
-      google::test::admin::database::v1::WriteLogEntriesRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->WriteLogEntries(request),
-        [this](grpc::ClientContext& context,
-            google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-          return stub_->WriteLogEntries(context, request);
-        },
-        request, __func__);
-  }
-
-  StreamRange<std::string> ListLogs(
-      google::test::admin::database::v1::ListLogsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<GoldenKitchenSinkRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy());
-    auto idempotency = idempotency_policy()->ListLogs(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<StreamRange<
-        std::string>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name]
-          (google::test::admin::database::v1::ListLogsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::test::admin::database::v1::ListLogsRequest const& request) {
-                return stub->ListLogs(context, request);
-              },
-              r, function_name);
-        },
-        [](google::test::admin::database::v1::ListLogsResponse r) {
-          std::vector<std::string> result(r.log_names().size());
-          auto& messages = *r.mutable_log_names();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StreamRange<google::test::admin::database::v1::TailLogEntriesResponse> TailLogEntries(
-      google::test::admin::database::v1::TailLogEntriesRequest const& request) override {
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<GoldenKitchenSinkRetryPolicy const>(
-            retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(
-        backoff_policy());
-
-    auto factory = [stub](
-        google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-      return stub->TailLogEntries(absl::make_unique<grpc::ClientContext>(),
-          request);
-    };
-
-    auto resumable =
-        internal::MakeResumableStreamingReadRpc<
-            google::test::admin::database::v1::TailLogEntriesResponse,
-            google::test::admin::database::v1::TailLogEntriesRequest>(
-                retry->clone(), backoff->clone(),
-                [](std::chrono::milliseconds) {}, factory,
-                GoldenKitchenSinkTailLogEntriesStreamingUpdater,
-                request);
-
-    return internal::MakeStreamRange(internal::StreamReader<
-        google::test::admin::database::v1::TailLogEntriesResponse>(
-        [resumable]{return resumable->Read();}));
-  }
-
-  StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(
-      google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ListServiceAccountKeys(request),
-        [this](grpc::ClientContext& context,
-            google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-          return stub_->ListServiceAccountKeys(context, request);
-        },
-        request, __func__);
-  }
-
-  Status
-  DoNothing(
-      google::protobuf::Empty const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DoNothing(request),
-        [this](grpc::ClientContext& context,
-            google::protobuf::Empty const& request) {
-          return stub_->DoNothing(context, request);
-        },
-        request, __func__);
-  }
-
-  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::test::admin::database::v1::AppendRowsRequest,
-      google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows() override {
-    return stub_->AsyncAppendRows(
-        background_->cq(), absl::make_unique<grpc::ClientContext>());
-  }
-
- private:
-  std::unique_ptr<GoldenKitchenSinkRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GoldenKitchenSinkRetryPolicyOption>()) {
-      return options.get<GoldenKitchenSinkRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GoldenKitchenSinkBackoffPolicyOption>()) {
-      return options.get<GoldenKitchenSinkBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
-      return options.get<GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub_;
-  std::unique_ptr<GoldenKitchenSinkRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -289,7 +108,7 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = golden_internal::CreateDefaultGoldenKitchenSinkStub(
     background->cq(), options);
-  return std::make_shared<GoldenKitchenSinkConnectionImpl>(
+  return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -307,7 +126,7 @@ std::shared_ptr<golden::GoldenKitchenSinkConnection>
 MakeGoldenKitchenSinkConnection(
     std::shared_ptr<GoldenKitchenSinkStub> stub, Options options) {
   options = GoldenKitchenSinkDefaultOptions(std::move(options));
-  return std::make_shared<golden::GoldenKitchenSinkConnectionImpl>(
+  return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(),
       std::move(stub), std::move(options));
 }
