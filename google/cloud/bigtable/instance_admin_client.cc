@@ -41,7 +41,9 @@ namespace btadmin = ::google::bigtable::admin::v2;
 class DefaultInstanceAdminClient : public InstanceAdminClient {
  public:
   DefaultInstanceAdminClient(std::string project, Options options)
-      : project_(std::move(project)), impl_(std::move(options)) {}
+      : project_(std::move(project)), impl_(options) {
+    MakeConnection(std::move(options));
+  }
 
   std::string const& project() const override { return project_; }
   std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
