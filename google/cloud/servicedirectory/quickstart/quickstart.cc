@@ -12,25 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/servicedirectory/ EDIT HERE .h"
+#include "google/cloud/servicedirectory/registration_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace servicedirectory = ::google::cloud::servicedirectory;
-  auto client = servicedirectory::Client(
-      servicedirectory::MakeConnection(/* EDIT HERE */));
+  auto client = servicedirectory::RegistrationServiceClient(
+      servicedirectory::MakeRegistrationServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = project.FullName() + "/locations/" + argv[2];
+  for (auto ns : client.ListNamespaces(parent)) {
+    if (!ns) throw std::runtime_error(ns.status().message());
+    std::cout << ns->DebugString() << "\n";
   }
 
   return 0;

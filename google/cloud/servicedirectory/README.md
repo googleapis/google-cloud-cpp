@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Service Directory API][cloud-service-docs], a service to Service Directory is a platform for discovering, publishing, and connecting services.
+[Service Directory][cloud-service], a platform for discovering, publishing, and
+connecting services, regardless of the environment.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/servicedirectory
+[cloud-service]: https://cloud.google.com/service-directory
+[cloud-service-docs]: https://cloud.google.com/service-directory/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-servicedirectory/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/servicedirectory
 
@@ -38,25 +40,26 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/servicedirectory/ EDIT HERE .h"
+#include "google/cloud/servicedirectory/registration_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace servicedirectory = ::google::cloud::servicedirectory;
-  auto client = servicedirectory::Client(
-      servicedirectory::MakeConnection(/* EDIT HERE */));
+  auto client = servicedirectory::RegistrationServiceClient(
+      servicedirectory::MakeRegistrationServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = project.FullName() + "/locations/" + argv[2];
+  for (auto ns : client.ListNamespaces(parent)) {
+    if (!ns) throw std::runtime_error(ns.status().message());
+    std::cout << ns->DebugString() << "\n";
   }
 
   return 0;

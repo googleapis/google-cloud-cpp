@@ -2,8 +2,9 @@
 
 @mainpage Service Directory API C++ Client Library
 
-An idiomatic C++ client library for the [Service Directory API][cloud-service-docs], a service
-to Service Directory is a platform for discovering, publishing, and connecting services.
+An idiomatic C++ client library for the
+[Service Directory][cloud-service], a platform for discovering, publishing, and
+connecting services, regardless of the environment.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/servicedirectory
+[cloud-service]: https://cloud.google.com/service-directory
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
