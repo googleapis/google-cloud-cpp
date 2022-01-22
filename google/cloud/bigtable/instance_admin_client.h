@@ -88,11 +88,6 @@ class InstanceAdminClient {
   // them protected, so the mock classes can override them, and then make the
   // classes that do use them friends.
  protected:
-  void MakeConnection(Options options) {
-    connection_ =
-        bigtable_admin::MakeBigtableInstanceAdminConnection(std::move(options));
-  }
-
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
   friend class internal::LoggingInstanceAdminClient;
@@ -333,13 +328,11 @@ class InstanceAdminClient {
 
  private:
   friend class InstanceAdmin;
-
-  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
+  // TODO(#7534): Make this a pure virtual function, when we break the class.
+  virtual std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
   connection() {
-    return connection_;
+    return nullptr;
   }
-
-  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
 };
 
 /// Create a new instance admin client configured via @p options.
