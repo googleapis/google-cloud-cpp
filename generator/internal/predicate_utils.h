@@ -251,6 +251,8 @@ class Pattern {
   std::function<bool(T const&)> predicate_;
 };
 
+using MethodPredicateFragment =
+    PredicatedFragment<google::protobuf::MethodDescriptor>;
 using MethodPattern = Pattern<google::protobuf::MethodDescriptor>;
 
 }  // namespace generator_internal
