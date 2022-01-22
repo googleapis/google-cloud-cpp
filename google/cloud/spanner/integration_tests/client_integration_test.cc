@@ -974,9 +974,7 @@ TEST_F(ClientIntegrationTest, UnifiedCredentials) {
       Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   if (emulator_) {
     options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-                      "test-only-invalid", std::chrono::system_clock::now() +
-                                               std::chrono::minutes(15)))
+                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                   .set<internal::UseInsecureChannelOption>(true);
   }
   // Reconnect to the database using the new credentials.

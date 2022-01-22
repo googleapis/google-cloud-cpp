@@ -210,9 +210,7 @@ TEST_F(SubscriptionAdminIntegrationTest, UnifiedCredentials) {
       Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   if (UsingEmulator()) {
     options = Options{}
-                  .set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
-                      "test-only-invalid", std::chrono::system_clock::now() +
-                                               std::chrono::minutes(15)))
+                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                   .set<internal::UseInsecureChannelOption>(true);
   }
   auto client = SubscriptionAdminClient(
