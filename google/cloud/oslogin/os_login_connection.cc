@@ -17,13 +17,13 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/os_login_connection.h"
+#include "google/cloud/oslogin/internal/os_login_connection_impl.h"
 #include "google/cloud/oslogin/internal/os_login_option_defaults.h"
 #include "google/cloud/oslogin/internal/os_login_stub_factory.h"
 #include "google/cloud/oslogin/os_login_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -67,146 +67,6 @@ OsLoginServiceConnection::UpdateSshPublicKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class OsLoginServiceConnectionImpl : public OsLoginServiceConnection {
- public:
-  OsLoginServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<OsLoginServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<OsLoginServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<OsLoginServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~OsLoginServiceConnectionImpl() override = default;
-
-  Status DeletePosixAccount(
-      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeletePosixAccount(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::oslogin::v1::DeletePosixAccountRequest const&
-                   request) {
-          return stub_->DeletePosixAccount(context, request);
-        },
-        request, __func__);
-  }
-
-  Status DeleteSshPublicKey(
-      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteSshPublicKey(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const&
-                   request) {
-          return stub_->DeleteSshPublicKey(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
-      google::cloud::oslogin::v1::GetLoginProfileRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetLoginProfile(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
-          return stub_->GetLoginProfile(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
-      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetSshPublicKey(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
-          return stub_->GetSshPublicKey(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-  ImportSshPublicKey(
-      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ImportSshPublicKey(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::oslogin::v1::ImportSshPublicKeyRequest const&
-                   request) {
-          return stub_->ImportSshPublicKey(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
-      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateSshPublicKey(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const&
-                   request) {
-          return stub_->UpdateSshPublicKey(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<OsLoginServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<OsLoginServiceRetryPolicyOption>()) {
-      return options.get<OsLoginServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<OsLoginServiceBackoffPolicyOption>()) {
-      return options.get<OsLoginServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<OsLoginServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<OsLoginServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub_;
-  std::unique_ptr<OsLoginServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -216,7 +76,7 @@ std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = oslogin_internal::CreateDefaultOsLoginServiceStub(
       background->cq(), options);
-  return std::make_shared<OsLoginServiceConnectionImpl>(
+  return std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -233,7 +93,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<oslogin::OsLoginServiceConnection> MakeOsLoginServiceConnection(
     std::shared_ptr<OsLoginServiceStub> stub, Options options) {
   options = OsLoginServiceDefaultOptions(std::move(options));
-  return std::make_shared<oslogin::OsLoginServiceConnectionImpl>(
+  return std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

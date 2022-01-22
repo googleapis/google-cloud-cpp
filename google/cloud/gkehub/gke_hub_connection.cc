@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkehub/gke_hub_connection.h"
 #include "google/cloud/gkehub/gke_hub_options.h"
+#include "google/cloud/gkehub/internal/gke_hub_connection_impl.h"
 #include "google/cloud/gkehub/internal/gke_hub_option_defaults.h"
 #include "google/cloud/gkehub/internal/gke_hub_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -126,342 +126,6 @@ GkeHubConnection::GenerateConnectManifest(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class GkeHubConnectionImpl : public GkeHubConnection {
- public:
-  GkeHubConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gkehub_internal::GkeHubStub> stub, Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<GkeHubRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<GkeHubBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<GkeHubPollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<GkeHubConnectionIdempotencyPolicyOption>()->clone()) {}
-
-  ~GkeHubConnectionImpl() override = default;
-
-  StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
-      google::cloud::gkehub::v1::ListMembershipsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<GkeHubRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListMemberships(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::gkehub::v1::Membership>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::gkehub::v1::ListMembershipsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::gkehub::v1::ListMembershipsRequest const&
-                         request) {
-                return stub->ListMemberships(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::gkehub::v1::ListMembershipsResponse r) {
-          std::vector<google::cloud::gkehub::v1::Membership> result(
-              r.resources().size());
-          auto& messages = *r.mutable_resources();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
-      google::cloud::gkehub::v1::ListFeaturesRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<GkeHubRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListFeatures(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::gkehub::v1::Feature>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::gkehub::v1::ListFeaturesRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::gkehub::v1::ListFeaturesRequest const&
-                         request) {
-                return stub->ListFeatures(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::gkehub::v1::ListFeaturesResponse r) {
-          std::vector<google::cloud::gkehub::v1::Feature> result(
-              r.resources().size());
-          auto& messages = *r.mutable_resources();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      google::cloud::gkehub::v1::GetMembershipRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetMembership(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gkehub::v1::GetMembershipRequest const& request) {
-          return stub_->GetMembership(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      google::cloud::gkehub::v1::GetFeatureRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetFeature(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gkehub::v1::GetFeatureRequest const& request) {
-          return stub_->GetFeature(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
-      google::cloud::gkehub::v1::CreateMembershipRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gkehub::v1::Membership>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
-          return stub->AsyncCreateMembership(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::gkehub::v1::Membership>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateMembership(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      google::cloud::gkehub::v1::CreateFeatureRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gkehub::v1::Feature>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
-          return stub->AsyncCreateFeature(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::gkehub::v1::Feature>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateFeature(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const&
-                       request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gkehub::v1::OperationMetadata>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
-          return stub->AsyncDeleteMembership(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::cloud::gkehub::v1::OperationMetadata>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteMembership(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
-      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gkehub::v1::OperationMetadata>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
-          return stub->AsyncDeleteFeature(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::cloud::gkehub::v1::OperationMetadata>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteFeature(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
-      google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gkehub::v1::Membership>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
-          return stub->AsyncUpdateMembership(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::gkehub::v1::Membership>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateMembership(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gkehub::v1::Feature>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
-          return stub->AsyncUpdateFeature(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::gkehub::v1::Feature>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateFeature(request), polling_policy(),
-        __func__);
-  }
-
-  StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
-  GenerateConnectManifest(
-      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GenerateConnectManifest(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
-                   request) {
-          return stub_->GenerateConnectManifest(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<GkeHubRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GkeHubRetryPolicyOption>()) {
-      return options.get<GkeHubRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GkeHubBackoffPolicyOption>()) {
-      return options.get<GkeHubBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GkeHubPollingPolicyOption>()) {
-      return options.get<GkeHubPollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<GkeHubConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GkeHubConnectionIdempotencyPolicyOption>()) {
-      return options.get<GkeHubConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gkehub_internal::GkeHubStub> stub_;
-  std::unique_ptr<GkeHubRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<GkeHubConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  GkeHubPolicyOptionList>(options, __func__);
@@ -469,8 +133,8 @@ std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       gkehub_internal::CreateDefaultGkeHubStub(background->cq(), options);
-  return std::make_shared<GkeHubConnectionImpl>(std::move(background),
-                                                std::move(stub), options);
+  return std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -486,7 +150,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<gkehub::GkeHubConnection> MakeGkeHubConnection(
     std::shared_ptr<GkeHubStub> stub, Options options) {
   options = GkeHubDefaultOptions(std::move(options));
-  return std::make_shared<gkehub::GkeHubConnectionImpl>(
+  return std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

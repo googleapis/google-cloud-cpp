@@ -18,6 +18,7 @@
 
 #include "google/cloud/ids/ids_connection.h"
 #include "google/cloud/ids/ids_options.h"
+#include "google/cloud/ids/internal/ids_connection_impl.h"
 #include "google/cloud/ids/internal/ids_option_defaults.h"
 #include "google/cloud/ids/internal/ids_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -69,173 +69,14 @@ IDSConnection::DeleteEndpoint(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-namespace {
-class IDSConnectionImpl : public IDSConnection {
- public:
-  IDSConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<ids_internal::IDSStub> stub, Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(options.get<IDSRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<IDSBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<IDSPollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<IDSConnectionIdempotencyPolicyOption>()->clone()) {}
-
-  ~IDSConnectionImpl() override = default;
-
-  StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<IDSRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListEndpoints(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::ids::v1::Endpoint>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::cloud::ids::v1::ListEndpointsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](
-                  grpc::ClientContext& context,
-                  google::cloud::ids::v1::ListEndpointsRequest const& request) {
-                return stub->ListEndpoints(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::ids::v1::ListEndpointsResponse r) {
-          std::vector<google::cloud::ids::v1::Endpoint> result(
-              r.endpoints().size());
-          auto& messages = *r.mutable_endpoints();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      google::cloud::ids::v1::GetEndpointRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetEndpoint(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::ids::v1::GetEndpointRequest const& request) {
-          return stub_->GetEndpoint(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
-      google::cloud::ids::v1::CreateEndpointRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::ids::v1::Endpoint>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::ids::v1::CreateEndpointRequest const& request) {
-          return stub->AsyncCreateEndpoint(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::ids::v1::Endpoint>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateEndpoint(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
-      google::cloud::ids::v1::DeleteEndpointRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::ids::v1::OperationMetadata>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-          return stub->AsyncDeleteEndpoint(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::cloud::ids::v1::OperationMetadata>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteEndpoint(request), polling_policy(),
-        __func__);
-  }
-
- private:
-  std::unique_ptr<IDSRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<IDSRetryPolicyOption>()) {
-      return options.get<IDSRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<IDSBackoffPolicyOption>()) {
-      return options.get<IDSBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<IDSPollingPolicyOption>()) {
-      return options.get<IDSPollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<IDSConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<IDSConnectionIdempotencyPolicyOption>()) {
-      return options.get<IDSConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<ids_internal::IDSStub> stub_;
-  std::unique_ptr<IDSRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<IDSConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  IDSPolicyOptionList>(options, __func__);
   options = ids_internal::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = ids_internal::CreateDefaultIDSStub(background->cq(), options);
-  return std::make_shared<IDSConnectionImpl>(std::move(background),
-                                             std::move(stub), options);
+  return std::make_shared<ids_internal::IDSConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -251,7 +92,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<ids::IDSConnection> MakeIDSConnection(
     std::shared_ptr<IDSStub> stub, Options options) {
   options = IDSDefaultOptions(std::move(options));
-  return std::make_shared<ids::IDSConnectionImpl>(
+  return std::make_shared<ids_internal::IDSConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

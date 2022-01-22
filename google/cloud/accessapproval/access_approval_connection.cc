@@ -18,13 +18,13 @@
 
 #include "google/cloud/accessapproval/access_approval_connection.h"
 #include "google/cloud/accessapproval/access_approval_options.h"
+#include "google/cloud/accessapproval/internal/access_approval_connection_impl.h"
 #include "google/cloud/accessapproval/internal/access_approval_option_defaults.h"
 #include "google/cloud/accessapproval/internal/access_approval_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -90,186 +90,6 @@ Status AccessApprovalConnection::DeleteAccessApprovalSettings(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class AccessApprovalConnectionImpl : public AccessApprovalConnection {
- public:
-  AccessApprovalConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<AccessApprovalRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<AccessApprovalBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<AccessApprovalConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~AccessApprovalConnectionImpl() override = default;
-
-  StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-  ListApprovalRequests(
-      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<AccessApprovalRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListApprovalRequests(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::cloud::accessapproval::v1::
-                            ListApprovalRequestsMessage const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::accessapproval::v1::
-                         ListApprovalRequestsMessage const& request) {
-                return stub->ListApprovalRequests(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::accessapproval::v1::ListApprovalRequestsResponse r) {
-          std::vector<google::cloud::accessapproval::v1::ApprovalRequest>
-              result(r.approval_requests().size());
-          auto& messages = *r.mutable_approval_requests();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  GetApprovalRequest(
-      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetApprovalRequest(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
-                request) {
-          return stub_->GetApprovalRequest(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  ApproveApprovalRequest(
-      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ApproveApprovalRequest(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::accessapproval::v1::
-                   ApproveApprovalRequestMessage const& request) {
-          return stub_->ApproveApprovalRequest(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  DismissApprovalRequest(
-      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DismissApprovalRequest(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::accessapproval::v1::
-                   DismissApprovalRequestMessage const& request) {
-          return stub_->DismissApprovalRequest(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  GetAccessApprovalSettings(
-      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetAccessApprovalSettings(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::accessapproval::v1::
-                   GetAccessApprovalSettingsMessage const& request) {
-          return stub_->GetAccessApprovalSettings(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  UpdateAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          UpdateAccessApprovalSettingsMessage const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateAccessApprovalSettings(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::accessapproval::v1::
-                   UpdateAccessApprovalSettingsMessage const& request) {
-          return stub_->UpdateAccessApprovalSettings(context, request);
-        },
-        request, __func__);
-  }
-
-  Status DeleteAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          DeleteAccessApprovalSettingsMessage const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteAccessApprovalSettings(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::accessapproval::v1::
-                   DeleteAccessApprovalSettingsMessage const& request) {
-          return stub_->DeleteAccessApprovalSettings(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<AccessApprovalRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AccessApprovalRetryPolicyOption>()) {
-      return options.get<AccessApprovalRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AccessApprovalBackoffPolicyOption>()) {
-      return options.get<AccessApprovalBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AccessApprovalConnectionIdempotencyPolicyOption>()) {
-      return options.get<AccessApprovalConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub_;
-  std::unique_ptr<AccessApprovalRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -280,7 +100,8 @@ std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = accessapproval_internal::CreateDefaultAccessApprovalStub(
       background->cq(), options);
-  return std::make_shared<AccessApprovalConnectionImpl>(
+  return std::make_shared<
+      accessapproval_internal::AccessApprovalConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -298,7 +119,8 @@ std::shared_ptr<accessapproval::AccessApprovalConnection>
 MakeAccessApprovalConnection(std::shared_ptr<AccessApprovalStub> stub,
                              Options options) {
   options = AccessApprovalDefaultOptions(std::move(options));
-  return std::make_shared<accessapproval::AccessApprovalConnectionImpl>(
+  return std::make_shared<
+      accessapproval_internal::AccessApprovalConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

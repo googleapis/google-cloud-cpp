@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/domain_mappings_connection.h"
 #include "google/cloud/appengine/domain_mappings_options.h"
+#include "google/cloud/appengine/internal/domain_mappings_connection_impl.h"
 #include "google/cloud/appengine/internal/domain_mappings_option_defaults.h"
 #include "google/cloud/appengine/internal/domain_mappings_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -79,209 +79,6 @@ DomainMappingsConnection::DeleteDomainMapping(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-namespace {
-class DomainMappingsConnectionImpl : public DomainMappingsConnection {
- public:
-  DomainMappingsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::DomainMappingsStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<DomainMappingsRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<DomainMappingsBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<DomainMappingsPollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<DomainMappingsConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~DomainMappingsConnectionImpl() override = default;
-
-  StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
-      google::appengine::v1::ListDomainMappingsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<DomainMappingsRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListDomainMappings(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::appengine::v1::DomainMapping>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::appengine::v1::ListDomainMappingsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::appengine::v1::ListDomainMappingsRequest const&
-                         request) {
-                return stub->ListDomainMappings(context, request);
-              },
-              r, function_name);
-        },
-        [](google::appengine::v1::ListDomainMappingsResponse r) {
-          std::vector<google::appengine::v1::DomainMapping> result(
-              r.domain_mappings().size());
-          auto& messages = *r.mutable_domain_mappings();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
-      google::appengine::v1::GetDomainMappingRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetDomainMapping(request),
-        [this](grpc::ClientContext& context,
-               google::appengine::v1::GetDomainMappingRequest const& request) {
-          return stub_->GetDomainMapping(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
-      google::appengine::v1::CreateDomainMappingRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::appengine::v1::DomainMapping>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::appengine::v1::CreateDomainMappingRequest const& request) {
-          return stub->AsyncCreateDomainMapping(cq, std::move(context),
-                                                request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::appengine::v1::DomainMapping>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateDomainMapping(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
-      google::appengine::v1::UpdateDomainMappingRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::appengine::v1::DomainMapping>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::appengine::v1::UpdateDomainMappingRequest const& request) {
-          return stub->AsyncUpdateDomainMapping(cq, std::move(context),
-                                                request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::appengine::v1::DomainMapping>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateDomainMapping(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const&
-                          request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::appengine::v1::OperationMetadataV1>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::appengine::v1::DeleteDomainMappingRequest const& request) {
-          return stub->AsyncDeleteDomainMapping(cq, std::move(context),
-                                                request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::appengine::v1::OperationMetadataV1>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteDomainMapping(request), polling_policy(),
-        __func__);
-  }
-
- private:
-  std::unique_ptr<DomainMappingsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<DomainMappingsRetryPolicyOption>()) {
-      return options.get<DomainMappingsRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<DomainMappingsBackoffPolicyOption>()) {
-      return options.get<DomainMappingsBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<DomainMappingsPollingPolicyOption>()) {
-      return options.get<DomainMappingsPollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<DomainMappingsConnectionIdempotencyPolicyOption>()) {
-      return options.get<DomainMappingsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::DomainMappingsStub> stub_;
-  std::unique_ptr<DomainMappingsRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<DomainMappingsConnection> MakeDomainMappingsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -292,7 +89,7 @@ std::shared_ptr<DomainMappingsConnection> MakeDomainMappingsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = appengine_internal::CreateDefaultDomainMappingsStub(
       background->cq(), options);
-  return std::make_shared<DomainMappingsConnectionImpl>(
+  return std::make_shared<appengine_internal::DomainMappingsConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -310,7 +107,7 @@ std::shared_ptr<appengine::DomainMappingsConnection>
 MakeDomainMappingsConnection(std::shared_ptr<DomainMappingsStub> stub,
                              Options options) {
   options = DomainMappingsDefaultOptions(std::move(options));
-  return std::make_shared<appengine::DomainMappingsConnectionImpl>(
+  return std::make_shared<appengine_internal::DomainMappingsConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

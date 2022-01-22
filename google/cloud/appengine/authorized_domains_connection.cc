@@ -18,13 +18,13 @@
 
 #include "google/cloud/appengine/authorized_domains_connection.h"
 #include "google/cloud/appengine/authorized_domains_options.h"
+#include "google/cloud/appengine/internal/authorized_domains_connection_impl.h"
 #include "google/cloud/appengine/internal/authorized_domains_option_defaults.h"
 #include "google/cloud/appengine/internal/authorized_domains_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -48,93 +48,6 @@ AuthorizedDomainsConnection::ListAuthorizedDomains(
       });
 }
 
-namespace {
-class AuthorizedDomainsConnectionImpl : public AuthorizedDomainsConnection {
- public:
-  AuthorizedDomainsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::AuthorizedDomainsStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<AuthorizedDomainsRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<AuthorizedDomainsBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<AuthorizedDomainsConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~AuthorizedDomainsConnectionImpl() override = default;
-
-  StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
-      google::appengine::v1::ListAuthorizedDomainsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<AuthorizedDomainsRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListAuthorizedDomains(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::appengine::v1::AuthorizedDomain>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::appengine::v1::ListAuthorizedDomainsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::appengine::v1::ListAuthorizedDomainsRequest const&
-                         request) {
-                return stub->ListAuthorizedDomains(context, request);
-              },
-              r, function_name);
-        },
-        [](google::appengine::v1::ListAuthorizedDomainsResponse r) {
-          std::vector<google::appengine::v1::AuthorizedDomain> result(
-              r.domains().size());
-          auto& messages = *r.mutable_domains();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
- private:
-  std::unique_ptr<AuthorizedDomainsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AuthorizedDomainsRetryPolicyOption>()) {
-      return options.get<AuthorizedDomainsRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AuthorizedDomainsBackoffPolicyOption>()) {
-      return options.get<AuthorizedDomainsBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
-      return options.get<AuthorizedDomainsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::AuthorizedDomainsStub> stub_;
-  std::unique_ptr<AuthorizedDomainsRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -145,7 +58,7 @@ std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = appengine_internal::CreateDefaultAuthorizedDomainsStub(
       background->cq(), options);
-  return std::make_shared<AuthorizedDomainsConnectionImpl>(
+  return std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -163,7 +76,7 @@ std::shared_ptr<appengine::AuthorizedDomainsConnection>
 MakeAuthorizedDomainsConnection(std::shared_ptr<AuthorizedDomainsStub> stub,
                                 Options options) {
   options = AuthorizedDomainsDefaultOptions(std::move(options));
-  return std::make_shared<appengine::AuthorizedDomainsConnectionImpl>(
+  return std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

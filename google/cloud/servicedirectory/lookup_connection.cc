@@ -17,13 +17,13 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/lookup_connection.h"
+#include "google/cloud/servicedirectory/internal/lookup_connection_impl.h"
 #include "google/cloud/servicedirectory/internal/lookup_option_defaults.h"
 #include "google/cloud/servicedirectory/internal/lookup_stub_factory.h"
 #include "google/cloud/servicedirectory/lookup_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -39,73 +39,6 @@ LookupServiceConnection::ResolveService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class LookupServiceConnectionImpl : public LookupServiceConnection {
- public:
-  LookupServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<LookupServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<LookupServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<LookupServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~LookupServiceConnectionImpl() override = default;
-
-  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-  ResolveService(
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ResolveService(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::ResolveServiceRequest const&
-                   request) { return stub_->ResolveService(context, request); },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<LookupServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<LookupServiceRetryPolicyOption>()) {
-      return options.get<LookupServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<LookupServiceBackoffPolicyOption>()) {
-      return options.get<LookupServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<LookupServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<LookupServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub_;
-  std::unique_ptr<LookupServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<LookupServiceConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<LookupServiceConnection> MakeLookupServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -116,7 +49,8 @@ std::shared_ptr<LookupServiceConnection> MakeLookupServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = servicedirectory_internal::CreateDefaultLookupServiceStub(
       background->cq(), options);
-  return std::make_shared<LookupServiceConnectionImpl>(
+  return std::make_shared<
+      servicedirectory_internal::LookupServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -134,7 +68,8 @@ std::shared_ptr<servicedirectory::LookupServiceConnection>
 MakeLookupServiceConnection(std::shared_ptr<LookupServiceStub> stub,
                             Options options) {
   options = LookupServiceDefaultOptions(std::move(options));
-  return std::make_shared<servicedirectory::LookupServiceConnectionImpl>(
+  return std::make_shared<
+      servicedirectory_internal::LookupServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

@@ -17,6 +17,7 @@
 // source: google/cloud/talent/v4/job_service.proto
 
 #include "google/cloud/talent/job_connection.h"
+#include "google/cloud/talent/internal/job_connection_impl.h"
 #include "google/cloud/talent/internal/job_option_defaults.h"
 #include "google/cloud/talent/internal/job_stub_factory.h"
 #include "google/cloud/talent/job_options.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -104,261 +104,6 @@ JobServiceConnection::SearchJobsForAlert(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class JobServiceConnectionImpl : public JobServiceConnection {
- public:
-  JobServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::JobServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<JobServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<JobServiceBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<JobServicePollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<JobServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~JobServiceConnectionImpl() override = default;
-
-  StatusOr<google::cloud::talent::v4::Job> CreateJob(
-      google::cloud::talent::v4::CreateJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::CreateJobRequest const& request) {
-          return stub_->CreateJob(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const&
-                      request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::talent::v4::BatchCreateJobsResponse>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
-          return stub->AsyncBatchCreateJobs(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::talent::v4::BatchCreateJobsResponse>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->BatchCreateJobs(request), polling_policy(),
-        __func__);
-  }
-
-  StatusOr<google::cloud::talent::v4::Job> GetJob(
-      google::cloud::talent::v4::GetJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::GetJobRequest const& request) {
-          return stub_->GetJob(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::talent::v4::Job> UpdateJob(
-      google::cloud::talent::v4::UpdateJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::UpdateJobRequest const& request) {
-          return stub_->UpdateJob(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const&
-                      request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::talent::v4::BatchUpdateJobsResponse>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
-          return stub->AsyncBatchUpdateJobs(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::talent::v4::BatchUpdateJobsResponse>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->BatchUpdateJobs(request), polling_policy(),
-        __func__);
-  }
-
-  Status DeleteJob(
-      google::cloud::talent::v4::DeleteJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::DeleteJobRequest const& request) {
-          return stub_->DeleteJob(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const&
-                      request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::talent::v4::BatchDeleteJobsResponse>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
-          return stub->AsyncBatchDeleteJobs(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::talent::v4::BatchDeleteJobsResponse>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->BatchDeleteJobs(request), polling_policy(),
-        __func__);
-  }
-
-  StreamRange<google::cloud::talent::v4::Job> ListJobs(
-      google::cloud::talent::v4::ListJobsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<JobServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListJobs(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::talent::v4::Job>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::cloud::talent::v4::ListJobsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](
-                  grpc::ClientContext& context,
-                  google::cloud::talent::v4::ListJobsRequest const& request) {
-                return stub->ListJobs(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::talent::v4::ListJobsResponse r) {
-          std::vector<google::cloud::talent::v4::Job> result(r.jobs().size());
-          auto& messages = *r.mutable_jobs();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
-      google::cloud::talent::v4::SearchJobsRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->SearchJobs(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::SearchJobsRequest const& request) {
-          return stub_->SearchJobs(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
-      google::cloud::talent::v4::SearchJobsRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->SearchJobsForAlert(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::SearchJobsRequest const& request) {
-          return stub_->SearchJobsForAlert(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<JobServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<JobServiceRetryPolicyOption>()) {
-      return options.get<JobServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<JobServiceBackoffPolicyOption>()) {
-      return options.get<JobServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<JobServicePollingPolicyOption>()) {
-      return options.get<JobServicePollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<JobServiceConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<JobServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<JobServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<talent_internal::JobServiceStub> stub_;
-  std::unique_ptr<JobServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<JobServiceConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -367,8 +112,8 @@ std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       talent_internal::CreateDefaultJobServiceStub(background->cq(), options);
-  return std::make_shared<JobServiceConnectionImpl>(std::move(background),
-                                                    std::move(stub), options);
+  return std::make_shared<talent_internal::JobServiceConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -384,7 +129,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<talent::JobServiceConnection> MakeJobServiceConnection(
     std::shared_ptr<JobServiceStub> stub, Options options) {
   options = JobServiceDefaultOptions(std::move(options));
-  return std::make_shared<talent::JobServiceConnectionImpl>(
+  return std::make_shared<talent_internal::JobServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

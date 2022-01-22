@@ -18,6 +18,7 @@
 
 #include "google/cloud/gameservices/game_server_clusters_connection.h"
 #include "google/cloud/gameservices/game_server_clusters_options.h"
+#include "google/cloud/gameservices/internal/game_server_clusters_connection_impl.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_option_defaults.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -99,272 +99,6 @@ GameServerClustersServiceConnection::PreviewUpdateGameServerCluster(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class GameServerClustersServiceConnectionImpl
-    : public GameServerClustersServiceConnection {
- public:
-  GameServerClustersServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gameservices_internal::GameServerClustersServiceStub>
-          stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<GameServerClustersServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<GameServerClustersServiceBackoffPolicyOption>()
-                ->clone()),
-        polling_policy_prototype_(
-            options.get<GameServerClustersServicePollingPolicyOption>()
-                ->clone()),
-        idempotency_policy_(
-            options
-                .get<
-                    GameServerClustersServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~GameServerClustersServiceConnectionImpl() override = default;
-
-  StreamRange<google::cloud::gaming::v1::GameServerCluster>
-  ListGameServerClusters(
-      google::cloud::gaming::v1::ListGameServerClustersRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<GameServerClustersServiceRetryPolicy const>(
-        retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListGameServerClusters(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::gaming::v1::GameServerCluster>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::gaming::v1::ListGameServerClustersRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::gaming::v1::
-                         ListGameServerClustersRequest const& request) {
-                return stub->ListGameServerClusters(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::gaming::v1::ListGameServerClustersResponse r) {
-          std::vector<google::cloud::gaming::v1::GameServerCluster> result(
-              r.game_server_clusters().size());
-          auto& messages = *r.mutable_game_server_clusters();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::gaming::v1::GameServerCluster> GetGameServerCluster(
-      google::cloud::gaming::v1::GetGameServerClusterRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetGameServerCluster(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gaming::v1::GetGameServerClusterRequest const&
-                   request) {
-          return stub_->GetGameServerCluster(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  CreateGameServerCluster(
-      google::cloud::gaming::v1::CreateGameServerClusterRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gaming::v1::GameServerCluster>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gaming::v1::CreateGameServerClusterRequest const&
-                   request) {
-          return stub->AsyncCreateGameServerCluster(cq, std::move(context),
-                                                    request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::gaming::v1::GameServerCluster>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateGameServerCluster(request),
-        polling_policy(), __func__);
-  }
-
-  StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
-  PreviewCreateGameServerCluster(
-      google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->PreviewCreateGameServerCluster(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gaming::v1::
-                   PreviewCreateGameServerClusterRequest const& request) {
-          return stub_->PreviewCreateGameServerCluster(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerCluster(
-      google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gaming::v1::OperationMetadata>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gaming::v1::DeleteGameServerClusterRequest const&
-                   request) {
-          return stub->AsyncDeleteGameServerCluster(cq, std::move(context),
-                                                    request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::cloud::gaming::v1::OperationMetadata>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteGameServerCluster(request),
-        polling_policy(), __func__);
-  }
-
-  StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
-  PreviewDeleteGameServerCluster(
-      google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->PreviewDeleteGameServerCluster(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gaming::v1::
-                   PreviewDeleteGameServerClusterRequest const& request) {
-          return stub_->PreviewDeleteGameServerCluster(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  UpdateGameServerCluster(
-      google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gaming::v1::GameServerCluster>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gaming::v1::UpdateGameServerClusterRequest const&
-                   request) {
-          return stub->AsyncUpdateGameServerCluster(cq, std::move(context),
-                                                    request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::gaming::v1::GameServerCluster>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateGameServerCluster(request),
-        polling_policy(), __func__);
-  }
-
-  StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
-  PreviewUpdateGameServerCluster(
-      google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->PreviewUpdateGameServerCluster(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gaming::v1::
-                   PreviewUpdateGameServerClusterRequest const& request) {
-          return stub_->PreviewUpdateGameServerCluster(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<GameServerClustersServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GameServerClustersServiceRetryPolicyOption>()) {
-      return options.get<GameServerClustersServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GameServerClustersServiceBackoffPolicyOption>()) {
-      return options.get<GameServerClustersServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GameServerClustersServicePollingPolicyOption>()) {
-      return options.get<GameServerClustersServicePollingPolicyOption>()
-          ->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            GameServerClustersServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<GameServerClustersServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::GameServerClustersServiceStub> stub_;
-  std::unique_ptr<GameServerClustersServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<GameServerClustersServiceConnection>
 MakeGameServerClustersServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -375,7 +109,8 @@ MakeGameServerClustersServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gameservices_internal::CreateDefaultGameServerClustersServiceStub(
       background->cq(), options);
-  return std::make_shared<GameServerClustersServiceConnectionImpl>(
+  return std::make_shared<
+      gameservices_internal::GameServerClustersServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -394,7 +129,7 @@ MakeGameServerClustersServiceConnection(
     std::shared_ptr<GameServerClustersServiceStub> stub, Options options) {
   options = GameServerClustersServiceDefaultOptions(std::move(options));
   return std::make_shared<
-      gameservices::GameServerClustersServiceConnectionImpl>(
+      gameservices_internal::GameServerClustersServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
