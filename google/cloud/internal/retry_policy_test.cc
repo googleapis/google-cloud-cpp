@@ -43,8 +43,8 @@ using LimitedErrorCountRetryPolicyForTest =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         TestRetryablePolicy>;
 
-auto const kLimitedTimeTestPeriod = std::chrono::milliseconds(50);
-auto const kLimitedTimeTolerance = std::chrono::milliseconds(10);
+auto const kLimitedTimeTestPeriod = std::chrono::milliseconds(100);
+auto const kLimitedTimeTolerance = std::chrono::milliseconds(20);
 
 /**
  * @test Verify that a retry policy configured to run for 50ms works correctly.
