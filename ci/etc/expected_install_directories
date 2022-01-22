@@ -150,6 +150,10 @@
 ./include/google/cloud/security
 ./include/google/cloud/security/privateca
 ./include/google/cloud/security/privateca/v1
+./include/google/cloud/servicedirectory
+./include/google/cloud/servicedirectory/internal
+./include/google/cloud/servicedirectory/mocks
+./include/google/cloud/servicedirectory/v1
 ./include/google/cloud/serviceusage
 ./include/google/cloud/serviceusage/internal
 ./include/google/cloud/serviceusage/mocks
@@ -278,6 +282,7 @@
 ./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
+./lib64/cmake/google_cloud_cpp_servicedirectory
 ./lib64/cmake/google_cloud_cpp_serviceusage
 ./lib64/cmake/google_cloud_cpp_shell
 ./lib64/cmake/google_cloud_cpp_storage
