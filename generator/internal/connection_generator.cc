@@ -214,28 +214,24 @@ Status ConnectionGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes(
       {vars("connection_header_path"), vars("options_header_path"),
-       vars("option_defaults_header_path"), vars("stub_factory_header_path"),
-       "google/cloud/background_threads.h", "google/cloud/common_options.h",
-       "google/cloud/grpc_options.h",
+       vars("connection_impl_header_path"), vars("option_defaults_header_path"),
+       vars("stub_factory_header_path"), "google/cloud/background_threads.h",
+       "google/cloud/common_options.h", "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod()
            ? "google/cloud/internal/async_long_running_operation.h"
            : "",
        HasStreamingReadMethod()
            ? "google/cloud/internal/resumable_streaming_read_rpc.h"
-           : "",
-       "google/cloud/internal/retry_loop.h",
-       HasStreamingReadMethod()
-           ? "google/cloud/internal/streaming_read_rpc_logging.h"
            : ""});
   CcSystemIncludes({"memory"});
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  CcPrint(  // clang-format off
-    "\n$connection_class_name$::~$connection_class_name$() = default;\n");
-  // clang-format on
+  CcPrint(R"""(
+$connection_class_name$::~$connection_class_name$() = default;
+)""");
 
   for (auto const& method : methods()) {
     if (IsBidirStreaming(method)) {
@@ -350,274 +346,7 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
-  // open anonymous namespace
-  CcPrint("\nnamespace {\n");
-  // default connection implementation class
-  CcPrint(
-      {//clang-format off
-       {"class $connection_class_name$Impl : public $connection_class_name$ {\n"
-        " public:\n"
-        "  $connection_class_name$Impl(\n"
-        "      std::unique_ptr<google::cloud::BackgroundThreads> background,\n"
-        "      "
-        "std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
-        "stub,\n"
-        "      Options const& options)\n"
-        "      : background_(std::move(background)), stub_(std::move(stub)),\n"
-        "        "
-        "retry_policy_prototype_(options.get<$retry_policy_name$Option>()->"
-        "clone()),\n"
-        "        "
-        "backoff_policy_prototype_(options.get<$service_name$"
-        "BackoffPolicyOption>()->clone()),\n"},
-       {[this] { return HasLongrunningMethod(); },
-        "        "
-        "polling_policy_prototype_(options.get<$service_name$"
-        "PollingPolicyOption>()->clone()),\n",
-        ""},
-       {"        "
-        "idempotency_policy_(options.get<$idempotency_class_name$Option>()->"
-        "clone()) {}\n"
-        "\n"
-        "  ~$connection_class_name$Impl() override = default;\n"}});
-  //  clang-format on
-
-  for (auto const& method : methods()) {
-    if (IsBidirStreaming(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__,
-                    R"""(
-  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      $request_type$,
-      $response_type$>>
-  Async$method_name$() override {
-    return stub_->Async$method_name$(
-        background_->cq(), absl::make_unique<grpc::ClientContext>());
-  }
-)""");
-      continue;
-    }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-             {
-                 {IsResponseTypeEmpty,
-                  // clang-format off
-    "\n  Status\n",
-    "\n  StatusOr<$response_type$>\n"},
-   {"  $method_name$(\n"
-    "      $request_type$ const& request) override {\n"
-    "    return google::cloud::internal::RetryLoop(\n"
-    "        retry_policy(), backoff_policy(),\n"
-    "        idempotency_policy()->$method_name$(request),\n"
-    "        [this](grpc::ClientContext& context,\n"
-    "            $request_type$ const& request) {\n"
-    "          return stub_->$method_name$(context, request);\n"
-    "        },\n"
-    "        request, __func__);\n"
-    "  }\n"}
-                 // clang-format on
-             },
-             All(IsNonStreaming, Not(IsLongrunningOperation),
-                 Not(IsPaginated))),
-         MethodPattern(
-             {{IsResponseTypeEmpty, "\n  future<Status>",
-               "\n  future<StatusOr<$longrunning_deduced_response_type$>>"},
-              {R"""(
-  $method_name$($request_type$ const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
-          background_->cq(), request,
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 $request_type$ const& request) {
-            return stub->Async$method_name$(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::GetOperationRequest const& request) {
-            return stub->AsyncGetOperation(cq, std::move(context), request);
-          },
-          [stub](google::cloud::CompletionQueue& cq,
-                 std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::CancelOperationRequest const& request) {
-            return stub->AsyncCancelOperation(cq, std::move(context), request);
-          },)"""},
-              {IsLongrunningMetadataTypeUsedAsResponse,
-               R"""(
-          &google::cloud::internal::ExtractLongRunningResultMetadata<$longrunning_deduced_response_type$>,)""",
-               R"""(
-          &google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)"""},
-              {R"""(
-          retry_policy(), backoff_policy(),
-          idempotency_policy()->$method_name$(request),
-          polling_policy(), __func__))"""},
-              {IsResponseTypeEmpty, R"""(
-          .then([](future<StatusOr<google::protobuf::Empty>> f) {
-            return f.get().status();
-          });)""",
-               ";"},
-              {R"""(
-  }
-)"""}},
-             All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
-         MethodPattern(
-             {
-                 // clang-format off
-   {"\n"
-    "  StreamRange<$range_output_type$> $method_name$(\n"
-    "      $request_type$ request) override {\n"
-    "    request.clear_page_token();\n"
-    "    auto stub = stub_;\n"
-    "    auto retry =\n"
-    "        std::shared_ptr<$retry_policy_name$ const>(retry_policy());\n"
-    "    auto backoff = std::shared_ptr<BackoffPolicy const>(\n"
-    "        backoff_policy());\n"
-    "    auto idempotency = idempotency_policy()->$method_name$(request);\n"
-    "    char const* function_name = __func__;\n"
-    "    return google::cloud::internal::MakePaginationRange<StreamRange<\n"
-    "        $range_output_type$>>(\n"
-    "        std::move(request),\n"
-    "        [stub, retry, backoff, idempotency, function_name]\n"
-    "          ($request_type$ const& r) {\n"
-    "          return google::cloud::internal::RetryLoop(\n"
-    "              retry->clone(), backoff->clone(), idempotency,\n"
-    "              [stub](grpc::ClientContext& context,\n"
-    "                     $request_type$ const& request) {\n"
-    "                return stub->$method_name$(context, request);\n"
-    "              },\n"
-    "              r, function_name);\n"
-    "        },\n"
-    "        []($response_type$ r) {\n"
-    "          std::vector<$range_output_type$> result(r.$range_output_field_name$().size());\n"
-    "          auto& messages = *r.mutable_$range_output_field_name$();\n"
-    "          std::move(messages.begin(), messages.end(), result.begin());\n"
-    "          return result;\n"
-    "        });\n"
-    "  }\n"
-                     // clang-format on
-                 },
-             },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
-         MethodPattern(
-             {
-                 // clang-format off
-   {"\n"
-    "  StreamRange<$response_type$> $method_name$(\n"
-    "      $request_type$ const& request) override {\n"
-    "    auto stub = stub_;\n"
-    "    auto retry =\n"
-    "        std::shared_ptr<$retry_policy_name$ const>(\n"
-    "            retry_policy());\n"
-    "    auto backoff = std::shared_ptr<BackoffPolicy const>(\n"
-    "        backoff_policy());\n"
-    "\n"
-    "    auto factory = [stub](\n"
-    "        $request_type$ const& request) {\n"
-    "      return stub->$method_name$(absl::make_unique<grpc::ClientContext>(),\n"
-    "          request);\n"
-    "    };\n"
-    "\n"
-    "    auto resumable =\n"
-    "        internal::MakeResumableStreamingReadRpc<\n"
-    "            $response_type$,\n"
-    "            $request_type$>(\n"
-    "                retry->clone(), backoff->clone(),\n"
-    "                [](std::chrono::milliseconds) {}, factory,\n"
-    "                $service_name$$method_name$StreamingUpdater,\n"
-    "                request);\n"
-    "\n"
-    "    return internal::MakeStreamRange(internal::StreamReader<\n"
-    "        $response_type$>(\n"
-    "        [resumable]{return resumable->Read();}));\n"
-    "  }\n"
-                     // clang-format on
-                 },
-             },
-             IsStreamingRead)},
-        __FILE__, __LINE__);
-  }
-
-  for (auto const& method : async_methods()) {
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "\n  future<Status>\n",
-    "\n  future<StatusOr<$response_type$>>\n"},
-   {"  Async$method_name$(\n"
-    "      $request_type$ const& request) override {\n"
-    "    auto& stub = stub_;\n"
-    "    return google::cloud::internal::AsyncRetryLoop(\n"
-    "        retry_policy(), backoff_policy(),\n"
-    "        idempotency_policy()->$method_name$(request),\n"
-    "        background_->cq(),\n"
-    "        [stub](CompletionQueue& cq,\n"
-    "               std::unique_ptr<grpc::ClientContext> context,\n"
-    "               $request_type$ const& request) {\n"
-    "          return stub->Async$method_name$(cq, std::move(context), request);\n"
-    "        },\n"
-    "        request, __func__);\n"
-    "  }\n"}
-                // clang-format on
-            },
-            All(IsNonStreaming, Not(IsLongrunningOperation),
-                Not(IsPaginated)))},
-        __FILE__, __LINE__);
-  }
-
   CcPrint(R"""(
- private:
-  std::unique_ptr<$retry_policy_name$> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$retry_policy_name$Option>()) {
-      return options.get<$retry_policy_name$Option>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$service_name$BackoffPolicyOption>()) {
-      return options.get<$service_name$BackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-)""");
-  if (HasLongrunningMethod()) {
-    CcPrint(R"""(
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$service_name$PollingPolicyOption>()) {
-      return options.get<$service_name$PollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-)""");
-  }
-  CcPrint(R"""(
-  std::unique_ptr<$idempotency_class_name$> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$idempotency_class_name$Option>()) {
-      return options.get<$idempotency_class_name$Option>()->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;
-  std::unique_ptr<$retry_policy_name$ const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;)""");
-  if (HasLongrunningMethod()) {
-    CcPrint(R"""(
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;)""");
-  }
-  CcPrint(R"""(
-  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -627,12 +356,13 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
     background->cq(), options);
-  return std::make_shared<$connection_class_name$Impl>(
+  return std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
       std::move(background), std::move(stub), options);
 }
 )""");
 
   CcCloseNamespaces();
+
   CcOpenNamespaces(NamespaceType::kInternal);
 
   CcPrint(
@@ -641,7 +371,7 @@ std::shared_ptr<$product_namespace$::$connection_class_name$>
 Make$connection_class_name$(
     std::shared_ptr<$stub_class_name$> stub, Options options) {
   options = $service_name$DefaultOptions(std::move(options));
-  return std::make_shared<$product_namespace$::$connection_class_name$Impl>(
+  return std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
       internal::MakeBackgroundThreadsFactory(options)(),
       std::move(stub), std::move(options));
 }

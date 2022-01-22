@@ -23,6 +23,7 @@
 #include "generator/internal/client_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
+#include "generator/internal/connection_impl_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
@@ -526,6 +527,12 @@ VarsDictionary CreateServiceVars(
   vars["connection_header_path"] =
       absl::StrCat(vars["product_path"],
                    ServiceNameToFilePath(descriptor.name()), "_connection.h");
+  vars["connection_impl_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_connection_impl.cc");
+  vars["connection_impl_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_connection_impl.h");
   vars["connection_options_name"] =
       absl::StrCat(descriptor.name(), "ConnectionOptions");
   vars["connection_options_traits_name"] =
@@ -685,6 +692,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
         service, service_vars, CreateMethodVars(*service, service_vars),
         context));
     code_generators.push_back(absl::make_unique<OptionsGenerator>(
+        service, service_vars, CreateMethodVars(*service, service_vars),
+        context));
+    code_generators.push_back(absl::make_unique<ConnectionImplGenerator>(
         service, service_vars, CreateMethodVars(*service, service_vars),
         context));
     if (service_vars.find("retry_status_code_expression") !=
