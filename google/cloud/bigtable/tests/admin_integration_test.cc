@@ -34,7 +34,6 @@ namespace {
 
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::IsEmpty;
 using ::testing::IsSupersetOf;
 using ::testing::Not;
 
@@ -385,7 +384,7 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   auto no_logging_client =
       TableAdmin(MakeAdminClient(project_id()), instance_id());
   (void)no_logging_client.ListTables(btadmin::Table::NAME_ONLY);
-  EXPECT_THAT(log.ExtractLines(), IsEmpty());
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("ListTables"))));
 }
 
 }  // namespace

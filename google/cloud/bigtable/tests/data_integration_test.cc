@@ -33,7 +33,6 @@ using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::IsEmpty;
 
 using DataIntegrationTest =
     ::google::cloud::bigtable::testing::TableIntegrationTest;
@@ -538,7 +537,7 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   auto no_logging_client =
       Table(MakeDataClient(project_id(), instance_id()), table_id);
   Apply(no_logging_client, row_key, created);
-  EXPECT_THAT(log.ExtractLines(), IsEmpty());
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
 }
 
 TEST(ConnectionRefresh, Disabled) {
