@@ -39,7 +39,6 @@ using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::IsEmpty;
 using ::testing::Not;
 namespace btadmin = ::google::bigtable::admin::v2;
 
@@ -473,7 +472,7 @@ TEST_F(InstanceAdminIntegrationTest,
   // Verify that a normal client does not log.
   auto no_logging_client = InstanceAdmin(MakeInstanceAdminClient(project_id_));
   (void)no_logging_client.ListInstances();
-  EXPECT_THAT(log.ExtractLines(), IsEmpty());
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("ListInstances"))));
 }
 
 TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {

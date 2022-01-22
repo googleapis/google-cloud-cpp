@@ -478,7 +478,7 @@ TEST_F(InstanceAdminIntegrationTest,
   auto no_logging_client =
       BigtableInstanceAdminClient(MakeBigtableInstanceAdminConnection());
   (void)no_logging_client.ListInstances(project_name);
-  EXPECT_THAT(log.ExtractLines(), IsEmpty());
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("ListInstances"))));
 }
 
 TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
