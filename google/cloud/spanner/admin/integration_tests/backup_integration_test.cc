@@ -69,7 +69,8 @@ class BackupIntegrationTest
  public:
   BackupIntegrationTest()
       : generator_(google::cloud::internal::MakeDefaultPRNG()),
-        database_admin_client_(spanner_admin::MakeDatabaseAdminConnection(
+        database_admin_client_(
+            spanner_admin::MakeDatabaseAdminConnection(),
             Options{}
                 .set<spanner_admin::DatabaseAdminRetryPolicyOption>(
                     spanner_admin::DatabaseAdminLimitedTimeRetryPolicy(
@@ -84,7 +85,7 @@ class BackupIntegrationTest
                         LimitedTimeRetryPolicy(std::chrono::hours(3)),
                         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                                  std::chrono::minutes(1), 2.0))
-                        .clone()))) {}
+                        .clone())) {}
 
  protected:
   google::cloud::internal::DefaultPRNG generator_;
