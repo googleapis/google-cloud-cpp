@@ -74,6 +74,8 @@ add_library(
     admin_options.h
     internal/admin_auth_decorator.cc
     internal/admin_auth_decorator.h
+    internal/admin_connection_impl.cc
+    internal/admin_connection_impl.h
     internal/admin_logging_decorator.cc
     internal/admin_logging_decorator.h
     internal/admin_metadata_decorator.cc
@@ -128,6 +130,8 @@ add_library(
     internal/subscriber_stub_factory.h
     internal/topic_stats_auth_decorator.cc
     internal/topic_stats_auth_decorator.h
+    internal/topic_stats_connection_impl.cc
+    internal/topic_stats_connection_impl.h
     internal/topic_stats_logging_decorator.cc
     internal/topic_stats_logging_decorator.h
     internal/topic_stats_metadata_decorator.cc

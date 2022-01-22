@@ -86,6 +86,8 @@ add_library(
     admin/bigtable_table_admin_options.h
     admin/internal/bigtable_instance_admin_auth_decorator.cc
     admin/internal/bigtable_instance_admin_auth_decorator.h
+    admin/internal/bigtable_instance_admin_connection_impl.cc
+    admin/internal/bigtable_instance_admin_connection_impl.h
     admin/internal/bigtable_instance_admin_logging_decorator.cc
     admin/internal/bigtable_instance_admin_logging_decorator.h
     admin/internal/bigtable_instance_admin_metadata_decorator.cc
@@ -99,6 +101,8 @@ add_library(
     admin/internal/bigtable_instance_admin_stub_factory.h
     admin/internal/bigtable_table_admin_auth_decorator.cc
     admin/internal/bigtable_table_admin_auth_decorator.h
+    admin/internal/bigtable_table_admin_connection_impl.cc
+    admin/internal/bigtable_table_admin_connection_impl.h
     admin/internal/bigtable_table_admin_logging_decorator.cc
     admin/internal/bigtable_table_admin_logging_decorator.h
     admin/internal/bigtable_table_admin_metadata_decorator.cc

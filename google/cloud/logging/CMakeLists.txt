@@ -34,6 +34,8 @@ add_library(
     google_cloud_cpp_logging # cmake-format: sort
     internal/logging_service_v2_auth_decorator.cc
     internal/logging_service_v2_auth_decorator.h
+    internal/logging_service_v2_connection_impl.cc
+    internal/logging_service_v2_connection_impl.h
     internal/logging_service_v2_logging_decorator.cc
     internal/logging_service_v2_logging_decorator.h
     internal/logging_service_v2_metadata_decorator.cc
