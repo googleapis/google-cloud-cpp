@@ -49,6 +49,8 @@ add_library(
     internal/iam_auth_decorator.h
     internal/iam_credentials_auth_decorator.cc
     internal/iam_credentials_auth_decorator.h
+    internal/iam_credentials_connection_impl.cc
+    internal/iam_credentials_connection_impl.h
     internal/iam_credentials_logging_decorator.cc
     internal/iam_credentials_logging_decorator.h
     internal/iam_credentials_metadata_decorator.cc
@@ -60,6 +62,8 @@ add_library(
     internal/iam_credentials_stub.h
     internal/iam_credentials_stub_factory.cc
     internal/iam_credentials_stub_factory.h
+    internal/iam_connection_impl.cc
+    internal/iam_connection_impl.h
     internal/iam_logging_decorator.cc
     internal/iam_logging_decorator.h
     internal/iam_metadata_decorator.cc

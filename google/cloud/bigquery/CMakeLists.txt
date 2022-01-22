@@ -42,6 +42,8 @@ add_library(
     bigquery_read_options.h
     internal/bigquery_read_auth_decorator.cc
     internal/bigquery_read_auth_decorator.h
+    internal/bigquery_read_connection_impl.cc
+    internal/bigquery_read_connection_impl.h
     internal/bigquery_read_logging_decorator.cc
     internal/bigquery_read_logging_decorator.h
     internal/bigquery_read_metadata_decorator.cc

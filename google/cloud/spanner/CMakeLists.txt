@@ -48,6 +48,8 @@ add_library(
     admin/instance_admin_options.h
     admin/internal/database_admin_auth_decorator.cc
     admin/internal/database_admin_auth_decorator.h
+    admin/internal/database_admin_connection_impl.cc
+    admin/internal/database_admin_connection_impl.h
     admin/internal/database_admin_logging_decorator.cc
     admin/internal/database_admin_logging_decorator.h
     admin/internal/database_admin_metadata_decorator.cc
@@ -61,6 +63,8 @@ add_library(
     admin/internal/database_admin_stub_factory.h
     admin/internal/instance_admin_auth_decorator.cc
     admin/internal/instance_admin_auth_decorator.h
+    admin/internal/instance_admin_connection_impl.cc
+    admin/internal/instance_admin_connection_impl.h
     admin/internal/instance_admin_logging_decorator.cc
     admin/internal/instance_admin_logging_decorator.h
     admin/internal/instance_admin_metadata_decorator.cc
