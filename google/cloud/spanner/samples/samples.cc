@@ -3064,17 +3064,16 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
                 /*scaling=*/4.0))
             .clone();
     auto client = google::cloud::spanner_admin::InstanceAdminClient(
-        google::cloud::spanner_admin::MakeInstanceAdminConnection(
-            google::cloud::Options{}
-                .set<google::cloud::spanner_admin::
-                         InstanceAdminRetryPolicyOption>(
-                    std::move(retry_policy))
-                .set<google::cloud::spanner_admin::
-                         InstanceAdminBackoffPolicyOption>(
-                    std::move(backoff_policy))
-                .set<google::cloud::spanner_admin::
-                         InstanceAdminPollingPolicyOption>(
-                    std::move(polling_policy))));
+        google::cloud::spanner_admin::MakeInstanceAdminConnection(),
+        google::cloud::Options{}
+            .set<google::cloud::spanner_admin::InstanceAdminRetryPolicyOption>(
+                std::move(retry_policy))
+            .set<
+                google::cloud::spanner_admin::InstanceAdminBackoffPolicyOption>(
+                std::move(backoff_policy))
+            .set<
+                google::cloud::spanner_admin::InstanceAdminPollingPolicyOption>(
+                std::move(polling_policy)));
 
     // Use the client as usual.
     std::cout << "Available configs for project " << project_id << "\n";
@@ -3129,17 +3128,16 @@ void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
                 /*scaling=*/4.0))
             .clone();
     auto client = google::cloud::spanner_admin::DatabaseAdminClient(
-        google::cloud::spanner_admin::MakeDatabaseAdminConnection(
-            google::cloud::Options{}
-                .set<google::cloud::spanner_admin::
-                         DatabaseAdminRetryPolicyOption>(
-                    std::move(retry_policy))
-                .set<google::cloud::spanner_admin::
-                         DatabaseAdminBackoffPolicyOption>(
-                    std::move(backoff_policy))
-                .set<google::cloud::spanner_admin::
-                         DatabaseAdminPollingPolicyOption>(
-                    std::move(polling_policy))));
+        google::cloud::spanner_admin::MakeDatabaseAdminConnection(),
+        google::cloud::Options{}
+            .set<google::cloud::spanner_admin::DatabaseAdminRetryPolicyOption>(
+                std::move(retry_policy))
+            .set<
+                google::cloud::spanner_admin::DatabaseAdminBackoffPolicyOption>(
+                std::move(backoff_policy))
+            .set<
+                google::cloud::spanner_admin::DatabaseAdminPollingPolicyOption>(
+                std::move(polling_policy)));
 
     // Use the client as usual.
     spanner::Instance instance(project_id, instance_id);
@@ -3830,19 +3828,16 @@ void RunAll(bool emulator) {
   std::cout << "Running samples on " << instance_id << std::endl;
 
   google::cloud::spanner_admin::InstanceAdminClient instance_admin_client(
-      google::cloud::spanner_admin::MakeInstanceAdminConnection(
-          google::cloud::Options{}
-              .set<
-                  google::cloud::spanner_admin::InstanceAdminRetryPolicyOption>(
-                  google::cloud::spanner_admin::
-                      InstanceAdminLimitedTimeRetryPolicy(
-                          std::chrono::minutes(60))
-                          .clone())
-              .set<google::cloud::spanner_admin::
-                       InstanceAdminBackoffPolicyOption>(
-                  google::cloud::spanner::ExponentialBackoffPolicy(
-                      std::chrono::seconds(1), std::chrono::minutes(1), 2.0)
-                      .clone())));
+      google::cloud::spanner_admin::MakeInstanceAdminConnection(),
+      google::cloud::Options{}
+          .set<google::cloud::spanner_admin::InstanceAdminRetryPolicyOption>(
+              google::cloud::spanner_admin::InstanceAdminLimitedTimeRetryPolicy(
+                  std::chrono::minutes(60))
+                  .clone())
+          .set<google::cloud::spanner_admin::InstanceAdminBackoffPolicyOption>(
+              google::cloud::spanner::ExponentialBackoffPolicy(
+                  std::chrono::seconds(1), std::chrono::minutes(1), 2.0)
+                  .clone()));
 
   SampleBanner("get-instance");
   GetInstance(instance_admin_client, project_id, instance_id);
@@ -3866,28 +3861,23 @@ void RunAll(bool emulator) {
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
   google::cloud::spanner_admin::DatabaseAdminClient database_admin_client(
-      google::cloud::spanner_admin::MakeDatabaseAdminConnection(
-          google::cloud::Options{}
-              .set<
-                  google::cloud::spanner_admin::DatabaseAdminRetryPolicyOption>(
-                  google::cloud::spanner_admin::
-                      DatabaseAdminLimitedTimeRetryPolicy(
-                          std::chrono::minutes(60))
-                          .clone())
-              .set<google::cloud::spanner_admin::
-                       DatabaseAdminBackoffPolicyOption>(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection(),
+      google::cloud::Options{}
+          .set<google::cloud::spanner_admin::DatabaseAdminRetryPolicyOption>(
+              google::cloud::spanner_admin::DatabaseAdminLimitedTimeRetryPolicy(
+                  std::chrono::minutes(60))
+                  .clone())
+          .set<google::cloud::spanner_admin::DatabaseAdminBackoffPolicyOption>(
+              google::cloud::spanner::ExponentialBackoffPolicy(
+                  std::chrono::seconds(1), std::chrono::minutes(1), 2.0)
+                  .clone())
+          .set<google::cloud::spanner_admin::DatabaseAdminPollingPolicyOption>(
+              google::cloud::spanner::GenericPollingPolicy<>(
+                  google::cloud::spanner::LimitedTimeRetryPolicy(
+                      std::chrono::hours(2)),
                   google::cloud::spanner::ExponentialBackoffPolicy(
-                      std::chrono::seconds(1), std::chrono::minutes(1), 2.0)
-                      .clone())
-              .set<google::cloud::spanner_admin::
-                       DatabaseAdminPollingPolicyOption>(
-                  google::cloud::spanner::GenericPollingPolicy<>(
-                      google::cloud::spanner::LimitedTimeRetryPolicy(
-                          std::chrono::hours(2)),
-                      google::cloud::spanner::ExponentialBackoffPolicy(
-                          std::chrono::seconds(1), std::chrono::minutes(1),
-                          2.0))
-                      .clone())));
+                      std::chrono::seconds(1), std::chrono::minutes(1), 2.0))
+                  .clone()));
 
   RunAllSlowInstanceTests(instance_admin_client, database_admin_client,
                           generator, project_id, test_iam_service_account,
