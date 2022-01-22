@@ -9,3 +9,11 @@ coverage:
 ignore:
   - "google/cloud/bigtable/admin"
   - "google/cloud/spanner/admin"
+  - "google/cloud/storage/internal/storage_auth_decorator.cc"
+  - "google/cloud/storage/internal/storage_auth_decorator.h"
+  - "google/cloud/storage/internal/storage_logging_decorator.cc"
+  - "google/cloud/storage/internal/storage_logging_decorator.h"
+  - "google/cloud/storage/internal/storage_metadata_decorator.cc"
+  - "google/cloud/storage/internal/storage_metadata_decorator.h"
+  - "google/cloud/storage/internal/storage_stub.cc"
+  - "google/cloud/storage/internal/storage_stub.h"
