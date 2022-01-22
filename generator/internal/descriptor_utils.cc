@@ -35,12 +35,14 @@
 #include "generator/internal/stub_generator.h"
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
+#include <google/protobuf/compiler/cpp/cpp_names.h>
 #include <regex>
 #include <string>
 
 using ::google::protobuf::FieldDescriptor;
 using ::google::protobuf::MethodDescriptor;
 using ::google::protobuf::ServiceDescriptor;
+using ::google::protobuf::compiler::cpp::FieldName;
 
 namespace google {
 namespace cloud {
@@ -186,41 +188,43 @@ void SetMethodSignatureMethodVars(
       absl::StripAsciiWhitespace(&parameter);
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameter);
+      auto const parameter_name = FieldName(parameter_descriptor);
       if (parameter_descriptor->is_map()) {
         method_signature += absl::StrFormat(
             "std::map<%s, %s> const& %s",
             CppTypeToString(parameter_descriptor->message_type()->map_key()),
             CppTypeToString(parameter_descriptor->message_type()->map_value()),
-            parameter);
+            parameter_name);
         method_request_setters += absl::StrFormat(
-            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n", parameter,
-            parameter, parameter);
+            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
+            parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->is_repeated()) {
-        method_signature +=
-            absl::StrFormat("std::vector<%s> const& %s",
-                            CppTypeToString(parameter_descriptor), parameter);
+        method_signature += absl::StrFormat(
+            "std::vector<%s> const& %s", CppTypeToString(parameter_descriptor),
+            parameter_name);
         method_request_setters += absl::StrFormat(
-            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n", parameter,
-            parameter, parameter);
+            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
+            parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->type() ==
                  FieldDescriptor::TYPE_MESSAGE) {
         method_signature += absl::StrFormat(
-            "%s const& %s", CppTypeToString(parameter_descriptor), parameter);
+            "%s const& %s", CppTypeToString(parameter_descriptor),
+            parameter_name);
         method_request_setters += absl::StrFormat(
-            "  *request.mutable_%s() = %s;\n", parameter, parameter);
+            "  *request.mutable_%s() = %s;\n", parameter_name, parameter_name);
       } else {
         switch (parameter_descriptor->cpp_type()) {
           case FieldDescriptor::CPPTYPE_STRING:
             method_signature += absl::StrFormat(
                 "%s const& %s", CppTypeToString(parameter_descriptor),
-                parameter);
+                parameter_name);
             break;
           default:
             method_signature += absl::StrFormat(
-                "%s %s", CppTypeToString(parameter_descriptor), parameter);
+                "%s %s", CppTypeToString(parameter_descriptor), parameter_name);
         }
-        method_request_setters +=
-            absl::StrFormat("  request.set_%s(%s);\n", parameter, parameter);
+        method_request_setters += absl::StrFormat(
+            "  request.set_%s(%s);\n", parameter_name, parameter_name);
       }
       method_signature += ", ";
     }
@@ -240,7 +244,14 @@ void SetResourceRoutingMethodVars(
     method_vars["method_request_url_substitution"] = result->url_substitution;
     std::string param = result->param_key;
     method_vars["method_request_param_key"] = param;
-    std::vector<std::string> chunks = absl::StrSplit(param, '.');
+    std::vector<std::string> chunks;
+    auto const* input_type = method.input_type();
+    for (auto const sv : absl::StrSplit(param, '.')) {
+      auto const chunk = std::string(sv);
+      auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
+      chunks.push_back(FieldName(chunk_descriptor));
+      input_type = chunk_descriptor->message_type();
+    }
     method_vars["method_request_param_value"] =
         absl::StrJoin(chunks, "().") + "()";
     method_vars["method_request_body"] = result->body;
@@ -334,7 +345,7 @@ std::string FormatApiMethodSignatureParameters(
         EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
         {{"\n\n", "\n  /// "}, {"\n", "\n  /// "}});
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
-                          parameter, std::move(comment));
+                          FieldName(parameter_descriptor), std::move(comment));
   }
   return parameter_comments;
 }
