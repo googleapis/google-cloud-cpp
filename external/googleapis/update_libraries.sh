@@ -108,6 +108,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/secretmanager/v1:secretmanager_cc_grpc" \
       "@com_google_googleapis//google/cloud/secretmanager/logging/v1:logging_cc_grpc"
   )"
+  ["servicedirectory"]="@com_google_googleapis//google/cloud/servicedirectory/v1:servicedirectory_cc_grpc"
   ["serviceusage"]="@com_google_googleapis//google/api/serviceusage/v1:serviceusage_cc_grpc"
   ["shell"]="@com_google_googleapis//google/cloud/shell/v1:shell_cc_grpc"
   ["spanner"]="$(

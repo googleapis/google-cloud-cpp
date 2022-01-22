@@ -450,6 +450,21 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Service Directory
+service {
+  service_proto_path: "google/cloud/servicedirectory/v1/lookup_service.proto"
+  product_path: "google/cloud/servicedirectory"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable", "kUnknown"]
+}
+
+service {
+  service_proto_path: "google/cloud/servicedirectory/v1/registration_service.proto"
+  product_path: "google/cloud/servicedirectory"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable", "kUnknown"]
+}
+
 # Service Usage
 service {
   service_proto_path: "google/api/serviceusage/v1/serviceusage.proto"
