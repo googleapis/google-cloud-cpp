@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/environments_connection.h"
 #include "google/cloud/composer/environments_options.h"
+#include "google/cloud/composer/internal/environments_connection_impl.h"
 #include "google/cloud/composer/internal/environments_option_defaults.h"
 #include "google/cloud/composer/internal/environments_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -91,214 +91,6 @@ EnvironmentsConnection::DeleteEnvironment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-namespace {
-class EnvironmentsConnectionImpl : public EnvironmentsConnection {
- public:
-  EnvironmentsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<composer_internal::EnvironmentsStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<EnvironmentsRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<EnvironmentsBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<EnvironmentsPollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<EnvironmentsConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~EnvironmentsConnectionImpl() override = default;
-
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        CreateEnvironmentRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::orchestration::airflow::service::v1::Environment>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::orchestration::airflow::service::v1::
-                   CreateEnvironmentRequest const& request) {
-          return stub->AsyncCreateEnvironment(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::orchestration::airflow::service::v1::Environment>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateEnvironment(request), polling_policy(),
-        __func__);
-  }
-
-  StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(google::cloud::orchestration::airflow::service::v1::
-                     GetEnvironmentRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetEnvironment(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::orchestration::airflow::service::v1::
-                   GetEnvironmentRequest const& request) {
-          return stub_->GetEnvironment(context, request);
-        },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-  ListEnvironments(google::cloud::orchestration::airflow::service::v1::
-                       ListEnvironmentsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<EnvironmentsRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListEnvironments(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<StreamRange<
-        google::cloud::orchestration::airflow::service::v1::Environment>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::cloud::orchestration::airflow::service::v1::
-                            ListEnvironmentsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::orchestration::airflow::service::v1::
-                         ListEnvironmentsRequest const& request) {
-                return stub->ListEnvironments(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::orchestration::airflow::service::v1::
-               ListEnvironmentsResponse r) {
-          std::vector<
-              google::cloud::orchestration::airflow::service::v1::Environment>
-              result(r.environments().size());
-          auto& messages = *r.mutable_environments();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        UpdateEnvironmentRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::orchestration::airflow::service::v1::Environment>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::orchestration::airflow::service::v1::
-                   UpdateEnvironmentRequest const& request) {
-          return stub->AsyncUpdateEnvironment(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::orchestration::airflow::service::v1::Environment>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateEnvironment(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        DeleteEnvironmentRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::orchestration::airflow::service::v1::OperationMetadata>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::orchestration::airflow::service::v1::
-                   DeleteEnvironmentRequest const& request) {
-          return stub->AsyncDeleteEnvironment(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::cloud::orchestration::airflow::service::v1::
-                OperationMetadata>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteEnvironment(request), polling_policy(),
-        __func__);
-  }
-
- private:
-  std::unique_ptr<EnvironmentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<EnvironmentsRetryPolicyOption>()) {
-      return options.get<EnvironmentsRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<EnvironmentsBackoffPolicyOption>()) {
-      return options.get<EnvironmentsBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<EnvironmentsPollingPolicyOption>()) {
-      return options.get<EnvironmentsPollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<EnvironmentsConnectionIdempotencyPolicyOption>()) {
-      return options.get<EnvironmentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<composer_internal::EnvironmentsStub> stub_;
-  std::unique_ptr<EnvironmentsRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -308,8 +100,8 @@ std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = composer_internal::CreateDefaultEnvironmentsStub(background->cq(),
                                                                options);
-  return std::make_shared<EnvironmentsConnectionImpl>(std::move(background),
-                                                      std::move(stub), options);
+  return std::make_shared<composer_internal::EnvironmentsConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -325,7 +117,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<composer::EnvironmentsConnection> MakeEnvironmentsConnection(
     std::shared_ptr<EnvironmentsStub> stub, Options options) {
   options = EnvironmentsDefaultOptions(std::move(options));
-  return std::make_shared<composer::EnvironmentsConnectionImpl>(
+  return std::make_shared<composer_internal::EnvironmentsConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

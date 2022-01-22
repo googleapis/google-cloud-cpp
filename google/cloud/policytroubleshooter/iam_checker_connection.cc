@@ -18,12 +18,12 @@
 
 #include "google/cloud/policytroubleshooter/iam_checker_connection.h"
 #include "google/cloud/policytroubleshooter/iam_checker_options.h"
+#include "google/cloud/policytroubleshooter/internal/iam_checker_connection_impl.h"
 #include "google/cloud/policytroubleshooter/internal/iam_checker_option_defaults.h"
 #include "google/cloud/policytroubleshooter/internal/iam_checker_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -40,75 +40,6 @@ IamCheckerConnection::TroubleshootIamPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class IamCheckerConnectionImpl : public IamCheckerConnection {
- public:
-  IamCheckerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<policytroubleshooter_internal::IamCheckerStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<IamCheckerRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<IamCheckerBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<IamCheckerConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~IamCheckerConnectionImpl() override = default;
-
-  StatusOr<
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(
-      google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->TroubleshootIamPolicy(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::policytroubleshooter::v1::
-                   TroubleshootIamPolicyRequest const& request) {
-          return stub_->TroubleshootIamPolicy(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<IamCheckerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<IamCheckerRetryPolicyOption>()) {
-      return options.get<IamCheckerRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<IamCheckerBackoffPolicyOption>()) {
-      return options.get<IamCheckerBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<IamCheckerConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<IamCheckerConnectionIdempotencyPolicyOption>()) {
-      return options.get<IamCheckerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<policytroubleshooter_internal::IamCheckerStub> stub_;
-  std::unique_ptr<IamCheckerRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<IamCheckerConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -118,8 +49,9 @@ std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = policytroubleshooter_internal::CreateDefaultIamCheckerStub(
       background->cq(), options);
-  return std::make_shared<IamCheckerConnectionImpl>(std::move(background),
-                                                    std::move(stub), options);
+  return std::make_shared<
+      policytroubleshooter_internal::IamCheckerConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -136,7 +68,8 @@ std::shared_ptr<policytroubleshooter::IamCheckerConnection>
 MakeIamCheckerConnection(std::shared_ptr<IamCheckerStub> stub,
                          Options options) {
   options = IamCheckerDefaultOptions(std::move(options));
-  return std::make_shared<policytroubleshooter::IamCheckerConnectionImpl>(
+  return std::make_shared<
+      policytroubleshooter_internal::IamCheckerConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

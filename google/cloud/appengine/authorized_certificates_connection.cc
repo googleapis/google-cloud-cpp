@@ -18,13 +18,13 @@
 
 #include "google/cloud/appengine/authorized_certificates_connection.h"
 #include "google/cloud/appengine/authorized_certificates_options.h"
+#include "google/cloud/appengine/internal/authorized_certificates_connection_impl.h"
 #include "google/cloud/appengine/internal/authorized_certificates_option_defaults.h"
 #include "google/cloud/appengine/internal/authorized_certificates_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -72,160 +72,6 @@ Status AuthorizedCertificatesConnection::DeleteAuthorizedCertificate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class AuthorizedCertificatesConnectionImpl
-    : public AuthorizedCertificatesConnection {
- public:
-  AuthorizedCertificatesConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<AuthorizedCertificatesRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<AuthorizedCertificatesBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options
-                .get<AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~AuthorizedCertificatesConnectionImpl() override = default;
-
-  StreamRange<google::appengine::v1::AuthorizedCertificate>
-  ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<AuthorizedCertificatesRetryPolicy const>(
-        retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency =
-        idempotency_policy()->ListAuthorizedCertificates(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::appengine::v1::AuthorizedCertificate>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::appengine::v1::ListAuthorizedCertificatesRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::appengine::v1::
-                         ListAuthorizedCertificatesRequest const& request) {
-                return stub->ListAuthorizedCertificates(context, request);
-              },
-              r, function_name);
-        },
-        [](google::appengine::v1::ListAuthorizedCertificatesResponse r) {
-          std::vector<google::appengine::v1::AuthorizedCertificate> result(
-              r.certificates().size());
-          auto& messages = *r.mutable_certificates();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::appengine::v1::AuthorizedCertificate>
-  GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetAuthorizedCertificate(request),
-        [this](grpc::ClientContext& context,
-               google::appengine::v1::GetAuthorizedCertificateRequest const&
-                   request) {
-          return stub_->GetAuthorizedCertificate(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::appengine::v1::AuthorizedCertificate>
-  CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateAuthorizedCertificate(request),
-        [this](grpc::ClientContext& context,
-               google::appengine::v1::CreateAuthorizedCertificateRequest const&
-                   request) {
-          return stub_->CreateAuthorizedCertificate(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::appengine::v1::AuthorizedCertificate>
-  UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateAuthorizedCertificate(request),
-        [this](grpc::ClientContext& context,
-               google::appengine::v1::UpdateAuthorizedCertificateRequest const&
-                   request) {
-          return stub_->UpdateAuthorizedCertificate(context, request);
-        },
-        request, __func__);
-  }
-
-  Status DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteAuthorizedCertificate(request),
-        [this](grpc::ClientContext& context,
-               google::appengine::v1::DeleteAuthorizedCertificateRequest const&
-                   request) {
-          return stub_->DeleteAuthorizedCertificate(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<AuthorizedCertificatesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AuthorizedCertificatesRetryPolicyOption>()) {
-      return options.get<AuthorizedCertificatesRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<AuthorizedCertificatesBackoffPolicyOption>()) {
-      return options.get<AuthorizedCertificatesBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub_;
-  std::unique_ptr<AuthorizedCertificatesRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<AuthorizedCertificatesConnection>
 MakeAuthorizedCertificatesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -236,7 +82,8 @@ MakeAuthorizedCertificatesConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = appengine_internal::CreateDefaultAuthorizedCertificatesStub(
       background->cq(), options);
-  return std::make_shared<AuthorizedCertificatesConnectionImpl>(
+  return std::make_shared<
+      appengine_internal::AuthorizedCertificatesConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -254,7 +101,8 @@ std::shared_ptr<appengine::AuthorizedCertificatesConnection>
 MakeAuthorizedCertificatesConnection(
     std::shared_ptr<AuthorizedCertificatesStub> stub, Options options) {
   options = AuthorizedCertificatesDefaultOptions(std::move(options));
-  return std::make_shared<appengine::AuthorizedCertificatesConnectionImpl>(
+  return std::make_shared<
+      appengine_internal::AuthorizedCertificatesConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

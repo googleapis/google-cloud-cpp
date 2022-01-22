@@ -18,13 +18,13 @@
 
 #include "google/cloud/composer/image_versions_connection.h"
 #include "google/cloud/composer/image_versions_options.h"
+#include "google/cloud/composer/internal/image_versions_connection_impl.h"
 #include "google/cloud/composer/internal/image_versions_option_defaults.h"
 #include "google/cloud/composer/internal/image_versions_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -53,96 +53,6 @@ ImageVersionsConnection::ListImageVersions(
       });
 }
 
-namespace {
-class ImageVersionsConnectionImpl : public ImageVersionsConnection {
- public:
-  ImageVersionsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<composer_internal::ImageVersionsStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<ImageVersionsRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<ImageVersionsBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<ImageVersionsConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~ImageVersionsConnectionImpl() override = default;
-
-  StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-  ListImageVersions(google::cloud::orchestration::airflow::service::v1::
-                        ListImageVersionsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<ImageVersionsRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListImageVersions(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<StreamRange<
-        google::cloud::orchestration::airflow::service::v1::ImageVersion>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::cloud::orchestration::airflow::service::v1::
-                            ListImageVersionsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::orchestration::airflow::service::v1::
-                         ListImageVersionsRequest const& request) {
-                return stub->ListImageVersions(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::orchestration::airflow::service::v1::
-               ListImageVersionsResponse r) {
-          std::vector<
-              google::cloud::orchestration::airflow::service::v1::ImageVersion>
-              result(r.image_versions().size());
-          auto& messages = *r.mutable_image_versions();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
- private:
-  std::unique_ptr<ImageVersionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ImageVersionsRetryPolicyOption>()) {
-      return options.get<ImageVersionsRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ImageVersionsBackoffPolicyOption>()) {
-      return options.get<ImageVersionsBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ImageVersionsConnectionIdempotencyPolicyOption>()) {
-      return options.get<ImageVersionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<composer_internal::ImageVersionsStub> stub_;
-  std::unique_ptr<ImageVersionsRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -152,7 +62,7 @@ std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = composer_internal::CreateDefaultImageVersionsStub(
       background->cq(), options);
-  return std::make_shared<ImageVersionsConnectionImpl>(
+  return std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -169,7 +79,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<composer::ImageVersionsConnection> MakeImageVersionsConnection(
     std::shared_ptr<ImageVersionsStub> stub, Options options) {
   options = ImageVersionsDefaultOptions(std::move(options));
-  return std::make_shared<composer::ImageVersionsConnectionImpl>(
+  return std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

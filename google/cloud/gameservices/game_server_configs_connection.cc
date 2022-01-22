@@ -18,6 +18,7 @@
 
 #include "google/cloud/gameservices/game_server_configs_connection.h"
 #include "google/cloud/gameservices/game_server_configs_options.h"
+#include "google/cloud/gameservices/internal/game_server_configs_connection_impl.h"
 #include "google/cloud/gameservices/internal/game_server_configs_option_defaults.h"
 #include "google/cloud/gameservices/internal/game_server_configs_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -73,194 +73,6 @@ GameServerConfigsServiceConnection::DeleteGameServerConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-namespace {
-class GameServerConfigsServiceConnectionImpl
-    : public GameServerConfigsServiceConnection {
- public:
-  GameServerConfigsServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<GameServerConfigsServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<GameServerConfigsServiceBackoffPolicyOption>()
-                ->clone()),
-        polling_policy_prototype_(
-            options.get<GameServerConfigsServicePollingPolicyOption>()
-                ->clone()),
-        idempotency_policy_(
-            options
-                .get<
-                    GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~GameServerConfigsServiceConnectionImpl() override = default;
-
-  StreamRange<google::cloud::gaming::v1::GameServerConfig>
-  ListGameServerConfigs(google::cloud::gaming::v1::ListGameServerConfigsRequest
-                            request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<GameServerConfigsServiceRetryPolicy const>(
-        retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListGameServerConfigs(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::gaming::v1::GameServerConfig>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::gaming::v1::ListGameServerConfigsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](
-                  grpc::ClientContext& context,
-                  google::cloud::gaming::v1::ListGameServerConfigsRequest const&
-                      request) {
-                return stub->ListGameServerConfigs(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::gaming::v1::ListGameServerConfigsResponse r) {
-          std::vector<google::cloud::gaming::v1::GameServerConfig> result(
-              r.game_server_configs().size());
-          auto& messages = *r.mutable_game_server_configs();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
-      google::cloud::gaming::v1::GetGameServerConfigRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetGameServerConfig(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::gaming::v1::GetGameServerConfigRequest const&
-                   request) {
-          return stub_->GetGameServerConfig(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-  CreateGameServerConfig(
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gaming::v1::GameServerConfig>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gaming::v1::CreateGameServerConfigRequest const&
-                   request) {
-          return stub->AsyncCreateGameServerConfig(cq, std::move(context),
-                                                   request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::gaming::v1::GameServerConfig>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateGameServerConfig(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerConfig(
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::gaming::v1::OperationMetadata>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
-                   request) {
-          return stub->AsyncDeleteGameServerConfig(cq, std::move(context),
-                                                   request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::cloud::gaming::v1::OperationMetadata>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteGameServerConfig(request), polling_policy(),
-        __func__);
-  }
-
- private:
-  std::unique_ptr<GameServerConfigsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GameServerConfigsServiceRetryPolicyOption>()) {
-      return options.get<GameServerConfigsServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GameServerConfigsServiceBackoffPolicyOption>()) {
-      return options.get<GameServerConfigsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<GameServerConfigsServicePollingPolicyOption>()) {
-      return options.get<GameServerConfigsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<GameServerConfigsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub_;
-  std::unique_ptr<GameServerConfigsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<GameServerConfigsServiceConnection>
 MakeGameServerConfigsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -271,7 +83,8 @@ MakeGameServerConfigsServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gameservices_internal::CreateDefaultGameServerConfigsServiceStub(
       background->cq(), options);
-  return std::make_shared<GameServerConfigsServiceConnectionImpl>(
+  return std::make_shared<
+      gameservices_internal::GameServerConfigsServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -289,7 +102,8 @@ std::shared_ptr<gameservices::GameServerConfigsServiceConnection>
 MakeGameServerConfigsServiceConnection(
     std::shared_ptr<GameServerConfigsServiceStub> stub, Options options) {
   options = GameServerConfigsServiceDefaultOptions(std::move(options));
-  return std::make_shared<gameservices::GameServerConfigsServiceConnectionImpl>(
+  return std::make_shared<
+      gameservices_internal::GameServerConfigsServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

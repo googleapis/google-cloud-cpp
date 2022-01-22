@@ -18,6 +18,7 @@
 
 #include "google/cloud/spanner/admin/instance_admin_connection.h"
 #include "google/cloud/spanner/admin/instance_admin_options.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_connection_impl.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -117,281 +117,6 @@ InstanceAdminConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class InstanceAdminConnectionImpl : public InstanceAdminConnection {
- public:
-  InstanceAdminConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<InstanceAdminRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<InstanceAdminBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<InstanceAdminPollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<InstanceAdminConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~InstanceAdminConnectionImpl() override = default;
-
-  StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-  ListInstanceConfigs(
-      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<InstanceAdminRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListInstanceConfigs(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::spanner::admin::instance::v1::
-                            ListInstanceConfigsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::spanner::admin::instance::v1::
-                         ListInstanceConfigsRequest const& request) {
-                return stub->ListInstanceConfigs(context, request);
-              },
-              r, function_name);
-        },
-        [](google::spanner::admin::instance::v1::ListInstanceConfigsResponse
-               r) {
-          std::vector<google::spanner::admin::instance::v1::InstanceConfig>
-              result(r.instance_configs().size());
-          auto& messages = *r.mutable_instance_configs();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(
-      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetInstanceConfig(request),
-        [this](grpc::ClientContext& context,
-               google::spanner::admin::instance::v1::
-                   GetInstanceConfigRequest const& request) {
-          return stub_->GetInstanceConfig(context, request);
-        },
-        request, __func__);
-  }
-
-  StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
-      google::spanner::admin::instance::v1::ListInstancesRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<InstanceAdminRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListInstances(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::spanner::admin::instance::v1::Instance>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::spanner::admin::instance::v1::ListInstancesRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::spanner::admin::instance::v1::
-                         ListInstancesRequest const& request) {
-                return stub->ListInstances(context, request);
-              },
-              r, function_name);
-        },
-        [](google::spanner::admin::instance::v1::ListInstancesResponse r) {
-          std::vector<google::spanner::admin::instance::v1::Instance> result(
-              r.instances().size());
-          auto& messages = *r.mutable_instances();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      google::spanner::admin::instance::v1::GetInstanceRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetInstance(request),
-        [this](grpc::ClientContext& context,
-               google::spanner::admin::instance::v1::GetInstanceRequest const&
-                   request) { return stub_->GetInstance(context, request); },
-        request, __func__);
-  }
-
-  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(
-      google::spanner::admin::instance::v1::CreateInstanceRequest const&
-          request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::spanner::admin::instance::v1::Instance>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::spanner::admin::instance::v1::CreateInstanceRequest const&
-                request) {
-          return stub->AsyncCreateInstance(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::spanner::admin::instance::v1::Instance>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateInstance(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(
-      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-          request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::spanner::admin::instance::v1::Instance>(
-        background_->cq(), request,
-        [stub](
-            google::cloud::CompletionQueue& cq,
-            std::unique_ptr<grpc::ClientContext> context,
-            google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-                request) {
-          return stub->AsyncUpdateInstance(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::spanner::admin::instance::v1::Instance>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateInstance(request), polling_policy(),
-        __func__);
-  }
-
-  Status DeleteInstance(
-      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteInstance(request),
-        [this](
-            grpc::ClientContext& context,
-            google::spanner::admin::instance::v1::DeleteInstanceRequest const&
-                request) { return stub_->DeleteInstance(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->SetIamPolicy(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::SetIamPolicyRequest const& request) {
-          return stub_->SetIamPolicy(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetIamPolicy(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::GetIamPolicyRequest const& request) {
-          return stub_->GetIamPolicy(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->TestIamPermissions(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::TestIamPermissionsRequest const& request) {
-          return stub_->TestIamPermissions(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<InstanceAdminRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<InstanceAdminRetryPolicyOption>()) {
-      return options.get<InstanceAdminRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<InstanceAdminBackoffPolicyOption>()) {
-      return options.get<InstanceAdminBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<InstanceAdminPollingPolicyOption>()) {
-      return options.get<InstanceAdminPollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<InstanceAdminConnectionIdempotencyPolicyOption>()) {
-      return options.get<InstanceAdminConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub_;
-  std::unique_ptr<InstanceAdminRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -402,7 +127,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = spanner_admin_internal::CreateDefaultInstanceAdminStub(
       background->cq(), options);
-  return std::make_shared<InstanceAdminConnectionImpl>(
+  return std::make_shared<spanner_admin_internal::InstanceAdminConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -421,7 +146,7 @@ std::shared_ptr<spanner_admin::InstanceAdminConnection>
 MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
                             Options options) {
   options = InstanceAdminDefaultOptions(std::move(options));
-  return std::make_shared<spanner_admin::InstanceAdminConnectionImpl>(
+  return std::make_shared<spanner_admin_internal::InstanceAdminConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

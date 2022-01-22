@@ -18,13 +18,13 @@
 
 #include "google/cloud/scheduler/cloud_scheduler_connection.h"
 #include "google/cloud/scheduler/cloud_scheduler_options.h"
+#include "google/cloud/scheduler/internal/cloud_scheduler_connection_impl.h"
 #include "google/cloud/scheduler/internal/cloud_scheduler_option_defaults.h"
 #include "google/cloud/scheduler/internal/cloud_scheduler_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -83,173 +83,6 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::RunJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class CloudSchedulerConnectionImpl : public CloudSchedulerConnection {
- public:
-  CloudSchedulerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<scheduler_internal::CloudSchedulerStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<CloudSchedulerRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<CloudSchedulerBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<CloudSchedulerConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~CloudSchedulerConnectionImpl() override = default;
-
-  StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
-      google::cloud::scheduler::v1::ListJobsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<CloudSchedulerRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListJobs(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::scheduler::v1::Job>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::scheduler::v1::ListJobsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::scheduler::v1::ListJobsRequest const&
-                         request) { return stub->ListJobs(context, request); },
-              r, function_name);
-        },
-        [](google::cloud::scheduler::v1::ListJobsResponse r) {
-          std::vector<google::cloud::scheduler::v1::Job> result(
-              r.jobs().size());
-          auto& messages = *r.mutable_jobs();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::scheduler::v1::Job> GetJob(
-      google::cloud::scheduler::v1::GetJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::scheduler::v1::GetJobRequest const& request) {
-          return stub_->GetJob(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
-      google::cloud::scheduler::v1::CreateJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::scheduler::v1::CreateJobRequest const& request) {
-          return stub_->CreateJob(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
-      google::cloud::scheduler::v1::UpdateJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::scheduler::v1::UpdateJobRequest const& request) {
-          return stub_->UpdateJob(context, request);
-        },
-        request, __func__);
-  }
-
-  Status DeleteJob(
-      google::cloud::scheduler::v1::DeleteJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::scheduler::v1::DeleteJobRequest const& request) {
-          return stub_->DeleteJob(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
-      google::cloud::scheduler::v1::PauseJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->PauseJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::scheduler::v1::PauseJobRequest const& request) {
-          return stub_->PauseJob(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
-      google::cloud::scheduler::v1::ResumeJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ResumeJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::scheduler::v1::ResumeJobRequest const& request) {
-          return stub_->ResumeJob(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::scheduler::v1::Job> RunJob(
-      google::cloud::scheduler::v1::RunJobRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(), idempotency_policy()->RunJob(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::scheduler::v1::RunJobRequest const& request) {
-          return stub_->RunJob(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<CloudSchedulerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<CloudSchedulerRetryPolicyOption>()) {
-      return options.get<CloudSchedulerRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<CloudSchedulerBackoffPolicyOption>()) {
-      return options.get<CloudSchedulerBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<CloudSchedulerConnectionIdempotencyPolicyOption>()) {
-      return options.get<CloudSchedulerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<scheduler_internal::CloudSchedulerStub> stub_;
-  std::unique_ptr<CloudSchedulerRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -260,7 +93,7 @@ std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = scheduler_internal::CreateDefaultCloudSchedulerStub(
       background->cq(), options);
-  return std::make_shared<CloudSchedulerConnectionImpl>(
+  return std::make_shared<scheduler_internal::CloudSchedulerConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -278,7 +111,7 @@ std::shared_ptr<scheduler::CloudSchedulerConnection>
 MakeCloudSchedulerConnection(std::shared_ptr<CloudSchedulerStub> stub,
                              Options options) {
   options = CloudSchedulerDefaultOptions(std::move(options));
-  return std::make_shared<scheduler::CloudSchedulerConnectionImpl>(
+  return std::make_shared<scheduler_internal::CloudSchedulerConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

@@ -17,6 +17,7 @@
 // source: google/cloud/automl/v1/prediction_service.proto
 
 #include "google/cloud/automl/prediction_connection.h"
+#include "google/cloud/automl/internal/prediction_connection_impl.h"
 #include "google/cloud/automl/internal/prediction_option_defaults.h"
 #include "google/cloud/automl/internal/prediction_stub_factory.h"
 #include "google/cloud/automl/prediction_options.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -48,112 +48,6 @@ PredictionServiceConnection::BatchPredict(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-namespace {
-class PredictionServiceConnectionImpl : public PredictionServiceConnection {
- public:
-  PredictionServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<automl_internal::PredictionServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<PredictionServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<PredictionServiceBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<PredictionServicePollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<PredictionServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~PredictionServiceConnectionImpl() override = default;
-
-  StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      google::cloud::automl::v1::PredictRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->Predict(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::automl::v1::PredictRequest const& request) {
-          return stub_->Predict(context, request);
-        },
-        request, __func__);
-  }
-
-  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      google::cloud::automl::v1::BatchPredictRequest const& request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::automl::v1::BatchPredictResult>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::automl::v1::BatchPredictRequest const& request) {
-          return stub->AsyncBatchPredict(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::automl::v1::BatchPredictResult>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->BatchPredict(request), polling_policy(),
-        __func__);
-  }
-
- private:
-  std::unique_ptr<PredictionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PredictionServiceRetryPolicyOption>()) {
-      return options.get<PredictionServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PredictionServiceBackoffPolicyOption>()) {
-      return options.get<PredictionServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PredictionServicePollingPolicyOption>()) {
-      return options.get<PredictionServicePollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PredictionServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<PredictionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<automl_internal::PredictionServiceStub> stub_;
-  std::unique_ptr<PredictionServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -164,7 +58,7 @@ std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = automl_internal::CreateDefaultPredictionServiceStub(
       background->cq(), options);
-  return std::make_shared<PredictionServiceConnectionImpl>(
+  return std::make_shared<automl_internal::PredictionServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -182,7 +76,7 @@ std::shared_ptr<automl::PredictionServiceConnection>
 MakePredictionServiceConnection(std::shared_ptr<PredictionServiceStub> stub,
                                 Options options) {
   options = PredictionServiceDefaultOptions(std::move(options));
-  return std::make_shared<automl::PredictionServiceConnectionImpl>(
+  return std::make_shared<automl_internal::PredictionServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

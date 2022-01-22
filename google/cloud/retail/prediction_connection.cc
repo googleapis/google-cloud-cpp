@@ -17,13 +17,13 @@
 // source: google/cloud/retail/v2/prediction_service.proto
 
 #include "google/cloud/retail/prediction_connection.h"
+#include "google/cloud/retail/internal/prediction_connection_impl.h"
 #include "google/cloud/retail/internal/prediction_option_defaults.h"
 #include "google/cloud/retail/internal/prediction_stub_factory.h"
 #include "google/cloud/retail/prediction_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -39,73 +39,6 @@ PredictionServiceConnection::Predict(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class PredictionServiceConnectionImpl : public PredictionServiceConnection {
- public:
-  PredictionServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::PredictionServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<PredictionServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<PredictionServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<PredictionServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~PredictionServiceConnectionImpl() override = default;
-
-  StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
-      google::cloud::retail::v2::PredictRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->Predict(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::retail::v2::PredictRequest const& request) {
-          return stub_->Predict(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<PredictionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PredictionServiceRetryPolicyOption>()) {
-      return options.get<PredictionServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PredictionServiceBackoffPolicyOption>()) {
-      return options.get<PredictionServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PredictionServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<PredictionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::PredictionServiceStub> stub_;
-  std::unique_ptr<PredictionServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -116,7 +49,7 @@ std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultPredictionServiceStub(
       background->cq(), options);
-  return std::make_shared<PredictionServiceConnectionImpl>(
+  return std::make_shared<retail_internal::PredictionServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -134,7 +67,7 @@ std::shared_ptr<retail::PredictionServiceConnection>
 MakePredictionServiceConnection(std::shared_ptr<PredictionServiceStub> stub,
                                 Options options) {
   options = PredictionServiceDefaultOptions(std::move(options));
-  return std::make_shared<retail::PredictionServiceConnectionImpl>(
+  return std::make_shared<retail_internal::PredictionServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

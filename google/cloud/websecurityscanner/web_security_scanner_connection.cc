@@ -17,6 +17,7 @@
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
 #include "google/cloud/websecurityscanner/web_security_scanner_connection.h"
+#include "google/cloud/websecurityscanner/internal/web_security_scanner_connection_impl.h"
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_option_defaults.h"
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_stub_factory.h"
 #include "google/cloud/websecurityscanner/web_security_scanner_options.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -149,315 +149,6 @@ WebSecurityScannerConnection::ListFindingTypeStats(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class WebSecurityScannerConnectionImpl : public WebSecurityScannerConnection {
- public:
-  WebSecurityScannerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<WebSecurityScannerRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<WebSecurityScannerBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<WebSecurityScannerConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~WebSecurityScannerConnectionImpl() override = default;
-
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
-      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateScanConfig(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::
-                   CreateScanConfigRequest const& request) {
-          return stub_->CreateScanConfig(context, request);
-        },
-        request, __func__);
-  }
-
-  Status DeleteScanConfig(
-      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteScanConfig(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::
-                   DeleteScanConfigRequest const& request) {
-          return stub_->DeleteScanConfig(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
-      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetScanConfig(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-                request) { return stub_->GetScanConfig(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest
-                      request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<WebSecurityScannerRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListScanConfigs(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::websecurityscanner::v1::
-                         ListScanConfigsRequest const& request) {
-                return stub->ListScanConfigs(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::websecurityscanner::v1::ListScanConfigsResponse r) {
-          std::vector<google::cloud::websecurityscanner::v1::ScanConfig> result(
-              r.scan_configs().size());
-          auto& messages = *r.mutable_scan_configs();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
-      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateScanConfig(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::
-                   UpdateScanConfigRequest const& request) {
-          return stub_->UpdateScanConfig(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
-      google::cloud::websecurityscanner::v1::StartScanRunRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->StartScanRun(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::StartScanRunRequest const&
-                   request) { return stub_->StartScanRun(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
-      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetScanRun(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::GetScanRunRequest const&
-                   request) { return stub_->GetScanRun(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::websecurityscanner::v1::ScanRun> ListScanRuns(
-      google::cloud::websecurityscanner::v1::ListScanRunsRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<WebSecurityScannerRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListScanRuns(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::websecurityscanner::v1::ListScanRunsRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::websecurityscanner::v1::
-                         ListScanRunsRequest const& request) {
-                return stub->ListScanRuns(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::websecurityscanner::v1::ListScanRunsResponse r) {
-          std::vector<google::cloud::websecurityscanner::v1::ScanRun> result(
-              r.scan_runs().size());
-          auto& messages = *r.mutable_scan_runs();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
-      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->StopScanRun(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::StopScanRunRequest const&
-                   request) { return stub_->StopScanRun(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest
-                      request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<WebSecurityScannerRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListCrawledUrls(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::websecurityscanner::v1::
-                         ListCrawledUrlsRequest const& request) {
-                return stub->ListCrawledUrls(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse r) {
-          std::vector<google::cloud::websecurityscanner::v1::CrawledUrl> result(
-              r.crawled_urls().size());
-          auto& messages = *r.mutable_crawled_urls();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
-      google::cloud::websecurityscanner::v1::GetFindingRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetFinding(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::GetFindingRequest const&
-                   request) { return stub_->GetFinding(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::websecurityscanner::v1::Finding> ListFindings(
-      google::cloud::websecurityscanner::v1::ListFindingsRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<WebSecurityScannerRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListFindings(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::websecurityscanner::v1::Finding>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::websecurityscanner::v1::ListFindingsRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::websecurityscanner::v1::
-                         ListFindingsRequest const& request) {
-                return stub->ListFindings(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::websecurityscanner::v1::ListFindingsResponse r) {
-          std::vector<google::cloud::websecurityscanner::v1::Finding> result(
-              r.findings().size());
-          auto& messages = *r.mutable_findings();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-  ListFindingTypeStats(
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ListFindingTypeStats(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::websecurityscanner::v1::
-                   ListFindingTypeStatsRequest const& request) {
-          return stub_->ListFindingTypeStats(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<WebSecurityScannerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<WebSecurityScannerRetryPolicyOption>()) {
-      return options.get<WebSecurityScannerRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<WebSecurityScannerBackoffPolicyOption>()) {
-      return options.get<WebSecurityScannerBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<WebSecurityScannerConnectionIdempotencyPolicyOption>()) {
-      return options.get<WebSecurityScannerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub_;
-  std::unique_ptr<WebSecurityScannerRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -468,7 +159,8 @@ std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = websecurityscanner_internal::CreateDefaultWebSecurityScannerStub(
       background->cq(), options);
-  return std::make_shared<WebSecurityScannerConnectionImpl>(
+  return std::make_shared<
+      websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -486,7 +178,8 @@ std::shared_ptr<websecurityscanner::WebSecurityScannerConnection>
 MakeWebSecurityScannerConnection(std::shared_ptr<WebSecurityScannerStub> stub,
                                  Options options) {
   options = WebSecurityScannerDefaultOptions(std::move(options));
-  return std::make_shared<websecurityscanner::WebSecurityScannerConnectionImpl>(
+  return std::make_shared<
+      websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

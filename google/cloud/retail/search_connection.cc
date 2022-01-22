@@ -17,6 +17,7 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/search_connection.h"
+#include "google/cloud/retail/internal/search_connection_impl.h"
 #include "google/cloud/retail/internal/search_option_defaults.h"
 #include "google/cloud/retail/internal/search_stub_factory.h"
 #include "google/cloud/retail/search_options.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -49,91 +49,6 @@ SearchServiceConnection::Search(
       });
 }
 
-namespace {
-class SearchServiceConnectionImpl : public SearchServiceConnection {
- public:
-  SearchServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::SearchServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<SearchServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<SearchServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<SearchServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~SearchServiceConnectionImpl() override = default;
-
-  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
-      google::cloud::retail::v2::SearchRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<SearchServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->Search(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::cloud::retail::v2::SearchRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::retail::v2::SearchRequest const& request) {
-                return stub->Search(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::retail::v2::SearchResponse r) {
-          std::vector<google::cloud::retail::v2::SearchResponse::SearchResult>
-              result(r.results().size());
-          auto& messages = *r.mutable_results();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
- private:
-  std::unique_ptr<SearchServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<SearchServiceRetryPolicyOption>()) {
-      return options.get<SearchServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<SearchServiceBackoffPolicyOption>()) {
-      return options.get<SearchServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<SearchServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<SearchServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::SearchServiceStub> stub_;
-  std::unique_ptr<SearchServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<SearchServiceConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -143,7 +58,7 @@ std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultSearchServiceStub(background->cq(),
                                                               options);
-  return std::make_shared<SearchServiceConnectionImpl>(
+  return std::make_shared<retail_internal::SearchServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -160,7 +75,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<retail::SearchServiceConnection> MakeSearchServiceConnection(
     std::shared_ptr<SearchServiceStub> stub, Options options) {
   options = SearchServiceDefaultOptions(std::move(options));
-  return std::make_shared<retail::SearchServiceConnectionImpl>(
+  return std::make_shared<retail_internal::SearchServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

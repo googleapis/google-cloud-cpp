@@ -18,13 +18,13 @@
 
 #include "google/cloud/artifactregistry/artifact_registry_connection.h"
 #include "google/cloud/artifactregistry/artifact_registry_options.h"
+#include "google/cloud/artifactregistry/internal/artifact_registry_connection_impl.h"
 #include "google/cloud/artifactregistry/internal/artifact_registry_option_defaults.h"
 #include "google/cloud/artifactregistry/internal/artifact_registry_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -76,144 +76,6 @@ ArtifactRegistryConnection::GetRepository(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class ArtifactRegistryConnectionImpl : public ArtifactRegistryConnection {
- public:
-  ArtifactRegistryConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<ArtifactRegistryRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<ArtifactRegistryBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<ArtifactRegistryConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~ArtifactRegistryConnectionImpl() override = default;
-
-  StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-  ListDockerImages(
-      google::devtools::artifactregistry::v1::ListDockerImagesRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<ArtifactRegistryRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListDockerImages(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::devtools::artifactregistry::v1::DockerImage>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::devtools::artifactregistry::v1::
-                            ListDockerImagesRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::devtools::artifactregistry::v1::
-                         ListDockerImagesRequest const& request) {
-                return stub->ListDockerImages(context, request);
-              },
-              r, function_name);
-        },
-        [](google::devtools::artifactregistry::v1::ListDockerImagesResponse r) {
-          std::vector<google::devtools::artifactregistry::v1::DockerImage>
-              result(r.docker_images().size());
-          auto& messages = *r.mutable_docker_images();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StreamRange<google::devtools::artifactregistry::v1::Repository>
-  ListRepositories(
-      google::devtools::artifactregistry::v1::ListRepositoriesRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<ArtifactRegistryRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListRepositories(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::devtools::artifactregistry::v1::Repository>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency,
-         function_name](google::devtools::artifactregistry::v1::
-                            ListRepositoriesRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::devtools::artifactregistry::v1::
-                         ListRepositoriesRequest const& request) {
-                return stub->ListRepositories(context, request);
-              },
-              r, function_name);
-        },
-        [](google::devtools::artifactregistry::v1::ListRepositoriesResponse r) {
-          std::vector<google::devtools::artifactregistry::v1::Repository>
-              result(r.repositories().size());
-          auto& messages = *r.mutable_repositories();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
-      google::devtools::artifactregistry::v1::GetRepositoryRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetRepository(request),
-        [this](
-            grpc::ClientContext& context,
-            google::devtools::artifactregistry::v1::GetRepositoryRequest const&
-                request) { return stub_->GetRepository(context, request); },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<ArtifactRegistryRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ArtifactRegistryRetryPolicyOption>()) {
-      return options.get<ArtifactRegistryRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ArtifactRegistryBackoffPolicyOption>()) {
-      return options.get<ArtifactRegistryBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
-      return options.get<ArtifactRegistryConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub_;
-  std::unique_ptr<ArtifactRegistryRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -224,7 +86,8 @@ std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = artifactregistry_internal::CreateDefaultArtifactRegistryStub(
       background->cq(), options);
-  return std::make_shared<ArtifactRegistryConnectionImpl>(
+  return std::make_shared<
+      artifactregistry_internal::ArtifactRegistryConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -242,7 +105,8 @@ std::shared_ptr<artifactregistry::ArtifactRegistryConnection>
 MakeArtifactRegistryConnection(std::shared_ptr<ArtifactRegistryStub> stub,
                                Options options) {
   options = ArtifactRegistryDefaultOptions(std::move(options));
-  return std::make_shared<artifactregistry::ArtifactRegistryConnectionImpl>(
+  return std::make_shared<
+      artifactregistry_internal::ArtifactRegistryConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
