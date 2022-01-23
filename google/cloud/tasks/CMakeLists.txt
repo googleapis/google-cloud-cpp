@@ -106,11 +106,10 @@ add_library(google_cloud_cpp_tasks_mocks INTERFACE)
 target_sources(google_cloud_cpp_tasks_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_tasks_mocks
-    INTERFACE google-cloud-cpp::experimental-tasks GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_tasks_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-tasks_mocks)
+    INTERFACE google-cloud-cpp::tasks GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_tasks_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::tasks_mocks)
 target_include_directories(
     google_cloud_cpp_tasks_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
