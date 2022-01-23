@@ -89,11 +89,6 @@ target_compile_options(google_cloud_cpp_workflows
 add_library(google-cloud-cpp::experimental-workflows ALIAS
             google_cloud_cpp_workflows)
 
-# To avoid maintaining the list of files for the library, export them to a .bzl
-# file.
-include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_workflows YEAR "2021")
-
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
@@ -116,7 +111,6 @@ target_link_libraries(
 set_target_properties(
     google_cloud_cpp_workflows_mocks
     PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-workflows_mocks)
-create_bazel_config(google_cloud_cpp_workflows_mocks YEAR "2022")
 target_include_directories(
     google_cloud_cpp_workflows_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -171,7 +165,7 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Workflow Executions API C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to access Workflow Executions API.")
+    "Provides C++ APIs to use the Workflow Executions API.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_workflows")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common" " google_cloud_cpp_workflows_protos")

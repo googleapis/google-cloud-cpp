@@ -44,13 +44,13 @@ google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_websecurityscanner_protos
     # cmake-format: sort
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/crawled_url.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/finding_addon.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/finding.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/finding_addon.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/finding_type_stats.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/scan_config_error.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/scan_config.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/scan_run_error_trace.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/scan_config_error.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/scan_run.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/scan_run_error_trace.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/scan_run_warning_trace.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/websecurityscanner/v1/web_security_scanner.proto
     PROTO_PATH_DIRECTORIES
@@ -93,11 +93,6 @@ target_compile_options(google_cloud_cpp_websecurityscanner
 add_library(google-cloud-cpp::experimental-websecurityscanner ALIAS
             google_cloud_cpp_websecurityscanner)
 
-# To avoid maintaining the list of files for the library, export them to a .bzl
-# file.
-include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_websecurityscanner YEAR "2021")
-
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
@@ -122,7 +117,6 @@ set_target_properties(
     google_cloud_cpp_websecurityscanner_mocks
     PROPERTIES EXPORT_NAME
                google-cloud-cpp::experimental-websecurityscanner_mocks)
-create_bazel_config(google_cloud_cpp_websecurityscanner_mocks YEAR "2022")
 target_include_directories(
     google_cloud_cpp_websecurityscanner_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -181,7 +175,7 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Web Security Scanner API C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to access Web Security Scanner API.")
+    "Provides C++ APIs to use the Web Security Scanner API.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_websecurityscanner")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
               " google_cloud_cpp_common"
