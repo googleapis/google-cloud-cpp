@@ -156,6 +156,21 @@ Options DefaultOptions(Options opts) {
   return opts;
 }
 
+Options DefaultDataOptions(Options opts) {
+  opts = DefaultOptions(std::move(opts));
+  return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
+}
+
+Options DefaultInstanceAdminOptions(Options opts) {
+  opts = DefaultOptions(std::move(opts));
+  return opts.set<EndpointOption>(opts.get<InstanceAdminEndpointOption>());
+}
+
+Options DefaultTableAdminOptions(Options opts) {
+  opts = DefaultOptions(std::move(opts));
+  return opts.set<EndpointOption>(opts.get<AdminEndpointOption>());
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

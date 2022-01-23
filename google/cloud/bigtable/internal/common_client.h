@@ -110,11 +110,9 @@ void ScheduleChannelRefresh(
  * The class exposes the channels because they are needed for clients that
  * use more than one type of Stub.
  *
- * @tparam Traits encapsulates variations between the clients.  Currently, which
- *   `*_endpoint()` member function is used.
  * @tparam Interface the gRPC object returned by `Stub()`.
  */
-template <typename Traits, typename Interface>
+template <typename Interface>
 class CommonClient {
  public:
   //@{
@@ -216,7 +214,7 @@ class CommonClient {
     auto args = google::cloud::internal::MakeChannelArguments(opts_);
     args.SetInt(GRPC_ARG_CHANNEL_ID, idx);
     auto res = grpc::CreateCustomChannel(
-        Traits::Endpoint(opts_), opts_.get<GrpcCredentialOption>(), args);
+        opts_.get<EndpointOption>(), opts_.get<GrpcCredentialOption>(), args);
     if (opts_.get<MaxConnectionRefreshOption>().count() == 0) {
       return res;
     }

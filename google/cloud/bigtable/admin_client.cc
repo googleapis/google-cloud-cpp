@@ -394,21 +394,15 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
     return impl_.BackgroundThreadsFactory();
   }
 
-  struct Traits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<AdminEndpointOption>();
-    }
-  };
-
   std::string project_;
-  internal::CommonClient<Traits, btadmin::BigtableTableAdmin> impl_;
+  internal::CommonClient<btadmin::BigtableTableAdmin> impl_;
 };
 
 }  // namespace
 
 std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
                                              Options options) {
-  options = internal::DefaultOptions(std::move(options));
+  options = internal::DefaultTableAdminOptions(std::move(options));
   bool tracing_enabled = google::cloud::internal::Contains(
       options.get<TracingComponentsOption>(), "rpc");
   auto tracing_options = options.get<GrpcTracingOptionsOption>();

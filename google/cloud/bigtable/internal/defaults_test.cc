@@ -118,6 +118,36 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   EXPECT_THAT(*s, HasSubstr("test-prefix"));
 }
 
+TEST(OptionsTest, DefaultDataOptions) {
+  auto options =
+      Options{}
+          .set<DataEndpointOption>("data.googleapis.com")
+          .set<AdminEndpointOption>("tableadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultDataOptions(std::move(options));
+  EXPECT_EQ("data.googleapis.com", options.get<EndpointOption>());
+}
+
+TEST(OptionsTest, DefaultInstanceAdminOptions) {
+  auto options =
+      Options{}
+          .set<DataEndpointOption>("data.googleapis.com")
+          .set<AdminEndpointOption>("tableadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultInstanceAdminOptions(std::move(options));
+  EXPECT_EQ("instanceadmin.googleapis.com", options.get<EndpointOption>());
+}
+
+TEST(OptionsTest, DefaultTableAdminOptions) {
+  auto options =
+      Options{}
+          .set<DataEndpointOption>("data.googleapis.com")
+          .set<AdminEndpointOption>("tableadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultTableAdminOptions(std::move(options));
+  EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
+}
+
 TEST(EndpointEnvTest, EmulatorEnvOnly) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
 
