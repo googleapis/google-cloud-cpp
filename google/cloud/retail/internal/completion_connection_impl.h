@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_COMPLETION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_COMPLETION_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/retail/completion_connection.h"
 #include "google/cloud/retail/completion_connection_idempotency_policy.h"
 #include "google/cloud/retail/completion_options.h"
 #include "google/cloud/retail/internal/completion_retry_traits.h"
 #include "google/cloud/retail/internal/completion_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -45,15 +45,17 @@ class CompletionServiceConnectionImpl
   ~CompletionServiceConnectionImpl() override = default;
 
   CompletionServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_internal::CompletionServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<retail_internal::CompletionServiceStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
-  CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
+      google::cloud::retail::v2::CompleteQueryRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-  ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
+  ImportCompletionData(
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
+      override;
 
  private:
   std::unique_ptr<retail::CompletionServiceRetryPolicy> retry_policy() {
@@ -67,29 +69,37 @@ class CompletionServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<retail::CompletionServiceBackoffPolicyOption>()) {
-      return options.get<retail::CompletionServiceBackoffPolicyOption>()->clone();
+      return options.get<retail::CompletionServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::CompletionServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            retail::CompletionServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::CompletionServiceStub> stub_;
-  std::unique_ptr<retail::CompletionServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<retail::CompletionServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<retail::CompletionServicePollingPolicyOption>()) {
-      return options.get<retail::CompletionServicePollingPolicyOption>()->clone();
+      return options.get<retail::CompletionServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

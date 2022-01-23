@@ -17,11 +17,11 @@
 // source: google/cloud/webrisk/v1/webrisk.proto
 
 #include "google/cloud/webrisk/internal/web_risk_connection_impl.h"
+#include "google/cloud/webrisk/internal/web_risk_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/webrisk/internal/web_risk_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,53 +33,65 @@ WebRiskServiceConnectionImpl::WebRiskServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-WebRiskServiceConnectionImpl::ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
+WebRiskServiceConnectionImpl::ComputeThreatListDiff(
+    google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ComputeThreatListDiff(request),
       [this](grpc::ClientContext& context,
-          google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
+             google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
+                 request) {
         return stub_->ComputeThreatListDiff(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
-WebRiskServiceConnectionImpl::SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request) {
+WebRiskServiceConnectionImpl::SearchUris(
+    google::cloud::webrisk::v1::SearchUrisRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SearchUris(request),
       [this](grpc::ClientContext& context,
-          google::cloud::webrisk::v1::SearchUrisRequest const& request) {
+             google::cloud::webrisk::v1::SearchUrisRequest const& request) {
         return stub_->SearchUris(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-WebRiskServiceConnectionImpl::SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request) {
+WebRiskServiceConnectionImpl::SearchHashes(
+    google::cloud::webrisk::v1::SearchHashesRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SearchHashes(request),
       [this](grpc::ClientContext& context,
-          google::cloud::webrisk::v1::SearchHashesRequest const& request) {
+             google::cloud::webrisk::v1::SearchHashesRequest const& request) {
         return stub_->SearchHashes(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
-WebRiskServiceConnectionImpl::CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
+WebRiskServiceConnectionImpl::CreateSubmission(
+    google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateSubmission(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
         return stub_->CreateSubmission(context, request);
       },

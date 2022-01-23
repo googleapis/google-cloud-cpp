@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_FOLDERS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_FOLDERS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/resourcemanager/folders_connection.h"
 #include "google/cloud/resourcemanager/folders_connection_idempotency_policy.h"
 #include "google/cloud/resourcemanager/folders_options.h"
 #include "google/cloud/resourcemanager/internal/folders_retry_traits.h"
 #include "google/cloud/resourcemanager/internal/folders_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,48 +40,54 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FoldersConnectionImpl
-    : public resourcemanager::FoldersConnection {
+class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
  public:
   ~FoldersConnectionImpl() override = default;
 
   FoldersConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<resourcemanager_internal::FoldersStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<resourcemanager_internal::FoldersStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::resourcemanager::v3::Folder>
-  GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
+      google::cloud::resourcemanager::v3::GetFolderRequest const& request)
+      override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Folder>
-  ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
+      google::cloud::resourcemanager::v3::ListFoldersRequest request) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Folder>
-  SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
+      google::cloud::resourcemanager::v3::SearchFoldersRequest request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<resourcemanager::FoldersRetryPolicy> retry_policy() {
@@ -95,29 +101,37 @@ class FoldersConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<resourcemanager::FoldersBackoffPolicyOption>()) {
-      return options.get<resourcemanager::FoldersBackoffPolicyOption>()->clone();
+      return options.get<resourcemanager::FoldersBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()) {
-      return options.get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::FoldersStub> stub_;
-  std::unique_ptr<resourcemanager::FoldersRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<resourcemanager::FoldersRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<resourcemanager::FoldersPollingPolicyOption>()) {
-      return options.get<resourcemanager::FoldersPollingPolicyOption>()->clone();
+      return options.get<resourcemanager::FoldersPollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

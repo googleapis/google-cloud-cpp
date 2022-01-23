@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPANY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPANY_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
 #include "google/cloud/talent/company_connection.h"
 #include "google/cloud/talent/company_connection_idempotency_policy.h"
 #include "google/cloud/talent/company_options.h"
 #include "google/cloud/talent/internal/company_retry_traits.h"
 #include "google/cloud/talent/internal/company_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -37,30 +37,29 @@ namespace cloud {
 namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CompanyServiceConnectionImpl
-    : public talent::CompanyServiceConnection {
+class CompanyServiceConnectionImpl : public talent::CompanyServiceConnection {
  public:
   ~CompanyServiceConnectionImpl() override = default;
 
   CompanyServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::CompanyServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<talent_internal::CompanyServiceStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::talent::v4::Company>
-  CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> CreateCompany(
+      google::cloud::talent::v4::CreateCompanyRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Company>
-  GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> GetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Company>
-  UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
+      google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
 
-  Status
-  DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
+  Status DeleteCompany(
+      google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
 
-  StreamRange<google::cloud::talent::v4::Company>
-  ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request) override;
+  StreamRange<google::cloud::talent::v4::Company> ListCompanies(
+      google::cloud::talent::v4::ListCompaniesRequest request) override;
 
  private:
   std::unique_ptr<talent::CompanyServiceRetryPolicy> retry_policy() {
@@ -79,19 +78,25 @@ class CompanyServiceConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<talent::CompanyServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<talent::CompanyServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::CompanyServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<talent::CompanyServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<talent::CompanyServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<talent::CompanyServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::CompanyServiceStub> stub_;
-  std::unique_ptr<talent::CompanyServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<talent::CompanyServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<talent::CompanyServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<talent::CompanyServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

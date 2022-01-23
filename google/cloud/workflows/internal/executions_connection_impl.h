@@ -19,17 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_INTERNAL_EXECUTIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_INTERNAL_EXECUTIONS_CONNECTION_IMPL_H
 
+#include "google/cloud/workflows/executions_connection.h"
+#include "google/cloud/workflows/executions_connection_idempotency_policy.h"
+#include "google/cloud/workflows/executions_options.h"
+#include "google/cloud/workflows/internal/executions_retry_traits.h"
+#include "google/cloud/workflows/internal/executions_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/workflows/executions_connection.h"
-#include "google/cloud/workflows/executions_connection_idempotency_policy.h"
-#include "google/cloud/workflows/executions_options.h"
-#include "google/cloud/workflows/internal/executions_retry_traits.h"
-#include "google/cloud/workflows/internal/executions_stub.h"
 #include <memory>
 
 namespace google {
@@ -37,27 +37,30 @@ namespace cloud {
 namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ExecutionsConnectionImpl
-    : public workflows::ExecutionsConnection {
+class ExecutionsConnectionImpl : public workflows::ExecutionsConnection {
  public:
   ~ExecutionsConnectionImpl() override = default;
 
   ExecutionsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<workflows_internal::ExecutionsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<workflows_internal::ExecutionsStub> stub,
+      Options const& options);
 
   StreamRange<google::cloud::workflows::executions::v1::Execution>
-  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request) override;
+  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest
+                     request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution>
-  CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution>
-  GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
+      google::cloud::workflows::executions::v1::GetExecutionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution>
-  CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+          request) override;
 
  private:
   std::unique_ptr<workflows::ExecutionsRetryPolicy> retry_policy() {
@@ -76,19 +79,24 @@ class ExecutionsConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<workflows::ExecutionsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<workflows::ExecutionsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<workflows::ExecutionsConnectionIdempotencyPolicyOption>()) {
-      return options.get<workflows::ExecutionsConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<workflows::ExecutionsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<workflows_internal::ExecutionsStub> stub_;
-  std::unique_ptr<workflows::ExecutionsRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<workflows::ExecutionsRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<workflows::ExecutionsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<workflows::ExecutionsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

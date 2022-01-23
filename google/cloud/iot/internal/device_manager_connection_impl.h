@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iot/device_manager_connection.h"
 #include "google/cloud/iot/device_manager_connection_idempotency_policy.h"
 #include "google/cloud/iot/device_manager_options.h"
 #include "google/cloud/iot/internal/device_manager_retry_traits.h"
 #include "google/cloud/iot/internal/device_manager_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,72 +37,81 @@ namespace cloud {
 namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DeviceManagerConnectionImpl
-    : public iot::DeviceManagerConnection {
+class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
  public:
   ~DeviceManagerConnectionImpl() override = default;
 
   DeviceManagerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iot_internal::DeviceManagerStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<iot_internal::DeviceManagerStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::iot::v1::DeviceRegistry>
-  CreateDeviceRegistry(google::cloud::iot::v1::CreateDeviceRegistryRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
+      google::cloud::iot::v1::CreateDeviceRegistryRequest const& request)
+      override;
 
-  StatusOr<google::cloud::iot::v1::DeviceRegistry>
-  GetDeviceRegistry(google::cloud::iot::v1::GetDeviceRegistryRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::DeviceRegistry> GetDeviceRegistry(
+      google::cloud::iot::v1::GetDeviceRegistryRequest const& request) override;
 
-  StatusOr<google::cloud::iot::v1::DeviceRegistry>
-  UpdateDeviceRegistry(google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::DeviceRegistry> UpdateDeviceRegistry(
+      google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request)
+      override;
 
-  Status
-  DeleteDeviceRegistry(google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request) override;
+  Status DeleteDeviceRegistry(
+      google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request)
+      override;
 
-  StreamRange<google::cloud::iot::v1::DeviceRegistry>
-  ListDeviceRegistries(google::cloud::iot::v1::ListDeviceRegistriesRequest request) override;
+  StreamRange<google::cloud::iot::v1::DeviceRegistry> ListDeviceRegistries(
+      google::cloud::iot::v1::ListDeviceRegistriesRequest request) override;
 
-  StatusOr<google::cloud::iot::v1::Device>
-  CreateDevice(google::cloud::iot::v1::CreateDeviceRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::Device> CreateDevice(
+      google::cloud::iot::v1::CreateDeviceRequest const& request) override;
 
-  StatusOr<google::cloud::iot::v1::Device>
-  GetDevice(google::cloud::iot::v1::GetDeviceRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::Device> GetDevice(
+      google::cloud::iot::v1::GetDeviceRequest const& request) override;
 
-  StatusOr<google::cloud::iot::v1::Device>
-  UpdateDevice(google::cloud::iot::v1::UpdateDeviceRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::Device> UpdateDevice(
+      google::cloud::iot::v1::UpdateDeviceRequest const& request) override;
 
-  Status
-  DeleteDevice(google::cloud::iot::v1::DeleteDeviceRequest const& request) override;
+  Status DeleteDevice(
+      google::cloud::iot::v1::DeleteDeviceRequest const& request) override;
 
-  StreamRange<google::cloud::iot::v1::Device>
-  ListDevices(google::cloud::iot::v1::ListDevicesRequest request) override;
+  StreamRange<google::cloud::iot::v1::Device> ListDevices(
+      google::cloud::iot::v1::ListDevicesRequest request) override;
 
-  StatusOr<google::cloud::iot::v1::DeviceConfig>
-  ModifyCloudToDeviceConfig(google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::DeviceConfig> ModifyCloudToDeviceConfig(
+      google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
-  ListDeviceConfigVersions(google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request) override;
+  ListDeviceConfigVersions(
+      google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse>
-  ListDeviceStates(google::cloud::iot::v1::ListDeviceStatesRequest const& request) override;
+  StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse> ListDeviceStates(
+      google::cloud::iot::v1::ListDeviceStatesRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
-  SendCommandToDevice(google::cloud::iot::v1::SendCommandToDeviceRequest const& request) override;
+  SendCommandToDevice(google::cloud::iot::v1::SendCommandToDeviceRequest const&
+                          request) override;
 
   StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
-  BindDeviceToGateway(google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) override;
+  BindDeviceToGateway(google::cloud::iot::v1::BindDeviceToGatewayRequest const&
+                          request) override;
 
   StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
-  UnbindDeviceFromGateway(google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request) override;
+  UnbindDeviceFromGateway(
+      google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request)
+      override;
 
  private:
   std::unique_ptr<iot::DeviceManagerRetryPolicy> retry_policy() {
@@ -121,10 +130,12 @@ class DeviceManagerConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<iot::DeviceManagerConnectionIdempotencyPolicyOption>()) {
-      return options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()->clone();
+      return options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -133,7 +144,8 @@ class DeviceManagerConnectionImpl
   std::shared_ptr<iot_internal::DeviceManagerStub> stub_;
   std::unique_ptr<iot::DeviceManagerRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

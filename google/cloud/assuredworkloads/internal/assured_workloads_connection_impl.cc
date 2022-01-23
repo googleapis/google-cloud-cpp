@@ -33,98 +33,124 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub> stub,
+    std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub>
+        stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<assuredworkloads::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options
+              .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
+              ->clone()),
+      backoff_policy_prototype_(
+          options
+              .get<assuredworkloads::
+                       AssuredWorkloadsServiceBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<
+                  assuredworkloads::
+                      AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options
+              .get<assuredworkloads::
+                       AssuredWorkloadsServicePollingPolicyOption>()
+              ->clone()) {}
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-AssuredWorkloadsServiceConnectionImpl::CreateWorkload(google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::assuredworkloads::v1::Workload>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-     return stub->AsyncCreateWorkload(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::assuredworkloads::v1::Workload>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->CreateWorkload(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::assuredworkloads::v1::Workload>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+                 request) {
+        return stub->AsyncCreateWorkload(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::assuredworkloads::v1::Workload>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateWorkload(request), polling_policy(),
+      __func__);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceConnectionImpl::UpdateWorkload(google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
+AssuredWorkloadsServiceConnectionImpl::UpdateWorkload(
+    google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateWorkload(request),
       [this](grpc::ClientContext& context,
-          google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
-        return stub_->UpdateWorkload(context, request);
-      },
+             google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
+                 request) { return stub_->UpdateWorkload(context, request); },
       request, __func__);
 }
 
-Status
-AssuredWorkloadsServiceConnectionImpl::DeleteWorkload(google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
+Status AssuredWorkloadsServiceConnectionImpl::DeleteWorkload(
+    google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteWorkload(request),
       [this](grpc::ClientContext& context,
-          google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
-        return stub_->DeleteWorkload(context, request);
-      },
+             google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
+                 request) { return stub_->DeleteWorkload(context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceConnectionImpl::GetWorkload(google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
+AssuredWorkloadsServiceConnectionImpl::GetWorkload(
+    google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetWorkload(request),
       [this](grpc::ClientContext& context,
-          google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
-        return stub_->GetWorkload(context, request);
-      },
+             google::cloud::assuredworkloads::v1::GetWorkloadRequest const&
+                 request) { return stub_->GetWorkload(context, request); },
       request, __func__);
 }
 
 StreamRange<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceConnectionImpl::ListWorkloads(google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
+AssuredWorkloadsServiceConnectionImpl::ListWorkloads(
+    google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      assuredworkloads::AssuredWorkloadsServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListWorkloads(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::assuredworkloads::v1::Workload>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::assuredworkloads::v1::Workload>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
-              return stub->ListWorkloads(context, request);
-            },
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&
+                    request) { return stub->ListWorkloads(context, request); },
             r, function_name);
       },
       [](google::cloud::assuredworkloads::v1::ListWorkloadsResponse r) {
-        std::vector<google::cloud::assuredworkloads::v1::Workload> result(r.workloads().size());
+        std::vector<google::cloud::assuredworkloads::v1::Workload> result(
+            r.workloads().size());
         auto& messages = *r.mutable_workloads();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

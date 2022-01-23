@@ -17,12 +17,12 @@
 // source: google/cloud/retail/v2/completion_service.proto
 
 #include "google/cloud/retail/internal/completion_connection_impl.h"
+#include "google/cloud/retail/internal/completion_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/retail/internal/completion_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -34,49 +34,61 @@ CompletionServiceConnectionImpl::CompletionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_internal::CompletionServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<retail::CompletionServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<retail::CompletionServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<retail::CompletionServicePollingPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<retail::CompletionServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<retail::CompletionServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options.get<retail::CompletionServicePollingPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
-CompletionServiceConnectionImpl::CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request) {
+CompletionServiceConnectionImpl::CompleteQuery(
+    google::cloud::retail::v2::CompleteQueryRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CompleteQuery(request),
       [this](grpc::ClientContext& context,
-          google::cloud::retail::v2::CompleteQueryRequest const& request) {
+             google::cloud::retail::v2::CompleteQueryRequest const& request) {
         return stub_->CompleteQuery(context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-CompletionServiceConnectionImpl::ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+CompletionServiceConnectionImpl::ImportCompletionData(
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::ImportCompletionDataResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
-     return stub->AsyncImportCompletionData(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::ImportCompletionDataResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->ImportCompletionData(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::ImportCompletionDataResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::ImportCompletionDataRequest const&
+                 request) {
+        return stub->AsyncImportCompletionData(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::ImportCompletionDataResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ImportCompletionData(request), polling_policy(),
+      __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_INTERNAL_SECRET_MANAGER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_INTERNAL_SECRET_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/secretmanager/internal/secret_manager_retry_traits.h"
 #include "google/cloud/secretmanager/internal/secret_manager_stub.h"
 #include "google/cloud/secretmanager/secret_manager_connection.h"
 #include "google/cloud/secretmanager/secret_manager_connection_idempotency_policy.h"
 #include "google/cloud/secretmanager/secret_manager_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,60 +43,77 @@ class SecretManagerServiceConnectionImpl
   ~SecretManagerServiceConnectionImpl() override = default;
 
   SecretManagerServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<secretmanager_internal::SecretManagerServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<secretmanager_internal::SecretManagerServiceStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::secretmanager::v1::Secret>
-  ListSecrets(google::cloud::secretmanager::v1::ListSecretsRequest request) override;
+  StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
+      google::cloud::secretmanager::v1::ListSecretsRequest request) override;
 
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  CreateSecret(google::cloud::secretmanager::v1::CreateSecretRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
+      google::cloud::secretmanager::v1::CreateSecretRequest const& request)
+      override;
 
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  AddSecretVersion(google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
+      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  GetSecret(google::cloud::secretmanager::v1::GetSecretRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
+      google::cloud::secretmanager::v1::GetSecretRequest const& request)
+      override;
 
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  UpdateSecret(google::cloud::secretmanager::v1::UpdateSecretRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
+      google::cloud::secretmanager::v1::UpdateSecretRequest const& request)
+      override;
 
-  Status
-  DeleteSecret(google::cloud::secretmanager::v1::DeleteSecretRequest const& request) override;
+  Status DeleteSecret(
+      google::cloud::secretmanager::v1::DeleteSecretRequest const& request)
+      override;
 
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-  ListSecretVersions(google::cloud::secretmanager::v1::ListSecretVersionsRequest request) override;
+  ListSecretVersions(google::cloud::secretmanager::v1::ListSecretVersionsRequest
+                         request) override;
 
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  GetSecretVersion(google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
+      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request)
+      override;
 
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-  AccessSecretVersion(google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) override;
+  AccessSecretVersion(
+      google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
+          request) override;
 
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DisableSecretVersion(google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) override;
+  DisableSecretVersion(
+      google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
+      google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
+          request) override;
 
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  EnableSecretVersion(google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) override;
+  DestroySecretVersion(
+      google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DestroySecretVersion(google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
-
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<secretmanager::SecretManagerServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<secretmanager::SecretManagerServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<secretmanager::SecretManagerServiceRetryPolicyOption>()) {
-      return options.get<secretmanager::SecretManagerServiceRetryPolicyOption>()->clone();
+      return options
+          .get<secretmanager::SecretManagerServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -104,24 +121,36 @@ class SecretManagerServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<secretmanager::SecretManagerServiceBackoffPolicyOption>()) {
-      return options.get<secretmanager::SecretManagerServiceBackoffPolicyOption>()->clone();
+      return options
+          .get<secretmanager::SecretManagerServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<secretmanager::SecretManagerServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      secretmanager::SecretManagerServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<secretmanager::SecretManagerServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<secretmanager::SecretManagerServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<secretmanager::
+                     SecretManagerServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<secretmanager::
+                   SecretManagerServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<secretmanager_internal::SecretManagerServiceStub> stub_;
-  std::unique_ptr<secretmanager::SecretManagerServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<secretmanager::SecretManagerServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<secretmanager::SecretManagerServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<
+      secretmanager::SecretManagerServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

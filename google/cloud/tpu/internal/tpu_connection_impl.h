@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_INTERNAL_TPU_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_INTERNAL_TPU_CONNECTION_IMPL_H
 
+#include "google/cloud/tpu/internal/tpu_retry_traits.h"
+#include "google/cloud/tpu/internal/tpu_stub.h"
+#include "google/cloud/tpu/tpu_connection.h"
+#include "google/cloud/tpu/tpu_connection_idempotency_policy.h"
+#include "google/cloud/tpu/tpu_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -26,11 +31,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/tpu/internal/tpu_retry_traits.h"
-#include "google/cloud/tpu/internal/tpu_stub.h"
-#include "google/cloud/tpu/tpu_connection.h"
-#include "google/cloud/tpu/tpu_connection_idempotency_policy.h"
-#include "google/cloud/tpu/tpu_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,48 +40,48 @@ namespace cloud {
 namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TpuConnectionImpl
-    : public tpu::TpuConnection {
+class TpuConnectionImpl : public tpu::TpuConnection {
  public:
   ~TpuConnectionImpl() override = default;
 
   TpuConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<tpu_internal::TpuStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<tpu_internal::TpuStub> stub, Options const& options);
 
-  StreamRange<google::cloud::tpu::v1::Node>
-  ListNodes(google::cloud::tpu::v1::ListNodesRequest request) override;
+  StreamRange<google::cloud::tpu::v1::Node> ListNodes(
+      google::cloud::tpu::v1::ListNodesRequest request) override;
 
-  StatusOr<google::cloud::tpu::v1::Node>
-  GetNode(google::cloud::tpu::v1::GetNodeRequest const& request) override;
+  StatusOr<google::cloud::tpu::v1::Node> GetNode(
+      google::cloud::tpu::v1::GetNodeRequest const& request) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>>
-  CreateNode(google::cloud::tpu::v1::CreateNodeRequest const& request) override;
+  future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
+      google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>>
-  DeleteNode(google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
+  future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
+      google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>>
-  ReimageNode(google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
+  future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
+      google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>>
-  StopNode(google::cloud::tpu::v1::StopNodeRequest const& request) override;
+  future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
+      google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
-  future<StatusOr<google::cloud::tpu::v1::Node>>
-  StartNode(google::cloud::tpu::v1::StartNodeRequest const& request) override;
+  future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
+      google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
-  StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
-  ListTensorFlowVersions(google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) override;
+  StreamRange<google::cloud::tpu::v1::TensorFlowVersion> ListTensorFlowVersions(
+      google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) override;
 
-  StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
-  GetTensorFlowVersion(google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) override;
+  StatusOr<google::cloud::tpu::v1::TensorFlowVersion> GetTensorFlowVersion(
+      google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request)
+      override;
 
-  StreamRange<google::cloud::tpu::v1::AcceleratorType>
-  ListAcceleratorTypes(google::cloud::tpu::v1::ListAcceleratorTypesRequest request) override;
+  StreamRange<google::cloud::tpu::v1::AcceleratorType> ListAcceleratorTypes(
+      google::cloud::tpu::v1::ListAcceleratorTypesRequest request) override;
 
-  StatusOr<google::cloud::tpu::v1::AcceleratorType>
-  GetAcceleratorType(google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) override;
+  StatusOr<google::cloud::tpu::v1::AcceleratorType> GetAcceleratorType(
+      google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request)
+      override;
 
  private:
   std::unique_ptr<tpu::TpuRetryPolicy> retry_policy() {

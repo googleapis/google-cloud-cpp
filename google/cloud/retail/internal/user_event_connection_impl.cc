@@ -17,12 +17,12 @@
 // source: google/cloud/retail/v2/user_event_service.proto
 
 #include "google/cloud/retail/internal/user_event_connection_impl.h"
+#include "google/cloud/retail/internal/user_event_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/retail/internal/user_event_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -34,30 +34,41 @@ UserEventServiceConnectionImpl::UserEventServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_internal::UserEventServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<retail::UserEventServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<retail::UserEventServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<retail::UserEventServiceConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<retail::UserEventServicePollingPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<retail::UserEventServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<retail::UserEventServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<retail::UserEventServiceConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options.get<retail::UserEventServicePollingPolicyOption>()->clone()) {
+}
 
 StatusOr<google::cloud::retail::v2::UserEvent>
-UserEventServiceConnectionImpl::WriteUserEvent(google::cloud::retail::v2::WriteUserEventRequest const& request) {
+UserEventServiceConnectionImpl::WriteUserEvent(
+    google::cloud::retail::v2::WriteUserEventRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->WriteUserEvent(request),
       [this](grpc::ClientContext& context,
-          google::cloud::retail::v2::WriteUserEventRequest const& request) {
+             google::cloud::retail::v2::WriteUserEventRequest const& request) {
         return stub_->WriteUserEvent(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::api::HttpBody>
-UserEventServiceConnectionImpl::CollectUserEvent(google::cloud::retail::v2::CollectUserEventRequest const& request) {
+UserEventServiceConnectionImpl::CollectUserEvent(
+    google::cloud::retail::v2::CollectUserEventRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CollectUserEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::retail::v2::CollectUserEventRequest const& request) {
         return stub_->CollectUserEvent(context, request);
       },
@@ -65,84 +76,92 @@ UserEventServiceConnectionImpl::CollectUserEvent(google::cloud::retail::v2::Coll
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
-UserEventServiceConnectionImpl::PurgeUserEvents(google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+UserEventServiceConnectionImpl::PurgeUserEvents(
+    google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::PurgeUserEventsResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
-     return stub->AsyncPurgeUserEvents(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::PurgeUserEventsResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->PurgeUserEvents(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::PurgeUserEventsResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+        return stub->AsyncPurgeUserEvents(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::PurgeUserEventsResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PurgeUserEvents(request), polling_policy(),
+      __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
-UserEventServiceConnectionImpl::ImportUserEvents(google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+UserEventServiceConnectionImpl::ImportUserEvents(
+    google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::ImportUserEventsResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::ImportUserEventsResponse>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
           std::unique_ptr<grpc::ClientContext> context,
           google::cloud::retail::v2::ImportUserEventsRequest const& request) {
-     return stub->AsyncImportUserEvents(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::ImportUserEventsResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->ImportUserEvents(request),
-    polling_policy(), __func__);
-
+        return stub->AsyncImportUserEvents(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::ImportUserEventsResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ImportUserEvents(request), polling_policy(),
+      __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
-UserEventServiceConnectionImpl::RejoinUserEvents(google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+UserEventServiceConnectionImpl::RejoinUserEvents(
+    google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::RejoinUserEventsResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::RejoinUserEventsResponse>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
           std::unique_ptr<grpc::ClientContext> context,
           google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
-     return stub->AsyncRejoinUserEvents(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::RejoinUserEventsResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->RejoinUserEvents(request),
-    polling_policy(), __func__);
-
+        return stub->AsyncRejoinUserEvents(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::RejoinUserEventsResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RejoinUserEvents(request), polling_policy(),
+      __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,12 +17,12 @@
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
 #include "google/cloud/videointelligence/internal/video_intelligence_connection_impl.h"
+#include "google/cloud/videointelligence/internal/video_intelligence_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/videointelligence/internal/video_intelligence_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -32,39 +32,60 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VideoIntelligenceServiceConnectionImpl::VideoIntelligenceServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub> stub,
+    std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
+        stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options
+              .get<videointelligence::
+                       VideoIntelligenceServiceRetryPolicyOption>()
+              ->clone()),
+      backoff_policy_prototype_(
+          options
+              .get<videointelligence::
+                       VideoIntelligenceServiceBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<
+                  videointelligence::
+                      VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options
+              .get<videointelligence::
+                       VideoIntelligenceServicePollingPolicyOption>()
+              ->clone()) {}
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-VideoIntelligenceServiceConnectionImpl::AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::videointelligence::v1::AnnotateVideoResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-     return stub->AsyncAnnotateVideo(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::videointelligence::v1::AnnotateVideoResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->AnnotateVideo(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::videointelligence::v1::AnnotateVideoResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+                 request) {
+        return stub->AsyncAnnotateVideo(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::videointelligence::v1::AnnotateVideoResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->AnnotateVideo(request), polling_policy(), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

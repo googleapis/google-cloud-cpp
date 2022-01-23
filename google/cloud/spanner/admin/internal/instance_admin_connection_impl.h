@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/spanner/admin/instance_admin_connection.h"
 #include "google/cloud/spanner/admin/instance_admin_connection_idempotency_policy.h"
 #include "google/cloud/spanner/admin/instance_admin_options.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_retry_traits.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,45 +46,57 @@ class InstanceAdminConnectionImpl
   ~InstanceAdminConnectionImpl() override = default;
 
   InstanceAdminConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub,
+      Options const& options);
 
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-  ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) override;
+  ListInstanceConfigs(
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request)
+      override;
 
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request) override;
+  GetInstanceConfig(
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request) override;
 
-  StreamRange<google::spanner::admin::instance::v1::Instance>
-  ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request) override;
+  StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
+      google::spanner::admin::instance::v1::ListInstancesRequest request)
+      override;
 
-  StatusOr<google::spanner::admin::instance::v1::Instance>
-  GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request) override;
+  CreateInstance(
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) override;
 
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request) override;
+  UpdateInstance(
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) override;
 
-  Status
-  DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request) override;
+  Status DeleteInstance(
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<spanner_admin::InstanceAdminRetryPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminRetryPolicyOption>()->clone();
+      return options.get<spanner_admin::InstanceAdminRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -92,29 +104,37 @@ class InstanceAdminConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<spanner_admin::InstanceAdminBackoffPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminBackoffPolicyOption>()->clone();
+      return options.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub_;
-  std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<spanner_admin::InstanceAdminPollingPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminPollingPolicyOption>()->clone();
+      return options.get<spanner_admin::InstanceAdminPollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

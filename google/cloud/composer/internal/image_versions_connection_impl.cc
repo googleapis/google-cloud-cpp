@@ -17,9 +17,9 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/internal/image_versions_connection_impl.h"
+#include "google/cloud/composer/internal/image_versions_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/composer/internal/image_versions_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -34,32 +34,48 @@ ImageVersionsConnectionImpl::ImageVersionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<composer_internal::ImageVersionsStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<composer::ImageVersionsRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<composer::ImageVersionsBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<composer::ImageVersionsRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<composer::ImageVersionsBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-ImageVersionsConnectionImpl::ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request) {
+ImageVersionsConnectionImpl::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
+        request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<composer::ImageVersionsRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<composer::ImageVersionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListImageVersions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::orchestration::airflow::service::v1::ImageVersion>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::orchestration::airflow::service::v1::
+                          ListImageVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::orchestration::airflow::service::v1::
+                       ListImageVersionsRequest const& request) {
               return stub->ListImageVersions(context, request);
             },
             r, function_name);
       },
-      [](google::cloud::orchestration::airflow::service::v1::ListImageVersionsResponse r) {
-        std::vector<google::cloud::orchestration::airflow::service::v1::ImageVersion> result(r.image_versions().size());
+      [](google::cloud::orchestration::airflow::service::v1::
+             ListImageVersionsResponse r) {
+        std::vector<
+            google::cloud::orchestration::airflow::service::v1::ImageVersion>
+            result(r.image_versions().size());
         auto& messages = *r.mutable_image_versions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_BIGQUERY_READ_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_BIGQUERY_READ_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/bigquery_read_connection.h"
 #include "google/cloud/bigquery/bigquery_read_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/bigquery_read_options.h"
 #include "google/cloud/bigquery/internal/bigquery_read_retry_traits.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,24 +37,27 @@ namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BigQueryReadConnectionImpl
-    : public bigquery::BigQueryReadConnection {
+class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
  public:
   ~BigQueryReadConnectionImpl() override = default;
 
   BigQueryReadConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+          request) override;
 
-  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) override;
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-  SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) override;
+  SplitReadStream(
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+          request) override;
 
  private:
   std::unique_ptr<bigquery::BigQueryReadRetryPolicy> retry_policy() {
@@ -73,19 +76,25 @@ class BigQueryReadConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<bigquery::BigQueryReadConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<bigquery::BigQueryReadConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()) {
-      return options.get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_internal::BigQueryReadStub> stub_;
-  std::unique_ptr<bigquery::BigQueryReadRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<bigquery::BigQueryReadRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<bigquery::BigQueryReadConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<bigquery::BigQueryReadConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_INTERNAL_ENVIRONMENTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_INTERNAL_ENVIRONMENTS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/composer/environments_connection.h"
 #include "google/cloud/composer/environments_connection_idempotency_policy.h"
 #include "google/cloud/composer/environments_options.h"
 #include "google/cloud/composer/internal/environments_retry_traits.h"
 #include "google/cloud/composer/internal/environments_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,30 +40,37 @@ namespace cloud {
 namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EnvironmentsConnectionImpl
-    : public composer::EnvironmentsConnection {
+class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
  public:
   ~EnvironmentsConnectionImpl() override = default;
 
   EnvironmentsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<composer_internal::EnvironmentsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<composer_internal::EnvironmentsStub> stub,
+      Options const& options);
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request) override;
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        CreateEnvironmentRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request) override;
+  GetEnvironment(google::cloud::orchestration::airflow::service::v1::
+                     GetEnvironmentRequest const& request) override;
 
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-  ListEnvironments(google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request) override;
+  ListEnvironments(google::cloud::orchestration::airflow::service::v1::
+                       ListEnvironmentsRequest request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request) override;
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        UpdateEnvironmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        DeleteEnvironmentRequest const& request) override;
 
  private:
   std::unique_ptr<composer::EnvironmentsRetryPolicy> retry_policy() {
@@ -82,19 +89,25 @@ class EnvironmentsConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<composer::EnvironmentsConnectionIdempotencyPolicyOption>()) {
-      return options.get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<composer::EnvironmentsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<composer_internal::EnvironmentsStub> stub_;
-  std::unique_ptr<composer::EnvironmentsRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<composer::EnvironmentsRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

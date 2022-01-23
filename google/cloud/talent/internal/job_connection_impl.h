@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_JOB_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_JOB_CONNECTION_IMPL_H
 
+#include "google/cloud/talent/internal/job_retry_traits.h"
+#include "google/cloud/talent/internal/job_stub.h"
+#include "google/cloud/talent/job_connection.h"
+#include "google/cloud/talent/job_connection_idempotency_policy.h"
+#include "google/cloud/talent/job_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -26,11 +31,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/talent/internal/job_retry_traits.h"
-#include "google/cloud/talent/internal/job_stub.h"
-#include "google/cloud/talent/job_connection.h"
-#include "google/cloud/talent/job_connection_idempotency_policy.h"
-#include "google/cloud/talent/job_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,45 +40,47 @@ namespace cloud {
 namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class JobServiceConnectionImpl
-    : public talent::JobServiceConnection {
+class JobServiceConnectionImpl : public talent::JobServiceConnection {
  public:
   ~JobServiceConnectionImpl() override = default;
 
   JobServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::JobServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<talent_internal::JobServiceStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::talent::v4::Job>
-  CreateJob(google::cloud::talent::v4::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Job> CreateJob(
+      google::cloud::talent::v4::CreateJobRequest const& request) override;
 
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const& request) override;
+  BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const&
+                      request) override;
 
-  StatusOr<google::cloud::talent::v4::Job>
-  GetJob(google::cloud::talent::v4::GetJobRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Job> GetJob(
+      google::cloud::talent::v4::GetJobRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Job>
-  UpdateJob(google::cloud::talent::v4::UpdateJobRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Job> UpdateJob(
+      google::cloud::talent::v4::UpdateJobRequest const& request) override;
 
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const& request) override;
+  BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const&
+                      request) override;
 
-  Status
-  DeleteJob(google::cloud::talent::v4::DeleteJobRequest const& request) override;
+  Status DeleteJob(
+      google::cloud::talent::v4::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const& request) override;
+  BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const&
+                      request) override;
 
-  StreamRange<google::cloud::talent::v4::Job>
-  ListJobs(google::cloud::talent::v4::ListJobsRequest request) override;
+  StreamRange<google::cloud::talent::v4::Job> ListJobs(
+      google::cloud::talent::v4::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::talent::v4::SearchJobsResponse>
-  SearchJobs(google::cloud::talent::v4::SearchJobsRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
+      google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::SearchJobsResponse>
-  SearchJobsForAlert(google::cloud::talent::v4::SearchJobsRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
+      google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
  private:
   std::unique_ptr<talent::JobServiceRetryPolicy> retry_policy() {
@@ -97,10 +99,12 @@ class JobServiceConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<talent::JobServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<talent::JobServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<talent::JobServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<talent::JobServiceConnectionIdempotencyPolicyOption>()->clone();
+      return options.get<talent::JobServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -109,7 +113,8 @@ class JobServiceConnectionImpl
   std::shared_ptr<talent_internal::JobServiceStub> stub_;
   std::unique_ptr<talent::JobServiceRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<talent::JobServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<talent::JobServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

@@ -40,30 +40,29 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VersionsConnectionImpl
-    : public appengine::VersionsConnection {
+class VersionsConnectionImpl : public appengine::VersionsConnection {
  public:
   ~VersionsConnectionImpl() override = default;
 
   VersionsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::VersionsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_internal::VersionsStub> stub,
+      Options const& options);
 
-  StreamRange<google::appengine::v1::Version>
-  ListVersions(google::appengine::v1::ListVersionsRequest request) override;
+  StreamRange<google::appengine::v1::Version> ListVersions(
+      google::appengine::v1::ListVersionsRequest request) override;
 
-  StatusOr<google::appengine::v1::Version>
-  GetVersion(google::appengine::v1::GetVersionRequest const& request) override;
+  StatusOr<google::appengine::v1::Version> GetVersion(
+      google::appengine::v1::GetVersionRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Version>>
-  CreateVersion(google::appengine::v1::CreateVersionRequest const& request) override;
+  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+      google::appengine::v1::CreateVersionRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Version>>
-  UpdateVersion(google::appengine::v1::UpdateVersionRequest const& request) override;
+  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+      google::appengine::v1::UpdateVersionRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request) override;
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+      google::appengine::v1::DeleteVersionRequest const& request) override;
 
  private:
   std::unique_ptr<appengine::VersionsRetryPolicy> retry_policy() {
@@ -82,10 +81,13 @@ class VersionsConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::VersionsConnectionIdempotencyPolicyOption>()) {
-      return options.get<appengine::VersionsConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<appengine::VersionsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -94,7 +96,8 @@ class VersionsConnectionImpl
   std::shared_ptr<appengine_internal::VersionsStub> stub_;
   std::unique_ptr<appengine::VersionsRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

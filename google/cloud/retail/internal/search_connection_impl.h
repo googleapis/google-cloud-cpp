@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_SEARCH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_SEARCH_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/retail/internal/search_retry_traits.h"
 #include "google/cloud/retail/internal/search_stub.h"
 #include "google/cloud/retail/search_connection.h"
 #include "google/cloud/retail/search_connection_idempotency_policy.h"
 #include "google/cloud/retail/search_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,18 +37,17 @@ namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SearchServiceConnectionImpl
-    : public retail::SearchServiceConnection {
+class SearchServiceConnectionImpl : public retail::SearchServiceConnection {
  public:
   ~SearchServiceConnectionImpl() override = default;
 
   SearchServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_internal::SearchServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<retail_internal::SearchServiceStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-  Search(google::cloud::retail::v2::SearchRequest request) override;
+  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
+      google::cloud::retail::v2::SearchRequest request) override;
 
  private:
   std::unique_ptr<retail::SearchServiceRetryPolicy> retry_policy() {
@@ -67,19 +66,24 @@ class SearchServiceConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<retail::SearchServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<retail::SearchServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<retail::SearchServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<retail::SearchServiceConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::SearchServiceStub> stub_;
-  std::unique_ptr<retail::SearchServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<retail::SearchServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::SearchServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<retail::SearchServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

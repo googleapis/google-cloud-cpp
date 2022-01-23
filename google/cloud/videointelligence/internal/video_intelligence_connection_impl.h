@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_INTERNAL_VIDEO_INTELLIGENCE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_INTERNAL_VIDEO_INTELLIGENCE_CONNECTION_IMPL_H
 
+#include "google/cloud/videointelligence/internal/video_intelligence_retry_traits.h"
+#include "google/cloud/videointelligence/internal/video_intelligence_stub.h"
+#include "google/cloud/videointelligence/video_intelligence_connection.h"
+#include "google/cloud/videointelligence/video_intelligence_connection_idempotency_policy.h"
+#include "google/cloud/videointelligence/video_intelligence_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -26,11 +31,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/videointelligence/internal/video_intelligence_retry_traits.h"
-#include "google/cloud/videointelligence/internal/video_intelligence_stub.h"
-#include "google/cloud/videointelligence/video_intelligence_connection.h"
-#include "google/cloud/videointelligence/video_intelligence_connection_idempotency_policy.h"
-#include "google/cloud/videointelligence/video_intelligence_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -45,48 +45,72 @@ class VideoIntelligenceServiceConnectionImpl
   ~VideoIntelligenceServiceConnectionImpl() override = default;
 
   VideoIntelligenceServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
+          stub,
+      Options const& options);
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
+  AnnotateVideo(
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
+      override;
 
  private:
-  std::unique_ptr<videointelligence::VideoIntelligenceServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<videointelligence::VideoIntelligenceServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()) {
-      return options.get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()->clone();
+    if (options.has<
+            videointelligence::VideoIntelligenceServiceRetryPolicyOption>()) {
+      return options
+          .get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()) {
-      return options.get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()->clone();
+    if (options.has<
+            videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()) {
+      return options
+          .get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            videointelligence::
+                VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<videointelligence::
+                   VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub> stub_;
-  std::unique_ptr<videointelligence::VideoIntelligenceServiceRetryPolicy const> retry_policy_prototype_;
+  std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
+      stub_;
+  std::unique_ptr<videointelligence::VideoIntelligenceServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<
+      videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<videointelligence::VideoIntelligenceServicePollingPolicyOption>()) {
-      return options.get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()->clone();
+    if (options.has<
+            videointelligence::VideoIntelligenceServicePollingPolicyOption>()) {
+      return options
+          .get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

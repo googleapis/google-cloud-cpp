@@ -17,8 +17,8 @@
 // source: google/cloud/billing/budgets/v1/budget_service.proto
 
 #include "google/cloud/billing/internal/budget_connection_impl.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/billing/internal/budget_option_defaults.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -34,83 +34,93 @@ BudgetServiceConnectionImpl::BudgetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<billing_internal::BudgetServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<billing::BudgetServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<billing::BudgetServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<billing::BudgetServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<billing::BudgetServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceConnectionImpl::CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
+BudgetServiceConnectionImpl::CreateBudget(
+    google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateBudget(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
-        return stub_->CreateBudget(context, request);
-      },
+             google::cloud::billing::budgets::v1::CreateBudgetRequest const&
+                 request) { return stub_->CreateBudget(context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceConnectionImpl::UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
+BudgetServiceConnectionImpl::UpdateBudget(
+    google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateBudget(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
-        return stub_->UpdateBudget(context, request);
-      },
+             google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
+                 request) { return stub_->UpdateBudget(context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceConnectionImpl::GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
+BudgetServiceConnectionImpl::GetBudget(
+    google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetBudget(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
-        return stub_->GetBudget(context, request);
-      },
+             google::cloud::billing::budgets::v1::GetBudgetRequest const&
+                 request) { return stub_->GetBudget(context, request); },
       request, __func__);
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceConnectionImpl::ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
+BudgetServiceConnectionImpl::ListBudgets(
+    google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<billing::BudgetServiceRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<billing::BudgetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBudgets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::billing::budgets::v1::Budget>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::billing::budgets::v1::Budget>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::billing::budgets::v1::ListBudgetsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::billing::budgets::v1::ListBudgetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
-              return stub->ListBudgets(context, request);
-            },
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::billing::budgets::v1::ListBudgetsRequest const&
+                    request) { return stub->ListBudgets(context, request); },
             r, function_name);
       },
       [](google::cloud::billing::budgets::v1::ListBudgetsResponse r) {
-        std::vector<google::cloud::billing::budgets::v1::Budget> result(r.budgets().size());
+        std::vector<google::cloud::billing::budgets::v1::Budget> result(
+            r.budgets().size());
         auto& messages = *r.mutable_budgets();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-Status
-BudgetServiceConnectionImpl::DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
+Status BudgetServiceConnectionImpl::DeleteBudget(
+    google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteBudget(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
-        return stub_->DeleteBudget(context, request);
-      },
+             google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
+                 request) { return stub_->DeleteBudget(context, request); },
       request, __func__);
 }
 

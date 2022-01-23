@@ -46,114 +46,184 @@ class AccessContextManagerConnectionImpl
   ~AccessContextManagerConnectionImpl() override = default;
 
   AccessContextManagerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
+          stub,
+      Options const& options);
 
   StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-  ListAccessPolicies(google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest request) override;
+  ListAccessPolicies(
+      google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
+          request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-  GetAccessPolicy(google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const& request) override;
+  GetAccessPolicy(
+      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy(google::identity::accesscontextmanager::v1::AccessPolicy const& request) override;
+  CreateAccessPolicy(
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request)
+      override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request) override;
+  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
+                         UpdateAccessPolicyRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request) override;
+  future<StatusOr<google::identity::accesscontextmanager::v1::
+                      AccessContextManagerOperationMetadata>>
+  DeleteAccessPolicy(google::identity::accesscontextmanager::v1::
+                         DeleteAccessPolicyRequest const& request) override;
 
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-  ListAccessLevels(google::identity::accesscontextmanager::v1::ListAccessLevelsRequest request) override;
+  ListAccessLevels(
+      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
+          request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-  GetAccessLevel(google::identity::accesscontextmanager::v1::GetAccessLevelRequest const& request) override;
+  GetAccessLevel(
+      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
+          request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request) override;
+  CreateAccessLevel(google::identity::accesscontextmanager::v1::
+                        CreateAccessLevelRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request) override;
+  UpdateAccessLevel(google::identity::accesscontextmanager::v1::
+                        UpdateAccessLevelRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request) override;
+  future<StatusOr<google::identity::accesscontextmanager::v1::
+                      AccessContextManagerOperationMetadata>>
+  DeleteAccessLevel(google::identity::accesscontextmanager::v1::
+                        DeleteAccessLevelRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels(google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request) override;
+  future<StatusOr<
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
+  ReplaceAccessLevels(google::identity::accesscontextmanager::v1::
+                          ReplaceAccessLevelsRequest const& request) override;
 
   StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  ListServicePerimeters(google::identity::accesscontextmanager::v1::ListServicePerimetersRequest request) override;
+  ListServicePerimeters(
+      google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
+          request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(google::identity::accesscontextmanager::v1::GetServicePerimeterRequest const& request) override;
+  GetServicePerimeter(google::identity::accesscontextmanager::v1::
+                          GetServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter(google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request) override;
+  CreateServicePerimeter(
+      google::identity::accesscontextmanager::v1::
+          CreateServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter(google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request) override;
+  UpdateServicePerimeter(
+      google::identity::accesscontextmanager::v1::
+          UpdateServicePerimeterRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter(google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request) override;
+  future<StatusOr<google::identity::accesscontextmanager::v1::
+                      AccessContextManagerOperationMetadata>>
+  DeleteServicePerimeter(
+      google::identity::accesscontextmanager::v1::
+          DeleteServicePerimeterRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>
-  ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request) override;
+  future<StatusOr<google::identity::accesscontextmanager::v1::
+                      ReplaceServicePerimetersResponse>>
+  ReplaceServicePerimeters(
+      google::identity::accesscontextmanager::v1::
+          ReplaceServicePerimetersRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>
-  CommitServicePerimeters(google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request) override;
+  future<StatusOr<google::identity::accesscontextmanager::v1::
+                      CommitServicePerimetersResponse>>
+  CommitServicePerimeters(
+      google::identity::accesscontextmanager::v1::
+          CommitServicePerimetersRequest const& request) override;
 
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest request) override;
+  ListGcpUserAccessBindings(
+      google::identity::accesscontextmanager::v1::
+          ListGcpUserAccessBindingsRequest request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest const& request) override;
+  GetGcpUserAccessBinding(
+      google::identity::accesscontextmanager::v1::
+          GetGcpUserAccessBindingRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request) override;
+  future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  CreateGcpUserAccessBinding(
+      google::identity::accesscontextmanager::v1::
+          CreateGcpUserAccessBindingRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request) override;
+  future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  UpdateGcpUserAccessBinding(
+      google::identity::accesscontextmanager::v1::
+          UpdateGcpUserAccessBindingRequest const& request) override;
 
-  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding(google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request) override;
+  future<StatusOr<google::identity::accesscontextmanager::v1::
+                      GcpUserAccessBindingOperationMetadata>>
+  DeleteGcpUserAccessBinding(
+      google::identity::accesscontextmanager::v1::
+          DeleteGcpUserAccessBindingRequest const& request) override;
 
  private:
-  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy> retry_policy() {
+  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<accesscontextmanager::AccessContextManagerRetryPolicyOption>()) {
-      return options.get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()->clone();
+    if (options.has<
+            accesscontextmanager::AccessContextManagerRetryPolicyOption>()) {
+      return options
+          .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()) {
-      return options.get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()->clone();
+    if (options.has<
+            accesscontextmanager::AccessContextManagerBackoffPolicyOption>()) {
+      return options
+          .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicyOption>()) {
-      return options.get<accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<accesscontextmanager::
+                     AccessContextManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<accesscontextmanager::
+                   AccessContextManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub> stub_;
-  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy const> retry_policy_prototype_;
+  std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
+      stub_;
+  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<
+      accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<accesscontextmanager::AccessContextManagerPollingPolicyOption>()) {
-      return options.get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()->clone();
+    if (options.has<
+            accesscontextmanager::AccessContextManagerPollingPolicyOption>()) {
+      return options
+          .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

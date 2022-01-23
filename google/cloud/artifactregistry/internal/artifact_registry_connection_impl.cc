@@ -34,32 +34,49 @@ ArtifactRegistryConnectionImpl::ArtifactRegistryConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+              ->clone()),
+      backoff_policy_prototype_(
+          options.get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<artifactregistry::
+                       ArtifactRegistryConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-ArtifactRegistryConnectionImpl::ListDockerImages(google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
+ArtifactRegistryConnectionImpl::ListDockerImages(
+    google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDockerImages(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::devtools::artifactregistry::v1::DockerImage>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::DockerImage>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::devtools::artifactregistry::v1::ListDockerImagesRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::devtools::artifactregistry::v1::ListDockerImagesRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::devtools::artifactregistry::v1::
+                       ListDockerImagesRequest const& request) {
               return stub->ListDockerImages(context, request);
             },
             r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListDockerImagesResponse r) {
-        std::vector<google::devtools::artifactregistry::v1::DockerImage> result(r.docker_images().size());
+        std::vector<google::devtools::artifactregistry::v1::DockerImage> result(
+            r.docker_images().size());
         auto& messages = *r.mutable_docker_images();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -67,26 +84,34 @@ ArtifactRegistryConnectionImpl::ListDockerImages(google::devtools::artifactregis
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryConnectionImpl::ListRepositories(google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
+ArtifactRegistryConnectionImpl::ListRepositories(
+    google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRepositories(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::devtools::artifactregistry::v1::Repository>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::Repository>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::devtools::artifactregistry::v1::ListRepositoriesRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::devtools::artifactregistry::v1::ListRepositoriesRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::devtools::artifactregistry::v1::
+                       ListRepositoriesRequest const& request) {
               return stub->ListRepositories(context, request);
             },
             r, function_name);
       },
       [](google::devtools::artifactregistry::v1::ListRepositoriesResponse r) {
-        std::vector<google::devtools::artifactregistry::v1::Repository> result(r.repositories().size());
+        std::vector<google::devtools::artifactregistry::v1::Repository> result(
+            r.repositories().size());
         auto& messages = *r.mutable_repositories();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -94,14 +119,15 @@ ArtifactRegistryConnectionImpl::ListRepositories(google::devtools::artifactregis
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryConnectionImpl::GetRepository(google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) {
+ArtifactRegistryConnectionImpl::GetRepository(
+    google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetRepository(request),
       [this](grpc::ClientContext& context,
-          google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) {
-        return stub_->GetRepository(context, request);
-      },
+             google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+                 request) { return stub_->GetRepository(context, request); },
       request, __func__);
 }
 

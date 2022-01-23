@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_CONNECTION_IMPL_H
 
-#include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/logging/internal/logging_service_v2_retry_traits.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
 #include "google/cloud/logging/logging_service_v2_connection.h"
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/logging/logging_service_v2_options.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,24 +44,26 @@ class LoggingServiceV2ConnectionImpl
   ~LoggingServiceV2ConnectionImpl() override = default;
 
   LoggingServiceV2ConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
+      Options const& options);
 
-  Status
-  DeleteLog(google::logging::v2::DeleteLogRequest const& request) override;
+  Status DeleteLog(
+      google::logging::v2::DeleteLogRequest const& request) override;
 
-  StatusOr<google::logging::v2::WriteLogEntriesResponse>
-  WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request) override;
+  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
 
-  StreamRange<google::logging::v2::LogEntry>
-  ListLogEntries(google::logging::v2::ListLogEntriesRequest request) override;
+  StreamRange<google::logging::v2::LogEntry> ListLogEntries(
+      google::logging::v2::ListLogEntriesRequest request) override;
 
   StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(google::logging::v2::ListMonitoredResourceDescriptorsRequest request) override;
+  ListMonitoredResourceDescriptors(
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest request)
+      override;
 
-  StreamRange<std::string>
-  ListLogs(google::logging::v2::ListLogsRequest request) override;
+  StreamRange<std::string> ListLogs(
+      google::logging::v2::ListLogsRequest request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
@@ -80,24 +82,31 @@ class LoggingServiceV2ConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<logging::LoggingServiceV2BackoffPolicyOption>()) {
-      return options.get<logging::LoggingServiceV2BackoffPolicyOption>()->clone();
+      return options.get<logging::LoggingServiceV2BackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<logging::LoggingServiceV2ConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<logging::LoggingServiceV2ConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
-      return options.get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub_;
-  std::unique_ptr<logging::LoggingServiceV2RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<logging::LoggingServiceV2RetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<logging::LoggingServiceV2ConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<logging::LoggingServiceV2ConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,10 +17,10 @@
 // source: google/iam/credentials/v1/iamcredentials.proto
 
 #include "google/cloud/iam/internal/iam_credentials_connection_impl.h"
+#include "google/cloud/iam/internal/iam_credentials_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/iam/internal/iam_credentials_option_defaults.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
@@ -33,29 +33,38 @@ IAMCredentialsConnectionImpl::IAMCredentialsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<iam::IAMCredentialsRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<iam::IAMCredentialsBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<iam::IAMCredentialsRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<iam::IAMCredentialsBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-IAMCredentialsConnectionImpl::GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+IAMCredentialsConnectionImpl::GenerateAccessToken(
+    google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GenerateAccessToken(request),
       [this](grpc::ClientContext& context,
-          google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+             google::iam::credentials::v1::GenerateAccessTokenRequest const&
+                 request) {
         return stub_->GenerateAccessToken(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-IAMCredentialsConnectionImpl::GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+IAMCredentialsConnectionImpl::GenerateIdToken(
+    google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GenerateIdToken(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
         return stub_->GenerateIdToken(context, request);
       },
@@ -63,24 +72,24 @@ IAMCredentialsConnectionImpl::GenerateIdToken(google::iam::credentials::v1::Gene
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
-IAMCredentialsConnectionImpl::SignBlob(google::iam::credentials::v1::SignBlobRequest const& request) {
+IAMCredentialsConnectionImpl::SignBlob(
+    google::iam::credentials::v1::SignBlobRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SignBlob(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->SignBlob(request),
       [this](grpc::ClientContext& context,
-          google::iam::credentials::v1::SignBlobRequest const& request) {
+             google::iam::credentials::v1::SignBlobRequest const& request) {
         return stub_->SignBlob(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
-IAMCredentialsConnectionImpl::SignJwt(google::iam::credentials::v1::SignJwtRequest const& request) {
+IAMCredentialsConnectionImpl::SignJwt(
+    google::iam::credentials::v1::SignJwtRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SignJwt(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->SignJwt(request),
       [this](grpc::ClientContext& context,
-          google::iam::credentials::v1::SignJwtRequest const& request) {
+             google::iam::credentials::v1::SignJwtRequest const& request) {
         return stub_->SignJwt(context, request);
       },
       request, __func__);

@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_CATALOG_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_CATALOG_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/retail/catalog_connection.h"
 #include "google/cloud/retail/catalog_connection_idempotency_policy.h"
 #include "google/cloud/retail/catalog_options.h"
 #include "google/cloud/retail/internal/catalog_retry_traits.h"
 #include "google/cloud/retail/internal/catalog_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,27 +37,28 @@ namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CatalogServiceConnectionImpl
-    : public retail::CatalogServiceConnection {
+class CatalogServiceConnectionImpl : public retail::CatalogServiceConnection {
  public:
   ~CatalogServiceConnectionImpl() override = default;
 
   CatalogServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_internal::CatalogServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<retail_internal::CatalogServiceStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::retail::v2::Catalog>
-  ListCatalogs(google::cloud::retail::v2::ListCatalogsRequest request) override;
+  StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
+      google::cloud::retail::v2::ListCatalogsRequest request) override;
 
-  StatusOr<google::cloud::retail::v2::Catalog>
-  UpdateCatalog(google::cloud::retail::v2::UpdateCatalogRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
+      google::cloud::retail::v2::UpdateCatalogRequest const& request) override;
 
-  Status
-  SetDefaultBranch(google::cloud::retail::v2::SetDefaultBranchRequest const& request) override;
+  Status SetDefaultBranch(
+      google::cloud::retail::v2::SetDefaultBranchRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-  GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const& request) override;
+  GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const&
+                       request) override;
 
  private:
   std::unique_ptr<retail::CatalogServiceRetryPolicy> retry_policy() {
@@ -76,19 +77,25 @@ class CatalogServiceConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<retail::CatalogServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<retail::CatalogServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::CatalogServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<retail::CatalogServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<retail::CatalogServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<retail::CatalogServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::CatalogServiceStub> stub_;
-  std::unique_ptr<retail::CatalogServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<retail::CatalogServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::CatalogServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<retail::CatalogServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,11 +17,11 @@
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
 #include "google/cloud/pubsublite/internal/topic_stats_connection_impl.h"
+#include "google/cloud/pubsublite/internal/topic_stats_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/pubsublite/internal/topic_stats_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,42 +33,57 @@ TopicStatsServiceConnectionImpl::TopicStatsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
+              ->clone()),
+      backoff_policy_prototype_(
+          options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<pubsublite::
+                       TopicStatsServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-TopicStatsServiceConnectionImpl::ComputeMessageStats(google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
+TopicStatsServiceConnectionImpl::ComputeMessageStats(
+    google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ComputeMessageStats(request),
       [this](grpc::ClientContext& context,
-          google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
+             google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
+                 request) {
         return stub_->ComputeMessageStats(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-TopicStatsServiceConnectionImpl::ComputeHeadCursor(google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
+TopicStatsServiceConnectionImpl::ComputeHeadCursor(
+    google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ComputeHeadCursor(request),
       [this](grpc::ClientContext& context,
-          google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
+             google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
+                 request) {
         return stub_->ComputeHeadCursor(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-TopicStatsServiceConnectionImpl::ComputeTimeCursor(google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
+TopicStatsServiceConnectionImpl::ComputeTimeCursor(
+    google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ComputeTimeCursor(request),
       [this](grpc::ClientContext& context,
-          google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
+             google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
+                 request) {
         return stub_->ComputeTimeCursor(context, request);
       },
       request, __func__);

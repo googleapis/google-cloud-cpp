@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_INTERNAL_MANAGED_NOTEBOOK_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_INTERNAL_MANAGED_NOTEBOOK_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/notebooks/internal/managed_notebook_retry_traits.h"
 #include "google/cloud/notebooks/internal/managed_notebook_stub.h"
 #include "google/cloud/notebooks/managed_notebook_connection.h"
 #include "google/cloud/notebooks/managed_notebook_connection_idempotency_policy.h"
 #include "google/cloud/notebooks/managed_notebook_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,42 +46,49 @@ class ManagedNotebookServiceConnectionImpl
   ~ManagedNotebookServiceConnectionImpl() override = default;
 
   ManagedNotebookServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::notebooks::v1::Runtime>
-  ListRuntimes(google::cloud::notebooks::v1::ListRuntimesRequest request) override;
+  StreamRange<google::cloud::notebooks::v1::Runtime> ListRuntimes(
+      google::cloud::notebooks::v1::ListRuntimesRequest request) override;
 
-  StatusOr<google::cloud::notebooks::v1::Runtime>
-  GetRuntime(google::cloud::notebooks::v1::GetRuntimeRequest const& request) override;
+  StatusOr<google::cloud::notebooks::v1::Runtime> GetRuntime(
+      google::cloud::notebooks::v1::GetRuntimeRequest const& request) override;
 
-  future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  CreateRuntime(google::cloud::notebooks::v1::CreateRuntimeRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> CreateRuntime(
+      google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteRuntime(google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) override;
+  DeleteRuntime(google::cloud::notebooks::v1::DeleteRuntimeRequest const&
+                    request) override;
 
-  future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  StartRuntime(google::cloud::notebooks::v1::StartRuntimeRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
+      google::cloud::notebooks::v1::StartRuntimeRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  StopRuntime(google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
+      google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
 
-  future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  SwitchRuntime(google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
+      google::cloud::notebooks::v1::SwitchRuntimeRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  ResetRuntime(google::cloud::notebooks::v1::ResetRuntimeRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> ResetRuntime(
+      google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  ReportRuntimeEvent(google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> ReportRuntimeEvent(
+      google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
+      override;
 
  private:
   std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<notebooks::ManagedNotebookServiceRetryPolicyOption>()) {
-      return options.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()->clone();
+      return options.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -89,29 +96,41 @@ class ManagedNotebookServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<notebooks::ManagedNotebookServiceBackoffPolicyOption>()) {
-      return options.get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()->clone();
+      return options
+          .get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            notebooks::
+                ManagedNotebookServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<notebooks::
+                   ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub_;
-  std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<notebooks::ManagedNotebookServicePollingPolicyOption>()) {
-      return options.get<notebooks::ManagedNotebookServicePollingPolicyOption>()->clone();
+      return options
+          .get<notebooks::ManagedNotebookServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

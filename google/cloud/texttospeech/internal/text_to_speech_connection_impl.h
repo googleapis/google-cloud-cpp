@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_INTERNAL_TEXT_TO_SPEECH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_INTERNAL_TEXT_TO_SPEECH_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/texttospeech/internal/text_to_speech_retry_traits.h"
 #include "google/cloud/texttospeech/internal/text_to_speech_stub.h"
 #include "google/cloud/texttospeech/text_to_speech_connection.h"
 #include "google/cloud/texttospeech/text_to_speech_connection_idempotency_policy.h"
 #include "google/cloud/texttospeech/text_to_speech_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,27 +36,30 @@ namespace cloud {
 namespace texttospeech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TextToSpeechConnectionImpl
-    : public texttospeech::TextToSpeechConnection {
+class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
  public:
   ~TextToSpeechConnectionImpl() override = default;
 
   TextToSpeechConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
-  ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request) override;
+  StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
+      google::cloud::texttospeech::v1::ListVoicesRequest const& request)
+      override;
 
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-  SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) override;
+  SynthesizeSpeech(
+      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
+      override;
 
  private:
   std::unique_ptr<texttospeech::TextToSpeechRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<texttospeech::TextToSpeechRetryPolicyOption>()) {
-      return options.get<texttospeech::TextToSpeechRetryPolicyOption>()->clone();
+      return options.get<texttospeech::TextToSpeechRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -64,24 +67,31 @@ class TextToSpeechConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<texttospeech::TextToSpeechBackoffPolicyOption>()) {
-      return options.get<texttospeech::TextToSpeechBackoffPolicyOption>()->clone();
+      return options.get<texttospeech::TextToSpeechBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()) {
-      return options.get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub_;
-  std::unique_ptr<texttospeech::TextToSpeechRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<texttospeech::TextToSpeechRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

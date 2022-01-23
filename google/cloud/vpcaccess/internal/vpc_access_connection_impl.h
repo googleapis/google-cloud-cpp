@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_INTERNAL_VPC_ACCESS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_INTERNAL_VPC_ACCESS_CONNECTION_IMPL_H
 
+#include "google/cloud/vpcaccess/internal/vpc_access_retry_traits.h"
+#include "google/cloud/vpcaccess/internal/vpc_access_stub.h"
+#include "google/cloud/vpcaccess/vpc_access_connection.h"
+#include "google/cloud/vpcaccess/vpc_access_connection_idempotency_policy.h"
+#include "google/cloud/vpcaccess/vpc_access_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -27,11 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vpcaccess/internal/vpc_access_retry_traits.h"
-#include "google/cloud/vpcaccess/internal/vpc_access_stub.h"
-#include "google/cloud/vpcaccess/vpc_access_connection.h"
-#include "google/cloud/vpcaccess/vpc_access_connection_idempotency_policy.h"
-#include "google/cloud/vpcaccess/vpc_access_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -46,27 +46,31 @@ class VpcAccessServiceConnectionImpl
   ~VpcAccessServiceConnectionImpl() override = default;
 
   VpcAccessServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub,
+      Options const& options);
 
-  future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
-  CreateConnector(google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) override;
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::vpcaccess::v1::Connector>
-  GetConnector(google::cloud::vpcaccess::v1::GetConnectorRequest const& request) override;
+  StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
+      google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vpcaccess::v1::Connector>
-  ListConnectors(google::cloud::vpcaccess::v1::ListConnectorsRequest request) override;
+  StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
+      google::cloud::vpcaccess::v1::ListConnectorsRequest request) override;
 
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) override;
+  DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const&
+                      request) override;
 
  private:
   std::unique_ptr<vpcaccess::VpcAccessServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<vpcaccess::VpcAccessServiceRetryPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()->clone();
+      return options.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -74,29 +78,37 @@ class VpcAccessServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<vpcaccess::VpcAccessServiceBackoffPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()->clone();
+      return options.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub_;
-  std::unique_ptr<vpcaccess::VpcAccessServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<vpcaccess::VpcAccessServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<vpcaccess::VpcAccessServicePollingPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServicePollingPolicyOption>()->clone();
+      return options.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

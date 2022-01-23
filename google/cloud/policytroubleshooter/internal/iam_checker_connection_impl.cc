@@ -17,11 +17,11 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/internal/iam_checker_connection_impl.h"
+#include "google/cloud/policytroubleshooter/internal/iam_checker_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/policytroubleshooter/internal/iam_checker_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,18 +33,30 @@ IamCheckerConnectionImpl::IamCheckerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<policytroubleshooter_internal::IamCheckerStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<policytroubleshooter::IamCheckerRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<policytroubleshooter::IamCheckerBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<policytroubleshooter::IamCheckerConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<policytroubleshooter::IamCheckerRetryPolicyOption>()
+              ->clone()),
+      backoff_policy_prototype_(
+          options.get<policytroubleshooter::IamCheckerBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<policytroubleshooter::
+                       IamCheckerConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-IamCheckerConnectionImpl::TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
+IamCheckerConnectionImpl::TroubleshootIamPolicy(
+    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TroubleshootIamPolicy(request),
       [this](grpc::ClientContext& context,
-          google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
+             google::cloud::policytroubleshooter::v1::
+                 TroubleshootIamPolicyRequest const& request) {
         return stub_->TroubleshootIamPolicy(context, request);
       },
       request, __func__);

@@ -34,32 +34,47 @@ AuthorizedDomainsConnectionImpl::AuthorizedDomainsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<appengine_internal::AuthorizedDomainsStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<appengine::AuthorizedDomainsRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<appengine::AuthorizedDomainsBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<appengine::AuthorizedDomainsConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<appengine::AuthorizedDomainsRetryPolicyOption>()
+              ->clone()),
+      backoff_policy_prototype_(
+          options.get<appengine::AuthorizedDomainsBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<appengine::
+                       AuthorizedDomainsConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
-AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request) {
+AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(
+    google::appengine::v1::ListAuthorizedDomainsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<appengine::AuthorizedDomainsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<appengine::AuthorizedDomainsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAuthorizedDomains(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::appengine::v1::AuthorizedDomain>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::appengine::v1::AuthorizedDomain>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::appengine::v1::ListAuthorizedDomainsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::appengine::v1::ListAuthorizedDomainsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::appengine::v1::ListAuthorizedDomainsRequest const&
+                       request) {
               return stub->ListAuthorizedDomains(context, request);
             },
             r, function_name);
       },
       [](google::appengine::v1::ListAuthorizedDomainsResponse r) {
-        std::vector<google::appengine::v1::AuthorizedDomain> result(r.domains().size());
+        std::vector<google::appengine::v1::AuthorizedDomain> result(
+            r.domains().size());
         auto& messages = *r.mutable_domains();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

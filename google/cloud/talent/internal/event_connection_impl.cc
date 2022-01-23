@@ -17,11 +17,11 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/internal/event_connection_impl.h"
+#include "google/cloud/talent/internal/event_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/talent/internal/event_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,17 +33,24 @@ EventServiceConnectionImpl::EventServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<talent_internal::EventServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<talent::EventServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<talent::EventServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<talent::EventServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<talent::EventServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<talent::EventServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<talent::EventServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
-EventServiceConnectionImpl::CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request) {
+EventServiceConnectionImpl::CreateClientEvent(
+    google::cloud::talent::v4::CreateClientEventRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateClientEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::talent::v4::CreateClientEventRequest const& request) {
         return stub_->CreateClientEvent(context, request);
       },

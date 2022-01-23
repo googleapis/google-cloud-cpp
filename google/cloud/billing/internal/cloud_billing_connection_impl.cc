@@ -17,8 +17,8 @@
 // source: google/cloud/billing/v1/cloud_billing.proto
 
 #include "google/cloud/billing/internal/cloud_billing_connection_impl.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/billing/internal/cloud_billing_option_defaults.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -34,17 +34,24 @@ CloudBillingConnectionImpl::CloudBillingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<billing_internal::CloudBillingStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<billing::CloudBillingRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<billing::CloudBillingBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<billing::CloudBillingConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<billing::CloudBillingRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<billing::CloudBillingBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<billing::CloudBillingConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingConnectionImpl::GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request) {
+CloudBillingConnectionImpl::GetBillingAccount(
+    google::cloud::billing::v1::GetBillingAccountRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetBillingAccount(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::billing::v1::GetBillingAccountRequest const& request) {
         return stub_->GetBillingAccount(context, request);
       },
@@ -52,26 +59,32 @@ CloudBillingConnectionImpl::GetBillingAccount(google::cloud::billing::v1::GetBil
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
-CloudBillingConnectionImpl::ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request) {
+CloudBillingConnectionImpl::ListBillingAccounts(
+    google::cloud::billing::v1::ListBillingAccountsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBillingAccounts(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::billing::v1::BillingAccount>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::billing::v1::BillingAccount>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::billing::v1::ListBillingAccountsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::billing::v1::ListBillingAccountsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::billing::v1::ListBillingAccountsRequest const&
+                       request) {
               return stub->ListBillingAccounts(context, request);
             },
             r, function_name);
       },
       [](google::cloud::billing::v1::ListBillingAccountsResponse r) {
-        std::vector<google::cloud::billing::v1::BillingAccount> result(r.billing_accounts().size());
+        std::vector<google::cloud::billing::v1::BillingAccount> result(
+            r.billing_accounts().size());
         auto& messages = *r.mutable_billing_accounts();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -79,50 +92,61 @@ CloudBillingConnectionImpl::ListBillingAccounts(google::cloud::billing::v1::List
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingConnectionImpl::UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
+CloudBillingConnectionImpl::UpdateBillingAccount(
+    google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateBillingAccount(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
+             google::cloud::billing::v1::UpdateBillingAccountRequest const&
+                 request) {
         return stub_->UpdateBillingAccount(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingConnectionImpl::CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
+CloudBillingConnectionImpl::CreateBillingAccount(
+    google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateBillingAccount(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
+             google::cloud::billing::v1::CreateBillingAccountRequest const&
+                 request) {
         return stub_->CreateBillingAccount(context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingConnectionImpl::ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
+CloudBillingConnectionImpl::ListProjectBillingInfo(
+    google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProjectBillingInfo(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::billing::v1::ListProjectBillingInfoRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::billing::v1::ListProjectBillingInfoRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::billing::v1::ListProjectBillingInfoRequest const&
+                    request) {
               return stub->ListProjectBillingInfo(context, request);
             },
             r, function_name);
       },
       [](google::cloud::billing::v1::ListProjectBillingInfoResponse r) {
-        std::vector<google::cloud::billing::v1::ProjectBillingInfo> result(r.project_billing_info().size());
+        std::vector<google::cloud::billing::v1::ProjectBillingInfo> result(
+            r.project_billing_info().size());
         auto& messages = *r.mutable_project_billing_info();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -130,60 +154,66 @@ CloudBillingConnectionImpl::ListProjectBillingInfo(google::cloud::billing::v1::L
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingConnectionImpl::GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
+CloudBillingConnectionImpl::GetProjectBillingInfo(
+    google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetProjectBillingInfo(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
+             google::cloud::billing::v1::GetProjectBillingInfoRequest const&
+                 request) {
         return stub_->GetProjectBillingInfo(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingConnectionImpl::UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) {
+CloudBillingConnectionImpl::UpdateProjectBillingInfo(
+    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateProjectBillingInfo(request),
       [this](grpc::ClientContext& context,
-          google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) {
+             google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
+                 request) {
         return stub_->UpdateProjectBillingInfo(context, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> CloudBillingConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::GetIamPolicyRequest const& request) {
+             google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> CloudBillingConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::SetIamPolicyRequest const& request) {
+             google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudBillingConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+CloudBillingConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::TestIamPermissionsRequest const& request) {
+             google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);
       },
       request, __func__);

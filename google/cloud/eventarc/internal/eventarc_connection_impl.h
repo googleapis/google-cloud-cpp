@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_INTERNAL_EVENTARC_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_INTERNAL_EVENTARC_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/eventarc/eventarc_connection.h"
 #include "google/cloud/eventarc/eventarc_connection_idempotency_policy.h"
 #include "google/cloud/eventarc/eventarc_options.h"
 #include "google/cloud/eventarc/internal/eventarc_retry_traits.h"
 #include "google/cloud/eventarc/internal/eventarc_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,30 +40,32 @@ namespace cloud {
 namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EventarcConnectionImpl
-    : public eventarc::EventarcConnection {
+class EventarcConnectionImpl : public eventarc::EventarcConnection {
  public:
   ~EventarcConnectionImpl() override = default;
 
   EventarcConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<eventarc_internal::EventarcStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<eventarc_internal::EventarcStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::eventarc::v1::Trigger>
-  GetTrigger(google::cloud::eventarc::v1::GetTriggerRequest const& request) override;
+  StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
+      google::cloud::eventarc::v1::GetTriggerRequest const& request) override;
 
-  StreamRange<google::cloud::eventarc::v1::Trigger>
-  ListTriggers(google::cloud::eventarc::v1::ListTriggersRequest request) override;
+  StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
+      google::cloud::eventarc::v1::ListTriggersRequest request) override;
 
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  CreateTrigger(google::cloud::eventarc::v1::CreateTriggerRequest const& request) override;
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  UpdateTrigger(google::cloud::eventarc::v1::UpdateTriggerRequest const& request) override;
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  DeleteTrigger(google::cloud::eventarc::v1::DeleteTriggerRequest const& request) override;
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
+      override;
 
  private:
   std::unique_ptr<eventarc::EventarcRetryPolicy> retry_policy() {
@@ -82,10 +84,12 @@ class EventarcConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<eventarc::EventarcConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<eventarc::EventarcConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<eventarc::EventarcConnectionIdempotencyPolicyOption>()) {
-      return options.get<eventarc::EventarcConnectionIdempotencyPolicyOption>()->clone();
+      return options.get<eventarc::EventarcConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -94,7 +98,8 @@ class EventarcConnectionImpl
   std::shared_ptr<eventarc_internal::EventarcStub> stub_;
   std::unique_ptr<eventarc::EventarcRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<eventarc::EventarcConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<eventarc::EventarcConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

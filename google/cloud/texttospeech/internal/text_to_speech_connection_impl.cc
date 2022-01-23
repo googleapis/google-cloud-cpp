@@ -17,11 +17,11 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/internal/text_to_speech_connection_impl.h"
+#include "google/cloud/texttospeech/internal/text_to_speech_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/texttospeech/internal/text_to_speech_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,17 +33,27 @@ TextToSpeechConnectionImpl::TextToSpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<texttospeech::TextToSpeechRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<texttospeech::TextToSpeechBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<texttospeech::TextToSpeechRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<texttospeech::TextToSpeechBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<
+                  texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
-TextToSpeechConnectionImpl::ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
+TextToSpeechConnectionImpl::ListVoices(
+    google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ListVoices(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
         return stub_->ListVoices(context, request);
       },
@@ -51,14 +61,14 @@ TextToSpeechConnectionImpl::ListVoices(google::cloud::texttospeech::v1::ListVoic
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-TextToSpeechConnectionImpl::SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
+TextToSpeechConnectionImpl::SynthesizeSpeech(
+    google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SynthesizeSpeech(request),
       [this](grpc::ClientContext& context,
-          google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-        return stub_->SynthesizeSpeech(context, request);
-      },
+             google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
+                 request) { return stub_->SynthesizeSpeech(context, request); },
       request, __func__);
 }
 

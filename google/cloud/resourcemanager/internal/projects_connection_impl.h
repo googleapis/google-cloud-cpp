@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_PROJECTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_PROJECTS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/resourcemanager/internal/projects_retry_traits.h"
 #include "google/cloud/resourcemanager/internal/projects_stub.h"
 #include "google/cloud/resourcemanager/projects_connection.h"
 #include "google/cloud/resourcemanager/projects_connection_idempotency_policy.h"
 #include "google/cloud/resourcemanager/projects_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,48 +40,54 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ProjectsConnectionImpl
-    : public resourcemanager::ProjectsConnection {
+class ProjectsConnectionImpl : public resourcemanager::ProjectsConnection {
  public:
   ~ProjectsConnectionImpl() override = default;
 
   ProjectsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<resourcemanager_internal::ProjectsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<resourcemanager_internal::ProjectsStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::resourcemanager::v3::Project>
-  GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
+      google::cloud::resourcemanager::v3::GetProjectRequest const& request)
+      override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
+      google::cloud::resourcemanager::v3::ListProjectsRequest request) override;
 
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request) override;
+  StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
+      google::cloud::resourcemanager::v3::SearchProjectsRequest request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) override;
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<resourcemanager::ProjectsRetryPolicy> retry_policy() {
@@ -95,29 +101,37 @@ class ProjectsConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<resourcemanager::ProjectsBackoffPolicyOption>()) {
-      return options.get<resourcemanager::ProjectsBackoffPolicyOption>()->clone();
+      return options.get<resourcemanager::ProjectsBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<resourcemanager::ProjectsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<resourcemanager::ProjectsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()) {
-      return options.get<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::ProjectsStub> stub_;
-  std::unique_ptr<resourcemanager::ProjectsRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<resourcemanager::ProjectsRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<resourcemanager::ProjectsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<resourcemanager::ProjectsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<resourcemanager::ProjectsPollingPolicyOption>()) {
-      return options.get<resourcemanager::ProjectsPollingPolicyOption>()->clone();
+      return options.get<resourcemanager::ProjectsPollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

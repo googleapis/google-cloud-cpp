@@ -17,9 +17,9 @@
 // source: google/cloud/gaming/v1/game_server_configs_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_configs_connection_impl.h"
+#include "google/cloud/gameservices/internal/game_server_configs_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/gameservices/internal/game_server_configs_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -35,33 +35,56 @@ GameServerConfigsServiceConnectionImpl::GameServerConfigsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<gameservices::GameServerConfigsServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<gameservices::GameServerConfigsServiceConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<gameservices::GameServerConfigsServicePollingPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options
+              .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
+              ->clone()),
+      backoff_policy_prototype_(
+          options
+              .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
+              ->clone()),
+      idempotency_policy_(
+          options
+              .get<
+                  gameservices::
+                      GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options
+              .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
+              ->clone()) {}
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
-GameServerConfigsServiceConnectionImpl::ListGameServerConfigs(google::cloud::gaming::v1::ListGameServerConfigsRequest request) {
+GameServerConfigsServiceConnectionImpl::ListGameServerConfigs(
+    google::cloud::gaming::v1::ListGameServerConfigsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<gameservices::GameServerConfigsServiceRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<gameservices::GameServerConfigsServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGameServerConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::gaming::v1::GameServerConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gaming::v1::GameServerConfig>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::gaming::v1::ListGameServerConfigsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::gaming::v1::ListGameServerConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::gaming::v1::ListGameServerConfigsRequest const&
+                    request) {
               return stub->ListGameServerConfigs(context, request);
             },
             r, function_name);
       },
       [](google::cloud::gaming::v1::ListGameServerConfigsResponse r) {
-        std::vector<google::cloud::gaming::v1::GameServerConfig> result(r.game_server_configs().size());
+        std::vector<google::cloud::gaming::v1::GameServerConfig> result(
+            r.game_server_configs().size());
         auto& messages = *r.mutable_game_server_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -69,69 +92,79 @@ GameServerConfigsServiceConnectionImpl::ListGameServerConfigs(google::cloud::gam
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerConfig>
-GameServerConfigsServiceConnectionImpl::GetGameServerConfig(google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
+GameServerConfigsServiceConnectionImpl::GetGameServerConfig(
+    google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetGameServerConfig(request),
       [this](grpc::ClientContext& context,
-          google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
+             google::cloud::gaming::v1::GetGameServerConfigRequest const&
+                 request) {
         return stub_->GetGameServerConfig(context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-GameServerConfigsServiceConnectionImpl::CreateGameServerConfig(google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
+GameServerConfigsServiceConnectionImpl::CreateGameServerConfig(
+    google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gaming::v1::GameServerConfig>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
-     return stub->AsyncCreateGameServerConfig(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gaming::v1::GameServerConfig>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->CreateGameServerConfig(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gaming::v1::GameServerConfig>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::gaming::v1::CreateGameServerConfigRequest const&
+                 request) {
+        return stub->AsyncCreateGameServerConfig(cq, std::move(context),
+                                                 request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gaming::v1::GameServerConfig>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateGameServerConfig(request), polling_policy(),
+      __func__);
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-GameServerConfigsServiceConnectionImpl::DeleteGameServerConfig(google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
+GameServerConfigsServiceConnectionImpl::DeleteGameServerConfig(
+    google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gaming::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
-     return stub->AsyncDeleteGameServerConfig(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::gaming::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteGameServerConfig(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gaming::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
+                 request) {
+        return stub->AsyncDeleteGameServerConfig(cq, std::move(context),
+                                                 request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gaming::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteGameServerConfig(request), polling_policy(),
+      __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

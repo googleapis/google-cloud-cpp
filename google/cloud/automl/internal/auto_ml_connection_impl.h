@@ -40,69 +40,70 @@ namespace cloud {
 namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AutoMlConnectionImpl
-    : public automl::AutoMlConnection {
+class AutoMlConnectionImpl : public automl::AutoMlConnection {
  public:
   ~AutoMlConnectionImpl() override = default;
 
   AutoMlConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<automl_internal::AutoMlStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<automl_internal::AutoMlStub> stub,
+      Options const& options);
 
-  future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset(google::cloud::automl::v1::CreateDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
-  StatusOr<google::cloud::automl::v1::Dataset>
-  GetDataset(google::cloud::automl::v1::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
+      google::cloud::automl::v1::GetDatasetRequest const& request) override;
 
-  StreamRange<google::cloud::automl::v1::Dataset>
-  ListDatasets(google::cloud::automl::v1::ListDatasetsRequest request) override;
+  StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
+      google::cloud::automl::v1::ListDatasetsRequest request) override;
 
-  StatusOr<google::cloud::automl::v1::Dataset>
-  UpdateDataset(google::cloud::automl::v1::UpdateDatasetRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
+      google::cloud::automl::v1::UpdateDatasetRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
+      google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData(google::cloud::automl::v1::ImportDataRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
+      google::cloud::automl::v1::ImportDataRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData(google::cloud::automl::v1::ExportDataRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
+      google::cloud::automl::v1::ExportDataRequest const& request) override;
 
-  StatusOr<google::cloud::automl::v1::AnnotationSpec>
-  GetAnnotationSpec(google::cloud::automl::v1::GetAnnotationSpecRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
+      google::cloud::automl::v1::GetAnnotationSpecRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel(google::cloud::automl::v1::CreateModelRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      google::cloud::automl::v1::CreateModelRequest const& request) override;
 
-  StatusOr<google::cloud::automl::v1::Model>
-  GetModel(google::cloud::automl::v1::GetModelRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Model> GetModel(
+      google::cloud::automl::v1::GetModelRequest const& request) override;
 
-  StreamRange<google::cloud::automl::v1::Model>
-  ListModels(google::cloud::automl::v1::ListModelsRequest request) override;
+  StreamRange<google::cloud::automl::v1::Model> ListModels(
+      google::cloud::automl::v1::ListModelsRequest request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
+      google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
-  StatusOr<google::cloud::automl::v1::Model>
-  UpdateModel(google::cloud::automl::v1::UpdateModelRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Model> UpdateModel(
+      google::cloud::automl::v1::UpdateModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel(google::cloud::automl::v1::DeployModelRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
+      google::cloud::automl::v1::DeployModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
+      google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel(google::cloud::automl::v1::ExportModelRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
+      google::cloud::automl::v1::ExportModelRequest const& request) override;
 
-  StatusOr<google::cloud::automl::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::automl::v1::GetModelEvaluationRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
+      google::cloud::automl::v1::GetModelEvaluationRequest const& request)
+      override;
 
-  StreamRange<google::cloud::automl::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::automl::v1::ListModelEvaluationsRequest request) override;
+  StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
+      google::cloud::automl::v1::ListModelEvaluationsRequest request) override;
 
  private:
   std::unique_ptr<automl::AutoMlRetryPolicy> retry_policy() {
@@ -121,10 +122,12 @@ class AutoMlConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<automl::AutoMlConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<automl::AutoMlConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<automl::AutoMlConnectionIdempotencyPolicyOption>()) {
-      return options.get<automl::AutoMlConnectionIdempotencyPolicyOption>()->clone();
+      return options.get<automl::AutoMlConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -133,7 +136,8 @@ class AutoMlConnectionImpl
   std::shared_ptr<automl_internal::AutoMlStub> stub_;
   std::unique_ptr<automl::AutoMlRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<automl::AutoMlConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<automl::AutoMlConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

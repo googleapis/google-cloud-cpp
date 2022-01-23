@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORGANIZATIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_INTERNAL_ORGANIZATIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/resourcemanager/internal/organizations_retry_traits.h"
 #include "google/cloud/resourcemanager/internal/organizations_stub.h"
 #include "google/cloud/resourcemanager/organizations_connection.h"
 #include "google/cloud/resourcemanager/organizations_connection_idempotency_policy.h"
 #include "google/cloud/resourcemanager/organizations_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,30 +43,34 @@ class OrganizationsConnectionImpl
   ~OrganizationsConnectionImpl() override = default;
 
   OrganizationsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::resourcemanager::v3::Organization>
-  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
+      override;
 
   StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) override;
+  SearchOrganizations(
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<resourcemanager::OrganizationsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<resourcemanager::OrganizationsRetryPolicyOption>()) {
-      return options.get<resourcemanager::OrganizationsRetryPolicyOption>()->clone();
+      return options.get<resourcemanager::OrganizationsRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -74,24 +78,32 @@ class OrganizationsConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<resourcemanager::OrganizationsBackoffPolicyOption>()) {
-      return options.get<resourcemanager::OrganizationsBackoffPolicyOption>()->clone();
+      return options.get<resourcemanager::OrganizationsBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()) {
-      return options.get<resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<resourcemanager::
+                        OrganizationsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<
+              resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub_;
-  std::unique_ptr<resourcemanager::OrganizationsRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<resourcemanager::OrganizationsRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -43,30 +43,40 @@ class AuthorizedCertificatesConnectionImpl
   ~AuthorizedCertificatesConnectionImpl() override = default;
 
   AuthorizedCertificatesConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub,
+      Options const& options);
 
   StreamRange<google::appengine::v1::AuthorizedCertificate>
-  ListAuthorizedCertificates(google::appengine::v1::ListAuthorizedCertificatesRequest request) override;
+  ListAuthorizedCertificates(
+      google::appengine::v1::ListAuthorizedCertificatesRequest request)
+      override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  GetAuthorizedCertificate(google::appengine::v1::GetAuthorizedCertificateRequest const& request) override;
+  GetAuthorizedCertificate(
+      google::appengine::v1::GetAuthorizedCertificateRequest const& request)
+      override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  CreateAuthorizedCertificate(google::appengine::v1::CreateAuthorizedCertificateRequest const& request) override;
+  CreateAuthorizedCertificate(
+      google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
+      override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
-  UpdateAuthorizedCertificate(google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) override;
+  UpdateAuthorizedCertificate(
+      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
+      override;
 
-  Status
-  DeleteAuthorizedCertificate(google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) override;
+  Status DeleteAuthorizedCertificate(
+      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
+      override;
 
  private:
   std::unique_ptr<appengine::AuthorizedCertificatesRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::AuthorizedCertificatesRetryPolicyOption>()) {
-      return options.get<appengine::AuthorizedCertificatesRetryPolicyOption>()->clone();
+      return options.get<appengine::AuthorizedCertificatesRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -74,24 +84,34 @@ class AuthorizedCertificatesConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::AuthorizedCertificatesBackoffPolicyOption>()) {
-      return options.get<appengine::AuthorizedCertificatesBackoffPolicyOption>()->clone();
+      return options
+          .get<appengine::AuthorizedCertificatesBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<appengine::AuthorizedCertificatesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<appengine::AuthorizedCertificatesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
-      return options.get<appengine::AuthorizedCertificatesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            appengine::
+                AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<appengine::
+                   AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub_;
-  std::unique_ptr<appengine::AuthorizedCertificatesRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<appengine::AuthorizedCertificatesRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::AuthorizedCertificatesConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<appengine::AuthorizedCertificatesConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

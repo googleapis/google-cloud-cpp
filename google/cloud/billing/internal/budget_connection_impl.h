@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_INTERNAL_BUDGET_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_INTERNAL_BUDGET_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/budget_connection.h"
 #include "google/cloud/billing/budget_connection_idempotency_policy.h"
 #include "google/cloud/billing/budget_options.h"
 #include "google/cloud/billing/internal/budget_retry_traits.h"
 #include "google/cloud/billing/internal/budget_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,30 +37,33 @@ namespace cloud {
 namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BudgetServiceConnectionImpl
-    : public billing::BudgetServiceConnection {
+class BudgetServiceConnectionImpl : public billing::BudgetServiceConnection {
  public:
   ~BudgetServiceConnectionImpl() override = default;
 
   BudgetServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<billing_internal::BudgetServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<billing_internal::BudgetServiceStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
+      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
+      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const& request) override;
+  StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
+      google::cloud::billing::budgets::v1::GetBudgetRequest const& request)
+      override;
 
-  StreamRange<google::cloud::billing::budgets::v1::Budget>
-  ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest request) override;
+  StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
+      google::cloud::billing::budgets::v1::ListBudgetsRequest request) override;
 
-  Status
-  DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) override;
+  Status DeleteBudget(
+      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request)
+      override;
 
  private:
   std::unique_ptr<billing::BudgetServiceRetryPolicy> retry_policy() {
@@ -79,19 +82,25 @@ class BudgetServiceConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<billing::BudgetServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<billing::BudgetServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_internal::BudgetServiceStub> stub_;
-  std::unique_ptr<billing::BudgetServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<billing::BudgetServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

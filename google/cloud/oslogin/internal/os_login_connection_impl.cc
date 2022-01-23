@@ -17,11 +17,11 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/internal/os_login_connection_impl.h"
+#include "google/cloud/oslogin/internal/os_login_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/oslogin/internal/os_login_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,41 +33,51 @@ OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<oslogin::OsLoginServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<oslogin::OsLoginServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<oslogin::OsLoginServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<oslogin::OsLoginServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<oslogin::OsLoginServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<oslogin::OsLoginServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
-Status
-OsLoginServiceConnectionImpl::DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
+Status OsLoginServiceConnectionImpl::DeletePosixAccount(
+    google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeletePosixAccount(request),
       [this](grpc::ClientContext& context,
-          google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
+             google::cloud::oslogin::v1::DeletePosixAccountRequest const&
+                 request) {
         return stub_->DeletePosixAccount(context, request);
       },
       request, __func__);
 }
 
-Status
-OsLoginServiceConnectionImpl::DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
+Status OsLoginServiceConnectionImpl::DeleteSshPublicKey(
+    google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteSshPublicKey(request),
       [this](grpc::ClientContext& context,
-          google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
+             google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const&
+                 request) {
         return stub_->DeleteSshPublicKey(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::oslogin::v1::LoginProfile>
-OsLoginServiceConnectionImpl::GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
+OsLoginServiceConnectionImpl::GetLoginProfile(
+    google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetLoginProfile(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
         return stub_->GetLoginProfile(context, request);
       },
@@ -75,11 +85,13 @@ OsLoginServiceConnectionImpl::GetLoginProfile(google::cloud::oslogin::v1::GetLog
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceConnectionImpl::GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
+OsLoginServiceConnectionImpl::GetSshPublicKey(
+    google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetSshPublicKey(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
         return stub_->GetSshPublicKey(context, request);
       },
@@ -87,24 +99,28 @@ OsLoginServiceConnectionImpl::GetSshPublicKey(google::cloud::oslogin::v1::GetSsh
 }
 
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-OsLoginServiceConnectionImpl::ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
+OsLoginServiceConnectionImpl::ImportSshPublicKey(
+    google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ImportSshPublicKey(request),
       [this](grpc::ClientContext& context,
-          google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
+             google::cloud::oslogin::v1::ImportSshPublicKeyRequest const&
+                 request) {
         return stub_->ImportSshPublicKey(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceConnectionImpl::UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
+OsLoginServiceConnectionImpl::UpdateSshPublicKey(
+    google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateSshPublicKey(request),
       [this](grpc::ClientContext& context,
-          google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
+             google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const&
+                 request) {
         return stub_->UpdateSshPublicKey(context, request);
       },
       request, __func__);

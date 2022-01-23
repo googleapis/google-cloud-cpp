@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_INTERNAL_ORG_POLICY_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/orgpolicy/internal/org_policy_retry_traits.h"
 #include "google/cloud/orgpolicy/internal/org_policy_stub.h"
 #include "google/cloud/orgpolicy/org_policy_connection.h"
 #include "google/cloud/orgpolicy/org_policy_connection_idempotency_policy.h"
 #include "google/cloud/orgpolicy/org_policy_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,36 +37,38 @@ namespace cloud {
 namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class OrgPolicyConnectionImpl
-    : public orgpolicy::OrgPolicyConnection {
+class OrgPolicyConnectionImpl : public orgpolicy::OrgPolicyConnection {
  public:
   ~OrgPolicyConnectionImpl() override = default;
 
   OrgPolicyConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::orgpolicy::v2::Constraint>
-  ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request) override;
+  StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
+      google::cloud::orgpolicy::v2::ListConstraintsRequest request) override;
 
-  StreamRange<google::cloud::orgpolicy::v2::Policy>
-  ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request) override;
+  StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
+      google::cloud::orgpolicy::v2::ListPoliciesRequest request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request) override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
+      google::cloud::orgpolicy::v2::GetPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
+      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
+      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) override;
+  StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
+      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request)
+      override;
 
-  Status
-  DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) override;
+  Status DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const&
+                          request) override;
 
  private:
   std::unique_ptr<orgpolicy::OrgPolicyRetryPolicy> retry_policy() {
@@ -85,19 +87,24 @@ class OrgPolicyConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<orgpolicy::OrgPolicyConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<orgpolicy::OrgPolicyConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()) {
-      return options.get<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub_;
-  std::unique_ptr<orgpolicy::OrgPolicyRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<orgpolicy::OrgPolicyRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<orgpolicy::OrgPolicyConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<orgpolicy::OrgPolicyConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

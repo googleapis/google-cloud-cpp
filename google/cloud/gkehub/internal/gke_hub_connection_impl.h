@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gkehub/gke_hub_connection.h"
 #include "google/cloud/gkehub/gke_hub_connection_idempotency_policy.h"
 #include "google/cloud/gkehub/gke_hub_options.h"
 #include "google/cloud/gkehub/internal/gke_hub_retry_traits.h"
 #include "google/cloud/gkehub/internal/gke_hub_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -40,48 +40,52 @@ namespace cloud {
 namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GkeHubConnectionImpl
-    : public gkehub::GkeHubConnection {
+class GkeHubConnectionImpl : public gkehub::GkeHubConnection {
  public:
   ~GkeHubConnectionImpl() override = default;
 
   GkeHubConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<gkehub_internal::GkeHubStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<gkehub_internal::GkeHubStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::gkehub::v1::Membership>
-  ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest request) override;
+  StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
+      google::cloud::gkehub::v1::ListMembershipsRequest request) override;
 
-  StreamRange<google::cloud::gkehub::v1::Feature>
-  ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest request) override;
+  StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
+      google::cloud::gkehub::v1::ListFeaturesRequest request) override;
 
-  StatusOr<google::cloud::gkehub::v1::Membership>
-  GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
+      google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
 
-  StatusOr<google::cloud::gkehub::v1::Feature>
-  GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
+  StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
+      google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const& request) override;
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Feature>>
-  CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
-
-  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const& request) override;
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
+      google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
+  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const&
+                       request) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const& request) override;
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
+      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
 
-  future<StatusOr<google::cloud::gkehub::v1::Feature>>
-  UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
+      google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
-  GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) override;
+  GenerateConnectManifest(
+      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
+      override;
 
  private:
   std::unique_ptr<gkehub::GkeHubRetryPolicy> retry_policy() {
@@ -100,10 +104,12 @@ class GkeHubConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<gkehub::GkeHubConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<gkehub::GkeHubConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<gkehub::GkeHubConnectionIdempotencyPolicyOption>()) {
-      return options.get<gkehub::GkeHubConnectionIdempotencyPolicyOption>()->clone();
+      return options.get<gkehub::GkeHubConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -112,7 +118,8 @@ class GkeHubConnectionImpl
   std::shared_ptr<gkehub_internal::GkeHubStub> stub_;
   std::unique_ptr<gkehub::GkeHubRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<gkehub::GkeHubConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<gkehub::GkeHubConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

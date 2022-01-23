@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_INTERNAL_CLOUD_CATALOG_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_INTERNAL_CLOUD_CATALOG_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/cloud_catalog_connection.h"
 #include "google/cloud/billing/cloud_catalog_connection_idempotency_policy.h"
 #include "google/cloud/billing/cloud_catalog_options.h"
 #include "google/cloud/billing/internal/cloud_catalog_retry_traits.h"
 #include "google/cloud/billing/internal/cloud_catalog_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,21 +37,20 @@ namespace cloud {
 namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudCatalogConnectionImpl
-    : public billing::CloudCatalogConnection {
+class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
  public:
   ~CloudCatalogConnectionImpl() override = default;
 
   CloudCatalogConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<billing_internal::CloudCatalogStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<billing_internal::CloudCatalogStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::billing::v1::Service>
-  ListServices(google::cloud::billing::v1::ListServicesRequest request) override;
+  StreamRange<google::cloud::billing::v1::Service> ListServices(
+      google::cloud::billing::v1::ListServicesRequest request) override;
 
-  StreamRange<google::cloud::billing::v1::Sku>
-  ListSkus(google::cloud::billing::v1::ListSkusRequest request) override;
+  StreamRange<google::cloud::billing::v1::Sku> ListSkus(
+      google::cloud::billing::v1::ListSkusRequest request) override;
 
  private:
   std::unique_ptr<billing::CloudCatalogRetryPolicy> retry_policy() {
@@ -70,19 +69,24 @@ class CloudCatalogConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<billing::CloudCatalogConnectionIdempotencyPolicyOption>()) {
-      return options.get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_internal::CloudCatalogStub> stub_;
-  std::unique_ptr<billing::CloudCatalogRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<billing::CloudCatalogRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

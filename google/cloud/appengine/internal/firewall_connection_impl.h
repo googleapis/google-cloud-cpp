@@ -37,33 +37,34 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FirewallConnectionImpl
-    : public appengine::FirewallConnection {
+class FirewallConnectionImpl : public appengine::FirewallConnection {
  public:
   ~FirewallConnectionImpl() override = default;
 
   FirewallConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::FirewallStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_internal::FirewallStub> stub,
+      Options const& options);
 
-  StreamRange<google::appengine::v1::FirewallRule>
-  ListIngressRules(google::appengine::v1::ListIngressRulesRequest request) override;
+  StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
+      google::appengine::v1::ListIngressRulesRequest request) override;
 
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
-  BatchUpdateIngressRules(google::appengine::v1::BatchUpdateIngressRulesRequest const& request) override;
+  BatchUpdateIngressRules(
+      google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::FirewallRule>
-  CreateIngressRule(google::appengine::v1::CreateIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
+      google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
-  StatusOr<google::appengine::v1::FirewallRule>
-  GetIngressRule(google::appengine::v1::GetIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
+      google::appengine::v1::GetIngressRuleRequest const& request) override;
 
-  StatusOr<google::appengine::v1::FirewallRule>
-  UpdateIngressRule(google::appengine::v1::UpdateIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
+      google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
-  Status
-  DeleteIngressRule(google::appengine::v1::DeleteIngressRuleRequest const& request) override;
+  Status DeleteIngressRule(
+      google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:
   std::unique_ptr<appengine::FirewallRetryPolicy> retry_policy() {
@@ -82,10 +83,13 @@ class FirewallConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<appengine::FirewallConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<appengine::FirewallConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::FirewallConnectionIdempotencyPolicyOption>()) {
-      return options.get<appengine::FirewallConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<appengine::FirewallConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -94,7 +98,8 @@ class FirewallConnectionImpl
   std::shared_ptr<appengine_internal::FirewallStub> stub_;
   std::unique_ptr<appengine::FirewallRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::FirewallConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<appengine::FirewallConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

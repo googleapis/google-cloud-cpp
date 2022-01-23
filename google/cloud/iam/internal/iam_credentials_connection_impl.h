@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_CREDENTIALS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_CREDENTIALS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iam/iam_credentials_connection.h"
 #include "google/cloud/iam/iam_credentials_connection_idempotency_policy.h"
 #include "google/cloud/iam/iam_credentials_options.h"
 #include "google/cloud/iam/internal/iam_credentials_retry_traits.h"
 #include "google/cloud/iam/internal/iam_credentials_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -36,27 +36,29 @@ namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IAMCredentialsConnectionImpl
-    : public iam::IAMCredentialsConnection {
+class IAMCredentialsConnectionImpl : public iam::IAMCredentialsConnection {
  public:
   ~IAMCredentialsConnectionImpl() override = default;
 
   IAMCredentialsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
+      Options const& options);
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request) override;
+  GenerateAccessToken(
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
+      override;
 
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request) override;
+  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const&
+                      request) override;
 
-  StatusOr<google::iam::credentials::v1::SignBlobResponse>
-  SignBlob(google::iam::credentials::v1::SignBlobRequest const& request) override;
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      google::iam::credentials::v1::SignBlobRequest const& request) override;
 
-  StatusOr<google::iam::credentials::v1::SignJwtResponse>
-  SignJwt(google::iam::credentials::v1::SignJwtRequest const& request) override;
+  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
+      google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
   std::unique_ptr<iam::IAMCredentialsRetryPolicy> retry_policy() {
@@ -75,10 +77,13 @@ class IAMCredentialsConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<iam::IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<iam::IAMCredentialsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()) {
-      return options.get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -87,7 +92,8 @@ class IAMCredentialsConnectionImpl
   std::shared_ptr<iam_internal::IAMCredentialsStub> stub_;
   std::unique_ptr<iam::IAMCredentialsRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<iam::IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<iam::IAMCredentialsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

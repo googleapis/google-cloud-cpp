@@ -35,103 +35,117 @@ InstancesConnectionImpl::InstancesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<appengine_internal::InstancesStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<appengine::InstancesRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<appengine::InstancesBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<appengine::InstancesConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<appengine::InstancesPollingPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<appengine::InstancesRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<appengine::InstancesBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<appengine::InstancesConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options.get<appengine::InstancesPollingPolicyOption>()->clone()) {}
 
 StreamRange<google::appengine::v1::Instance>
-InstancesConnectionImpl::ListInstances(google::appengine::v1::ListInstancesRequest request) {
+InstancesConnectionImpl::ListInstances(
+    google::appengine::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<appengine::InstancesRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<appengine::InstancesRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInstances(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::appengine::v1::Instance>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::appengine::v1::Instance>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::appengine::v1::ListInstancesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::appengine::v1::ListInstancesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::appengine::v1::ListInstancesRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::appengine::v1::ListInstancesRequest const& request) {
               return stub->ListInstances(context, request);
             },
             r, function_name);
       },
       [](google::appengine::v1::ListInstancesResponse r) {
-        std::vector<google::appengine::v1::Instance> result(r.instances().size());
+        std::vector<google::appengine::v1::Instance> result(
+            r.instances().size());
         auto& messages = *r.mutable_instances();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::appengine::v1::Instance>
-InstancesConnectionImpl::GetInstance(google::appengine::v1::GetInstanceRequest const& request) {
+StatusOr<google::appengine::v1::Instance> InstancesConnectionImpl::GetInstance(
+    google::appengine::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetInstance(request),
       [this](grpc::ClientContext& context,
-          google::appengine::v1::GetInstanceRequest const& request) {
+             google::appengine::v1::GetInstanceRequest const& request) {
         return stub_->GetInstance(context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesConnectionImpl::DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request) {
+InstancesConnectionImpl::DeleteInstance(
+    google::appengine::v1::DeleteInstanceRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::appengine::v1::OperationMetadataV1>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::appengine::v1::DeleteInstanceRequest const& request) {
-     return stub->AsyncDeleteInstance(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::appengine::v1::OperationMetadataV1>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteInstance(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::appengine::v1::OperationMetadataV1>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::appengine::v1::DeleteInstanceRequest const& request) {
+        return stub->AsyncDeleteInstance(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::appengine::v1::OperationMetadataV1>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteInstance(request), polling_policy(),
+      __func__);
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesConnectionImpl::DebugInstance(google::appengine::v1::DebugInstanceRequest const& request) {
+InstancesConnectionImpl::DebugInstance(
+    google::appengine::v1::DebugInstanceRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::appengine::v1::Instance>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::appengine::v1::DebugInstanceRequest const& request) {
-     return stub->AsyncDebugInstance(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::appengine::v1::Instance>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DebugInstance(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::appengine::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::appengine::v1::DebugInstanceRequest const& request) {
+        return stub->AsyncDebugInstance(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::appengine::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DebugInstance(request), polling_policy(), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,12 +17,12 @@
 // source: google/cloud/iot/v1/device_manager.proto
 
 #include "google/cloud/iot/internal/device_manager_connection_impl.h"
+#include "google/cloud/iot/internal/device_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/iot/internal/device_manager_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -34,17 +34,24 @@ DeviceManagerConnectionImpl::DeviceManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<iot_internal::DeviceManagerStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<iot::DeviceManagerRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<iot::DeviceManagerBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<iot::DeviceManagerRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<iot::DeviceManagerBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
-DeviceManagerConnectionImpl::CreateDeviceRegistry(google::cloud::iot::v1::CreateDeviceRegistryRequest const& request) {
+DeviceManagerConnectionImpl::CreateDeviceRegistry(
+    google::cloud::iot::v1::CreateDeviceRegistryRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateDeviceRegistry(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::iot::v1::CreateDeviceRegistryRequest const& request) {
         return stub_->CreateDeviceRegistry(context, request);
       },
@@ -52,35 +59,39 @@ DeviceManagerConnectionImpl::CreateDeviceRegistry(google::cloud::iot::v1::Create
 }
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
-DeviceManagerConnectionImpl::GetDeviceRegistry(google::cloud::iot::v1::GetDeviceRegistryRequest const& request) {
+DeviceManagerConnectionImpl::GetDeviceRegistry(
+    google::cloud::iot::v1::GetDeviceRegistryRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetDeviceRegistry(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::GetDeviceRegistryRequest const& request) {
+             google::cloud::iot::v1::GetDeviceRegistryRequest const& request) {
         return stub_->GetDeviceRegistry(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
-DeviceManagerConnectionImpl::UpdateDeviceRegistry(google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request) {
+DeviceManagerConnectionImpl::UpdateDeviceRegistry(
+    google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateDeviceRegistry(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request) {
         return stub_->UpdateDeviceRegistry(context, request);
       },
       request, __func__);
 }
 
-Status
-DeviceManagerConnectionImpl::DeleteDeviceRegistry(google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request) {
+Status DeviceManagerConnectionImpl::DeleteDeviceRegistry(
+    google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteDeviceRegistry(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request) {
         return stub_->DeleteDeviceRegistry(context, request);
       },
@@ -88,26 +99,32 @@ DeviceManagerConnectionImpl::DeleteDeviceRegistry(google::cloud::iot::v1::Delete
 }
 
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
-DeviceManagerConnectionImpl::ListDeviceRegistries(google::cloud::iot::v1::ListDeviceRegistriesRequest request) {
+DeviceManagerConnectionImpl::ListDeviceRegistries(
+    google::cloud::iot::v1::ListDeviceRegistriesRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDeviceRegistries(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::iot::v1::DeviceRegistry>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::iot::v1::DeviceRegistry>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::iot::v1::ListDeviceRegistriesRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::iot::v1::ListDeviceRegistriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::iot::v1::ListDeviceRegistriesRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::iot::v1::ListDeviceRegistriesRequest const&
+                       request) {
               return stub->ListDeviceRegistries(context, request);
             },
             r, function_name);
       },
       [](google::cloud::iot::v1::ListDeviceRegistriesResponse r) {
-        std::vector<google::cloud::iot::v1::DeviceRegistry> result(r.device_registries().size());
+        std::vector<google::cloud::iot::v1::DeviceRegistry> result(
+            r.device_registries().size());
         auto& messages = *r.mutable_device_registries();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,68 +132,74 @@ DeviceManagerConnectionImpl::ListDeviceRegistries(google::cloud::iot::v1::ListDe
 }
 
 StatusOr<google::cloud::iot::v1::Device>
-DeviceManagerConnectionImpl::CreateDevice(google::cloud::iot::v1::CreateDeviceRequest const& request) {
+DeviceManagerConnectionImpl::CreateDevice(
+    google::cloud::iot::v1::CreateDeviceRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateDevice(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::CreateDeviceRequest const& request) {
+             google::cloud::iot::v1::CreateDeviceRequest const& request) {
         return stub_->CreateDevice(context, request);
       },
       request, __func__);
 }
 
-StatusOr<google::cloud::iot::v1::Device>
-DeviceManagerConnectionImpl::GetDevice(google::cloud::iot::v1::GetDeviceRequest const& request) {
+StatusOr<google::cloud::iot::v1::Device> DeviceManagerConnectionImpl::GetDevice(
+    google::cloud::iot::v1::GetDeviceRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetDevice(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::GetDeviceRequest const& request) {
+             google::cloud::iot::v1::GetDeviceRequest const& request) {
         return stub_->GetDevice(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::iot::v1::Device>
-DeviceManagerConnectionImpl::UpdateDevice(google::cloud::iot::v1::UpdateDeviceRequest const& request) {
+DeviceManagerConnectionImpl::UpdateDevice(
+    google::cloud::iot::v1::UpdateDeviceRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateDevice(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::UpdateDeviceRequest const& request) {
+             google::cloud::iot::v1::UpdateDeviceRequest const& request) {
         return stub_->UpdateDevice(context, request);
       },
       request, __func__);
 }
 
-Status
-DeviceManagerConnectionImpl::DeleteDevice(google::cloud::iot::v1::DeleteDeviceRequest const& request) {
+Status DeviceManagerConnectionImpl::DeleteDevice(
+    google::cloud::iot::v1::DeleteDeviceRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteDevice(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::DeleteDeviceRequest const& request) {
+             google::cloud::iot::v1::DeleteDeviceRequest const& request) {
         return stub_->DeleteDevice(context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::iot::v1::Device>
-DeviceManagerConnectionImpl::ListDevices(google::cloud::iot::v1::ListDevicesRequest request) {
+DeviceManagerConnectionImpl::ListDevices(
+    google::cloud::iot::v1::ListDevicesRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDevices(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::iot::v1::Device>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::iot::v1::Device>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::iot::v1::ListDevicesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::iot::v1::ListDevicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::iot::v1::ListDevicesRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::iot::v1::ListDevicesRequest const& request) {
               return stub->ListDevices(context, request);
             },
             r, function_name);
@@ -190,83 +213,91 @@ DeviceManagerConnectionImpl::ListDevices(google::cloud::iot::v1::ListDevicesRequ
 }
 
 StatusOr<google::cloud::iot::v1::DeviceConfig>
-DeviceManagerConnectionImpl::ModifyCloudToDeviceConfig(google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request) {
+DeviceManagerConnectionImpl::ModifyCloudToDeviceConfig(
+    google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ModifyCloudToDeviceConfig(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request) {
+             google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const&
+                 request) {
         return stub_->ModifyCloudToDeviceConfig(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
-DeviceManagerConnectionImpl::ListDeviceConfigVersions(google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request) {
+DeviceManagerConnectionImpl::ListDeviceConfigVersions(
+    google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ListDeviceConfigVersions(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request) {
+             google::cloud::iot::v1::ListDeviceConfigVersionsRequest const&
+                 request) {
         return stub_->ListDeviceConfigVersions(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse>
-DeviceManagerConnectionImpl::ListDeviceStates(google::cloud::iot::v1::ListDeviceStatesRequest const& request) {
+DeviceManagerConnectionImpl::ListDeviceStates(
+    google::cloud::iot::v1::ListDeviceStatesRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ListDeviceStates(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::ListDeviceStatesRequest const& request) {
+             google::cloud::iot::v1::ListDeviceStatesRequest const& request) {
         return stub_->ListDeviceStates(context, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-DeviceManagerConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DeviceManagerConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::SetIamPolicyRequest const& request) {
+             google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-DeviceManagerConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DeviceManagerConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::GetIamPolicyRequest const& request) {
+             google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DeviceManagerConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+DeviceManagerConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::TestIamPermissionsRequest const& request) {
+             google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
-DeviceManagerConnectionImpl::SendCommandToDevice(google::cloud::iot::v1::SendCommandToDeviceRequest const& request) {
+DeviceManagerConnectionImpl::SendCommandToDevice(
+    google::cloud::iot::v1::SendCommandToDeviceRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SendCommandToDevice(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::iot::v1::SendCommandToDeviceRequest const& request) {
         return stub_->SendCommandToDevice(context, request);
       },
@@ -274,11 +305,13 @@ DeviceManagerConnectionImpl::SendCommandToDevice(google::cloud::iot::v1::SendCom
 }
 
 StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
-DeviceManagerConnectionImpl::BindDeviceToGateway(google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) {
+DeviceManagerConnectionImpl::BindDeviceToGateway(
+    google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->BindDeviceToGateway(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) {
         return stub_->BindDeviceToGateway(context, request);
       },
@@ -286,12 +319,14 @@ DeviceManagerConnectionImpl::BindDeviceToGateway(google::cloud::iot::v1::BindDev
 }
 
 StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
-DeviceManagerConnectionImpl::UnbindDeviceFromGateway(google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request) {
+DeviceManagerConnectionImpl::UnbindDeviceFromGateway(
+    google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UnbindDeviceFromGateway(request),
       [this](grpc::ClientContext& context,
-          google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request) {
+             google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const&
+                 request) {
         return stub_->UnbindDeviceFromGateway(context, request);
       },
       request, __func__);

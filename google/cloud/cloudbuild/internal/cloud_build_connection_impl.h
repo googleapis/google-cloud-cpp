@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudbuild/cloud_build_connection.h"
 #include "google/cloud/cloudbuild/cloud_build_connection_idempotency_policy.h"
 #include "google/cloud/cloudbuild/cloud_build_options.h"
 #include "google/cloud/cloudbuild/internal/cloud_build_retry_traits.h"
 #include "google/cloud/cloudbuild/internal/cloud_build_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,69 +40,90 @@ namespace cloud {
 namespace cloudbuild_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudBuildConnectionImpl
-    : public cloudbuild::CloudBuildConnection {
+class CloudBuildConnectionImpl : public cloudbuild::CloudBuildConnection {
  public:
   ~CloudBuildConnectionImpl() override = default;
 
   CloudBuildConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub,
+      Options const& options);
 
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-  CreateBuild(google::devtools::cloudbuild::v1::CreateBuildRequest const& request) override;
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
+      google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudbuild::v1::Build>
-  GetBuild(google::devtools::cloudbuild::v1::GetBuildRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
+      google::devtools::cloudbuild::v1::GetBuildRequest const& request)
+      override;
 
-  StreamRange<google::devtools::cloudbuild::v1::Build>
-  ListBuilds(google::devtools::cloudbuild::v1::ListBuildsRequest request) override;
+  StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
+      google::devtools::cloudbuild::v1::ListBuildsRequest request) override;
 
-  StatusOr<google::devtools::cloudbuild::v1::Build>
-  CancelBuild(google::devtools::cloudbuild::v1::CancelBuildRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
+      google::devtools::cloudbuild::v1::CancelBuildRequest const& request)
+      override;
 
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-  RetryBuild(google::devtools::cloudbuild::v1::RetryBuildRequest const& request) override;
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
+      google::devtools::cloudbuild::v1::RetryBuildRequest const& request)
+      override;
 
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-  ApproveBuild(google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) override;
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
+      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
-  CreateBuildTrigger(google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
+      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
+          request) override;
 
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
-  GetBuildTrigger(google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
+      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request)
+      override;
 
-  StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
-  ListBuildTriggers(google::devtools::cloudbuild::v1::ListBuildTriggersRequest request) override;
+  StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
+      google::devtools::cloudbuild::v1::ListBuildTriggersRequest request)
+      override;
 
-  Status
-  DeleteBuildTrigger(google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request) override;
+  Status DeleteBuildTrigger(
+      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
+          request) override;
 
-  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
-  UpdateBuildTrigger(google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
+      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
+          request) override;
 
-  future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-  RunBuildTrigger(google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) override;
+  future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
-  ReceiveTriggerWebhook(google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request) override;
+  ReceiveTriggerWebhook(
+      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
+          request) override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  CreateWorkerPool(google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) override;
+  CreateWorkerPool(
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
-  GetWorkerPool(google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
+      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request)
+      override;
 
-  future<StatusOr<google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-  DeleteWorkerPool(google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) override;
+  future<StatusOr<
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+  DeleteWorkerPool(
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request)
+      override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  UpdateWorkerPool(google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) override;
+  UpdateWorkerPool(
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request)
+      override;
 
-  StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
-  ListWorkerPools(google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request) override;
+  StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
+      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request)
+      override;
 
  private:
   std::unique_ptr<cloudbuild::CloudBuildRetryPolicy> retry_policy() {
@@ -121,19 +142,25 @@ class CloudBuildConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<cloudbuild::CloudBuildConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<cloudbuild::CloudBuildConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()) {
-      return options.get<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub_;
-  std::unique_ptr<cloudbuild::CloudBuildRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<cloudbuild::CloudBuildRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<cloudbuild::CloudBuildConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<cloudbuild::CloudBuildConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

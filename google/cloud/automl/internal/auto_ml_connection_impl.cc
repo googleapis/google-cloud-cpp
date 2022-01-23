@@ -33,74 +33,85 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoMlConnectionImpl::AutoMlConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<automl_internal::AutoMlStub> stub,
-    Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<automl::AutoMlRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<automl::AutoMlBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<automl::AutoMlConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<automl::AutoMlPollingPolicyOption>()->clone()) {}
+    std::shared_ptr<automl_internal::AutoMlStub> stub, Options const& options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<automl::AutoMlRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<automl::AutoMlBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<automl::AutoMlConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options.get<automl::AutoMlPollingPolicyOption>()->clone()) {}
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
-AutoMlConnectionImpl::CreateDataset(google::cloud::automl::v1::CreateDatasetRequest const& request) {
+AutoMlConnectionImpl::CreateDataset(
+    google::cloud::automl::v1::CreateDatasetRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::Dataset>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::CreateDatasetRequest const& request) {
-     return stub->AsyncCreateDataset(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::automl::v1::Dataset>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->CreateDataset(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::Dataset>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::CreateDatasetRequest const& request) {
+        return stub->AsyncCreateDataset(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::automl::v1::Dataset>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateDataset(request), polling_policy(), __func__);
 }
 
-StatusOr<google::cloud::automl::v1::Dataset>
-AutoMlConnectionImpl::GetDataset(google::cloud::automl::v1::GetDatasetRequest const& request) {
+StatusOr<google::cloud::automl::v1::Dataset> AutoMlConnectionImpl::GetDataset(
+    google::cloud::automl::v1::GetDatasetRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetDataset(request),
       [this](grpc::ClientContext& context,
-          google::cloud::automl::v1::GetDatasetRequest const& request) {
+             google::cloud::automl::v1::GetDatasetRequest const& request) {
         return stub_->GetDataset(context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::automl::v1::Dataset>
-AutoMlConnectionImpl::ListDatasets(google::cloud::automl::v1::ListDatasetsRequest request) {
+AutoMlConnectionImpl::ListDatasets(
+    google::cloud::automl::v1::ListDatasetsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
   auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatasets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::automl::v1::Dataset>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::automl::v1::Dataset>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::automl::v1::ListDatasetsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::automl::v1::ListDatasetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::automl::v1::ListDatasetsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::automl::v1::ListDatasetsRequest const& request) {
               return stub->ListDatasets(context, request);
             },
             r, function_name);
       },
       [](google::cloud::automl::v1::ListDatasetsResponse r) {
-        std::vector<google::cloud::automl::v1::Dataset> result(r.datasets().size());
+        std::vector<google::cloud::automl::v1::Dataset> result(
+            r.datasets().size());
         auto& messages = *r.mutable_datasets();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -108,104 +119,110 @@ AutoMlConnectionImpl::ListDatasets(google::cloud::automl::v1::ListDatasetsReques
 }
 
 StatusOr<google::cloud::automl::v1::Dataset>
-AutoMlConnectionImpl::UpdateDataset(google::cloud::automl::v1::UpdateDatasetRequest const& request) {
+AutoMlConnectionImpl::UpdateDataset(
+    google::cloud::automl::v1::UpdateDatasetRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateDataset(request),
       [this](grpc::ClientContext& context,
-          google::cloud::automl::v1::UpdateDatasetRequest const& request) {
+             google::cloud::automl::v1::UpdateDatasetRequest const& request) {
         return stub_->UpdateDataset(context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlConnectionImpl::DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+AutoMlConnectionImpl::DeleteDataset(
+    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::DeleteDatasetRequest const& request) {
-     return stub->AsyncDeleteDataset(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::automl::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteDataset(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+        return stub->AsyncDeleteDataset(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::automl::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteDataset(request), polling_policy(), __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlConnectionImpl::ImportData(google::cloud::automl::v1::ImportDataRequest const& request) {
+AutoMlConnectionImpl::ImportData(
+    google::cloud::automl::v1::ImportDataRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::ImportDataRequest const& request) {
-     return stub->AsyncImportData(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::automl::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->ImportData(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::ImportDataRequest const& request) {
+        return stub->AsyncImportData(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::automl::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ImportData(request), polling_policy(), __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlConnectionImpl::ExportData(google::cloud::automl::v1::ExportDataRequest const& request) {
+AutoMlConnectionImpl::ExportData(
+    google::cloud::automl::v1::ExportDataRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::ExportDataRequest const& request) {
-     return stub->AsyncExportData(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::automl::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->ExportData(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::ExportDataRequest const& request) {
+        return stub->AsyncExportData(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::automl::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ExportData(request), polling_policy(), __func__);
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
-AutoMlConnectionImpl::GetAnnotationSpec(google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
+AutoMlConnectionImpl::GetAnnotationSpec(
+    google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetAnnotationSpec(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
         return stub_->GetAnnotationSpec(context, request);
       },
@@ -213,59 +230,62 @@ AutoMlConnectionImpl::GetAnnotationSpec(google::cloud::automl::v1::GetAnnotation
 }
 
 future<StatusOr<google::cloud::automl::v1::Model>>
-AutoMlConnectionImpl::CreateModel(google::cloud::automl::v1::CreateModelRequest const& request) {
+AutoMlConnectionImpl::CreateModel(
+    google::cloud::automl::v1::CreateModelRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::Model>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::CreateModelRequest const& request) {
-     return stub->AsyncCreateModel(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::automl::v1::Model>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->CreateModel(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::Model>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::CreateModelRequest const& request) {
+        return stub->AsyncCreateModel(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::automl::v1::Model>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateModel(request), polling_policy(), __func__);
 }
 
-StatusOr<google::cloud::automl::v1::Model>
-AutoMlConnectionImpl::GetModel(google::cloud::automl::v1::GetModelRequest const& request) {
+StatusOr<google::cloud::automl::v1::Model> AutoMlConnectionImpl::GetModel(
+    google::cloud::automl::v1::GetModelRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetModel(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->GetModel(request),
       [this](grpc::ClientContext& context,
-          google::cloud::automl::v1::GetModelRequest const& request) {
+             google::cloud::automl::v1::GetModelRequest const& request) {
         return stub_->GetModel(context, request);
       },
       request, __func__);
 }
 
-StreamRange<google::cloud::automl::v1::Model>
-AutoMlConnectionImpl::ListModels(google::cloud::automl::v1::ListModelsRequest request) {
+StreamRange<google::cloud::automl::v1::Model> AutoMlConnectionImpl::ListModels(
+    google::cloud::automl::v1::ListModelsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
   auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListModels(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::automl::v1::Model>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::automl::v1::Model>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::automl::v1::ListModelsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::automl::v1::ListModelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::automl::v1::ListModelsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::automl::v1::ListModelsRequest const& request) {
               return stub->ListModels(context, request);
             },
             r, function_name);
@@ -279,131 +299,137 @@ AutoMlConnectionImpl::ListModels(google::cloud::automl::v1::ListModelsRequest re
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlConnectionImpl::DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request) {
+AutoMlConnectionImpl::DeleteModel(
+    google::cloud::automl::v1::DeleteModelRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::DeleteModelRequest const& request) {
-     return stub->AsyncDeleteModel(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::automl::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteModel(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::DeleteModelRequest const& request) {
+        return stub->AsyncDeleteModel(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::automl::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteModel(request), polling_policy(), __func__);
 }
 
-StatusOr<google::cloud::automl::v1::Model>
-AutoMlConnectionImpl::UpdateModel(google::cloud::automl::v1::UpdateModelRequest const& request) {
+StatusOr<google::cloud::automl::v1::Model> AutoMlConnectionImpl::UpdateModel(
+    google::cloud::automl::v1::UpdateModelRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateModel(request),
       [this](grpc::ClientContext& context,
-          google::cloud::automl::v1::UpdateModelRequest const& request) {
+             google::cloud::automl::v1::UpdateModelRequest const& request) {
         return stub_->UpdateModel(context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlConnectionImpl::DeployModel(google::cloud::automl::v1::DeployModelRequest const& request) {
+AutoMlConnectionImpl::DeployModel(
+    google::cloud::automl::v1::DeployModelRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::DeployModelRequest const& request) {
-     return stub->AsyncDeployModel(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::automl::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeployModel(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::DeployModelRequest const& request) {
+        return stub->AsyncDeployModel(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::automl::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeployModel(request), polling_policy(), __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlConnectionImpl::UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request) {
+AutoMlConnectionImpl::UndeployModel(
+    google::cloud::automl::v1::UndeployModelRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::UndeployModelRequest const& request) {
-     return stub->AsyncUndeployModel(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::automl::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->UndeployModel(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::UndeployModelRequest const& request) {
+        return stub->AsyncUndeployModel(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::automl::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UndeployModel(request), polling_policy(), __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlConnectionImpl::ExportModel(google::cloud::automl::v1::ExportModelRequest const& request) {
+AutoMlConnectionImpl::ExportModel(
+    google::cloud::automl::v1::ExportModelRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::automl::v1::OperationMetadata>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::automl::v1::ExportModelRequest const& request) {
-     return stub->AsyncExportModel(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::automl::v1::OperationMetadata>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->ExportModel(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::automl::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::automl::v1::ExportModelRequest const& request) {
+        return stub->AsyncExportModel(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::automl::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ExportModel(request), polling_policy(), __func__);
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
-AutoMlConnectionImpl::GetModelEvaluation(google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
+AutoMlConnectionImpl::GetModelEvaluation(
+    google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetModelEvaluation(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
         return stub_->GetModelEvaluation(context, request);
       },
@@ -411,26 +437,31 @@ AutoMlConnectionImpl::GetModelEvaluation(google::cloud::automl::v1::GetModelEval
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
-AutoMlConnectionImpl::ListModelEvaluations(google::cloud::automl::v1::ListModelEvaluationsRequest request) {
+AutoMlConnectionImpl::ListModelEvaluations(
+    google::cloud::automl::v1::ListModelEvaluationsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
   auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListModelEvaluations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::automl::v1::ModelEvaluation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::automl::v1::ModelEvaluation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::automl::v1::ListModelEvaluationsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::automl::v1::ListModelEvaluationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::automl::v1::ListModelEvaluationsRequest const&
+                       request) {
               return stub->ListModelEvaluations(context, request);
             },
             r, function_name);
       },
       [](google::cloud::automl::v1::ListModelEvaluationsResponse r) {
-        std::vector<google::cloud::automl::v1::ModelEvaluation> result(r.model_evaluation().size());
+        std::vector<google::cloud::automl::v1::ModelEvaluation> result(
+            r.model_evaluation().size());
         auto& messages = *r.mutable_model_evaluation();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

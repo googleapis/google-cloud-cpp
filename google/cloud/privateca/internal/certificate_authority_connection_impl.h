@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_INTERNAL_CERTIFICATE_AUTHORITY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_INTERNAL_CERTIFICATE_AUTHORITY_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/privateca/certificate_authority_connection.h"
 #include "google/cloud/privateca/certificate_authority_connection_idempotency_policy.h"
 #include "google/cloud/privateca/certificate_authority_options.h"
 #include "google/cloud/privateca/internal/certificate_authority_retry_traits.h"
 #include "google/cloud/privateca/internal/certificate_authority_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -46,132 +46,208 @@ class CertificateAuthorityServiceConnectionImpl
   ~CertificateAuthorityServiceConnectionImpl() override = default;
 
   CertificateAuthorityServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub,
+      Options const& options);
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
-  CreateCertificate(google::cloud::security::privateca::v1::CreateCertificateRequest const& request) override;
+  CreateCertificate(
+      google::cloud::security::privateca::v1::CreateCertificateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::security::privateca::v1::Certificate>
-  GetCertificate(google::cloud::security::privateca::v1::GetCertificateRequest const& request) override;
+  StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
+      google::cloud::security::privateca::v1::GetCertificateRequest const&
+          request) override;
 
   StreamRange<google::cloud::security::privateca::v1::Certificate>
-  ListCertificates(google::cloud::security::privateca::v1::ListCertificatesRequest request) override;
+  ListCertificates(
+      google::cloud::security::privateca::v1::ListCertificatesRequest request)
+      override;
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
-  RevokeCertificate(google::cloud::security::privateca::v1::RevokeCertificateRequest const& request) override;
+  RevokeCertificate(
+      google::cloud::security::privateca::v1::RevokeCertificateRequest const&
+          request) override;
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
-  UpdateCertificate(google::cloud::security::privateca::v1::UpdateCertificateRequest const& request) override;
+  UpdateCertificate(
+      google::cloud::security::privateca::v1::UpdateCertificateRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  ActivateCertificateAuthority(google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const& request) override;
+  ActivateCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          ActivateCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  CreateCertificateAuthority(google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const& request) override;
+  CreateCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          CreateCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DisableCertificateAuthority(google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const& request) override;
+  DisableCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          DisableCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  EnableCertificateAuthority(google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const& request) override;
+  EnableCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          EnableCertificateAuthorityRequest const& request) override;
 
-  StatusOr<google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse>
-  FetchCertificateAuthorityCsr(google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest const& request) override;
+  StatusOr<google::cloud::security::privateca::v1::
+               FetchCertificateAuthorityCsrResponse>
+  FetchCertificateAuthorityCsr(
+      google::cloud::security::privateca::v1::
+          FetchCertificateAuthorityCsrRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
-  GetCertificateAuthority(google::cloud::security::privateca::v1::GetCertificateAuthorityRequest const& request) override;
+  GetCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          GetCertificateAuthorityRequest const& request) override;
 
   StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
-  ListCertificateAuthorities(google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest request) override;
+  ListCertificateAuthorities(
+      google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
+          request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UndeleteCertificateAuthority(google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const& request) override;
+  UndeleteCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          UndeleteCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DeleteCertificateAuthority(google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const& request) override;
+  DeleteCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          DeleteCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UpdateCertificateAuthority(google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const& request) override;
+  UpdateCertificateAuthority(
+      google::cloud::security::privateca::v1::
+          UpdateCertificateAuthorityRequest const& request) override;
 
-  future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-  CreateCaPool(google::cloud::security::privateca::v1::CreateCaPoolRequest const& request) override;
+  future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
+      google::cloud::security::privateca::v1::CreateCaPoolRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
-  UpdateCaPool(google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request) override;
+  future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
+      google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
+          request) override;
 
-  StatusOr<google::cloud::security::privateca::v1::CaPool>
-  GetCaPool(google::cloud::security::privateca::v1::GetCaPoolRequest const& request) override;
+  StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
+      google::cloud::security::privateca::v1::GetCaPoolRequest const& request)
+      override;
 
-  StreamRange<google::cloud::security::privateca::v1::CaPool>
-  ListCaPools(google::cloud::security::privateca::v1::ListCaPoolsRequest request) override;
+  StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
+      google::cloud::security::privateca::v1::ListCaPoolsRequest request)
+      override;
 
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCaPool(google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request) override;
+  DeleteCaPool(
+      google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
+          request) override;
 
   StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
-  FetchCaCerts(google::cloud::security::privateca::v1::FetchCaCertsRequest const& request) override;
+  FetchCaCerts(
+      google::cloud::security::privateca::v1::FetchCaCertsRequest const&
+          request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
-  GetCertificateRevocationList(google::cloud::security::privateca::v1::GetCertificateRevocationListRequest const& request) override;
+  GetCertificateRevocationList(
+      google::cloud::security::privateca::v1::
+          GetCertificateRevocationListRequest const& request) override;
 
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
-  ListCertificateRevocationLists(google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest request) override;
+  ListCertificateRevocationLists(
+      google::cloud::security::privateca::v1::
+          ListCertificateRevocationListsRequest request) override;
 
-  future<StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
-  UpdateCertificateRevocationList(google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const& request) override;
+  future<StatusOr<
+      google::cloud::security::privateca::v1::CertificateRevocationList>>
+  UpdateCertificateRevocationList(
+      google::cloud::security::privateca::v1::
+          UpdateCertificateRevocationListRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  CreateCertificateTemplate(google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const& request) override;
+  CreateCertificateTemplate(
+      google::cloud::security::privateca::v1::
+          CreateCertificateTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCertificateTemplate(google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const& request) override;
+  DeleteCertificateTemplate(
+      google::cloud::security::privateca::v1::
+          DeleteCertificateTemplateRequest const& request) override;
 
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
-  GetCertificateTemplate(google::cloud::security::privateca::v1::GetCertificateTemplateRequest const& request) override;
+  GetCertificateTemplate(
+      google::cloud::security::privateca::v1::
+          GetCertificateTemplateRequest const& request) override;
 
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
-  ListCertificateTemplates(google::cloud::security::privateca::v1::ListCertificateTemplatesRequest request) override;
+  ListCertificateTemplates(
+      google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
+          request) override;
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  UpdateCertificateTemplate(google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const& request) override;
+  UpdateCertificateTemplate(
+      google::cloud::security::privateca::v1::
+          UpdateCertificateTemplateRequest const& request) override;
 
  private:
-  std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<privateca::CertificateAuthorityServiceRetryPolicyOption>()) {
-      return options.get<privateca::CertificateAuthorityServiceRetryPolicyOption>()->clone();
+    if (options
+            .has<privateca::CertificateAuthorityServiceRetryPolicyOption>()) {
+      return options
+          .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<privateca::CertificateAuthorityServiceBackoffPolicyOption>()) {
-      return options.get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()->clone();
+    if (options
+            .has<privateca::CertificateAuthorityServiceBackoffPolicyOption>()) {
+      return options
+          .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<privateca::CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<privateca::CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            privateca::
+                CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<
+              privateca::
+                  CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub_;
-  std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<
+      privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<privateca::CertificateAuthorityServicePollingPolicyOption>()) {
-      return options.get<privateca::CertificateAuthorityServicePollingPolicyOption>()->clone();
+    if (options
+            .has<privateca::CertificateAuthorityServicePollingPolicyOption>()) {
+      return options
+          .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

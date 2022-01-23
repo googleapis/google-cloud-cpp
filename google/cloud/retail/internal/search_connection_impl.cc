@@ -17,12 +17,12 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/internal/search_connection_impl.h"
+#include "google/cloud/retail/internal/search_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/retail/internal/search_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -34,32 +34,42 @@ SearchServiceConnectionImpl::SearchServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_internal::SearchServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<retail::SearchServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<retail::SearchServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<retail::SearchServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<retail::SearchServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<retail::SearchServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-SearchServiceConnectionImpl::Search(google::cloud::retail::v2::SearchRequest request) {
+SearchServiceConnectionImpl::Search(
+    google::cloud::retail::v2::SearchRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<retail::SearchServiceRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<retail::SearchServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->Search(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::retail::v2::SearchRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::retail::v2::SearchRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::retail::v2::SearchRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::retail::v2::SearchRequest const& request) {
               return stub->Search(context, request);
             },
             r, function_name);
       },
       [](google::cloud::retail::v2::SearchResponse r) {
-        std::vector<google::cloud::retail::v2::SearchResponse::SearchResult> result(r.results().size());
+        std::vector<google::cloud::retail::v2::SearchResponse::SearchResult>
+            result(r.results().size());
         auto& messages = *r.mutable_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

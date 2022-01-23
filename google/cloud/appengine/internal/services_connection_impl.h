@@ -40,27 +40,26 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ServicesConnectionImpl
-    : public appengine::ServicesConnection {
+class ServicesConnectionImpl : public appengine::ServicesConnection {
  public:
   ~ServicesConnectionImpl() override = default;
 
   ServicesConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::ServicesStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_internal::ServicesStub> stub,
+      Options const& options);
 
-  StreamRange<google::appengine::v1::Service>
-  ListServices(google::appengine::v1::ListServicesRequest request) override;
+  StreamRange<google::appengine::v1::Service> ListServices(
+      google::appengine::v1::ListServicesRequest request) override;
 
-  StatusOr<google::appengine::v1::Service>
-  GetService(google::appengine::v1::GetServiceRequest const& request) override;
+  StatusOr<google::appengine::v1::Service> GetService(
+      google::appengine::v1::GetServiceRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Service>>
-  UpdateService(google::appengine::v1::UpdateServiceRequest const& request) override;
+  future<StatusOr<google::appengine::v1::Service>> UpdateService(
+      google::appengine::v1::UpdateServiceRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteService(google::appengine::v1::DeleteServiceRequest const& request) override;
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
+      google::appengine::v1::DeleteServiceRequest const& request) override;
 
  private:
   std::unique_ptr<appengine::ServicesRetryPolicy> retry_policy() {
@@ -79,10 +78,13 @@ class ServicesConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<appengine::ServicesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<appengine::ServicesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::ServicesConnectionIdempotencyPolicyOption>()) {
-      return options.get<appengine::ServicesConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<appengine::ServicesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -91,7 +93,8 @@ class ServicesConnectionImpl
   std::shared_ptr<appengine_internal::ServicesStub> stub_;
   std::unique_ptr<appengine::ServicesRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::ServicesConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<appengine::ServicesConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

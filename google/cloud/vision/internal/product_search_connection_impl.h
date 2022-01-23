@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_INTERNAL_PRODUCT_SEARCH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_INTERNAL_PRODUCT_SEARCH_CONNECTION_IMPL_H
 
+#include "google/cloud/vision/internal/product_search_retry_traits.h"
+#include "google/cloud/vision/internal/product_search_stub.h"
+#include "google/cloud/vision/product_search_connection.h"
+#include "google/cloud/vision/product_search_connection_idempotency_policy.h"
+#include "google/cloud/vision/product_search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -27,11 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vision/internal/product_search_retry_traits.h"
-#include "google/cloud/vision/internal/product_search_stub.h"
-#include "google/cloud/vision/product_search_connection.h"
-#include "google/cloud/vision/product_search_connection_idempotency_policy.h"
-#include "google/cloud/vision/product_search_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -40,72 +40,82 @@ namespace cloud {
 namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ProductSearchConnectionImpl
-    : public vision::ProductSearchConnection {
+class ProductSearchConnectionImpl : public vision::ProductSearchConnection {
  public:
   ~ProductSearchConnectionImpl() override = default;
 
   ProductSearchConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<vision_internal::ProductSearchStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<vision_internal::ProductSearchStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  CreateProductSet(google::cloud::vision::v1::CreateProductSetRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
+      google::cloud::vision::v1::CreateProductSetRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vision::v1::ProductSet>
-  ListProductSets(google::cloud::vision::v1::ListProductSetsRequest request) override;
+  StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
+      google::cloud::vision::v1::ListProductSetsRequest request) override;
 
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  GetProductSet(google::cloud::vision::v1::GetProductSetRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
+      google::cloud::vision::v1::GetProductSetRequest const& request) override;
 
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  UpdateProductSet(google::cloud::vision::v1::UpdateProductSetRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
+      google::cloud::vision::v1::UpdateProductSetRequest const& request)
+      override;
 
-  Status
-  DeleteProductSet(google::cloud::vision::v1::DeleteProductSetRequest const& request) override;
+  Status DeleteProductSet(
+      google::cloud::vision::v1::DeleteProductSetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::vision::v1::Product>
-  CreateProduct(google::cloud::vision::v1::CreateProductRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::Product> CreateProduct(
+      google::cloud::vision::v1::CreateProductRequest const& request) override;
 
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProducts(google::cloud::vision::v1::ListProductsRequest request) override;
+  StreamRange<google::cloud::vision::v1::Product> ListProducts(
+      google::cloud::vision::v1::ListProductsRequest request) override;
 
-  StatusOr<google::cloud::vision::v1::Product>
-  GetProduct(google::cloud::vision::v1::GetProductRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::Product> GetProduct(
+      google::cloud::vision::v1::GetProductRequest const& request) override;
 
-  StatusOr<google::cloud::vision::v1::Product>
-  UpdateProduct(google::cloud::vision::v1::UpdateProductRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
+      google::cloud::vision::v1::UpdateProductRequest const& request) override;
 
-  Status
-  DeleteProduct(google::cloud::vision::v1::DeleteProductRequest const& request) override;
+  Status DeleteProduct(
+      google::cloud::vision::v1::DeleteProductRequest const& request) override;
 
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  CreateReferenceImage(google::cloud::vision::v1::CreateReferenceImageRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
+      google::cloud::vision::v1::CreateReferenceImageRequest const& request)
+      override;
 
-  Status
-  DeleteReferenceImage(google::cloud::vision::v1::DeleteReferenceImageRequest const& request) override;
+  Status DeleteReferenceImage(
+      google::cloud::vision::v1::DeleteReferenceImageRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vision::v1::ReferenceImage>
-  ListReferenceImages(google::cloud::vision::v1::ListReferenceImagesRequest request) override;
+  StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
+      google::cloud::vision::v1::ListReferenceImagesRequest request) override;
 
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  GetReferenceImage(google::cloud::vision::v1::GetReferenceImageRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
+      google::cloud::vision::v1::GetReferenceImageRequest const& request)
+      override;
 
-  Status
-  AddProductToProductSet(google::cloud::vision::v1::AddProductToProductSetRequest const& request) override;
+  Status AddProductToProductSet(
+      google::cloud::vision::v1::AddProductToProductSetRequest const& request)
+      override;
 
-  Status
-  RemoveProductFromProductSet(google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request) override;
+  Status RemoveProductFromProductSet(
+      google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
+          request) override;
 
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProductsInProductSet(google::cloud::vision::v1::ListProductsInProductSetRequest request) override;
+  StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
+      google::cloud::vision::v1::ListProductsInProductSetRequest request)
+      override;
 
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const& request) override;
+  ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const&
+                        request) override;
 
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request) override;
+  PurgeProducts(
+      google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
  private:
   std::unique_ptr<vision::ProductSearchRetryPolicy> retry_policy() {
@@ -124,19 +134,24 @@ class ProductSearchConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<vision::ProductSearchConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<vision::ProductSearchConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<vision::ProductSearchConnectionIdempotencyPolicyOption>()) {
-      return options.get<vision::ProductSearchConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<vision::ProductSearchConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_internal::ProductSearchStub> stub_;
-  std::unique_ptr<vision::ProductSearchRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<vision::ProductSearchRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<vision::ProductSearchConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<vision::ProductSearchConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

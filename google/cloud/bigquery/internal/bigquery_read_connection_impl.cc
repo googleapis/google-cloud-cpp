@@ -17,8 +17,8 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/internal/bigquery_read_connection_impl.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/internal/bigquery_read_option_defaults.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
@@ -35,50 +35,65 @@ BigQueryReadConnectionImpl::BigQueryReadConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<bigquery::BigQueryReadRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<bigquery::BigQueryReadBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<bigquery::BigQueryReadRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<bigquery::BigQueryReadBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-BigQueryReadConnectionImpl::CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
+BigQueryReadConnectionImpl::CreateReadSession(
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateReadSession(request),
-      [this](grpc::ClientContext& context,
-          google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
-        return stub_->CreateReadSession(context, request);
-      },
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+              request) { return stub_->CreateReadSession(context, request); },
       request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-BigQueryReadConnectionImpl::ReadRows(google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
+BigQueryReadConnectionImpl::ReadRows(
+    google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto stub = stub_;
-  auto retry = std::shared_ptr<bigquery::BigQueryReadRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<bigquery::BigQueryReadRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
-  auto factory = [stub](google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-    return stub->ReadRows(absl::make_unique<grpc::ClientContext>(), request);
-  };
-  auto resumable =
-      internal::MakeResumableStreamingReadRpc<google::cloud::bigquery::storage::v1::ReadRowsResponse, google::cloud::bigquery::storage::v1::ReadRowsRequest>(
-          retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-          factory,
-          bigquery::BigQueryReadReadRowsStreamingUpdater,
-          request);
-  return internal::MakeStreamRange(internal::StreamReader<google::cloud::bigquery::storage::v1::ReadRowsResponse>(
-      [resumable]{return resumable->Read();}));
+  auto factory =
+      [stub](google::cloud::bigquery::storage::v1::ReadRowsRequest const&
+                 request) {
+        return stub->ReadRows(absl::make_unique<grpc::ClientContext>(),
+                              request);
+      };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::cloud::bigquery::storage::v1::ReadRowsResponse,
+      google::cloud::bigquery::storage::v1::ReadRowsRequest>(
+      retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
+      factory, bigquery::BigQueryReadReadRowsStreamingUpdater, request);
+  return internal::MakeStreamRange(
+      internal::StreamReader<
+          google::cloud::bigquery::storage::v1::ReadRowsResponse>(
+          [resumable] { return resumable->Read(); }));
 }
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-BigQueryReadConnectionImpl::SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
+BigQueryReadConnectionImpl::SplitReadStream(
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SplitReadStream(request),
       [this](grpc::ClientContext& context,
-          google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
-        return stub_->SplitReadStream(context, request);
-      },
+             google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+                 request) { return stub_->SplitReadStream(context, request); },
       request, __func__);
 }
 

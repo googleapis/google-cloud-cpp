@@ -17,9 +17,9 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/internal/publisher_connection_impl.h"
+#include "google/cloud/eventarc/internal/publisher_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/eventarc/internal/publisher_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -33,18 +33,27 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<eventarc_internal::PublisherStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<eventarc::PublisherRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<eventarc::PublisherBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<eventarc::PublisherConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<eventarc::PublisherRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<eventarc::PublisherBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
-PublisherConnectionImpl::PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
+StatusOr<google::cloud::eventarc::publishing::v1::
+             PublishChannelConnectionEventsResponse>
+PublisherConnectionImpl::PublishChannelConnectionEvents(
+    google::cloud::eventarc::publishing::v1::
+        PublishChannelConnectionEventsRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PublishChannelConnectionEvents(request),
       [this](grpc::ClientContext& context,
-          google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
+             google::cloud::eventarc::publishing::v1::
+                 PublishChannelConnectionEventsRequest const& request) {
         return stub_->PublishChannelConnectionEvents(context, request);
       },
       request, __func__);

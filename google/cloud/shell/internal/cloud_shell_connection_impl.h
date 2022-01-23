@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_INTERNAL_CLOUD_SHELL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_INTERNAL_CLOUD_SHELL_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/shell/cloud_shell_connection.h"
 #include "google/cloud/shell/cloud_shell_connection_idempotency_policy.h"
 #include "google/cloud/shell/cloud_shell_options.h"
 #include "google/cloud/shell/internal/cloud_shell_retry_traits.h"
 #include "google/cloud/shell/internal/cloud_shell_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -45,24 +45,28 @@ class CloudShellServiceConnectionImpl
   ~CloudShellServiceConnectionImpl() override = default;
 
   CloudShellServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<shell_internal::CloudShellServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<shell_internal::CloudShellServiceStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::shell::v1::Environment>
-  GetEnvironment(google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
+  StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
+      google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
-  StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
+  StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const&
+                       request) override;
 
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
-  AuthorizeEnvironment(google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
+  AuthorizeEnvironment(
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
-  AddPublicKey(google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
+      google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
-  RemovePublicKey(google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+  RemovePublicKey(
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
  private:
   std::unique_ptr<shell::CloudShellServiceRetryPolicy> retry_policy() {
@@ -76,29 +80,37 @@ class CloudShellServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<shell::CloudShellServiceBackoffPolicyOption>()) {
-      return options.get<shell::CloudShellServiceBackoffPolicyOption>()->clone();
+      return options.get<shell::CloudShellServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<shell::CloudShellServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<shell::CloudShellServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<shell_internal::CloudShellServiceStub> stub_;
-  std::unique_ptr<shell::CloudShellServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<shell::CloudShellServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<shell::CloudShellServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<shell::CloudShellServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<shell::CloudShellServicePollingPolicyOption>()) {
-      return options.get<shell::CloudShellServicePollingPolicyOption>()->clone();
+      return options.get<shell::CloudShellServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

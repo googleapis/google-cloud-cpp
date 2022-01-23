@@ -17,13 +17,13 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/internal/product_connection_impl.h"
+#include "google/cloud/retail/internal/product_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/retail/internal/product_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -35,57 +35,72 @@ ProductServiceConnectionImpl::ProductServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_internal::ProductServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<retail::ProductServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<retail::ProductServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<retail::ProductServiceConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<retail::ProductServicePollingPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<retail::ProductServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<retail::ProductServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<retail::ProductServiceConnectionIdempotencyPolicyOption>()
+              ->clone()),
+      polling_policy_prototype_(
+          options.get<retail::ProductServicePollingPolicyOption>()->clone()) {}
 
 StatusOr<google::cloud::retail::v2::Product>
-ProductServiceConnectionImpl::CreateProduct(google::cloud::retail::v2::CreateProductRequest const& request) {
+ProductServiceConnectionImpl::CreateProduct(
+    google::cloud::retail::v2::CreateProductRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateProduct(request),
       [this](grpc::ClientContext& context,
-          google::cloud::retail::v2::CreateProductRequest const& request) {
+             google::cloud::retail::v2::CreateProductRequest const& request) {
         return stub_->CreateProduct(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::Product>
-ProductServiceConnectionImpl::GetProduct(google::cloud::retail::v2::GetProductRequest const& request) {
+ProductServiceConnectionImpl::GetProduct(
+    google::cloud::retail::v2::GetProductRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetProduct(request),
       [this](grpc::ClientContext& context,
-          google::cloud::retail::v2::GetProductRequest const& request) {
+             google::cloud::retail::v2::GetProductRequest const& request) {
         return stub_->GetProduct(context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::retail::v2::Product>
-ProductServiceConnectionImpl::ListProducts(google::cloud::retail::v2::ListProductsRequest request) {
+ProductServiceConnectionImpl::ListProducts(
+    google::cloud::retail::v2::ListProductsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<retail::ProductServiceRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<retail::ProductServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProducts(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::retail::v2::Product>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::retail::v2::Product>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::retail::v2::ListProductsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::retail::v2::ListProductsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::retail::v2::ListProductsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::retail::v2::ListProductsRequest const& request) {
               return stub->ListProducts(context, request);
             },
             r, function_name);
       },
       [](google::cloud::retail::v2::ListProductsResponse r) {
-        std::vector<google::cloud::retail::v2::Product> result(r.products().size());
+        std::vector<google::cloud::retail::v2::Product> result(
+            r.products().size());
         auto& messages = *r.mutable_products();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -93,135 +108,146 @@ ProductServiceConnectionImpl::ListProducts(google::cloud::retail::v2::ListProduc
 }
 
 StatusOr<google::cloud::retail::v2::Product>
-ProductServiceConnectionImpl::UpdateProduct(google::cloud::retail::v2::UpdateProductRequest const& request) {
+ProductServiceConnectionImpl::UpdateProduct(
+    google::cloud::retail::v2::UpdateProductRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateProduct(request),
       [this](grpc::ClientContext& context,
-          google::cloud::retail::v2::UpdateProductRequest const& request) {
+             google::cloud::retail::v2::UpdateProductRequest const& request) {
         return stub_->UpdateProduct(context, request);
       },
       request, __func__);
 }
 
-Status
-ProductServiceConnectionImpl::DeleteProduct(google::cloud::retail::v2::DeleteProductRequest const& request) {
+Status ProductServiceConnectionImpl::DeleteProduct(
+    google::cloud::retail::v2::DeleteProductRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteProduct(request),
       [this](grpc::ClientContext& context,
-          google::cloud::retail::v2::DeleteProductRequest const& request) {
+             google::cloud::retail::v2::DeleteProductRequest const& request) {
         return stub_->DeleteProduct(context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-ProductServiceConnectionImpl::ImportProducts(google::cloud::retail::v2::ImportProductsRequest const& request) {
+ProductServiceConnectionImpl::ImportProducts(
+    google::cloud::retail::v2::ImportProductsRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::ImportProductsResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::retail::v2::ImportProductsRequest const& request) {
-     return stub->AsyncImportProducts(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::ImportProductsResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->ImportProducts(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::ImportProductsResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::ImportProductsRequest const& request) {
+        return stub->AsyncImportProducts(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::ImportProductsResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ImportProducts(request), polling_policy(),
+      __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-ProductServiceConnectionImpl::SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request) {
+ProductServiceConnectionImpl::SetInventory(
+    google::cloud::retail::v2::SetInventoryRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::SetInventoryResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::retail::v2::SetInventoryRequest const& request) {
-     return stub->AsyncSetInventory(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::SetInventoryResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->SetInventory(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::SetInventoryResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::SetInventoryRequest const& request) {
+        return stub->AsyncSetInventory(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::SetInventoryResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->SetInventory(request), polling_policy(), __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-ProductServiceConnectionImpl::AddFulfillmentPlaces(google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+ProductServiceConnectionImpl::AddFulfillmentPlaces(
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::AddFulfillmentPlacesResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
-     return stub->AsyncAddFulfillmentPlaces(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::AddFulfillmentPlacesResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->AddFulfillmentPlaces(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::AddFulfillmentPlacesResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::AddFulfillmentPlacesRequest const&
+                 request) {
+        return stub->AsyncAddFulfillmentPlaces(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::AddFulfillmentPlacesResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->AddFulfillmentPlaces(request), polling_policy(),
+      __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-ProductServiceConnectionImpl::RemoveFulfillmentPlaces(google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   auto stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
-     return stub->AsyncRemoveFulfillmentPlaces(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->RemoveFulfillmentPlaces(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
+                 request) {
+        return stub->AsyncRemoveFulfillmentPlaces(cq, std::move(context),
+                                                  request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RemoveFulfillmentPlaces(request), polling_policy(),
+      __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

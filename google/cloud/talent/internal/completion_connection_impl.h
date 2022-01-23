@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPLETION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPLETION_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/talent/completion_connection.h"
 #include "google/cloud/talent/completion_connection_idempotency_policy.h"
 #include "google/cloud/talent/completion_options.h"
 #include "google/cloud/talent/internal/completion_retry_traits.h"
 #include "google/cloud/talent/internal/completion_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,18 +36,17 @@ namespace cloud {
 namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CompletionConnectionImpl
-    : public talent::CompletionConnection {
+class CompletionConnectionImpl : public talent::CompletionConnection {
  public:
   ~CompletionConnectionImpl() override = default;
 
   CompletionConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::CompletionStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<talent_internal::CompletionStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
-  CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
+      google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:
   std::unique_ptr<talent::CompletionRetryPolicy> retry_policy() {
@@ -66,10 +65,12 @@ class CompletionConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<talent::CompletionConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<talent::CompletionConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<talent::CompletionConnectionIdempotencyPolicyOption>()) {
-      return options.get<talent::CompletionConnectionIdempotencyPolicyOption>()->clone();
+      return options.get<talent::CompletionConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
@@ -78,7 +79,8 @@ class CompletionConnectionImpl
   std::shared_ptr<talent_internal::CompletionStub> stub_;
   std::unique_ptr<talent::CompletionRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<talent::CompletionConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<talent::CompletionConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,27 +40,26 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class InstancesConnectionImpl
-    : public appengine::InstancesConnection {
+class InstancesConnectionImpl : public appengine::InstancesConnection {
  public:
   ~InstancesConnectionImpl() override = default;
 
   InstancesConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::InstancesStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_internal::InstancesStub> stub,
+      Options const& options);
 
-  StreamRange<google::appengine::v1::Instance>
-  ListInstances(google::appengine::v1::ListInstancesRequest request) override;
+  StreamRange<google::appengine::v1::Instance> ListInstances(
+      google::appengine::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::appengine::v1::Instance>
-  GetInstance(google::appengine::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::appengine::v1::Instance> GetInstance(
+      google::appengine::v1::GetInstanceRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request) override;
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
+      google::appengine::v1::DeleteInstanceRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Instance>>
-  DebugInstance(google::appengine::v1::DebugInstanceRequest const& request) override;
+  future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
+      google::appengine::v1::DebugInstanceRequest const& request) override;
 
  private:
   std::unique_ptr<appengine::InstancesRetryPolicy> retry_policy() {
@@ -79,19 +78,24 @@ class InstancesConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<appengine::InstancesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<appengine::InstancesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::InstancesConnectionIdempotencyPolicyOption>()) {
-      return options.get<appengine::InstancesConnectionIdempotencyPolicyOption>()->clone();
+      return options
+          .get<appengine::InstancesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::InstancesStub> stub_;
-  std::unique_ptr<appengine::InstancesRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<appengine::InstancesRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::InstancesConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<appengine::InstancesConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

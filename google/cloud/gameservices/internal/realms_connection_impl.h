@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_INTERNAL_REALMS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_INTERNAL_REALMS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/internal/realms_retry_traits.h"
 #include "google/cloud/gameservices/internal/realms_stub.h"
 #include "google/cloud/gameservices/realms_connection.h"
 #include "google/cloud/gameservices/realms_connection_idempotency_policy.h"
 #include "google/cloud/gameservices/realms_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,33 +46,35 @@ class RealmsServiceConnectionImpl
   ~RealmsServiceConnectionImpl() override = default;
 
   RealmsServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<gameservices_internal::RealmsServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<gameservices_internal::RealmsServiceStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::gaming::v1::Realm>
-  ListRealms(google::cloud::gaming::v1::ListRealmsRequest request) override;
+  StreamRange<google::cloud::gaming::v1::Realm> ListRealms(
+      google::cloud::gaming::v1::ListRealmsRequest request) override;
 
-  StatusOr<google::cloud::gaming::v1::Realm>
-  GetRealm(google::cloud::gaming::v1::GetRealmRequest const& request) override;
+  StatusOr<google::cloud::gaming::v1::Realm> GetRealm(
+      google::cloud::gaming::v1::GetRealmRequest const& request) override;
 
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  CreateRealm(google::cloud::gaming::v1::CreateRealmRequest const& request) override;
+  future<StatusOr<google::cloud::gaming::v1::Realm>> CreateRealm(
+      google::cloud::gaming::v1::CreateRealmRequest const& request) override;
 
-  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteRealm(google::cloud::gaming::v1::DeleteRealmRequest const& request) override;
+  future<StatusOr<google::cloud::gaming::v1::OperationMetadata>> DeleteRealm(
+      google::cloud::gaming::v1::DeleteRealmRequest const& request) override;
 
-  future<StatusOr<google::cloud::gaming::v1::Realm>>
-  UpdateRealm(google::cloud::gaming::v1::UpdateRealmRequest const& request) override;
+  future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
+      google::cloud::gaming::v1::UpdateRealmRequest const& request) override;
 
   StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
-  PreviewRealmUpdate(google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) override;
+  PreviewRealmUpdate(google::cloud::gaming::v1::PreviewRealmUpdateRequest const&
+                         request) override;
 
  private:
   std::unique_ptr<gameservices::RealmsServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<gameservices::RealmsServiceRetryPolicyOption>()) {
-      return options.get<gameservices::RealmsServiceRetryPolicyOption>()->clone();
+      return options.get<gameservices::RealmsServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -80,29 +82,37 @@ class RealmsServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<gameservices::RealmsServiceBackoffPolicyOption>()) {
-      return options.get<gameservices::RealmsServiceBackoffPolicyOption>()->clone();
+      return options.get<gameservices::RealmsServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gameservices_internal::RealmsServiceStub> stub_;
-  std::unique_ptr<gameservices::RealmsServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<gameservices::RealmsServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<gameservices::RealmsServicePollingPolicyOption>()) {
-      return options.get<gameservices::RealmsServicePollingPolicyOption>()->clone();
+      return options.get<gameservices::RealmsServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

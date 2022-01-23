@@ -46,60 +46,68 @@ class ApiGatewayServiceConnectionImpl
   ~ApiGatewayServiceConnectionImpl() override = default;
 
   ApiGatewayServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::apigateway::v1::Gateway>
-  ListGateways(google::cloud::apigateway::v1::ListGatewaysRequest request) override;
+  StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
+      google::cloud::apigateway::v1::ListGatewaysRequest request) override;
 
-  StatusOr<google::cloud::apigateway::v1::Gateway>
-  GetGateway(google::cloud::apigateway::v1::GetGatewayRequest const& request) override;
+  StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
+      google::cloud::apigateway::v1::GetGatewayRequest const& request) override;
 
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-  CreateGateway(google::cloud::apigateway::v1::CreateGatewayRequest const& request) override;
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
+      google::cloud::apigateway::v1::CreateGatewayRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-  UpdateGateway(google::cloud::apigateway::v1::UpdateGatewayRequest const& request) override;
-
-  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteGateway(google::cloud::apigateway::v1::DeleteGatewayRequest const& request) override;
-
-  StreamRange<google::cloud::apigateway::v1::Api>
-  ListApis(google::cloud::apigateway::v1::ListApisRequest request) override;
-
-  StatusOr<google::cloud::apigateway::v1::Api>
-  GetApi(google::cloud::apigateway::v1::GetApiRequest const& request) override;
-
-  future<StatusOr<google::cloud::apigateway::v1::Api>>
-  CreateApi(google::cloud::apigateway::v1::CreateApiRequest const& request) override;
-
-  future<StatusOr<google::cloud::apigateway::v1::Api>>
-  UpdateApi(google::cloud::apigateway::v1::UpdateApiRequest const& request) override;
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
+      google::cloud::apigateway::v1::UpdateGatewayRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApi(google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
+  DeleteGateway(google::cloud::apigateway::v1::DeleteGatewayRequest const&
+                    request) override;
 
-  StreamRange<google::cloud::apigateway::v1::ApiConfig>
-  ListApiConfigs(google::cloud::apigateway::v1::ListApiConfigsRequest request) override;
+  StreamRange<google::cloud::apigateway::v1::Api> ListApis(
+      google::cloud::apigateway::v1::ListApisRequest request) override;
 
-  StatusOr<google::cloud::apigateway::v1::ApiConfig>
-  GetApiConfig(google::cloud::apigateway::v1::GetApiConfigRequest const& request) override;
+  StatusOr<google::cloud::apigateway::v1::Api> GetApi(
+      google::cloud::apigateway::v1::GetApiRequest const& request) override;
 
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-  CreateApiConfig(google::cloud::apigateway::v1::CreateApiConfigRequest const& request) override;
+  future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
+      google::cloud::apigateway::v1::CreateApiRequest const& request) override;
 
-  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-  UpdateApiConfig(google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) override;
+  future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
+      google::cloud::apigateway::v1::UpdateApiRequest const& request) override;
+
+  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
+      google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
+
+  StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
+      google::cloud::apigateway::v1::ListApiConfigsRequest request) override;
+
+  StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
+      google::cloud::apigateway::v1::GetApiConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
+      google::cloud::apigateway::v1::CreateApiConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
+      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApiConfig(google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) override;
+  DeleteApiConfig(google::cloud::apigateway::v1::DeleteApiConfigRequest const&
+                      request) override;
 
  private:
   std::unique_ptr<apigateway::ApiGatewayServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<apigateway::ApiGatewayServiceRetryPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServiceRetryPolicyOption>()->clone();
+      return options.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -107,29 +115,37 @@ class ApiGatewayServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<apigateway::ApiGatewayServiceBackoffPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()->clone();
+      return options.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub_;
-  std::unique_ptr<apigateway::ApiGatewayServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<apigateway::ApiGatewayServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<apigateway::ApiGatewayServicePollingPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServicePollingPolicyOption>()->clone();
+      return options.get<apigateway::ApiGatewayServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

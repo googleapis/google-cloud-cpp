@@ -17,12 +17,12 @@
 // source: google/cloud/workflows/executions/v1/executions.proto
 
 #include "google/cloud/workflows/internal/executions_connection_impl.h"
+#include "google/cloud/workflows/internal/executions_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/workflows/internal/executions_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -34,32 +34,44 @@ ExecutionsConnectionImpl::ExecutionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<workflows_internal::ExecutionsStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<workflows::ExecutionsRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<workflows::ExecutionsBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<workflows::ExecutionsConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<workflows::ExecutionsRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<workflows::ExecutionsBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options.get<workflows::ExecutionsConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
-ExecutionsConnectionImpl::ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
+ExecutionsConnectionImpl::ListExecutions(
+    google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<workflows::ExecutionsRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<workflows::ExecutionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListExecutions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::workflows::executions::v1::Execution>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::workflows::executions::v1::Execution>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::workflows::executions::v1::ListExecutionsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::workflows::executions::v1::
+                       ListExecutionsRequest const& request) {
               return stub->ListExecutions(context, request);
             },
             r, function_name);
       },
       [](google::cloud::workflows::executions::v1::ListExecutionsResponse r) {
-        std::vector<google::cloud::workflows::executions::v1::Execution> result(r.executions().size());
+        std::vector<google::cloud::workflows::executions::v1::Execution> result(
+            r.executions().size());
         auto& messages = *r.mutable_executions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -67,36 +79,44 @@ ExecutionsConnectionImpl::ListExecutions(google::cloud::workflows::executions::v
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsConnectionImpl::CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) {
+ExecutionsConnectionImpl::CreateExecution(
+    google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateExecution(request),
       [this](grpc::ClientContext& context,
-          google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) {
+             google::cloud::workflows::executions::v1::
+                 CreateExecutionRequest const& request) {
         return stub_->CreateExecution(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsConnectionImpl::GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request) {
+ExecutionsConnectionImpl::GetExecution(
+    google::cloud::workflows::executions::v1::GetExecutionRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetExecution(request),
-      [this](grpc::ClientContext& context,
-          google::cloud::workflows::executions::v1::GetExecutionRequest const& request) {
-        return stub_->GetExecution(context, request);
-      },
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::workflows::executions::v1::GetExecutionRequest const&
+              request) { return stub_->GetExecution(context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsConnectionImpl::CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) {
+ExecutionsConnectionImpl::CancelExecution(
+    google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CancelExecution(request),
       [this](grpc::ClientContext& context,
-          google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) {
+             google::cloud::workflows::executions::v1::
+                 CancelExecutionRequest const& request) {
         return stub_->CancelExecution(context, request);
       },
       request, __func__);

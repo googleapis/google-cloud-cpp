@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_PRODUCT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_INTERNAL_PRODUCT_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/retail/internal/product_retry_traits.h"
 #include "google/cloud/retail/internal/product_stub.h"
 #include "google/cloud/retail/product_connection.h"
 #include "google/cloud/retail/product_connection_idempotency_policy.h"
 #include "google/cloud/retail/product_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,42 +40,47 @@ namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ProductServiceConnectionImpl
-    : public retail::ProductServiceConnection {
+class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
  public:
   ~ProductServiceConnectionImpl() override = default;
 
   ProductServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_internal::ProductServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<retail_internal::ProductServiceStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::retail::v2::Product>
-  CreateProduct(google::cloud::retail::v2::CreateProductRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Product> CreateProduct(
+      google::cloud::retail::v2::CreateProductRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::Product>
-  GetProduct(google::cloud::retail::v2::GetProductRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Product> GetProduct(
+      google::cloud::retail::v2::GetProductRequest const& request) override;
 
-  StreamRange<google::cloud::retail::v2::Product>
-  ListProducts(google::cloud::retail::v2::ListProductsRequest request) override;
+  StreamRange<google::cloud::retail::v2::Product> ListProducts(
+      google::cloud::retail::v2::ListProductsRequest request) override;
 
-  StatusOr<google::cloud::retail::v2::Product>
-  UpdateProduct(google::cloud::retail::v2::UpdateProductRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
+      google::cloud::retail::v2::UpdateProductRequest const& request) override;
 
-  Status
-  DeleteProduct(google::cloud::retail::v2::DeleteProductRequest const& request) override;
+  Status DeleteProduct(
+      google::cloud::retail::v2::DeleteProductRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(google::cloud::retail::v2::ImportProductsRequest const& request) override;
+  ImportProducts(
+      google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request) override;
+  SetInventory(
+      google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) override;
+  AddFulfillmentPlaces(
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) override;
+  RemoveFulfillmentPlaces(
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
+      override;
 
  private:
   std::unique_ptr<retail::ProductServiceRetryPolicy> retry_policy() {
@@ -94,19 +99,25 @@ class ProductServiceConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<retail::ProductServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<retail::ProductServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::ProductServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<retail::ProductServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<retail::ProductServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<retail::ProductServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::ProductServiceStub> stub_;
-  std::unique_ptr<retail::ProductServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<retail::ProductServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::ProductServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<retail::ProductServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

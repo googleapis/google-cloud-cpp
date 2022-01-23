@@ -43,24 +43,31 @@ class ArtifactRegistryConnectionImpl
   ~ArtifactRegistryConnectionImpl() override = default;
 
   ArtifactRegistryConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
+      Options const& options);
 
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-  ListDockerImages(google::devtools::artifactregistry::v1::ListDockerImagesRequest request) override;
+  ListDockerImages(
+      google::devtools::artifactregistry::v1::ListDockerImagesRequest request)
+      override;
 
   StreamRange<google::devtools::artifactregistry::v1::Repository>
-  ListRepositories(google::devtools::artifactregistry::v1::ListRepositoriesRequest request) override;
+  ListRepositories(
+      google::devtools::artifactregistry::v1::ListRepositoriesRequest request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Repository>
-  GetRepository(google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
+      google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy> retry_policy() {
+  std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<artifactregistry::ArtifactRegistryRetryPolicyOption>()) {
-      return options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()->clone();
+      return options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -68,24 +75,33 @@ class ArtifactRegistryConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<artifactregistry::ArtifactRegistryBackoffPolicyOption>()) {
-      return options.get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()->clone();
+      return options
+          .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
-      return options.get<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<artifactregistry::
+                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<artifactregistry::
+                   ArtifactRegistryConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub_;
-  std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

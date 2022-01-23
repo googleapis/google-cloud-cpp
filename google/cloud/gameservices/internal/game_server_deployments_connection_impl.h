@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_INTERNAL_GAME_SERVER_DEPLOYMENTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_INTERNAL_GAME_SERVER_DEPLOYMENTS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gameservices/game_server_deployments_connection.h"
 #include "google/cloud/gameservices/game_server_deployments_connection_idempotency_policy.h"
 #include "google/cloud/gameservices/game_server_deployments_options.h"
 #include "google/cloud/gameservices/internal/game_server_deployments_retry_traits.h"
 #include "google/cloud/gameservices/internal/game_server_deployments_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,72 +46,114 @@ class GameServerDeploymentsServiceConnectionImpl
   ~GameServerDeploymentsServiceConnectionImpl() override = default;
 
   GameServerDeploymentsServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub>
+          stub,
+      Options const& options);
 
   StreamRange<google::cloud::gaming::v1::GameServerDeployment>
-  ListGameServerDeployments(google::cloud::gaming::v1::ListGameServerDeploymentsRequest request) override;
+  ListGameServerDeployments(
+      google::cloud::gaming::v1::ListGameServerDeploymentsRequest request)
+      override;
 
   StatusOr<google::cloud::gaming::v1::GameServerDeployment>
-  GetGameServerDeployment(google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request) override;
+  GetGameServerDeployment(
+      google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  CreateGameServerDeployment(google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request) override;
+  CreateGameServerDeployment(
+      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerDeployment(google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request) override;
+  DeleteGameServerDeployment(
+      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  UpdateGameServerDeployment(google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request) override;
+  UpdateGameServerDeployment(
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
+          request) override;
 
   StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
-  GetGameServerDeploymentRollout(google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const& request) override;
+  GetGameServerDeploymentRollout(
+      google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  UpdateGameServerDeploymentRollout(google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const& request) override;
+  UpdateGameServerDeploymentRollout(
+      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
+          request) override;
 
-  StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
-  PreviewGameServerDeploymentRollout(google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const& request) override;
+  StatusOr<
+      google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
+  PreviewGameServerDeploymentRollout(
+      google::cloud::gaming::v1::
+          PreviewGameServerDeploymentRolloutRequest const& request) override;
 
   StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
-  FetchDeploymentState(google::cloud::gaming::v1::FetchDeploymentStateRequest const& request) override;
+  FetchDeploymentState(
+      google::cloud::gaming::v1::FetchDeploymentStateRequest const& request)
+      override;
 
  private:
-  std::unique_ptr<gameservices::GameServerDeploymentsServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<gameservices::GameServerDeploymentsServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()) {
-      return options.get<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()->clone();
+    if (options.has<
+            gameservices::GameServerDeploymentsServiceRetryPolicyOption>()) {
+      return options
+          .get<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()) {
-      return options.get<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()->clone();
+    if (options.has<
+            gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()) {
+      return options
+          .get<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            gameservices::
+                GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<
+              gameservices::
+                  GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub> stub_;
-  std::unique_ptr<gameservices::GameServerDeploymentsServiceRetryPolicy const> retry_policy_prototype_;
+  std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub>
+      stub_;
+  std::unique_ptr<gameservices::GameServerDeploymentsServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<
+      gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::GameServerDeploymentsServicePollingPolicyOption>()) {
-      return options.get<gameservices::GameServerDeploymentsServicePollingPolicyOption>()->clone();
+    if (options.has<
+            gameservices::GameServerDeploymentsServicePollingPolicyOption>()) {
+      return options
+          .get<gameservices::GameServerDeploymentsServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

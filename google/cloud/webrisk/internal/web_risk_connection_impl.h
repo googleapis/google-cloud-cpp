@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_INTERNAL_WEB_RISK_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_INTERNAL_WEB_RISK_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
 #include "google/cloud/webrisk/internal/web_risk_retry_traits.h"
 #include "google/cloud/webrisk/internal/web_risk_stub.h"
 #include "google/cloud/webrisk/web_risk_connection.h"
 #include "google/cloud/webrisk/web_risk_connection_idempotency_policy.h"
 #include "google/cloud/webrisk/web_risk_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
@@ -36,27 +36,29 @@ namespace cloud {
 namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class WebRiskServiceConnectionImpl
-    : public webrisk::WebRiskServiceConnection {
+class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
  public:
   ~WebRiskServiceConnectionImpl() override = default;
 
   WebRiskServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub,
+      Options const& options);
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) override;
+  ComputeThreatListDiff(
+      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
+      override;
 
-  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
-  SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
+  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
+      google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-  SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
+  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
+      google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
 
-  StatusOr<google::cloud::webrisk::v1::Submission>
-  CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request) override;
+  StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
+      google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
+      override;
 
  private:
   std::unique_ptr<webrisk::WebRiskServiceRetryPolicy> retry_policy() {
@@ -75,19 +77,25 @@ class WebRiskServiceConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub_;
-  std::unique_ptr<webrisk::WebRiskServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<webrisk::WebRiskServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

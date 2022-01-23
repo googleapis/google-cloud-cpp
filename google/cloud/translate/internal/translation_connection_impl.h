@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_INTERNAL_TRANSLATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_INTERNAL_TRANSLATION_CONNECTION_IMPL_H
 
+#include "google/cloud/translate/internal/translation_retry_traits.h"
+#include "google/cloud/translate/internal/translation_stub.h"
+#include "google/cloud/translate/translation_connection.h"
+#include "google/cloud/translate/translation_connection_idempotency_policy.h"
+#include "google/cloud/translate/translation_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -26,11 +31,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/translate/internal/translation_retry_traits.h"
-#include "google/cloud/translate/internal/translation_stub.h"
-#include "google/cloud/translate/translation_connection.h"
-#include "google/cloud/translate/translation_connection_idempotency_policy.h"
-#include "google/cloud/translate/translation_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -46,45 +46,60 @@ class TranslationServiceConnectionImpl
   ~TranslationServiceConnectionImpl() override = default;
 
   TranslationServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<translate_internal::TranslationServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<translate_internal::TranslationServiceStub> stub,
+      Options const& options);
 
-  StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-  TranslateText(google::cloud::translation::v3::TranslateTextRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
+      google::cloud::translation::v3::TranslateTextRequest const& request)
+      override;
 
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-  DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const& request) override;
+  DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const&
+                     request) override;
 
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
-  GetSupportedLanguages(google::cloud::translation::v3::GetSupportedLanguagesRequest const& request) override;
+  GetSupportedLanguages(
+      google::cloud::translation::v3::GetSupportedLanguagesRequest const&
+          request) override;
 
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
-  TranslateDocument(google::cloud::translation::v3::TranslateDocumentRequest const& request) override;
+  TranslateDocument(
+      google::cloud::translation::v3::TranslateDocumentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-  BatchTranslateText(google::cloud::translation::v3::BatchTranslateTextRequest const& request) override;
+  BatchTranslateText(
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(google::cloud::translation::v3::BatchTranslateDocumentRequest const& request) override;
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  CreateGlossary(google::cloud::translation::v3::CreateGlossaryRequest const& request) override;
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
+      google::cloud::translation::v3::CreateGlossaryRequest const& request)
+      override;
 
-  StreamRange<google::cloud::translation::v3::Glossary>
-  ListGlossaries(google::cloud::translation::v3::ListGlossariesRequest request) override;
+  StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
+      google::cloud::translation::v3::ListGlossariesRequest request) override;
 
-  StatusOr<google::cloud::translation::v3::Glossary>
-  GetGlossary(google::cloud::translation::v3::GetGlossaryRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
+      google::cloud::translation::v3::GetGlossaryRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const& request) override;
+  DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const&
+                     request) override;
 
  private:
   std::unique_ptr<translate::TranslationServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<translate::TranslationServiceRetryPolicyOption>()) {
-      return options.get<translate::TranslationServiceRetryPolicyOption>()->clone();
+      return options.get<translate::TranslationServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -92,29 +107,37 @@ class TranslationServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<translate::TranslationServiceBackoffPolicyOption>()) {
-      return options.get<translate::TranslationServiceBackoffPolicyOption>()->clone();
+      return options.get<translate::TranslationServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<translate::TranslationServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<translate::TranslationServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<translate::TranslationServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<translate::TranslationServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            translate::TranslationServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<translate::TranslationServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<translate_internal::TranslationServiceStub> stub_;
-  std::unique_ptr<translate::TranslationServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<translate::TranslationServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<translate::TranslationServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<translate::TranslationServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<translate::TranslationServicePollingPolicyOption>()) {
-      return options.get<translate::TranslationServicePollingPolicyOption>()->clone();
+      return options.get<translate::TranslationServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

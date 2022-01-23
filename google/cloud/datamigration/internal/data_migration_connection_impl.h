@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAMIGRATION_INTERNAL_DATA_MIGRATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAMIGRATION_INTERNAL_DATA_MIGRATION_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datamigration/data_migration_connection.h"
 #include "google/cloud/datamigration/data_migration_connection_idempotency_policy.h"
 #include "google/cloud/datamigration/data_migration_options.h"
 #include "google/cloud/datamigration/internal/data_migration_retry_traits.h"
 #include "google/cloud/datamigration/internal/data_migration_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,66 +46,96 @@ class DataMigrationServiceConnectionImpl
   ~DataMigrationServiceConnectionImpl() override = default;
 
   DataMigrationServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub,
+      Options const& options);
 
-  StreamRange<google::cloud::clouddms::v1::MigrationJob>
-  ListMigrationJobs(google::cloud::clouddms::v1::ListMigrationJobsRequest request) override;
+  StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
+      google::cloud::clouddms::v1::ListMigrationJobsRequest request) override;
 
-  StatusOr<google::cloud::clouddms::v1::MigrationJob>
-  GetMigrationJob(google::cloud::clouddms::v1::GetMigrationJobRequest const& request) override;
-
-  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  CreateMigrationJob(google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) override;
+  StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
+      google::cloud::clouddms::v1::GetMigrationJobRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  UpdateMigrationJob(google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) override;
+  CreateMigrationJob(
+      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  UpdateMigrationJob(
+      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteMigrationJob(google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) override;
+  DeleteMigrationJob(
+      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
+      google::cloud::clouddms::v1::StartMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
+      google::cloud::clouddms::v1::StopMigrationJobRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  StartMigrationJob(google::cloud::clouddms::v1::StartMigrationJobRequest const& request) override;
+  ResumeMigrationJob(
+      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  StopMigrationJob(google::cloud::clouddms::v1::StopMigrationJobRequest const& request) override;
+  PromoteMigrationJob(
+      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  ResumeMigrationJob(google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) override;
+  VerifyMigrationJob(
+      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  PromoteMigrationJob(google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) override;
+  RestartMigrationJob(
+      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  VerifyMigrationJob(google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) override;
-
-  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  RestartMigrationJob(google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) override;
-
-  StatusOr<google::cloud::clouddms::v1::SshScript>
-  GenerateSshScript(google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) override;
+  StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
+      google::cloud::clouddms::v1::GenerateSshScriptRequest const& request)
+      override;
 
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-  ListConnectionProfiles(google::cloud::clouddms::v1::ListConnectionProfilesRequest request) override;
+  ListConnectionProfiles(
+      google::cloud::clouddms::v1::ListConnectionProfilesRequest request)
+      override;
 
-  StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
-  GetConnectionProfile(google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) override;
+  StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
+      google::cloud::clouddms::v1::GetConnectionProfileRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  CreateConnectionProfile(google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request) override;
+  CreateConnectionProfile(
+      google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request) override;
+  UpdateConnectionProfile(
+      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConnectionProfile(google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request) override;
+  DeleteConnectionProfile(
+      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<datamigration::DataMigrationServiceRetryPolicyOption>()) {
-      return options.get<datamigration::DataMigrationServiceRetryPolicyOption>()->clone();
+      return options
+          .get<datamigration::DataMigrationServiceRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -113,29 +143,43 @@ class DataMigrationServiceConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<datamigration::DataMigrationServiceBackoffPolicyOption>()) {
-      return options.get<datamigration::DataMigrationServiceBackoffPolicyOption>()->clone();
+      return options
+          .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<datamigration::DataMigrationServiceConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      datamigration::DataMigrationServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datamigration::DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<datamigration::DataMigrationServiceConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<datamigration::
+                     DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<datamigration::
+                   DataMigrationServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub_;
-  std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<datamigration::DataMigrationServiceConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<
+      datamigration::DataMigrationServiceConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<datamigration::DataMigrationServicePollingPolicyOption>()) {
-      return options.get<datamigration::DataMigrationServicePollingPolicyOption>()->clone();
+      return options
+          .get<datamigration::DataMigrationServicePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

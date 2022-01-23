@@ -17,12 +17,12 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/internal/key_management_connection_impl.h"
+#include "google/cloud/kms/internal/key_management_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/kms/internal/key_management_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -34,32 +34,43 @@ KeyManagementServiceConnectionImpl::KeyManagementServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<kms_internal::KeyManagementServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<kms::KeyManagementServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<kms::KeyManagementServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<kms::KeyManagementServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<kms::KeyManagementServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StreamRange<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceConnectionImpl::ListKeyRings(google::cloud::kms::v1::ListKeyRingsRequest request) {
+KeyManagementServiceConnectionImpl::ListKeyRings(
+    google::cloud::kms::v1::ListKeyRingsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListKeyRings(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::v1::KeyRing>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::kms::v1::KeyRing>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::kms::v1::ListKeyRingsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::kms::v1::ListKeyRingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::kms::v1::ListKeyRingsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::kms::v1::ListKeyRingsRequest const& request) {
               return stub->ListKeyRings(context, request);
             },
             r, function_name);
       },
       [](google::cloud::kms::v1::ListKeyRingsResponse r) {
-        std::vector<google::cloud::kms::v1::KeyRing> result(r.key_rings().size());
+        std::vector<google::cloud::kms::v1::KeyRing> result(
+            r.key_rings().size());
         auto& messages = *r.mutable_key_rings();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -67,26 +78,32 @@ KeyManagementServiceConnectionImpl::ListKeyRings(google::cloud::kms::v1::ListKey
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceConnectionImpl::ListCryptoKeys(google::cloud::kms::v1::ListCryptoKeysRequest request) {
+KeyManagementServiceConnectionImpl::ListCryptoKeys(
+    google::cloud::kms::v1::ListCryptoKeysRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCryptoKeys(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::v1::CryptoKey>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::kms::v1::CryptoKey>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::kms::v1::ListCryptoKeysRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::kms::v1::ListCryptoKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::kms::v1::ListCryptoKeysRequest const& request) {
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::kms::v1::ListCryptoKeysRequest const& request) {
               return stub->ListCryptoKeys(context, request);
             },
             r, function_name);
       },
       [](google::cloud::kms::v1::ListCryptoKeysResponse r) {
-        std::vector<google::cloud::kms::v1::CryptoKey> result(r.crypto_keys().size());
+        std::vector<google::cloud::kms::v1::CryptoKey> result(
+            r.crypto_keys().size());
         auto& messages = *r.mutable_crypto_keys();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -94,26 +111,32 @@ KeyManagementServiceConnectionImpl::ListCryptoKeys(google::cloud::kms::v1::ListC
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceConnectionImpl::ListCryptoKeyVersions(google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) {
+KeyManagementServiceConnectionImpl::ListCryptoKeyVersions(
+    google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCryptoKeyVersions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::kms::v1::ListCryptoKeyVersionsRequest const&
+                       request) {
               return stub->ListCryptoKeyVersions(context, request);
             },
             r, function_name);
       },
       [](google::cloud::kms::v1::ListCryptoKeyVersionsResponse r) {
-        std::vector<google::cloud::kms::v1::CryptoKeyVersion> result(r.crypto_key_versions().size());
+        std::vector<google::cloud::kms::v1::CryptoKeyVersion> result(
+            r.crypto_key_versions().size());
         auto& messages = *r.mutable_crypto_key_versions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -121,26 +144,32 @@ KeyManagementServiceConnectionImpl::ListCryptoKeyVersions(google::cloud::kms::v1
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceConnectionImpl::ListImportJobs(google::cloud::kms::v1::ListImportJobsRequest request) {
+KeyManagementServiceConnectionImpl::ListImportJobs(
+    google::cloud::kms::v1::ListImportJobsRequest request) {
   request.clear_page_token();
   auto stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListImportJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::v1::ImportJob>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::kms::v1::ImportJob>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::kms::v1::ListImportJobsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::kms::v1::ListImportJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::kms::v1::ListImportJobsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::kms::v1::ListImportJobsRequest const& request) {
               return stub->ListImportJobs(context, request);
             },
             r, function_name);
       },
       [](google::cloud::kms::v1::ListImportJobsResponse r) {
-        std::vector<google::cloud::kms::v1::ImportJob> result(r.import_jobs().size());
+        std::vector<google::cloud::kms::v1::ImportJob> result(
+            r.import_jobs().size());
         auto& messages = *r.mutable_import_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -148,35 +177,39 @@ KeyManagementServiceConnectionImpl::ListImportJobs(google::cloud::kms::v1::ListI
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceConnectionImpl::GetKeyRing(google::cloud::kms::v1::GetKeyRingRequest const& request) {
+KeyManagementServiceConnectionImpl::GetKeyRing(
+    google::cloud::kms::v1::GetKeyRingRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetKeyRing(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::GetKeyRingRequest const& request) {
+             google::cloud::kms::v1::GetKeyRingRequest const& request) {
         return stub_->GetKeyRing(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceConnectionImpl::GetCryptoKey(google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
+KeyManagementServiceConnectionImpl::GetCryptoKey(
+    google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetCryptoKey(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
+             google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
         return stub_->GetCryptoKey(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceConnectionImpl::GetCryptoKeyVersion(google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
+KeyManagementServiceConnectionImpl::GetCryptoKeyVersion(
+    google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetCryptoKeyVersion(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
         return stub_->GetCryptoKeyVersion(context, request);
       },
@@ -184,227 +217,251 @@ KeyManagementServiceConnectionImpl::GetCryptoKeyVersion(google::cloud::kms::v1::
 }
 
 StatusOr<google::cloud::kms::v1::PublicKey>
-KeyManagementServiceConnectionImpl::GetPublicKey(google::cloud::kms::v1::GetPublicKeyRequest const& request) {
+KeyManagementServiceConnectionImpl::GetPublicKey(
+    google::cloud::kms::v1::GetPublicKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetPublicKey(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::GetPublicKeyRequest const& request) {
+             google::cloud::kms::v1::GetPublicKeyRequest const& request) {
         return stub_->GetPublicKey(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceConnectionImpl::GetImportJob(google::cloud::kms::v1::GetImportJobRequest const& request) {
+KeyManagementServiceConnectionImpl::GetImportJob(
+    google::cloud::kms::v1::GetImportJobRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetImportJob(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::GetImportJobRequest const& request) {
+             google::cloud::kms::v1::GetImportJobRequest const& request) {
         return stub_->GetImportJob(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
-KeyManagementServiceConnectionImpl::CreateKeyRing(google::cloud::kms::v1::CreateKeyRingRequest const& request) {
+KeyManagementServiceConnectionImpl::CreateKeyRing(
+    google::cloud::kms::v1::CreateKeyRingRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateKeyRing(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::CreateKeyRingRequest const& request) {
+             google::cloud::kms::v1::CreateKeyRingRequest const& request) {
         return stub_->CreateKeyRing(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceConnectionImpl::CreateCryptoKey(google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
+KeyManagementServiceConnectionImpl::CreateCryptoKey(
+    google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateCryptoKey(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
+             google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
         return stub_->CreateCryptoKey(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceConnectionImpl::CreateCryptoKeyVersion(google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
+KeyManagementServiceConnectionImpl::CreateCryptoKeyVersion(
+    google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateCryptoKeyVersion(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
+             google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&
+                 request) {
         return stub_->CreateCryptoKeyVersion(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceConnectionImpl::ImportCryptoKeyVersion(google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
+KeyManagementServiceConnectionImpl::ImportCryptoKeyVersion(
+    google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ImportCryptoKeyVersion(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
+             google::cloud::kms::v1::ImportCryptoKeyVersionRequest const&
+                 request) {
         return stub_->ImportCryptoKeyVersion(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
-KeyManagementServiceConnectionImpl::CreateImportJob(google::cloud::kms::v1::CreateImportJobRequest const& request) {
+KeyManagementServiceConnectionImpl::CreateImportJob(
+    google::cloud::kms::v1::CreateImportJobRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateImportJob(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::CreateImportJobRequest const& request) {
+             google::cloud::kms::v1::CreateImportJobRequest const& request) {
         return stub_->CreateImportJob(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceConnectionImpl::UpdateCryptoKey(google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
+KeyManagementServiceConnectionImpl::UpdateCryptoKey(
+    google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateCryptoKey(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
+             google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
         return stub_->UpdateCryptoKey(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceConnectionImpl::UpdateCryptoKeyVersion(google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
+KeyManagementServiceConnectionImpl::UpdateCryptoKeyVersion(
+    google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateCryptoKeyVersion(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
+             google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const&
+                 request) {
         return stub_->UpdateCryptoKeyVersion(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
-KeyManagementServiceConnectionImpl::UpdateCryptoKeyPrimaryVersion(google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request) {
+KeyManagementServiceConnectionImpl::UpdateCryptoKeyPrimaryVersion(
+    google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
+        request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateCryptoKeyPrimaryVersion(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request) {
+             google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
+                 request) {
         return stub_->UpdateCryptoKeyPrimaryVersion(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceConnectionImpl::DestroyCryptoKeyVersion(google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
+KeyManagementServiceConnectionImpl::DestroyCryptoKeyVersion(
+    google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DestroyCryptoKeyVersion(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
+             google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const&
+                 request) {
         return stub_->DestroyCryptoKeyVersion(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-KeyManagementServiceConnectionImpl::RestoreCryptoKeyVersion(google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
+KeyManagementServiceConnectionImpl::RestoreCryptoKeyVersion(
+    google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->RestoreCryptoKeyVersion(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
+             google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const&
+                 request) {
         return stub_->RestoreCryptoKeyVersion(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
-KeyManagementServiceConnectionImpl::Encrypt(google::cloud::kms::v1::EncryptRequest const& request) {
+KeyManagementServiceConnectionImpl::Encrypt(
+    google::cloud::kms::v1::EncryptRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Encrypt(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->Encrypt(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::EncryptRequest const& request) {
+             google::cloud::kms::v1::EncryptRequest const& request) {
         return stub_->Encrypt(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
-KeyManagementServiceConnectionImpl::Decrypt(google::cloud::kms::v1::DecryptRequest const& request) {
+KeyManagementServiceConnectionImpl::Decrypt(
+    google::cloud::kms::v1::DecryptRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Decrypt(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->Decrypt(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::DecryptRequest const& request) {
+             google::cloud::kms::v1::DecryptRequest const& request) {
         return stub_->Decrypt(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
-KeyManagementServiceConnectionImpl::AsymmetricSign(google::cloud::kms::v1::AsymmetricSignRequest const& request) {
+KeyManagementServiceConnectionImpl::AsymmetricSign(
+    google::cloud::kms::v1::AsymmetricSignRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AsymmetricSign(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::AsymmetricSignRequest const& request) {
+             google::cloud::kms::v1::AsymmetricSignRequest const& request) {
         return stub_->AsymmetricSign(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
-KeyManagementServiceConnectionImpl::AsymmetricDecrypt(google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
+KeyManagementServiceConnectionImpl::AsymmetricDecrypt(
+    google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AsymmetricDecrypt(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
+             google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
         return stub_->AsymmetricDecrypt(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
-KeyManagementServiceConnectionImpl::MacSign(google::cloud::kms::v1::MacSignRequest const& request) {
+KeyManagementServiceConnectionImpl::MacSign(
+    google::cloud::kms::v1::MacSignRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MacSign(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->MacSign(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::MacSignRequest const& request) {
+             google::cloud::kms::v1::MacSignRequest const& request) {
         return stub_->MacSign(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
-KeyManagementServiceConnectionImpl::MacVerify(google::cloud::kms::v1::MacVerifyRequest const& request) {
+KeyManagementServiceConnectionImpl::MacVerify(
+    google::cloud::kms::v1::MacVerifyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->MacVerify(request),
       [this](grpc::ClientContext& context,
-          google::cloud::kms::v1::MacVerifyRequest const& request) {
+             google::cloud::kms::v1::MacVerifyRequest const& request) {
         return stub_->MacVerify(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-KeyManagementServiceConnectionImpl::GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
+KeyManagementServiceConnectionImpl::GenerateRandomBytes(
+    google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GenerateRandomBytes(request),
-      [this](grpc::ClientContext& context,
+      [this](
+          grpc::ClientContext& context,
           google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
         return stub_->GenerateRandomBytes(context, request);
       },

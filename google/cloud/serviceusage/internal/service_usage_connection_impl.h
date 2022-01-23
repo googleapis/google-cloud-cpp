@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_INTERNAL_SERVICE_USAGE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_INTERNAL_SERVICE_USAGE_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/serviceusage/internal/service_usage_retry_traits.h"
 #include "google/cloud/serviceusage/internal/service_usage_stub.h"
 #include "google/cloud/serviceusage/service_usage_connection.h"
 #include "google/cloud/serviceusage/service_usage_connection_idempotency_policy.h"
 #include "google/cloud/serviceusage/service_usage_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,39 +40,44 @@ namespace cloud {
 namespace serviceusage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ServiceUsageConnectionImpl
-    : public serviceusage::ServiceUsageConnection {
+class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
  public:
   ~ServiceUsageConnectionImpl() override = default;
 
   ServiceUsageConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub,
+      Options const& options);
 
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(google::api::serviceusage::v1::EnableServiceRequest const& request) override;
+  EnableService(google::api::serviceusage::v1::EnableServiceRequest const&
+                    request) override;
 
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(google::api::serviceusage::v1::DisableServiceRequest const& request) override;
+  DisableService(google::api::serviceusage::v1::DisableServiceRequest const&
+                     request) override;
 
-  StatusOr<google::api::serviceusage::v1::Service>
-  GetService(google::api::serviceusage::v1::GetServiceRequest const& request) override;
+  StatusOr<google::api::serviceusage::v1::Service> GetService(
+      google::api::serviceusage::v1::GetServiceRequest const& request) override;
 
-  StreamRange<google::api::serviceusage::v1::Service>
-  ListServices(google::api::serviceusage::v1::ListServicesRequest request) override;
+  StreamRange<google::api::serviceusage::v1::Service> ListServices(
+      google::api::serviceusage::v1::ListServicesRequest request) override;
 
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices(google::api::serviceusage::v1::BatchEnableServicesRequest const& request) override;
+  BatchEnableServices(
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
+      override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const& request) override;
+  BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const&
+                       request) override;
 
  private:
   std::unique_ptr<serviceusage::ServiceUsageRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<serviceusage::ServiceUsageRetryPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsageRetryPolicyOption>()->clone();
+      return options.get<serviceusage::ServiceUsageRetryPolicyOption>()
+          ->clone();
     }
     return retry_policy_prototype_->clone();
   }
@@ -80,29 +85,37 @@ class ServiceUsageConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<serviceusage::ServiceUsageBackoffPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsageBackoffPolicyOption>()->clone();
+      return options.get<serviceusage::ServiceUsageBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub_;
-  std::unique_ptr<serviceusage::ServiceUsageRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<serviceusage::ServiceUsageRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<serviceusage::ServiceUsagePollingPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsagePollingPolicyOption>()->clone();
+      return options.get<serviceusage::ServiceUsagePollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }

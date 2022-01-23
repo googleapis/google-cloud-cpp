@@ -17,11 +17,11 @@
 // source: google/cloud/retail/v2/prediction_service.proto
 
 #include "google/cloud/retail/internal/prediction_connection_impl.h"
+#include "google/cloud/retail/internal/prediction_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/retail/internal/prediction_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,18 +33,24 @@ PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_internal::PredictionServiceStub> stub,
     Options const& options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<retail::PredictionServiceRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<retail::PredictionServiceBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()->clone()) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      retry_policy_prototype_(
+          options.get<retail::PredictionServiceRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          options.get<retail::PredictionServiceBackoffPolicyOption>()->clone()),
+      idempotency_policy_(
+          options
+              .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
+              ->clone()) {}
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
-PredictionServiceConnectionImpl::Predict(google::cloud::retail::v2::PredictRequest const& request) {
+PredictionServiceConnectionImpl::Predict(
+    google::cloud::retail::v2::PredictRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Predict(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->Predict(request),
       [this](grpc::ClientContext& context,
-          google::cloud::retail::v2::PredictRequest const& request) {
+             google::cloud::retail::v2::PredictRequest const& request) {
         return stub_->Predict(context, request);
       },
       request, __func__);

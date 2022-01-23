@@ -39,27 +39,26 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ApplicationsConnectionImpl
-    : public appengine::ApplicationsConnection {
+class ApplicationsConnectionImpl : public appengine::ApplicationsConnection {
  public:
   ~ApplicationsConnectionImpl() override = default;
 
   ApplicationsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::ApplicationsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_internal::ApplicationsStub> stub,
+      Options const& options);
 
-  StatusOr<google::appengine::v1::Application>
-  GetApplication(google::appengine::v1::GetApplicationRequest const& request) override;
+  StatusOr<google::appengine::v1::Application> GetApplication(
+      google::appengine::v1::GetApplicationRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  CreateApplication(google::appengine::v1::CreateApplicationRequest const& request) override;
+  future<StatusOr<google::appengine::v1::Application>> CreateApplication(
+      google::appengine::v1::CreateApplicationRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  UpdateApplication(google::appengine::v1::UpdateApplicationRequest const& request) override;
+  future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
+      google::appengine::v1::UpdateApplicationRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  RepairApplication(google::appengine::v1::RepairApplicationRequest const& request) override;
+  future<StatusOr<google::appengine::v1::Application>> RepairApplication(
+      google::appengine::v1::RepairApplicationRequest const& request) override;
 
  private:
   std::unique_ptr<appengine::ApplicationsRetryPolicy> retry_policy() {
@@ -78,19 +77,25 @@ class ApplicationsConnectionImpl
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<appengine::ApplicationsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<appengine::ApplicationsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::ApplicationsConnectionIdempotencyPolicyOption>()) {
-      return options.get<appengine::ApplicationsConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<appengine::ApplicationsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<appengine::ApplicationsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::ApplicationsStub> stub_;
-  std::unique_ptr<appengine::ApplicationsRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<appengine::ApplicationsRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::ApplicationsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<appengine::ApplicationsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();

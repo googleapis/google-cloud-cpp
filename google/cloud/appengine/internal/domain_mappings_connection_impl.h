@@ -46,24 +46,27 @@ class DomainMappingsConnectionImpl
   ~DomainMappingsConnectionImpl() override = default;
 
   DomainMappingsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::DomainMappingsStub> stub,
-    Options const& options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_internal::DomainMappingsStub> stub,
+      Options const& options);
 
-  StreamRange<google::appengine::v1::DomainMapping>
-  ListDomainMappings(google::appengine::v1::ListDomainMappingsRequest request) override;
+  StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
+      google::appengine::v1::ListDomainMappingsRequest request) override;
 
-  StatusOr<google::appengine::v1::DomainMapping>
-  GetDomainMapping(google::appengine::v1::GetDomainMappingRequest const& request) override;
+  StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
+      google::appengine::v1::GetDomainMappingRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::DomainMapping>>
-  CreateDomainMapping(google::appengine::v1::CreateDomainMappingRequest const& request) override;
+  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
+      google::appengine::v1::CreateDomainMappingRequest const& request)
+      override;
 
-  future<StatusOr<google::appengine::v1::DomainMapping>>
-  UpdateDomainMapping(google::appengine::v1::UpdateDomainMappingRequest const& request) override;
+  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
+      google::appengine::v1::UpdateDomainMappingRequest const& request)
+      override;
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const& request) override;
+  DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const&
+                          request) override;
 
  private:
   std::unique_ptr<appengine::DomainMappingsRetryPolicy> retry_policy() {
@@ -77,29 +80,37 @@ class DomainMappingsConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::DomainMappingsBackoffPolicyOption>()) {
-      return options.get<appengine::DomainMappingsBackoffPolicyOption>()->clone();
+      return options.get<appengine::DomainMappingsBackoffPolicyOption>()
+          ->clone();
     }
     return backoff_policy_prototype_->clone();
   }
 
-  std::unique_ptr<appengine::DomainMappingsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<appengine::DomainMappingsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::DomainMappingsConnectionIdempotencyPolicyOption>()) {
-      return options.get<appengine::DomainMappingsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            appengine::DomainMappingsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<appengine::DomainMappingsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
     return idempotency_policy_->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::DomainMappingsStub> stub_;
-  std::unique_ptr<appengine::DomainMappingsRetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<appengine::DomainMappingsRetryPolicy const>
+      retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::DomainMappingsConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<appengine::DomainMappingsConnectionIdempotencyPolicy>
+      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::DomainMappingsPollingPolicyOption>()) {
-      return options.get<appengine::DomainMappingsPollingPolicyOption>()->clone();
+      return options.get<appengine::DomainMappingsPollingPolicyOption>()
+          ->clone();
     }
     return polling_policy_prototype_->clone();
   }
