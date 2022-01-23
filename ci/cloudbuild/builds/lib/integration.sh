@@ -235,16 +235,6 @@ function integration::ctest_with_emulators() {
     "--parallel" "$(nproc)"
   )
 
-  io::log_h2 "Running Generator integration tests via CTest"
-  googleapis_abs_path="$(realpath "${cmake_out}")/external/googleapis/src/googleapis_download/"
-  env -C "${cmake_out}" \
-    GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes" \
-    GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH="${googleapis_abs_path}" \
-    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/local/include/" \
-    GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH="/workspace/" \
-    GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH="/workspace/" \
-    ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"
-
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator

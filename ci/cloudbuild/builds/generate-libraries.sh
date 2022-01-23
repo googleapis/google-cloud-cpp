@@ -22,7 +22,17 @@ source module ci/cloudbuild/builds/lib/git.sh
 
 bazel_output_base="$(bazel info output_base)"
 
-io::log_h2 "Running generator"
+io::log_h2 "Running the generator to update the golden files"
+bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
+  //generator:google-cloud-cpp-codegen -- \
+  --protobuf_proto_path="${bazel_output_base}/external/com_google_protobuf/src" \
+  --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
+  --golden_proto_path="${PWD}" \
+  --output_path="${PWD}" \
+  --update_ci=false \
+  --config_file="${PWD}/generator/integration_tests/golden_config.textproto"
+
+io::log_h2 "Running the generator to update the generated libraries"
 bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
   //generator:google-cloud-cpp-codegen -- \
   --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
@@ -39,4 +49,5 @@ git ls-files -z | grep -zE '\.(cc|h)$' |
 # This build should fail if any generated files differ from what was checked
 # in. We only look in the google/ directory so that the build doesn't fail if
 # it's run while editing files in generator/...
-git diff --exit-code google/
+io::log_h2 "Highlight generated code differences"
+git diff --exit-code generator/integration_tests/golden/ google/ ci/
