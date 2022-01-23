@@ -41,6 +41,12 @@ int DefaultConnectionPoolSize();
  */
 Options DefaultOptions(Options opts = {});
 
+Options DefaultDataOptions(Options opts);
+
+Options DefaultInstanceAdminOptions(Options opts);
+
+Options DefaultTableAdminOptions(Options opts);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

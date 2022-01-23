@@ -169,15 +169,9 @@ class DefaultDataClient : public DataClient {
     return impl_.BackgroundThreadsFactory();
   }
 
-  struct Traits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<DataEndpointOption>();
-    }
-  };
-
   std::string project_;
   std::string instance_;
-  internal::CommonClient<Traits, btproto::Bigtable> impl_;
+  internal::CommonClient<btproto::Bigtable> impl_;
 };
 
 }  // namespace
@@ -185,7 +179,7 @@ class DefaultDataClient : public DataClient {
 std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
                                            std::string instance_id,
                                            Options options) {
-  options = internal::DefaultOptions(std::move(options));
+  options = internal::DefaultDataOptions(std::move(options));
   bool tracing_enabled = google::cloud::internal::Contains(
       options.get<TracingComponentsOption>(), "rpc");
   auto tracing_options = options.get<GrpcTracingOptionsOption>();

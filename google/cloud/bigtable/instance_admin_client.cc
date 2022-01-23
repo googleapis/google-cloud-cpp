@@ -327,21 +327,15 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
     return impl_.BackgroundThreadsFactory();
   }
 
-  struct Traits {
-    static std::string const& Endpoint(Options const& options) {
-      return options.get<InstanceAdminEndpointOption>();
-    }
-  };
-
   std::string project_;
-  internal::CommonClient<Traits, btadmin::BigtableInstanceAdmin> impl_;
+  internal::CommonClient<btadmin::BigtableInstanceAdmin> impl_;
 };
 
 }  // anonymous namespace
 
 std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
     std::string project, Options options) {
-  options = internal::DefaultOptions(std::move(options));
+  options = internal::DefaultInstanceAdminOptions(std::move(options));
   bool tracing_enabled = google::cloud::internal::Contains(
       options.get<TracingComponentsOption>(), "rpc");
   auto tracing_options = options.get<GrpcTracingOptionsOption>();
