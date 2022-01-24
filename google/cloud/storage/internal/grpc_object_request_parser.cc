@@ -265,8 +265,8 @@ google::storage::v2::ListObjectsRequest GrpcObjectRequestParser::ToProto(
   google::storage::v2::ListObjectsRequest result;
   result.set_parent("projects/_/buckets/" + request.bucket_name());
   auto const page_size = request.GetOption<MaxResults>().value_or(0);
-  // Clamp out of range values, the service will clamp to its own range ([0,
-  // 1000] as of this writing) anyway.
+  // Clamp out of range values. The service will clamp to its own range
+  // ([0, 1000] as of this writing) anyway.
   if (page_size < 0) {
     result.set_page_size(0);
   } else if (page_size < std::numeric_limits<std::int32_t>::max()) {
