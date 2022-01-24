@@ -26,6 +26,7 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_list_responses.h"
 #include "google/cloud/bigtable/instance_update_config.h"
+#include "google/cloud/bigtable/internal/convert_policies.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/version.h"
@@ -133,12 +134,14 @@ class InstanceAdmin {
       : connection_(std::move(connection)),
         project_id_(std::move(project)),
         project_name_(Project(project_id_).FullName()),
-        rpc_retry_policy_prototype_(
+        retry_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
-        rpc_backoff_policy_prototype_(
+        backoff_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
-        polling_policy_prototype_(
-            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)) {}
+        polling_prototype_(
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
+        policies_(bigtable_internal::MakeInstanceAdminOptions(
+            retry_prototype_, backoff_prototype_, polling_prototype_)) {}
 
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
@@ -148,12 +151,14 @@ class InstanceAdmin {
         connection_(client_->connection()),
         project_id_(client_->project()),
         project_name_(Project(project_id_).FullName()),
-        rpc_retry_policy_prototype_(
+        retry_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
-        rpc_backoff_policy_prototype_(
+        backoff_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
-        polling_policy_prototype_(
+        polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
+        policies_(bigtable_internal::MakeInstanceAdminOptions(
+            retry_prototype_, backoff_prototype_, polling_prototype_)),
         background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
@@ -182,8 +187,20 @@ class InstanceAdmin {
   template <typename... Policies>
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                          Policies&&... policies)
-      : InstanceAdmin(std::move(client)) {
+      : client_(std::move(client)),
+        connection_(client_->connection()),
+        project_id_(client_->project()),
+        project_name_(Project(project_id_).FullName()),
+        retry_prototype_(
+            DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
+        backoff_prototype_(
+            DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
+        polling_prototype_(
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
+        background_threads_(client_->BackgroundThreadsFactory()()) {
     ChangePolicies(std::forward<Policies>(policies)...);
+    policies_ = bigtable_internal::MakeInstanceAdminOptions(
+        retry_prototype_, backoff_prototype_, polling_prototype_);
   }
 
   /// The full name (`projects/<project_id>`) of the project.
@@ -738,15 +755,15 @@ class InstanceAdmin {
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
-    rpc_retry_policy_prototype_ = policy.clone();
+    retry_prototype_ = policy.clone();
   }
 
   void ChangePolicy(RPCBackoffPolicy const& policy) {
-    rpc_backoff_policy_prototype_ = policy.clone();
+    backoff_prototype_ = policy.clone();
   }
 
   void ChangePolicy(PollingPolicy const& policy) {
-    polling_policy_prototype_ = policy.clone();
+    polling_prototype_ = policy.clone();
   }
 
   template <typename Policy, typename... Policies>
@@ -761,15 +778,15 @@ class InstanceAdmin {
       google::iam::v1::Policy proto);
 
   std::unique_ptr<PollingPolicy> clone_polling_policy() {
-    return polling_policy_prototype_->clone();
+    return polling_prototype_->clone();
   }
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return rpc_retry_policy_prototype_->clone();
+    return retry_prototype_->clone();
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return rpc_backoff_policy_prototype_->clone();
+    return backoff_prototype_->clone();
   }
 
   future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -796,9 +813,10 @@ class InstanceAdmin {
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
   std::string project_id_;
   std::string project_name_;
-  std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
-  std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
-  std::shared_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::shared_ptr<RPCRetryPolicy> retry_prototype_;
+  std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
+  std::shared_ptr<PollingPolicy> polling_prototype_;
+  Options policies_;
   std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
