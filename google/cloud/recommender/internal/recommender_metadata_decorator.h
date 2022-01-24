@@ -81,9 +81,11 @@ class RecommenderMetadata : public RecommenderStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<RecommenderStub> child_;
   std::string api_client_header_;
-};  // RecommenderMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal

@@ -69,9 +69,11 @@ class CloudSchedulerMetadata : public CloudSchedulerStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<CloudSchedulerStub> child_;
   std::string api_client_header_;
-};  // CloudSchedulerMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal

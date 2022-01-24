@@ -55,9 +55,11 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<ArtifactRegistryStub> child_;
   std::string api_client_header_;
-};  // ArtifactRegistryMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal

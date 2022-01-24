@@ -101,9 +101,11 @@ class CloudTasksMetadata : public CloudTasksStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<CloudTasksStub> child_;
   std::string api_client_header_;
-};  // CloudTasksMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal

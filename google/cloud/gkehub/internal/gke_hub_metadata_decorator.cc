@@ -144,6 +144,10 @@ future<Status> GkeHubMetadata::AsyncCancelOperation(
 void GkeHubMetadata::SetMetadata(grpc::ClientContext& context,
                                  std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
+
+void GkeHubMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 

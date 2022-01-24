@@ -43,9 +43,11 @@ class ImageVersionsMetadata : public ImageVersionsStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<ImageVersionsStub> child_;
   std::string api_client_header_;
-};  // ImageVersionsMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal

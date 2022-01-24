@@ -41,9 +41,11 @@ class CompletionMetadata : public CompletionStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<CompletionStub> child_;
   std::string api_client_header_;
-};  // CompletionMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal

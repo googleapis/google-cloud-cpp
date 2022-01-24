@@ -55,9 +55,11 @@ class VideoIntelligenceServiceMetadata : public VideoIntelligenceServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<VideoIntelligenceServiceStub> child_;
   std::string api_client_header_;
-};  // VideoIntelligenceServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal

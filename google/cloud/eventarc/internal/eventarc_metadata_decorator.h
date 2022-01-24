@@ -74,9 +74,11 @@ class EventarcMetadata : public EventarcStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<EventarcStub> child_;
   std::string api_client_header_;
-};  // EventarcMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
