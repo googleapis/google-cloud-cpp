@@ -1,0 +1,8 @@
+@com_google_googleapis//google/api/servicecontrol/v1:check_error.proto
+@com_google_googleapis//google/api/servicecontrol/v1:distribution.proto
+@com_google_googleapis//google/api/servicecontrol/v1:http_request.proto
+@com_google_googleapis//google/api/servicecontrol/v1:log_entry.proto
+@com_google_googleapis//google/api/servicecontrol/v1:metric_value.proto
+@com_google_googleapis//google/api/servicecontrol/v1:operation.proto
+@com_google_googleapis//google/api/servicecontrol/v1:quota_controller.proto
+@com_google_googleapis//google/api/servicecontrol/v1:service_controller.proto
