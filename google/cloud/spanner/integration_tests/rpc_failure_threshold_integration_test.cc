@@ -41,7 +41,7 @@ class RpcFailureThresholdTest
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id.empty());
 
-    generator_ = google::cloud::internal::MakeDefaultPRNG();
+    generator_ = google::cloud::internal::DefaultPRNG(std::random_device{}());
     auto instance_id =
         spanner_testing::PickRandomInstance(generator_, project_id);
     ASSERT_STATUS_OK(instance_id);
@@ -81,9 +81,8 @@ class RpcFailureThresholdTest
   }
 
   void TearDown() override {
-    if (!db_) {
-      return;
-    }
+    if (!db_) return;
+
     std::cout << "Dropping database " << db_->database_id() << std::flush;
     spanner_admin::DatabaseAdminClient admin_client(
         spanner_admin::MakeDatabaseAdminConnection());
@@ -101,6 +100,8 @@ struct Result {
   int number_of_successes;
   int number_of_failures;
 };
+
+auto constexpr kReportCount = 5;
 
 /// Run a single copy of the experiment
 Result RunExperiment(Database const& db, int iterations) {
@@ -129,7 +130,7 @@ Result RunExperiment(Database const& db, int iterations) {
     }
   };
 
-  int const report = iterations / 5;
+  int const report = iterations / kReportCount;
   for (int i = 0; i != iterations; ++i) {
     if (i % report == 0) std::cout << '.' << std::flush;
     auto delete_status =
@@ -163,7 +164,7 @@ Result RunExperiment(Database const& db, int iterations) {
  * If the confidence interval includes a critical threshold (0.999) then the
  * program fails, claiming that the underlying error rate may be too high.
  *
- * The number of iteration in the program was chosen to the statistical test
+ * The number of iteration in the program was chosen so the statistical test
  * would have 0.99 power. That is, the test would miss an actual change from
  * 0.001 to 0.002 only 1% of the time.
  *
@@ -173,6 +174,10 @@ Result RunExperiment(Database const& db, int iterations) {
  */
 TEST_F(RpcFailureThresholdTest, ExecuteDmlDeleteErrors) {
   ASSERT_TRUE(db_);
+  // When using the emulator there is not much value in this test, we still run
+  // it just to get the code coverage.
+  auto const emulator =
+      google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
 
   // We are using the approximation via a normal distribution from here:
   //   https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval
@@ -193,8 +198,8 @@ TEST_F(RpcFailureThresholdTest, ExecuteDmlDeleteErrors) {
   // ```R
   // require(pwr)
   // pwr.p.test(
-  //     h=ES.h(p1=0.002, p2=0.001),
-  //     power=0.99, sig.level=0.01, alternative="greater")
+  //     h=ES.h(p1=0.001, p2=0.0001),
+  //     power=0.95, sig.level=0.01, alternative="greater")
   // proportion power calculation for binomial distribution
   // (arcsine transformation)
   //
@@ -214,15 +219,20 @@ TEST_F(RpcFailureThresholdTest, ExecuteDmlDeleteErrors) {
 
   int const desired_samples = 32000;  // slightly higher sample rate.
 
-  auto const threads_per_core = 8;
-  // GCC and Clang default capture constants, but MSVC does not, so pass the
-  // constant as an argument.
-  auto const number_of_threads = [](int tpc) -> unsigned {
+  auto constexpr kMinThreads = 8;
+  auto const number_of_threads = [&] {
     auto number_of_cores = std::thread::hardware_concurrency();
-    return number_of_cores == 0 ? tpc : number_of_cores * tpc;
-  }(threads_per_core);
+    return number_of_cores == 0 ? kMinThreads : number_of_cores;
+  }();
 
-  auto const iterations = static_cast<int>(desired_samples / number_of_threads);
+  // When using the emulator we run the minimal number of iterations needed to
+  // ensure the code does not rot.  Otherwise, we run the same number of
+  // iterations in each thread, such that the total number of "samples" matches
+  // the `desired_samples. We are a bit sloppy and add 1 to account for
+  // truncation, running an extra iteration won't hurt.
+  auto const iterations = std::max(
+      kReportCount,  // minimum value that does not crash
+      emulator ? 1 : static_cast<int>(desired_samples / number_of_threads) + 1);
 
   int number_of_successes = 0;
   int number_of_failures = 0;
@@ -250,12 +260,13 @@ TEST_F(RpcFailureThresholdTest, ExecuteDmlDeleteErrors) {
             << "\nEstimated 99% confidence interval for success rate is ["
             << (mid - r) << "," << (mid + r) << "]\n";
 
+  if (emulator) return;
   EXPECT_GT(mid - r, 1.0 - threshold)
       << " number_of_failures=" << number_of_failures
       << ", number_of_successes=" << number_of_successes
       << ", number_of_trials=" << number_of_trials << ", mid=" << mid
       << ", r=" << r << ", range=[ " << (mid - r) << " , " << (mid + r) << "]"
-      << ", kTheshold=" << threshold;
+      << ", kThreshold=" << threshold;
 }
 
 }  // namespace
