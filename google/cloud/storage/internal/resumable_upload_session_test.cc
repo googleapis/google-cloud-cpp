@@ -37,7 +37,7 @@ TEST(ResumableUploadResponseTest, Base) {
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ("test-object-name", actual.payload->name());
   EXPECT_EQ("location-value", actual.upload_session_url);
-  EXPECT_EQ(2000, actual.committed_size);
+  EXPECT_EQ(2000, actual.committed_size.value_or(0));
   EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
 
   std::ostringstream os;
@@ -54,7 +54,7 @@ TEST(ResumableUploadResponseTest, NoLocation) {
                     .value();
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(2000, actual.committed_size);
+  EXPECT_EQ(2000, actual.committed_size.value_or(0));
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
