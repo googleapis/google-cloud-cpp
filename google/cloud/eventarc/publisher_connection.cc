@@ -17,13 +17,13 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publisher_connection.h"
+#include "google/cloud/eventarc/internal/publisher_connection_impl.h"
 #include "google/cloud/eventarc/internal/publisher_option_defaults.h"
 #include "google/cloud/eventarc/internal/publisher_stub_factory.h"
 #include "google/cloud/eventarc/publisher_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -41,74 +41,6 @@ PublisherConnection::PublishChannelConnectionEvents(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class PublisherConnectionImpl : public PublisherConnection {
- public:
-  PublisherConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<eventarc_internal::PublisherStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<PublisherRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<PublisherBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<PublisherConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~PublisherConnectionImpl() override = default;
-
-  StatusOr<google::cloud::eventarc::publishing::v1::
-               PublishChannelConnectionEventsResponse>
-  PublishChannelConnectionEvents(
-      google::cloud::eventarc::publishing::v1::
-          PublishChannelConnectionEventsRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->PublishChannelConnectionEvents(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::eventarc::publishing::v1::
-                   PublishChannelConnectionEventsRequest const& request) {
-          return stub_->PublishChannelConnectionEvents(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<PublisherRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PublisherRetryPolicyOption>()) {
-      return options.get<PublisherRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PublisherBackoffPolicyOption>()) {
-      return options.get<PublisherBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PublisherConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<PublisherConnectionIdempotencyPolicyOption>()) {
-      return options.get<PublisherConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<eventarc_internal::PublisherStub> stub_;
-  std::unique_ptr<PublisherRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PublisherConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  PublisherPolicyOptionList>(options, __func__);
@@ -116,8 +48,8 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       eventarc_internal::CreateDefaultPublisherStub(background->cq(), options);
-  return std::make_shared<PublisherConnectionImpl>(std::move(background),
-                                                   std::move(stub), options);
+  return std::make_shared<eventarc_internal::PublisherConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -133,7 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<eventarc::PublisherConnection> MakePublisherConnection(
     std::shared_ptr<PublisherStub> stub, Options options) {
   options = PublisherDefaultOptions(std::move(options));
-  return std::make_shared<eventarc::PublisherConnectionImpl>(
+  return std::make_shared<eventarc_internal::PublisherConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

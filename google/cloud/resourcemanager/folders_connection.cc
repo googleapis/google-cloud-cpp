@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/folders_connection.h"
 #include "google/cloud/resourcemanager/folders_options.h"
+#include "google/cloud/resourcemanager/internal/folders_connection_impl.h"
 #include "google/cloud/resourcemanager/internal/folders_option_defaults.h"
 #include "google/cloud/resourcemanager/internal/folders_stub_factory.h"
 #include "google/cloud/background_threads.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -127,327 +127,6 @@ FoldersConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class FoldersConnectionImpl : public FoldersConnection {
- public:
-  FoldersConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<resourcemanager_internal::FoldersStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<FoldersRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<FoldersBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<FoldersPollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<FoldersConnectionIdempotencyPolicyOption>()->clone()) {}
-
-  ~FoldersConnectionImpl() override = default;
-
-  StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-      google::cloud::resourcemanager::v3::GetFolderRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetFolder(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::resourcemanager::v3::GetFolderRequest const&
-                   request) { return stub_->GetFolder(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
-      google::cloud::resourcemanager::v3::ListFoldersRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<FoldersRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListFolders(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::resourcemanager::v3::Folder>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::resourcemanager::v3::ListFoldersRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](
-                  grpc::ClientContext& context,
-                  google::cloud::resourcemanager::v3::ListFoldersRequest const&
-                      request) { return stub->ListFolders(context, request); },
-              r, function_name);
-        },
-        [](google::cloud::resourcemanager::v3::ListFoldersResponse r) {
-          std::vector<google::cloud::resourcemanager::v3::Folder> result(
-              r.folders().size());
-          auto& messages = *r.mutable_folders();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
-      google::cloud::resourcemanager::v3::SearchFoldersRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<FoldersRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->SearchFolders(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::resourcemanager::v3::Folder>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::resourcemanager::v3::SearchFoldersRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::resourcemanager::v3::
-                         SearchFoldersRequest const& request) {
-                return stub->SearchFolders(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::resourcemanager::v3::SearchFoldersResponse r) {
-          std::vector<google::cloud::resourcemanager::v3::Folder> result(
-              r.folders().size());
-          auto& messages = *r.mutable_folders();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
-      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::resourcemanager::v3::Folder>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::resourcemanager::v3::CreateFolderRequest const&
-                   request) {
-          return stub->AsyncCreateFolder(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::resourcemanager::v3::Folder>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateFolder(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
-      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::resourcemanager::v3::Folder>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::resourcemanager::v3::UpdateFolderRequest const&
-                   request) {
-          return stub->AsyncUpdateFolder(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::resourcemanager::v3::Folder>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateFolder(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
-      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::resourcemanager::v3::Folder>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::resourcemanager::v3::MoveFolderRequest const&
-                   request) {
-          return stub->AsyncMoveFolder(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::resourcemanager::v3::Folder>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->MoveFolder(request), polling_policy(), __func__);
-  }
-
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
-      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::resourcemanager::v3::Folder>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::resourcemanager::v3::DeleteFolderRequest const&
-                   request) {
-          return stub->AsyncDeleteFolder(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::resourcemanager::v3::Folder>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteFolder(request), polling_policy(),
-        __func__);
-  }
-
-  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
-      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::resourcemanager::v3::Folder>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
-                   request) {
-          return stub->AsyncUndeleteFolder(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::resourcemanager::v3::Folder>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UndeleteFolder(request), polling_policy(),
-        __func__);
-  }
-
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetIamPolicy(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::GetIamPolicyRequest const& request) {
-          return stub_->GetIamPolicy(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->SetIamPolicy(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::SetIamPolicyRequest const& request) {
-          return stub_->SetIamPolicy(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->TestIamPermissions(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::TestIamPermissionsRequest const& request) {
-          return stub_->TestIamPermissions(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<FoldersRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<FoldersRetryPolicyOption>()) {
-      return options.get<FoldersRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<FoldersBackoffPolicyOption>()) {
-      return options.get<FoldersBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<FoldersPollingPolicyOption>()) {
-      return options.get<FoldersPollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<FoldersConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<FoldersConnectionIdempotencyPolicyOption>()) {
-      return options.get<FoldersConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcemanager_internal::FoldersStub> stub_;
-  std::unique_ptr<FoldersRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<FoldersConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  FoldersPolicyOptionList>(options, __func__);
@@ -455,8 +134,8 @@ std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = resourcemanager_internal::CreateDefaultFoldersStub(
       background->cq(), options);
-  return std::make_shared<FoldersConnectionImpl>(std::move(background),
-                                                 std::move(stub), options);
+  return std::make_shared<resourcemanager_internal::FoldersConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -472,7 +151,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<resourcemanager::FoldersConnection> MakeFoldersConnection(
     std::shared_ptr<FoldersStub> stub, Options options) {
   options = FoldersDefaultOptions(std::move(options));
-  return std::make_shared<resourcemanager::FoldersConnectionImpl>(
+  return std::make_shared<resourcemanager_internal::FoldersConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

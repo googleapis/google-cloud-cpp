@@ -17,6 +17,7 @@
 // source: google/cloud/recommender/v1/recommender_service.proto
 
 #include "google/cloud/recommender/recommender_connection.h"
+#include "google/cloud/recommender/internal/recommender_connection_impl.h"
 #include "google/cloud/recommender/internal/recommender_option_defaults.h"
 #include "google/cloud/recommender/internal/recommender_stub_factory.h"
 #include "google/cloud/recommender/recommender_options.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -99,210 +99,6 @@ RecommenderConnection::MarkRecommendationFailed(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class RecommenderConnectionImpl : public RecommenderConnection {
- public:
-  RecommenderConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<recommender_internal::RecommenderStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<RecommenderRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<RecommenderBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<RecommenderConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~RecommenderConnectionImpl() override = default;
-
-  StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
-      google::cloud::recommender::v1::ListInsightsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<RecommenderRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListInsights(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::recommender::v1::Insight>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::recommender::v1::ListInsightsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::recommender::v1::ListInsightsRequest const&
-                         request) {
-                return stub->ListInsights(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::recommender::v1::ListInsightsResponse r) {
-          std::vector<google::cloud::recommender::v1::Insight> result(
-              r.insights().size());
-          auto& messages = *r.mutable_insights();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
-      google::cloud::recommender::v1::GetInsightRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetInsight(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::recommender::v1::GetInsightRequest const& request) {
-          return stub_->GetInsight(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
-      google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->MarkInsightAccepted(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
-                   request) {
-          return stub_->MarkInsightAccepted(context, request);
-        },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::recommender::v1::Recommendation>
-  ListRecommendations(google::cloud::recommender::v1::ListRecommendationsRequest
-                          request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<RecommenderRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListRecommendations(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::recommender::v1::Recommendation>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::recommender::v1::ListRecommendationsRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::recommender::v1::
-                         ListRecommendationsRequest const& request) {
-                return stub->ListRecommendations(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::recommender::v1::ListRecommendationsResponse r) {
-          std::vector<google::cloud::recommender::v1::Recommendation> result(
-              r.recommendations().size());
-          auto& messages = *r.mutable_recommendations();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::recommender::v1::Recommendation> GetRecommendation(
-      google::cloud::recommender::v1::GetRecommendationRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetRecommendation(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::recommender::v1::GetRecommendationRequest const&
-                   request) {
-          return stub_->GetRecommendation(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationClaimed(
-      google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->MarkRecommendationClaimed(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::recommender::v1::
-                   MarkRecommendationClaimedRequest const& request) {
-          return stub_->MarkRecommendationClaimed(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationSucceeded(
-      google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->MarkRecommendationSucceeded(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::recommender::v1::
-                   MarkRecommendationSucceededRequest const& request) {
-          return stub_->MarkRecommendationSucceeded(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationFailed(
-      google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->MarkRecommendationFailed(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::recommender::v1::
-                   MarkRecommendationFailedRequest const& request) {
-          return stub_->MarkRecommendationFailed(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<RecommenderRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<RecommenderRetryPolicyOption>()) {
-      return options.get<RecommenderRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<RecommenderBackoffPolicyOption>()) {
-      return options.get<RecommenderBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<RecommenderConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<RecommenderConnectionIdempotencyPolicyOption>()) {
-      return options.get<RecommenderConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<recommender_internal::RecommenderStub> stub_;
-  std::unique_ptr<RecommenderRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<RecommenderConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -312,8 +108,8 @@ std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = recommender_internal::CreateDefaultRecommenderStub(
       background->cq(), options);
-  return std::make_shared<RecommenderConnectionImpl>(std::move(background),
-                                                     std::move(stub), options);
+  return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -329,7 +125,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<recommender::RecommenderConnection> MakeRecommenderConnection(
     std::shared_ptr<RecommenderStub> stub, Options options) {
   options = RecommenderDefaultOptions(std::move(options));
-  return std::make_shared<recommender::RecommenderConnectionImpl>(
+  return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

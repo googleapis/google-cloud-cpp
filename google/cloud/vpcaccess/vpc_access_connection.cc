@@ -17,6 +17,7 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/vpc_access_connection.h"
+#include "google/cloud/vpcaccess/internal/vpc_access_connection_impl.h"
 #include "google/cloud/vpcaccess/internal/vpc_access_option_defaults.h"
 #include "google/cloud/vpcaccess/internal/vpc_access_stub_factory.h"
 #include "google/cloud/vpcaccess/vpc_access_options.h"
@@ -25,7 +26,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -71,178 +71,6 @@ VpcAccessServiceConnection::DeleteConnector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-namespace {
-class VpcAccessServiceConnectionImpl : public VpcAccessServiceConnection {
- public:
-  VpcAccessServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<VpcAccessServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<VpcAccessServiceBackoffPolicyOption>()->clone()),
-        polling_policy_prototype_(
-            options.get<VpcAccessServicePollingPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<VpcAccessServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~VpcAccessServiceConnectionImpl() override = default;
-
-  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
-      override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::vpcaccess::v1::Connector>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::vpcaccess::v1::CreateConnectorRequest const&
-                   request) {
-          return stub->AsyncCreateConnector(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultResponse<
-            google::cloud::vpcaccess::v1::Connector>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateConnector(request), polling_policy(),
-        __func__);
-  }
-
-  StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetConnector(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-          return stub_->GetConnector(context, request);
-        },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
-      google::cloud::vpcaccess::v1::ListConnectorsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<VpcAccessServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListConnectors(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::vpcaccess::v1::Connector>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::vpcaccess::v1::ListConnectorsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::vpcaccess::v1::ListConnectorsRequest const&
-                         request) {
-                return stub->ListConnectors(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::vpcaccess::v1::ListConnectorsResponse r) {
-          std::vector<google::cloud::vpcaccess::v1::Connector> result(
-              r.connectors().size());
-          auto& messages = *r.mutable_connectors();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const&
-                      request) override {
-    auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<
-        google::cloud::vpcaccess::v1::OperationMetadata>(
-        background_->cq(), request,
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::cloud::vpcaccess::v1::DeleteConnectorRequest const&
-                   request) {
-          return stub->AsyncDeleteConnector(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
-          return stub->AsyncGetOperation(cq, std::move(context), request);
-        },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
-          return stub->AsyncCancelOperation(cq, std::move(context), request);
-        },
-        &google::cloud::internal::ExtractLongRunningResultMetadata<
-            google::cloud::vpcaccess::v1::OperationMetadata>,
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteConnector(request), polling_policy(),
-        __func__);
-  }
-
- private:
-  std::unique_ptr<VpcAccessServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<VpcAccessServiceRetryPolicyOption>()) {
-      return options.get<VpcAccessServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<VpcAccessServiceBackoffPolicyOption>()) {
-      return options.get<VpcAccessServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<VpcAccessServicePollingPolicyOption>()) {
-      return options.get<VpcAccessServicePollingPolicyOption>()->clone();
-    }
-    return polling_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<VpcAccessServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub_;
-  std::unique_ptr<VpcAccessServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -253,7 +81,7 @@ std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = vpcaccess_internal::CreateDefaultVpcAccessServiceStub(
       background->cq(), options);
-  return std::make_shared<VpcAccessServiceConnectionImpl>(
+  return std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -271,7 +99,7 @@ std::shared_ptr<vpcaccess::VpcAccessServiceConnection>
 MakeVpcAccessServiceConnection(std::shared_ptr<VpcAccessServiceStub> stub,
                                Options options) {
   options = VpcAccessServiceDefaultOptions(std::move(options));
-  return std::make_shared<vpcaccess::VpcAccessServiceConnectionImpl>(
+  return std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

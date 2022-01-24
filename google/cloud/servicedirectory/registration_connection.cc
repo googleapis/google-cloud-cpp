@@ -17,6 +17,7 @@
 // source: google/cloud/servicedirectory/v1/registration_service.proto
 
 #include "google/cloud/servicedirectory/registration_connection.h"
+#include "google/cloud/servicedirectory/internal/registration_connection_impl.h"
 #include "google/cloud/servicedirectory/internal/registration_option_defaults.h"
 #include "google/cloud/servicedirectory/internal/registration_stub_factory.h"
 #include "google/cloud/servicedirectory/registration_options.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -164,346 +164,6 @@ RegistrationServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class RegistrationServiceConnectionImpl : public RegistrationServiceConnection {
- public:
-  RegistrationServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<RegistrationServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<RegistrationServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<RegistrationServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~RegistrationServiceConnectionImpl() override = default;
-
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
-      google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateNamespace(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-                request) { return stub_->CreateNamespace(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
-      google::cloud::servicedirectory::v1::ListNamespacesRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<RegistrationServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListNamespaces(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::servicedirectory::v1::Namespace>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::servicedirectory::v1::ListNamespacesRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::servicedirectory::v1::
-                         ListNamespacesRequest const& request) {
-                return stub->ListNamespaces(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::servicedirectory::v1::ListNamespacesResponse r) {
-          std::vector<google::cloud::servicedirectory::v1::Namespace> result(
-              r.namespaces().size());
-          auto& messages = *r.mutable_namespaces();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
-      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetNamespace(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::GetNamespaceRequest const&
-                   request) { return stub_->GetNamespace(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
-      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateNamespace(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-                request) { return stub_->UpdateNamespace(context, request); },
-        request, __func__);
-  }
-
-  Status DeleteNamespace(
-      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-          request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteNamespace(request),
-        [this](
-            grpc::ClientContext& context,
-            google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-                request) { return stub_->DeleteNamespace(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
-      google::cloud::servicedirectory::v1::CreateServiceRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateService(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::CreateServiceRequest const&
-                   request) { return stub_->CreateService(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
-      google::cloud::servicedirectory::v1::ListServicesRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<RegistrationServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListServices(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::servicedirectory::v1::Service>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::servicedirectory::v1::ListServicesRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::servicedirectory::v1::
-                         ListServicesRequest const& request) {
-                return stub->ListServices(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::servicedirectory::v1::ListServicesResponse r) {
-          std::vector<google::cloud::servicedirectory::v1::Service> result(
-              r.services().size());
-          auto& messages = *r.mutable_services();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
-      google::cloud::servicedirectory::v1::GetServiceRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetService(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::GetServiceRequest const&
-                   request) { return stub_->GetService(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
-      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateService(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::UpdateServiceRequest const&
-                   request) { return stub_->UpdateService(context, request); },
-        request, __func__);
-  }
-
-  Status DeleteService(
-      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteService(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::DeleteServiceRequest const&
-                   request) { return stub_->DeleteService(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
-      google::cloud::servicedirectory::v1::CreateEndpointRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateEndpoint(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::CreateEndpointRequest const&
-                   request) { return stub_->CreateEndpoint(context, request); },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
-      google::cloud::servicedirectory::v1::ListEndpointsRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<RegistrationServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListEndpoints(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::servicedirectory::v1::Endpoint>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::servicedirectory::v1::ListEndpointsRequest const&
-                r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::servicedirectory::v1::
-                         ListEndpointsRequest const& request) {
-                return stub->ListEndpoints(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::servicedirectory::v1::ListEndpointsResponse r) {
-          std::vector<google::cloud::servicedirectory::v1::Endpoint> result(
-              r.endpoints().size());
-          auto& messages = *r.mutable_endpoints();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
-      google::cloud::servicedirectory::v1::GetEndpointRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetEndpoint(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::GetEndpointRequest const&
-                   request) { return stub_->GetEndpoint(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
-      google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateEndpoint(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
-                   request) { return stub_->UpdateEndpoint(context, request); },
-        request, __func__);
-  }
-
-  Status DeleteEndpoint(
-      google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteEndpoint(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::servicedirectory::v1::DeleteEndpointRequest const&
-                   request) { return stub_->DeleteEndpoint(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetIamPolicy(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::GetIamPolicyRequest const& request) {
-          return stub_->GetIamPolicy(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->SetIamPolicy(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::SetIamPolicyRequest const& request) {
-          return stub_->SetIamPolicy(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->TestIamPermissions(request),
-        [this](grpc::ClientContext& context,
-               google::iam::v1::TestIamPermissionsRequest const& request) {
-          return stub_->TestIamPermissions(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<RegistrationServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<RegistrationServiceRetryPolicyOption>()) {
-      return options.get<RegistrationServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<RegistrationServiceBackoffPolicyOption>()) {
-      return options.get<RegistrationServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<RegistrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<RegistrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub_;
-  std::unique_ptr<RegistrationServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<RegistrationServiceConnection>
 MakeRegistrationServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -514,7 +174,8 @@ MakeRegistrationServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = servicedirectory_internal::CreateDefaultRegistrationServiceStub(
       background->cq(), options);
-  return std::make_shared<RegistrationServiceConnectionImpl>(
+  return std::make_shared<
+      servicedirectory_internal::RegistrationServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -532,7 +193,8 @@ std::shared_ptr<servicedirectory::RegistrationServiceConnection>
 MakeRegistrationServiceConnection(std::shared_ptr<RegistrationServiceStub> stub,
                                   Options options) {
   options = RegistrationServiceDefaultOptions(std::move(options));
-  return std::make_shared<servicedirectory::RegistrationServiceConnectionImpl>(
+  return std::make_shared<
+      servicedirectory_internal::RegistrationServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

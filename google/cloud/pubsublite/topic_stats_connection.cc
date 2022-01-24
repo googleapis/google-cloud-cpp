@@ -17,13 +17,13 @@
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
 #include "google/cloud/pubsublite/topic_stats_connection.h"
+#include "google/cloud/pubsublite/internal/topic_stats_connection_impl.h"
 #include "google/cloud/pubsublite/internal/topic_stats_option_defaults.h"
 #include "google/cloud/pubsublite/internal/topic_stats_stub_factory.h"
 #include "google/cloud/pubsublite/topic_stats_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -51,106 +51,6 @@ TopicStatsServiceConnection::ComputeTimeCursor(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class TopicStatsServiceConnectionImpl : public TopicStatsServiceConnection {
- public:
-  TopicStatsServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<TopicStatsServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<TopicStatsServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<TopicStatsServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~TopicStatsServiceConnectionImpl() override = default;
-
-  StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-  ComputeMessageStats(
-      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ComputeMessageStats(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
-                   request) {
-          return stub_->ComputeMessageStats(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-  ComputeHeadCursor(
-      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ComputeHeadCursor(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
-                   request) {
-          return stub_->ComputeHeadCursor(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-  ComputeTimeCursor(
-      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->ComputeTimeCursor(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
-                   request) {
-          return stub_->ComputeTimeCursor(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<TopicStatsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TopicStatsServiceRetryPolicyOption>()) {
-      return options.get<TopicStatsServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TopicStatsServiceBackoffPolicyOption>()) {
-      return options.get<TopicStatsServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<TopicStatsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub_;
-  std::unique_ptr<TopicStatsServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -161,7 +61,7 @@ std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = pubsublite_internal::CreateDefaultTopicStatsServiceStub(
       background->cq(), options);
-  return std::make_shared<TopicStatsServiceConnectionImpl>(
+  return std::make_shared<pubsublite_internal::TopicStatsServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -179,7 +79,7 @@ std::shared_ptr<pubsublite::TopicStatsServiceConnection>
 MakeTopicStatsServiceConnection(std::shared_ptr<TopicStatsServiceStub> stub,
                                 Options options) {
   options = TopicStatsServiceDefaultOptions(std::move(options));
-  return std::make_shared<pubsublite::TopicStatsServiceConnectionImpl>(
+  return std::make_shared<pubsublite_internal::TopicStatsServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

@@ -17,6 +17,7 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/tenant_connection.h"
+#include "google/cloud/talent/internal/tenant_connection_impl.h"
 #include "google/cloud/talent/internal/tenant_option_defaults.h"
 #include "google/cloud/talent/internal/tenant_stub_factory.h"
 #include "google/cloud/talent/tenant_options.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -70,140 +70,6 @@ TenantServiceConnection::ListTenants(
       });
 }
 
-namespace {
-class TenantServiceConnectionImpl : public TenantServiceConnection {
- public:
-  TenantServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::TenantServiceStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<TenantServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<TenantServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<TenantServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~TenantServiceConnectionImpl() override = default;
-
-  StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      google::cloud::talent::v4::CreateTenantRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CreateTenant(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::CreateTenantRequest const& request) {
-          return stub_->CreateTenant(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      google::cloud::talent::v4::GetTenantRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetTenant(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::GetTenantRequest const& request) {
-          return stub_->GetTenant(context, request);
-        },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      google::cloud::talent::v4::UpdateTenantRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateTenant(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::UpdateTenantRequest const& request) {
-          return stub_->UpdateTenant(context, request);
-        },
-        request, __func__);
-  }
-
-  Status DeleteTenant(
-      google::cloud::talent::v4::DeleteTenantRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->DeleteTenant(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::DeleteTenantRequest const& request) {
-          return stub_->DeleteTenant(context, request);
-        },
-        request, __func__);
-  }
-
-  StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest request) override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry =
-        std::shared_ptr<TenantServiceRetryPolicy const>(retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListTenants(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::talent::v4::Tenant>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::talent::v4::ListTenantsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::talent::v4::ListTenantsRequest const&
-                         request) {
-                return stub->ListTenants(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::talent::v4::ListTenantsResponse r) {
-          std::vector<google::cloud::talent::v4::Tenant> result(
-              r.tenants().size());
-          auto& messages = *r.mutable_tenants();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
- private:
-  std::unique_ptr<TenantServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TenantServiceRetryPolicyOption>()) {
-      return options.get<TenantServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TenantServiceBackoffPolicyOption>()) {
-      return options.get<TenantServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TenantServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<TenantServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<talent_internal::TenantServiceStub> stub_;
-  std::unique_ptr<TenantServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<TenantServiceConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -213,7 +79,7 @@ std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = talent_internal::CreateDefaultTenantServiceStub(background->cq(),
                                                               options);
-  return std::make_shared<TenantServiceConnectionImpl>(
+  return std::make_shared<talent_internal::TenantServiceConnectionImpl>(
       std::move(background), std::move(stub), options);
 }
 
@@ -230,7 +96,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<talent::TenantServiceConnection> MakeTenantServiceConnection(
     std::shared_ptr<TenantServiceStub> stub, Options options) {
   options = TenantServiceDefaultOptions(std::move(options));
-  return std::make_shared<talent::TenantServiceConnectionImpl>(
+  return std::make_shared<talent_internal::TenantServiceConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }

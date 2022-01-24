@@ -18,12 +18,12 @@
 
 #include "google/cloud/talent/completion_connection.h"
 #include "google/cloud/talent/completion_options.h"
+#include "google/cloud/talent/internal/completion_connection_impl.h"
 #include "google/cloud/talent/internal/completion_option_defaults.h"
 #include "google/cloud/talent/internal/completion_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -39,71 +39,6 @@ CompletionConnection::CompleteQuery(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class CompletionConnectionImpl : public CompletionConnection {
- public:
-  CompletionConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::CompletionStub> stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<CompletionRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<CompletionBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options.get<CompletionConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~CompletionConnectionImpl() override = default;
-
-  StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      google::cloud::talent::v4::CompleteQueryRequest const& request) override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->CompleteQuery(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::talent::v4::CompleteQueryRequest const& request) {
-          return stub_->CompleteQuery(context, request);
-        },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<CompletionRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<CompletionRetryPolicyOption>()) {
-      return options.get<CompletionRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<CompletionBackoffPolicyOption>()) {
-      return options.get<CompletionBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<CompletionConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<CompletionConnectionIdempotencyPolicyOption>()) {
-      return options.get<CompletionConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<talent_internal::CompletionStub> stub_;
-  std::unique_ptr<CompletionRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<CompletionConnectionIdempotencyPolicy> idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<CompletionConnection> MakeCompletionConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -112,8 +47,8 @@ std::shared_ptr<CompletionConnection> MakeCompletionConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       talent_internal::CreateDefaultCompletionStub(background->cq(), options);
-  return std::make_shared<CompletionConnectionImpl>(std::move(background),
-                                                    std::move(stub), options);
+  return std::make_shared<talent_internal::CompletionConnectionImpl>(
+      std::move(background), std::move(stub), options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -129,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<talent::CompletionConnection> MakeCompletionConnection(
     std::shared_ptr<CompletionStub> stub, Options options) {
   options = CompletionDefaultOptions(std::move(options));
-  return std::make_shared<talent::CompletionConnectionImpl>(
+  return std::make_shared<talent_internal::CompletionConnectionImpl>(
       internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
       std::move(options));
 }
