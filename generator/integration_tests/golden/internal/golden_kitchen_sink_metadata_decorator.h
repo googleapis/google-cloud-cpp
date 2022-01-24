@@ -79,9 +79,11 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<GoldenKitchenSinkStub> child_;
   std::string api_client_header_;
-};  // GoldenKitchenSinkMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
