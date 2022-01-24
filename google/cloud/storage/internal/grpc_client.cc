@@ -27,7 +27,6 @@
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
@@ -227,7 +226,8 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
 
   // This loop must run at least once because we need to send at least one
   // Write() call for empty objects.
-  for (std::int64_t offset = 0, n = 0; offset <= contents_size; offset += n) {
+  std::int64_t n;
+  for (std::int64_t offset = 0; offset <= contents_size; offset += n) {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
     n = (std::min)(contents_size - offset, maximum_buffer_size);
@@ -297,8 +297,12 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
-    ListObjectsRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListObjectsRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  auto response = stub_->ListObjects(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcObjectRequestParser::FromProto(*response, options_);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteObject(DeleteObjectRequest const&) {

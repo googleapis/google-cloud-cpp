@@ -260,6 +260,44 @@ ResumableUploadResponse GrpcObjectRequestParser::FromProto(
   return response;
 }
 
+google::storage::v2::ListObjectsRequest GrpcObjectRequestParser::ToProto(
+    ListObjectsRequest const& request) {
+  google::storage::v2::ListObjectsRequest result;
+  result.set_parent("projects/_/buckets/" + request.bucket_name());
+  auto const page_size = request.GetOption<MaxResults>().value_or(0);
+  // Clamp out of range values. The service will clamp to its own range
+  // ([0, 1000] as of this writing) anyway.
+  if (page_size < 0) {
+    result.set_page_size(0);
+  } else if (page_size < std::numeric_limits<std::int32_t>::max()) {
+    result.set_page_size(static_cast<std::int32_t>(page_size));
+  } else {
+    result.set_page_size(std::numeric_limits<std::int32_t>::max());
+  }
+  result.set_page_token(request.page_token());
+  result.set_delimiter(request.GetOption<Delimiter>().value_or(""));
+  result.set_include_trailing_delimiter(
+      request.GetOption<IncludeTrailingDelimiter>().value_or(false));
+  result.set_prefix(request.GetOption<Prefix>().value_or(""));
+  result.set_versions(request.GetOption<Versions>().value_or(""));
+  result.set_lexicographic_start(request.GetOption<StartOffset>().value_or(""));
+  result.set_lexicographic_end(request.GetOption<EndOffset>().value_or(""));
+  SetCommonParameters(result, request);
+  return result;
+}
+
+ListObjectsResponse GrpcObjectRequestParser::FromProto(
+    google::storage::v2::ListObjectsResponse const& response,
+    Options const& options) {
+  ListObjectsResponse result;
+  result.next_page_token = response.next_page_token();
+  for (auto const& o : response.objects()) {
+    result.items.push_back(GrpcObjectMetadataParser::FromProto(o, options));
+  }
+  for (auto const& p : response.prefixes()) result.prefixes.push_back(p);
+  return result;
+}
+
 StatusOr<google::storage::v2::StartResumableWriteRequest>
 GrpcObjectRequestParser::ToProto(ResumableUploadRequest const& request) {
   google::storage::v2::StartResumableWriteRequest result;

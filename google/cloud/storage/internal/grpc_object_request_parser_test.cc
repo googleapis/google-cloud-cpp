@@ -32,6 +32,7 @@ namespace {
 namespace storage_proto = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 
 // Use gsutil to obtain the CRC32C checksum (in base64):
 //    TEXT="The quick brown fox jumps over the lazy dog"
@@ -303,6 +304,58 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestWithObjectMetadata) {
 
   auto actual = GrpcObjectRequestParser::ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
+  google::storage::v2::ListObjectsRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        parent: "projects/_/buckets/test-bucket"
+        page_size: 10
+        page_token: "test-only-invalid"
+        delimiter: "/"
+        include_trailing_delimiter: true
+        prefix: "test/prefix"
+        versions: true
+        lexicographic_start: "test/prefix/a"
+        lexicographic_end: "test/prefix/abc"
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  ListObjectsRequest req("test-bucket");
+  req.set_page_token("test-only-invalid");
+  req.set_multiple_options(
+      MaxResults(10), Delimiter("/"), IncludeTrailingDelimiter(true),
+      Prefix("test/prefix"), Versions(true), StartOffset("test/prefix/a"),
+      EndOffset("test/prefix/abc"), UserProject("test-user-project"),
+      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+
+  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, ListObjectsResponse) {
+  google::storage::v2::ListObjectsResponse response;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        objects { bucket: "projects/_/buckets/test-bucket" name: "object1" }
+        objects { bucket: "projects/_/buckets/test-bucket" name: "object2" }
+        prefixes: "prefix1/"
+        prefixes: "prefix2/"
+        next_page_token: "test-only-invalid-token"
+      )pb",
+      &response));
+
+  auto actual = GrpcObjectRequestParser::FromProto(response, Options{});
+  EXPECT_EQ(actual.next_page_token, "test-only-invalid-token");
+  EXPECT_THAT(actual.prefixes, ElementsAre("prefix1/", "prefix2/"));
+  std::vector<std::string> names;
+  for (auto const& o : actual.items) names.push_back(o.bucket());
+  EXPECT_THAT(names, ElementsAre("test-bucket", "test-bucket"));
+  names.clear();
+  for (auto const& o : actual.items) names.push_back(o.name());
+  EXPECT_THAT(names, ElementsAre("object1", "object2"));
 }
 
 TEST(GrpcObjectRequestParser, ResumableUploadRequestSimple) {

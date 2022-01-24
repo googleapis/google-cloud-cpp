@@ -15,12 +15,10 @@
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 namespace google {
@@ -32,6 +30,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -68,6 +67,13 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
     return meta;
   };
   EXPECT_EQ(sans_acls(*insert), sans_acls(*get));
+
+  std::vector<std::string> names;
+  for (auto const& object : client->ListObjects(bucket_name)) {
+    ASSERT_STATUS_OK(object);
+    names.push_back(object->name());
+  }
+  EXPECT_THAT(names, Contains(object_name));
 }
 
 }  // namespace

@@ -48,6 +48,10 @@ class StorageMetadata : public StorageStub {
       google::storage::v2::WriteObjectResponse>>
   WriteObject(std::unique_ptr<grpc::ClientContext> context) override;
 
+  StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
+      grpc::ClientContext& context,
+      google::storage::v2::ListObjectsRequest const& request) override;
+
   StatusOr<google::storage::v2::StartResumableWriteResponse>
   StartResumableWrite(
       grpc::ClientContext& context,

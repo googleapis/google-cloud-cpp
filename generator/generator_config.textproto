@@ -527,7 +527,6 @@ service {
     "ComposeObject",
     "DeleteObject",
     "UpdateObject",
-    "ListObjects",
     "RewriteObject",
     "CreateHmacKey",
     "DeleteHmacKey",

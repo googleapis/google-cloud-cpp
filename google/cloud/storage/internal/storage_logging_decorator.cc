@@ -88,6 +88,17 @@ StorageLogging::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
   return stream;
 }
 
+StatusOr<google::storage::v2::ListObjectsResponse> StorageLogging::ListObjects(
+    grpc::ClientContext& context,
+    google::storage::v2::ListObjectsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::ListObjectsRequest const& request) {
+        return child_->ListObjects(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageLogging::StartResumableWrite(
     grpc::ClientContext& context,
