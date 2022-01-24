@@ -32,12 +32,8 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 template <class Request, class Response>
-using BidiStream =
-    ::google::cloud::AsyncStreamingReadWriteRpc<Request, Response>;
-
-template <class Request, class Response>
-using StreamFactory =
-    std::function<std::unique_ptr<BidiStream<Request, Response>>()>;
+using StreamFactory = std::function<
+    std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>()>;
 
 using ClientMetadata = std::unordered_map<std::string, std::string>;
 
@@ -61,10 +57,9 @@ MakeStreamFactory(std::shared_ptr<PublisherServiceStub> const& stub,
 
 inline StreamFactory<pubsublite::v1::SubscribeRequest,
                      pubsublite::v1::SubscribeResponse>
-MakeStreamFactory(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<SubscriberServiceStub> const& stub,
-    google::cloud::CompletionQueue const& cq, ClientMetadata const& metadata) {
+MakeStreamFactory(std::shared_ptr<SubscriberServiceStub> const& stub,
+                  google::cloud::CompletionQueue const& cq,
+                  ClientMetadata const& metadata) {
   return
       [=] { return stub->AsyncSubscribe(cq, MakeGrpcClientContext(metadata)); };
 }
