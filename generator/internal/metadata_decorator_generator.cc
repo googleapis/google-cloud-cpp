@@ -151,15 +151,16 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
 )""");
   }
 
-  HeaderPrint(  // clang-format off
-    "\n"
-    " private:\n"
-    "  void SetMetadata(grpc::ClientContext& context,\n"
-    "                   std::string const& request_params);\n"
-    "  std::shared_ptr<$stub_class_name$> child_;\n"
-    "  std::string api_client_header_;\n"
-    "};  // $metadata_class_name$\n");
-  // clang-format on
+  HeaderPrint(R"""(
+ private:
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
+  std::shared_ptr<$stub_class_name$> child_;
+  std::string api_client_header_;
+};
+)""");
 
   HeaderCloseNamespaces();
   // close header guard
@@ -205,7 +206,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $response_type$>>
 $metadata_class_name$::$method_name$(
     std::unique_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->$method_name$(std::move(context));
 }
 )""");
@@ -220,7 +221,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->Async$method_name$(cq, std::move(context));
 }
 )""");
@@ -332,16 +333,17 @@ future<Status> $metadata_class_name$::AsyncCancelOperation(
 )""");
   }
 
-  CcPrint(  // clang-format off
-    "\n"
-    "void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,\n"
-    "                                        std::string const& "
-    "request_params) {\n"
-    "  context.AddMetadata(\"x-goog-request-params\", request_params);\n"
-    "  context.AddMetadata(\"x-goog-api-client\", api_client_header_);\n"
-    "}\n"
-            // clang-format on
-  );
+  CcPrint(R"""(
+void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
+                                        std::string const& request_params) {
+  context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
+
+void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
+  context.AddMetadata("x-goog-api-client", api_client_header_);
+}
+)""");
 
   CcCloseNamespaces();
   return {};
