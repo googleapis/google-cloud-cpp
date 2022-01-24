@@ -2,6 +2,8 @@
 ./include
 ./include/google
 ./include/google/api
+./include/google/api/servicecontrol
+./include/google/api/servicecontrol/v1
 ./include/google/api/servicemanagement
 ./include/google/api/servicemanagement/v1
 ./include/google/api/serviceusage
@@ -152,6 +154,9 @@
 ./include/google/cloud/security
 ./include/google/cloud/security/privateca
 ./include/google/cloud/security/privateca/v1
+./include/google/cloud/servicecontrol
+./include/google/cloud/servicecontrol/internal
+./include/google/cloud/servicecontrol/mocks
 ./include/google/cloud/servicedirectory
 ./include/google/cloud/servicedirectory/internal
 ./include/google/cloud/servicedirectory/mocks
@@ -287,6 +292,7 @@
 ./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager
+./lib64/cmake/google_cloud_cpp_servicecontrol
 ./lib64/cmake/google_cloud_cpp_servicedirectory
 ./lib64/cmake/google_cloud_cpp_servicemanagement
 ./lib64/cmake/google_cloud_cpp_serviceusage
