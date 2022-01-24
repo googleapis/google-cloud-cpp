@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Service Management API][cloud-service-docs], a service to Google Service Management allows service producers to publish their services on Google Cloud Platform so that they can be discovered and used by service consumers.
+[Service Management API][cloud-service-docs]. This service allows service
+producers to publish their services on Google Cloud Platform so that they can be
+discovered and used by service consumers.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/servicemanagement
+[cloud-service-docs]: https://cloud.google.com/service-management
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-servicemanagement/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/servicemanagement
 
@@ -38,8 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/servicemanagement/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/servicemanagement/service_manager_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -50,13 +51,14 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace servicemanagement = ::google::cloud::servicemanagement;
-  auto client = servicemanagement::Client(
-      servicemanagement::MakeConnection(/* EDIT HERE */));
+  auto client = servicemanagement::ServiceManagerClient(
+      servicemanagement::MakeServiceManagerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  google::api::servicemanagement::v1::ListServicesRequest request;
+  request.set_producer_project_id(argv[1]);
+  for (auto s : client.ListServices(request)) {
+    if (!s) throw std::runtime_error(s.status().message());
+    std::cout << s->DebugString() << "\n";
   }
 
   return 0;

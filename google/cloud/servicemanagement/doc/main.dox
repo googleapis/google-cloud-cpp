@@ -2,10 +2,9 @@
 
 @mainpage Service Management API C++ Client Library
 
-An idiomatic C++ client library for the [Service Management API][cloud-service-docs], a service
-to Google Service Management allows service producers to publish their services on Google Cloud Platform so that they can be discovered and used by service consumers.
-
-This library is **experimental**. Its APIs are subject to change without notice.
+An idiomatic C++ client library for the [Service Management API][cloud-service-docs].
+This service allows service producers to publish their services on Google Cloud
+Platform so that they can be discovered and used by service consumers.
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
@@ -81,7 +80,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/servicemanagement
+[cloud-service-docs]: https://cloud.google.com/service-management
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

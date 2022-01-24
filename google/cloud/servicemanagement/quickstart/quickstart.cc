@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/servicemanagement/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/servicemanagement/service_manager_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -24,13 +23,14 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace servicemanagement = ::google::cloud::servicemanagement;
-  auto client = servicemanagement::Client(
-      servicemanagement::MakeConnection(/* EDIT HERE */));
+  auto client = servicemanagement::ServiceManagerClient(
+      servicemanagement::MakeServiceManagerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  google::api::servicemanagement::v1::ListServicesRequest request;
+  request.set_producer_project_id(argv[1]);
+  for (auto s : client.ListServices(request)) {
+    if (!s) throw std::runtime_error(s.status().message());
+    std::cout << s->DebugString() << "\n";
   }
 
   return 0;
