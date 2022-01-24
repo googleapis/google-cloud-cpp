@@ -56,7 +56,7 @@ class AdminClient {
  public:
   virtual ~AdminClient() = default;
 
-  /// The project that this AdminClient works on.
+  /// The project id that this AdminClient works on.
   virtual std::string const& project() const = 0;
 
   /**

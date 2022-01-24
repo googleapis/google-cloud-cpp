@@ -142,6 +142,7 @@ class TableAdmin {
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : client_(std::move(client)),
+        project_id_(client_->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         rpc_retry_policy_prototype_(
@@ -213,7 +214,7 @@ class TableAdmin {
       google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED;
   //@}
 
-  std::string const& project() const { return client_->project(); }
+  std::string const& project() const { return project_id_; }
   std::string const& instance_id() const { return instance_id_; }
   std::string const& instance_name() const { return instance_name_; }
 
@@ -988,20 +989,20 @@ class TableAdmin {
 
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
-    return google::cloud::bigtable::TableName(project(), instance_id(),
+    return google::cloud::bigtable::TableName(project_id_, instance_id_,
                                               table_id);
   }
 
   /// Return the fully qualified name of a Cluster.
   std::string ClusterName(std::string const& cluster_id) const {
-    return google::cloud::bigtable::ClusterName(project(), instance_id(),
+    return google::cloud::bigtable::ClusterName(project_id_, instance_id_,
                                                 cluster_id);
   }
 
   /// Return the fully qualified name of a Backup.
   std::string BackupName(std::string const& cluster_id,
                          std::string const& backup_id) const {
-    return google::cloud::bigtable::BackupName(project(), instance_id(),
+    return google::cloud::bigtable::BackupName(project_id_, instance_id_,
                                                cluster_id, backup_id);
   }
 
@@ -1067,6 +1068,7 @@ class TableAdmin {
       std::string const& consistency_token);
 
   std::shared_ptr<AdminClient> client_;
+  std::string project_id_;
   std::string instance_id_;
   std::string instance_name_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
