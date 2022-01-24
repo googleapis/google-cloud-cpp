@@ -23,6 +23,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/curl_impl.h",
     "internal/curl_options.h",
     "internal/curl_wrappers.h",
+    "internal/http_payload.h",
     "internal/rest_options.h",
     "internal/rest_request.h",
     "internal/rest_response.h",
@@ -34,6 +35,7 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/curl_handle_factory.cc",
     "internal/curl_impl.cc",
     "internal/curl_wrappers.cc",
+    "internal/http_payload.cc",
     "internal/rest_request.cc",
     "internal/rest_response.cc",
 ]
