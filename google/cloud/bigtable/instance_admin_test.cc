@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/admin/mocks/mock_bigtable_instance_admin_connection.h"
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/admin/mocks/mock_bigtable_instance_admin_connection.h"
 #include <gmock/gmock.h>
 
 namespace google {
