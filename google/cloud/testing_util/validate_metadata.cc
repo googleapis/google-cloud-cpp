@@ -165,18 +165,43 @@ Status IsContextMDValid(
     absl::optional<std::string> const& resource_prefix_header) {
   auto headers = GetMetadata(context);
 
-  // Extract the metadata from `x-goog-request-params` header in context.
-  auto md = ExtractMDFromHeaders(headers);
-  if (!md) {
-    return md.status();
+  // Check x-goog-api-client first, because it should always be present.
+  auto found_api_client_header = headers.find("x-goog-api-client");
+  if (found_api_client_header == headers.end()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Expected x-goog-api-client metadata");
+  }
+  if (found_api_client_header->second != api_client_header) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Expected x-goog-api-client to be " + api_client_header +
+                      ", was " + found_api_client_header->second);
+  }
+
+  if (resource_prefix_header) {
+    std::string const header = "google-cloud-resource-prefix";
+    auto it = headers.find(header);
+    if (it == headers.end()) {
+      return Status(StatusCode::kInvalidArgument, header + " not found");
+    }
+    if (it->second != *resource_prefix_header) {
+      return Status(StatusCode::kInvalidArgument,
+                    header + " expected to be " + *resource_prefix_header +
+                        ", but was " + it->second);
+    }
   }
 
   // Extract expectations on `x-goog-request-params` from the `google.api.http`
   // annotation on the specified method.
   auto params = ExtractParamsFromMethod(method, resource_name);
-  if (!params) {
-    return params.status();
-  }
+  if (!params) return std::move(params).status();
+
+  // If there are no annotations, there is nothing to check.
+  if (params->empty()) return Status{};
+
+  // Extract the metadata from `x-goog-request-params` header in context.
+  auto md = ExtractMDFromHeaders(headers);
+  if (!md) return std::move(md).status();
+
   // Check if the metadata in the context satisfied the expectations.
   for (auto const& param_pattern : *params) {
     auto const& param = param_pattern.first;
@@ -193,29 +218,6 @@ Status IsContextMDValid(
               // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
               found_it->second + "\") does not satisfy the pattern (\"" +
               expected_pattern + "\").");
-    }
-  }
-
-  auto found_api_client_header = headers.find("x-goog-api-client");
-  if (found_api_client_header == headers.end()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Expected x-goog-api-client metadata");
-  }
-  if (found_api_client_header->second != api_client_header) {
-    return Status(StatusCode::kInvalidArgument,
-                  "Expected x-goog-api-client to be " + api_client_header +
-                      ", was " + found_api_client_header->second);
-  }
-  if (resource_prefix_header) {
-    std::string const header = "google-cloud-resource-prefix";
-    auto it = headers.find(header);
-    if (it == headers.end()) {
-      return Status(StatusCode::kInvalidArgument, header + " not found");
-    }
-    if (it->second != *resource_prefix_header) {
-      return Status(StatusCode::kInvalidArgument,
-                    header + " expected to be " + *resource_prefix_header +
-                        ", but was " + it->second);
     }
   }
 
