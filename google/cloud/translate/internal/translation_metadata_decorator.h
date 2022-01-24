@@ -105,9 +105,11 @@ class TranslationServiceMetadata : public TranslationServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<TranslationServiceStub> child_;
   std::string api_client_header_;
-};  // TranslationServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_internal

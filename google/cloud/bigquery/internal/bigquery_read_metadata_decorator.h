@@ -54,9 +54,11 @@ class BigQueryReadMetadata : public BigQueryReadStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<BigQueryReadStub> child_;
   std::string api_client_header_;
-};  // BigQueryReadMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

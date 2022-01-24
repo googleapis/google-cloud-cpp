@@ -125,9 +125,11 @@ class DeviceManagerMetadata : public DeviceManagerStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<DeviceManagerStub> child_;
   std::string api_client_header_;
-};  // DeviceManagerMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal

@@ -44,9 +44,11 @@ class SubscriberServiceMetadata : public SubscriberServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<SubscriberServiceStub> child_;
   std::string api_client_header_;
-};  // SubscriberServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

@@ -127,9 +127,11 @@ class ApiGatewayServiceMetadata : public ApiGatewayServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<ApiGatewayServiceStub> child_;
   std::string api_client_header_;
-};  // ApiGatewayServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal

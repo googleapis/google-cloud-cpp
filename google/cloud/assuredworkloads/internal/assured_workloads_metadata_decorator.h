@@ -75,9 +75,11 @@ class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
   std::string api_client_header_;
-};  // AssuredWorkloadsServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal

@@ -80,9 +80,11 @@ class ServiceUsageMetadata : public ServiceUsageStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<ServiceUsageStub> child_;
   std::string api_client_header_;
-};  // ServiceUsageMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_internal

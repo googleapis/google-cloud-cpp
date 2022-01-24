@@ -78,9 +78,11 @@ class AccessApprovalMetadata : public AccessApprovalStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<AccessApprovalStub> child_;
   std::string api_client_header_;
-};  // AccessApprovalMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal

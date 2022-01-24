@@ -236,9 +236,11 @@ class CertificateAuthorityServiceMetadata
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<CertificateAuthorityServiceStub> child_;
   std::string api_client_header_;
-};  // CertificateAuthorityServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal

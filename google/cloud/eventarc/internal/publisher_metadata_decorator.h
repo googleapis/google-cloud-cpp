@@ -44,9 +44,11 @@ class PublisherMetadata : public PublisherStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<PublisherStub> child_;
   std::string api_client_header_;
-};  // PublisherMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal

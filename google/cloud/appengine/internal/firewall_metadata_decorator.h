@@ -63,9 +63,11 @@ class FirewallMetadata : public FirewallStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<FirewallStub> child_;
   std::string api_client_header_;
-};  // FirewallMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

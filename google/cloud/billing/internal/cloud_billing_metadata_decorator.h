@@ -88,9 +88,11 @@ class CloudBillingMetadata : public CloudBillingStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<CloudBillingStub> child_;
   std::string api_client_header_;
-};  // CloudBillingMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal

@@ -85,9 +85,11 @@ class ReachabilityServiceMetadata : public ReachabilityServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<ReachabilityServiceStub> child_;
   std::string api_client_header_;
-};  // ReachabilityServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal

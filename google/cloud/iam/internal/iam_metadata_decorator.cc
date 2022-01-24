@@ -230,6 +230,10 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMMetadata::LintPolicy(
 void IAMMetadata::SetMetadata(grpc::ClientContext& context,
                               std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
+
+void IAMMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 

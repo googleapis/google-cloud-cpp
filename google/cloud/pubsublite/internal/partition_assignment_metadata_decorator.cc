@@ -39,13 +39,18 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 PartitionAssignmentServiceMetadata::AsyncAssignPartitions(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncAssignPartitions(cq, std::move(context));
 }
 
 void PartitionAssignmentServiceMetadata::SetMetadata(
     grpc::ClientContext& context, std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
+
+void PartitionAssignmentServiceMetadata::SetMetadata(
+    grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 

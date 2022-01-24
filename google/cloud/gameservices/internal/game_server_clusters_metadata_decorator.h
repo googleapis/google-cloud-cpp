@@ -96,9 +96,11 @@ class GameServerClustersServiceMetadata : public GameServerClustersServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<GameServerClustersServiceStub> child_;
   std::string api_client_header_;
-};  // GameServerClustersServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
