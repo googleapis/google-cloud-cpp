@@ -34,6 +34,7 @@ if (BUILD_TESTING)
         integration_test.h
         mock_fake_clock.cc
         mock_fake_clock.h
+        mock_rest_utils.h
         scoped_environment.cc
         scoped_environment.h
         scoped_log.cc
