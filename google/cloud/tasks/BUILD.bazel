@@ -16,12 +16,24 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_tasks.bzl", "google_cloud_cpp_tasks_hdrs", "google_cloud_cpp_tasks_srcs")
+SOURCE_GLOB = "**/*.cc"
+
+MOCK_SOURCE_GLOB = "mocks/*.cc"
+
+HEADER_GLOB = "**/*.h"
+
+MOCK_HEADER_GLOB = "mocks/*.h"
 
 cc_library(
     name = "google_cloud_cpp_tasks",
-    srcs = google_cloud_cpp_tasks_srcs,
-    hdrs = google_cloud_cpp_tasks_hdrs,
+    srcs = glob(
+        include = [SOURCE_GLOB],
+        exclude = [MOCK_SOURCE_GLOB],
+    ),
+    hdrs = glob(
+        include = [HEADER_GLOB],
+        exclude = [MOCK_HEADER_GLOB],
+    ),
     visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -30,12 +42,14 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_tasks_mocks.bzl", "google_cloud_cpp_tasks_mocks_hdrs", "google_cloud_cpp_tasks_mocks_srcs")
-
 cc_library(
     name = "google_cloud_cpp_tasks_mocks",
-    srcs = google_cloud_cpp_tasks_mocks_srcs,
-    hdrs = google_cloud_cpp_tasks_mocks_hdrs,
+    srcs = glob(
+        include = [MOCK_SOURCE_GLOB],
+    ),
+    hdrs = glob(
+        include = [MOCK_HEADER_GLOB],
+    ),
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_tasks",
