@@ -325,13 +325,12 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
         stub->AsyncGetOperation(context, request, cq).release());
   }
 
- protected:
+ private:
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection()
       override {
     return connection_;
   }
 
- private:
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.BackgroundThreadsFactory();
   }
