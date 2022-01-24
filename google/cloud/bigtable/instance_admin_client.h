@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_CLIENT_H
 
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
@@ -87,7 +88,6 @@ class InstanceAdminClient {
   // them protected, so the mock classes can override them, and then make the
   // classes that do use them friends.
  protected:
-  friend class InstanceAdmin;
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
   friend class internal::LoggingInstanceAdminClient;
@@ -325,6 +325,14 @@ class InstanceAdminClient {
                     google::longrunning::GetOperationRequest const& request,
                     grpc::CompletionQueue* cq) = 0;
   //@}
+
+ private:
+  friend class InstanceAdmin;
+  // TODO(#7534): Make this a pure virtual function, when we break the class.
+  virtual std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
+  connection() {
+    return nullptr;
+  }
 };
 
 /// Create a new instance admin client configured via @p options.

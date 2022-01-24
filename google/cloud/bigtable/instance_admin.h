@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H
 
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
+#include "google/cloud/bigtable/admin/bigtable_instance_admin_options.h"
 #include "google/cloud/bigtable/app_profile_config.h"
 #include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/cluster_list_responses.h"
@@ -124,11 +126,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class InstanceAdmin {
  public:
+  explicit InstanceAdmin(
+      std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
+          connection,
+      std::string project)
+      : connection_(std::move(connection)),
+        project_id_(std::move(project)),
+        project_name_(Project(project_id_).FullName()),
+        rpc_retry_policy_prototype_(
+            DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
+        rpc_backoff_policy_prototype_(
+            DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
+        polling_policy_prototype_(
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)) {}
+
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
    */
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : client_(std::move(client)),
+        connection_(client_->connection()),
         project_id_(client_->project()),
         project_name_(Project(project_id_).FullName()),
         rpc_retry_policy_prototype_(
@@ -716,6 +733,8 @@ class InstanceAdmin {
       std::vector<std::string> const& permissions);
 
  private:
+  friend class InstanceAdminTester;
+
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
@@ -774,6 +793,7 @@ class InstanceAdmin {
                             AppProfileUpdateConfig config);
 
   std::shared_ptr<InstanceAdminClient> client_;
+  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
   std::string project_id_;
   std::string project_name_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;

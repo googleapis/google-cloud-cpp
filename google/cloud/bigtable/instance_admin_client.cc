@@ -41,7 +41,10 @@ namespace btadmin = ::google::bigtable::admin::v2;
 class DefaultInstanceAdminClient : public InstanceAdminClient {
  public:
   DefaultInstanceAdminClient(std::string project, Options options)
-      : project_(std::move(project)), impl_(std::move(options)) {}
+      : project_(std::move(project)),
+        impl_(options),
+        connection_(bigtable_admin::MakeBigtableInstanceAdminConnection(
+            std::move(options))) {}
 
   std::string const& project() const override { return project_; }
   std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
@@ -323,12 +326,18 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   }
 
  private:
+  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection()
+      override {
+    return connection_;
+  }
+
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.BackgroundThreadsFactory();
   }
 
   std::string project_;
   internal::CommonClient<btadmin::BigtableInstanceAdmin> impl_;
+  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
 };
 
 }  // anonymous namespace
