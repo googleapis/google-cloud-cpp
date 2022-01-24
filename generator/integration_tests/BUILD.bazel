@@ -60,25 +60,3 @@ cc_grpc_library(
     grpc_only = True,
     deps = [":google_cloud_cpp_generator_testing_cc_proto"],
 )
-
-load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_generator_integration_tests")
-
-[cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
-    timeout = "long",
-    srcs = [test],
-    data = [
-        "//generator/integration_tests/golden:golden_filegroup",
-        "//generator/integration_tests/golden:golden_internal_filegroup",
-        "//generator/integration_tests/golden:golden_mocks_filegroup",
-    ],
-    tags = [
-        "integration-test",
-        "no-msan",
-    ],
-    deps = [
-        "//generator:google_cloud_cpp_generator",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest_main",
-    ],
-) for test in google_cloud_cpp_generator_integration_tests]

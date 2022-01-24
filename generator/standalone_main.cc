@@ -33,10 +33,13 @@ ABSL_FLAG(std::string, protobuf_proto_path, "",
           "Path to root dir of protos distributed with protobuf.");
 ABSL_FLAG(std::string, googleapis_proto_path, "",
           "Path to root dir of protos distributed with googleapis.");
+ABSL_FLAG(std::string, golden_proto_path, "",
+          "Path to root dir of protos distributed with googleapis.");
 ABSL_FLAG(std::string, output_path, ".",
           "Path to root dir where code is emitted.");
 ABSL_FLAG(std::string, scaffold, "",
           "Generate the library support files for the given directory.");
+ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
 
 namespace {
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
@@ -163,6 +166,7 @@ int main(int argc, char** argv) {
 
   auto proto_path = absl::GetFlag(FLAGS_protobuf_proto_path);
   auto googleapis_path = absl::GetFlag(FLAGS_googleapis_proto_path);
+  auto golden_path = absl::GetFlag(FLAGS_golden_proto_path);
   auto config_file = absl::GetFlag(FLAGS_config_file);
   auto output_path = absl::GetFlag(FLAGS_output_path);
   auto scaffold = absl::GetFlag(FLAGS_scaffold);
@@ -177,10 +181,12 @@ int main(int argc, char** argv) {
     GCP_LOG(ERROR) << "Failed to parse config file: " << config_file << "\n";
   }
 
-  auto const install_result = WriteInstallDirectories(*config, output_path);
-  if (install_result != 0) return install_result;
-  auto const features_result = WriteFeatureList(*config, output_path);
-  if (features_result != 0) return features_result;
+  if (absl::GetFlag(FLAGS_update_ci)) {
+    auto const install_result = WriteInstallDirectories(*config, output_path);
+    if (install_result != 0) return install_result;
+    auto const features_result = WriteFeatureList(*config, output_path);
+    if (features_result != 0) return features_result;
+  }
 
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
@@ -193,6 +199,9 @@ int main(int argc, char** argv) {
     args.emplace_back("");
     args.emplace_back("--proto_path=" + proto_path);
     args.emplace_back("--proto_path=" + googleapis_path);
+    if (!golden_path.empty()) {
+      args.emplace_back("--proto_path=" + golden_path);
+    }
     args.emplace_back("--cpp_codegen_out=" + output_path);
     args.emplace_back("--cpp_codegen_opt=product_path=" +
                       service.product_path());

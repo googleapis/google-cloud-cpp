@@ -47,11 +47,6 @@ curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 function integration::bazel_args() {
   declare -a args
 
-  bazel_output=$(bazel info output_base)
-  readonly bazel_output
-  readonly bazel_googleapis_path="${bazel_output}/external/com_google_googleapis/"
-  readonly bazel_proto_path="${bazel_output}/external/com_google_protobuf/src/"
-
   args+=(
     # Common settings
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
@@ -61,12 +56,6 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_TRACING_OPTIONS=${GOOGLE_CLOUD_CPP_TRACING_OPTIONS}"
     "--test_env=CLOUD_STORAGE_ENABLE_TRACING=${CLOUD_STORAGE_ENABLE_TRACING}"
     "--test_env=HOME=${HOME}"
-
-    # Generator
-    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH=${bazel_googleapis_path}"
-    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH=${bazel_proto_path}"
-    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=yes"
-    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH=/workspace"
 
     # IAM
     "--test_env=GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT}"
@@ -213,6 +202,23 @@ function integration::bazel_with_emulators() {
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
     //google/cloud/examples/...
+
+  local bazel_output_base
+  if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
+    io::log_h2 "Skipping generator integration test"
+  else
+    io::log_h2 "Running generator integration test"
+    bazel_output_base="$(bazel info output_base)"
+    bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
+      //generator:google-cloud-cpp-codegen -- \
+      --protobuf_proto_path="${bazel_output_base}/external/com_google_protobuf/src" \
+      --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
+      --golden_proto_path="${PWD}" \
+      --output_path="${PWD}" \
+      --update_ci=false \
+      --config_file="${PWD}/generator/integration_tests/golden_config.textproto"
+    git diff --exit-code generator/integration_tests/golden/
+  fi
 }
 
 # Runs integration tests with CTest using emulators. This function requires a
@@ -234,16 +240,6 @@ function integration::ctest_with_emulators() {
     "--output-on-failure"
     "--parallel" "$(nproc)"
   )
-
-  io::log_h2 "Running Generator integration tests via CTest"
-  googleapis_abs_path="$(realpath "${cmake_out}")/external/googleapis/src/googleapis_download/"
-  env -C "${cmake_out}" \
-    GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes" \
-    GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH="${googleapis_abs_path}" \
-    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/local/include/" \
-    GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH="/workspace/" \
-    GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH="/workspace/" \
-    ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \

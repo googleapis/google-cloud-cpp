@@ -49,62 +49,9 @@ target_link_libraries(
 set_target_properties(google_cloud_cpp_generator_testing_grpc_lib
                       PROPERTIES CXX_CLANG_TIDY "")
 
-function (google_cloud_cpp_generator_define_integration_tests)
-    # The tests require googletest to be installed. Force CMake to use the
-    # config file for googletest (that is, the CMake file installed by
-    # googletest itself), because the generic `FindGTest` module does not define
-    # the GTest::gmock target, and the target names are also weird.
-    find_package(GTest CONFIG REQUIRED)
-
-    set(google_cloud_cpp_generator_integration_tests
-        # cmake-format: sort
-        generator_integration_test.cc)
-
-    # Export the list of unit tests to a .bzl file so we do not need to maintain
-    # the list in two places.
-    export_list_to_bazel(
-        "google_cloud_cpp_generator_integration_tests.bzl"
-        "google_cloud_cpp_generator_integration_tests" YEAR "2020")
-
-    # Create a custom target so we can say "build all the tests"
-    add_custom_target(generator-integration-tests)
-
-    # Generate a target for each integration test.
-    foreach (fname ${google_cloud_cpp_generator_integration_tests})
-        google_cloud_cpp_add_executable(
-            target "google_cloud_cpp_generator_integration" "${fname}")
-        target_link_libraries(
-            ${target}
-            PRIVATE google_cloud_cpp_generator
-                    google_cloud_cpp_testing
-                    google_cloud_cpp_testing_grpc
-                    GTest::gmock_main
-                    GTest::gmock
-                    GTest::gtest
-                    protobuf::libprotoc)
-        google_cloud_cpp_add_common_options(${target})
-
-        # With googletest it is relatively easy to exceed the default number of
-        # sections (~65,000) in a single .obj file. Add the /bigobj option to
-        # all the tests, even if it is not needed.
-        if (MSVC)
-            target_compile_options(${target} PRIVATE "/bigobj")
-        endif ()
-        add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;integration-test-emulator")
-        add_dependencies(generator-integration-tests ${target})
-    endforeach ()
-    if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-        return()
-    endif ()
-endfunction ()
-
 # Only define the tests if testing is enabled. Package maintainers may not want
 # to build all the tests everytime they create a new package or when the package
 # is installed from source.
 if (BUILD_TESTING)
     add_subdirectory(golden)
-    google_cloud_cpp_generator_define_integration_tests()
 endif (BUILD_TESTING)
