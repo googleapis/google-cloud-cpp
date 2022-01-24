@@ -194,6 +194,56 @@ google::storage::v2::PredefinedObjectAcl GrpcObjectRequestParser::ToProtoObject(
   return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
 }
 
+google::storage::v2::GetObjectRequest GrpcObjectRequestParser::ToProto(
+    GetObjectMetadataRequest const& request) {
+  google::storage::v2::GetObjectRequest result;
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  SetCommonParameters(result, request);
+
+  result.set_bucket("projects/_/buckets/" + request.bucket_name());
+  result.set_object(request.object_name());
+  result.set_generation(request.GetOption<Generation>().value_or(0));
+  auto projection = request.GetOption<Projection>().value_or("");
+  if (projection == "full") result.mutable_read_mask()->add_paths("*");
+  return result;
+}
+
+StatusOr<google::storage::v2::ReadObjectRequest>
+GrpcObjectRequestParser::ToProto(ReadObjectRangeRequest const& request) {
+  google::storage::v2::ReadObjectRequest r;
+  auto status = SetCommonObjectParameters(r, request);
+  if (!status.ok()) return status;
+  r.set_object(request.object_name());
+  r.set_bucket("projects/_/buckets/" + request.bucket_name());
+  if (request.HasOption<Generation>()) {
+    r.set_generation(request.GetOption<Generation>().value());
+  }
+  if (request.HasOption<ReadRange>()) {
+    auto const range = request.GetOption<ReadRange>().value();
+    r.set_read_offset(range.begin);
+    r.set_read_limit(range.end - range.begin);
+  }
+  if (request.HasOption<ReadLast>()) {
+    auto const offset = request.GetOption<ReadLast>().value();
+    r.set_read_offset(-offset);
+  }
+  if (request.HasOption<ReadFromOffset>()) {
+    auto const offset = request.GetOption<ReadFromOffset>().value();
+    if (offset > r.read_offset()) {
+      if (r.read_limit() > 0) {
+        r.set_read_limit(offset - r.read_offset());
+      }
+      r.set_read_offset(offset);
+    }
+  }
+  SetGenerationConditions(r, request);
+  SetMetagenerationConditions(r, request);
+  SetCommonParameters(r, request);
+
+  return r;
+}
+
 StatusOr<google::storage::v2::WriteObjectRequest>
 GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   google::storage::v2::WriteObjectRequest r;
@@ -325,56 +375,6 @@ google::storage::v2::QueryWriteStatusRequest GrpcObjectRequestParser::ToProto(
   google::storage::v2::QueryWriteStatusRequest r;
   r.set_upload_id(request.upload_session_url());
   return r;
-}
-
-StatusOr<google::storage::v2::ReadObjectRequest>
-GrpcObjectRequestParser::ToProto(ReadObjectRangeRequest const& request) {
-  google::storage::v2::ReadObjectRequest r;
-  auto status = SetCommonObjectParameters(r, request);
-  if (!status.ok()) return status;
-  r.set_object(request.object_name());
-  r.set_bucket("projects/_/buckets/" + request.bucket_name());
-  if (request.HasOption<Generation>()) {
-    r.set_generation(request.GetOption<Generation>().value());
-  }
-  if (request.HasOption<ReadRange>()) {
-    auto const range = request.GetOption<ReadRange>().value();
-    r.set_read_offset(range.begin);
-    r.set_read_limit(range.end - range.begin);
-  }
-  if (request.HasOption<ReadLast>()) {
-    auto const offset = request.GetOption<ReadLast>().value();
-    r.set_read_offset(-offset);
-  }
-  if (request.HasOption<ReadFromOffset>()) {
-    auto const offset = request.GetOption<ReadFromOffset>().value();
-    if (offset > r.read_offset()) {
-      if (r.read_limit() > 0) {
-        r.set_read_limit(offset - r.read_offset());
-      }
-      r.set_read_offset(offset);
-    }
-  }
-  SetGenerationConditions(r, request);
-  SetMetagenerationConditions(r, request);
-  SetCommonParameters(r, request);
-
-  return r;
-}
-
-google::storage::v2::GetObjectRequest GrpcObjectRequestParser::ToProto(
-    GetObjectMetadataRequest const& request) {
-  google::storage::v2::GetObjectRequest result;
-  SetGenerationConditions(result, request);
-  SetMetagenerationConditions(result, request);
-  SetCommonParameters(result, request);
-
-  result.set_bucket("projects/_/buckets/" + request.bucket_name());
-  result.set_object(request.object_name());
-  result.set_generation(request.GetOption<Generation>().value_or(0));
-  auto projection = request.GetOption<Projection>().value_or("");
-  if (projection == "full") result.mutable_read_mask()->add_paths("*");
-  return result;
 }
 
 }  // namespace internal

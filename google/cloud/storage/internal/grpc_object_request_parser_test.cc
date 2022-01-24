@@ -62,6 +62,147 @@ auto constexpr kText = "The quick brown fox jumps over the lazy dog";
 //     MD5         : 4ad12fa3657faa80c2b9a92d652c3721
 auto constexpr kAlt = "How vexingly quick daft zebras jump!";
 
+TEST(GrpcObjectRequestParser, PredefinedAclObject) {
+  EXPECT_EQ(storage_proto::OBJECT_ACL_AUTHENTICATED_READ,
+            GrpcObjectRequestParser::ToProtoObject(
+                PredefinedAcl::AuthenticatedRead()));
+  EXPECT_EQ(storage_proto::OBJECT_ACL_PRIVATE,
+            GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::Private()));
+  EXPECT_EQ(
+      storage_proto::OBJECT_ACL_PROJECT_PRIVATE,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::ProjectPrivate()));
+  EXPECT_EQ(
+      storage_proto::OBJECT_ACL_PUBLIC_READ,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicRead()));
+  EXPECT_EQ(
+      storage_proto::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicReadWrite()));
+  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
+            GrpcObjectRequestParser::ToProtoObject(
+                PredefinedAcl::BucketOwnerFullControl()));
+  EXPECT_EQ(
+      google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ,
+      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
+}
+
+TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
+  google::storage::v2::GetObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object"
+        generation: 7
+        if_generation_match: 1
+        if_generation_not_match: 2
+        if_metageneration_match: 3
+        if_metageneration_not_match: 4
+        common_request_params: { user_project: "test-user-project" }
+        read_mask { paths: "*" }
+      )pb",
+      &expected));
+
+  GetObjectMetadataRequest req("test-bucket", "test-object");
+  req.set_multiple_options(
+      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
+      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4), Projection("full"),
+      UserProject("test-user-project"), UserProject("test-user-project"),
+      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+
+  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestSimple) {
+  google::storage::v2::ReadObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+      )pb",
+      &expected));
+
+  ReadObjectRangeRequest req("test-bucket", "test-object");
+
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestAllFields) {
+  google::storage::v2::ReadObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object"
+        generation: 7
+        read_offset: 2000
+        read_limit: 1000
+        if_generation_match: 1
+        if_generation_not_match: 2
+        if_metageneration_match: 3
+        if_metageneration_not_match: 4
+        common_request_params: { user_project: "test-user-project" }
+        common_object_request_params: {
+          encryption_algorithm: "AES256"
+          # to get the key value use:
+          #   /bin/echo -n "01234567"
+          # to get the key hash use (note this command goes over two lines):
+          #   /bin/echo -n "01234567" | sha256sum
+          encryption_key_bytes: "01234567"
+          encryption_key_sha256_bytes: "\x92\x45\x92\xb9\xb1\x03\xf1\x4f\x83\x3f\xaa\xfb\x67\xf4\x80\x69\x1f\x01\x98\x8a\xa4\x57\xc0\x06\x17\x69\xf5\x8c\xd4\x73\x11\xbc"
+        }
+      )pb",
+      &expected));
+
+  ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(
+      Generation(7), ReadFromOffset(2000), ReadRange(1000, 3000),
+      IfGenerationMatch(1), IfGenerationNotMatch(2), IfMetagenerationMatch(3),
+      IfMetagenerationNotMatch(4), UserProject("test-user-project"),
+      UserProject("test-user-project"), QuotaUser("test-quota-user"),
+      UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"));
+
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLast) {
+  google::storage::v2::ReadObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object"
+        read_offset: -2000
+      )pb",
+      &expected));
+
+  ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(ReadLast(2000));
+
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
+  google::storage::v2::ReadObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+      )pb",
+      &expected));
+
+  ReadObjectRangeRequest req("test-bucket", "test-object");
+  req.set_multiple_options(ReadLast(0));
+
+  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+
+  auto client = GrpcClient::Create(DefaultOptionsGrpc(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<EndpointOption>("localhost:1")));
+  StatusOr<std::unique_ptr<ObjectReadSource>> reader = client->ReadObject(req);
+  EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
+}
+
 TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -486,147 +627,6 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadRequestSimple) {
   QueryResumableUploadRequest req("test-upload-id");
 
   auto actual = GrpcObjectRequestParser::ToProto(req);
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcObjectRequestParser, ReadObjectRangeRequestSimple) {
-  google::storage::v2::ReadObjectRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
-      )pb",
-      &expected));
-
-  ReadObjectRangeRequest req("test-bucket", "test-object");
-
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcObjectRequestParser, ReadObjectRangeRequestAllFields) {
-  google::storage::v2::ReadObjectRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 7
-        read_offset: 2000
-        read_limit: 1000
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
-        common_object_request_params: {
-          encryption_algorithm: "AES256"
-          # to get the key value use:
-          #   /bin/echo -n "01234567"
-          # to get the key hash use (note this command goes over two lines):
-          #   /bin/echo -n "01234567" | sha256sum
-          encryption_key_bytes: "01234567"
-          encryption_key_sha256_bytes: "\x92\x45\x92\xb9\xb1\x03\xf1\x4f\x83\x3f\xaa\xfb\x67\xf4\x80\x69\x1f\x01\x98\x8a\xa4\x57\xc0\x06\x17\x69\xf5\x8c\xd4\x73\x11\xbc"
-        }
-      )pb",
-      &expected));
-
-  ReadObjectRangeRequest req("test-bucket", "test-object");
-  req.set_multiple_options(
-      Generation(7), ReadFromOffset(2000), ReadRange(1000, 3000),
-      IfGenerationMatch(1), IfGenerationNotMatch(2), IfMetagenerationMatch(3),
-      IfMetagenerationNotMatch(4), UserProject("test-user-project"),
-      UserProject("test-user-project"), QuotaUser("test-quota-user"),
-      UserIp("test-user-ip"), EncryptionKey::FromBinaryKey("01234567"));
-
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLast) {
-  google::storage::v2::ReadObjectRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        read_offset: -2000
-      )pb",
-      &expected));
-
-  ReadObjectRangeRequest req("test-bucket", "test-object");
-  req.set_multiple_options(ReadLast(2000));
-
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
-  google::storage::v2::ReadObjectRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket" object: "test-object"
-      )pb",
-      &expected));
-
-  ReadObjectRangeRequest req("test-bucket", "test-object");
-  req.set_multiple_options(ReadLast(0));
-
-  auto const actual = GrpcObjectRequestParser::ToProto(req).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-
-  auto client = GrpcClient::Create(DefaultOptionsGrpc(
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<EndpointOption>("localhost:1")));
-  StatusOr<std::unique_ptr<ObjectReadSource>> reader = client->ReadObject(req);
-  EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
-}
-
-TEST(GrpcObjectRequestParser, PredefinedAclObject) {
-  EXPECT_EQ(storage_proto::OBJECT_ACL_AUTHENTICATED_READ,
-            GrpcObjectRequestParser::ToProtoObject(
-                PredefinedAcl::AuthenticatedRead()));
-  EXPECT_EQ(storage_proto::OBJECT_ACL_PRIVATE,
-            GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::Private()));
-  EXPECT_EQ(
-      storage_proto::OBJECT_ACL_PROJECT_PRIVATE,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::ProjectPrivate()));
-  EXPECT_EQ(
-      storage_proto::OBJECT_ACL_PUBLIC_READ,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicRead()));
-  EXPECT_EQ(
-      storage_proto::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicReadWrite()));
-  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
-            GrpcObjectRequestParser::ToProtoObject(
-                PredefinedAcl::BucketOwnerFullControl()));
-  EXPECT_EQ(
-      google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
-}
-
-TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
-  google::storage::v2::GetObjectRequest expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        bucket: "projects/_/buckets/test-bucket"
-        object: "test-object"
-        generation: 7
-        if_generation_match: 1
-        if_generation_not_match: 2
-        if_metageneration_match: 3
-        if_metageneration_not_match: 4
-        common_request_params: { user_project: "test-user-project" }
-        read_mask { paths: "*" }
-      )pb",
-      &expected));
-
-  GetObjectMetadataRequest req("test-bucket", "test-object");
-  req.set_multiple_options(
-      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
-      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4), Projection("full"),
-      UserProject("test-user-project"), UserProject("test-user-project"),
-      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
-
-  auto const actual = GrpcObjectRequestParser::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 

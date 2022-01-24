@@ -29,6 +29,12 @@ struct GrpcObjectRequestParser {
   static google::storage::v2::PredefinedObjectAcl ToProtoObject(
       PredefinedAcl const& acl);
 
+  static google::storage::v2::GetObjectRequest ToProto(
+      GetObjectMetadataRequest const& request);
+
+  static StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
+      ReadObjectRangeRequest const& request);
+
   static StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
       InsertObjectMediaRequest const& request);
   static ResumableUploadResponse FromProto(
@@ -43,14 +49,9 @@ struct GrpcObjectRequestParser {
 
   static StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
       ResumableUploadRequest const& request);
+
   static google::storage::v2::QueryWriteStatusRequest ToProto(
       QueryResumableUploadRequest const& request);
-
-  static StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
-      ReadObjectRangeRequest const& request);
-
-  static google::storage::v2::GetObjectRequest ToProto(
-      GetObjectMetadataRequest const& request);
 };
 
 }  // namespace internal
