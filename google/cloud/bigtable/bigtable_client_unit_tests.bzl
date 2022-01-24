@@ -34,7 +34,7 @@ bigtable_client_unit_tests = [
     "iam_policy_test.cc",
     "idempotent_mutation_policy_test.cc",
     "instance_admin_client_test.cc",
-    "instance_admin_new_test.cc",
+    "instance_admin_legacy_test.cc",
     "instance_admin_test.cc",
     "instance_config_test.cc",
     "instance_update_config_test.cc",
