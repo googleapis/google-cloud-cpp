@@ -466,6 +466,14 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# Service Management
+service {
+  service_proto_path: "google/api/servicemanagement/v1/servicemanager.proto"
+  product_path: "google/cloud/servicemanagement"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Service Usage
 service {
   service_proto_path: "google/api/serviceusage/v1/serviceusage.proto"
