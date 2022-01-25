@@ -319,6 +319,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_bucket_access_control_parser.h
         internal/grpc_bucket_metadata_parser.cc
         internal/grpc_bucket_metadata_parser.h
+        internal/grpc_bucket_request_parser.cc
+        internal/grpc_bucket_request_parser.h
         internal/grpc_client.cc
         internal/grpc_client.h
         internal/grpc_common_request_params.h
@@ -598,6 +600,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             # cmake-format: sort
             internal/grpc_bucket_access_control_parser_test.cc
             internal/grpc_bucket_metadata_parser_test.cc
+            internal/grpc_bucket_request_parser_test.cc
             internal/grpc_client_failures_test.cc
             internal/grpc_client_insert_object_media_test.cc
             internal/grpc_client_read_object_test.cc
