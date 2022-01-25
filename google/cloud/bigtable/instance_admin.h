@@ -43,6 +43,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Implements the APIs to administer Cloud Bigtable instances.
  *
@@ -146,20 +147,9 @@ class InstanceAdmin {
   /**
    * @param client the interface to create grpc stubs, report errors, etc.
    */
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
-      : client_(std::move(client)),
-        connection_(client_->connection()),
-        project_id_(client_->project()),
-        project_name_(Project(project_id_).FullName()),
-        retry_prototype_(
-            DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
-        backoff_prototype_(
-            DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
-        polling_prototype_(
-            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
-        policies_(bigtable_internal::MakeInstanceAdminOptions(
-            retry_prototype_, backoff_prototype_, polling_prototype_)),
-        background_threads_(client_->BackgroundThreadsFactory()()) {}
+      : InstanceAdmin(client->connection(), client->project()) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
@@ -185,19 +175,18 @@ class InstanceAdmin {
    *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
   template <typename... Policies>
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                          Policies&&... policies)
-      : client_(std::move(client)),
-        connection_(client_->connection()),
-        project_id_(client_->project()),
+      : connection_(client->connection()),
+        project_id_(client->project()),
         project_name_(Project(project_id_).FullName()),
         retry_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
         backoff_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
         polling_prototype_(
-            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
-        background_threads_(client_->BackgroundThreadsFactory()()) {
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)) {
     ChangePolicies(std::forward<Policies>(policies)...);
     policies_ = bigtable_internal::MakeInstanceAdminOptions(
         retry_prototype_, backoff_prototype_, polling_prototype_);
@@ -777,47 +766,17 @@ class InstanceAdmin {
   static StatusOr<google::cloud::IamPolicy> ProtoToWrapper(
       google::iam::v1::Policy proto);
 
-  std::unique_ptr<PollingPolicy> clone_polling_policy() {
-    return polling_prototype_->clone();
-  }
-
-  std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return retry_prototype_->clone();
-  }
-
-  std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return backoff_prototype_->clone();
-  }
-
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  AsyncCreateInstanceImpl(CompletionQueue& cq,
-                          bigtable::InstanceConfig instance_config);
-
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncCreateClusterImpl(
-      CompletionQueue& cq, ClusterConfig cluster_config,
-      std::string const& instance_id, std::string const& cluster_id);
-
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  AsyncUpdateInstanceImpl(CompletionQueue& cq,
-                          InstanceUpdateConfig instance_update_config);
-
-  future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncUpdateClusterImpl(
-      CompletionQueue& cq, ClusterConfig cluster_config);
-
-  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  AsyncUpdateAppProfileImpl(CompletionQueue& cq, std::string const& instance_id,
-                            std::string const& profile_id,
-                            AppProfileUpdateConfig config);
-
-  std::shared_ptr<InstanceAdminClient> client_;
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
   std::string project_id_;
   std::string project_name_;
+  //@{
+  /// These prototypes are only used as temporary storage during construction of
+  /// the class, where they are consolidated as `policies_`.
   std::shared_ptr<RPCRetryPolicy> retry_prototype_;
   std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
   std::shared_ptr<PollingPolicy> polling_prototype_;
+  //}
   Options policies_;
-  std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
