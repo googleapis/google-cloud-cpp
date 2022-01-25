@@ -52,8 +52,8 @@ crc32c_SRCS = [
 config_setting(
     name = "windows",
     constraint_values = [
-      "@platforms//os:windows",
-      "@platforms//cpu:x86_64"
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
     ],
     visibility = ["//visibility:public"],
 )
@@ -61,8 +61,8 @@ config_setting(
 config_setting(
     name = "linux_x86_64",
     constraint_values = [
-      "@platforms//os:linux",
-      "@platforms//cpu:x86_64"
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
     ],
     visibility = ["//visibility:public"],
 )
@@ -70,7 +70,7 @@ config_setting(
 config_setting(
     name = "macos",
     constraint_values = [
-      "@platforms//os:macos"
+        "@platforms//os:macos",
     ],
     visibility = ["//visibility:public"],
 )
