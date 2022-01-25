@@ -451,6 +451,21 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Service Control
+service {
+  service_proto_path: "google/api/servicecontrol/v1/quota_controller.proto"
+  product_path: "google/cloud/servicecontrol"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/api/servicecontrol/v1/service_controller.proto"
+  product_path: "google/cloud/servicecontrol"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Service Directory
 service {
   service_proto_path: "google/cloud/servicedirectory/v1/lookup_service.proto"
