@@ -58,6 +58,13 @@ using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableInstanceAdminConnection;
 
 std::string const kProjectId = "the-project";
+std::string const kInstanceId = "the-instance";
+std::string const kClusterId = "the-cluster";
+std::string const kProfileId = "the-profile";
+auto const kProjectName = Project(kProjectId).FullName();
+auto const kInstanceName = InstanceName(kProjectId, kInstanceId);
+auto const kClusterName = ClusterName(kProjectId, kInstanceId, kClusterId);
+auto const kProfileName = AppProfileName(kProjectId, kInstanceId, kProfileId);
 
 Status FailingStatus() { return Status(StatusCode::kPermissionDenied, "fail"); }
 
@@ -80,10 +87,9 @@ class InstanceAdminTest : public ::testing::Test {
 };
 
 TEST_F(InstanceAdminTest, Project) {
-  Project p(kProjectId);
-  InstanceAdmin tested(MakeInstanceAdminClient(p.project_id()));
-  EXPECT_EQ(p.project_id(), tested.project_id());
-  EXPECT_EQ(p.FullName(), tested.project_name());
+  InstanceAdmin tested(MakeInstanceAdminClient(kProjectId));
+  EXPECT_EQ(kProjectId, tested.project_id());
+  EXPECT_EQ(kProjectName, tested.project_name());
 }
 
 TEST_F(InstanceAdminTest, CopyConstructor) {
@@ -207,16 +213,15 @@ TEST_F(InstanceAdminTest, LegacyConstructorWithPolicies) {
 
 TEST_F(InstanceAdminTest, ListInstancesSuccess) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto const expected_names = {InstanceName(kProjectId, "i0"),
-                               InstanceName(kProjectId, "i1")};
-  auto const expected_fails = {"l0", "l1"};
+  std::vector<std::string> const expected_names = {
+      InstanceName(kProjectId, "i0"), InstanceName(kProjectId, "i1")};
+  std::vector<std::string> const expected_fails = {"l0", "l1"};
 
   EXPECT_CALL(*connection_, ListInstances)
       .WillOnce([&expected_names, &expected_fails](
                     btadmin::ListInstancesRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        auto const project_name = Project(kProjectId).FullName();
-        EXPECT_EQ(project_name, request.parent());
+        EXPECT_EQ(kProjectName, request.parent());
 
         btadmin::ListInstancesResponse response;
         for (auto const& name : expected_names) {
@@ -250,11 +255,9 @@ TEST_F(InstanceAdminTest, ListInstancesFailure) {
 
 TEST_F(InstanceAdminTest, CreateInstance) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto const project_name = Project(kProjectId).FullName();
-  auto constexpr kInstanceId = "the-instance";
   auto constexpr kDisplayName = "display name";
-  auto const expected_location_names = {project_name + "/locations/l0",
-                                        project_name + "/locations/l1"};
+  std::vector<std::string> const expected_location_names = {
+      kProjectName + "/locations/l0", kProjectName + "/locations/l1"};
   std::map<std::string, ClusterConfig> cluster_map = {
       {"c0", ClusterConfig("l0", 3, btadmin::HDD)},
       {"c1", ClusterConfig("l1", 3, btadmin::HDD)}};
@@ -264,7 +267,7 @@ TEST_F(InstanceAdminTest, CreateInstance) {
       .WillOnce([&](btadmin::CreateInstanceRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kInstanceId, request.instance_id());
-        EXPECT_EQ(project_name, request.parent());
+        EXPECT_EQ(kProjectName, request.parent());
         EXPECT_EQ(kDisplayName, request.instance().display_name());
         std::vector<std::string> actual_location_names;
         for (auto&& c : request.clusters()) {
@@ -281,18 +284,14 @@ TEST_F(InstanceAdminTest, CreateInstance) {
 
 TEST_F(InstanceAdminTest, CreateCluster) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto constexpr kClusterId = "the-cluster";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
-  auto const location_name =
-      Project(kProjectId).FullName() + "/locations/the-location";
+  auto const location_name = kProjectName + "/locations/the-location";
   auto config = ClusterConfig("the-location", 3, btadmin::HDD);
 
   EXPECT_CALL(*connection_, CreateCluster)
       .WillOnce([&](btadmin::CreateClusterRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kClusterId, request.cluster_id());
-        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(kInstanceName, request.parent());
         EXPECT_EQ(location_name, request.cluster().location());
         EXPECT_EQ(3, request.cluster().serve_nodes());
         EXPECT_EQ(btadmin::HDD, request.cluster().default_storage_type());
@@ -323,13 +322,11 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
 
 TEST_F(InstanceAdminTest, GetInstance) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
 
   EXPECT_CALL(*connection_, GetInstance)
       .WillOnce([&](btadmin::GetInstanceRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.name());
+        EXPECT_EQ(kInstanceName, request.name());
         return FailingStatus();
       });
 
@@ -339,13 +336,11 @@ TEST_F(InstanceAdminTest, GetInstance) {
 
 TEST_F(InstanceAdminTest, DeleteInstance) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const expected_name = InstanceName(kProjectId, kInstanceId);
 
   EXPECT_CALL(*connection_, DeleteInstance)
       .WillOnce([&](btadmin::DeleteInstanceRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(expected_name, request.name());
+        EXPECT_EQ(kInstanceName, request.name());
         return Status();
       });
 
@@ -354,14 +349,11 @@ TEST_F(InstanceAdminTest, DeleteInstance) {
 
 TEST_F(InstanceAdminTest, GetCluster) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto constexpr kClusterId = "the-cluster";
-  auto const cluster_name = ClusterName(kProjectId, kInstanceId, kClusterId);
 
   EXPECT_CALL(*connection_, GetCluster)
       .WillOnce([&](btadmin::GetClusterRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(cluster_name, request.name());
+        EXPECT_EQ(kClusterName, request.name());
         return FailingStatus();
       });
 
@@ -371,16 +363,15 @@ TEST_F(InstanceAdminTest, GetCluster) {
 
 TEST_F(InstanceAdminTest, ListClustersSuccess) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const expected_names = {ClusterName(kProjectId, kInstanceId, "c0"),
-                               ClusterName(kProjectId, kInstanceId, "c1")};
-  auto const expected_fails = {"l0", "l1"};
+  std::vector<std::string> const expected_names = {
+      ClusterName(kProjectId, kInstanceId, "c0"),
+      ClusterName(kProjectId, kInstanceId, "c1")};
+  std::vector<std::string> const expected_fails = {"l0", "l1"};
 
   EXPECT_CALL(*connection_, ListClusters)
       .WillOnce([&](btadmin::ListClustersRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        auto const instance_name = InstanceName(kProjectId, kInstanceId);
-        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(kInstanceName, request.parent());
 
         btadmin::ListClustersResponse response;
         for (auto const& name : expected_names) {
@@ -422,12 +413,9 @@ TEST_F(InstanceAdminTest, ListClustersFailure) {
 
 TEST_F(InstanceAdminTest, UpdateCluster) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto const cluster_name =
-      ClusterName(kProjectId, "the-instance", "the-cluster");
-  auto const location_name =
-      Project(kProjectId).FullName() + "/locations/the-location";
+  auto const location_name = kProjectName + "/locations/the-location";
   btadmin::Cluster c;
-  c.set_name(cluster_name);
+  c.set_name(kClusterName);
   c.set_location(location_name);
   c.set_serve_nodes(3);
   c.set_default_storage_type(btadmin::HDD);
@@ -436,7 +424,7 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
   EXPECT_CALL(*connection_, UpdateCluster)
       .WillOnce([&](btadmin::Cluster const& cluster) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(cluster_name, cluster.name());
+        EXPECT_EQ(kClusterName, cluster.name());
         EXPECT_EQ(location_name, cluster.location());
         EXPECT_EQ(3, cluster.serve_nodes());
         EXPECT_EQ(btadmin::HDD, cluster.default_storage_type());
@@ -449,14 +437,11 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
 
 TEST_F(InstanceAdminTest, DeleteCluster) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto constexpr kClusterId = "the-cluster";
-  auto const cluster_name = ClusterName(kProjectId, kInstanceId, kClusterId);
 
   EXPECT_CALL(*connection_, DeleteCluster)
       .WillOnce([&](btadmin::DeleteClusterRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(cluster_name, request.name());
+        EXPECT_EQ(kClusterName, request.name());
         return Status();
       });
 
@@ -465,16 +450,13 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
 
 TEST_F(InstanceAdminTest, CreateAppProfile) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto constexpr kProfileId = "the-profile";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
   auto config = AppProfileConfig::MultiClusterUseAny(kProfileId);
 
   EXPECT_CALL(*connection_, CreateAppProfile)
       .WillOnce([&](btadmin::CreateAppProfileRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kProfileId, request.app_profile_id());
-        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(kInstanceName, request.parent());
         return FailingStatus();
       });
 
@@ -484,14 +466,11 @@ TEST_F(InstanceAdminTest, CreateAppProfile) {
 
 TEST_F(InstanceAdminTest, GetAppProfile) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto constexpr kProfileId = "the-profile";
-  auto const profile_name = AppProfileName(kProjectId, kInstanceId, kProfileId);
 
   EXPECT_CALL(*connection_, GetAppProfile)
       .WillOnce([&](btadmin::GetAppProfileRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(profile_name, request.name());
+        EXPECT_EQ(kProfileName, request.name());
         return FailingStatus();
       });
 
@@ -501,16 +480,13 @@ TEST_F(InstanceAdminTest, GetAppProfile) {
 
 TEST_F(InstanceAdminTest, UpdateAppProfile) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto constexpr kProfileId = "the-profile";
   auto constexpr kDescription = "description";
-  auto const profile_name = AppProfileName(kProjectId, kInstanceId, kProfileId);
   auto config = AppProfileUpdateConfig().set_description(kDescription);
 
   EXPECT_CALL(*connection_, UpdateAppProfile)
       .WillOnce([&](btadmin::UpdateAppProfileRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(profile_name, request.app_profile().name());
+        EXPECT_EQ(kProfileName, request.app_profile().name());
         EXPECT_EQ(kDescription, request.app_profile().description());
         return make_ready_future<StatusOr<btadmin::AppProfile>>(
             FailingStatus());
@@ -522,7 +498,6 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
 
 TEST_F(InstanceAdminTest, ListAppProfilesSuccess) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
   std::vector<std::string> const expected_names = {
       AppProfileName(kProjectId, kInstanceId, "p0"),
       AppProfileName(kProjectId, kInstanceId, "p1")};
@@ -532,8 +507,7 @@ TEST_F(InstanceAdminTest, ListAppProfilesSuccess) {
       .WillOnce([&iter, &expected_names](
                     btadmin::ListAppProfilesRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        auto const instance_name = InstanceName(kProjectId, kInstanceId);
-        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(kInstanceName, request.parent());
 
         using ::google::cloud::internal::MakeStreamRange;
         using ::google::cloud::internal::StreamReader;
@@ -561,13 +535,11 @@ TEST_F(InstanceAdminTest, ListAppProfilesSuccess) {
 
 TEST_F(InstanceAdminTest, ListAppProfilesFailure) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
 
   EXPECT_CALL(*connection_, ListAppProfiles)
       .WillOnce([&](btadmin::ListAppProfilesRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        auto const instance_name = InstanceName(kProjectId, kInstanceId);
-        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(kInstanceName, request.parent());
 
         using ::google::cloud::internal::MakeStreamRange;
         return MakeStreamRange<btadmin::AppProfile>(
@@ -580,14 +552,11 @@ TEST_F(InstanceAdminTest, ListAppProfilesFailure) {
 
 TEST_F(InstanceAdminTest, DeleteAppProfile) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto constexpr kProfileId = "the-profile";
-  auto const profile_name = AppProfileName(kProjectId, kInstanceId, kProfileId);
 
   EXPECT_CALL(*connection_, DeleteAppProfile)
       .WillOnce([&](btadmin::DeleteAppProfileRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(profile_name, request.name());
+        EXPECT_EQ(kProfileName, request.name());
         EXPECT_EQ(true, request.ignore_warnings());
         return Status();
       });
@@ -597,13 +566,11 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
 
 TEST_F(InstanceAdminTest, GetIamPolicySuccess) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
 
   EXPECT_CALL(*connection_, GetIamPolicy)
       .WillOnce([&](iamproto::GetIamPolicyRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.resource());
+        EXPECT_EQ(kInstanceName, request.resource());
         iamproto::Policy p;
         p.set_version(3);
         p.set_etag("tag");
@@ -618,13 +585,11 @@ TEST_F(InstanceAdminTest, GetIamPolicySuccess) {
 
 TEST_F(InstanceAdminTest, GetIamPolicyFailure) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
 
   EXPECT_CALL(*connection_, GetIamPolicy)
       .WillOnce([&](iamproto::GetIamPolicyRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.resource());
+        EXPECT_EQ(kInstanceName, request.resource());
         return FailingStatus();
       });
 
@@ -634,13 +599,11 @@ TEST_F(InstanceAdminTest, GetIamPolicyFailure) {
 
 TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
 
   EXPECT_CALL(*connection_, GetIamPolicy)
       .WillOnce([&](iamproto::GetIamPolicyRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.resource());
+        EXPECT_EQ(kInstanceName, request.resource());
         return FailingStatus();
       });
 
@@ -650,8 +613,6 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
 
 TEST_F(InstanceAdminTest, SetIamPolicy) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
   google::cloud::IamBinding b1({"role1", {"m1", "m2"}});
   google::cloud::IamBinding b2({"role2", {"m1", "m3"}});
   google::cloud::IamBindings bindings({b1, b2});
@@ -659,7 +620,7 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
   EXPECT_CALL(*connection_, SetIamPolicy)
       .WillOnce([&](iamproto::SetIamPolicyRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.resource());
+        EXPECT_EQ(kInstanceName, request.resource());
         EXPECT_EQ("tag", request.policy().etag());
         EXPECT_EQ(2, request.policy().bindings_size());
         return FailingStatus();
@@ -671,8 +632,6 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
 
 TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
   iamproto::Policy policy;
   policy.set_etag("tag");
   policy.set_version(3);
@@ -680,7 +639,7 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
   EXPECT_CALL(*connection_, SetIamPolicy)
       .WillOnce([&](iamproto::SetIamPolicyRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.resource());
+        EXPECT_EQ(kInstanceName, request.resource());
         EXPECT_EQ("tag", request.policy().etag());
         EXPECT_EQ(3, request.policy().version());
         return FailingStatus();
@@ -692,15 +651,13 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
 
 TEST_F(InstanceAdminTest, TestIamPermissionsSuccess) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
   std::vector<std::string> const expected_permissions = {"writer", "reader"};
   std::vector<std::string> const returned_permissions = {"reader"};
 
   EXPECT_CALL(*connection_, TestIamPermissions)
       .WillOnce([&](iamproto::TestIamPermissionsRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.resource());
+        EXPECT_EQ(kInstanceName, request.resource());
         std::vector<std::string> actual_permissions;
         for (auto const& c : request.permissions()) {
           actual_permissions.emplace_back(c);
@@ -720,14 +677,12 @@ TEST_F(InstanceAdminTest, TestIamPermissionsSuccess) {
 
 TEST_F(InstanceAdminTest, TestIamPermissionsFailure) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto constexpr kInstanceId = "the-instance";
-  auto const instance_name = InstanceName(kProjectId, kInstanceId);
   std::vector<std::string> const expected_permissions = {"writer", "reader"};
 
   EXPECT_CALL(*connection_, TestIamPermissions)
       .WillOnce([&](iamproto::TestIamPermissionsRequest const& request) {
         CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(instance_name, request.resource());
+        EXPECT_EQ(kInstanceName, request.resource());
         std::vector<std::string> actual_permissions;
         for (auto const& c : request.permissions()) {
           actual_permissions.emplace_back(c);
