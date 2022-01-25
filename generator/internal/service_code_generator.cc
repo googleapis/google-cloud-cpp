@@ -164,6 +164,19 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   return include_paths;
 }
 
+bool ServiceCodeGenerator::IsDeprecatedMethodSignature(
+    google::protobuf::MethodDescriptor const& method,
+    int method_signature_number) const {
+  auto method_vars = service_method_vars_.find(method.full_name());
+  if (method_vars == service_method_vars_.end()) {
+    GCP_LOG(FATAL) << method.full_name()
+                   << " not found in service_method_vars_\n";
+  }
+  return method_vars->second.find("method_signature" +
+                                  std::to_string(method_signature_number)) ==
+         method_vars->second.end();
+}
+
 VarsDictionary const& ServiceCodeGenerator::vars() const {
   return service_vars_;
 }

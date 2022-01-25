@@ -140,6 +140,15 @@ class ServiceCodeGenerator : public GeneratorInterface {
    */
   std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
 
+  /**
+   * Because method signatures are removed if they contain deprecated fields,
+   * the number of method signatures to emit may be fewer than the number in
+   * the proto file.
+   */
+  bool IsDeprecatedMethodSignature(
+      google::protobuf::MethodDescriptor const& method,
+      int method_signature_number) const;
+
  private:
   void SetMethods();
 

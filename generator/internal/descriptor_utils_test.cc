@@ -577,13 +577,13 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_vars = vars_.find("google.protobuf.Service.Method6");
   ASSERT_NE(method_vars, vars_.end());
-  EXPECT_NE(method_vars->second.find("method_signature0"),
+  EXPECT_EQ(method_vars->second.find("method_signature0"),
             method_vars->second.end());
   EXPECT_NE(method_vars->second.find("method_signature1"),
             method_vars->second.end());
   EXPECT_EQ(method_vars->second.find("method_signature2"),
             method_vars->second.end());
-  EXPECT_EQ(method_vars->second.find("method_signature3"),
+  EXPECT_NE(method_vars->second.find("method_signature3"),
             method_vars->second.end());
 }
 
@@ -756,10 +756,10 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "default_idempotency", "kIdempotent"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method6", "method_signature0",
+            "google.protobuf.Service.Method6", "method_signature1",
             "std::map<std::string, std::string> const& labels, "),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method6", "method_request_setters0",
+            "google.protobuf.Service.Method6", "method_request_setters1",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",

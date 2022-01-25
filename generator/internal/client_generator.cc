@@ -118,6 +118,7 @@ Status ClientGenerator::GenerateHeader() {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
+      if (IsDeprecatedMethodSignature(method, i)) continue;
       std::string const method_string = absl::StrCat(
           "  $method_name$($method_signature", i, "$Options options = {});\n");
       std::string const signature = method_signature_extension[i];
@@ -344,6 +345,7 @@ Status ClientGenerator::GenerateCc() {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
+      if (IsDeprecatedMethodSignature(method, i)) continue;
       std::string method_string =
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
                        i, "$Options options) {\n");
