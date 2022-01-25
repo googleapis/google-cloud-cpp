@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc_bucket_request_parser.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
@@ -159,8 +161,13 @@ StatusOr<BucketMetadata> GrpcClient::CreateBucket(CreateBucketRequest const&) {
 }
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
-    GetBucketMetadataRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetBucketMetadataRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "");
+  auto response = stub_->GetBucket(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketMetadataParser::FromProto(*response);
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucket(DeleteBucketRequest const&) {
