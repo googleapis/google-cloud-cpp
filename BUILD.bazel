@@ -172,6 +172,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-binaryauthorization",
+    deps = [
+        "//google/cloud/binaryauthorization:google_cloud_cpp_binaryauthorization",
+    ],
+)
+
+cc_library(
+    name = "experimental-binaryauthorization_mocks",
+    deps = [
+        "//google/cloud/binaryauthorization:google_cloud_cpp_binaryauthorization_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-channel",
     deps = [
         "//google/cloud/channel:google_cloud_cpp_channel",

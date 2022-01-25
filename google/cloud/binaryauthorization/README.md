@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Binary Authorization API][cloud-service-docs], a service to The management interface for Binary Authorization, a system providing policy control for images deployed to Kubernetes Engine clusters.
+[Binary Authorization API][cloud-service-docs]. Binary Authorization is a system
+providing policy control for images deployed to Kubernetes Engine clusters.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,7 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/binaryauthorization/ EDIT HERE .h"
+#include "google/cloud/binaryauthorization/binauthz_management_service_v1_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,13 +51,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace binaryauthorization = ::google::cloud::binaryauthorization;
-  auto client = binaryauthorization::Client(
-      binaryauthorization::MakeConnection(/* EDIT HERE */));
+  auto client = binaryauthorization::BinauthzManagementServiceV1Client(
+      binaryauthorization::MakeBinauthzManagementServiceV1Connection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListAttestors(project.FullName())) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;

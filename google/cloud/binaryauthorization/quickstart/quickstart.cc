@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/binaryauthorization/ EDIT HERE .h"
+#include "google/cloud/binaryauthorization/binauthz_management_service_v1_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,13 +24,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace binaryauthorization = ::google::cloud::binaryauthorization;
-  auto client = binaryauthorization::Client(
-      binaryauthorization::MakeConnection(/* EDIT HERE */));
+  auto client = binaryauthorization::BinauthzManagementServiceV1Client(
+      binaryauthorization::MakeBinauthzManagementServiceV1Connection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListAttestors(project.FullName())) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;

@@ -24,7 +24,10 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "binaryauthorization_internal"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::binaryauthorization_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::binaryauthorization_protos
+                                  google-cloud-cpp::grafeas_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/grafeas")
 
 find_package(gRPC REQUIRED)
 find_package(ProtobufWithTargets REQUIRED)
@@ -58,7 +61,7 @@ target_link_libraries(
            google-cloud-cpp::api_http_protos
            google-cloud-cpp::api_resource_protos
            google-cloud-cpp::rpc_status_protos
-           grafeas_v1_grafeas_protos)
+           google-cloud-cpp::grafeas_protos)
 
 file(
     GLOB source_files
@@ -171,9 +174,12 @@ set(GOOGLE_CLOUD_PC_NAME "The Binary Authorization API C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to use the Binary Authorization API.")
 set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_binaryauthorization")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_binaryauthorization_protos")
+string(
+    CONCAT GOOGLE_CLOUD_PC_REQUIRES
+           "google_cloud_cpp_grpc_utils"
+           " google_cloud_cpp_common"
+           " google_cloud_cpp_binaryauthorization_protos"
+           " google_cloud_cpp_grafeas_protos")
 
 # Create and install the pkg-config files.
 configure_file(
