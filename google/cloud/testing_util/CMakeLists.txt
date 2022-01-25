@@ -34,7 +34,6 @@ if (BUILD_TESTING)
         integration_test.h
         mock_fake_clock.cc
         mock_fake_clock.h
-        mock_rest_utils.h
         scoped_environment.cc
         scoped_environment.h
         scoped_log.cc
@@ -142,4 +141,17 @@ if (BUILD_TESTING)
         endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
+
+    if (NOT GOOGLE_CLOUD_CPP_ENABLE_REST)
+        return()
+    endif ()
+
+    add_library(google_cloud_cpp_testing_rest # cmake-format: sort
+                mock_http_payload.h)
+    set_target_properties(google_cloud_cpp_testing_rest
+                          PROPERTIES LINKER_LANGUAGE CXX)
+    target_link_libraries(google_cloud_cpp_testing_rest PUBLIC GTest::gmock)
+    google_cloud_cpp_add_common_options(google_cloud_cpp_testing_rest)
+
+    create_bazel_config(google_cloud_cpp_testing_rest YEAR 2022)
 endif ()

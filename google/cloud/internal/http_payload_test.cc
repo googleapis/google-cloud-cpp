@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/http_payload.h"
-#include "google/cloud/testing_util/mock_rest_utils.h"
+#include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 

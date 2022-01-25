@@ -17,7 +17,6 @@
 #include "google/cloud/log.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/str_split.h"
-#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -32,6 +31,7 @@ StatusOr<std::size_t> CurlHttpPayload::Read(absl::Span<char> buffer) {
   return impl_->Read(buffer);
 }
 
+// TODO(#8089): remove lowercase operations after this issue has been resolved.
 std::multimap<std::string, std::string> CurlHttpPayload::Trailers() const {
   std::multimap<std::string, std::string> trailers;
   auto headers = impl_->headers();
@@ -57,7 +57,7 @@ std::multimap<std::string, std::string> CurlHttpPayload::Trailers() const {
 
 StatusOr<std::string> ReadAll(std::unique_ptr<HttpPayload> payload,
                               std::size_t read_size) {
-  std::stringstream output_buffer;
+  std::string output_buffer;
   // Allocate buf on the heap as large values of read_size could exceed stack
   // size.
   auto buf = absl::make_unique<char[]>(read_size);
@@ -65,9 +65,9 @@ StatusOr<std::string> ReadAll(std::unique_ptr<HttpPayload> payload,
   do {
     read_status = payload->Read({&buf[0], read_size});
     if (!read_status.ok()) return read_status.status();
-    output_buffer.write(buf.get(), read_status.value());
+    output_buffer.append(buf.get(), read_status.value());
   } while (read_status.value() > 0);
-  return output_buffer.str();
+  return output_buffer;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
