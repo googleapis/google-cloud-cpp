@@ -3,8 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Service Control API][cloud-service-docs]. Provides admission control and
-telemetry reporting for services integrated with Service Infrastructure.
+[Service Control API][cloud-service-docs]. This service provides admission
+control and telemetry reporting for services integrated with Service
+Infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
