@@ -57,14 +57,20 @@ using ::testing::UnorderedElementsAreArray;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableInstanceAdminConnection;
 
-std::string const kProjectId = "the-project";
-std::string const kInstanceId = "the-instance";
-std::string const kClusterId = "the-cluster";
-std::string const kProfileId = "the-profile";
-auto const kProjectName = Project(kProjectId).FullName();
-auto const kInstanceName = InstanceName(kProjectId, kInstanceId);
-auto const kClusterName = ClusterName(kProjectId, kInstanceId, kClusterId);
-auto const kProfileName = AppProfileName(kProjectId, kInstanceId, kProfileId);
+auto const kProjectId = "the-project";
+auto const kInstanceId = "the-instance";
+auto const kClusterId = "the-cluster";
+auto const kProfileId = "the-profile";
+auto const kProjectName = "projects/the-project";
+auto const kInstanceName = "projects/the-project/instances/the-instance";
+auto const kClusterName =
+    "projects/the-project/instances/the-instance/clusters/the-cluster";
+auto const kProfileName =
+    "projects/the-project/instances/the-instance/appProfiles/the-profile";
+
+std::string LocationName(std::string const& location) {
+  return kProjectName + ("/locations/" + location);
+}
 
 Status FailingStatus() { return Status(StatusCode::kPermissionDenied, "fail"); }
 
@@ -256,8 +262,8 @@ TEST_F(InstanceAdminTest, ListInstancesFailure) {
 TEST_F(InstanceAdminTest, CreateInstance) {
   auto tested = InstanceAdmin(connection_, kProjectId);
   auto constexpr kDisplayName = "display name";
-  std::vector<std::string> const expected_location_names = {
-      kProjectName + "/locations/l0", kProjectName + "/locations/l1"};
+  std::vector<std::string> const expected_location_names = {LocationName("l0"),
+                                                            LocationName("l1")};
   std::map<std::string, ClusterConfig> cluster_map = {
       {"c0", ClusterConfig("l0", 3, btadmin::HDD)},
       {"c1", ClusterConfig("l1", 3, btadmin::HDD)}};
@@ -284,7 +290,7 @@ TEST_F(InstanceAdminTest, CreateInstance) {
 
 TEST_F(InstanceAdminTest, CreateCluster) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto const location_name = kProjectName + "/locations/the-location";
+  auto const location_name = LocationName("the-location");
   auto config = ClusterConfig("the-location", 3, btadmin::HDD);
 
   EXPECT_CALL(*connection_, CreateCluster)
@@ -413,7 +419,7 @@ TEST_F(InstanceAdminTest, ListClustersFailure) {
 
 TEST_F(InstanceAdminTest, UpdateCluster) {
   auto tested = InstanceAdmin(connection_, kProjectId);
-  auto const location_name = kProjectName + "/locations/the-location";
+  auto const location_name = LocationName("the-location");
   btadmin::Cluster c;
   c.set_name(kClusterName);
   c.set_location(location_name);
