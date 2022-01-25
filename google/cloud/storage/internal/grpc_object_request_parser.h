@@ -28,6 +28,8 @@ namespace internal {
 struct GrpcObjectRequestParser {
   static google::storage::v2::PredefinedObjectAcl ToProtoObject(
       PredefinedAcl const& acl);
+  static google::storage::v2::PredefinedObjectAcl ToProtoObject(
+      DestinationPredefinedAcl const& acl);
 
   static google::storage::v2::DeleteObjectRequest ToProto(
       DeleteObjectRequest const& request);
@@ -48,6 +50,12 @@ struct GrpcObjectRequestParser {
       ListObjectsRequest const& request);
   static ListObjectsResponse FromProto(
       google::storage::v2::ListObjectsResponse const& response,
+      Options const& options);
+
+  static StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
+      RewriteObjectRequest const& request);
+  static RewriteObjectResponse FromProto(
+      google::storage::v2::RewriteResponse const& response,
       Options const& options);
 
   static StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
