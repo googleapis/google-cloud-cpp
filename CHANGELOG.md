@@ -101,8 +101,8 @@ only affect customers who mock this class in their tests. Code that calls
 
 This change will allow us to deliver new features more quickly by reducing the
 maintenance costs of the library. It also provides a better mocking interface
-for `bigtable::InstanceAdmin`. We are sorry to those that are inconvenienced by
-this change.
+for `bigtable::InstanceAdmin`. We apologize if you are inconvenienced by this
+change.
 
 If only your tests are broken, please use
 `bigtable_admin_mocks::MockBigtableInstanceAdminConnection` in place of
@@ -123,7 +123,7 @@ library. For more information on these new classes, see our
 [Architecture Design] document.
 
 Again, we apologize for making this breaking change, but we believe it is in the
-best interest of our customers.
+best long-term interest of our customers.
 
 [Cloud Bigtable Admin API]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [Architecture Design]: https://github.com/googleapis/google-cloud-cpp/blob/main/ARCHITECTURE.md#the-client-classes
