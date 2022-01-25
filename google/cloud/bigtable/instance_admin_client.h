@@ -27,18 +27,15 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Holds configuration options for `bigtable::InstanceAdmin`.
+ * Creates a `bigtable_admin::BigtableInstanceAdminConnection` for
+ * `bigtable::InstanceAdmin` to use.
  *
- * This class is used as a conduit to pass configuration options to
- * `bigtable::InstanceAdmin`. Formerly, this class was responsible for
- * initiating a connection to the Cloud Bigtable Instance Admin service. Now
- * that connection is initiated by `bigtable::InstanceAdmin`. This class is
- * maintained only for backwards compatibility.
+ * This class is used to initiate a connection to the Cloud Bigtable Instance
+ * Admin service. It is maintained only for backwards compatibility.
  *
- * @deprecated Please consider using
- *     `bigtable_admin::BigtableInstanceAdminConnection` to configure
- *     `bigtable_admin::BigtableInstanceAdminClient`, instead of using this
- *     class to configure `bigtable::InstanceAdmin`.
+ * @deprecated Please use `bigtable_admin::BigtableInstanceAdminConnection` to
+ *     configure `bigtable_admin::BigtableInstanceAdminClient`, instead of using
+ *     this class to configure `bigtable::InstanceAdmin`.
  */
 class InstanceAdminClient {
  public:
