@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/grpc_bucket_request_parser.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -26,33 +25,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-namespace storage_proto = ::google::storage::v2;
+namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::ElementsAre;
 
 TEST(GrpcBucketRequestParser, PredefinedAclObject) {
-  EXPECT_EQ(storage_proto::BUCKET_ACL_AUTHENTICATED_READ,
+  EXPECT_EQ(v2::BUCKET_ACL_AUTHENTICATED_READ,
             GrpcBucketRequestParser::ToProtoBucket(
                 PredefinedAcl::AuthenticatedRead()));
-  EXPECT_EQ(storage_proto::BUCKET_ACL_PRIVATE,
+  EXPECT_EQ(v2::BUCKET_ACL_PRIVATE,
             GrpcBucketRequestParser::ToProtoBucket(PredefinedAcl::Private()));
   EXPECT_EQ(
-      storage_proto::BUCKET_ACL_PROJECT_PRIVATE,
+      v2::BUCKET_ACL_PROJECT_PRIVATE,
       GrpcBucketRequestParser::ToProtoBucket(PredefinedAcl::ProjectPrivate()));
+  EXPECT_EQ(v2::BUCKET_ACL_PUBLIC_READ, GrpcBucketRequestParser::ToProtoBucket(
+                                            PredefinedAcl::PublicRead()));
   EXPECT_EQ(
-      storage_proto::BUCKET_ACL_PUBLIC_READ,
-      GrpcBucketRequestParser::ToProtoBucket(PredefinedAcl::PublicRead()));
-  EXPECT_EQ(
-      storage_proto::BUCKET_ACL_PUBLIC_READ_WRITE,
+      v2::BUCKET_ACL_PUBLIC_READ_WRITE,
       GrpcBucketRequestParser::ToProtoBucket(PredefinedAcl::PublicReadWrite()));
-  EXPECT_EQ(storage_proto::PREDEFINED_BUCKET_ACL_UNSPECIFIED,
+  EXPECT_EQ(v2::PREDEFINED_BUCKET_ACL_UNSPECIFIED,
             GrpcBucketRequestParser::ToProtoBucket(
                 PredefinedAcl::BucketOwnerFullControl()));
 }
 
 TEST(GrpcBucketRequestParser, GetBucketMetadataAllOptions) {
-  google::storage::v2::GetBucketRequest expected;
+  v2::GetBucketRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         name: "projects/_/buckets/test-bucket"

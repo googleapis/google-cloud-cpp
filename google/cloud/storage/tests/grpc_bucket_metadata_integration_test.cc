@@ -17,7 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <vector>
 
@@ -30,8 +29,6 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
