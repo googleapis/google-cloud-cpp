@@ -55,6 +55,7 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
+  auto rewrite_name = MakeRandomObjectName();
 
   auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
                                      IfGenerationMatch(0));
@@ -75,6 +76,11 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
     names.push_back(object->name());
   }
   EXPECT_THAT(names, Contains(object_name));
+
+  auto rewrite = client->RewriteObjectBlocking(bucket_name, object_name,
+                                               bucket_name, rewrite_name);
+  ASSERT_STATUS_OK(rewrite);
+  ScheduleForDelete(*rewrite);
 
   auto del = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(del);

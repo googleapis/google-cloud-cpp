@@ -328,8 +328,14 @@ StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
 }
 
 StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
-    RewriteObjectRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    RewriteObjectRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "resource");
+  auto response = stub_->RewriteObject(context, *proto);
+  if (!response) return std::move(response).status();
+  return GrpcObjectRequestParser::FromProto(*response, options_);
 }
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
