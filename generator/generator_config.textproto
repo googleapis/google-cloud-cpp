@@ -526,7 +526,6 @@ service {
     "CreateNotification",
     "ListNotifications",
     "ComposeObject",
-    "DeleteObject",
     "UpdateObject",
     "RewriteObject",
     "CreateHmacKey",

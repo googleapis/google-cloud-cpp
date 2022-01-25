@@ -85,6 +85,32 @@ TEST(GrpcObjectRequestParser, PredefinedAclObject) {
       GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
 }
 
+TEST(GrpcObjectRequestParser, DeleteObjectAllFields) {
+  google::storage::v2::DeleteObjectRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object"
+        generation: 7
+        if_generation_match: 1
+        if_generation_not_match: 2
+        if_metageneration_match: 3
+        if_metageneration_not_match: 4
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  DeleteObjectRequest req("test-bucket", "test-object");
+  req.set_multiple_options(
+      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
+      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
+      UserProject("test-user-project"), QuotaUser("test-quota-user"),
+      UserIp("test-user-ip"));
+
+  auto const actual = GrpcObjectRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
   google::storage::v2::GetObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(

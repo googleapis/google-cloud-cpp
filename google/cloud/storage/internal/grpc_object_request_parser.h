@@ -29,6 +29,9 @@ struct GrpcObjectRequestParser {
   static google::storage::v2::PredefinedObjectAcl ToProtoObject(
       PredefinedAcl const& acl);
 
+  static google::storage::v2::DeleteObjectRequest ToProto(
+      DeleteObjectRequest const& request);
+
   static google::storage::v2::GetObjectRequest ToProto(
       GetObjectMetadataRequest const& request);
 

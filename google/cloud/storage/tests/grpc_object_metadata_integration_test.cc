@@ -30,6 +30,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -74,6 +75,12 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
     names.push_back(object->name());
   }
   EXPECT_THAT(names, Contains(object_name));
+
+  auto del = client->DeleteObject(bucket_name, object_name);
+  ASSERT_STATUS_OK(del);
+
+  get = client->GetObjectMetadata(bucket_name, object_name);
+  EXPECT_THAT(get, StatusIs(StatusCode::kNotFound));
 }
 
 }  // namespace

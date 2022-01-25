@@ -32,6 +32,13 @@ StorageMetadata::StorageMetadata(std::shared_ptr<StorageStub> child)
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
+Status StorageMetadata::DeleteObject(
+    grpc::ClientContext& context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  SetMetadata(context, {});
+  return child_->DeleteObject(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
     grpc::ClientContext& context,
     google::storage::v2::GetObjectRequest const& request) {

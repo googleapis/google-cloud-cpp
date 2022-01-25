@@ -30,6 +30,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageStub::~StorageStub() = default;
 
+Status DefaultStorageStub::DeleteObject(
+    grpc::ClientContext& client_context,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteObject(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::storage::v2::Object> DefaultStorageStub::GetObject(
     grpc::ClientContext& client_context,
     google::storage::v2::GetObjectRequest const& request) {

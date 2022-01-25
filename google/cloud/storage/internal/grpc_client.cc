@@ -305,8 +305,13 @@ StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
   return GrpcObjectRequestParser::FromProto(*response, options_);
 }
 
-StatusOr<EmptyResponse> GrpcClient::DeleteObject(DeleteObjectRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<EmptyResponse> GrpcClient::DeleteObject(
+    DeleteObjectRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  auto response = stub_->DeleteObject(context, proto);
+  if (!response.ok()) return response;
+  return EmptyResponse{};
 }
 
 StatusOr<ObjectMetadata> GrpcClient::UpdateObject(UpdateObjectRequest const&) {

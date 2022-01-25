@@ -194,6 +194,18 @@ google::storage::v2::PredefinedObjectAcl GrpcObjectRequestParser::ToProtoObject(
   return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
 }
 
+google::storage::v2::DeleteObjectRequest GrpcObjectRequestParser::ToProto(
+    DeleteObjectRequest const& request) {
+  google::storage::v2::DeleteObjectRequest result;
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  SetCommonParameters(result, request);
+  result.set_bucket("projects/_/buckets/" + request.bucket_name());
+  result.set_object(request.object_name());
+  result.set_generation(request.GetOption<Generation>().value_or(0));
+  return result;
+}
+
 google::storage::v2::GetObjectRequest GrpcObjectRequestParser::ToProto(
     GetObjectMetadataRequest const& request) {
   google::storage::v2::GetObjectRequest result;
