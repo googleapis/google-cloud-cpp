@@ -746,8 +746,7 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
 }
 
 std::string TableAdmin::InstanceName() const {
-  return google::cloud::bigtable::InstanceName(client_->project(),
-                                               instance_id_);
+  return google::cloud::bigtable::InstanceName(project_id_, instance_id_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

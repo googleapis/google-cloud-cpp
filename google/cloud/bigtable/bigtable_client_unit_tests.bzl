@@ -65,6 +65,7 @@ bigtable_client_unit_tests = [
     "rpc_backoff_policy_test.cc",
     "rpc_retry_policy_test.cc",
     "table_admin_legacy_test.cc",
+    "table_admin_test.cc",
     "table_apply_test.cc",
     "table_bulk_apply_test.cc",
     "table_check_and_mutate_row_test.cc",
