@@ -91,8 +91,17 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 4.0. From the top-level directory, run the usual
+EOF
+
+# This block changes the here-doc style to allow variable substitution.
+BAZEL_VERSION="$(awk -F= '/USE_BAZEL_VERSION/{print $2}' "${BINDIR}/../../.bazeliskrc")"
+readonly BAZEL_VERSION
+cat <<EOF
+This library requires Bazel >= ${BAZEL_VERSION}. From the top-level directory, run the usual
 commands.
+EOF
+
+cat <<"EOF"
 
 ```shell
 bazel build //...
