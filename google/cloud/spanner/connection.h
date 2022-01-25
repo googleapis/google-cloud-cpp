@@ -128,6 +128,9 @@ class Connection {
   };
   //@}
 
+  /// Returns any options use by the concrete Connection.
+  virtual Options options() { return Options{}; }
+
   /// Defines the interface for `Client::Read()`
   virtual RowStream Read(ReadParams) = 0;
 
