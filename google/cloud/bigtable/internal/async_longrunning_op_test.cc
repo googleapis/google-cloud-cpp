@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/internal/async_longrunning_op.h"
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
-#include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/chrono_literals.h"

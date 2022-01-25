@@ -466,7 +466,7 @@ TEST_F(InstanceAdminIntegrationTest,
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListInstances")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncCreateInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetInstance")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncUpdateInstance")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncPartialUpdateInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteInstance")));
 
   // Verify that a normal client does not log.
