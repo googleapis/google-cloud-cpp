@@ -756,6 +756,7 @@ service GoldenKitchenSink {
       post: "/v1/{name=projects/*/serviceAccounts/*}:generateAccessToken"
       body: "*"
     };
+    option (google.api.method_signature) = "name,not_used_anymore";
     option (google.api.method_signature) = "name,delegates,scope,lifetime";
   }
 
@@ -893,6 +894,9 @@ message GenerateAccessTokenRequest {
   // `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   // character is required; replacing it with a project ID is invalid.
   repeated string delegates = 2;
+
+  // Deprecated field for testing method signatures.
+  string not_used_anymore = 3 [deprecated = true];
 
   // Required. Code to identify the scopes to be included in the OAuth 2.0 access token.
   // See https://developers.google.com/identity/protocols/googlescopes for more

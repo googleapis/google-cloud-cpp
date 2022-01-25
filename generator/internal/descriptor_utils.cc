@@ -179,7 +179,7 @@ void SetMethodSignatureMethodVars(
     VarsDictionary& method_vars) {
   auto method_signature_extension =
       method.options().GetRepeatedExtension(google::api::method_signature);
-  for (int i = 0, emit_method = 0; i < method_signature_extension.size(); ++i) {
+  for (int i = 0; i < method_signature_extension.size(); ++i) {
     google::protobuf::Descriptor const* input_type = method.input_type();
     std::vector<std::string> parameters =
         absl::StrSplit(method_signature_extension[i], ',', absl::SkipEmpty());
@@ -236,11 +236,10 @@ void SetMethodSignatureMethodVars(
       method_signature += ", ";
     }
     if (field_deprecated) continue;
-    std::string key = "method_signature" + std::to_string(emit_method);
+    std::string key = "method_signature" + std::to_string(i);
     method_vars[key] = method_signature;
-    std::string key2 = "method_request_setters" + std::to_string(emit_method);
+    std::string key2 = "method_request_setters" + std::to_string(i);
     method_vars[key2] = method_request_setters;
-    ++emit_method;
   }
 }
 
