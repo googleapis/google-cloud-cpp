@@ -65,7 +65,7 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 3.0. From the top-level directory, run the usual
+This library requires Bazel >= 4.0. From the top-level directory, run the usual
 commands.
 
 ```shell
