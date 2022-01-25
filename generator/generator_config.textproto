@@ -130,6 +130,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Binary Authorization
+service {
+  service_proto_path: "google/cloud/binaryauthorization/v1/service.proto"
+  product_path: "google/cloud/binaryauthorization"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Certificate Authority
 service {
   service_proto_path: "google/cloud/security/privateca/v1/service.proto"

@@ -51,6 +51,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/billing/v1:billing_cc_grpc" \
       "@com_google_googleapis//google/cloud/billing/budgets/v1:budgets_cc_grpc"
   )"
+  ["binaryauthorization"]="@com_google_googleapis//google/cloud/binaryauthorization/v1:binaryauthorization_cc_grpc"
   ["channel"]="@com_google_googleapis//google/cloud/channel/v1:channel_cc_grpc"
   ["cloudbuild"]="@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
