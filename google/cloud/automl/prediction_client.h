@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// AutoML Prediction API.
 ///
 /// On any input that is documented to expect a string parameter in
-/// snake_case or kebab-case, either of those cases is accepted.
+/// snake_case or dash-case, either of those cases is accepted.
 ///
 /// @par Equality
 ///
@@ -159,12 +159,12 @@ class PredictionServiceClient {
   ///    objects. The default is false.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L166}
+  /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L164}
   ///
   /// [google.cloud.automl.v1.PredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L118}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L117}
   /// [google.cloud.automl.v1.PredictResponse]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L166}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
   ///
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       std::string const& name,
@@ -210,15 +210,15 @@ class PredictionServiceClient {
   ///   `prediction_type`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::PredictRequest,google/cloud/automl/v1/prediction_service.proto#L118}
+  /// @googleapis_link{google::cloud::automl::v1::PredictRequest,google/cloud/automl/v1/prediction_service.proto#L117}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L166}
+  /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L164}
   ///
   /// [google.cloud.automl.v1.PredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L118}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L117}
   /// [google.cloud.automl.v1.PredictResponse]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L166}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
   ///
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       google::cloud::automl::v1::PredictRequest const& request,
@@ -321,12 +321,12 @@ class PredictionServiceClient {
   ///
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L310}
+  /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L308}
   ///
   /// [google.cloud.automl.v1.BatchPredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L204}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
   /// [google.cloud.automl.v1.BatchPredictResult]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L310}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
   ///
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       std::string const& name,
@@ -355,15 +355,15 @@ class PredictionServiceClient {
   /// * AutoML Tables
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::BatchPredictRequest,google/cloud/automl/v1/prediction_service.proto#L204}
+  /// @googleapis_link{google::cloud::automl::v1::BatchPredictRequest,google/cloud/automl/v1/prediction_service.proto#L202}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L310}
+  /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L308}
   ///
   /// [google.cloud.automl.v1.BatchPredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L204}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
   /// [google.cloud.automl.v1.BatchPredictResult]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L310}
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
   ///
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request,

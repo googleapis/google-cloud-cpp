@@ -48,7 +48,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Currently the only supported `location_id` is "us-central1".
 ///
 /// On any input that is documented to expect a string parameter in
-/// snake_case or kebab-case, either of those cases is accepted.
+/// snake_case or dash-case, either of those cases is accepted.
 ///
 /// @par Equality
 ///
@@ -108,7 +108,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.CreateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L296}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L294}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -120,13 +120,13 @@ class AutoMlClient {
   /// Creates a dataset.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::CreateDatasetRequest,google/cloud/automl/v1/service.proto#L296}
+  /// @googleapis_link{google::cloud::automl::v1::CreateDatasetRequest,google/cloud/automl/v1/service.proto#L294}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.CreateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L296}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L294}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -143,7 +143,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.GetDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L310}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -154,13 +154,13 @@ class AutoMlClient {
   /// Gets a dataset.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetDatasetRequest,google/cloud/automl/v1/service.proto#L310}
+  /// @googleapis_link{google::cloud::automl::v1::GetDatasetRequest,google/cloud/automl/v1/service.proto#L308}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.GetDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L310}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -178,7 +178,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.ListDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L321}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -189,13 +189,13 @@ class AutoMlClient {
   /// Lists datasets in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ListDatasetsRequest,google/cloud/automl/v1/service.proto#L321}
+  /// @googleapis_link{google::cloud::automl::v1::ListDatasetsRequest,google/cloud/automl/v1/service.proto#L319}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.ListDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L321}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -214,7 +214,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.UpdateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L362}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -226,13 +226,13 @@ class AutoMlClient {
   /// Updates a dataset.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::UpdateDatasetRequest,google/cloud/automl/v1/service.proto#L362}
+  /// @googleapis_link{google::cloud::automl::v1::UpdateDatasetRequest,google/cloud/automl/v1/service.proto#L359}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
   /// [google.cloud.automl.v1.UpdateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L362}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
   /// [google.cloud.automl.v1.Dataset]:
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -250,12 +250,12 @@ class AutoMlClient {
   /// @param name  Required. The resource name of the dataset to delete.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.DeleteDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L371}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       std::string const& name, Options options = {});
@@ -268,15 +268,15 @@ class AutoMlClient {
   /// [metadata][google.longrunning.Operation.metadata] field.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::DeleteDatasetRequest,google/cloud/automl/v1/service.proto#L371}
+  /// @googleapis_link{google::cloud::automl::v1::DeleteDatasetRequest,google/cloud/automl/v1/service.proto#L368}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.DeleteDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L371}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       google::cloud::automl::v1::DeleteDatasetRequest const& request,
@@ -301,12 +301,12 @@ class AutoMlClient {
   ///  if any.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.ImportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L382}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       std::string const& name,
@@ -325,15 +325,15 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ImportDataRequest,google/cloud/automl/v1/service.proto#L382}
+  /// @googleapis_link{google::cloud::automl::v1::ImportDataRequest,google/cloud/automl/v1/service.proto#L379}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.ImportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L382}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       google::cloud::automl::v1::ImportDataRequest const& request,
@@ -348,12 +348,12 @@ class AutoMlClient {
   /// @param output_config  Required. The desired output location.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.ExportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L398}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       std::string const& name,
@@ -366,15 +366,15 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ExportDataRequest,google/cloud/automl/v1/service.proto#L398}
+  /// @googleapis_link{google::cloud::automl::v1::ExportDataRequest,google/cloud/automl/v1/service.proto#L395}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.ExportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L398}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       google::cloud::automl::v1::ExportDataRequest const& request,
@@ -390,7 +390,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::AnnotationSpec,google/cloud/automl/v1/annotation_spec.proto#L30}
   ///
   /// [google.cloud.automl.v1.GetAnnotationSpecRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L412}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
   /// [google.cloud.automl.v1.AnnotationSpec]:
   /// @googleapis_reference_link{google/cloud/automl/v1/annotation_spec.proto#L30}
   ///
@@ -401,13 +401,13 @@ class AutoMlClient {
   /// Gets an annotation spec.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetAnnotationSpecRequest,google/cloud/automl/v1/service.proto#L412}
+  /// @googleapis_link{google::cloud::automl::v1::GetAnnotationSpecRequest,google/cloud/automl/v1/service.proto#L409}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::AnnotationSpec,google/cloud/automl/v1/annotation_spec.proto#L30}
   ///
   /// [google.cloud.automl.v1.GetAnnotationSpecRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L412}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
   /// [google.cloud.automl.v1.AnnotationSpec]:
   /// @googleapis_reference_link{google/cloud/automl/v1/annotation_spec.proto#L30}
   ///
@@ -430,7 +430,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.CreateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L423}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -446,13 +446,13 @@ class AutoMlClient {
   /// a global evaluation, and one evaluation for each annotation spec.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::CreateModelRequest,google/cloud/automl/v1/service.proto#L423}
+  /// @googleapis_link{google::cloud::automl::v1::CreateModelRequest,google/cloud/automl/v1/service.proto#L420}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.CreateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L423}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -469,7 +469,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.GetModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L437}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L434}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -480,13 +480,13 @@ class AutoMlClient {
   /// Gets a model.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetModelRequest,google/cloud/automl/v1/service.proto#L437}
+  /// @googleapis_link{google::cloud::automl::v1::GetModelRequest,google/cloud/automl/v1/service.proto#L434}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.GetModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L437}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L434}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -504,7 +504,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.ListModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L448}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L445}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -515,13 +515,13 @@ class AutoMlClient {
   /// Lists models.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ListModelsRequest,google/cloud/automl/v1/service.proto#L448}
+  /// @googleapis_link{google::cloud::automl::v1::ListModelsRequest,google/cloud/automl/v1/service.proto#L445}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.ListModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L448}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L445}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -539,12 +539,12 @@ class AutoMlClient {
   /// @param name  Required. Resource name of the model being deleted.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.DeleteModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L489}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       std::string const& name, Options options = {});
@@ -557,15 +557,15 @@ class AutoMlClient {
   /// [metadata][google.longrunning.Operation.metadata] field.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::DeleteModelRequest,google/cloud/automl/v1/service.proto#L489}
+  /// @googleapis_link{google::cloud::automl::v1::DeleteModelRequest,google/cloud/automl/v1/service.proto#L486}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.DeleteModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L489}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       google::cloud::automl::v1::DeleteModelRequest const& request,
@@ -582,7 +582,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.UpdateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L500}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -594,13 +594,13 @@ class AutoMlClient {
   /// Updates a model.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::UpdateModelRequest,google/cloud/automl/v1/service.proto#L500}
+  /// @googleapis_link{google::cloud::automl::v1::UpdateModelRequest,google/cloud/automl/v1/service.proto#L497}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
   /// [google.cloud.automl.v1.UpdateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L500}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
@@ -612,7 +612,6 @@ class AutoMlClient {
   /// Deploys a model. If a model is already deployed, deploying it with the
   /// same parameters has no effect. Deploying with different parametrs
   /// (as e.g. changing
-  ///
   /// [node_number][google.cloud.automl.v1p1beta.ImageObjectDetectionModelDeploymentMetadata.node_number])
   ///  will reset the deployment state without pausing the model's availability.
   ///
@@ -625,12 +624,12 @@ class AutoMlClient {
   /// @param name  Required. Resource name of the model to deploy.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.DeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L509}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       std::string const& name, Options options = {});
@@ -639,7 +638,6 @@ class AutoMlClient {
   /// Deploys a model. If a model is already deployed, deploying it with the
   /// same parameters has no effect. Deploying with different parametrs
   /// (as e.g. changing
-  ///
   /// [node_number][google.cloud.automl.v1p1beta.ImageObjectDetectionModelDeploymentMetadata.node_number])
   ///  will reset the deployment state without pausing the model's availability.
   ///
@@ -650,15 +648,15 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::DeployModelRequest,google/cloud/automl/v1/service.proto#L509}
+  /// @googleapis_link{google::cloud::automl::v1::DeployModelRequest,google/cloud/automl/v1/service.proto#L506}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.DeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L509}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       google::cloud::automl::v1::DeployModelRequest const& request,
@@ -676,12 +674,12 @@ class AutoMlClient {
   /// @param name  Required. Resource name of the model to undeploy.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.UndeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L529}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       std::string const& name, Options options = {});
@@ -696,15 +694,15 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::UndeployModelRequest,google/cloud/automl/v1/service.proto#L529}
+  /// @googleapis_link{google::cloud::automl::v1::UndeployModelRequest,google/cloud/automl/v1/service.proto#L526}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.UndeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L529}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       google::cloud::automl::v1::UndeployModelRequest const& request,
@@ -724,12 +722,12 @@ class AutoMlClient {
   /// configuration.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.ExportModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L542}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       std::string const& name,
@@ -746,15 +744,15 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ExportModelRequest,google/cloud/automl/v1/service.proto#L542}
+  /// @googleapis_link{google::cloud::automl::v1::ExportModelRequest,google/cloud/automl/v1/service.proto#L539}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
   /// [google.cloud.automl.v1.ExportModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L542}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
   /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L33}
+  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       google::cloud::automl::v1::ExportModelRequest const& request,
@@ -769,7 +767,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
   /// [google.cloud.automl.v1.GetModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L556}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L553}
   /// [google.cloud.automl.v1.ModelEvaluation]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
@@ -780,13 +778,13 @@ class AutoMlClient {
   /// Gets a model evaluation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetModelEvaluationRequest,google/cloud/automl/v1/service.proto#L556}
+  /// @googleapis_link{google::cloud::automl::v1::GetModelEvaluationRequest,google/cloud/automl/v1/service.proto#L553}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
   /// [google.cloud.automl.v1.GetModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L556}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L553}
   /// [google.cloud.automl.v1.ModelEvaluation]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
@@ -815,7 +813,7 @@ class AutoMlClient {
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
   /// [google.cloud.automl.v1.ListModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L567}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L564}
   /// [google.cloud.automl.v1.ModelEvaluation]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
@@ -827,13 +825,13 @@ class AutoMlClient {
   /// Lists model evaluations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ListModelEvaluationsRequest,google/cloud/automl/v1/service.proto#L567}
+  /// @googleapis_link{google::cloud::automl::v1::ListModelEvaluationsRequest,google/cloud/automl/v1/service.proto#L564}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
   /// [google.cloud.automl.v1.ListModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L567}
+  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L564}
   /// [google.cloud.automl.v1.ModelEvaluation]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
