@@ -568,6 +568,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-servicemanagement",
+    deps = [
+        "//google/cloud/servicemanagement:google_cloud_cpp_servicemanagement",
+    ],
+)
+
+cc_library(
+    name = "experimental-servicemanagement_mocks",
+    deps = [
+        "//google/cloud/servicemanagement:google_cloud_cpp_servicemanagement_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-serviceusage",
     deps = [
         "//google/cloud/serviceusage:google_cloud_cpp_serviceusage",
