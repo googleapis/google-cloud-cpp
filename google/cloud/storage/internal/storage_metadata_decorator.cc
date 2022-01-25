@@ -70,6 +70,13 @@ StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(
   return child_->ListObjects(context, request);
 }
 
+StatusOr<google::storage::v2::RewriteResponse> StorageMetadata::RewriteObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  SetMetadata(context, {});
+  return child_->RewriteObject(context, request);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageMetadata::StartResumableWrite(
     grpc::ClientContext& context,

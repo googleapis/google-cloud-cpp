@@ -110,6 +110,17 @@ StatusOr<google::storage::v2::ListObjectsResponse> StorageLogging::ListObjects(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::RewriteResponse> StorageLogging::RewriteObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::RewriteObjectRequest const& request) {
+        return child_->RewriteObject(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageLogging::StartResumableWrite(
     grpc::ClientContext& context,
