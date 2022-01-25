@@ -170,8 +170,6 @@ add_library(
     internal/logging_admin_client.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
-    internal/logging_instance_admin_client.cc
-    internal/logging_instance_admin_client.h
     internal/prefix_range_end.cc
     internal/prefix_range_end.h
     internal/readrowsparser.cc
@@ -258,7 +256,6 @@ if (BUILD_TESTING)
         testing/mock_admin_client.h
         testing/mock_async_failing_rpc_factory.h
         testing/mock_data_client.h
-        testing/mock_instance_admin_client.h
         testing/mock_mutate_rows_reader.h
         testing/mock_policies.h
         testing/mock_read_rows_reader.h
@@ -308,14 +305,12 @@ if (BUILD_TESTING)
         iam_policy_test.cc
         idempotent_mutation_policy_test.cc
         instance_admin_client_test.cc
-        instance_admin_legacy_test.cc
         instance_admin_test.cc
         instance_config_test.cc
         instance_update_config_test.cc
         internal/async_bulk_apply_test.cc
         internal/async_longrunning_op_test.cc
         internal/async_poll_op_test.cc
-        internal/async_retry_unary_rpc_and_poll_test.cc
         internal/async_row_sampler_test.cc
         internal/bulk_mutator_test.cc
         internal/common_client_test.cc
@@ -324,7 +319,6 @@ if (BUILD_TESTING)
         internal/google_bytes_traits_test.cc
         internal/logging_admin_client_test.cc
         internal/logging_data_client_test.cc
-        internal/logging_instance_admin_client_test.cc
         internal/prefix_range_end_test.cc
         internal/wait_for_consistency_test.cc
         metadata_update_policy_test.cc

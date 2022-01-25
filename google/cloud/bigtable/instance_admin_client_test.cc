@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin_client.h"
-#include "google/cloud/bigtable/internal/logging_instance_admin_client.h"
-#include "google/cloud/testing_util/scoped_environment.h"
-#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 namespace google {
 namespace cloud {
@@ -23,50 +21,16 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-TEST(InstanceAdminClientTest, Default) {
-  auto admin_client = CreateDefaultInstanceAdminClient(
-      "test-project", ClientOptions().set_connection_pool_size(1));
+TEST(InstanceAdminClientTest, CreateDefaultClient) {
+  auto admin_client = CreateDefaultInstanceAdminClient("test-project", {});
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
-
-  auto stub0 = admin_client->Channel();
-  EXPECT_TRUE(stub0);
-
-  auto stub1 = admin_client->Channel();
-  EXPECT_EQ(stub0.get(), stub1.get());
-
-  admin_client->reset();
-  stub1 = admin_client->Channel();
-  EXPECT_TRUE(stub1);
-  EXPECT_NE(stub0.get(), stub1.get());
 }
 
 TEST(InstanceAdminClientTest, MakeClient) {
-  auto admin_client = MakeInstanceAdminClient(
-      "test-project", Options{}.set<GrpcNumChannelsOption>(1));
-  ASSERT_TRUE(admin_client);
-  EXPECT_EQ("test-project", admin_client->project());
-
-  auto stub0 = admin_client->Channel();
-  EXPECT_TRUE(stub0);
-
-  auto stub1 = admin_client->Channel();
-  EXPECT_EQ(stub0.get(), stub1.get());
-
-  admin_client->reset();
-  stub1 = admin_client->Channel();
-  EXPECT_TRUE(stub1);
-  EXPECT_NE(stub0.get(), stub1.get());
-}
-
-TEST(InstanceAdminClientTest, Logging) {
-  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "rpc");
-
   auto admin_client = MakeInstanceAdminClient("test-project");
   ASSERT_TRUE(admin_client);
-  ASSERT_TRUE(dynamic_cast<internal::LoggingInstanceAdminClient const*>(
-      admin_client.get()))
-      << "Should create LoggingInstanceAdminClient";
+  EXPECT_EQ("test-project", admin_client->project());
 }
 
 }  // namespace
