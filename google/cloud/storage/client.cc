@@ -100,9 +100,10 @@ ObjectWriteStream Client::WriteObjectImpl(
     error_stream.Close();
     return error_stream;
   }
+  auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
+      raw_client_->client_options().upload_buffer_size());
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
-      *std::move(session), raw_client_->client_options().upload_buffer_size(),
-      internal::CreateHashFunction(request),
+      *std::move(session), buffer_size, internal::CreateHashFunction(request),
       internal::HashValues{
           request.GetOption<Crc32cChecksumValue>().value_or(""),
           request.GetOption<MD5HashValue>().value_or(""),

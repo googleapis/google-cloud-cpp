@@ -1235,8 +1235,8 @@ class Client {
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
-   *   `UseResumableUploadSession`, `UserProject`, `WithObjectMetadata` and
-   *   `UploadContentLength`, `AutoFinalize`.
+   *   `UseResumableUploadSession`, `UserProject`, `WithObjectMetadata`,
+   *   `UploadContentLength`, `AutoFinalize`, and `UploadBufferSize`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
