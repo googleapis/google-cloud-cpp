@@ -554,6 +554,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-servicecontrol",
+    deps = [
+        "//google/cloud/servicecontrol:google_cloud_cpp_servicecontrol",
+    ],
+)
+
+cc_library(
+    name = "experimental-servicecontrol_mocks",
+    deps = [
+        "//google/cloud/servicecontrol:google_cloud_cpp_servicecontrol_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-servicedirectory",
     deps = [
         "//google/cloud/servicedirectory:google_cloud_cpp_servicedirectory",

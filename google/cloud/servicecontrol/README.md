@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Service Control API][cloud-service-docs], a service to Provides admission control and telemetry reporting for services integrated with Service Infrastructure.
+[Service Control API][cloud-service-docs]. Provides admission control and
+telemetry reporting for services integrated with Service Infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/servicecontrol
+[cloud-service-docs]: https://cloud.google.com/service-control
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-servicecontrol/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/servicecontrol
 
@@ -38,8 +39,9 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/servicecontrol/ EDIT HERE .h"
+#include "google/cloud/servicecontrol/service_controller_client.h"
 #include "google/cloud/project.h"
+#include <google/protobuf/util/time_util.h>
 #include <iostream>
 #include <stdexcept>
 
@@ -50,14 +52,26 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace servicecontrol = ::google::cloud::servicecontrol;
-  auto client =
-      servicecontrol::Client(servicecontrol::MakeConnection(/* EDIT HERE */));
+  auto client = servicecontrol::ServiceControllerClient(
+      servicecontrol::MakeServiceControllerConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  google::api::servicecontrol::v1::CheckRequest request;
+  request.set_service_name("pubsub.googleapis.com");
+  *request.mutable_operation() = [&] {
+    using ::google::protobuf::util::TimeUtil;
+
+    google::api::servicecontrol::v1::Operation op;
+    op.set_operation_id("TODO-use-UUID-4-or-UUID-5");
+    op.set_operation_name("google.pubsub.v1.Publisher.Publish");
+    op.set_consumer_id(project.FullName());
+    *op.mutable_start_time() = TimeUtil::GetCurrentTime();
+    return op;
+  }();
+
+  auto response = client.Check(request);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

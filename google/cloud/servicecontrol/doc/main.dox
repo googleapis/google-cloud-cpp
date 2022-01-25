@@ -2,8 +2,9 @@
 
 @mainpage Service Control API C++ Client Library
 
-An idiomatic C++ client library for the [Service Control API][cloud-service-docs], a service
-to Provides admission control and telemetry reporting for services integrated with Service Infrastructure.
+An idiomatic C++ client library for the [Service Control API][cloud-service-docs].
+Provides admission control and telemetry reporting for services integrated with
+Service Infrastructure.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/servicecontrol
+[cloud-service-docs]: https://cloud.google.com/service-control
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
