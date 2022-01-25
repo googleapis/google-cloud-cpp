@@ -29,8 +29,6 @@ class MockHttpPayload : public rest_internal::HttpPayload {
   ~MockHttpPayload() override = default;
   MOCK_METHOD(StatusOr<std::size_t>, Read, (absl::Span<char> buffer),
               (override));
-  MOCK_METHOD((std::multimap<std::string, std::string>), Trailers, (),
-              (const, override));
 };
 
 }  // namespace testing_util

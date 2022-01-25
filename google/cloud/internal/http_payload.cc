@@ -31,30 +31,6 @@ StatusOr<std::size_t> CurlHttpPayload::Read(absl::Span<char> buffer) {
   return impl_->Read(buffer);
 }
 
-// TODO(#8089): remove lowercase operations after this issue has been resolved.
-std::multimap<std::string, std::string> CurlHttpPayload::Trailers() const {
-  std::multimap<std::string, std::string> trailers;
-  auto headers = impl_->headers();
-  auto iter = std::find_if(headers.begin(), headers.end(),
-                           [](std::pair<std::string, std::string> p) {
-                             absl::AsciiStrToLower(&p.first);
-                             return p.first == "trailer";
-                           });
-  if (iter == headers.end()) return trailers;
-  std::set<std::string> trailer_keys =
-      absl::StrSplit(iter->second, absl::ByChar(','));
-  for (auto key : trailer_keys) {
-    absl::AsciiStrToLower(&key);
-    auto trailer = std::find_if(headers.begin(), headers.end(),
-                                [&](std::pair<std::string, std::string> p) {
-                                  absl::AsciiStrToLower(&p.first);
-                                  return p.first == key;
-                                });
-    trailers.insert(*trailer);
-  }
-  return trailers;
-}
-
 StatusOr<std::string> ReadAll(std::unique_ptr<HttpPayload> payload,
                               std::size_t read_size) {
   std::string output_buffer;
@@ -64,7 +40,7 @@ StatusOr<std::string> ReadAll(std::unique_ptr<HttpPayload> payload,
   StatusOr<std::size_t> read_status;
   do {
     read_status = payload->Read({&buf[0], read_size});
-    if (!read_status.ok()) return read_status.status();
+    if (!read_status.ok()) return std::move(read_status).status();
     output_buffer.append(buf.get(), read_status.value());
   } while (read_status.value() > 0);
   return output_buffer;

@@ -39,9 +39,6 @@ class HttpPayload {
   // read the entire payload.
   // Returns number of bytes actually read into buffer from the payload.
   virtual StatusOr<std::size_t> Read(absl::Span<char> buffer) = 0;
-
-  // Returns any trailers received while reading the payload.
-  virtual std::multimap<std::string, std::string> Trailers() const = 0;
 };
 
 // Implementation using libcurl.
@@ -55,7 +52,6 @@ class CurlHttpPayload : public HttpPayload {
   CurlHttpPayload& operator=(CurlHttpPayload&&) = default;
 
   StatusOr<std::size_t> Read(absl::Span<char> buffer) override;
-  std::multimap<std::string, std::string> Trailers() const override;
 
  private:
   friend class CurlRestResponse;
