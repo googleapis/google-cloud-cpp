@@ -356,6 +356,7 @@ char const* const kServiceProto =
     "  string name = 1;\n"
     "  // labels $field comment.\n"
     "  map<string, string> labels = 2;\n"
+    "  string not_used_anymore = 3 [deprecated = true];\n"
     "}\n"
     "// Leading comments about message Bar.\n"
     "message Bar {\n"
@@ -448,7 +449,9 @@ char const* const kServiceProto =
     "    option (google.api.http) = {\n"
     "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
     "    };\n"
+    "    option (google.api.method_signature) = \"name,not_used_anymore\";\n"
     "    option (google.api.method_signature) = \"labels\";\n"
+    "    option (google.api.method_signature) = \"not_used_anymore,labels\";\n"
     "    option (google.api.method_signature) = \"name,labels\";\n"
     "  }\n"
     "  // Leading comments about rpc Method7.\n"
@@ -537,7 +540,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
               HasSubstr(R"""(  ///
   /// Leading comments about rpc Method0$$.
   ///
-  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L15}
+  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L16}
   /// @param options  Optional. Operation options.
   ///
 )"""));
@@ -566,6 +569,22 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   /// @param options  Optional. Operation options.
   ///
 )"""));
+}
+
+TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
+  auto method_vars = vars_.find("google.protobuf.Service.Method6");
+  ASSERT_NE(method_vars, vars_.end());
+  EXPECT_NE(method_vars->second.find("method_signature0"),
+            method_vars->second.end());
+  EXPECT_NE(method_vars->second.find("method_signature1"),
+            method_vars->second.end());
+  EXPECT_EQ(method_vars->second.find("method_signature2"),
+            method_vars->second.end());
+  EXPECT_EQ(method_vars->second.find("method_signature3"),
+            method_vars->second.end());
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
@@ -597,7 +616,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
-                             "foo/v1/service.proto#L30}"),
+                             "foo/v1/service.proto#L31}"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -610,7 +629,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method1",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L15}"),
+                             "foo/v1/service.proto#L16}"),
         // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
@@ -639,7 +658,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L15}"),
+                             "foo/v1/service.proto#L16}"),
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
@@ -758,7 +777,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L15}"),
+                             "foo/v1/service.proto#L16}"),
         // Method8
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "method_signature0",
