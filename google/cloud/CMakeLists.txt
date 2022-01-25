@@ -669,6 +669,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             ${target}
             PRIVATE google-cloud-cpp::rest-internal
                     google_cloud_cpp_testing
+                    google_cloud_cpp_testing_rest
                     google-cloud-cpp::common
                     absl::span
                     GTest::gmock_main

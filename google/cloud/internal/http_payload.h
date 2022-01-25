@@ -28,17 +28,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CurlImpl;
 
+// Allows the payload and trailers of an HTTP response to be read.
 class HttpPayload {
  public:
+  static constexpr std::size_t kDefaultReadSize = 1024 * 1024;
   virtual ~HttpPayload() = default;
+
+  // Always reads up to N bytes (as specified in buffer) from the payload and
+  // write tp the provided buffer. Read can be called multiple times in order to
+  // read the entire payload.
+  // Returns number of bytes actually read into buffer from the payload.
   virtual StatusOr<std::size_t> Read(absl::Span<char> buffer) = 0;
+
+  // Returns any trailers received while reading the payload.
   virtual std::multimap<std::string, std::string> Trailers() const = 0;
 };
 
+// Implementation using libcurl.
 class CurlHttpPayload : public HttpPayload {
  public:
-  static constexpr std::size_t kDefaultReadSize = 1024 * 1024;
-
   ~CurlHttpPayload() override = default;
 
   CurlHttpPayload(CurlHttpPayload const&) = delete;
@@ -46,13 +54,7 @@ class CurlHttpPayload : public HttpPayload {
   CurlHttpPayload& operator=(CurlHttpPayload const&) = delete;
   CurlHttpPayload& operator=(CurlHttpPayload&&) = default;
 
-  // Always reads up to N bytes (as specified in buffer) from the payload and
-  // write tp the provided buffer. Read can be called multiple times in order to
-  // read the entire payload.
-  // Returns number of bytes actually read into buffer from the payload.
   StatusOr<std::size_t> Read(absl::Span<char> buffer) override;
-
-  // Returns any trailers received while reading the payload.
   std::multimap<std::string, std::string> Trailers() const override;
 
  private:
@@ -67,7 +69,7 @@ class CurlHttpPayload : public HttpPayload {
 // bytes from the payload to a buffer it allocates.
 StatusOr<std::string> ReadAll(
     std::unique_ptr<HttpPayload> payload,
-    std::size_t read_size = CurlHttpPayload::kDefaultReadSize);
+    std::size_t read_size = HttpPayload::kDefaultReadSize);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
