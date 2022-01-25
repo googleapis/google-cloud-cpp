@@ -94,11 +94,11 @@ struct UploadLimit
 };
 
 /**
- * Set the buffer size for a #ObjectWriteStream.
+ * Set the buffer size for a stream created in `Client::WriteObject()`.
  *
  * Some applications may need to tune the upload buffer for some specific
  * uploads. This option can be passed to `Client::WriteObject()` to override the
- * default setting in the #Client.
+ * default setting in the `storage::Client`.
  */
 struct UploadBufferSize
     : public internal::ComplexOption<UploadBufferSize, std::size_t> {
