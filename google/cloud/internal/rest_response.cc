@@ -226,6 +226,7 @@ std::multimap<std::string, std::string> CurlRestResponse::Headers() const {
 }
 
 std::unique_ptr<HttpPayload> CurlRestResponse::ExtractPayload() && {
+  // Constructor is private so make_unique is not an option here.
   return std::unique_ptr<CurlHttpPayload>(
       new CurlHttpPayload(std::move(impl_), std::move(options_)));
 }
