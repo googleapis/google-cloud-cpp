@@ -146,13 +146,15 @@ if (BUILD_TESTING)
         return()
     endif ()
 
-    add_library(google_cloud_cpp_testing_rest # cmake-format: sort
-                mock_http_payload.h)
-    set_target_properties(google_cloud_cpp_testing_rest
-                          PROPERTIES LINKER_LANGUAGE CXX)
+    # As long as this remains a header only library, macos idiosyncrasies
+    # require it to be an INTERFACE library.
+    add_library(google_cloud_cpp_testing_rest INTERFACE)
+    target_sources(
+        google_cloud_cpp_testing_rest
+        INTERFACE # cmake-format: sort
+                  ${CMAKE_CURRENT_SOURCE_DIR}/mock_http_payload.h)
     target_link_libraries(google_cloud_cpp_testing_rest
-                          PUBLIC google-cloud-cpp::common GTest::gmock)
-    google_cloud_cpp_add_common_options(google_cloud_cpp_testing_rest)
+                          INTERFACE google-cloud-cpp::common GTest::gmock)
 
     create_bazel_config(google_cloud_cpp_testing_rest YEAR 2022)
 endif ()
