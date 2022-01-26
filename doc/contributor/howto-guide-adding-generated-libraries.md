@@ -108,7 +108,6 @@ external/googleapis/update_libraries.sh
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
-mkdir -p "google/cloud/${library}"
 bazel_output_base="$(bazel info output_base)"
 bazel run \
   //generator:google-cloud-cpp-codegen -- \
