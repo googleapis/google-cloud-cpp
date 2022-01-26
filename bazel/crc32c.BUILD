@@ -51,33 +51,41 @@ crc32c_SRCS = [
 
 config_setting(
     name = "windows",
-    values = {"cpu": "x64_windows"},
+    constraint_values = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
     visibility = ["//visibility:public"],
 )
 
 config_setting(
     name = "linux_x86_64",
-    values = {"cpu": "k8"},
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
     visibility = ["//visibility:public"],
 )
 
 config_setting(
-    name = "darwin",
-    values = {"cpu": "darwin"},
+    name = "macos",
+    constraint_values = [
+        "@platforms//os:macos",
+    ],
     visibility = ["//visibility:public"],
 )
 
 sse42_copts = select({
     ":windows": ["/arch:AVX"],
     ":linux_x86_64": ["-msse4.2"],
-    ":darwin": ["-msse4.2"],
+    ":macos": ["-msse4.2"],
     "//conditions:default": [],
 })
 
 sse42_enabled = select({
     ":windows": "1",
     ":linux_x86_64": "1",
-    ":darwin": "1",
+    ":macos": "1",
     "//conditions:default": "0",
 })
 
