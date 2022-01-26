@@ -53,7 +53,8 @@ target_link_libraries(
            google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos)
+           google-cloud-cpp::api_http_protos
+           google-cloud-cpp::rpc_code_protos)
 
 file(
     GLOB source_files
