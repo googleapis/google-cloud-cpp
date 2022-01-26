@@ -141,4 +141,20 @@ if (BUILD_TESTING)
         endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
+
+    if (NOT GOOGLE_CLOUD_CPP_ENABLE_REST)
+        return()
+    endif ()
+
+    # As long as this remains a header only library, macos idiosyncrasies
+    # require it to be an INTERFACE library.
+    add_library(google_cloud_cpp_testing_rest INTERFACE)
+    target_sources(
+        google_cloud_cpp_testing_rest
+        INTERFACE # cmake-format: sort
+                  ${CMAKE_CURRENT_SOURCE_DIR}/mock_http_payload.h)
+    target_link_libraries(google_cloud_cpp_testing_rest
+                          INTERFACE google-cloud-cpp::common GTest::gmock)
+
+    create_bazel_config(google_cloud_cpp_testing_rest YEAR 2022)
 endif ()

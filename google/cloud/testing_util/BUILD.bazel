@@ -113,3 +113,15 @@ load(":google_cloud_cpp_testing_grpc_unit_tests.bzl", "google_cloud_cpp_testing_
         "@com_google_protobuf//:protobuf",
     ],
 ) for test in google_cloud_cpp_testing_grpc_unit_tests]
+
+load(":google_cloud_cpp_testing_rest.bzl", "google_cloud_cpp_testing_rest_hdrs", "google_cloud_cpp_testing_rest_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_testing_rest",
+    srcs = google_cloud_cpp_testing_rest_srcs,
+    hdrs = google_cloud_cpp_testing_rest_hdrs,
+    deps = [
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
