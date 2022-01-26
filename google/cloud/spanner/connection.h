@@ -128,7 +128,7 @@ class Connection {
   };
   //@}
 
-  /// Returns any options use by the concrete Connection.
+  /// Returns the options used by the Connection.
   virtual Options options() { return Options{}; }
 
   /// Defines the interface for `Client::Read()`

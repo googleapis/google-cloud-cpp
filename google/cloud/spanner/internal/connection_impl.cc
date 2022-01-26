@@ -106,7 +106,7 @@ ConnectionImpl::ConnectionImpl(
     std::vector<std::shared_ptr<SpannerStub>> stubs, Options opts)
     : db_(std::move(db)),
       background_threads_(std::move(background_threads)),
-      opts_(spanner_internal::DefaultOptions(std::move(opts))),
+      opts_(internal::MergeOptions(std::move(opts), Connection::options())),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts_)) {}
 
@@ -321,26 +321,28 @@ class StreamingPartitionedDmlResult {
   std::unique_ptr<ResultSourceInterface> source_;
 };
 
-std::shared_ptr<spanner::RetryPolicy> const& ConnectionImpl::RetryPolicy()
-    const {
+std::shared_ptr<spanner::RetryPolicy> const&
+ConnectionImpl::RetryPolicyPrototype() const {
   // TODO(#7690): Base this on internal::CurrentOptions().
   return opts_.get<spanner::SpannerRetryPolicyOption>();
 }
 
-std::shared_ptr<spanner::BackoffPolicy> const& ConnectionImpl::BackoffPolicy()
-    const {
+std::shared_ptr<spanner::BackoffPolicy> const&
+ConnectionImpl::BackoffPolicyPrototype() const {
   // TODO(#7690): Base this on internal::CurrentOptions().
   return opts_.get<spanner::SpannerBackoffPolicyOption>();
 }
 
 bool ConnectionImpl::RpcStreamTracingEnabled() const {
-  // TODO(#7690): Base this on internal::CurrentOptions().
+  // TODO(#7690): Base this on internal::CurrentOptions() if we want to
+  // allow per-operation options to influence "rpc-streams" tracing.
   return internal::Contains(opts_.get<TracingComponentsOption>(),
                             "rpc-streams");
 }
 
 TracingOptions const& ConnectionImpl::RpcTracingOptions() const {
-  // TODO(#7690): Base this on internal::CurrentOptions().
+  // TODO(#7690): Base this on internal::CurrentOptions() if we want to
+  // allow per-operation options to influence "rpc-streams" tracing.
   return opts_.get<GrpcTracingOptionsOption>();
 }
 
@@ -383,7 +385,7 @@ StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
 
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
-      RetryPolicy()->clone(), BackoffPolicy()->clone(),
+      RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::BeginTransactionRequest const& request) {
@@ -451,8 +453,8 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   };
   for (;;) {
     auto rpc = absl::make_unique<PartialResultSetResume>(
-        factory, Idempotency::kIdempotent, RetryPolicy()->clone(),
-        BackoffPolicy()->clone());
+        factory, Idempotency::kIdempotent, RetryPolicyPrototype()->clone(),
+        BackoffPolicyPrototype()->clone());
     auto reader = PartialResultSetSource::Create(std::move(rpc));
     if (s->has_begin()) {
       if (reader.ok()) {
@@ -513,7 +515,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
     auto response = RetryLoop(
-        RetryPolicy()->clone(), BackoffPolicy()->clone(),
+        RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 spanner_proto::PartitionReadRequest const& request) {
@@ -644,12 +646,12 @@ ResultType ConnectionImpl::CommonQueryImpl(
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
   auto stub = session_pool_->GetStub(*session);
-  auto const& retry_policy = RetryPolicy();
-  auto const& backoff_policy = BackoffPolicy();
+  auto const& retry_policy_prototype = RetryPolicyPrototype();
+  auto const& backoff_policy_prototype = BackoffPolicyPrototype();
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
   auto retry_resume_fn =
-      [stub, retry_policy, backoff_policy, tracing_enabled,
+      [stub, retry_policy_prototype, backoff_policy_prototype, tracing_enabled,
        tracing_options](spanner_proto::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
     auto factory = [stub, request, tracing_enabled,
@@ -666,8 +668,8 @@ ResultType ConnectionImpl::CommonQueryImpl(
       return reader;
     };
     auto rpc = absl::make_unique<PartialResultSetResume>(
-        std::move(factory), Idempotency::kIdempotent, retry_policy->clone(),
-        backoff_policy->clone());
+        std::move(factory), Idempotency::kIdempotent,
+        retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
     return PartialResultSetSource::Create(std::move(rpc));
   };
@@ -716,15 +718,15 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
   auto stub = session_pool_->GetStub(*session);
-  auto const& retry_policy = RetryPolicy();
-  auto const& backoff_policy = BackoffPolicy();
+  auto const& retry_policy_prototype = RetryPolicyPrototype();
+  auto const& backoff_policy_prototype = BackoffPolicyPrototype();
 
   auto retry_resume_fn =
-      [function_name, stub, retry_policy, backoff_policy,
+      [function_name, stub, retry_policy_prototype, backoff_policy_prototype,
        session](spanner_proto::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
     StatusOr<spanner_proto::ResultSet> response = RetryLoop(
-        retry_policy->clone(), backoff_policy->clone(),
+        retry_policy_prototype->clone(), backoff_policy_prototype->clone(),
         Idempotency::kIdempotent,
         [stub](grpc::ClientContext& context,
                spanner_proto::ExecuteSqlRequest const& request) {
@@ -800,7 +802,7 @@ ConnectionImpl::PartitionQueryImpl(
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
     auto response = RetryLoop(
-        RetryPolicy()->clone(), BackoffPolicy()->clone(),
+        RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 spanner_proto::PartitionQueryRequest const& request) {
@@ -874,7 +876,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
     auto response = RetryLoop(
-        RetryPolicy()->clone(), BackoffPolicy()->clone(),
+        RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 spanner_proto::ExecuteBatchDmlRequest const& request) {
@@ -996,7 +998,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
-      RetryPolicy()->clone(), BackoffPolicy()->clone(),
+      RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::CommitRequest const& request) {
@@ -1058,7 +1060,7 @@ Status ConnectionImpl::RollbackImpl(
   request.set_transaction_id(s->id());
   auto stub = session_pool_->GetStub(*session);
   auto status = RetryLoop(
-      RetryPolicy()->clone(), BackoffPolicy()->clone(),
+      RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               spanner_proto::RollbackRequest const& request) {

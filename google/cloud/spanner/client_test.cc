@@ -28,6 +28,7 @@
 #include <array>
 #include <chrono>
 #include <cstdint>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -46,6 +47,7 @@ using ::google::protobuf::TextFormat;
 using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::SaveArg;
@@ -1190,6 +1192,71 @@ TEST(ClientTest, QueryOptionsOverlayPrecedence) {
                   .request_tag(),
               absl::nullopt);
   }
+}
+
+struct StringOption {
+  using Type = std::string;
+};
+
+TEST(ClientTest, UsesConnectionOptions) {
+  auto conn = std::make_shared<MockConnection>();
+  auto txn = MakeReadWriteTransaction();
+
+  EXPECT_CALL(*conn, options).WillOnce([] {
+    return Options{}.set<StringOption>("connection");
+  });
+  EXPECT_CALL(*conn, Rollback)
+      .WillOnce([txn](Connection::RollbackParams const& params) {
+        auto const& options = internal::CurrentOptions();
+        EXPECT_THAT(options.get<StringOption>(), Eq("connection"));
+        EXPECT_THAT(params.transaction, Eq(txn));
+        return Status();
+      });
+
+  Client client(conn, Options{});
+  auto rollback = client.Rollback(txn, Options{});
+  EXPECT_STATUS_OK(rollback);
+}
+
+TEST(ClientTest, UsesClientOptions) {
+  auto conn = std::make_shared<MockConnection>();
+  auto txn = MakeReadWriteTransaction();
+
+  EXPECT_CALL(*conn, options).WillOnce([] {
+    return Options{}.set<StringOption>("connection");
+  });
+  EXPECT_CALL(*conn, Rollback)
+      .WillOnce([txn](Connection::RollbackParams const& params) {
+        auto const& options = internal::CurrentOptions();
+        EXPECT_THAT(options.get<StringOption>(), Eq("client"));
+        EXPECT_THAT(params.transaction, Eq(txn));
+        return Status();
+      });
+
+  Client client(conn, Options{}.set<StringOption>("client"));
+  auto rollback = client.Rollback(txn, Options{});
+  EXPECT_STATUS_OK(rollback);
+}
+
+TEST(ClientTest, UsesOperationOptions) {
+  auto conn = std::make_shared<MockConnection>();
+  auto txn = MakeReadWriteTransaction();
+
+  EXPECT_CALL(*conn, options).WillOnce([] {
+    return Options{}.set<StringOption>("connection");
+  });
+  EXPECT_CALL(*conn, Rollback)
+      .WillOnce([txn](Connection::RollbackParams const& params) {
+        auto const& options = internal::CurrentOptions();
+        EXPECT_THAT(options.get<StringOption>(), Eq("operation"));
+        EXPECT_THAT(params.transaction, Eq(txn));
+        return Status();
+      });
+
+  Client client(conn, Options{}.set<StringOption>("client"));
+  auto rollback =
+      client.Rollback(txn, Options{}.set<StringOption>("operation"));
+  EXPECT_STATUS_OK(rollback);
 }
 
 }  // namespace
