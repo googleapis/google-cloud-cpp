@@ -57,7 +57,7 @@ function features::libraries() {
 function features::list_full() {
   local feature_list
   mapfile -t feature_list < <(features::libraries)
-  printf "%s\n" "${feature_list[@]}" experimental-storage-grpc | sort -u
+  printf "%s\n" "${feature_list[@]}" experimental-storage-grpc grafeas | sort -u
 }
 
 function features::list_full_cmake() {

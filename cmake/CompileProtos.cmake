@@ -213,6 +213,76 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
         PARENT_SCOPE)
 endfunction ()
 
+# Generate a list of proto files from a `protolists/*.list` file.
+#
+# The proto libraries in googleapis/googleapis do not ship with support for
+# CMake. We need to write our own CMake files. To ease the maintenance effort we
+# use a script that queries the BUILD files in googleapis/googleapis, and
+# extracts the list of `.proto` files for each proto library we are interested
+# in. These files are extracted as Bazel rule names, for example:
+#
+# @com_google_googleapis//google/bigtable/v2:bigtable.proto
+#
+# We use naming conventions to convert these rules files to a path. Using the
+# same example that becomes:
+#
+# ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/v2/bigtable.proto
+#
+function (google_cloud_cpp_load_protolist var file)
+    file(READ "${file}" contents)
+    string(REGEX REPLACE "\n" ";" contents "${contents}")
+    set(protos)
+    foreach (line IN LISTS contents)
+        string(REPLACE "@com_google_googleapis//" "" line "${line}")
+        string(REPLACE ":" "/" line "${line}")
+        if ("${line}" STREQUAL "")
+            continue()
+        endif ()
+        list(APPEND protos "${EXTERNAL_GOOGLEAPIS_SOURCE}/${line}")
+    endforeach ()
+    set(${var}
+        "${protos}"
+        PARENT_SCOPE)
+endfunction ()
+
+# Generate a list of proto dependencies from a `protodeps/*.deps` file.
+#
+# The proto libraries in googleapis/googleapis do not ship with support for
+# CMake. We need to write our own CMake files. To ease the maintenance effort we
+# use a script that queries the BUILD files in googleapis/googleapis, and
+# extracts the list of dependencies for each proto library we are interested in.
+# These dependencies are extracted as Bazel rule names, for example:
+#
+# @com_google_googleapis//google/api:annotations_proto
+#
+# We use naming conventions to convert these rules files to a CMake target.
+# Using the same example that becomes:
+#
+# google-cloud-cpp::api_annotations_proto
+#
+function (google_cloud_cpp_load_protodeps var file)
+    file(READ "${file}" contents)
+    string(REGEX REPLACE "\n" ";" contents "${contents}")
+    set(deps)
+    foreach (line IN LISTS contents)
+        if ("${line}" STREQUAL "")
+            continue()
+        endif ()
+        string(REPLACE ":" "_" line "${line}")
+        string(REPLACE "_proto" "_protos" line "${line}")
+        string(REPLACE "@com_google_googleapis//" "google-cloud-cpp::" line
+                       "${line}")
+        # Avoid duplicate `google`'s in the target name.
+        string(REPLACE "google-cloud-cpp::google/" "google-cloud-cpp::" line
+                       "${line}")
+        string(REPLACE "/" "_" line "${line}")
+        list(APPEND deps "${line}")
+    endforeach ()
+    set(${var}
+        "${deps}"
+        PARENT_SCOPE)
+endfunction ()
+
 include(GNUInstallDirs)
 
 # Install headers for a C++ proto library.
