@@ -165,6 +165,7 @@ add_library(
     internal/parameter_pack_validation.h
     internal/patch_builder.cc
     internal/patch_builder.h
+    internal/patch_builder_details.h
     internal/policy_document_request.cc
     internal/policy_document_request.h
     internal/raw_client.cc

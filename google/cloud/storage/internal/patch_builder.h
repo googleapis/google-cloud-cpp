@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PATCH_BUILDER_H
 
 #include "google/cloud/storage/version.h"
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -44,7 +45,7 @@ class PatchBuilder {
   PatchBuilder(PatchBuilder const& other);
   PatchBuilder& operator=(PatchBuilder const& other);
 
-  // This have to be declared explicitly and defined out of line because `Impl`
+  // These have to be declared explicitly and defined out of line because `Impl`
   // is incomplete at this point.
   PatchBuilder(PatchBuilder&&) noexcept;
   PatchBuilder& operator=(PatchBuilder&&) noexcept;
@@ -122,10 +123,13 @@ class PatchBuilder {
                               std::string const& json_stringified_object);
 
  private:
+  friend struct PatchBuilderDetails;
+
   struct Impl;
   explicit PatchBuilder(std::unique_ptr<Impl> impl);
   std::unique_ptr<Impl> pimpl_;
 };
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

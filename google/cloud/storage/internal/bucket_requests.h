@@ -174,14 +174,15 @@ class PatchBucketRequest
                               BucketMetadata const& original,
                               BucketMetadata const& updated);
   explicit PatchBucketRequest(std::string bucket,
-                              BucketMetadataPatchBuilder const& patch);
+                              BucketMetadataPatchBuilder patch);
 
+  BucketMetadataPatchBuilder const& patch() const { return patch_; }
   std::string const& bucket() const { return bucket_; }
-  std::string const& payload() const { return payload_; }
+  std::string payload() const { return patch_.BuildPatch(); }
 
  private:
+  BucketMetadataPatchBuilder patch_;
   std::string bucket_;
-  std::string payload_;
 };
 
 std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r);

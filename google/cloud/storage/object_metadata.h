@@ -34,6 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct ObjectMetadataParser;
 struct GrpcObjectMetadataParser;
+struct GrpcObjectRequestParser;
 }  // namespace internal
 
 /// A simple representation for the customerEncryption field.
@@ -342,6 +343,8 @@ class ObjectMetadataPatchBuilder {
   ObjectMetadataPatchBuilder& ResetCustomTime();
 
  private:
+  friend struct internal::GrpcObjectRequestParser;
+
   internal::PatchBuilder impl_;
   bool metadata_subpatch_dirty_{false};
   internal::PatchBuilder metadata_subpatch_;

@@ -37,6 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct BucketMetadataParser;
 struct GrpcBucketMetadataParser;
+struct GrpcBucketRequestParser;
 }  // namespace internal
 
 /**
@@ -1006,6 +1007,8 @@ class BucketMetadataPatchBuilder {
   BucketMetadataPatchBuilder& ResetWebsite();
 
  private:
+  friend struct internal::GrpcBucketRequestParser;
+
   internal::PatchBuilder impl_;
   bool labels_subpatch_dirty_{false};
   internal::PatchBuilder labels_subpatch_;

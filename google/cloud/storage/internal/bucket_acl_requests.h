@@ -154,12 +154,13 @@ class PatchBucketAclRequest
                         BucketAccessControl const& original,
                         BucketAccessControl const& new_acl);
   PatchBucketAclRequest(std::string bucket, std::string entity,
-                        BucketAccessControlPatchBuilder const& patch);
+                        BucketAccessControlPatchBuilder patch);
 
-  std::string const& payload() const { return payload_; }
+  BucketAccessControlPatchBuilder const& patch() const { return patch_; }
+  std::string payload() const { return patch_.BuildPatch(); }
 
  private:
-  std::string payload_;
+  BucketAccessControlPatchBuilder patch_;
 };
 
 std::ostream& operator<<(std::ostream& os, PatchBucketAclRequest const& r);

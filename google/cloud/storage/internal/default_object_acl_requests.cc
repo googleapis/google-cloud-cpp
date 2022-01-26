@@ -24,6 +24,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 std::ostream& operator<<(std::ostream& os,
                          ListDefaultObjectAclRequest const& r) {
   os << "ListDefaultObjectAclRequest={bucket_name=" << r.bucket_name();
@@ -91,18 +92,15 @@ std::ostream& operator<<(std::ostream& os,
 PatchDefaultObjectAclRequest::PatchDefaultObjectAclRequest(
     std::string bucket, std::string entity, ObjectAccessControl const& original,
     ObjectAccessControl const& new_acl)
-    : GenericDefaultObjectAclRequest(std::move(bucket), std::move(entity)) {
-  PatchBuilder build_patch;
-  build_patch.AddStringField("entity", original.entity(), new_acl.entity());
-  build_patch.AddStringField("role", original.role(), new_acl.role());
-  payload_ = build_patch.ToString();
+    : PatchDefaultObjectAclRequest(std::move(bucket), std::move(entity),
+                                   DiffObjectAccessControl(original, new_acl)) {
 }
 
 PatchDefaultObjectAclRequest::PatchDefaultObjectAclRequest(
     std::string bucket, std::string entity,
-    ObjectAccessControlPatchBuilder const& patch)
+    ObjectAccessControlPatchBuilder patch)
     : GenericDefaultObjectAclRequest(std::move(bucket), std::move(entity)),
-      payload_(patch.BuildPatch()) {}
+      patch_(std::move(patch)) {}
 
 std::ostream& operator<<(std::ostream& os,
                          PatchDefaultObjectAclRequest const& r) {

@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/patch_builder.h"
+#include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/storage/version.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
-#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
@@ -27,8 +27,8 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 struct PatchBuilder::Impl {
- public:
   std::string ToString() const {
     if (empty()) {
       return "{}";
@@ -104,7 +104,6 @@ struct PatchBuilder::Impl {
     patch_[field_name] = v;
   }
 
- private:
   template <typename Integer>
   void AddIntegerField(char const* field_name, Integer lhs, Integer rhs,
                        Integer null_value) {
@@ -235,6 +234,10 @@ PatchBuilder& PatchBuilder::SetArrayField(
   pimpl_->SetArrayField(field_name,
                         nlohmann::json::parse(json_stringified_object));
   return *this;
+}
+
+nlohmann::json const& PatchBuilderDetails::GetPatch(PatchBuilder const& patch) {
+  return patch.pimpl_->patch_;
 }
 
 }  // namespace internal

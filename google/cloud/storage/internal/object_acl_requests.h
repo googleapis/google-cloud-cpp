@@ -155,15 +155,20 @@ class PatchObjectAclRequest
                         ObjectAccessControl const& new_acl);
   PatchObjectAclRequest(std::string bucket, std::string object,
                         std::string entity,
-                        ObjectAccessControlPatchBuilder const& patch);
+                        ObjectAccessControlPatchBuilder patch);
 
-  std::string const& payload() const { return payload_; }
+  ObjectAccessControlPatchBuilder const& patch() const { return patch_; }
+  std::string payload() const { return patch_.BuildPatch(); }
 
  private:
+  ObjectAccessControlPatchBuilder patch_;
   std::string payload_;
 };
 
 std::ostream& operator<<(std::ostream& os, PatchObjectAclRequest const& r);
+
+ObjectAccessControlPatchBuilder DiffObjectAccessControl(
+    ObjectAccessControl const& original, ObjectAccessControl const& new_acl);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
