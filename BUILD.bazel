@@ -179,6 +179,13 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-channel_mocks",
+    deps = [
+        "//google/cloud/channel:google_cloud_cpp_channel_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-cloudbuild",
     deps = [
         "//google/cloud/cloudbuild:google_cloud_cpp_cloudbuild",
