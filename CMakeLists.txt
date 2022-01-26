@@ -187,6 +187,9 @@ function (google_cloud_cpp_enable_deps)
     if (binaryauthorization IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE grafeas)
     endif ()
+    if (containeranalysis IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE grafeas)
+    endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
         PARENT_SCOPE)

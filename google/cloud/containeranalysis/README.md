@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Container Analysis API][cloud-service-docs], a service to An implementation of the Grafeas API, which stores, and enables querying and retrieval of critical metadata about all of your software artifacts.
+[Container Analysis API][cloud-service-docs]. An implementation of the
+[Grafeas API](https://grafeas.io), which stores, and enables querying and
+retrieval of critical metadata about all of your software artifacts.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/containeranalysis
+[cloud-service-docs]: https://cloud.google.com/container-analysis
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-containeranalysis/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/containeranalysis
 
@@ -38,7 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/containeranalysis/ EDIT HERE .h"
+#include "google/cloud/containeranalysis/grafeas_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,13 +52,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace containeranalysis = ::google::cloud::containeranalysis;
-  auto client = containeranalysis::Client(
-      containeranalysis::MakeConnection(/* EDIT HERE */));
+  auto client = containeranalysis::GrafeasClient(
+      containeranalysis::MakeGrafeasConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto n : client.ListNotes(project.FullName(), /*filter=*/"")) {
+    if (!n) throw std::runtime_error(n.status().message());
+    std::cout << n->DebugString() << "\n";
   }
 
   return 0;

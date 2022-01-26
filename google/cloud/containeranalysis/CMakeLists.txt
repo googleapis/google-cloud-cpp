@@ -24,6 +24,8 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::containeranalysis_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/grafeas")
 
 find_package(gRPC REQUIRED)
 find_package(ProtobufWithTargets REQUIRED)
@@ -60,7 +62,7 @@ target_link_libraries(
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::type_expr_protos
-           grafeas_v1_grafeas_protos)
+           google-cloud-cpp::grafeas_protos)
 
 file(
     GLOB source_files
