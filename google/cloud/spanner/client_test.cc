@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/results.h"
@@ -391,7 +392,17 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
   EXPECT_NE(conn, nullptr);
 
   conn = MakeConnection(db, Options{});
-  EXPECT_NE(conn, nullptr);
+  ASSERT_NE(conn, nullptr);
+  ASSERT_TRUE(conn->options().has<EndpointOption>());
+  EXPECT_EQ(conn->options().get<EndpointOption>(),
+            spanner_internal::DefaultOptions().get<EndpointOption>());
+
+  conn = MakeConnection(db, Options{}.set<EndpointOption>("endpoint"));
+  ASSERT_NE(conn, nullptr);
+  ASSERT_TRUE(conn->options().has<EndpointOption>());
+  EXPECT_NE(conn->options().get<EndpointOption>(),
+            spanner_internal::DefaultOptions().get<EndpointOption>());
+  EXPECT_EQ(conn->options().get<EndpointOption>(), "endpoint");
 }
 
 TEST(ClientTest, CommitMutatorSuccess) {
