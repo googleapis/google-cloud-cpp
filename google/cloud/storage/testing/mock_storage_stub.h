@@ -46,6 +46,10 @@ class MockStorageStub : public storage_internal::StorageStub {
   MOCK_METHOD(StatusOr<google::storage::v2::ListObjectsResponse>, ListObjects,
               (grpc::ClientContext&,
                google::storage::v2::ListObjectsRequest const&));
+  MOCK_METHOD(StatusOr<google::storage::v2::RewriteResponse>, RewriteObject,
+              (grpc::ClientContext&,
+               google::storage::v2::RewriteObjectRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<google::storage::v2::StartResumableWriteResponse>,
               StartResumableWrite,
               (grpc::ClientContext&,

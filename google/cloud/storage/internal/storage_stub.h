@@ -57,6 +57,10 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::ListObjectsRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::v2::RewriteResponse> RewriteObject(
+      grpc::ClientContext& context,
+      google::storage::v2::RewriteObjectRequest const& request) = 0;
+
   virtual StatusOr<google::storage::v2::StartResumableWriteResponse>
   StartResumableWrite(
       grpc::ClientContext& context,
@@ -99,6 +103,10 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
       grpc::ClientContext& client_context,
       google::storage::v2::ListObjectsRequest const& request) override;
+
+  StatusOr<google::storage::v2::RewriteResponse> RewriteObject(
+      grpc::ClientContext& client_context,
+      google::storage::v2::RewriteObjectRequest const& request) override;
 
   StatusOr<google::storage::v2::StartResumableWriteResponse>
   StartResumableWrite(

@@ -87,6 +87,18 @@ DefaultStorageStub::ListObjects(
   return response;
 }
 
+StatusOr<google::storage::v2::RewriteResponse>
+DefaultStorageStub::RewriteObject(
+    grpc::ClientContext& client_context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  google::storage::v2::RewriteResponse response;
+  auto status = grpc_stub_->RewriteObject(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 DefaultStorageStub::StartResumableWrite(
     grpc::ClientContext& client_context,

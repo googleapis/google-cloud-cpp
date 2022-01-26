@@ -550,7 +550,6 @@ service {
     "ListNotifications",
     "ComposeObject",
     "UpdateObject",
-    "RewriteObject",
     "CreateHmacKey",
     "DeleteHmacKey",
     "GetHmacKey",

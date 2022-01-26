@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
 #include <crc32c/crc32c.h>
 
@@ -164,34 +165,44 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
   return Status{};
 }
 
+google::storage::v2::PredefinedObjectAcl ToProtoObjectAcl(
+    std::string const& value) {
+  if (value == PredefinedAcl::BucketOwnerFullControl().value()) {
+    return google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL;
+  }
+  if (value == PredefinedAcl::BucketOwnerRead().value()) {
+    return google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ;
+  }
+  if (value == PredefinedAcl::AuthenticatedRead().value()) {
+    return google::storage::v2::OBJECT_ACL_AUTHENTICATED_READ;
+  }
+  if (value == PredefinedAcl::Private().value()) {
+    return google::storage::v2::OBJECT_ACL_PRIVATE;
+  }
+  if (value == PredefinedAcl::ProjectPrivate().value()) {
+    return google::storage::v2::OBJECT_ACL_PROJECT_PRIVATE;
+  }
+  if (value == PredefinedAcl::PublicRead().value()) {
+    return google::storage::v2::OBJECT_ACL_PUBLIC_READ;
+  }
+  if (value == PredefinedAcl::PublicReadWrite().value()) {
+    GCP_LOG(ERROR) << "Invalid predefinedAcl value " << value;
+    return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
+  }
+  GCP_LOG(ERROR) << "Unknown predefinedAcl value " << value;
+  return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
+}
+
 }  // namespace
 
 google::storage::v2::PredefinedObjectAcl GrpcObjectRequestParser::ToProtoObject(
     PredefinedAcl const& acl) {
-  if (acl.value() == PredefinedAcl::BucketOwnerFullControl().value()) {
-    return google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL;
-  }
-  if (acl.value() == PredefinedAcl::BucketOwnerRead().value()) {
-    return google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ;
-  }
-  if (acl.value() == PredefinedAcl::AuthenticatedRead().value()) {
-    return google::storage::v2::OBJECT_ACL_AUTHENTICATED_READ;
-  }
-  if (acl.value() == PredefinedAcl::Private().value()) {
-    return google::storage::v2::OBJECT_ACL_PRIVATE;
-  }
-  if (acl.value() == PredefinedAcl::ProjectPrivate().value()) {
-    return google::storage::v2::OBJECT_ACL_PROJECT_PRIVATE;
-  }
-  if (acl.value() == PredefinedAcl::PublicRead().value()) {
-    return google::storage::v2::OBJECT_ACL_PUBLIC_READ;
-  }
-  if (acl.value() == PredefinedAcl::PublicReadWrite().value()) {
-    GCP_LOG(ERROR) << "Invalid predefinedAcl value " << acl;
-    return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
-  }
-  GCP_LOG(ERROR) << "Unknown predefinedAcl value " << acl;
-  return google::storage::v2::PREDEFINED_OBJECT_ACL_UNSPECIFIED;
+  return ToProtoObjectAcl(acl.value());
+}
+
+google::storage::v2::PredefinedObjectAcl GrpcObjectRequestParser::ToProtoObject(
+    DestinationPredefinedAcl const& acl) {
+  return ToProtoObjectAcl(acl.value());
 }
 
 google::storage::v2::DeleteObjectRequest GrpcObjectRequestParser::ToProto(
@@ -357,6 +368,101 @@ ListObjectsResponse GrpcObjectRequestParser::FromProto(
     result.items.push_back(GrpcObjectMetadataParser::FromProto(o, options));
   }
   for (auto const& p : response.prefixes()) result.prefixes.push_back(p);
+  return result;
+}
+
+StatusOr<google::storage::v2::RewriteObjectRequest>
+GrpcObjectRequestParser::ToProto(RewriteObjectRequest const& request) {
+  google::storage::v2::RewriteObjectRequest result;
+  SetCommonParameters(result, request);
+  auto status = SetCommonObjectParameters(result, request);
+  if (!status.ok()) return status;
+
+  auto& destination = *result.mutable_destination();
+  destination.set_name(request.destination_object());
+  destination.set_bucket("projects/_/buckets/" + request.destination_bucket());
+  destination.set_kms_key(
+      request.GetOption<DestinationKmsKeyName>().value_or(""));
+  if (request.HasOption<WithObjectMetadata>()) {
+    // Only a few fields can be set as part of the metadata request.
+    auto m = request.GetOption<WithObjectMetadata>().value();
+    destination.set_storage_class(m.storage_class());
+    destination.set_content_encoding(m.content_encoding());
+    destination.set_content_disposition(m.content_disposition());
+    destination.set_cache_control(m.cache_control());
+    destination.set_content_language(m.content_language());
+    destination.set_content_type(m.content_type());
+    destination.set_temporary_hold(m.temporary_hold());
+    for (auto const& kv : m.metadata()) {
+      (*destination.mutable_metadata())[kv.first] = kv.second;
+    }
+    if (m.event_based_hold()) {
+      // The proto is an optional<bool>, avoid setting it to `false`, seems
+      // confusing.
+      destination.set_event_based_hold(m.event_based_hold());
+    }
+    if (m.has_custom_time()) {
+      *destination.mutable_custom_time() =
+          google::cloud::internal::ToProtoTimestamp(m.custom_time());
+    }
+  }
+  result.set_source_bucket("projects/_/buckets/" + request.source_bucket());
+  result.set_source_object(request.source_object());
+  result.set_source_generation(
+      request.GetOption<SourceGeneration>().value_or(0));
+  result.set_rewrite_token(request.rewrite_token());
+  if (request.HasOption<DestinationPredefinedAcl>()) {
+    result.set_destination_predefined_acl(
+        ToProtoObject(request.GetOption<DestinationPredefinedAcl>()));
+  }
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  if (request.HasOption<IfSourceGenerationMatch>()) {
+    result.set_if_source_generation_match(
+        request.GetOption<IfSourceGenerationMatch>().value());
+  }
+  if (request.HasOption<IfSourceGenerationNotMatch>()) {
+    result.set_if_source_generation_not_match(
+        request.GetOption<IfSourceGenerationNotMatch>().value());
+  }
+  if (request.HasOption<IfSourceMetagenerationMatch>()) {
+    result.set_if_source_metageneration_match(
+        request.GetOption<IfSourceMetagenerationMatch>().value());
+  }
+  if (request.HasOption<IfSourceMetagenerationNotMatch>()) {
+    result.set_if_source_metageneration_not_match(
+        request.GetOption<IfSourceMetagenerationNotMatch>().value());
+  }
+  result.set_max_bytes_rewritten_per_call(
+      request.GetOption<MaxBytesRewrittenPerCall>().value_or(0));
+  if (request.HasOption<SourceEncryptionKey>()) {
+    auto data = request.template GetOption<SourceEncryptionKey>().value();
+    auto key_bytes = Base64Decode(data.key);
+    if (!key_bytes) return std::move(key_bytes).status();
+    auto key_sha256_bytes = Base64Decode(data.sha256);
+    if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
+
+    result.set_copy_source_encryption_algorithm(data.algorithm);
+    result.set_copy_source_encryption_key_bytes(
+        std::string{key_bytes->begin(), key_bytes->end()});
+    result.set_copy_source_encryption_key_sha256_bytes(
+        std::string{key_sha256_bytes->begin(), key_sha256_bytes->end()});
+  }
+  return result;
+}
+
+RewriteObjectResponse GrpcObjectRequestParser::FromProto(
+    google::storage::v2::RewriteResponse const& response,
+    Options const& options) {
+  RewriteObjectResponse result;
+  result.done = response.done();
+  result.object_size = response.object_size();
+  result.total_bytes_rewritten = response.total_bytes_rewritten();
+  result.rewrite_token = response.rewrite_token();
+  if (response.has_resource()) {
+    result.resource =
+        GrpcObjectMetadataParser::FromProto(response.resource(), options);
+  }
   return result;
 }
 

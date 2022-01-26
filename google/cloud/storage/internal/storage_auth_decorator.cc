@@ -77,6 +77,14 @@ StatusOr<google::storage::v2::ListObjectsResponse> StorageAuth::ListObjects(
   return child_->ListObjects(context, request);
 }
 
+StatusOr<google::storage::v2::RewriteResponse> StorageAuth::RewriteObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RewriteObject(context, request);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageAuth::StartResumableWrite(
     grpc::ClientContext& context,

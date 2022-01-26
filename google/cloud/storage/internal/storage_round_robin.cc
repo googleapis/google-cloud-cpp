@@ -53,6 +53,12 @@ StorageRoundRobin::ListObjects(
   return Child()->ListObjects(context, request);
 }
 
+StatusOr<google::storage::v2::RewriteResponse> StorageRoundRobin::RewriteObject(
+    grpc::ClientContext& context,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  return Child()->RewriteObject(context, request);
+}
+
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageRoundRobin::StartResumableWrite(
     grpc::ClientContext& context,
