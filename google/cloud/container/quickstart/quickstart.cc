@@ -29,12 +29,9 @@ int main(int argc, char* argv[]) try {
   auto const location =
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
   auto response = client.ListClusters(location);
-  if (response.ok()) {
-    for (auto r : response->clusters()) {
-      std::cout << r.DebugString() << "\n";
-    }
-  } else {
-    throw std::runtime_error(response.status().message());
+  if (!response) throw std::runtime_error(response.status().message());
+  for (auto c : response->clusters()) {
+    std::cout << c.DebugString() << "\n";
   }
 
   return 0;
