@@ -1,0 +1,9 @@
+@com_google_googleapis//google/cloud/channel/v1:channel_partner_links.proto
+@com_google_googleapis//google/cloud/channel/v1:common.proto
+@com_google_googleapis//google/cloud/channel/v1:customers.proto
+@com_google_googleapis//google/cloud/channel/v1:entitlements.proto
+@com_google_googleapis//google/cloud/channel/v1:offers.proto
+@com_google_googleapis//google/cloud/channel/v1:operations.proto
+@com_google_googleapis//google/cloud/channel/v1:products.proto
+@com_google_googleapis//google/cloud/channel/v1:service.proto
+@com_google_googleapis//google/cloud/channel/v1:subscriber_event.proto
