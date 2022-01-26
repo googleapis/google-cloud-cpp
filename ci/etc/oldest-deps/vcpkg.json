@@ -30,9 +30,10 @@
       {"name": "protobuf", "version>=": "3.15.8"},
       {"name": "nlohmann-json", "version>=": "3.9.1"},
       "benchmark",
-      "gtest"
+      {"name": "gtest", "version>=": "1.11.0", "host":  true}
     ],
     "overrides": [
-      { "name": "protobuf", "version": "3.15.8" }
+      { "name": "protobuf", "version": "3.15.8" },
+      { "name": "gtest", "version": "1.11.0" }
     ]
 }
