@@ -27,7 +27,6 @@ namespace testing_util {
 
 class MockRestResponse : public rest_internal::RestResponse {
  public:
-  ~MockRestResponse() override = default;
   MOCK_METHOD(rest_internal::HttpStatusCode, StatusCode, (), (const, override));
   MOCK_METHOD((std::multimap<std::string, std::string>), Headers, (),
               (const, override));

@@ -234,7 +234,7 @@ Status AsStatus(RestResponse&& response) {
   auto const http_status_code = response.StatusCode();
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
   if (!payload.ok()) return AsStatus(http_status_code, "");
-  return AsStatus(http_status_code, std::move(*payload));
+  return AsStatus(http_status_code, *std::move(payload));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
