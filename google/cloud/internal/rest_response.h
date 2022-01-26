@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_RESPONSE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_RESPONSE_H
 
+#include "google/cloud/internal/http_payload.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -69,6 +69,39 @@ enum HttpStatusCode : std::int32_t {
   kServiceUnavailable = 503,
 };
 
+// This class contains the results of making a request to a RESTful service.
+class RestResponse {
+ public:
+  virtual ~RestResponse() = default;
+  virtual HttpStatusCode StatusCode() const = 0;
+  virtual std::multimap<std::string, std::string> Headers() const = 0;
+  // Creates a HttpPayload object from the underlying HTTP response,
+  // invalidating the current RestResponse object.
+  virtual std::unique_ptr<HttpPayload> ExtractPayload() && = 0;
+};
+
+// Implements RestResponse using libcurl.
+class CurlRestResponse : public RestResponse {
+ public:
+  ~CurlRestResponse() override = default;
+
+  CurlRestResponse(CurlRestResponse const&) = delete;
+  CurlRestResponse(CurlRestResponse&&) = default;
+  CurlRestResponse& operator=(CurlRestResponse const&) = delete;
+  CurlRestResponse& operator=(CurlRestResponse&&) = default;
+
+  HttpStatusCode StatusCode() const override;
+  std::multimap<std::string, std::string> Headers() const override;
+  std::unique_ptr<HttpPayload> ExtractPayload() && override;
+
+ private:
+  friend class CurlRestClient;
+  CurlRestResponse(Options options, std::unique_ptr<CurlImpl> impl);
+
+  std::unique_ptr<CurlImpl> impl_;
+  Options options_;
+};
+
 /**
  * Maps a response to a `Status`.
  *
@@ -95,6 +128,7 @@ enum HttpStatusCode : std::int32_t {
  *     the error message in the status is initialized from any content in the
  *     response payload.
  */
+Status AsStatus(RestResponse&& response);
 Status AsStatus(HttpStatusCode http_status_code, std::string payload);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
