@@ -150,7 +150,8 @@ if (BUILD_TESTING)
                 mock_http_payload.h)
     set_target_properties(google_cloud_cpp_testing_rest
                           PROPERTIES LINKER_LANGUAGE CXX)
-    target_link_libraries(google_cloud_cpp_testing_rest PUBLIC GTest::gmock)
+    target_link_libraries(google_cloud_cpp_testing_rest
+                          PUBLIC google-cloud-cpp::common GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing_rest)
 
     create_bazel_config(google_cloud_cpp_testing_rest YEAR 2022)
