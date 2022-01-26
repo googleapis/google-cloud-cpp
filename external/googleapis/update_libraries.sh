@@ -72,6 +72,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/gkehub/v1/multiclusteringress:multiclusteringress_cc_grpc" \
       "@com_google_googleapis//google/cloud/gkehub/v1/configmanagement:configmanagement_cc_grpc"
   )"
+  ["grafeas"]="@com_google_googleapis//grafeas/v1:grafeas_cc_grpc"
   ["iam"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc" \

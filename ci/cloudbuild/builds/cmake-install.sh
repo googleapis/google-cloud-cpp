@@ -113,10 +113,13 @@ expected_dirs+=(
   ./include/google/rpc
   ./include/google/spanner/v1
   ./include/google/type
+  ./include/grafeas
+  ./include/grafeas/v1
   ./lib64/cmake/bigtable_client
   ./lib64/cmake/google_cloud_cpp_bigtable
   ./lib64/cmake/google_cloud_cpp_common
   ./lib64/cmake/google_cloud_cpp_googleapis
+  ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
   ./lib64/cmake/google_cloud_cpp_pubsub
   ./lib64/cmake/google_cloud_cpp_rest_internal
@@ -177,7 +180,7 @@ done
 
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
-libraries="$(printf ";%s" $(features::list_full | grep -v experimental-))"
+libraries="$(printf ";%s" $(features::list_full | grep -v experimental- | grep -v grafeas))"
 libraries="${libraries:1}"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \

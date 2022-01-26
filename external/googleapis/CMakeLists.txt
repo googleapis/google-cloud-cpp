@@ -82,46 +82,10 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/type/quaternion.proto"
     "google/type/timeofday.proto")
 
-function (google_cloud_cpp_load_protolist var file)
-    file(READ "${file}" contents)
-    string(REGEX REPLACE "\n" ";" contents "${contents}")
-    set(protos)
-    foreach (line IN LISTS contents)
-        string(REPLACE "@com_google_googleapis//" "" line "${line}")
-        string(REPLACE ":" "/" line "${line}")
-        if ("${line}" STREQUAL "")
-            continue()
-        endif ()
-        list(APPEND protos "${EXTERNAL_GOOGLEAPIS_SOURCE}/${line}")
-    endforeach ()
-    set(${var}
-        "${protos}"
-        PARENT_SCOPE)
-endfunction ()
-
-function (google_cloud_cpp_load_protodeps var file)
-    file(READ "${file}" contents)
-    string(REGEX REPLACE "\n" ";" contents "${contents}")
-    set(deps)
-    foreach (line IN LISTS contents)
-        if ("${line}" STREQUAL "")
-            continue()
-        endif ()
-        string(REPLACE ":" "_" line "${line}")
-        string(REPLACE "_proto" "_protos" line "${line}")
-        string(REPLACE "@com_google_googleapis//" "google-cloud-cpp::" line
-                       "${line}")
-        string(REPLACE "google-cloud-cpp::google/" "google-cloud-cpp::" line
-                       "${line}")
-        string(REPLACE "/" "_" line "${line}")
-        list(APPEND deps "${line}")
-    endforeach ()
-    set(${var}
-        "${deps}"
-        PARENT_SCOPE)
-endfunction ()
-
 include(EnableWerror)
+
+# Include the functions to compile proto files and maintain proto libraries.
+include(CompileProtos)
 
 set(EXTERNAL_GOOGLEAPIS_BYPRODUCTS)
 foreach (proto ${EXTERNAL_GOOGLEAPIS_PROTO_FILES})
@@ -175,9 +139,6 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(SelectMSVCRuntime)
-
-# Include the functions to compile proto files.
-include(CompileProtos)
 
 google_cloud_cpp_add_protos_property()
 
