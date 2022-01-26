@@ -275,6 +275,15 @@ function (google_cloud_cpp_enable_features)
                 add_subdirectory(google/cloud/storage)
             endif ()
         else ()
+            if (NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/google/cloud/${feature}"
+                OR NOT EXISTS
+                   "${CMAKE_SOURCE_DIR}/google/cloud/${feature}/CMakeLists.txt")
+                message(
+                    WARNING
+                        "${feature} is not a valid feature in google-cloud-cpp, ignored"
+                )
+                continue()
+            endif ()
             add_subdirectory(google/cloud/${feature})
         endif ()
     endforeach ()
