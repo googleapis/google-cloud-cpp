@@ -18,6 +18,7 @@
 
 google_cloud_cpp_testing_rest_hdrs = [
     "mock_http_payload.h",
+    "mock_rest_response.h",
 ]
 
 google_cloud_cpp_testing_rest_srcs = [

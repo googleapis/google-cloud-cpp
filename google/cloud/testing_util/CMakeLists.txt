@@ -152,7 +152,8 @@ if (BUILD_TESTING)
     target_sources(
         google_cloud_cpp_testing_rest
         INTERFACE # cmake-format: sort
-                  ${CMAKE_CURRENT_SOURCE_DIR}/mock_http_payload.h)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/mock_http_payload.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/mock_rest_response.h)
     target_link_libraries(google_cloud_cpp_testing_rest
                           INTERFACE google-cloud-cpp::common GTest::gmock)
 
