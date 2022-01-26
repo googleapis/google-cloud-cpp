@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/container/v1/cluster_service.grpc.pb.h>
 #include <memory>
@@ -38,100 +38,100 @@ class ClusterManagerConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy> clone()
       const = 0;
 
-  virtual google::cloud::internal::Idempotency ListClusters(
+  virtual google::cloud::Idempotency ListClusters(
       google::container::v1::ListClustersRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetCluster(
+  virtual google::cloud::Idempotency GetCluster(
       google::container::v1::GetClusterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateCluster(
+  virtual google::cloud::Idempotency CreateCluster(
       google::container::v1::CreateClusterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateCluster(
+  virtual google::cloud::Idempotency UpdateCluster(
       google::container::v1::UpdateClusterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateNodePool(
+  virtual google::cloud::Idempotency UpdateNodePool(
       google::container::v1::UpdateNodePoolRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetNodePoolAutoscaling(
+  virtual google::cloud::Idempotency SetNodePoolAutoscaling(
       google::container::v1::SetNodePoolAutoscalingRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetLoggingService(
+  virtual google::cloud::Idempotency SetLoggingService(
       google::container::v1::SetLoggingServiceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetMonitoringService(
+  virtual google::cloud::Idempotency SetMonitoringService(
       google::container::v1::SetMonitoringServiceRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetAddonsConfig(
+  virtual google::cloud::Idempotency SetAddonsConfig(
       google::container::v1::SetAddonsConfigRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetLocations(
+  virtual google::cloud::Idempotency SetLocations(
       google::container::v1::SetLocationsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateMaster(
+  virtual google::cloud::Idempotency UpdateMaster(
       google::container::v1::UpdateMasterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetMasterAuth(
+  virtual google::cloud::Idempotency SetMasterAuth(
       google::container::v1::SetMasterAuthRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteCluster(
+  virtual google::cloud::Idempotency DeleteCluster(
       google::container::v1::DeleteClusterRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListOperations(
+  virtual google::cloud::Idempotency ListOperations(
       google::container::v1::ListOperationsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetOperation(
+  virtual google::cloud::Idempotency GetOperation(
       google::container::v1::GetOperationRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CancelOperation(
+  virtual google::cloud::Idempotency CancelOperation(
       google::container::v1::CancelOperationRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetServerConfig(
+  virtual google::cloud::Idempotency GetServerConfig(
       google::container::v1::GetServerConfigRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetJSONWebKeys(
+  virtual google::cloud::Idempotency GetJSONWebKeys(
       google::container::v1::GetJSONWebKeysRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListNodePools(
+  virtual google::cloud::Idempotency ListNodePools(
       google::container::v1::ListNodePoolsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetNodePool(
+  virtual google::cloud::Idempotency GetNodePool(
       google::container::v1::GetNodePoolRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CreateNodePool(
+  virtual google::cloud::Idempotency CreateNodePool(
       google::container::v1::CreateNodePoolRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency DeleteNodePool(
+  virtual google::cloud::Idempotency DeleteNodePool(
       google::container::v1::DeleteNodePoolRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency RollbackNodePoolUpgrade(
+  virtual google::cloud::Idempotency RollbackNodePoolUpgrade(
       google::container::v1::RollbackNodePoolUpgradeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetNodePoolManagement(
+  virtual google::cloud::Idempotency SetNodePoolManagement(
       google::container::v1::SetNodePoolManagementRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetLabels(
+  virtual google::cloud::Idempotency SetLabels(
       google::container::v1::SetLabelsRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetLegacyAbac(
+  virtual google::cloud::Idempotency SetLegacyAbac(
       google::container::v1::SetLegacyAbacRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency StartIPRotation(
+  virtual google::cloud::Idempotency StartIPRotation(
       google::container::v1::StartIPRotationRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency CompleteIPRotation(
+  virtual google::cloud::Idempotency CompleteIPRotation(
       google::container::v1::CompleteIPRotationRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetNodePoolSize(
+  virtual google::cloud::Idempotency SetNodePoolSize(
       google::container::v1::SetNodePoolSizeRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetNetworkPolicy(
+  virtual google::cloud::Idempotency SetNetworkPolicy(
       google::container::v1::SetNetworkPolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency SetMaintenancePolicy(
+  virtual google::cloud::Idempotency SetMaintenancePolicy(
       google::container::v1::SetMaintenancePolicyRequest const& request) = 0;
 
-  virtual google::cloud::internal::Idempotency ListUsableSubnetworks(
+  virtual google::cloud::Idempotency ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request) = 0;
 };
 
