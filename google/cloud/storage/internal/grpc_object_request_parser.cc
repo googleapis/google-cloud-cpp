@@ -16,7 +16,9 @@
 #include "google/cloud/storage/internal/grpc_common_request_params.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
+#include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
@@ -265,6 +267,90 @@ GrpcObjectRequestParser::ToProto(ReadObjectRangeRequest const& request) {
   SetCommonParameters(r, request);
 
   return r;
+}
+
+StatusOr<google::storage::v2::UpdateObjectRequest>
+GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
+  google::storage::v2::UpdateObjectRequest result;
+  auto status = SetCommonObjectParameters(result, request);
+  if (!status.ok()) return status;
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  SetCommonParameters(result, request);
+  SetPredefinedAcl(result, request);
+
+  auto& object = *result.mutable_object();
+  object.set_bucket("projects/_/buckets/" + request.bucket_name());
+  object.set_name(request.object_name());
+  object.set_generation(request.GetOption<Generation>().value_or(0));
+
+  auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
+
+  if (patch.contains("acl")) {
+    for (auto const& a : patch["acl"]) {
+      auto acl = ObjectAccessControlParser::FromJson(a);
+      if (!acl) return std::move(acl).status();
+      *object.add_acl() = GrpcObjectAccessControlParser::ToProto(*acl);
+    }
+    result.mutable_update_mask()->add_paths("acl");
+  }
+
+  if (request.patch().metadata_subpatch_dirty_) {
+    auto const& subpatch =
+        PatchBuilderDetails::GetPatch(request.patch().metadata_subpatch_);
+    // The semantics in gRPC are to replace any metadata attributes
+    result.mutable_update_mask()->add_paths("metadata");
+    for (auto const& kv : subpatch.items()) {
+      auto const& v = kv.value();
+      if (!v.is_string()) continue;
+      (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
+    }
+  }
+
+  if (patch.contains("customTime")) {
+    auto ts =
+        google::cloud::internal::ParseRfc3339(patch.value("customTime", ""));
+    if (!ts) return std::move(ts).status();
+    result.mutable_update_mask()->add_paths("custom_time");
+    *object.mutable_custom_time() =
+        google::cloud::internal::ToProtoTimestamp(*ts);
+  }
+
+  // We need to check each modifiable field.
+  struct StringField {
+    char const* json_name;
+    char const* grpc_name;
+    std::function<void(std::string v)> setter;
+  } string_fields[] = {
+      {"cacheControl", "cache_control",
+       [&object](std::string v) { object.set_cache_control(std::move(v)); }},
+      {"contentDisposition", "content_disposition",
+       [&object](std::string v) {
+         object.set_content_disposition(std::move(v));
+       }},
+      {"contentEncoding", "content_encoding",
+       [&object](std::string v) { object.set_content_encoding(std::move(v)); }},
+      {"contentLanguage", "content_language",
+       [&object](std::string v) { object.set_content_language(std::move(v)); }},
+      {"contentType", "content_type",
+       [&object](std::string v) { object.set_content_type(std::move(v)); }},
+  };
+  for (auto const& f : string_fields) {
+    if (!patch.contains(f.json_name)) continue;
+    f.setter(patch.value(f.json_name, ""));
+    result.mutable_update_mask()->add_paths(f.grpc_name);
+  }
+
+  if (patch.contains("eventBasedHold")) {
+    object.set_event_based_hold(patch.value("eventBasedHold", false));
+    result.mutable_update_mask()->add_paths("event_based_hold");
+  }
+  if (patch.contains("temporaryHold")) {
+    object.set_temporary_hold(patch.value("temporaryHold", false));
+    result.mutable_update_mask()->add_paths("temporary_hold");
+  }
+
+  return result;
 }
 
 StatusOr<google::storage::v2::WriteObjectRequest>
