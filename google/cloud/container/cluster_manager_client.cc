@@ -33,17 +33,6 @@ ClusterManagerClient::ClusterManagerClient(
 ClusterManagerClient::~ClusterManagerClient() = default;
 
 StatusOr<google::container::v1::ListClustersResponse>
-ClusterManagerClient::ListClusters(std::string const& project_id,
-                                   std::string const& zone, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::ListClustersRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  return connection_->ListClusters(request);
-}
-
-StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerClient::ListClusters(std::string const& parent, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
@@ -59,18 +48,6 @@ ClusterManagerClient::ListClusters(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->ListClusters(request);
-}
-
-StatusOr<google::container::v1::Cluster> ClusterManagerClient::GetCluster(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::GetClusterRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  return connection_->GetCluster(request);
 }
 
 StatusOr<google::container::v1::Cluster> ClusterManagerClient::GetCluster(
@@ -90,18 +67,6 @@ StatusOr<google::container::v1::Cluster> ClusterManagerClient::GetCluster(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::CreateCluster(
-    std::string const& project_id, std::string const& zone,
-    google::container::v1::Cluster const& cluster, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::CreateClusterRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  *request.mutable_cluster() = cluster;
-  return connection_->CreateCluster(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::CreateCluster(
     std::string const& parent, google::container::v1::Cluster const& cluster,
     Options options) {
   internal::OptionsSpan span(
@@ -118,20 +83,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::CreateCluster(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->CreateCluster(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::UpdateCluster(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id,
-    google::container::v1::ClusterUpdate const& update, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::UpdateClusterRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  *request.mutable_update() = update;
-  return connection_->UpdateCluster(request);
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::UpdateCluster(
@@ -171,22 +122,6 @@ ClusterManagerClient::SetNodePoolAutoscaling(
 }
 
 StatusOr<google::container::v1::Operation>
-ClusterManagerClient::SetLoggingService(std::string const& project_id,
-                                        std::string const& zone,
-                                        std::string const& cluster_id,
-                                        std::string const& logging_service,
-                                        Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::SetLoggingServiceRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  request.set_logging_service(logging_service);
-  return connection_->SetLoggingService(request);
-}
-
-StatusOr<google::container::v1::Operation>
 ClusterManagerClient::SetLoggingService(std::string const& name,
                                         std::string const& logging_service,
                                         Options options) {
@@ -205,21 +140,6 @@ ClusterManagerClient::SetLoggingService(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->SetLoggingService(request);
-}
-
-StatusOr<google::container::v1::Operation>
-ClusterManagerClient::SetMonitoringService(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, std::string const& monitoring_service,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::SetMonitoringServiceRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  request.set_monitoring_service(monitoring_service);
-  return connection_->SetMonitoringService(request);
 }
 
 StatusOr<google::container::v1::Operation>
@@ -245,21 +165,6 @@ ClusterManagerClient::SetMonitoringService(
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerClient::SetAddonsConfig(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id,
-    google::container::v1::AddonsConfig const& addons_config, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::SetAddonsConfigRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  *request.mutable_addons_config() = addons_config;
-  return connection_->SetAddonsConfig(request);
-}
-
-StatusOr<google::container::v1::Operation>
-ClusterManagerClient::SetAddonsConfig(
     std::string const& name,
     google::container::v1::AddonsConfig const& addons_config, Options options) {
   internal::OptionsSpan span(
@@ -280,20 +185,6 @@ ClusterManagerClient::SetAddonsConfig(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::SetLocations(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, std::vector<std::string> const& locations,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::SetLocationsRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  *request.mutable_locations() = {locations.begin(), locations.end()};
-  return connection_->SetLocations(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::SetLocations(
     std::string const& name, std::vector<std::string> const& locations,
     Options options) {
   internal::OptionsSpan span(
@@ -310,20 +201,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::SetLocations(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->SetLocations(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::UpdateMaster(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, std::string const& master_version,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::UpdateMasterRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  request.set_master_version(master_version);
-  return connection_->UpdateMaster(request);
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::UpdateMaster(
@@ -354,18 +231,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::SetMasterAuth(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteCluster(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::DeleteClusterRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  return connection_->DeleteCluster(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteCluster(
     std::string const& name, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
@@ -383,35 +248,12 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteCluster(
 }
 
 StatusOr<google::container::v1::ListOperationsResponse>
-ClusterManagerClient::ListOperations(std::string const& project_id,
-                                     std::string const& zone, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::ListOperationsRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  return connection_->ListOperations(request);
-}
-
-StatusOr<google::container::v1::ListOperationsResponse>
 ClusterManagerClient::ListOperations(
     google::container::v1::ListOperationsRequest const& request,
     Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->ListOperations(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::GetOperation(
-    std::string const& project_id, std::string const& zone,
-    std::string const& operation_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::GetOperationRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_operation_id(operation_id);
-  return connection_->GetOperation(request);
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::GetOperation(
@@ -431,19 +273,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::GetOperation(
   return connection_->GetOperation(request);
 }
 
-Status ClusterManagerClient::CancelOperation(std::string const& project_id,
-                                             std::string const& zone,
-                                             std::string const& operation_id,
-                                             Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::CancelOperationRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_operation_id(operation_id);
-  return connection_->CancelOperation(request);
-}
-
 Status ClusterManagerClient::CancelOperation(std::string const& name,
                                              Options options) {
   internal::OptionsSpan span(
@@ -459,18 +288,6 @@ Status ClusterManagerClient::CancelOperation(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->CancelOperation(request);
-}
-
-StatusOr<google::container::v1::ServerConfig>
-ClusterManagerClient::GetServerConfig(std::string const& project_id,
-                                      std::string const& zone,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::GetServerConfigRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  return connection_->GetServerConfig(request);
 }
 
 StatusOr<google::container::v1::ServerConfig>
@@ -502,20 +319,6 @@ ClusterManagerClient::GetJSONWebKeys(
 }
 
 StatusOr<google::container::v1::ListNodePoolsResponse>
-ClusterManagerClient::ListNodePools(std::string const& project_id,
-                                    std::string const& zone,
-                                    std::string const& cluster_id,
-                                    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::ListNodePoolsRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  return connection_->ListNodePools(request);
-}
-
-StatusOr<google::container::v1::ListNodePoolsResponse>
 ClusterManagerClient::ListNodePools(std::string const& parent,
                                     Options options) {
   internal::OptionsSpan span(
@@ -535,20 +338,6 @@ ClusterManagerClient::ListNodePools(
 }
 
 StatusOr<google::container::v1::NodePool> ClusterManagerClient::GetNodePool(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, std::string const& node_pool_id,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::GetNodePoolRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  request.set_node_pool_id(node_pool_id);
-  return connection_->GetNodePool(request);
-}
-
-StatusOr<google::container::v1::NodePool> ClusterManagerClient::GetNodePool(
     std::string const& name, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
@@ -562,20 +351,6 @@ StatusOr<google::container::v1::NodePool> ClusterManagerClient::GetNodePool(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->GetNodePool(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::CreateNodePool(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id,
-    google::container::v1::NodePool const& node_pool, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::CreateNodePoolRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  *request.mutable_node_pool() = node_pool;
-  return connection_->CreateNodePool(request);
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::CreateNodePool(
@@ -598,20 +373,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::CreateNodePool(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteNodePool(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, std::string const& node_pool_id,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::DeleteNodePoolRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  request.set_node_pool_id(node_pool_id);
-  return connection_->DeleteNodePool(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteNodePool(
     std::string const& name, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
@@ -626,22 +387,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::DeleteNodePool(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->DeleteNodePool(request);
-}
-
-StatusOr<google::container::v1::Operation>
-ClusterManagerClient::RollbackNodePoolUpgrade(std::string const& project_id,
-                                              std::string const& zone,
-                                              std::string const& cluster_id,
-                                              std::string const& node_pool_id,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::RollbackNodePoolUpgradeRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  request.set_node_pool_id(node_pool_id);
-  return connection_->RollbackNodePoolUpgrade(request);
 }
 
 StatusOr<google::container::v1::Operation>
@@ -680,19 +425,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::SetLabels(
 }
 
 StatusOr<google::container::v1::Operation> ClusterManagerClient::SetLegacyAbac(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id, bool enabled, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::SetLegacyAbacRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  request.set_enabled(enabled);
-  return connection_->SetLegacyAbac(request);
-}
-
-StatusOr<google::container::v1::Operation> ClusterManagerClient::SetLegacyAbac(
     std::string const& name, bool enabled, Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
@@ -708,20 +440,6 @@ StatusOr<google::container::v1::Operation> ClusterManagerClient::SetLegacyAbac(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->SetLegacyAbac(request);
-}
-
-StatusOr<google::container::v1::Operation>
-ClusterManagerClient::StartIPRotation(std::string const& project_id,
-                                      std::string const& zone,
-                                      std::string const& cluster_id,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::StartIPRotationRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  return connection_->StartIPRotation(request);
 }
 
 StatusOr<google::container::v1::Operation>
@@ -741,20 +459,6 @@ ClusterManagerClient::StartIPRotation(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->StartIPRotation(request);
-}
-
-StatusOr<google::container::v1::Operation>
-ClusterManagerClient::CompleteIPRotation(std::string const& project_id,
-                                         std::string const& zone,
-                                         std::string const& cluster_id,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::CompleteIPRotationRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  return connection_->CompleteIPRotation(request);
 }
 
 StatusOr<google::container::v1::Operation>
@@ -783,22 +487,6 @@ ClusterManagerClient::SetNodePoolSize(
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->SetNodePoolSize(request);
-}
-
-StatusOr<google::container::v1::Operation>
-ClusterManagerClient::SetNetworkPolicy(
-    std::string const& project_id, std::string const& zone,
-    std::string const& cluster_id,
-    google::container::v1::NetworkPolicy const& network_policy,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
-  google::container::v1::SetNetworkPolicyRequest request;
-  request.set_project_id(project_id);
-  request.set_zone(zone);
-  request.set_cluster_id(cluster_id);
-  *request.mutable_network_policy() = network_policy;
-  return connection_->SetNetworkPolicy(request);
 }
 
 StatusOr<google::container::v1::Operation>
