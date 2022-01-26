@@ -6,8 +6,9 @@ This directory contains **experimental** libraries. Its contents are subject to
 change without notice.
 
 This directory contains CMake targets to compile the
-[Grafeas](https://grafeas.io). Grafeas (the Greek word for "Scribe") is
-"An open artifact metadata API to audit and govern your software supply chain".
+[Grafeas](https://grafeas.io) protocol buffer files as a C++ library. Grafeas
+(the Greek word for "Scribe") is an open artifact metadata API to audit and
+govern your software supply chain.
 
 Several Google Cloud Platform services use the Grafeas APIs and protocol buffer
 definitions. This directory contains CMake targets to generate the C++ libraries
