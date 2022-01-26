@@ -285,6 +285,8 @@ google_cloud_cpp_enable_features()
 # to tradeoff readability vs. "making them compile everywhere".
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
     AND bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND iam IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     add_subdirectory(google/cloud/examples)
 endif ()
