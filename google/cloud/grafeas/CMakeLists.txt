@@ -15,7 +15,7 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "GrafeasPub/Sub Lite API C++ Client")
+set(DOXYGEN_PROJECT_NAME "Grafeas API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Grafeas API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "grafeas_internal" "grafeas_testing"
