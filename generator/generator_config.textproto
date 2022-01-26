@@ -194,6 +194,15 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Container Analysis
+service {
+  service_proto_path: "google/devtools/containeranalysis/v1/containeranalysis.proto"
+  additional_proto_files: ["grafeas/v1/grafeas.proto"]
+  product_path: "google/cloud/containeranalysis"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Database Migration
 service {
   service_proto_path: "google/cloud/clouddms/v1/clouddms.proto"
