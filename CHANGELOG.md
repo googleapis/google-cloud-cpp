@@ -90,10 +90,48 @@
 
 ## v1.36.0 - TBD
 
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+**BREAKING CHANGE:** The `bigtable::InstanceAdminClient` interface has changed
+significantly. Any code that extends this class or calls its experimental public
+APIs (`reset()`, `Channel()`) will be broken. For the most part, this should
+only affect customers who mock this class in their tests. Code that calls
+`bigtable::MakeInstanceAdminClient()` or
+`bigtable::CreateDefaultInstanceAdminClient()` will continue to work as before.
+
+This change will allow us to deliver new features more quickly by reducing the
+maintenance costs of the library. It also provides a better mocking interface
+for `bigtable::InstanceAdmin`. We apologize if you are inconvenienced by this
+change.
+
+If only your tests are broken, please use
+`bigtable_admin_mocks::MockBigtableInstanceAdminConnection` in place of
+`bigtable::testing::MockInstanceAdminClient`. The new mock should be more
+intuitive because of the differences described below:
+
+|`MockBigtableInstanceAdminConnection` | `MockInstanceAdminClient` |
+|-|-|
+| Mocks result of entire retry loop | Mocks result of one call in a retry loop |
+| Returns familiar `google::cloud::` types | Returns `grpc::` types |
+
+If more than your tests are broken, please use
+`bigtable_admin::BigtableInstanceAdminClient` in favor of
+`bigtable::InstanceAdmin`, and `bigtable_admin::BigtableInstanceAdminConnection`
+in favor of `bigtable::InstanceAdminClient`. These classes will incorporate the
+newest features of both the [Cloud Bigtable Admin API] and the C++ client
+library. For more information on these new classes, see our
+[Architecture Design] document.
+
+Again, we apologize for making this breaking change, but we believe it is in the
+best long-term interest of our customers.
+
+[Cloud Bigtable Admin API]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
+[Architecture Design]: https://github.com/googleapis/google-cloud-cpp/blob/main/ARCHITECTURE.md#the-client-classes
+
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
 
 **BREAKING CHANGE:** with this release any use of the
-`storage::internal::ResumableUploadResponse` type require changes. Applications
+`storage::internal::ResumableUploadResponse` type requires changes. Applications
 should have little need for this type, outside mocks, so the changes should not
 affect production code.
 
