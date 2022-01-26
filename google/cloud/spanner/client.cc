@@ -357,7 +357,7 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
     return spanner_internal::CreateDefaultSpannerStub(db, auth, opts, id++);
   });
   return std::make_shared<spanner_internal::ConnectionImpl>(
-      std::move(db), std::move(background), std::move(stubs), opts);
+      std::move(db), std::move(background), std::move(stubs), std::move(opts));
 }
 
 std::shared_ptr<Connection> MakeConnection(

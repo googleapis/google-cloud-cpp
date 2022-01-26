@@ -42,6 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class MockConnection : public spanner::Connection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
   MOCK_METHOD(spanner::RowStream, Read, (ReadParams), (override));
   MOCK_METHOD(StatusOr<std::vector<spanner::ReadPartition>>, PartitionRead,
               (PartitionReadParams), (override));

@@ -48,8 +48,9 @@ class ConnectionImpl : public spanner::Connection {
  public:
   ConnectionImpl(spanner::Database db,
                  std::unique_ptr<BackgroundThreads> background_threads,
-                 std::vector<std::shared_ptr<SpannerStub>> stubs,
-                 Options const& opts);
+                 std::vector<std::shared_ptr<SpannerStub>> stubs, Options opts);
+
+  Options options() override { return opts_; }
 
   spanner::RowStream Read(ReadParams) override;
   StatusOr<std::vector<spanner::ReadPartition>> PartitionRead(
@@ -69,6 +70,11 @@ class ConnectionImpl : public spanner::Connection {
   Status Rollback(RollbackParams) override;
 
  private:
+  std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype() const;
+  std::shared_ptr<spanner::BackoffPolicy> const& BackoffPolicyPrototype() const;
+  bool RpcStreamTracingEnabled() const;
+  TracingOptions const& RpcTracingOptions() const;
+
   Status PrepareSession(SessionHolder& session,
                         bool dissociate_from_pool = false);
 
@@ -163,12 +169,9 @@ class ConnectionImpl : public spanner::Connection {
       google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode);
 
   spanner::Database db_;
-  std::shared_ptr<spanner::RetryPolicy const> retry_policy_prototype_;
-  std::shared_ptr<spanner::BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<BackgroundThreads> background_threads_;
+  Options opts_;
   std::shared_ptr<SessionPool> session_pool_;
-  bool rpc_stream_tracing_enabled_ = false;
-  TracingOptions tracing_options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
