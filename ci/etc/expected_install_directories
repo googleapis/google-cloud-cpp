@@ -53,6 +53,10 @@
 ./include/google/cloud/billing/internal
 ./include/google/cloud/billing/mocks
 ./include/google/cloud/billing/v1
+./include/google/cloud/channel
+./include/google/cloud/channel/internal
+./include/google/cloud/channel/mocks
+./include/google/cloud/channel/v1
 ./include/google/cloud/cloudbuild
 ./include/google/cloud/cloudbuild/internal
 ./include/google/cloud/cloudbuild/mocks
@@ -268,6 +272,7 @@
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_bigquery
 ./lib64/cmake/google_cloud_cpp_billing
+./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_datamigration
