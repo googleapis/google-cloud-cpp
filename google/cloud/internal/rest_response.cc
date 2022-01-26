@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/log.h"
 #include <nlohmann/json.hpp>
 #include <iostream>
@@ -210,6 +211,30 @@ Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
 
   auto error_info = MakeErrorInfo(details);
   return Status(status_code, std::move(message), std::move(error_info));
+}
+
+CurlRestResponse::CurlRestResponse(Options options,
+                                   std::unique_ptr<CurlImpl> impl)
+    : impl_(std::move(impl)), options_(std::move(options)) {}
+
+HttpStatusCode CurlRestResponse::StatusCode() const {
+  return impl_->status_code();
+}
+
+std::multimap<std::string, std::string> CurlRestResponse::Headers() const {
+  return impl_->headers();
+}
+
+std::unique_ptr<HttpPayload> CurlRestResponse::ExtractPayload() && {
+  return std::unique_ptr<CurlHttpPayload>(
+      new CurlHttpPayload(std::move(impl_), std::move(options_)));
+}
+
+Status AsStatus(RestResponse&& response) {
+  auto const http_status_code = response.StatusCode();
+  auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
+  if (!payload.ok()) return AsStatus(http_status_code, "");
+  return AsStatus(http_status_code, std::move(*payload));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
