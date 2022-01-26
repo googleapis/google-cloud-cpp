@@ -12,22 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/channel/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/channel/cloud_channel_client.h"
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " account-id\n";
     return 1;
   }
 
   namespace channel = ::google::cloud::channel;
-  auto client = channel::Client(channel::MakeConnection(/* EDIT HERE */));
+  auto client = channel::CloudChannelServiceClient(
+      channel::MakeCloudChannelServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  // Fill in this request as needed.
+  auto request = google::cloud::channel::v1::ListProductsRequest{};
+  request.set_account(std::string("accounts/") + argv[1]);
+  for (auto r : client.ListProducts(std::move(request))) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
