@@ -55,9 +55,13 @@ int main(int argc, char* argv[]) try {
       container::MakeClusterManagerConnection(/* EDIT HERE */));
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.ListClusters(project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto response = client.ListClusters(project.FullName());
+  if (response.ok()) {
+    for (auto r : response->clusters()) {
+      std::cout << r.DebugString() << "\n";
+    }
+  } else {
+    throw std::runtime_error(response.status().message());
   }
 
   return 0;
