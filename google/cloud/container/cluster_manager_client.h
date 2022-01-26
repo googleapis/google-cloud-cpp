@@ -90,43 +90,18 @@ class ClusterManagerClient {
   /// Lists all clusters owned by a project in either the specified zone or all
   /// zones.
   ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the parent field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides, or "-" for all zones. This field has been deprecated
-  ///  and replaced by the parent field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2106}
-  ///
-  /// [google.container.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2087}
-  /// [google.container.v1.ListClustersResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2106}
-  ///
-  StatusOr<google::container::v1::ListClustersResponse> ListClusters(
-      std::string const& project_id, std::string const& zone,
-      Options options = {});
-
-  ///
-  /// Lists all clusters owned by a project in either the specified zone or all
-  /// zones.
-  ///
   /// @param parent  The parent (project and location) where the clusters will
   /// be listed.
   ///  Specified in the format `projects/*/locations/*`.
   ///  Location "-" matches all zones and all regions.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2106}
+  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2350}
   ///
   /// [google.container.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2087}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2331}
   /// [google.container.v1.ListClustersResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2106}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2350}
   ///
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       std::string const& parent, Options options = {});
@@ -136,45 +111,19 @@ class ClusterManagerClient {
   /// zones.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListClustersRequest,google/container/v1/cluster_service.proto#L2087}
+  /// @googleapis_link{google::container::v1::ListClustersRequest,google/container/v1/cluster_service.proto#L2331}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2106}
+  /// @googleapis_link{google::container::v1::ListClustersResponse,google/container/v1/cluster_service.proto#L2350}
   ///
   /// [google.container.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2087}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2331}
   /// [google.container.v1.ListClustersResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2106}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2350}
   ///
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       google::container::v1::ListClustersRequest const& request,
       Options options = {});
-
-  ///
-  /// Gets the details of a specific cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to retrieve.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1108}
-  ///
-  /// [google.container.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1725}
-  /// [google.container.v1.Cluster]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1108}
-  ///
-  StatusOr<google::container::v1::Cluster> GetCluster(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, Options options = {});
 
   ///
   /// Gets the details of a specific cluster.
@@ -184,12 +133,12 @@ class ClusterManagerClient {
   ///  Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1108}
+  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1261}
   ///
   /// [google.container.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1725}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1957}
   /// [google.container.v1.Cluster]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1108}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1261}
   ///
   StatusOr<google::container::v1::Cluster> GetCluster(std::string const& name,
                                                       Options options = {});
@@ -198,58 +147,19 @@ class ClusterManagerClient {
   /// Gets the details of a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetClusterRequest,google/container/v1/cluster_service.proto#L1725}
+  /// @googleapis_link{google::container::v1::GetClusterRequest,google/container/v1/cluster_service.proto#L1957}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1108}
+  /// @googleapis_link{google::container::v1::Cluster,google/container/v1/cluster_service.proto#L1261}
   ///
   /// [google.container.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1725}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1957}
   /// [google.container.v1.Cluster]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1108}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1261}
   ///
   StatusOr<google::container::v1::Cluster> GetCluster(
       google::container::v1::GetClusterRequest const& request,
       Options options = {});
-
-  ///
-  /// Creates a cluster, consisting of the specified number and type of Google
-  /// Compute Engine instances.
-  ///
-  /// By default, the cluster is created in the project's
-  /// [default
-  /// network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks).
-  ///
-  /// One firewall is added for the cluster. After cluster creation,
-  /// the Kubelet creates routes for each node to allow the containers
-  /// on that node to communicate with all other instances in the
-  /// cluster.
-  ///
-  /// Finally, an entry is added to the project's global metadata indicating
-  /// which CIDR range the cluster is using.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the parent field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  parent field.
-  /// @param cluster  Required. A [cluster
-  ///  resource](https://cloud.google.com/container-engine/reference/rest/v1/projects.locations.clusters)
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1703}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> CreateCluster(
-      std::string const& project_id, std::string const& zone,
-      google::container::v1::Cluster const& cluster, Options options = {});
 
   ///
   /// Creates a cluster, consisting of the specified number and type of Google
@@ -274,12 +184,12 @@ class ClusterManagerClient {
   ///  resource](https://cloud.google.com/container-engine/reference/rest/v1/projects.locations.clusters)
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1703}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1935}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> CreateCluster(
       std::string const& parent, google::container::v1::Cluster const& cluster,
@@ -302,47 +212,19 @@ class ClusterManagerClient {
   /// which CIDR range the cluster is using.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CreateClusterRequest,google/container/v1/cluster_service.proto#L1703}
+  /// @googleapis_link{google::container::v1::CreateClusterRequest,google/container/v1/cluster_service.proto#L1935}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1703}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1935}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> CreateCluster(
       google::container::v1::CreateClusterRequest const& request,
       Options options = {});
-
-  ///
-  /// Updates the settings of a specific cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to upgrade.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param update  Required. A description of the update.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1747}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> UpdateCluster(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id,
-      google::container::v1::ClusterUpdate const& update, Options options = {});
 
   ///
   /// Updates the settings of a specific cluster.
@@ -353,12 +235,12 @@ class ClusterManagerClient {
   /// @param update  Required. A description of the update.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1747}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1979}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> UpdateCluster(
       std::string const& name,
@@ -368,15 +250,15 @@ class ClusterManagerClient {
   /// Updates the settings of a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::UpdateClusterRequest,google/container/v1/cluster_service.proto#L1747}
+  /// @googleapis_link{google::container::v1::UpdateClusterRequest,google/container/v1/cluster_service.proto#L1979}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1747}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1979}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> UpdateCluster(
       google::container::v1::UpdateClusterRequest const& request,
@@ -386,15 +268,15 @@ class ClusterManagerClient {
   /// Updates the version and/or image type for the specified node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::UpdateNodePoolRequest,google/container/v1/cluster_service.proto#L1772}
+  /// @googleapis_link{google::container::v1::UpdateNodePoolRequest,google/container/v1/cluster_service.proto#L2004}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.UpdateNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1772}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2004}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> UpdateNodePool(
       google::container::v1::UpdateNodePoolRequest const& request,
@@ -404,55 +286,18 @@ class ClusterManagerClient {
   /// Sets the autoscaling settings for the specified node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNodePoolAutoscalingRequest,google/container/v1/cluster_service.proto#L1828}
+  /// @googleapis_link{google::container::v1::SetNodePoolAutoscalingRequest,google/container/v1/cluster_service.proto#L2072}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetNodePoolAutoscalingRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1828}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2072}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
       google::container::v1::SetNodePoolAutoscalingRequest const& request,
-      Options options = {});
-
-  ///
-  /// Sets the logging service for a specific cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to upgrade.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param logging_service  Required. The logging service the cluster should
-  /// use to write logs.
-  ///  Currently available options:
-  ///  * `logging.googleapis.com/kubernetes` - The Cloud Logging
-  ///  service with a Kubernetes-native resource model
-  ///  * `logging.googleapis.com` - The legacy Cloud Logging service (no longer
-  ///    available as of GKE 1.15).
-  ///  * `none` - no logs will be exported from the cluster.
-  ///  If left as an empty string,`logging.googleapis.com/kubernetes` will be
-  ///  used for GKE 1.14+ or `logging.googleapis.com` for earlier versions.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.SetLoggingServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1858}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> SetLoggingService(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, std::string const& logging_service,
       Options options = {});
 
   ///
@@ -473,12 +318,12 @@ class ClusterManagerClient {
   ///  used for GKE 1.14+ or `logging.googleapis.com` for earlier versions.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetLoggingServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1858}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2102}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetLoggingService(
       std::string const& name, std::string const& logging_service,
@@ -488,55 +333,18 @@ class ClusterManagerClient {
   /// Sets the logging service for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLoggingServiceRequest,google/container/v1/cluster_service.proto#L1858}
+  /// @googleapis_link{google::container::v1::SetLoggingServiceRequest,google/container/v1/cluster_service.proto#L2102}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetLoggingServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1858}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2102}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetLoggingService(
       google::container::v1::SetLoggingServiceRequest const& request,
-      Options options = {});
-
-  ///
-  /// Sets the monitoring service for a specific cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to upgrade.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param monitoring_service  Required. The monitoring service the cluster
-  /// should use to write metrics.
-  ///  Currently available options:
-  ///  * "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring
-  ///  service with a Kubernetes-native resource model
-  ///  * `monitoring.googleapis.com` - The legacy Cloud Monitoring service (no
-  ///    longer available as of GKE 1.15).
-  ///  * `none` - No metrics will be exported from the cluster.
-  ///  If left as an empty string,`monitoring.googleapis.com/kubernetes` will be
-  ///  used for GKE 1.14+ or `monitoring.googleapis.com` for earlier versions.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.SetMonitoringServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1893}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> SetMonitoringService(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, std::string const& monitoring_service,
       Options options = {});
 
   ///
@@ -557,12 +365,12 @@ class ClusterManagerClient {
   ///  used for GKE 1.14+ or `monitoring.googleapis.com` for earlier versions.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetMonitoringServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1893}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2137}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetMonitoringService(
       std::string const& name, std::string const& monitoring_service,
@@ -572,49 +380,18 @@ class ClusterManagerClient {
   /// Sets the monitoring service for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetMonitoringServiceRequest,google/container/v1/cluster_service.proto#L1893}
+  /// @googleapis_link{google::container::v1::SetMonitoringServiceRequest,google/container/v1/cluster_service.proto#L2137}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetMonitoringServiceRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1893}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2137}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetMonitoringService(
       google::container::v1::SetMonitoringServiceRequest const& request,
-      Options options = {});
-
-  ///
-  /// Sets the addons for a specific cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to upgrade.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param addons_config  Required. The desired configurations for the various
-  /// addons available to run in the
-  ///  cluster.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.SetAddonsConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1928}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> SetAddonsConfig(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id,
-      google::container::v1::AddonsConfig const& addons_config,
       Options options = {});
 
   ///
@@ -628,12 +405,12 @@ class ClusterManagerClient {
   ///  cluster.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetAddonsConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1928}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2172}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
       std::string const& name,
@@ -644,54 +421,18 @@ class ClusterManagerClient {
   /// Sets the addons for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetAddonsConfigRequest,google/container/v1/cluster_service.proto#L1928}
+  /// @googleapis_link{google::container::v1::SetAddonsConfigRequest,google/container/v1/cluster_service.proto#L2172}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetAddonsConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1928}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2172}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
       google::container::v1::SetAddonsConfigRequest const& request,
-      Options options = {});
-
-  ///
-  /// Sets the locations for a specific cluster.
-  /// Deprecated. Use
-  /// [projects.locations.clusters.update](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update)
-  /// instead.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to upgrade.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param locations  Required. The desired list of Google Compute Engine
-  ///  [zones](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster's nodes should be located. Changing the locations a cluster
-  ///  is in will result in nodes being either created or removed from the
-  ///  cluster, depending on whether locations are being added or removed. This
-  ///  list must always include the cluster's primary zone.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.SetLocationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1954}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> SetLocations(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, std::vector<std::string> const& locations,
       Options options = {});
 
   ///
@@ -711,12 +452,12 @@ class ClusterManagerClient {
   ///  list must always include the cluster's primary zone.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetLocationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1954}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2198}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetLocations(
       std::string const& name, std::vector<std::string> const& locations,
@@ -729,54 +470,18 @@ class ClusterManagerClient {
   /// instead.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLocationsRequest,google/container/v1/cluster_service.proto#L1954}
+  /// @googleapis_link{google::container::v1::SetLocationsRequest,google/container/v1/cluster_service.proto#L2198}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetLocationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1954}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2198}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetLocations(
       google::container::v1::SetLocationsRequest const& request,
-      Options options = {});
-
-  ///
-  /// Updates the master for a specific cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to upgrade.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param master_version  Required. The Kubernetes version to change the
-  /// master to.
-  ///  Users may specify either explicit versions offered by Kubernetes Engine
-  ///  or version aliases, which have the following behavior:
-  ///  - "latest": picks the highest valid Kubernetes version
-  ///  - "1.X": picks the highest valid patch+gke.N patch in the 1.X version
-  ///  - "1.X.Y": picks the highest valid gke.N patch in the 1.X.Y version
-  ///  - "1.X.Y-gke.N": picks an explicit Kubernetes version
-  ///  - "-": picks the default Kubernetes version
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.UpdateMasterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1985}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> UpdateMaster(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, std::string const& master_version,
       Options options = {});
 
   ///
@@ -796,12 +501,12 @@ class ClusterManagerClient {
   ///  - "-": picks the default Kubernetes version
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.UpdateMasterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1985}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2229}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> UpdateMaster(
       std::string const& name, std::string const& master_version,
@@ -811,15 +516,15 @@ class ClusterManagerClient {
   /// Updates the master for a specific cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::UpdateMasterRequest,google/container/v1/cluster_service.proto#L1985}
+  /// @googleapis_link{google::container::v1::UpdateMasterRequest,google/container/v1/cluster_service.proto#L2229}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.UpdateMasterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1985}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2229}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> UpdateMaster(
       google::container::v1::UpdateMasterRequest const& request,
@@ -831,53 +536,19 @@ class ClusterManagerClient {
   /// setting the password.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetMasterAuthRequest,google/container/v1/cluster_service.proto#L2019}
+  /// @googleapis_link{google::container::v1::SetMasterAuthRequest,google/container/v1/cluster_service.proto#L2263}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetMasterAuthRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2019}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2263}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetMasterAuth(
       google::container::v1::SetMasterAuthRequest const& request,
       Options options = {});
-
-  ///
-  /// Deletes the cluster, including the Kubernetes endpoint and all worker
-  /// nodes.
-  ///
-  /// Firewalls and routes that were configured during cluster creation
-  /// are also deleted.
-  ///
-  /// Other Google Compute Engine resources that might be in use by the cluster,
-  /// such as load balancer resources, are not deleted if they weren't present
-  /// when the cluster was initially created.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to delete.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2065}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> DeleteCluster(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, Options options = {});
 
   ///
   /// Deletes the cluster, including the Kubernetes endpoint and all worker
@@ -895,12 +566,12 @@ class ClusterManagerClient {
   ///  Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2065}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2309}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> DeleteCluster(
       std::string const& name, Options options = {});
@@ -917,15 +588,15 @@ class ClusterManagerClient {
   /// when the cluster was initially created.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::DeleteClusterRequest,google/container/v1/cluster_service.proto#L2065}
+  /// @googleapis_link{google::container::v1::DeleteClusterRequest,google/container/v1/cluster_service.proto#L2309}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2065}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2309}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> DeleteCluster(
       google::container::v1::DeleteClusterRequest const& request,
@@ -934,71 +605,20 @@ class ClusterManagerClient {
   ///
   /// Lists all operations in a project in a specific zone or all zones.
   ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the parent field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) to return
-  ///  operations for, or `-` for all zones. This field has been deprecated and
-  ///  replaced by the parent field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::ListOperationsResponse,google/container/v1/cluster_service.proto#L2180}
-  ///
-  /// [google.container.v1.ListOperationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2139}
-  /// [google.container.v1.ListOperationsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2180}
-  ///
-  StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
-      std::string const& project_id, std::string const& zone,
-      Options options = {});
-
-  ///
-  /// Lists all operations in a project in a specific zone or all zones.
-  ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListOperationsRequest,google/container/v1/cluster_service.proto#L2139}
+  /// @googleapis_link{google::container::v1::ListOperationsRequest,google/container/v1/cluster_service.proto#L2383}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::ListOperationsResponse,google/container/v1/cluster_service.proto#L2180}
+  /// @googleapis_link{google::container::v1::ListOperationsResponse,google/container/v1/cluster_service.proto#L2424}
   ///
   /// [google.container.v1.ListOperationsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2139}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2383}
   /// [google.container.v1.ListOperationsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2180}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2424}
   ///
   StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
       google::container::v1::ListOperationsRequest const& request,
       Options options = {});
-
-  ///
-  /// Gets the specified operation.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param operation_id  Deprecated. The server-assigned `name` of the
-  /// operation.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.GetOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2117}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> GetOperation(
-      std::string const& project_id, std::string const& zone,
-      std::string const& operation_id, Options options = {});
 
   ///
   /// Gets the specified operation.
@@ -1008,12 +628,12 @@ class ClusterManagerClient {
   ///  Specified in the format `projects/*/locations/*/operations/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.GetOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2117}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2361}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> GetOperation(
       std::string const& name, Options options = {});
@@ -1022,41 +642,19 @@ class ClusterManagerClient {
   /// Gets the specified operation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetOperationRequest,google/container/v1/cluster_service.proto#L2117}
+  /// @googleapis_link{google::container::v1::GetOperationRequest,google/container/v1/cluster_service.proto#L2361}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.GetOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2117}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2361}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> GetOperation(
       google::container::v1::GetOperationRequest const& request,
       Options options = {});
-
-  ///
-  /// Cancels the specified operation.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the operation resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param operation_id  Deprecated. The server-assigned `name` of the
-  /// operation.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  ///
-  /// [google.container.v1.CancelOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2158}
-  ///
-  Status CancelOperation(std::string const& project_id, std::string const& zone,
-                         std::string const& operation_id, Options options = {});
 
   ///
   /// Cancels the specified operation.
@@ -1067,7 +665,7 @@ class ClusterManagerClient {
   /// @param options  Optional. Operation options.
   ///
   /// [google.container.v1.CancelOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2158}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2402}
   ///
   Status CancelOperation(std::string const& name, Options options = {});
 
@@ -1075,38 +673,14 @@ class ClusterManagerClient {
   /// Cancels the specified operation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CancelOperationRequest,google/container/v1/cluster_service.proto#L2158}
+  /// @googleapis_link{google::container::v1::CancelOperationRequest,google/container/v1/cluster_service.proto#L2402}
   /// @param options  Optional. Operation options.
   ///
   /// [google.container.v1.CancelOperationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2158}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2402}
   ///
   Status CancelOperation(
       google::container::v1::CancelOperationRequest const& request,
-      Options options = {});
-
-  ///
-  /// Returns configuration info about the Google Kubernetes Engine service.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) to return
-  ///  operations for. This field has been deprecated and replaced by the name
-  ///  field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2208}
-  ///
-  /// [google.container.v1.GetServerConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2190}
-  /// [google.container.v1.ServerConfig]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2208}
-  ///
-  StatusOr<google::container::v1::ServerConfig> GetServerConfig(
-      std::string const& project_id, std::string const& zone,
       Options options = {});
 
   ///
@@ -1116,12 +690,12 @@ class ClusterManagerClient {
   ///  specified in the format `projects/*/locations/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2208}
+  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2452}
   ///
   /// [google.container.v1.GetServerConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2190}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2434}
   /// [google.container.v1.ServerConfig]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2208}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2452}
   ///
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
       std::string const& name, Options options = {});
@@ -1130,15 +704,15 @@ class ClusterManagerClient {
   /// Returns configuration info about the Google Kubernetes Engine service.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetServerConfigRequest,google/container/v1/cluster_service.proto#L2190}
+  /// @googleapis_link{google::container::v1::GetServerConfigRequest,google/container/v1/cluster_service.proto#L2434}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2208}
+  /// @googleapis_link{google::container::v1::ServerConfig,google/container/v1/cluster_service.proto#L2452}
   ///
   /// [google.container.v1.GetServerConfigRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2190}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2434}
   /// [google.container.v1.ServerConfig]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2208}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2452}
   ///
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
       google::container::v1::GetServerConfigRequest const& request,
@@ -1151,45 +725,19 @@ class ClusterManagerClient {
   /// clusters.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetJSONWebKeysRequest,google/container/v1/cluster_service.proto#L3096}
+  /// @googleapis_link{google::container::v1::GetJSONWebKeysRequest,google/container/v1/cluster_service.proto#L3391}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::GetJSONWebKeysResponse,google/container/v1/cluster_service.proto#L3133}
+  /// @googleapis_link{google::container::v1::GetJSONWebKeysResponse,google/container/v1/cluster_service.proto#L3428}
   ///
   /// [google.container.v1.GetJSONWebKeysRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3096}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3391}
   /// [google.container.v1.GetJSONWebKeysResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3133}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3428}
   ///
   StatusOr<google::container::v1::GetJSONWebKeysResponse> GetJSONWebKeys(
       google::container::v1::GetJSONWebKeysRequest const& request,
       Options options = {});
-
-  ///
-  /// Lists the node pools for a cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://developers.google.com/console/help/new/#projectnumber).
-  ///  This field has been deprecated and replaced by the parent field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  parent field.
-  /// @param cluster_id  Deprecated. The name of the cluster.
-  ///  This field has been deprecated and replaced by the parent field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L2695}
-  ///
-  /// [google.container.v1.ListNodePoolsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2294}
-  /// [google.container.v1.ListNodePoolsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2695}
-  ///
-  StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, Options options = {});
 
   ///
   /// Lists the node pools for a cluster.
@@ -1199,12 +747,12 @@ class ClusterManagerClient {
   ///  listed. Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L2695}
+  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L2972}
   ///
   /// [google.container.v1.ListNodePoolsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2294}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2538}
   /// [google.container.v1.ListNodePoolsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2695}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2972}
   ///
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
       std::string const& parent, Options options = {});
@@ -1213,47 +761,18 @@ class ClusterManagerClient {
   /// Lists the node pools for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListNodePoolsRequest,google/container/v1/cluster_service.proto#L2294}
+  /// @googleapis_link{google::container::v1::ListNodePoolsRequest,google/container/v1/cluster_service.proto#L2538}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L2695}
+  /// @googleapis_link{google::container::v1::ListNodePoolsResponse,google/container/v1/cluster_service.proto#L2972}
   ///
   /// [google.container.v1.ListNodePoolsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2294}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2538}
   /// [google.container.v1.ListNodePoolsResponse]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2695}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2972}
   ///
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
       google::container::v1::ListNodePoolsRequest const& request,
-      Options options = {});
-
-  ///
-  /// Retrieves the requested node pool.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://developers.google.com/console/help/new/#projectnumber).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param node_pool_id  Deprecated. The name of the node pool.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2348}
-  ///
-  /// [google.container.v1.GetNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2316}
-  /// [google.container.v1.NodePool]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2348}
-  ///
-  StatusOr<google::container::v1::NodePool> GetNodePool(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, std::string const& node_pool_id,
       Options options = {});
 
   ///
@@ -1265,12 +784,12 @@ class ClusterManagerClient {
   ///  `projects/*/locations/*/clusters/*/nodePools/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2348}
+  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2592}
   ///
   /// [google.container.v1.GetNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2316}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2560}
   /// [google.container.v1.NodePool]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2348}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2592}
   ///
   StatusOr<google::container::v1::NodePool> GetNodePool(std::string const& name,
                                                         Options options = {});
@@ -1279,47 +798,19 @@ class ClusterManagerClient {
   /// Retrieves the requested node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::GetNodePoolRequest,google/container/v1/cluster_service.proto#L2316}
+  /// @googleapis_link{google::container::v1::GetNodePoolRequest,google/container/v1/cluster_service.proto#L2560}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2348}
+  /// @googleapis_link{google::container::v1::NodePool,google/container/v1/cluster_service.proto#L2592}
   ///
   /// [google.container.v1.GetNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2316}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2560}
   /// [google.container.v1.NodePool]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2348}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2592}
   ///
   StatusOr<google::container::v1::NodePool> GetNodePool(
       google::container::v1::GetNodePoolRequest const& request,
       Options options = {});
-
-  ///
-  /// Creates a node pool for a cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://developers.google.com/console/help/new/#projectnumber).
-  ///  This field has been deprecated and replaced by the parent field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  parent field.
-  /// @param cluster_id  Deprecated. The name of the cluster.
-  ///  This field has been deprecated and replaced by the parent field.
-  /// @param node_pool  Required. The node pool to create.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.CreateNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2241}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> CreateNodePool(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id,
-      google::container::v1::NodePool const& node_pool, Options options = {});
 
   ///
   /// Creates a node pool for a cluster.
@@ -1331,12 +822,12 @@ class ClusterManagerClient {
   /// @param node_pool  Required. The node pool to create.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.CreateNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2241}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2485}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> CreateNodePool(
       std::string const& parent,
@@ -1346,47 +837,18 @@ class ClusterManagerClient {
   /// Creates a node pool for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CreateNodePoolRequest,google/container/v1/cluster_service.proto#L2241}
+  /// @googleapis_link{google::container::v1::CreateNodePoolRequest,google/container/v1/cluster_service.proto#L2485}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.CreateNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2241}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2485}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> CreateNodePool(
       google::container::v1::CreateNodePoolRequest const& request,
-      Options options = {});
-
-  ///
-  /// Deletes a node pool from a cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://developers.google.com/console/help/new/#projectnumber).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param node_pool_id  Deprecated. The name of the node pool to delete.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.DeleteNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2267}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> DeleteNodePool(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, std::string const& node_pool_id,
       Options options = {});
 
   ///
@@ -1398,12 +860,12 @@ class ClusterManagerClient {
   ///  `projects/*/locations/*/clusters/*/nodePools/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.DeleteNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2267}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2511}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> DeleteNodePool(
       std::string const& name, Options options = {});
@@ -1412,48 +874,18 @@ class ClusterManagerClient {
   /// Deletes a node pool from a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::DeleteNodePoolRequest,google/container/v1/cluster_service.proto#L2267}
+  /// @googleapis_link{google::container::v1::DeleteNodePoolRequest,google/container/v1/cluster_service.proto#L2511}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.DeleteNodePoolRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2267}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2511}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> DeleteNodePool(
       google::container::v1::DeleteNodePoolRequest const& request,
-      Options options = {});
-
-  ///
-  /// Rolls back a previously Aborted or Failed NodePool upgrade.
-  /// This makes no changes if the last upgrade successfully completed.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to rollback.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param node_pool_id  Deprecated. The name of the node pool to rollback.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.RollbackNodePoolUpgradeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2668}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, std::string const& node_pool_id,
       Options options = {});
 
   ///
@@ -1466,12 +898,12 @@ class ClusterManagerClient {
   ///  Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.RollbackNodePoolUpgradeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2668}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2945}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       std::string const& name, Options options = {});
@@ -1481,15 +913,15 @@ class ClusterManagerClient {
   /// This makes no changes if the last upgrade successfully completed.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::RollbackNodePoolUpgradeRequest,google/container/v1/cluster_service.proto#L2668}
+  /// @googleapis_link{google::container::v1::RollbackNodePoolUpgradeRequest,google/container/v1/cluster_service.proto#L2945}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.RollbackNodePoolUpgradeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2668}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2945}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       google::container::v1::RollbackNodePoolUpgradeRequest const& request,
@@ -1499,15 +931,15 @@ class ClusterManagerClient {
   /// Sets the NodeManagement options for a node pool.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNodePoolManagementRequest,google/container/v1/cluster_service.proto#L2605}
+  /// @googleapis_link{google::container::v1::SetNodePoolManagementRequest,google/container/v1/cluster_service.proto#L2883}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetNodePoolManagementRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2605}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2883}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetNodePoolManagement(
       google::container::v1::SetNodePoolManagementRequest const& request,
@@ -1517,47 +949,19 @@ class ClusterManagerClient {
   /// Sets labels on a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLabelsRequest,google/container/v1/cluster_service.proto#L2809}
+  /// @googleapis_link{google::container::v1::SetLabelsRequest,google/container/v1/cluster_service.proto#L3101}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2809}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3101}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetLabels(
       google::container::v1::SetLabelsRequest const& request,
       Options options = {});
-
-  ///
-  /// Enables or disables the ABAC authorization mechanism on a cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://support.google.com/cloud/answer/6158840).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster to update.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param enabled  Required. Whether ABAC authorization will be enabled in
-  /// the cluster.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.SetLegacyAbacRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2843}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> SetLegacyAbac(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, bool enabled, Options options = {});
 
   ///
   /// Enables or disables the ABAC authorization mechanism on a cluster.
@@ -1569,12 +973,12 @@ class ClusterManagerClient {
   /// the cluster.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetLegacyAbacRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2843}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3135}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
       std::string const& name, bool enabled, Options options = {});
@@ -1583,45 +987,19 @@ class ClusterManagerClient {
   /// Enables or disables the ABAC authorization mechanism on a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetLegacyAbacRequest,google/container/v1/cluster_service.proto#L2843}
+  /// @googleapis_link{google::container::v1::SetLegacyAbacRequest,google/container/v1/cluster_service.proto#L3135}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetLegacyAbacRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2843}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3135}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
       google::container::v1::SetLegacyAbacRequest const& request,
       Options options = {});
-
-  ///
-  /// Starts master IP rotation.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://developers.google.com/console/help/new/#projectnumber).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.StartIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2869}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> StartIPRotation(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, Options options = {});
 
   ///
   /// Starts master IP rotation.
@@ -1631,12 +1009,12 @@ class ClusterManagerClient {
   ///  rotation. Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.StartIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2869}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3161}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> StartIPRotation(
       std::string const& name, Options options = {});
@@ -1645,45 +1023,19 @@ class ClusterManagerClient {
   /// Starts master IP rotation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::StartIPRotationRequest,google/container/v1/cluster_service.proto#L2869}
+  /// @googleapis_link{google::container::v1::StartIPRotationRequest,google/container/v1/cluster_service.proto#L3161}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.StartIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2869}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3161}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> StartIPRotation(
       google::container::v1::StartIPRotationRequest const& request,
       Options options = {});
-
-  ///
-  /// Completes master IP rotation.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://developers.google.com/console/help/new/#projectnumber).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.CompleteIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2894}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> CompleteIPRotation(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id, Options options = {});
 
   ///
   /// Completes master IP rotation.
@@ -1693,12 +1045,12 @@ class ClusterManagerClient {
   ///  rotation. Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.CompleteIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2894}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3186}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
       std::string const& name, Options options = {});
@@ -1707,66 +1059,38 @@ class ClusterManagerClient {
   /// Completes master IP rotation.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::CompleteIPRotationRequest,google/container/v1/cluster_service.proto#L2894}
+  /// @googleapis_link{google::container::v1::CompleteIPRotationRequest,google/container/v1/cluster_service.proto#L3186}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.CompleteIPRotationRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2894}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3186}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
       google::container::v1::CompleteIPRotationRequest const& request,
       Options options = {});
 
   ///
-  /// Sets the size for a specific node pool.
+  /// Sets the size for a specific node pool. The new size will be used for all
+  /// replicas, including future replicas created by modifying
+  /// [NodePool.locations][google.container.v1.NodePool.locations].
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNodePoolSizeRequest,google/container/v1/cluster_service.proto#L2636}
+  /// @googleapis_link{google::container::v1::SetNodePoolSizeRequest,google/container/v1/cluster_service.proto#L2913}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetNodePoolSizeRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2636}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2913}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetNodePoolSize(
       google::container::v1::SetNodePoolSizeRequest const& request,
-      Options options = {});
-
-  ///
-  /// Enables or disables Network Policy for a cluster.
-  ///
-  /// @param project_id  Deprecated. The Google Developers Console [project ID
-  /// or project
-  ///  number](https://developers.google.com/console/help/new/#projectnumber).
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param zone  Deprecated. The name of the Google Compute Engine
-  ///  [zone](https://cloud.google.com/compute/docs/zones#available) in which
-  ///  the cluster resides. This field has been deprecated and replaced by the
-  ///  name field.
-  /// @param cluster_id  Deprecated. The name of the cluster.
-  ///  This field has been deprecated and replaced by the name field.
-  /// @param network_policy  Required. Configuration options for the
-  /// NetworkPolicy feature.
-  /// @param options  Optional. Operation options.
-  /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
-  ///
-  /// [google.container.v1.SetNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2951}
-  /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
-  ///
-  StatusOr<google::container::v1::Operation> SetNetworkPolicy(
-      std::string const& project_id, std::string const& zone,
-      std::string const& cluster_id,
-      google::container::v1::NetworkPolicy const& network_policy,
       Options options = {});
 
   ///
@@ -1779,12 +1103,12 @@ class ClusterManagerClient {
   /// NetworkPolicy feature.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2951}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3248}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
       std::string const& name,
@@ -1795,15 +1119,15 @@ class ClusterManagerClient {
   /// Enables or disables Network Policy for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetNetworkPolicyRequest,google/container/v1/cluster_service.proto#L2951}
+  /// @googleapis_link{google::container::v1::SetNetworkPolicyRequest,google/container/v1/cluster_service.proto#L3248}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2951}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3248}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
       google::container::v1::SetNetworkPolicyRequest const& request,
@@ -1824,12 +1148,12 @@ class ClusterManagerClient {
   ///  clears the existing maintenance policy.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetMaintenancePolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2976}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3273}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
       std::string const& project_id, std::string const& zone,
@@ -1849,12 +1173,12 @@ class ClusterManagerClient {
   ///  clears the existing maintenance policy.
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetMaintenancePolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2976}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3273}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
       std::string const& name,
@@ -1865,15 +1189,15 @@ class ClusterManagerClient {
   /// Sets the maintenance policy for a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::SetMaintenancePolicyRequest,google/container/v1/cluster_service.proto#L2976}
+  /// @googleapis_link{google::container::v1::SetMaintenancePolicyRequest,google/container/v1/cluster_service.proto#L3273}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L1761}
   ///
   /// [google.container.v1.SetMaintenancePolicyRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2976}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3273}
   /// [google.container.v1.Operation]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1538}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L1761}
   ///
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
       google::container::v1::SetMaintenancePolicyRequest const& request,
@@ -1883,15 +1207,15 @@ class ClusterManagerClient {
   /// Lists subnetworks that are usable for creating clusters in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::container::v1::ListUsableSubnetworksRequest,google/container/v1/cluster_service.proto#L3218}
+  /// @googleapis_link{google::container::v1::ListUsableSubnetworksRequest,google/container/v1/cluster_service.proto#L3567}
   /// @param options  Optional. Operation options.
   /// @return
-  /// @googleapis_link{google::container::v1::UsableSubnetwork,google/container/v1/cluster_service.proto#L3290}
+  /// @googleapis_link{google::container::v1::UsableSubnetwork,google/container/v1/cluster_service.proto#L3639}
   ///
   /// [google.container.v1.ListUsableSubnetworksRequest]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3218}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3567}
   /// [google.container.v1.UsableSubnetwork]:
-  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3290}
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3639}
   ///
   StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request,

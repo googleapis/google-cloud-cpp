@@ -16,166 +16,175 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_CONNECTION_IMPL_H
 
+#include "google/cloud/container/cluster_manager_connection.h"
+#include "google/cloud/container/cluster_manager_connection_idempotency_policy.h"
+#include "google/cloud/container/cluster_manager_options.h"
+#include "google/cloud/container/internal/cluster_manager_retry_traits.h"
 #include "google/cloud/container/internal/cluster_manager_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace container_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ClusterManagerMetadata : public ClusterManagerStub {
+class ClusterManagerConnectionImpl
+    : public container::ClusterManagerConnection {
  public:
-  ~ClusterManagerMetadata() override = default;
-  explicit ClusterManagerMetadata(std::shared_ptr<ClusterManagerStub> child);
+  ~ClusterManagerConnectionImpl() override = default;
+
+  ClusterManagerConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<container_internal::ClusterManagerStub> stub,
+      Options const& options);
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
       google::container::v1::ListClustersRequest const& request) override;
 
   StatusOr<google::container::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
       google::container::v1::GetClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CreateCluster(
-      grpc::ClientContext& context,
       google::container::v1::CreateClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateCluster(
-      grpc::ClientContext& context,
       google::container::v1::UpdateClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateNodePool(
-      grpc::ClientContext& context,
       google::container::v1::UpdateNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
-      grpc::ClientContext& context,
       google::container::v1::SetNodePoolAutoscalingRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetLoggingService(
-      grpc::ClientContext& context,
       google::container::v1::SetLoggingServiceRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMonitoringService(
-      grpc::ClientContext& context,
       google::container::v1::SetMonitoringServiceRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
-      grpc::ClientContext& context,
       google::container::v1::SetAddonsConfigRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLocations(
-      grpc::ClientContext& context,
       google::container::v1::SetLocationsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateMaster(
-      grpc::ClientContext& context,
       google::container::v1::UpdateMasterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMasterAuth(
-      grpc::ClientContext& context,
       google::container::v1::SetMasterAuthRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> DeleteCluster(
-      grpc::ClientContext& context,
       google::container::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
       google::container::v1::ListOperationsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> GetOperation(
-      grpc::ClientContext& context,
       google::container::v1::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
       google::container::v1::CancelOperationRequest const& request) override;
 
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
-      grpc::ClientContext& context,
       google::container::v1::GetServerConfigRequest const& request) override;
 
   StatusOr<google::container::v1::GetJSONWebKeysResponse> GetJSONWebKeys(
-      grpc::ClientContext& context,
       google::container::v1::GetJSONWebKeysRequest const& request) override;
 
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
-      grpc::ClientContext& context,
       google::container::v1::ListNodePoolsRequest const& request) override;
 
   StatusOr<google::container::v1::NodePool> GetNodePool(
-      grpc::ClientContext& context,
       google::container::v1::GetNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CreateNodePool(
-      grpc::ClientContext& context,
       google::container::v1::CreateNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> DeleteNodePool(
-      grpc::ClientContext& context,
       google::container::v1::DeleteNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
-      grpc::ClientContext& context,
       google::container::v1::RollbackNodePoolUpgradeRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolManagement(
-      grpc::ClientContext& context,
       google::container::v1::SetNodePoolManagementRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetLabels(
-      grpc::ClientContext& context,
       google::container::v1::SetLabelsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
-      grpc::ClientContext& context,
       google::container::v1::SetLegacyAbacRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> StartIPRotation(
-      grpc::ClientContext& context,
       google::container::v1::StartIPRotationRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
-      grpc::ClientContext& context,
       google::container::v1::CompleteIPRotationRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolSize(
-      grpc::ClientContext& context,
       google::container::v1::SetNodePoolSizeRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
-      grpc::ClientContext& context,
       google::container::v1::SetNetworkPolicyRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
-      grpc::ClientContext& context,
       google::container::v1::SetMaintenancePolicyRequest const& request)
       override;
 
-  StatusOr<google::container::v1::ListUsableSubnetworksResponse>
-  ListUsableSubnetworks(
-      grpc::ClientContext& context,
-      google::container::v1::ListUsableSubnetworksRequest const& request)
-      override;
+  StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
+      google::container::v1::ListUsableSubnetworksRequest request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
+  std::unique_ptr<container::ClusterManagerRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<container::ClusterManagerRetryPolicyOption>()) {
+      return options.get<container::ClusterManagerRetryPolicyOption>()->clone();
+    }
+    return retry_policy_prototype_->clone();
+  }
 
-  std::shared_ptr<ClusterManagerStub> child_;
-  std::string api_client_header_;
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<container::ClusterManagerBackoffPolicyOption>()) {
+      return options.get<container::ClusterManagerBackoffPolicyOption>()
+          ->clone();
+    }
+    return backoff_policy_prototype_->clone();
+  }
+
+  std::unique_ptr<container::ClusterManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            container::ClusterManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return idempotency_policy_->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<container_internal::ClusterManagerStub> stub_;
+  std::unique_ptr<container::ClusterManagerRetryPolicy const>
+      retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::unique_ptr<container::ClusterManagerConnectionIdempotencyPolicy>
+      idempotency_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -183,4 +192,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_CONNECTION_IMPL_H
