@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/containeranalysis/ EDIT HERE .h"
+#include "google/cloud/containeranalysis/grafeas_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,13 +24,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace containeranalysis = ::google::cloud::containeranalysis;
-  auto client = containeranalysis::Client(
-      containeranalysis::MakeConnection(/* EDIT HERE */));
+  auto client = containeranalysis::GrafeasClient(
+      containeranalysis::MakeGrafeasConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto n : client.ListNotes(project.FullName(), /*filter=*/"")) {
+    if (!n) throw std::runtime_error(n.status().message());
+    std::cout << n->DebugString() << "\n";
   }
 
   return 0;
