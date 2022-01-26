@@ -2,9 +2,9 @@
 
 @mainpage Kubernetes Engine API C++ Client Library
 
-An idiomatic C++ client library for the [Kubernetes Engine API][cloud-service-docs], a service
-to build and manage container-based applications, powered by the open source
- Kubernetes technology.
+An idiomatic C++ client library for the
+[Kubernetes Engine API][cloud-service-docs], a service to build and manage
+container-based applications, powered by the open source Kubernetes technology.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -82,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/container
+[cloud-service-docs]: https://cloud.google.com/kubernetes-engine/docs/
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
