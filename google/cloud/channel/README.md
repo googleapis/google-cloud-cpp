@@ -2,8 +2,10 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Channel API][cloud-service-docs], a service to The Cloud Channel API enables Google Cloud partners to have a single unified resale platform and APIs across all of Google Cloud including GCP, Workspace, Maps and Chrome.
+This directory contains an idiomatic C++ client library for the [Cloud Channel
+API][cloud-service-docs], a service that enables Google Cloud partners to have
+a single unified resale platform and APIs across all of Google Cloud including
+GCP, Workspace, Maps and Chrome.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,22 +40,25 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/channel/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/channel/cloud_channel_client.h"
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " account-id\n";
     return 1;
   }
 
   namespace channel = ::google::cloud::channel;
-  auto client = channel::Client(channel::MakeConnection(/* EDIT HERE */));
+  auto client = channel::CloudChannelServiceClient(
+      channel::MakeCloudChannelServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  // Fill in this request as needed.
+  auto request = google::cloud::channel::v1::ListProductsRequest{};
+  request.set_account(std::string("accounts/") + argv[1]);
+  for (auto r : client.ListProducts(std::move(request))) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
