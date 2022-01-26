@@ -14,6 +14,13 @@
 # limitations under the License.
 # ~~~
 
+# TODO(8125): Re-enable the macos build.
+if (APPLE)
+    message(WARNING "Cannot build this google/cloud/channel "
+                    "on Apple platforms until #8125 is fixed.")
+    return()
+endif ()
+
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Channel API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Channel API")
