@@ -36,6 +36,17 @@ StorageLogging::StorageLogging(std::shared_ptr<StorageStub> child,
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
+StatusOr<google::storage::v2::Bucket> StorageLogging::GetBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::GetBucketRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::GetBucketRequest const& request) {
+        return child_->GetBucket(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 Status StorageLogging::DeleteObject(
     grpc::ClientContext& context,
     google::storage::v2::DeleteObjectRequest const& request) {

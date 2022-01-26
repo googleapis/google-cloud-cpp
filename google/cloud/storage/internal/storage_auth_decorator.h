@@ -38,6 +38,10 @@ class StorageAuth : public StorageStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<StorageStub> child);
 
+  StatusOr<google::storage::v2::Bucket> GetBucket(
+      grpc::ClientContext& context,
+      google::storage::v2::GetBucketRequest const& request) override;
+
   Status DeleteObject(
       grpc::ClientContext& context,
       google::storage::v2::DeleteObjectRequest const& request) override;

@@ -536,7 +536,6 @@ service {
   omit_stub_factory: true
   omitted_rpcs: [
     "DeleteBucket",
-    "GetBucket",
     "CreateBucket",
     "ListBuckets",
     "LockBucketRetentionPolicy",

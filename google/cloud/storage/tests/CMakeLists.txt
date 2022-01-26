@@ -25,6 +25,7 @@ set(storage_client_integration_tests
     curl_resumable_upload_session_integration_test.cc
     curl_sign_blob_integration_test.cc
     error_injection_integration_test.cc
+    grpc_bucket_metadata_integration_test.cc
     grpc_integration_test.cc
     grpc_object_metadata_integration_test.cc
     grpc_service_account_integration_test.cc
