@@ -45,6 +45,12 @@ StorageRoundRobin::ReadObject(
   return Child()->ReadObject(std::move(context), request);
 }
 
+StatusOr<google::storage::v2::Object> StorageRoundRobin::UpdateObject(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateObjectRequest const& request) {
+  return Child()->UpdateObject(context, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>

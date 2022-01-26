@@ -48,6 +48,10 @@ class StorageRoundRobin : public StorageStub {
   ReadObject(std::unique_ptr<grpc::ClientContext> context,
              google::storage::v2::ReadObjectRequest const& request) override;
 
+  StatusOr<google::storage::v2::Object> UpdateObject(
+      grpc::ClientContext& context,
+      google::storage::v2::UpdateObjectRequest const& request) override;
+
   std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>

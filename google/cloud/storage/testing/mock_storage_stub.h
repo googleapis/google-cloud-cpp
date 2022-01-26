@@ -43,6 +43,10 @@ class MockStorageStub : public storage_internal::StorageStub {
               (std::unique_ptr<grpc::ClientContext>,
                google::storage::v2::ReadObjectRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::Object>, UpdateObject,
+              (grpc::ClientContext&,
+               google::storage::v2::UpdateObjectRequest const&),
+              (override));
   MOCK_METHOD((std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
                    google::storage::v2::WriteObjectRequest,
                    google::storage::v2::WriteObjectResponse>>),
