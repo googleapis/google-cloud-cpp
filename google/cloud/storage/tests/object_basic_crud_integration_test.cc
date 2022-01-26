@@ -156,8 +156,9 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   desired_patch.set_content_language("en");
   desired_patch.mutable_metadata().erase("updated");
   desired_patch.mutable_metadata().emplace("patched", "true");
-  StatusOr<ObjectMetadata> patched_meta = client->PatchObject(
-      bucket_name_, object_name, *updated_meta, desired_patch);
+  StatusOr<ObjectMetadata> patched_meta =
+      client->PatchObject(bucket_name_, object_name, *updated_meta,
+                          desired_patch, PredefinedAcl::Private());
   ASSERT_STATUS_OK(patched_meta);
 
   EXPECT_EQ(desired_patch.metadata(), patched_meta->metadata())

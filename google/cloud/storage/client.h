@@ -1475,7 +1475,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
+   *     `IfMetagenerationNotMatch`, `PredefinedAcl`, `EncryptionKey`,
    *     `Projection`, and `UserProject`.
    *
    * @par Idempotency

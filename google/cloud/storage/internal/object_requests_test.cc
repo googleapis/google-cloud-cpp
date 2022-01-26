@@ -755,29 +755,29 @@ TEST(PatchObjectRequestTest, DiffSetEventBasedHold) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchObjectRequestTest, DiffSetLabels) {
+TEST(PatchObjectRequestTest, DiffSetMetadata) {
   ObjectMetadata original = CreateObjectMetadataForTest();
   original.mutable_metadata() = {
-      {"label1", "v1"},
-      {"label2", "v2"},
+      {"meta1", "v1"},
+      {"meta2", "v2"},
   };
   ObjectMetadata updated = original;
-  updated.mutable_metadata().erase("label2");
-  updated.mutable_metadata().insert({"label3", "v3"});
+  updated.mutable_metadata().erase("meta2");
+  updated.mutable_metadata().insert({"meta3", "v3"});
   PatchObjectRequest request("test-bucket", "test-object", original, updated);
 
   auto patch = nlohmann::json::parse(request.payload());
   auto expected = nlohmann::json::parse(R"""({
-      "metadata": {"label2": null, "label3": "v3"}
+      "metadata": {"meta2": null, "meta3": "v3"}
   })""");
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchObjectRequestTest, DiffResetLabels) {
+TEST(PatchObjectRequestTest, DiffResetMetadata) {
   ObjectMetadata original = CreateObjectMetadataForTest();
   original.mutable_metadata() = {
-      {"label1", "v1"},
-      {"label2", "v2"},
+      {"meta1", "v1"},
+      {"meta2", "v2"},
   };
   ObjectMetadata updated = original;
   updated.mutable_metadata().clear();
@@ -804,8 +804,11 @@ TEST(PatchObjectRequestTest, Builder) {
   PatchObjectRequest request(
       "test-bucket", "test-object",
       ObjectMetadataPatchBuilder().SetContentType("application/json"));
-  request.set_multiple_options(IfMetagenerationNotMatch(7),
-                               UserProject("my-project"));
+  request.set_multiple_options(
+      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
+      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
+      PredefinedAcl::ProjectPrivate(), EncryptionKey::FromBinaryKey("ABCD1234"),
+      UserProject("my-project"));
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
 
@@ -813,10 +816,24 @@ TEST(PatchObjectRequestTest, Builder) {
   os << request;
   std::string actual = os.str();
   EXPECT_THAT(actual, HasSubstr("test-bucket"));
-  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("test-object"));
+  EXPECT_THAT(actual, HasSubstr("generation=7"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationMatch=1"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationNotMatch=2"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationMatch=3"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=4"));
+  EXPECT_THAT(actual, HasSubstr("predefinedAcl=projectPrivate"));
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
   EXPECT_THAT(actual, HasSubstr("contentType"));
   EXPECT_THAT(actual, HasSubstr("application/json"));
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-algorithm: AES256"));
+  // /bin/echo -n ABCD1234 | sha256sum #openssl base64 -e
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: QUJDRDEyMzQ="));
+  // /bin/echo -n ABCD1234 | sha256sum | awk '{printf("%s", $1);}' |
+  //     xxd -r -p | openssl base64
+  EXPECT_THAT(actual,
+              HasSubstr("x-goog-encryption-key-sha256: "
+                        "FjXIUlr7rljDe+3jyUQIROkUNyfMfBYL7WZew3jYomI="));
 }
 
 TEST(ComposeObjectRequestTest, SimpleCompose) {

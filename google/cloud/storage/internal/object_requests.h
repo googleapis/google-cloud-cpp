@@ -242,12 +242,19 @@ class ComposeObjectRequest
 std::ostream& operator<<(std::ostream& os, ComposeObjectRequest const& r);
 
 /**
- * Represents a request to the `Buckets: patch` API.
+ * Represents a request to the `Objects: patch` API.
  */
 class PatchObjectRequest
     : public GenericObjectRequest<
-          PatchObjectRequest, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          PredefinedAcl, PredefinedDefaultObjectAcl, Projection, UserProject> {
+          PatchObjectRequest, Generation, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          PredefinedAcl, EncryptionKey, Projection, UserProject,
+          // PredefinedDefaultObjectAcl has no effect in an `Objects: patch`
+          // request.  We are keeping it here for backwards compatibility. It
+          // was introduced in error (should have been PredefinedAcl), and it
+          // was never documented. The cost of keeping it is small, and there
+          // is very little motivation to remove it.
+          PredefinedDefaultObjectAcl> {
  public:
   PatchObjectRequest() = default;
   explicit PatchObjectRequest(std::string bucket_name, std::string object_name,
