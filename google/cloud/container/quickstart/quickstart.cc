@@ -13,22 +13,22 @@
 // limitations under the License.
 
 #include "google/cloud/container/cluster_manager_client.h"
-#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace container = ::google::cloud::container;
   auto client = container::ClusterManagerClient(
-      container::MakeClusterManagerConnection(/* EDIT HERE */));
+      container::MakeClusterManagerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  auto response = client.ListClusters(project.FullName());
+  auto const location =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  auto response = client.ListClusters(location);
   if (response.ok()) {
     for (auto r : response->clusters()) {
       std::cout << r.DebugString() << "\n";
