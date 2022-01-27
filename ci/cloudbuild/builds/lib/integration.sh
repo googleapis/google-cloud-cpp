@@ -217,7 +217,15 @@ function integration::bazel_with_emulators() {
       --output_path="${PWD}" \
       --update_ci=false \
       --config_file="${PWD}/generator/integration_tests/golden_config.textproto"
-    git diff --exit-code generator/integration_tests/golden/
+    git diff --exit-code \
+      generator/integration_tests/golden/ \
+      ':(exclude)generator/integration_tests/golden/tests/' \
+      ':(exclude)generator/integration_tests/golden/.clang-format' \
+      ':(exclude)generator/integration_tests/golden/BUILD.bazel' \
+      ':(exclude)generator/integration_tests/golden/CMakeLists.txt' \
+      ':(exclude)generator/integration_tests/golden/*.bzl' \
+      ':(exclude)generator/integration_tests/golden/*_stub.h' \
+      ':(exclude)generator/integration_tests/golden/streaming.cc'
   fi
 }
 
