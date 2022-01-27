@@ -183,6 +183,15 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
     list(APPEND GOOGLE_CLOUD_CPP_ENABLE "generator")
 endif ()
 
+function (google_cloud_cpp_enable_deps)
+    if (binaryauthorization IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE grafeas)
+    endif ()
+    set(GOOGLE_CLOUD_CPP_ENABLE
+        "${GOOGLE_CLOUD_CPP_ENABLE}"
+        PARENT_SCOPE)
+endfunction ()
+
 function (google_cloud_cpp_enable_cleanup)
     # Remove any library that's been disabled from the list.
     foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
@@ -199,10 +208,13 @@ function (google_cloud_cpp_enable_cleanup)
             list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
         endif ()
     endforeach ()
+    list(REMOVE_DUPLICATES GOOGLE_CLOUD_CPP_ENABLE)
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
         PARENT_SCOPE)
 endfunction ()
+
+google_cloud_cpp_enable_deps()
 google_cloud_cpp_enable_cleanup()
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC AND NOT
