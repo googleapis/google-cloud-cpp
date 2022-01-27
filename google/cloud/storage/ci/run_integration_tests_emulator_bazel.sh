@@ -17,7 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
-source module /google/cloud/storage/tools/run_emulator_utils.sh
+source module /ci/lib/run_gcs_httpbin_emulator_utils.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"
