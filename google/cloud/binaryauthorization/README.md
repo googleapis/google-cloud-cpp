@@ -26,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/binaryauthorization
+[cloud-service-docs]: https://cloud.google.com/binary-authorization
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-binaryauthorization/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/binaryauthorization
 
