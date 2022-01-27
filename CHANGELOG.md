@@ -90,6 +90,16 @@
 
 ## v1.36.0 - TBD
 
+### Bazel support
+
+**BREAKING CHANGE:** In
+https://github.com/googleapis/google-cloud-cpp/pull/8095 we stopped testing
+with Bazel 3.5 and moved most of our Bazel tests to Bazel 4.0, which is now our
+minimum supported Bazel version. In
+https://github.com/googleapis/google-cloud-cpp/pull/8099, we also added a
+`bazel-latest` build to ensure that we always work with the newest Bazel
+release (currently 5.0). For more info about Bazel, see https://bazel.build/.
+
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
 **BREAKING CHANGE:** The `bigtable::InstanceAdminClient` interface has changed
