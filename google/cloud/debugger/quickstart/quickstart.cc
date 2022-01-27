@@ -12,25 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/debugger/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/debugger/debugger2_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " debuggee-id client-version\n";
     return 1;
   }
 
+  auto const debuggee_id = argv[1];
+  auto const client_version = argv[2];
   namespace debugger = ::google::cloud::debugger;
-  auto client = debugger::Client(debugger::MakeConnection(/* EDIT HERE */));
-
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  auto client = debugger::Debugger2Client(debugger::MakeDebugger2Connection());
+  auto response = client.ListBreakpoints(debuggee_id, client_version);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

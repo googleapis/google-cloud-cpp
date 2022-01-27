@@ -2,8 +2,9 @@
 
 @mainpage Stackdriver Debugger API C++ Client Library
 
-An idiomatic C++ client library for the [Stackdriver Debugger API][cloud-service-docs], a service
-to Examines the call stack and variables of a running application without stopping or slowing it down.
+An idiomatic C++ client library for the [Stackdriver Debugger
+API][cloud-service-docs], a service to examine the call stack and variables of
+a running application without stopping or slowing it down.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
