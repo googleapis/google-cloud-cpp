@@ -1,0 +1,15 @@
+@com_google_googleapis//google/cloud/securitycenter/v1:asset.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:external_system.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:finding.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:folder.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:indicator.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:mute_config.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:notification_config.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:notification_message.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:organization_settings.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:resource.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:run_asset_discovery_response.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:security_marks.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_service.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:source.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:vulnerability.proto
