@@ -12,6 +12,7 @@ channel
 cloudbuild
 composer
 datamigration
+debugger
 dlp
 eventarc
 gameservices

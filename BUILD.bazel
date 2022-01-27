@@ -242,6 +242,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-debugger",
+    deps = [
+        "//google/cloud/debugger:google_cloud_cpp_debugger",
+    ],
+)
+
+cc_library(
+    name = "experimental-debugger_mocks",
+    deps = [
+        "//google/cloud/debugger:google_cloud_cpp_debugger_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-dlp",
     deps = [
         "//google/cloud/dlp:google_cloud_cpp_dlp",
