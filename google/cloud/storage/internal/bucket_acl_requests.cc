@@ -22,6 +22,18 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+
+BucketAccessControlPatchBuilder DiffBucketAccessControl(
+    BucketAccessControl const& original, BucketAccessControl const& new_acl) {
+  BucketAccessControlPatchBuilder patch;
+  if (original.entity() != new_acl.entity()) patch.set_role(new_acl.entity());
+  if (original.role() != new_acl.role()) patch.set_role(new_acl.role());
+  return patch;
+}
+
+}  // namespace
+
 std::ostream& operator<<(std::ostream& os, ListBucketAclRequest const& r) {
   os << "ListBucketAclRequest={bucket_name=" << r.bucket_name();
   r.DumpOptions(os, ", ");
@@ -83,18 +95,14 @@ std::ostream& operator<<(std::ostream& os, UpdateBucketAclRequest const& r) {
 PatchBucketAclRequest::PatchBucketAclRequest(
     std::string bucket, std::string entity, BucketAccessControl const& original,
     BucketAccessControl const& new_acl)
-    : GenericBucketAclRequest(std::move(bucket), std::move(entity)) {
-  PatchBuilder build_patch;
-  build_patch.AddStringField("entity", original.entity(), new_acl.entity());
-  build_patch.AddStringField("role", original.role(), new_acl.role());
-  payload_ = build_patch.ToString();
-}
+    : PatchBucketAclRequest(std::move(bucket), std::move(entity),
+                            DiffBucketAccessControl(original, new_acl)) {}
 
 PatchBucketAclRequest::PatchBucketAclRequest(
     std::string bucket, std::string entity,
-    BucketAccessControlPatchBuilder const& patch)
+    BucketAccessControlPatchBuilder patch)
     : GenericBucketAclRequest(std::move(bucket), std::move(entity)),
-      payload_(patch.BuildPatch()) {}
+      patch_(std::move(patch)) {}
 
 std::ostream& operator<<(std::ostream& os, PatchBucketAclRequest const& r) {
   os << "BucketAclRequest={bucket_name=" << r.bucket_name()

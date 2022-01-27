@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/patch_builder.h"
+#include "google/cloud/storage/internal/patch_builder_details.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <vector>
@@ -157,6 +158,29 @@ TEST(PatchBuilderTest, SetArrayField) {
   auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();
 }
+
+TEST(PatchBuilderTest, GetPatch) {
+  PatchBuilder builder;
+  builder.AddStringField("string-field", "", "new-value");
+  builder.AddIntField("int-field", 0, 42);
+  builder.AddBoolField("bool-field", false, true);
+  PatchBuilder subpatch;
+  subpatch.AddStringField("set-value", "", "new-value");
+  subpatch.AddStringField("unset-value", "old-value", "");
+  subpatch.AddStringField("untouched-value", "same-value", "same-value");
+  builder.AddSubPatch("the-field", subpatch);
+  nlohmann::json expected{
+      {"string-field", "new-value"},
+      {"int-field", 42},
+      {"bool-field", true},
+      {"the-field", {{"set-value", "new-value"}, {"unset-value", nullptr}}},
+  };
+  auto actual = PatchBuilderDetails::GetPatch(builder);
+  EXPECT_EQ(expected, actual) << builder.ToString();
+
+  EXPECT_EQ(expected.dump(), builder.ToString());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

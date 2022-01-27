@@ -25,6 +25,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 std::ostream& operator<<(std::ostream& os, ListObjectAclRequest const& r) {
   os << "ListObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
@@ -89,26 +90,30 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectAclRequest const& r) {
 PatchObjectAclRequest::PatchObjectAclRequest(
     std::string bucket, std::string object, std::string entity,
     ObjectAccessControl const& original, ObjectAccessControl const& new_acl)
-    : GenericObjectAclRequest(std::move(bucket), std::move(object),
-                              std::move(entity)) {
-  PatchBuilder build_patch;
-  build_patch.AddStringField("entity", original.entity(), new_acl.entity());
-  build_patch.AddStringField("role", original.role(), new_acl.role());
-  payload_ = build_patch.ToString();
-}
+    : PatchObjectAclRequest(std::move(bucket), std::move(object),
+                            std::move(entity),
+                            DiffObjectAccessControl(original, new_acl)) {}
 
 PatchObjectAclRequest::PatchObjectAclRequest(
     std::string bucket, std::string object, std::string entity,
-    ObjectAccessControlPatchBuilder const& patch)
+    ObjectAccessControlPatchBuilder patch)
     : GenericObjectAclRequest(std::move(bucket), std::move(object),
                               std::move(entity)),
-      payload_(patch.BuildPatch()) {}
+      patch_(std::move(patch)) {}
 
 std::ostream& operator<<(std::ostream& os, PatchObjectAclRequest const& r) {
   os << "ObjectAclRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name() << ", entity=" << r.entity();
   r.DumpOptions(os, ", ");
   return os << ", payload=" << r.payload() << "}";
+}
+
+ObjectAccessControlPatchBuilder DiffObjectAccessControl(
+    ObjectAccessControl const& original, ObjectAccessControl const& new_acl) {
+  ObjectAccessControlPatchBuilder patch;
+  if (original.entity() != new_acl.entity()) patch.set_role(new_acl.entity());
+  if (original.role() != new_acl.role()) patch.set_role(new_acl.role());
+  return patch;
 }
 
 }  // namespace internal

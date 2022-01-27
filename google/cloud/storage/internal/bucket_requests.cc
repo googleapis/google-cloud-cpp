@@ -278,12 +278,12 @@ std::ostream& operator<<(std::ostream& os, UpdateBucketRequest const& r) {
 PatchBucketRequest::PatchBucketRequest(std::string bucket,
                                        BucketMetadata const& original,
                                        BucketMetadata const& updated)
-    : bucket_(std::move(bucket)),
-      payload_(DiffBucketMetadata(original, updated).BuildPatch()) {}
+    : PatchBucketRequest(std::move(bucket),
+                         DiffBucketMetadata(original, updated)) {}
 
 PatchBucketRequest::PatchBucketRequest(std::string bucket,
-                                       BucketMetadataPatchBuilder const& patch)
-    : bucket_(std::move(bucket)), payload_(patch.BuildPatch()) {}
+                                       BucketMetadataPatchBuilder patch)
+    : patch_(std::move(patch)), bucket_(std::move(bucket)) {}
 
 std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r) {
   os << "PatchBucketRequest={bucket_name=" << r.bucket();

@@ -170,12 +170,13 @@ class PatchDefaultObjectAclRequest
                                ObjectAccessControl const& original,
                                ObjectAccessControl const& new_acl);
   PatchDefaultObjectAclRequest(std::string bucket, std::string entity,
-                               ObjectAccessControlPatchBuilder const& patch);
+                               ObjectAccessControlPatchBuilder patch);
 
-  std::string const& payload() const { return payload_; }
+  ObjectAccessControlPatchBuilder const& patch() const { return patch_; }
+  std::string payload() const { return patch_.BuildPatch(); }
 
  private:
-  std::string payload_;
+  ObjectAccessControlPatchBuilder patch_;
 };
 
 std::ostream& operator<<(std::ostream& os,
