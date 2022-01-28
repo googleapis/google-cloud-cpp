@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Asset API][cloud-service-docs], a service to The cloud asset API manages the history and inventory of cloud resources.
+[Cloud Asset API][cloud-service-docs], a metadata inventory service that allows
+you to view, monitor, and analyze all your GCP and Anthos assets across projects
+and services.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/asset
+[cloud-service-docs]: https://cloud.google.com/asset-inventory
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-asset/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/asset
 
@@ -38,7 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/asset/ EDIT HERE .h"
+#include "google/cloud/asset/asset_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,12 +52,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace asset = ::google::cloud::asset;
-  auto client = asset::Client(asset::MakeConnection(/* EDIT HERE */));
+  auto client = asset::AssetServiceClient(asset::MakeAssetServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListAssets(project.FullName())) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;

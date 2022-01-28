@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/asset/ EDIT HERE .h"
+#include "google/cloud/asset/asset_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,12 +24,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace asset = ::google::cloud::asset;
-  auto client = asset::Client(asset::MakeConnection(/* EDIT HERE */));
+  auto client = asset::AssetServiceClient(asset::MakeAssetServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListAssets(project.FullName())) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;

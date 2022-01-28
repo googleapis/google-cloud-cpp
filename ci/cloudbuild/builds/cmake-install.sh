@@ -79,6 +79,10 @@ expected_dirs+=(
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
+  # orgpolicy/v1 is not automatically added. It is used by
+  # google/cloud/asset, while google/cloud/orgpolicy uses
+  # the **v2** protos.
+  ./include/google/cloud/orgpolicy/v1
   # no RPC services in google/cloud/oslogin/common
   ./include/google/cloud/oslogin/common
   ./include/google/cloud/pubsub

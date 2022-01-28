@@ -2,8 +2,9 @@
 
 @mainpage Cloud Asset API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Asset API][cloud-service-docs], a service
-to The cloud asset API manages the history and inventory of cloud resources.
+An idiomatic C++ client library for the [Cloud Asset API][cloud-service-docs],
+a metadata inventory service that allows you to view, monitor, and analyze
+all your GCP and Anthos assets across projects and services.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/asset
+[cloud-service-docs]: https://cloud.google.com/asset-inventory
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

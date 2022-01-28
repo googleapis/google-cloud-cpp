@@ -14,6 +14,8 @@
 
 include(CMakeFindDependencyMacro)
 # google_cloud_cpp_googleapis finds both gRPC and Protobuf, no need to load them here.
+find_dependency(google_cloud_cpp_accesscontextmanager)
+find_dependency(google_cloud_cpp_osconfig)
 find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_common)
 find_dependency(google_cloud_cpp_grpc_utils)

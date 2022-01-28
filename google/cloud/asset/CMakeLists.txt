@@ -44,32 +44,31 @@ google_cloud_cpp_grpcpp_library(
     # cmake-format: sort
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/asset/v1/asset_service.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/asset/v1/assets.proto
+    # Note that we compile orgpolicy/**v2** in google/cloud/orgpolicy
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/orgpolicy/v1/orgpolicy.proto
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(asset_protos)
 target_link_libraries(
     google_cloud_cpp_asset_protos
-    PUBLIC
-        #
-        google-cloud-cpp::api_annotations_protos
-        google-cloud-cpp::api_client_protos
-        google-cloud-cpp::api_field_behavior_protos
-        google-cloud-cpp::api_http_protos
-        google-cloud-cpp::api_resource_protos
-        google-cloud-cpp::cloud_orgpolicy_v1_orgpolicy_protos
-        google-cloud-cpp::cloud_osconfig_v1_osconfig_protos
-        google-cloud-cpp::iam_v1_policy_protos
-        google-cloud-cpp::identity_accesscontextmanager_type_type_protos
-        google-cloud-cpp::identity_accesscontextmanager_v1_accesscontextmanager_protos
-        google-cloud-cpp::longrunning_operations_protos
-        google-cloud-cpp::rpc_code_protos
-        google-cloud-cpp::rpc_status_protos
-        google-cloud-cpp::type_date_protos
-        google-cloud-cpp::type_datetime_protos
-        google-cloud-cpp::type_dayofweek_protos
-        google-cloud-cpp::type_expr_protos
-        google-cloud-cpp::type_timeofday_protos)
+    PUBLIC #
+           google-cloud-cpp::accesscontextmanager_protos
+           google-cloud-cpp::osconfig_protos
+           google-cloud-cpp::api_annotations_protos
+           google-cloud-cpp::api_client_protos
+           google-cloud-cpp::api_field_behavior_protos
+           google-cloud-cpp::api_http_protos
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::iam_v1_policy_protos
+           google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::rpc_code_protos
+           google-cloud-cpp::rpc_status_protos
+           google-cloud-cpp::type_date_protos
+           google-cloud-cpp::type_datetime_protos
+           google-cloud-cpp::type_dayofweek_protos
+           google-cloud-cpp::type_expr_protos
+           google-cloud-cpp::type_timeofday_protos)
 
 file(
     GLOB source_files
