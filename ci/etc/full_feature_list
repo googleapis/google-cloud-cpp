@@ -3,6 +3,7 @@ accesscontextmanager
 apigateway
 appengine
 artifactregistry
+asset
 assuredworkloads
 automl
 bigquery
