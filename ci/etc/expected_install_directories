@@ -127,6 +127,12 @@
 ./include/google/cloud/orgpolicy/internal
 ./include/google/cloud/orgpolicy/mocks
 ./include/google/cloud/orgpolicy/v2
+./include/google/cloud/osconfig
+./include/google/cloud/osconfig/agentendpoint
+./include/google/cloud/osconfig/agentendpoint/v1
+./include/google/cloud/osconfig/internal
+./include/google/cloud/osconfig/mocks
+./include/google/cloud/osconfig/v1
 ./include/google/cloud/oslogin
 ./include/google/cloud/oslogin/internal
 ./include/google/cloud/oslogin/mocks
@@ -299,6 +305,7 @@
 ./lib64/cmake/google_cloud_cpp_networkmanagement
 ./lib64/cmake/google_cloud_cpp_notebooks
 ./lib64/cmake/google_cloud_cpp_orgpolicy
+./lib64/cmake/google_cloud_cpp_osconfig
 ./lib64/cmake/google_cloud_cpp_oslogin
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter
 ./lib64/cmake/google_cloud_cpp_privateca
