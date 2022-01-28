@@ -419,6 +419,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-memcache",
+    deps = [
+        "//google/cloud/memcache:google_cloud_cpp_memcache",
+    ],
+)
+
+cc_library(
+    name = "experimental-memcache_mocks",
+    deps = [
+        "//google/cloud/memcache:google_cloud_cpp_memcache_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-networkmanagement",
     deps = [
         "//google/cloud/networkmanagement:google_cloud_cpp_networkmanagement",

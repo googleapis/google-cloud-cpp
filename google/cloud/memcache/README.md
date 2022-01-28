@@ -2,8 +2,9 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Memorystore for Memcached API][cloud-service-docs], a service to Google Cloud Memorystore for Memcached API is used for creating and managing Memcached instances in GCP.
+This directory contains an idiomatic C++ client library for the [Cloud
+Memorystore for Memcached API][cloud-service-docs], a service for creating and
+managing Memcached instances in GCP.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 

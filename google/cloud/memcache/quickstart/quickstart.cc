@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/memcache/ EDIT HERE .h"
+#include "google/cloud/memcache/cloud_memcache_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,10 +24,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace memcache = ::google::cloud::memcache;
-  auto client = memcache::Client(memcache::MakeConnection(/* EDIT HERE */));
+  auto client =
+      memcache::CloudMemcacheClient(memcache::MakeCloudMemcacheConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const project_id = std::string(argv[1]);
+  auto const parent = "projects/" + project_id + "locations/-";
+  for (auto r : client.ListInstances(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
