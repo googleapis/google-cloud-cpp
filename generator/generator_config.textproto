@@ -346,6 +346,21 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# OS Config
+service {
+  service_proto_path: "google/cloud/osconfig/v1/osconfig_service.proto"
+  product_path: "google/cloud/osconfig"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto"
+  product_path: "google/cloud/osconfig"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # OS Login
 service {
   service_proto_path: "google/cloud/oslogin/v1/oslogin.proto"
