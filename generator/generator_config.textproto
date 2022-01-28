@@ -506,6 +506,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Security Center
+service {
+  service_proto_path: "google/cloud/securitycenter/v1/securitycenter_service.proto"
+  product_path: "google/cloud/securitycenter"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Service Control
 service {
   service_proto_path: "google/api/servicecontrol/v1/quota_controller.proto"
