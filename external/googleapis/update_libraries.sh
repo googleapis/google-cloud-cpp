@@ -90,6 +90,11 @@ declare -A -r LIBRARIES=(
   ["networkmanagement"]="@com_google_googleapis//google/cloud/networkmanagement/v1:networkmanagement_cc_grpc"
   ["notebooks"]="@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc"
   ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"
+  ["osconfig"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/osconfig/agentendpoint/v1:agentendpoint_cc_grpc" \
+      "@com_google_googleapis//google/cloud/osconfig/v1:osconfig_cc_grpc"
+  )"
   ["oslogin"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc" \

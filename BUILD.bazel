@@ -433,6 +433,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-osconfig",
+    deps = [
+        "//google/cloud/osconfig:google_cloud_cpp_osconfig",
+    ],
+)
+
+cc_library(
+    name = "experimental-osconfig_mocks",
+    deps = [
+        "//google/cloud/osconfig:google_cloud_cpp_osconfig_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-oslogin",
     deps = [
         "//google/cloud/oslogin:google_cloud_cpp_oslogin",
