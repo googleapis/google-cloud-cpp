@@ -27,11 +27,11 @@ fi # include guard
 source module ci/lib/io.sh
 
 io::log "Checking for a valid git environment..."
-if [[ -d .git ]]; then
-  io::log_green "Found .git directory"
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  io::log_green "Inside a git repository"
 else
-  # This .git dir is thrown away at the end of the build.
-  io::log "Initializing .git directory"
+  # This repository is thrown away at the end of the build.
+  io::log "Creating a git repository"
   git init --initial-branch=ephemeral-branch
   git config --local user.email "ephemeral@fake"
   git config --local user.name "ephemeral"

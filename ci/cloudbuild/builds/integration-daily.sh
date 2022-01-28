@@ -29,6 +29,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/git.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/lib/io.sh
 
