@@ -87,6 +87,10 @@
 ./include/google/cloud/eventarc/publishing
 ./include/google/cloud/eventarc/publishing/v1
 ./include/google/cloud/eventarc/v1
+./include/google/cloud/functions
+./include/google/cloud/functions/internal
+./include/google/cloud/functions/mocks
+./include/google/cloud/functions/v1
 ./include/google/cloud/gameservices
 ./include/google/cloud/gameservices/internal
 ./include/google/cloud/gameservices/mocks
@@ -305,6 +309,7 @@
 ./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_dlp
 ./lib64/cmake/google_cloud_cpp_eventarc
+./lib64/cmake/google_cloud_cpp_functions
 ./lib64/cmake/google_cloud_cpp_gameservices
 ./lib64/cmake/google_cloud_cpp_gkehub
 ./lib64/cmake/google_cloud_cpp_iam

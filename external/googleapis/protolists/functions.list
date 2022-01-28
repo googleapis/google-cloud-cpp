@@ -1,0 +1,2 @@
+@com_google_googleapis//google/cloud/functions/v1:functions.proto
+@com_google_googleapis//google/cloud/functions/v1:operations.proto

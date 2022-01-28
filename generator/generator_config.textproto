@@ -235,6 +235,15 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Functions
+service {
+  service_proto_path: "google/cloud/functions/v1/functions.proto"
+  additional_proto_files: ["google/cloud/functions/v1/operations.proto"]
+  product_path: "google/cloud/functions"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+}
+
 # Game Services
 service {
   service_proto_path: "google/cloud/gaming/v1/game_server_clusters_service.proto"
