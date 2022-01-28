@@ -31,6 +31,10 @@
 ./include/google/cloud/artifactregistry
 ./include/google/cloud/artifactregistry/internal
 ./include/google/cloud/artifactregistry/mocks
+./include/google/cloud/asset
+./include/google/cloud/asset/internal
+./include/google/cloud/asset/mocks
+./include/google/cloud/asset/v1
 ./include/google/cloud/assuredworkloads
 ./include/google/cloud/assuredworkloads/internal
 ./include/google/cloud/assuredworkloads/mocks
@@ -296,6 +300,7 @@
 ./lib64/cmake/google_cloud_cpp_apigateway
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_artifactregistry
+./lib64/cmake/google_cloud_cpp_asset
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_bigquery
