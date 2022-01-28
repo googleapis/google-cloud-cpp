@@ -34,6 +34,11 @@ cc_library(
         include = [HEADER_GLOB],
         exclude = [MOCK_HEADER_GLOB],
     ),
+    # TODO(8145): Enable on macOS.
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//os:windows",
+    ],
     visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -50,6 +55,11 @@ cc_library(
     hdrs = glob(
         include = [MOCK_HEADER_GLOB],
     ),
+    # TODO(8145): Enable on macOS.
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//os:windows",
+    ],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_asset",
