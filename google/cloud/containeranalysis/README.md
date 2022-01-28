@@ -3,7 +3,7 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Container Analysis API][cloud-service-docs]. An implementation of the
+[Container Analysis API][cloud-service-docs], an implementation of the
 [Grafeas API](https://grafeas.io), which stores, and enables querying and
 retrieval of critical metadata about all of your software artifacts.
 
