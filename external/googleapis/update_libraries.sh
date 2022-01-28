@@ -88,6 +88,7 @@ declare -A -r LIBRARIES=(
   ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_cc_grpc"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
+  ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
   ["monitoring"]="@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc"
   ["networkmanagement"]="@com_google_googleapis//google/cloud/networkmanagement/v1:networkmanagement_cc_grpc"
   ["notebooks"]="@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc"
