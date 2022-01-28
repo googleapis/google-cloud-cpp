@@ -3,7 +3,10 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[OS Config API][cloud-service-docs], a service to OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.
+[OS Config API][cloud-service-docs], a service for patch management, patch
+compliance, and configuration management on VM instances.
+
+<!-- TODO(#8139) - fix streaming read updated namespace before GA -->
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +28,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/osconfig
+[cloud-service-docs]: https://cloud.google.com/compute/docs/os-configuration-management
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-osconfig/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/osconfig
 
@@ -38,7 +41,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/osconfig/ EDIT HERE .h"
+#include "google/cloud/osconfig/os_config_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,12 +53,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace osconfig = ::google::cloud::osconfig;
-  auto client = osconfig::Client(osconfig::MakeConnection(/* EDIT HERE */));
+  auto client = osconfig::OsConfigServiceClient(
+      osconfig::MakeOsConfigServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto p : client.ListPatchJobs(project.FullName())) {
+    if (!p) throw std::runtime_error(p.status().message());
+    std::cout << p->DebugString() << "\n";
   }
 
   return 0;
