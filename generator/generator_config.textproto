@@ -55,6 +55,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Cloud Asset
+service {
+  service_proto_path: "google/cloud/asset/v1/asset_service.proto"
+  product_path: "google/cloud/asset"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Assured Workloads
 service {
   service_proto_path: "google/cloud/assuredworkloads/v1/assuredworkloads.proto"
