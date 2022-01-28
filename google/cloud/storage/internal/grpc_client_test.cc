@@ -28,7 +28,6 @@ namespace {
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::GetMetadata;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::Return;
