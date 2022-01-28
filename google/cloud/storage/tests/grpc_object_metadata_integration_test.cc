@@ -82,6 +82,12 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   ASSERT_STATUS_OK(rewrite);
   ScheduleForDelete(*rewrite);
 
+  auto patch = client->PatchObject(
+      bucket_name, object_name,
+      ObjectMetadataPatchBuilder{}.SetCacheControl("no-cache"));
+  ASSERT_STATUS_OK(patch);
+  EXPECT_EQ(patch->cache_control(), "no-cache");
+
   auto del = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(del);
 
