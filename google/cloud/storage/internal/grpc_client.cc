@@ -164,7 +164,7 @@ StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   auto proto = GrpcBucketRequestParser::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "");
+  ApplyQueryParameters(context, request);
   auto response = stub_->GetBucket(context, proto);
   if (!response) return std::move(response).status();
   return GrpcBucketMetadataParser::FromProto(*response);
@@ -271,7 +271,7 @@ StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   auto proto = GrpcObjectRequestParser::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "");
+  ApplyQueryParameters(context, request);
   auto response = stub_->GetObject(context, proto);
   if (!response) return std::move(response).status();
   return GrpcObjectMetadataParser::FromProto(*response, options_);
@@ -307,6 +307,7 @@ StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
     ListObjectsRequest const& request) {
   auto proto = GrpcObjectRequestParser::ToProto(request);
   grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
   auto response = stub_->ListObjects(context, proto);
   if (!response) return std::move(response).status();
   return GrpcObjectRequestParser::FromProto(*response, options_);
@@ -316,6 +317,7 @@ StatusOr<EmptyResponse> GrpcClient::DeleteObject(
     DeleteObjectRequest const& request) {
   auto proto = GrpcObjectRequestParser::ToProto(request);
   grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
   auto response = stub_->DeleteObject(context, proto);
   if (!response.ok()) return response;
   return EmptyResponse{};
@@ -468,7 +470,7 @@ StatusOr<ServiceAccount> GrpcClient::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
   auto proto = GrpcServiceAccountParser::ToProto(request);
   grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "");
+  ApplyQueryParameters(context, request);
   auto response = stub_->GetServiceAccount(context, proto);
   if (!response) return std::move(response).status();
   return GrpcServiceAccountParser::FromProto(*response);
