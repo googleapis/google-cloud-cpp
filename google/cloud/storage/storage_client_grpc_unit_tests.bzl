@@ -23,6 +23,7 @@ storage_client_grpc_unit_tests = [
     "internal/grpc_client_failures_test.cc",
     "internal/grpc_client_insert_object_media_test.cc",
     "internal/grpc_client_read_object_test.cc",
+    "internal/grpc_client_test.cc",
     "internal/grpc_configure_client_context_test.cc",
     "internal/grpc_object_access_control_parser_test.cc",
     "internal/grpc_object_metadata_parser_test.cc",
