@@ -2,8 +2,10 @@
 
 @mainpage Cloud Functions API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Functions API][cloud-service-docs], a service
-to Manages lightweight user-provided functions executed in response to events.
+An idiomatic C++ client library for the [Cloud Functions
+API][cloud-service-docs], a lightweight compute solution for developers to
+create single-purpose, stand-alone functions that respond to Cloud events
+without the need to manage a server or runtime environment.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 

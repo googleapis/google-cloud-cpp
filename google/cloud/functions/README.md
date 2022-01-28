@@ -2,8 +2,10 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Functions API][cloud-service-docs], a service to Manages lightweight user-provided functions executed in response to events.
+This directory contains an idiomatic C++ client library for the [Cloud
+Functions API][cloud-service-docs], a lightweight compute solution for
+developers to create single-purpose, stand-alone functions that respond to
+Cloud events without the need to manage a server or runtime environment.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,8 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/functions/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/functions/cloud_functions_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -50,10 +51,14 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace functions = ::google::cloud::functions;
-  auto client = functions::Client(functions::MakeConnection(/* EDIT HERE */));
+  auto client = functions::CloudFunctionsServiceClient(
+      functions::MakeCloudFunctionsServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto project_id = std::string(argv[1]);
+  auto request = google::cloud::functions::v1::ListFunctionsRequest{};
+  request.set_parent("projects/" + project_id + "locations/-");
+
+  for (auto r : client.ListFunctions(std::move(request))) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

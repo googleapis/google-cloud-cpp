@@ -284,6 +284,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-functions",
+    deps = [
+        "//google/cloud/functions:google_cloud_cpp_functions",
+    ],
+)
+
+cc_library(
+    name = "experimental-functions_mocks",
+    deps = [
+        "//google/cloud/functions:google_cloud_cpp_functions_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-eventarc",
     deps = [
         "//google/cloud/eventarc:google_cloud_cpp_eventarc",
