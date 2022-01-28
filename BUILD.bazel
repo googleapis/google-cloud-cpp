@@ -228,6 +228,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-containeranalysis",
+    deps = [
+        "//google/cloud/containeranalysis:google_cloud_cpp_containeranalysis",
+    ],
+)
+
+cc_library(
+    name = "experimental-containeranalysis_mocks",
+    deps = [
+        "//google/cloud/containeranalysis:google_cloud_cpp_containeranalysis_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-datamigration",
     deps = [
         "//google/cloud/datamigration:google_cloud_cpp_datamigration",
