@@ -3,8 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Security Command Center API][cloud-service-docs], provides access to temporal
-views of assets and findings within an organization.
+[Security Command Center API][cloud-service-docs], which provides access to
+temporal views of assets and findings within an organization.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
