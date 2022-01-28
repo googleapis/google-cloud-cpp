@@ -167,6 +167,10 @@
 ./include/google/cloud/recommender/internal
 ./include/google/cloud/recommender/mocks
 ./include/google/cloud/recommender/v1
+./include/google/cloud/redis
+./include/google/cloud/redis/internal
+./include/google/cloud/redis/mocks
+./include/google/cloud/redis/v1
 ./include/google/cloud/resourcemanager
 ./include/google/cloud/resourcemanager/internal
 ./include/google/cloud/resourcemanager/mocks
@@ -336,6 +340,7 @@
 ./lib64/cmake/google_cloud_cpp_privateca
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_recommender
+./lib64/cmake/google_cloud_cpp_redis
 ./lib64/cmake/google_cloud_cpp_resourcemanager
 ./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_scheduler
