@@ -56,6 +56,10 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/system_parameter.proto"
     "google/api/usage.proto"
     "google/api/visibility.proto"
+    # orgpolicy/v**1** is used *indirectly* by google/cloud/asset, therefore it
+    # does not appear in protolists/asset.list. In addition, it is not compiled
+    # by any other library, added manually.
+    "google/cloud/orgpolicy/v1/orgpolicy.proto"
     "google/devtools/cloudtrace/v2/trace.proto"
     "google/devtools/cloudtrace/v2/tracing.proto"
     "google/devtools/source/v1/source_context.proto"
