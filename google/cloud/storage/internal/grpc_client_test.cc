@@ -27,9 +27,6 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::GetMetadata;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
-using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -53,12 +50,11 @@ TEST(GrpcClient, QueryResumableUpload) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->QueryResumableUpload(
+  auto response = client->QueryResumableUpload(
       QueryResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, GetBucket) {
@@ -74,12 +70,11 @@ TEST(GrpcClient, GetBucket) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->GetBucketMetadata(
+  auto response = client->GetBucketMetadata(
       GetBucketMetadataRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, InsertObjectMedia) {
@@ -103,13 +98,12 @@ TEST(GrpcClient, InsertObjectMedia) {
             google::storage::v2::WriteObjectResponse>>(std::move(stream));
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->InsertObjectMedia(
+  auto response = client->InsertObjectMedia(
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "How vexingly quick daft zebras jump!")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, GetObjectMetadata) {
@@ -126,12 +120,11 @@ TEST(GrpcClient, GetObjectMetadata) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->GetObjectMetadata(
+  auto response = client->GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, ReadObject) {
@@ -169,12 +162,11 @@ TEST(GrpcClient, ListObjects) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->ListObjects(
+  auto response = client->ListObjects(
       ListObjectsRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, DeleteObject) {
@@ -191,12 +183,11 @@ TEST(GrpcClient, DeleteObject) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->DeleteObject(
+  auto response = client->DeleteObject(
       DeleteObjectRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, RewriteObject) {
@@ -219,13 +210,12 @@ TEST(GrpcClient, RewriteObject) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->RewriteObject(
+  auto response = client->RewriteObject(
       RewriteObjectRequest("test-source-bucket", "test-source-object",
                            "test-bucket", "test-object", "test-token")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, CreateResumableSession) {
@@ -246,12 +236,11 @@ TEST(GrpcClient, CreateResumableSession) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->CreateResumableSession(
+  auto response = client->CreateResumableSession(
       ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 TEST(GrpcClient, GetServiceAccount) {
@@ -267,12 +256,11 @@ TEST(GrpcClient, GetServiceAccount) {
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
-  auto status = client->GetServiceAccount(
+  auto response = client->GetServiceAccount(
       GetProjectServiceAccountRequest("test-project-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
-  EXPECT_THAT(status,
-              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+  EXPECT_EQ(response.status(), PermanentError());
 }
 
 }  // namespace
