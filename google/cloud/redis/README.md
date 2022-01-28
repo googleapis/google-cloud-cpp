@@ -2,8 +2,9 @@
 
 :construction:
 
-This directory contains an idiomatic C++ client library for the
-[Google Cloud Memorystore for Redis API][cloud-service-docs], a service to Creates and manages Redis instances on the Google Cloud Platform.
+This directory contains an idiomatic C++ client library for the [Google Cloud
+Memorystore for Redis API][cloud-service-docs], a service to create and manage
+Redis instances on the Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/redis
+[cloud-service-docs]: https://cloud.google.com/memorystore/docs/redis
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-redis/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/redis
 
@@ -38,7 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/redis/ EDIT HERE .h"
+#include "google/cloud/redis/cloud_redis_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,10 +51,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace redis = ::google::cloud::redis;
-  auto client = redis::Client(redis::MakeConnection(/* EDIT HERE */));
+  auto client = redis::CloudRedisClient(redis::MakeCloudRedisConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const project_id = std::string(argv[1]);
+  auto const parent = "projects/" + project_id + "locations/-";
+  for (auto r : client.ListInstances(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

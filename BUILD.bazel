@@ -596,6 +596,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-redis",
+    deps = [
+        "//google/cloud/redis:google_cloud_cpp_redis",
+    ],
+)
+
+cc_library(
+    name = "experimental-redis_mocks",
+    deps = [
+        "//google/cloud/redis:google_cloud_cpp_redis_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-resourcemanager",
     deps = [
         "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager",

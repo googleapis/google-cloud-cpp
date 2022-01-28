@@ -2,8 +2,9 @@
 
 @mainpage Google Cloud Memorystore for Redis API C++ Client Library
 
-An idiomatic C++ client library for the [Google Cloud Memorystore for Redis API][cloud-service-docs], a service
-to Creates and manages Redis instances on the Google Cloud Platform.
+An idiomatic C++ client library for the [Google Cloud Memorystore for Redis
+API][cloud-service-docs], a service to create and manage Redis instances on the
+Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/redis
+[cloud-service-docs]: https://cloud.google.com/memorystore/docs/redis
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

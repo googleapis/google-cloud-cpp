@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/redis/ EDIT HERE .h"
+#include "google/cloud/redis/cloud_redis_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,10 +24,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace redis = ::google::cloud::redis;
-  auto client = redis::Client(redis::MakeConnection(/* EDIT HERE */));
+  auto client = redis::CloudRedisClient(redis::MakeCloudRedisConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const project_id = std::string(argv[1]);
+  auto const parent = "projects/" + project_id + "locations/-";
+  for (auto r : client.ListInstances(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
