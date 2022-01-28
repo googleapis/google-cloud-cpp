@@ -16,8 +16,11 @@
 
 # TODO(8145): Enable on macOS.
 if (APPLE)
-    message(WARNING "Cannot build google/cloud/asset "
-            "on Apple platforms. See https://github.com/googleapis/google-cloud-cpp/issues/8145 for more details.")
+    message(
+        WARNING
+            "Cannot build google/cloud/asset on Apple platforms."
+            " More details at https://github.com/googleapis/google-cloud-cpp/issues/8145 ."
+    )
     return()
 endif ()
 
