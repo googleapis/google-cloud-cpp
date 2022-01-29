@@ -44,7 +44,9 @@ class CatalogServiceConnectionImpl : public retail::CatalogServiceConnection {
   CatalogServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<retail_internal::CatalogServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
       google::cloud::retail::v2::ListCatalogsRequest request) override;
@@ -66,7 +68,7 @@ class CatalogServiceConnectionImpl : public retail::CatalogServiceConnection {
     if (options.has<retail::CatalogServiceRetryPolicyOption>()) {
       return options.get<retail::CatalogServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<retail::CatalogServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -74,7 +76,7 @@ class CatalogServiceConnectionImpl : public retail::CatalogServiceConnection {
     if (options.has<retail::CatalogServiceBackoffPolicyOption>()) {
       return options.get<retail::CatalogServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<retail::CatalogServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<retail::CatalogServiceConnectionIdempotencyPolicy>
@@ -86,16 +88,14 @@ class CatalogServiceConnectionImpl : public retail::CatalogServiceConnection {
           .get<retail::CatalogServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<retail::CatalogServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::CatalogServiceStub> stub_;
-  std::unique_ptr<retail::CatalogServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::CatalogServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -49,6 +49,8 @@ class ValidationHelperV1Connection {
  public:
   virtual ~ValidationHelperV1Connection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::binaryauthorization::v1::
                        ValidateAttestationOccurrenceResponse>
   ValidateAttestationOccurrence(

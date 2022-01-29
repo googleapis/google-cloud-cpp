@@ -43,7 +43,9 @@ class OsLoginServiceConnectionImpl : public oslogin::OsLoginServiceConnection {
   OsLoginServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   Status DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
@@ -76,7 +78,7 @@ class OsLoginServiceConnectionImpl : public oslogin::OsLoginServiceConnection {
     if (options.has<oslogin::OsLoginServiceRetryPolicyOption>()) {
       return options.get<oslogin::OsLoginServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<oslogin::OsLoginServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -84,7 +86,7 @@ class OsLoginServiceConnectionImpl : public oslogin::OsLoginServiceConnection {
     if (options.has<oslogin::OsLoginServiceBackoffPolicyOption>()) {
       return options.get<oslogin::OsLoginServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<oslogin::OsLoginServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<oslogin::OsLoginServiceConnectionIdempotencyPolicy>
@@ -96,16 +98,14 @@ class OsLoginServiceConnectionImpl : public oslogin::OsLoginServiceConnection {
           .get<oslogin::OsLoginServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<oslogin::OsLoginServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub_;
-  std::unique_ptr<oslogin::OsLoginServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<oslogin::OsLoginServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

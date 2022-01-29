@@ -33,21 +33,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AuthorizedCertificatesConnectionImpl::AuthorizedCertificatesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<appengine::AuthorizedCertificatesRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<appengine::AuthorizedCertificatesBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  appengine::
-                      AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          appengine_internal::AuthorizedCertificatesDefaultOptions(
+              AuthorizedCertificatesConnection::options()))) {}
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesConnectionImpl::ListAuthorizedCertificates(

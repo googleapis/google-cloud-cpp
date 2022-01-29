@@ -59,7 +59,7 @@ std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
   auto stub = automl_internal::CreateDefaultPredictionServiceStub(
       background->cq(), options);
   return std::make_shared<automl_internal::PredictionServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -76,9 +76,9 @@ std::shared_ptr<automl::PredictionServiceConnection>
 MakePredictionServiceConnection(std::shared_ptr<PredictionServiceStub> stub,
                                 Options options) {
   options = PredictionServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<automl_internal::PredictionServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

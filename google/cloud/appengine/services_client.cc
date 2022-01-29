@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServicesClient::ServicesClient(std::shared_ptr<ServicesConnection> connection,
                                Options options)
     : connection_(std::move(connection)),
-      options_(appengine_internal::ServicesDefaultOptions(std::move(options))) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          appengine_internal::ServicesDefaultOptions(connection_->options()))) {
 }
 ServicesClient::~ServicesClient() = default;
 

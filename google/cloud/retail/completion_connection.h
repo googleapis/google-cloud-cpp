@@ -52,6 +52,8 @@ class CompletionServiceConnection {
  public:
   virtual ~CompletionServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
   CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request);
 

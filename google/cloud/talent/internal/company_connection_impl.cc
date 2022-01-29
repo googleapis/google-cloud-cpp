@@ -32,18 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompanyServiceConnectionImpl::CompanyServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::CompanyServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<talent_internal::CompanyServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<talent::CompanyServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<talent::CompanyServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<talent::CompanyServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), talent_internal::CompanyServiceDefaultOptions(
+                                  CompanyServiceConnection::options()))) {}
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::CreateCompany(

@@ -53,6 +53,8 @@ class ManagedNotebookServiceConnection {
  public:
   virtual ~ManagedNotebookServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::notebooks::v1::Runtime> ListRuntimes(
       google::cloud::notebooks::v1::ListRuntimesRequest request);
 

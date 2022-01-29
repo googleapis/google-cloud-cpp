@@ -48,7 +48,9 @@ class GameServerConfigsServiceConnectionImpl
   GameServerConfigsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::gaming::v1::GameServerConfig>
   ListGameServerConfigs(
@@ -78,7 +80,9 @@ class GameServerConfigsServiceConnectionImpl
           .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -89,7 +93,9 @@ class GameServerConfigsServiceConnectionImpl
           .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -104,17 +110,11 @@ class GameServerConfigsServiceConnectionImpl
                    GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<gameservices::
+                 GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub_;
-  std::unique_ptr<gameservices::GameServerConfigsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      gameservices::GameServerConfigsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -124,10 +124,14 @@ class GameServerConfigsServiceConnectionImpl
           .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

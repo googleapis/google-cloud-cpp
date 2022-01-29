@@ -77,7 +77,7 @@ std::shared_ptr<InstancesConnection> MakeInstancesConnection(Options options) {
   auto stub =
       appengine_internal::CreateDefaultInstancesStub(background->cq(), options);
   return std::make_shared<appengine_internal::InstancesConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -93,9 +93,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<appengine::InstancesConnection> MakeInstancesConnection(
     std::shared_ptr<InstancesStub> stub, Options options) {
   options = InstancesDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<appengine_internal::InstancesConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

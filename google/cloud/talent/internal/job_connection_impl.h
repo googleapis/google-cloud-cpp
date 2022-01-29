@@ -46,8 +46,9 @@ class JobServiceConnectionImpl : public talent::JobServiceConnection {
 
   JobServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::JobServiceStub> stub,
-      Options const& options);
+      std::shared_ptr<talent_internal::JobServiceStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       google::cloud::talent::v4::CreateJobRequest const& request) override;
@@ -88,7 +89,7 @@ class JobServiceConnectionImpl : public talent::JobServiceConnection {
     if (options.has<talent::JobServiceRetryPolicyOption>()) {
       return options.get<talent::JobServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<talent::JobServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -96,7 +97,7 @@ class JobServiceConnectionImpl : public talent::JobServiceConnection {
     if (options.has<talent::JobServiceBackoffPolicyOption>()) {
       return options.get<talent::JobServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<talent::JobServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<talent::JobServiceConnectionIdempotencyPolicy>
@@ -106,25 +107,21 @@ class JobServiceConnectionImpl : public talent::JobServiceConnection {
       return options.get<talent::JobServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<talent::JobServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<talent_internal::JobServiceStub> stub_;
-  std::unique_ptr<talent::JobServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<talent::JobServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<talent::JobServicePollingPolicyOption>()) {
       return options.get<talent::JobServicePollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<talent::JobServicePollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<talent_internal::JobServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

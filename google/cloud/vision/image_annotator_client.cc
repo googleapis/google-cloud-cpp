@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageAnnotatorClient::ImageAnnotatorClient(
     std::shared_ptr<ImageAnnotatorConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          vision_internal::ImageAnnotatorDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), vision_internal::ImageAnnotatorDefaultOptions(
+                                  connection_->options()))) {}
 ImageAnnotatorClient::~ImageAnnotatorClient() = default;
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>

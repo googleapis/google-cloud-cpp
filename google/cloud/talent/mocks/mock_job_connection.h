@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockJobServiceConnection : public talent::JobServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, CreateJob,
               (google::cloud::talent::v4::CreateJobRequest const& request),
               (override));

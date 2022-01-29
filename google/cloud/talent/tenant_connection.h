@@ -50,6 +50,8 @@ class TenantServiceConnection {
  public:
   virtual ~TenantServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       google::cloud::talent::v4::CreateTenantRequest const& request);
 

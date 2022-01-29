@@ -49,6 +49,8 @@ class SystemPolicyV1Connection {
  public:
   virtual ~SystemPolicyV1Connection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::binaryauthorization::v1::Policy>
   GetSystemPolicy(
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&

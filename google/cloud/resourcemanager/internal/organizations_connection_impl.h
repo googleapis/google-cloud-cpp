@@ -45,7 +45,9 @@ class OrganizationsConnectionImpl
   OrganizationsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
@@ -72,7 +74,8 @@ class OrganizationsConnectionImpl
       return options.get<resourcemanager::OrganizationsRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<resourcemanager::OrganizationsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -81,7 +84,8 @@ class OrganizationsConnectionImpl
       return options.get<resourcemanager::OrganizationsBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<resourcemanager::OrganizationsBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy>
@@ -94,16 +98,14 @@ class OrganizationsConnectionImpl
               resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub_;
-  std::unique_ptr<resourcemanager::OrganizationsRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

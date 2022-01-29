@@ -53,6 +53,8 @@ class BigtableTableAdminConnection {
  public:
   virtual ~BigtableTableAdminConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       google::bigtable::admin::v2::CreateTableRequest const& request);
 

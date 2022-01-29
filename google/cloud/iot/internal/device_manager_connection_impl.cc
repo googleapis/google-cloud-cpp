@@ -32,17 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeviceManagerConnectionImpl::DeviceManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iot_internal::DeviceManagerStub> stub,
-    Options const& options)
+    std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<iot::DeviceManagerRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<iot::DeviceManagerBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), iot_internal::DeviceManagerDefaultOptions(
+                                  DeviceManagerConnection::options()))) {}
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerConnectionImpl::CreateDeviceRegistry(

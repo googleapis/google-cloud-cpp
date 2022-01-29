@@ -53,6 +53,8 @@ class ServiceUsageConnection {
  public:
   virtual ~ServiceUsageConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
   EnableService(
       google::api::serviceusage::v1::EnableServiceRequest const& request);

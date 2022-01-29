@@ -33,17 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IDSConnectionImpl::IDSConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<ids_internal::IDSStub> stub, Options const& options)
+    std::shared_ptr<ids_internal::IDSStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<ids::IDSRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<ids::IDSBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<ids::IDSConnectionIdempotencyPolicyOption>()->clone()),
-      polling_policy_prototype_(
-          options.get<ids::IDSPollingPolicyOption>()->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          ids_internal::IDSDefaultOptions(IDSConnection::options()))) {}
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSConnectionImpl::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {

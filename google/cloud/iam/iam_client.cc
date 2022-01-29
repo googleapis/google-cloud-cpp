@@ -29,7 +29,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMClient::IAMClient(std::shared_ptr<IAMConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(iam_internal::IAMDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          iam_internal::IAMDefaultOptions(connection_->options()))) {}
 IAMClient::~IAMClient() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>

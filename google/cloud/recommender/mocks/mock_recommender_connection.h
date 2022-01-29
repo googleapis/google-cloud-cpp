@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockRecommenderConnection : public recommender::RecommenderConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::recommender::v1::Insight>,
               ListInsights,
               (google::cloud::recommender::v1::ListInsightsRequest request),

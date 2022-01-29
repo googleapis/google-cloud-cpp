@@ -34,30 +34,13 @@ VideoIntelligenceServiceConnectionImpl::VideoIntelligenceServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
         stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<videointelligence::
-                       VideoIntelligenceServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<videointelligence::
-                       VideoIntelligenceServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  videointelligence::
-                      VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<videointelligence::
-                       VideoIntelligenceServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
+              VideoIntelligenceServiceConnection::options()))) {}
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnectionImpl::AnnotateVideo(

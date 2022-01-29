@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockWorkflowsConnection : public workflows::WorkflowsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::workflows::v1::Workflow>,
               ListWorkflows,
               (google::cloud::workflows::v1::ListWorkflowsRequest request),

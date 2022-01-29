@@ -34,23 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceAdminConnectionImpl::InstanceAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<spanner_admin::InstanceAdminRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<spanner_admin::
-                       InstanceAdminConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<spanner_admin::InstanceAdminPollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          spanner_admin_internal::InstanceAdminDefaultOptions(
+              InstanceAdminConnection::options()))) {}
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminConnectionImpl::ListInstanceConfigs(

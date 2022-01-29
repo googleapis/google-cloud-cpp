@@ -33,17 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LoggingServiceV2ConnectionImpl::LoggingServiceV2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<logging::LoggingServiceV2RetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<logging::LoggingServiceV2BackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), logging_internal::LoggingServiceV2DefaultOptions(
+                                  LoggingServiceV2Connection::options()))) {}
 
 Status LoggingServiceV2ConnectionImpl::DeleteLog(
     google::logging::v2::DeleteLogRequest const& request) {

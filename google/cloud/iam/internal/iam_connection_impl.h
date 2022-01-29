@@ -43,7 +43,9 @@ class IAMConnectionImpl : public iam::IAMConnection {
 
   IAMConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iam_internal::IAMStub> stub, Options const& options);
+      std::shared_ptr<iam_internal::IAMStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
       google::iam::admin::v1::ListServiceAccountsRequest request) override;
@@ -144,7 +146,7 @@ class IAMConnectionImpl : public iam::IAMConnection {
     if (options.has<iam::IAMRetryPolicyOption>()) {
       return options.get<iam::IAMRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<iam::IAMRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -152,7 +154,7 @@ class IAMConnectionImpl : public iam::IAMConnection {
     if (options.has<iam::IAMBackoffPolicyOption>()) {
       return options.get<iam::IAMBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<iam::IAMBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<iam::IAMConnectionIdempotencyPolicy> idempotency_policy() {
@@ -160,14 +162,12 @@ class IAMConnectionImpl : public iam::IAMConnection {
     if (options.has<iam::IAMConnectionIdempotencyPolicyOption>()) {
       return options.get<iam::IAMConnectionIdempotencyPolicyOption>()->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<iam::IAMConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMStub> stub_;
-  std::unique_ptr<iam::IAMRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<iam::IAMConnectionIdempotencyPolicy> idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

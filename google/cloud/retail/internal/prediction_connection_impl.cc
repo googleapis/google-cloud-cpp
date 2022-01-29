@@ -32,17 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_internal::PredictionServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<retail::PredictionServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<retail::PredictionServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::PredictionServiceDefaultOptions(
+                                  PredictionServiceConnection::options()))) {}
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceConnectionImpl::Predict(

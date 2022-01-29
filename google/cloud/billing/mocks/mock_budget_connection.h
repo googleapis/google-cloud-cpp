@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockBudgetServiceConnection : public billing::BudgetServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::billing::budgets::v1::Budget>, CreateBudget,
       (google::cloud::billing::budgets::v1::CreateBudgetRequest const& request),

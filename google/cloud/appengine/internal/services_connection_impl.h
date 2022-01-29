@@ -46,8 +46,9 @@ class ServicesConnectionImpl : public appengine::ServicesConnection {
 
   ServicesConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::ServicesStub> stub,
-      Options const& options);
+      std::shared_ptr<appengine_internal::ServicesStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::appengine::v1::Service> ListServices(
       google::appengine::v1::ListServicesRequest request) override;
@@ -67,7 +68,7 @@ class ServicesConnectionImpl : public appengine::ServicesConnection {
     if (options.has<appengine::ServicesRetryPolicyOption>()) {
       return options.get<appengine::ServicesRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<appengine::ServicesRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -75,7 +76,7 @@ class ServicesConnectionImpl : public appengine::ServicesConnection {
     if (options.has<appengine::ServicesBackoffPolicyOption>()) {
       return options.get<appengine::ServicesBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<appengine::ServicesBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<appengine::ServicesConnectionIdempotencyPolicy>
@@ -86,25 +87,21 @@ class ServicesConnectionImpl : public appengine::ServicesConnection {
           .get<appengine::ServicesConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<appengine::ServicesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::ServicesStub> stub_;
-  std::unique_ptr<appengine::ServicesRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::ServicesConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::ServicesPollingPolicyOption>()) {
       return options.get<appengine::ServicesPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<appengine::ServicesPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<appengine_internal::ServicesStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

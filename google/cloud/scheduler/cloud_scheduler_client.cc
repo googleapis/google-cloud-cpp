@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudSchedulerClient::CloudSchedulerClient(
     std::shared_ptr<CloudSchedulerConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(scheduler_internal::CloudSchedulerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), scheduler_internal::CloudSchedulerDefaultOptions(
+                                  connection_->options()))) {}
 CloudSchedulerClient::~CloudSchedulerClient() = default;
 
 StreamRange<google::cloud::scheduler::v1::Job> CloudSchedulerClient::ListJobs(

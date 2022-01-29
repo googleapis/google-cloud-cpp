@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EventarcClient::EventarcClient(std::shared_ptr<EventarcConnection> connection,
                                Options options)
     : connection_(std::move(connection)),
-      options_(eventarc_internal::EventarcDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          eventarc_internal::EventarcDefaultOptions(connection_->options()))) {}
 EventarcClient::~EventarcClient() = default;
 
 StatusOr<google::cloud::eventarc::v1::Trigger> EventarcClient::GetTrigger(

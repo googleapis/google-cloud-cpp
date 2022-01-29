@@ -49,6 +49,8 @@ class ContainerAnalysisConnection {
  public:
   virtual ~ContainerAnalysisConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
 

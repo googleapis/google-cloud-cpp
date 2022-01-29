@@ -53,6 +53,8 @@ class DataMigrationServiceConnection {
  public:
   virtual ~DataMigrationServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::clouddms::v1::MigrationJob>
   ListMigrationJobs(
       google::cloud::clouddms::v1::ListMigrationJobsRequest request);

@@ -78,7 +78,11 @@ class $connection_class_name$Impl
   $connection_class_name$Impl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,
-    Options const& options);
+    Options options);
+)""");
+
+  HeaderPrint(R"""(
+  Options options() override { return options_; }
 )""");
 
   for (auto const& method : methods()) {
@@ -90,6 +94,11 @@ class $connection_class_name$Impl
                       AsyncMethodDeclaration(method));
   }
 
+  // `CurrentOptions()` may not have the service default options because we
+  // could be running in a test that calls the ConnectionImpl layer directly,
+  // and it does not create an `internal::OptionsSpan` like the Client layer.
+  // So, we have to fallback to `options_`, which we know has the service
+  // default options because we added them.
   HeaderPrint(R"""(
  private:
   std::unique_ptr<$product_namespace$::$retry_policy_name$> retry_policy() {
@@ -97,7 +106,7 @@ class $connection_class_name$Impl
     if (options.has<$product_namespace$::$retry_policy_name$Option>()) {
       return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<$product_namespace$::$retry_policy_name$Option>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -105,7 +114,7 @@ class $connection_class_name$Impl
     if (options.has<$product_namespace$::$service_name$BackoffPolicyOption>()) {
       return options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<$product_namespace$::$idempotency_class_name$> idempotency_policy() {
@@ -113,16 +122,10 @@ class $connection_class_name$Impl
     if (options.has<$product_namespace$::$idempotency_class_name$Option>()) {
       return options.get<$product_namespace$::$idempotency_class_name$Option>()->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<$product_namespace$::$idempotency_class_name$Option>()->
+clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;
-  std::unique_ptr<$product_namespace$::$retry_policy_name$ const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<$product_namespace$::$idempotency_class_name$> idempotency_policy_;
 )""");
-
   if (HasLongrunningMethod()) {
     HeaderPrint(R"""(
   std::unique_ptr<PollingPolicy> polling_policy() {
@@ -130,12 +133,16 @@ class $connection_class_name$Impl
     if (options.has<$product_namespace$::$service_name$PollingPolicyOption>()) {
       return options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
   }
-
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
 )""");
   }
+
+  HeaderPrint(R"""(
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;
+  Options options_;
+)""");
 
   // This closes the *ConnectionImpl class definition.
   HeaderPrint("};\n");
@@ -181,17 +188,11 @@ Status ConnectionImplGenerator::GenerateCc() {
 $connection_class_name$Impl::$connection_class_name$Impl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,
-    Options const& options)
+    Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<$product_namespace$::$retry_policy_name$Option>()->clone()),
-    backoff_policy_prototype_(options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<$product_namespace$::$idempotency_class_name$Option>()->clone()))""");
-  // The constructor depends on a couple of things.
-  if (HasLongrunningMethod()) {
-    CcPrint(R"""(,
-    polling_policy_prototype_(options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone()))""");
-  }
-  CcPrint(R"""( {}
+    options_(internal::MergeOptions(std::move(options),
+      $product_internal_namespace$::$service_name$DefaultOptions(
+        $connection_class_name$::options()))) {}
 )""");
 
   for (auto const& method : methods()) {

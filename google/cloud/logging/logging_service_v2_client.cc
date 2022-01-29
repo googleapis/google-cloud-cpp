@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LoggingServiceV2Client::LoggingServiceV2Client(
     std::shared_ptr<LoggingServiceV2Connection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(logging_internal::LoggingServiceV2DefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), logging_internal::LoggingServiceV2DefaultOptions(
+                                  connection_->options()))) {}
 LoggingServiceV2Client::~LoggingServiceV2Client() = default;
 
 Status LoggingServiceV2Client::DeleteLog(std::string const& log_name,

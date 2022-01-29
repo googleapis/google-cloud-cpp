@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceUsageClient::ServiceUsageClient(
     std::shared_ptr<ServiceUsageConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(serviceusage_internal::ServiceUsageDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), serviceusage_internal::ServiceUsageDefaultOptions(
+                                  connection_->options()))) {}
 ServiceUsageClient::~ServiceUsageClient() = default;
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>

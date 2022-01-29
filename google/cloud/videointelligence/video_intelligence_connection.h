@@ -52,6 +52,8 @@ class VideoIntelligenceServiceConnection {
  public:
   virtual ~VideoIntelligenceServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<
       StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
   AnnotateVideo(

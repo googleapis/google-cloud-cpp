@@ -32,16 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DlpServiceConnectionImpl::DlpServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dlp_internal::DlpServiceStub> stub, Options const& options)
+    std::shared_ptr<dlp_internal::DlpServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<dlp::DlpServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<dlp::DlpServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<dlp::DlpServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      dlp_internal::DlpServiceDefaultOptions(
+                                          DlpServiceConnection::options()))) {}
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DlpServiceConnectionImpl::InspectContent(

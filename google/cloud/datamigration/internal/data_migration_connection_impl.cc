@@ -34,23 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataMigrationServiceConnectionImpl::DataMigrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<datamigration::DataMigrationServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<datamigration::DataMigrationServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<datamigration::
-                       DataMigrationServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<datamigration::DataMigrationServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          datamigration_internal::DataMigrationServiceDefaultOptions(
+              DataMigrationServiceConnection::options()))) {}
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceConnectionImpl::ListMigrationJobs(

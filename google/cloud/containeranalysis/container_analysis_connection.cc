@@ -69,7 +69,7 @@ std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
       background->cq(), options);
   return std::make_shared<
       containeranalysis_internal::ContainerAnalysisConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -86,10 +86,10 @@ std::shared_ptr<containeranalysis::ContainerAnalysisConnection>
 MakeContainerAnalysisConnection(std::shared_ptr<ContainerAnalysisStub> stub,
                                 Options options) {
   options = ContainerAnalysisDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       containeranalysis_internal::ContainerAnalysisConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

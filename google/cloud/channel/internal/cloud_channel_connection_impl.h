@@ -48,7 +48,9 @@ class CloudChannelServiceConnectionImpl
   CloudChannelServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<channel_internal::CloudChannelServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
       google::cloud::channel::v1::ListCustomersRequest request) override;
@@ -196,7 +198,8 @@ class CloudChannelServiceConnectionImpl
       return options.get<channel::CloudChannelServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<channel::CloudChannelServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -205,7 +208,8 @@ class CloudChannelServiceConnectionImpl
       return options.get<channel::CloudChannelServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<channel::CloudChannelServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<channel::CloudChannelServiceConnectionIdempotencyPolicy>
@@ -217,16 +221,10 @@ class CloudChannelServiceConnectionImpl
           .get<channel::CloudChannelServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<channel::CloudChannelServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<channel_internal::CloudChannelServiceStub> stub_;
-  std::unique_ptr<channel::CloudChannelServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<channel::CloudChannelServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -234,10 +232,13 @@ class CloudChannelServiceConnectionImpl
       return options.get<channel::CloudChannelServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<channel::CloudChannelServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<channel_internal::CloudChannelServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

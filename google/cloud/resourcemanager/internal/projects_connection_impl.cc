@@ -34,20 +34,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectsConnectionImpl::ProjectsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<resourcemanager_internal::ProjectsStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<resourcemanager::ProjectsRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<resourcemanager::ProjectsBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<resourcemanager::ProjectsPollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), resourcemanager_internal::ProjectsDefaultOptions(
+                                  ProjectsConnection::options()))) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsConnectionImpl::GetProject(

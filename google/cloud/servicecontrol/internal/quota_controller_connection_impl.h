@@ -44,7 +44,9 @@ class QuotaControllerConnectionImpl
   QuotaControllerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<servicecontrol_internal::QuotaControllerStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const&
@@ -57,7 +59,8 @@ class QuotaControllerConnectionImpl
       return options.get<servicecontrol::QuotaControllerRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<servicecontrol::QuotaControllerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -66,7 +69,8 @@ class QuotaControllerConnectionImpl
       return options.get<servicecontrol::QuotaControllerBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<servicecontrol::QuotaControllerBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<servicecontrol::QuotaControllerConnectionIdempotencyPolicy>
@@ -79,16 +83,14 @@ class QuotaControllerConnectionImpl
                    QuotaControllerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<servicecontrol::QuotaControllerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicecontrol_internal::QuotaControllerStub> stub_;
-  std::unique_ptr<servicecontrol::QuotaControllerRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<servicecontrol::QuotaControllerConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

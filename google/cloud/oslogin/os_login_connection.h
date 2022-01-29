@@ -49,6 +49,8 @@ class OsLoginServiceConnection {
  public:
   virtual ~OsLoginServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual Status DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request);
 

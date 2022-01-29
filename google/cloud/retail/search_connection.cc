@@ -59,7 +59,7 @@ std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
   auto stub = retail_internal::CreateDefaultSearchServiceStub(background->cq(),
                                                               options);
   return std::make_shared<retail_internal::SearchServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -75,9 +75,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<retail::SearchServiceConnection> MakeSearchServiceConnection(
     std::shared_ptr<SearchServiceStub> stub, Options options) {
   options = SearchServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<retail_internal::SearchServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

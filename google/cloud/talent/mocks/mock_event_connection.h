@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockEventServiceConnection : public talent::EventServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::talent::v4::ClientEvent>, CreateClientEvent,
       (google::cloud::talent::v4::CreateClientEventRequest const& request),

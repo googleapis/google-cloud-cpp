@@ -44,7 +44,9 @@ class CloudBillingConnectionImpl : public billing::CloudBillingConnection {
   CloudBillingConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<billing_internal::CloudBillingStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       google::cloud::billing::v1::GetBillingAccountRequest const& request)
@@ -91,7 +93,7 @@ class CloudBillingConnectionImpl : public billing::CloudBillingConnection {
     if (options.has<billing::CloudBillingRetryPolicyOption>()) {
       return options.get<billing::CloudBillingRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<billing::CloudBillingRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -99,7 +101,7 @@ class CloudBillingConnectionImpl : public billing::CloudBillingConnection {
     if (options.has<billing::CloudBillingBackoffPolicyOption>()) {
       return options.get<billing::CloudBillingBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<billing::CloudBillingBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<billing::CloudBillingConnectionIdempotencyPolicy>
@@ -110,16 +112,14 @@ class CloudBillingConnectionImpl : public billing::CloudBillingConnection {
           .get<billing::CloudBillingConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<billing::CloudBillingConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_internal::CloudBillingStub> stub_;
-  std::unique_ptr<billing::CloudBillingRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<billing::CloudBillingConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -46,8 +46,9 @@ class WorkflowsConnectionImpl : public workflows::WorkflowsConnection {
 
   WorkflowsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<workflows_internal::WorkflowsStub> stub,
-      Options const& options);
+      std::shared_ptr<workflows_internal::WorkflowsStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
       google::cloud::workflows::v1::ListWorkflowsRequest request) override;
@@ -73,7 +74,7 @@ class WorkflowsConnectionImpl : public workflows::WorkflowsConnection {
     if (options.has<workflows::WorkflowsRetryPolicyOption>()) {
       return options.get<workflows::WorkflowsRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<workflows::WorkflowsRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -81,7 +82,7 @@ class WorkflowsConnectionImpl : public workflows::WorkflowsConnection {
     if (options.has<workflows::WorkflowsBackoffPolicyOption>()) {
       return options.get<workflows::WorkflowsBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<workflows::WorkflowsBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<workflows::WorkflowsConnectionIdempotencyPolicy>
@@ -92,26 +93,22 @@ class WorkflowsConnectionImpl : public workflows::WorkflowsConnection {
           .get<workflows::WorkflowsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<workflows::WorkflowsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<workflows_internal::WorkflowsStub> stub_;
-  std::unique_ptr<workflows::WorkflowsRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<workflows::WorkflowsConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<workflows::WorkflowsPollingPolicyOption>()) {
       return options.get<workflows::WorkflowsPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<workflows::WorkflowsPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<workflows_internal::WorkflowsStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

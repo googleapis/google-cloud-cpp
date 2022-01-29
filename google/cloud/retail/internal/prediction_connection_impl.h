@@ -44,7 +44,9 @@ class PredictionServiceConnectionImpl
   PredictionServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<retail_internal::PredictionServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request) override;
@@ -55,7 +57,7 @@ class PredictionServiceConnectionImpl
     if (options.has<retail::PredictionServiceRetryPolicyOption>()) {
       return options.get<retail::PredictionServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<retail::PredictionServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -64,7 +66,8 @@ class PredictionServiceConnectionImpl
       return options.get<retail::PredictionServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<retail::PredictionServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<retail::PredictionServiceConnectionIdempotencyPolicy>
@@ -76,16 +79,14 @@ class PredictionServiceConnectionImpl
           .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_internal::PredictionServiceStub> stub_;
-  std::unique_ptr<retail::PredictionServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::PredictionServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

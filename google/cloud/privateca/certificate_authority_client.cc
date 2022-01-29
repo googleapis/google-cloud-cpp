@@ -29,8 +29,10 @@ CertificateAuthorityServiceClient::CertificateAuthorityServiceClient(
     std::shared_ptr<CertificateAuthorityServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(privateca_internal::CertificateAuthorityServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          privateca_internal::CertificateAuthorityServiceDefaultOptions(
+              connection_->options()))) {}
 CertificateAuthorityServiceClient::~CertificateAuthorityServiceClient() =
     default;
 

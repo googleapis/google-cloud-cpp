@@ -179,7 +179,7 @@ std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
   auto stub = apigateway_internal::CreateDefaultApiGatewayServiceStub(
       background->cq(), options);
   return std::make_shared<apigateway_internal::ApiGatewayServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -196,9 +196,9 @@ std::shared_ptr<apigateway::ApiGatewayServiceConnection>
 MakeApiGatewayServiceConnection(std::shared_ptr<ApiGatewayServiceStub> stub,
                                 Options options) {
   options = ApiGatewayServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<apigateway_internal::ApiGatewayServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

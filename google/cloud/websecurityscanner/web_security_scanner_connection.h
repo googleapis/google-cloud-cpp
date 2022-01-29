@@ -50,6 +50,8 @@ class WebSecurityScannerConnection {
  public:
   virtual ~WebSecurityScannerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
   CreateScanConfig(
       google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&

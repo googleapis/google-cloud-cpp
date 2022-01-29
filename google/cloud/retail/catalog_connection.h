@@ -50,6 +50,8 @@ class CatalogServiceConnection {
  public:
   virtual ~CatalogServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
       google::cloud::retail::v2::ListCatalogsRequest request);
 

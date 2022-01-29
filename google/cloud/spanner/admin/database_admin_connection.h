@@ -53,6 +53,8 @@ class DatabaseAdminConnection {
  public:
   virtual ~DatabaseAdminConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::spanner::admin::database::v1::Database>
   ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesRequest request);

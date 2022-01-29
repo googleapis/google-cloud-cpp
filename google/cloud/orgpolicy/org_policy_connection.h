@@ -49,6 +49,8 @@ class OrgPolicyConnection {
  public:
   virtual ~OrgPolicyConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
       google::cloud::orgpolicy::v2::ListConstraintsRequest request);
 

@@ -34,23 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApiGatewayServiceConnectionImpl::ApiGatewayServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<apigateway::
-                       ApiGatewayServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<apigateway::ApiGatewayServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          apigateway_internal::ApiGatewayServiceDefaultOptions(
+              ApiGatewayServiceConnection::options()))) {}
 
 StreamRange<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceConnectionImpl::ListGateways(

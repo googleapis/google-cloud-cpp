@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockPublisherConnection : public eventarc::PublisherConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::eventarc::publishing::v1::
                            PublishChannelConnectionEventsResponse>,
               PublishChannelConnectionEvents,

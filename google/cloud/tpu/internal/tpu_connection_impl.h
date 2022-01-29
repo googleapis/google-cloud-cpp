@@ -46,7 +46,9 @@ class TpuConnectionImpl : public tpu::TpuConnection {
 
   TpuConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<tpu_internal::TpuStub> stub, Options const& options);
+      std::shared_ptr<tpu_internal::TpuStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::tpu::v1::Node> ListNodes(
       google::cloud::tpu::v1::ListNodesRequest request) override;
@@ -89,7 +91,7 @@ class TpuConnectionImpl : public tpu::TpuConnection {
     if (options.has<tpu::TpuRetryPolicyOption>()) {
       return options.get<tpu::TpuRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<tpu::TpuRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -97,7 +99,7 @@ class TpuConnectionImpl : public tpu::TpuConnection {
     if (options.has<tpu::TpuBackoffPolicyOption>()) {
       return options.get<tpu::TpuBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<tpu::TpuBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<tpu::TpuConnectionIdempotencyPolicy> idempotency_policy() {
@@ -105,24 +107,20 @@ class TpuConnectionImpl : public tpu::TpuConnection {
     if (options.has<tpu::TpuConnectionIdempotencyPolicyOption>()) {
       return options.get<tpu::TpuConnectionIdempotencyPolicyOption>()->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<tpu::TpuConnectionIdempotencyPolicyOption>()->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<tpu_internal::TpuStub> stub_;
-  std::unique_ptr<tpu::TpuRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<tpu::TpuConnectionIdempotencyPolicy> idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<tpu::TpuPollingPolicyOption>()) {
       return options.get<tpu::TpuPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<tpu::TpuPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<tpu_internal::TpuStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

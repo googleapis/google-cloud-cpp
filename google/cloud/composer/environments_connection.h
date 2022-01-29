@@ -53,6 +53,8 @@ class EnvironmentsConnection {
  public:
   virtual ~EnvironmentsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   CreateEnvironment(google::cloud::orchestration::airflow::service::v1::

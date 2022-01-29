@@ -47,7 +47,9 @@ class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
   FoldersConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<resourcemanager_internal::FoldersStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       google::cloud::resourcemanager::v3::GetFolderRequest const& request)
@@ -95,7 +97,7 @@ class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
     if (options.has<resourcemanager::FoldersRetryPolicyOption>()) {
       return options.get<resourcemanager::FoldersRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<resourcemanager::FoldersRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -104,7 +106,7 @@ class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
       return options.get<resourcemanager::FoldersBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<resourcemanager::FoldersBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy>
@@ -116,16 +118,10 @@ class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
           .get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcemanager_internal::FoldersStub> stub_;
-  std::unique_ptr<resourcemanager::FoldersRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -133,10 +129,12 @@ class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
       return options.get<resourcemanager::FoldersPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<resourcemanager::FoldersPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<resourcemanager_internal::FoldersStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

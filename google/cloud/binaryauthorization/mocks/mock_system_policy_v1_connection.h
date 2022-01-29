@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockSystemPolicyV1Connection
     : public binaryauthorization::SystemPolicyV1Connection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::binaryauthorization::v1::Policy>, GetSystemPolicy,
       (google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&

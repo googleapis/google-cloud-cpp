@@ -45,7 +45,9 @@ class WebSecurityScannerConnectionImpl
   WebSecurityScannerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
       google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
@@ -110,7 +112,9 @@ class WebSecurityScannerConnectionImpl
           .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -121,7 +125,9 @@ class WebSecurityScannerConnectionImpl
           .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -136,17 +142,15 @@ class WebSecurityScannerConnectionImpl
                    WebSecurityScannerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<websecurityscanner::
+                 WebSecurityScannerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub_;
-  std::unique_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      websecurityscanner::WebSecurityScannerConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

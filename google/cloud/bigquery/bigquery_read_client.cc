@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigQueryReadClient::BigQueryReadClient(
     std::shared_ptr<BigQueryReadConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          bigquery_internal::BigQueryReadDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), bigquery_internal::BigQueryReadDefaultOptions(
+                                  connection_->options()))) {}
 BigQueryReadClient::~BigQueryReadClient() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>

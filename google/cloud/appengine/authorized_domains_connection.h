@@ -50,6 +50,8 @@ class AuthorizedDomainsConnection {
  public:
   virtual ~AuthorizedDomainsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::appengine::v1::AuthorizedDomain>
   ListAuthorizedDomains(
       google::appengine::v1::ListAuthorizedDomainsRequest request);

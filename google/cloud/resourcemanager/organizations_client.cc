@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OrganizationsClient::OrganizationsClient(
     std::shared_ptr<OrganizationsConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(resourcemanager_internal::OrganizationsDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          resourcemanager_internal::OrganizationsDefaultOptions(
+              connection_->options()))) {}
 OrganizationsClient::~OrganizationsClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>

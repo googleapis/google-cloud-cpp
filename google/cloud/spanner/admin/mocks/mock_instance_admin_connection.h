@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockInstanceAdminConnection
     : public spanner_admin::InstanceAdminConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::spanner::admin::instance::v1::InstanceConfig>,
               ListInstanceConfigs,
               (google::spanner::admin::instance::v1::ListInstanceConfigsRequest

@@ -32,17 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TenantServiceConnectionImpl::TenantServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::TenantServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<talent_internal::TenantServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<talent::TenantServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<talent::TenantServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<talent::TenantServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), talent_internal::TenantServiceDefaultOptions(
+                                  TenantServiceConnection::options()))) {}
 
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::CreateTenant(

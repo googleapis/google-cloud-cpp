@@ -44,7 +44,9 @@ class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
   BigQueryReadConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
@@ -65,7 +67,7 @@ class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
     if (options.has<bigquery::BigQueryReadRetryPolicyOption>()) {
       return options.get<bigquery::BigQueryReadRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<bigquery::BigQueryReadRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -73,7 +75,7 @@ class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
     if (options.has<bigquery::BigQueryReadBackoffPolicyOption>()) {
       return options.get<bigquery::BigQueryReadBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<bigquery::BigQueryReadBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<bigquery::BigQueryReadConnectionIdempotencyPolicy>
@@ -85,16 +87,14 @@ class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
           .get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_internal::BigQueryReadStub> stub_;
-  std::unique_ptr<bigquery::BigQueryReadRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<bigquery::BigQueryReadConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

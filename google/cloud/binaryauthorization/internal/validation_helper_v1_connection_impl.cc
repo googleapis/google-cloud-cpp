@@ -32,22 +32,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ValidationHelperV1ConnectionImpl::ValidationHelperV1ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<binaryauthorization_internal::ValidationHelperV1Stub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<binaryauthorization::ValidationHelperV1RetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<binaryauthorization::ValidationHelperV1BackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<binaryauthorization::
-                       ValidationHelperV1ConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          binaryauthorization_internal::ValidationHelperV1DefaultOptions(
+              ValidationHelperV1Connection::options()))) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>

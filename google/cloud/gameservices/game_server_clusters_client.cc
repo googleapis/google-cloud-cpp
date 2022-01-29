@@ -29,8 +29,10 @@ GameServerClustersServiceClient::GameServerClustersServiceClient(
     std::shared_ptr<GameServerClustersServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(gameservices_internal::GameServerClustersServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          gameservices_internal::GameServerClustersServiceDefaultOptions(
+              connection_->options()))) {}
 GameServerClustersServiceClient::~GameServerClustersServiceClient() = default;
 
 StreamRange<google::cloud::gaming::v1::GameServerCluster>

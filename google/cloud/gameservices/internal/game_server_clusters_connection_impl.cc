@@ -36,27 +36,13 @@ GameServerClustersServiceConnectionImpl::
         std::unique_ptr<google::cloud::BackgroundThreads> background,
         std::shared_ptr<gameservices_internal::GameServerClustersServiceStub>
             stub,
-        Options const& options)
+        Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<gameservices::GameServerClustersServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<gameservices::GameServerClustersServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  gameservices::
-                      GameServerClustersServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<gameservices::GameServerClustersServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          gameservices_internal::GameServerClustersServiceDefaultOptions(
+              GameServerClustersServiceConnection::options()))) {}
 
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceConnectionImpl::ListGameServerClusters(

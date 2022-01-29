@@ -47,7 +47,9 @@ class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
   VmMigrationConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<vmmigration_internal::VmMigrationStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
       google::cloud::vmmigration::v1::ListSourcesRequest request) override;
@@ -238,7 +240,7 @@ class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
     if (options.has<vmmigration::VmMigrationRetryPolicyOption>()) {
       return options.get<vmmigration::VmMigrationRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<vmmigration::VmMigrationRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -247,7 +249,7 @@ class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
       return options.get<vmmigration::VmMigrationBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<vmmigration::VmMigrationBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<vmmigration::VmMigrationConnectionIdempotencyPolicy>
@@ -259,16 +261,10 @@ class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
           .get<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vmmigration_internal::VmMigrationStub> stub_;
-  std::unique_ptr<vmmigration::VmMigrationRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<vmmigration::VmMigrationConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -276,10 +272,12 @@ class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
       return options.get<vmmigration::VmMigrationPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<vmmigration::VmMigrationPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<vmmigration_internal::VmMigrationStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

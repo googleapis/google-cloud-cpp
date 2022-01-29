@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockApplicationsConnection : public appengine::ApplicationsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::appengine::v1::Application>, GetApplication,
               (google::appengine::v1::GetApplicationRequest const& request),
               (override));

@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockVmMigrationConnection : public vmmigration::VmMigrationConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::vmmigration::v1::Source>, ListSources,
               (google::cloud::vmmigration::v1::ListSourcesRequest request),
               (override));

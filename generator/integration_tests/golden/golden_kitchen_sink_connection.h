@@ -53,6 +53,8 @@ class GoldenKitchenSinkConnection {
  public:
   virtual ~GoldenKitchenSinkConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
 

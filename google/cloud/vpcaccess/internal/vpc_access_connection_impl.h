@@ -48,7 +48,9 @@ class VpcAccessServiceConnectionImpl
   VpcAccessServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
@@ -72,7 +74,8 @@ class VpcAccessServiceConnectionImpl
       return options.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -81,7 +84,8 @@ class VpcAccessServiceConnectionImpl
       return options.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy>
@@ -93,16 +97,10 @@ class VpcAccessServiceConnectionImpl
           .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub_;
-  std::unique_ptr<vpcaccess::VpcAccessServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -110,10 +108,13 @@ class VpcAccessServiceConnectionImpl
       return options.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -47,7 +47,9 @@ class BinauthzManagementServiceV1ConnectionImpl
       std::shared_ptr<
           binaryauthorization_internal::BinauthzManagementServiceV1Stub>
           stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       google::cloud::binaryauthorization::v1::GetPolicyRequest const& request)
@@ -88,7 +90,10 @@ class BinauthzManagementServiceV1ConnectionImpl
                    BinauthzManagementServiceV1RetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<
+            binaryauthorization::BinauthzManagementServiceV1RetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -100,7 +105,10 @@ class BinauthzManagementServiceV1ConnectionImpl
                    BinauthzManagementServiceV1BackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<binaryauthorization::
+                 BinauthzManagementServiceV1BackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<binaryauthorization::
@@ -116,19 +124,16 @@ class BinauthzManagementServiceV1ConnectionImpl
                   BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<binaryauthorization::
+                 BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<binaryauthorization_internal::BinauthzManagementServiceV1Stub>
       stub_;
-  std::unique_ptr<
-      binaryauthorization::BinauthzManagementServiceV1RetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<binaryauthorization::
-                      BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

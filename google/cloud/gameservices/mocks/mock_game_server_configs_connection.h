@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockGameServerConfigsServiceConnection
     : public gameservices::GameServerConfigsServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::gaming::v1::GameServerConfig>,
               ListGameServerConfigs,
               (google::cloud::gaming::v1::ListGameServerConfigsRequest request),

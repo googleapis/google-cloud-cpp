@@ -48,6 +48,8 @@ class CompletionConnection {
  public:
   virtual ~CompletionConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
   CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request);
 };

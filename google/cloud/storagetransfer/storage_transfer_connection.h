@@ -53,6 +53,8 @@ class StorageTransferServiceConnection {
  public:
   virtual ~StorageTransferServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
       google::storagetransfer::v1::GetGoogleServiceAccountRequest const&

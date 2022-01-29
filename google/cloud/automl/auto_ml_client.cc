@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AutoMlClient::AutoMlClient(std::shared_ptr<AutoMlConnection> connection,
                            Options options)
     : connection_(std::move(connection)),
-      options_(automl_internal::AutoMlDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          automl_internal::AutoMlDefaultOptions(connection_->options()))) {}
 AutoMlClient::~AutoMlClient() = default;
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>

@@ -30,7 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DeviceManagerClient::DeviceManagerClient(
     std::shared_ptr<DeviceManagerConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(iot_internal::DeviceManagerDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          iot_internal::DeviceManagerDefaultOptions(connection_->options()))) {}
 DeviceManagerClient::~DeviceManagerClient() = default;
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>

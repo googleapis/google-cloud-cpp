@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WebRiskServiceClient::WebRiskServiceClient(
     std::shared_ptr<WebRiskServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          webrisk_internal::WebRiskServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), webrisk_internal::WebRiskServiceDefaultOptions(
+                                  connection_->options()))) {}
 WebRiskServiceClient::~WebRiskServiceClient() = default;
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>

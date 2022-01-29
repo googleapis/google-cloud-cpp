@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 Debugger2Client::Debugger2Client(
     std::shared_ptr<Debugger2Connection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(debugger_internal::Debugger2DefaultOptions(std::move(options))) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          debugger_internal::Debugger2DefaultOptions(connection_->options()))) {
 }
 Debugger2Client::~Debugger2Client() = default;
 

@@ -67,7 +67,7 @@ std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
   auto stub = webrisk_internal::CreateDefaultWebRiskServiceStub(
       background->cq(), options);
   return std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -83,9 +83,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<webrisk::WebRiskServiceConnection> MakeWebRiskServiceConnection(
     std::shared_ptr<WebRiskServiceStub> stub, Options options) {
   options = WebRiskServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

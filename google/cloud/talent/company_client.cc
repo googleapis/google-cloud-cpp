@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CompanyServiceClient::CompanyServiceClient(
     std::shared_ptr<CompanyServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          talent_internal::CompanyServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), talent_internal::CompanyServiceDefaultOptions(
+                                  connection_->options()))) {}
 CompanyServiceClient::~CompanyServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::Company>

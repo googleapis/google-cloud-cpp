@@ -33,21 +33,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegistrationServiceConnectionImpl::RegistrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<servicedirectory::RegistrationServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<servicedirectory::RegistrationServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<servicedirectory::
-                       RegistrationServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicedirectory_internal::RegistrationServiceDefaultOptions(
+              RegistrationServiceConnection::options()))) {}
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceConnectionImpl::CreateNamespace(

@@ -51,6 +51,8 @@ class LoggingServiceV2Connection {
  public:
   virtual ~LoggingServiceV2Connection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual Status DeleteLog(
       google::logging::v2::DeleteLogRequest const& request);
 

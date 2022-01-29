@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TextToSpeechClient::TextToSpeechClient(
     std::shared_ptr<TextToSpeechConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(texttospeech_internal::TextToSpeechDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), texttospeech_internal::TextToSpeechDefaultOptions(
+                                  connection_->options()))) {}
 TextToSpeechClient::~TextToSpeechClient() = default;
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>

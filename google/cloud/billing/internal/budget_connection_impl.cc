@@ -32,18 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BudgetServiceConnectionImpl::BudgetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<billing_internal::BudgetServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<billing_internal::BudgetServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<billing::BudgetServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<billing::BudgetServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::BudgetServiceDefaultOptions(
+                                  BudgetServiceConnection::options()))) {}
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceConnectionImpl::CreateBudget(

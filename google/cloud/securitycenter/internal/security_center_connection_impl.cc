@@ -34,23 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecurityCenterConnectionImpl::SecurityCenterConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<securitycenter::SecurityCenterRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<securitycenter::SecurityCenterBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<securitycenter::
-                       SecurityCenterConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<securitycenter::SecurityCenterPollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          securitycenter_internal::SecurityCenterDefaultOptions(
+              SecurityCenterConnection::options()))) {}
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnectionImpl::BulkMuteFindings(

@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockCompletionServiceConnection
     : public retail::CompletionServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::retail::v2::CompleteQueryResponse>,
               CompleteQuery,
               (google::cloud::retail::v2::CompleteQueryRequest const& request),

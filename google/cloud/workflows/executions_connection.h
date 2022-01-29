@@ -49,6 +49,8 @@ class ExecutionsConnection {
  public:
   virtual ~ExecutionsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::workflows::executions::v1::Execution>
   ListExecutions(
       google::cloud::workflows::executions::v1::ListExecutionsRequest request);

@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GrafeasClient::GrafeasClient(std::shared_ptr<GrafeasConnection> connection,
                              Options options)
     : connection_(std::move(connection)),
-      options_(containeranalysis_internal::GrafeasDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), containeranalysis_internal::GrafeasDefaultOptions(
+                                  connection_->options()))) {}
 GrafeasClient::~GrafeasClient() = default;
 
 StatusOr<grafeas::v1::Occurrence> GrafeasClient::GetOccurrence(

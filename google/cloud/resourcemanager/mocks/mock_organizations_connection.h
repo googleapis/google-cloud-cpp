@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockOrganizationsConnection
     : public resourcemanager::OrganizationsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::resourcemanager::v3::Organization>,
               GetOrganization,
               (google::cloud::resourcemanager::v3::GetOrganizationRequest const&

@@ -105,6 +105,10 @@ Status ConnectionGenerator::GenerateHeader() {
     "  virtual ~$connection_class_name$() = 0;\n");
   // clang-format on
 
+  HeaderPrint(R"""(
+  virtual Options options() { return Options{}; }
+)""");
+
   for (auto const& method : methods()) {
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__,
@@ -357,7 +361,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
     background->cq(), options);
   return std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 )""");
 
@@ -371,9 +375,9 @@ std::shared_ptr<$product_namespace$::$connection_class_name$>
 Make$connection_class_name$(
     std::shared_ptr<$stub_class_name$> stub, Options options) {
   options = $service_name$DefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
-      internal::MakeBackgroundThreadsFactory(options)(),
-      std::move(stub), std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 )""");
 

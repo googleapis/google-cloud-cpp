@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudCatalogClient::CloudCatalogClient(
     std::shared_ptr<CloudCatalogConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          billing_internal::CloudCatalogDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::CloudCatalogDefaultOptions(
+                                  connection_->options()))) {}
 CloudCatalogClient::~CloudCatalogClient() = default;
 
 StreamRange<google::cloud::billing::v1::Service>

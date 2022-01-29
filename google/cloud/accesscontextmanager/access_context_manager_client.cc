@@ -28,9 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessContextManagerClient::AccessContextManagerClient(
     std::shared_ptr<AccessContextManagerConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
+      options_(internal::MergeOptions(
+          std::move(options),
           accesscontextmanager_internal::AccessContextManagerDefaultOptions(
-              std::move(options))) {}
+              connection_->options()))) {}
 AccessContextManagerClient::~AccessContextManagerClient() = default;
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>

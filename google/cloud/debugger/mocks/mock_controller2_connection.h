@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockController2Connection : public debugger::Controller2Connection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>,
       RegisterDebuggee,

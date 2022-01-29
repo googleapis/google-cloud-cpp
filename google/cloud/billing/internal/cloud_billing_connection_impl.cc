@@ -32,17 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudBillingConnectionImpl::CloudBillingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<billing_internal::CloudBillingStub> stub,
-    Options const& options)
+    std::shared_ptr<billing_internal::CloudBillingStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<billing::CloudBillingRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<billing::CloudBillingBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<billing::CloudBillingConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::CloudBillingDefaultOptions(
+                                  CloudBillingConnection::options()))) {}
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::GetBillingAccount(

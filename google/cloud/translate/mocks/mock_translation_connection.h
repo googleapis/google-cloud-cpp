@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockTranslationServiceConnection
     : public translate::TranslationServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::translation::v3::TranslateTextResponse>,
       TranslateText,

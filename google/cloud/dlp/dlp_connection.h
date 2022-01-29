@@ -49,6 +49,8 @@ class DlpServiceConnection {
  public:
   virtual ~DlpServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::privacy::dlp::v2::InspectContentResponse>
   InspectContent(
       google::privacy::dlp::v2::InspectContentRequest const& request);

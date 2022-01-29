@@ -62,7 +62,7 @@ std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
   auto stub = pubsublite_internal::CreateDefaultTopicStatsServiceStub(
       background->cq(), options);
   return std::make_shared<pubsublite_internal::TopicStatsServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -79,9 +79,9 @@ std::shared_ptr<pubsublite::TopicStatsServiceConnection>
 MakeTopicStatsServiceConnection(std::shared_ptr<TopicStatsServiceStub> stub,
                                 Options options) {
   options = TopicStatsServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<pubsublite_internal::TopicStatsServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

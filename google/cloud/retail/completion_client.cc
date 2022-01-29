@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CompletionServiceClient::CompletionServiceClient(
     std::shared_ptr<CompletionServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(retail_internal::CompletionServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::CompletionServiceDefaultOptions(
+                                  connection_->options()))) {}
 CompletionServiceClient::~CompletionServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>

@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockGrafeasConnection : public containeranalysis::GrafeasConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, GetOccurrence,
               (grafeas::v1::GetOccurrenceRequest const& request), (override));
 

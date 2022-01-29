@@ -49,6 +49,8 @@ class EventServiceConnection {
  public:
   virtual ~EventServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request);
 };

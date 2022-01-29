@@ -87,7 +87,7 @@ std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(Options options) {
   auto stub =
       workflows_internal::CreateDefaultWorkflowsStub(background->cq(), options);
   return std::make_shared<workflows_internal::WorkflowsConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -103,9 +103,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<workflows::WorkflowsConnection> MakeWorkflowsConnection(
     std::shared_ptr<WorkflowsStub> stub, Options options) {
   options = WorkflowsDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<workflows_internal::WorkflowsConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

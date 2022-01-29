@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockOsConfigServiceConnection
     : public osconfig::OsConfigServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::osconfig::v1::PatchJob>, ExecutePatchJob,
       (google::cloud::osconfig::v1::ExecutePatchJobRequest const& request),

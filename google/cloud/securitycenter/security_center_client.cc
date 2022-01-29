@@ -30,8 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecurityCenterClient::SecurityCenterClient(
     std::shared_ptr<SecurityCenterConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(securitycenter_internal::SecurityCenterDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          securitycenter_internal::SecurityCenterDefaultOptions(
+              connection_->options()))) {}
 SecurityCenterClient::~SecurityCenterClient() = default;
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>

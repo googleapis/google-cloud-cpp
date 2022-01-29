@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockEventarcConnection : public eventarc::EventarcConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::Trigger>, GetTrigger,
               (google::cloud::eventarc::v1::GetTriggerRequest const& request),
               (override));

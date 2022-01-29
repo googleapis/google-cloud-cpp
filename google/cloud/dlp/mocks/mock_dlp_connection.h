@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockDlpServiceConnection : public dlp::DlpServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::privacy::dlp::v2::InspectContentResponse>,
               InspectContent,
               (google::privacy::dlp::v2::InspectContentRequest const& request),

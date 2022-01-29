@@ -35,11 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GoldenKitchenSinkConnectionImpl::GoldenKitchenSinkConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
-    Options const& options)
+    Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone()) {}
+    options_(internal::MergeOptions(std::move(options),
+      golden_internal::GoldenKitchenSinkDefaultOptions(
+        GoldenKitchenSinkConnection::options()))) {}
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkConnectionImpl::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {

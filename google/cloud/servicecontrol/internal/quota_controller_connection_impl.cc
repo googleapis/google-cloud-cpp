@@ -32,20 +32,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 QuotaControllerConnectionImpl::QuotaControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicecontrol_internal::QuotaControllerStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<servicecontrol::QuotaControllerRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<servicecontrol::QuotaControllerBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<servicecontrol::
-                       QuotaControllerConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicecontrol_internal::QuotaControllerDefaultOptions(
+              QuotaControllerConnection::options()))) {}
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerConnectionImpl::AllocateQuota(

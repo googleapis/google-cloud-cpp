@@ -368,7 +368,7 @@ MakeCloudChannelServiceConnection(Options options) {
   auto stub = channel_internal::CreateDefaultCloudChannelServiceStub(
       background->cq(), options);
   return std::make_shared<channel_internal::CloudChannelServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -385,9 +385,9 @@ std::shared_ptr<channel::CloudChannelServiceConnection>
 MakeCloudChannelServiceConnection(std::shared_ptr<CloudChannelServiceStub> stub,
                                   Options options) {
   options = CloudChannelServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<channel_internal::CloudChannelServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

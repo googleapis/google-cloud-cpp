@@ -34,20 +34,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VmMigrationConnectionImpl::VmMigrationConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<vmmigration_internal::VmMigrationStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<vmmigration::VmMigrationRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<vmmigration::VmMigrationBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<vmmigration::VmMigrationPollingPolicyOption>()->clone()) {
-}
+      options_(internal::MergeOptions(
+          std::move(options), vmmigration_internal::VmMigrationDefaultOptions(
+                                  VmMigrationConnection::options()))) {}
 
 StreamRange<google::cloud::vmmigration::v1::Source>
 VmMigrationConnectionImpl::ListSources(

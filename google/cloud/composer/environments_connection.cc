@@ -101,7 +101,7 @@ std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
   auto stub = composer_internal::CreateDefaultEnvironmentsStub(background->cq(),
                                                                options);
   return std::make_shared<composer_internal::EnvironmentsConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -117,9 +117,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<composer::EnvironmentsConnection> MakeEnvironmentsConnection(
     std::shared_ptr<EnvironmentsStub> stub, Options options) {
   options = EnvironmentsDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<composer_internal::EnvironmentsConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,23 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceManagerConnectionImpl::ServiceManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<servicemanagement::ServiceManagerRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<servicemanagement::ServiceManagerBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<servicemanagement::
-                       ServiceManagerConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<servicemanagement::ServiceManagerPollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicemanagement_internal::ServiceManagerDefaultOptions(
+              ServiceManagerConnection::options()))) {}
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerConnectionImpl::ListServices(

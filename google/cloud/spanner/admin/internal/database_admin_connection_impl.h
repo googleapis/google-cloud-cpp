@@ -48,7 +48,9 @@ class DatabaseAdminConnectionImpl
   DatabaseAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesRequest request)
@@ -127,7 +129,8 @@ class DatabaseAdminConnectionImpl
       return options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -136,7 +139,8 @@ class DatabaseAdminConnectionImpl
       return options.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<spanner_admin::DatabaseAdminConnectionIdempotencyPolicy>
@@ -148,16 +152,10 @@ class DatabaseAdminConnectionImpl
           .get<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub_;
-  std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<spanner_admin::DatabaseAdminConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -165,10 +163,13 @@ class DatabaseAdminConnectionImpl
       return options.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

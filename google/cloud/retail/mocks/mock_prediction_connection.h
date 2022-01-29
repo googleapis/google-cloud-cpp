@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockPredictionServiceConnection
     : public retail::PredictionServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::retail::v2::PredictResponse>, Predict,
               (google::cloud::retail::v2::PredictRequest const& request),
               (override));

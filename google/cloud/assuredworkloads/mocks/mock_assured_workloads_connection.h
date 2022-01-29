@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockAssuredWorkloadsServiceConnection
     : public assuredworkloads::AssuredWorkloadsServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>,
               CreateWorkload,
               (google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&

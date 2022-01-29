@@ -53,6 +53,8 @@ class AdminServiceConnection {
  public:
   virtual ~AdminServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       google::cloud::pubsublite::v1::CreateTopicRequest const& request);
 

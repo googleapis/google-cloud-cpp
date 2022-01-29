@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ValidationHelperV1Client::ValidationHelperV1Client(
     std::shared_ptr<ValidationHelperV1Connection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(binaryauthorization_internal::ValidationHelperV1DefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          binaryauthorization_internal::ValidationHelperV1DefaultOptions(
+              connection_->options()))) {}
 ValidationHelperV1Client::~ValidationHelperV1Client() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::

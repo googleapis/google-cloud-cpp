@@ -48,6 +48,8 @@ class Controller2Connection {
  public:
   virtual ~Controller2Connection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<
       google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
   RegisterDebuggee(

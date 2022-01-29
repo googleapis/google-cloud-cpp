@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockCompletionConnection : public talent::CompletionConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::CompleteQueryResponse>,
               CompleteQuery,
               (google::cloud::talent::v4::CompleteQueryRequest const& request),

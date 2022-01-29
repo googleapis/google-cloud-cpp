@@ -47,7 +47,9 @@ class PredictionServiceConnectionImpl
   PredictionServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<automl_internal::PredictionServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       google::cloud::automl::v1::PredictRequest const& request) override;
@@ -61,7 +63,7 @@ class PredictionServiceConnectionImpl
     if (options.has<automl::PredictionServiceRetryPolicyOption>()) {
       return options.get<automl::PredictionServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<automl::PredictionServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -70,7 +72,8 @@ class PredictionServiceConnectionImpl
       return options.get<automl::PredictionServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<automl::PredictionServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<automl::PredictionServiceConnectionIdempotencyPolicy>
@@ -82,16 +85,10 @@ class PredictionServiceConnectionImpl
           .get<automl::PredictionServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<automl::PredictionServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<automl_internal::PredictionServiceStub> stub_;
-  std::unique_ptr<automl::PredictionServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<automl::PredictionServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -99,10 +96,13 @@ class PredictionServiceConnectionImpl
       return options.get<automl::PredictionServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<automl::PredictionServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<automl_internal::PredictionServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

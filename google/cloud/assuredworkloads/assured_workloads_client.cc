@@ -29,8 +29,10 @@ AssuredWorkloadsServiceClient::AssuredWorkloadsServiceClient(
     std::shared_ptr<AssuredWorkloadsServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
+              connection_->options()))) {}
 AssuredWorkloadsServiceClient::~AssuredWorkloadsServiceClient() = default;
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>

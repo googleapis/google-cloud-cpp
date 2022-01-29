@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CatalogServiceClient::CatalogServiceClient(
     std::shared_ptr<CatalogServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          retail_internal::CatalogServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::CatalogServiceDefaultOptions(
+                                  connection_->options()))) {}
 CatalogServiceClient::~CatalogServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::Catalog>

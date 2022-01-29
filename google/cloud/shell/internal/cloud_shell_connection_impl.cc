@@ -33,20 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudShellServiceConnectionImpl::CloudShellServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<shell_internal::CloudShellServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<shell::CloudShellServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<shell::CloudShellServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<shell::CloudShellServicePollingPolicyOption>()->clone()) {
-}
+      options_(internal::MergeOptions(
+          std::move(options), shell_internal::CloudShellServiceDefaultOptions(
+                                  CloudShellServiceConnection::options()))) {}
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceConnectionImpl::GetEnvironment(

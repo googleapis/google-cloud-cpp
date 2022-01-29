@@ -43,8 +43,9 @@ class DlpServiceConnectionImpl : public dlp::DlpServiceConnection {
 
   DlpServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dlp_internal::DlpServiceStub> stub,
-      Options const& options);
+      std::shared_ptr<dlp_internal::DlpServiceStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       google::privacy::dlp::v2::InspectContentRequest const& request) override;
@@ -179,7 +180,7 @@ class DlpServiceConnectionImpl : public dlp::DlpServiceConnection {
     if (options.has<dlp::DlpServiceRetryPolicyOption>()) {
       return options.get<dlp::DlpServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<dlp::DlpServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -187,7 +188,7 @@ class DlpServiceConnectionImpl : public dlp::DlpServiceConnection {
     if (options.has<dlp::DlpServiceBackoffPolicyOption>()) {
       return options.get<dlp::DlpServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<dlp::DlpServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<dlp::DlpServiceConnectionIdempotencyPolicy>
@@ -197,15 +198,13 @@ class DlpServiceConnectionImpl : public dlp::DlpServiceConnection {
       return options.get<dlp::DlpServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<dlp::DlpServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dlp_internal::DlpServiceStub> stub_;
-  std::unique_ptr<dlp::DlpServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<dlp::DlpServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

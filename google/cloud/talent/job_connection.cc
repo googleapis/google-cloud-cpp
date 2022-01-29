@@ -113,7 +113,7 @@ std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
   auto stub =
       talent_internal::CreateDefaultJobServiceStub(background->cq(), options);
   return std::make_shared<talent_internal::JobServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -129,9 +129,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<talent::JobServiceConnection> MakeJobServiceConnection(
     std::shared_ptr<JobServiceStub> stub, Options options) {
   options = JobServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<talent_internal::JobServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

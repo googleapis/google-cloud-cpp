@@ -52,6 +52,8 @@ class EventarcConnection {
  public:
   virtual ~EventarcConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
       google::cloud::eventarc::v1::GetTriggerRequest const& request);
 

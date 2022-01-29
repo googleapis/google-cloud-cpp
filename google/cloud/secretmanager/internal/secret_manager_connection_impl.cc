@@ -33,20 +33,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecretManagerServiceConnectionImpl::SecretManagerServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<secretmanager_internal::SecretManagerServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<secretmanager::SecretManagerServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<secretmanager::SecretManagerServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<secretmanager::
-                       SecretManagerServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          secretmanager_internal::SecretManagerServiceDefaultOptions(
+              SecretManagerServiceConnection::options()))) {}
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceConnectionImpl::ListSecrets(

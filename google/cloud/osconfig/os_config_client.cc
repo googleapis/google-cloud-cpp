@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsConfigServiceClient::OsConfigServiceClient(
     std::shared_ptr<OsConfigServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(osconfig_internal::OsConfigServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), osconfig_internal::OsConfigServiceDefaultOptions(
+                                  connection_->options()))) {}
 OsConfigServiceClient::~OsConfigServiceClient() = default;
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>

@@ -49,6 +49,8 @@ class TopicStatsServiceConnection {
  public:
   virtual ~TopicStatsServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
       google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request);

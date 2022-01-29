@@ -47,7 +47,9 @@ class CloudShellServiceConnectionImpl
   CloudShellServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<shell_internal::CloudShellServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
@@ -74,7 +76,7 @@ class CloudShellServiceConnectionImpl
     if (options.has<shell::CloudShellServiceRetryPolicyOption>()) {
       return options.get<shell::CloudShellServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<shell::CloudShellServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -83,7 +85,7 @@ class CloudShellServiceConnectionImpl
       return options.get<shell::CloudShellServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<shell::CloudShellServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<shell::CloudShellServiceConnectionIdempotencyPolicy>
@@ -95,16 +97,10 @@ class CloudShellServiceConnectionImpl
           .get<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<shell_internal::CloudShellServiceStub> stub_;
-  std::unique_ptr<shell::CloudShellServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<shell::CloudShellServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -112,10 +108,12 @@ class CloudShellServiceConnectionImpl
       return options.get<shell::CloudShellServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<shell::CloudShellServicePollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<shell_internal::CloudShellServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

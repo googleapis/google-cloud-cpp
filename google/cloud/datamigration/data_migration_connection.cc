@@ -191,7 +191,7 @@ MakeDataMigrationServiceConnection(Options options) {
       background->cq(), options);
   return std::make_shared<
       datamigration_internal::DataMigrationServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -208,10 +208,10 @@ std::shared_ptr<datamigration::DataMigrationServiceConnection>
 MakeDataMigrationServiceConnection(
     std::shared_ptr<DataMigrationServiceStub> stub, Options options) {
   options = DataMigrationServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       datamigration_internal::DataMigrationServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FirewallClient::FirewallClient(std::shared_ptr<FirewallConnection> connection,
                                Options options)
     : connection_(std::move(connection)),
-      options_(appengine_internal::FirewallDefaultOptions(std::move(options))) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          appengine_internal::FirewallDefaultOptions(connection_->options()))) {
 }
 FirewallClient::~FirewallClient() = default;
 

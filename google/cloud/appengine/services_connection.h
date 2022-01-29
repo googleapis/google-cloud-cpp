@@ -52,6 +52,8 @@ class ServicesConnection {
  public:
   virtual ~ServicesConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::appengine::v1::Service> ListServices(
       google::appengine::v1::ListServicesRequest request);
 

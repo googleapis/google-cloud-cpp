@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockIAMCredentialsConnection : public iam::IAMCredentialsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>,
       GenerateAccessToken,

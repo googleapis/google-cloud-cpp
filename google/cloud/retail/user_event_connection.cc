@@ -79,7 +79,7 @@ std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
   auto stub = retail_internal::CreateDefaultUserEventServiceStub(
       background->cq(), options);
   return std::make_shared<retail_internal::UserEventServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -96,9 +96,9 @@ std::shared_ptr<retail::UserEventServiceConnection>
 MakeUserEventServiceConnection(std::shared_ptr<UserEventServiceStub> stub,
                                Options options) {
   options = UserEventServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<retail_internal::UserEventServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

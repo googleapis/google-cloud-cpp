@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockServiceManagerConnection
     : public servicemanagement::ServiceManagerConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::api::servicemanagement::v1::ManagedService>,
               ListServices,
               (google::api::servicemanagement::v1::ListServicesRequest request),

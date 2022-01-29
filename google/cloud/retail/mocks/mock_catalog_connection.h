@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockCatalogServiceConnection : public retail::CatalogServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::retail::v2::Catalog>, ListCatalogs,
               (google::cloud::retail::v2::ListCatalogsRequest request),
               (override));

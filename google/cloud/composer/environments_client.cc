@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EnvironmentsClient::EnvironmentsClient(
     std::shared_ptr<EnvironmentsConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          composer_internal::EnvironmentsDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), composer_internal::EnvironmentsDefaultOptions(
+                                  connection_->options()))) {}
 EnvironmentsClient::~EnvironmentsClient() = default;
 
 future<

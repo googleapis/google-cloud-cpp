@@ -44,7 +44,9 @@ class GrafeasConnectionImpl : public containeranalysis::GrafeasConnection {
   GrafeasConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<containeranalysis_internal::GrafeasStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
       grafeas::v1::GetOccurrenceRequest const& request) override;
@@ -94,7 +96,7 @@ class GrafeasConnectionImpl : public containeranalysis::GrafeasConnection {
       return options.get<containeranalysis::GrafeasRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<containeranalysis::GrafeasRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -103,7 +105,8 @@ class GrafeasConnectionImpl : public containeranalysis::GrafeasConnection {
       return options.get<containeranalysis::GrafeasBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<containeranalysis::GrafeasBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<containeranalysis::GrafeasConnectionIdempotencyPolicy>
@@ -115,16 +118,14 @@ class GrafeasConnectionImpl : public containeranalysis::GrafeasConnection {
           .get<containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<containeranalysis_internal::GrafeasStub> stub_;
-  std::unique_ptr<containeranalysis::GrafeasRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<containeranalysis::GrafeasConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockAccessContextManagerConnection
     : public accesscontextmanager::AccessContextManagerConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>,
       ListAccessPolicies,

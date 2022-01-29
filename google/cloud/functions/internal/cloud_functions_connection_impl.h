@@ -48,7 +48,9 @@ class CloudFunctionsServiceConnectionImpl
   CloudFunctionsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::functions::v1::CloudFunction> ListFunctions(
       google::cloud::functions::v1::ListFunctionsRequest request) override;
@@ -98,7 +100,8 @@ class CloudFunctionsServiceConnectionImpl
       return options.get<functions::CloudFunctionsServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<functions::CloudFunctionsServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -107,7 +110,8 @@ class CloudFunctionsServiceConnectionImpl
       return options.get<functions::CloudFunctionsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<functions::CloudFunctionsServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<functions::CloudFunctionsServiceConnectionIdempotencyPolicy>
@@ -121,16 +125,11 @@ class CloudFunctionsServiceConnectionImpl
                    CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<
+            functions::CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub_;
-  std::unique_ptr<functions::CloudFunctionsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<functions::CloudFunctionsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -138,10 +137,13 @@ class CloudFunctionsServiceConnectionImpl
       return options.get<functions::CloudFunctionsServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<functions::CloudFunctionsServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

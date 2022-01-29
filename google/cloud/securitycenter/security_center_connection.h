@@ -53,6 +53,8 @@ class SecurityCenterConnection {
  public:
   virtual ~SecurityCenterConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<
       StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(

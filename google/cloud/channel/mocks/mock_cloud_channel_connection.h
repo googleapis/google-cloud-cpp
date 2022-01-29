@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockCloudChannelServiceConnection
     : public channel::CloudChannelServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::channel::v1::Customer>, ListCustomers,
               (google::cloud::channel::v1::ListCustomersRequest request),
               (override));

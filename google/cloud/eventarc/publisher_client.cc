@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PublisherClient::PublisherClient(
     std::shared_ptr<PublisherConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(eventarc_internal::PublisherDefaultOptions(std::move(options))) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          eventarc_internal::PublisherDefaultOptions(connection_->options()))) {
 }
 PublisherClient::~PublisherClient() = default;
 

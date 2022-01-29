@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ArtifactRegistryClient::ArtifactRegistryClient(
     std::shared_ptr<ArtifactRegistryConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(artifactregistry_internal::ArtifactRegistryDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          artifactregistry_internal::ArtifactRegistryDefaultOptions(
+              connection_->options()))) {}
 ArtifactRegistryClient::~ArtifactRegistryClient() = default;
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>

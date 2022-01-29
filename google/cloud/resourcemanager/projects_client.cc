@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectsClient::ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
                                Options options)
     : connection_(std::move(connection)),
-      options_(resourcemanager_internal::ProjectsDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), resourcemanager_internal::ProjectsDefaultOptions(
+                                  connection_->options()))) {}
 ProjectsClient::~ProjectsClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Project>

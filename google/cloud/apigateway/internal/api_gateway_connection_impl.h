@@ -48,7 +48,9 @@ class ApiGatewayServiceConnectionImpl
   ApiGatewayServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
       google::cloud::apigateway::v1::ListGatewaysRequest request) override;
@@ -109,7 +111,8 @@ class ApiGatewayServiceConnectionImpl
       return options.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -118,7 +121,8 @@ class ApiGatewayServiceConnectionImpl
       return options.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy>
@@ -130,16 +134,10 @@ class ApiGatewayServiceConnectionImpl
           .get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub_;
-  std::unique_ptr<apigateway::ApiGatewayServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -147,10 +145,13 @@ class ApiGatewayServiceConnectionImpl
       return options.get<apigateway::ApiGatewayServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<apigateway::ApiGatewayServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

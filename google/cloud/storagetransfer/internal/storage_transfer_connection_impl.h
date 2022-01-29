@@ -49,7 +49,9 @@ class StorageTransferServiceConnectionImpl
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<storagetransfer_internal::StorageTransferServiceStub>
           stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
@@ -93,7 +95,9 @@ class StorageTransferServiceConnectionImpl
           .get<storagetransfer::StorageTransferServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<storagetransfer::StorageTransferServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -104,7 +108,9 @@ class StorageTransferServiceConnectionImpl
           .get<storagetransfer::StorageTransferServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<storagetransfer::StorageTransferServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -119,17 +125,11 @@ class StorageTransferServiceConnectionImpl
                    StorageTransferServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<storagetransfer::
+                 StorageTransferServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<storagetransfer_internal::StorageTransferServiceStub> stub_;
-  std::unique_ptr<storagetransfer::StorageTransferServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      storagetransfer::StorageTransferServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -139,10 +139,14 @@ class StorageTransferServiceConnectionImpl
           .get<storagetransfer::StorageTransferServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<storagetransfer::StorageTransferServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<storagetransfer_internal::StorageTransferServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

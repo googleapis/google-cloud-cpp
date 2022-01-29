@@ -33,19 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VersionsConnectionImpl::VersionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::VersionsStub> stub,
-    Options const& options)
+    std::shared_ptr<appengine_internal::VersionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<appengine::VersionsRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<appengine::VersionsBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<appengine::VersionsConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<appengine::VersionsPollingPolicyOption>()->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), appengine_internal::VersionsDefaultOptions(
+                                  VersionsConnection::options()))) {}
 
 StreamRange<google::appengine::v1::Version>
 VersionsConnectionImpl::ListVersions(

@@ -29,8 +29,10 @@ StorageTransferServiceClient::StorageTransferServiceClient(
     std::shared_ptr<StorageTransferServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(storagetransfer_internal::StorageTransferServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          storagetransfer_internal::StorageTransferServiceDefaultOptions(
+              connection_->options()))) {}
 StorageTransferServiceClient::~StorageTransferServiceClient() = default;
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>

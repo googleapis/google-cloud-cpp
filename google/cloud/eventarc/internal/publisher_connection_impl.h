@@ -42,8 +42,9 @@ class PublisherConnectionImpl : public eventarc::PublisherConnection {
 
   PublisherConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<eventarc_internal::PublisherStub> stub,
-      Options const& options);
+      std::shared_ptr<eventarc_internal::PublisherStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::eventarc::publishing::v1::
                PublishChannelConnectionEventsResponse>
@@ -57,7 +58,7 @@ class PublisherConnectionImpl : public eventarc::PublisherConnection {
     if (options.has<eventarc::PublisherRetryPolicyOption>()) {
       return options.get<eventarc::PublisherRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<eventarc::PublisherRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -65,7 +66,7 @@ class PublisherConnectionImpl : public eventarc::PublisherConnection {
     if (options.has<eventarc::PublisherBackoffPolicyOption>()) {
       return options.get<eventarc::PublisherBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<eventarc::PublisherBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<eventarc::PublisherConnectionIdempotencyPolicy>
@@ -76,15 +77,13 @@ class PublisherConnectionImpl : public eventarc::PublisherConnection {
           .get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<eventarc_internal::PublisherStub> stub_;
-  std::unique_ptr<eventarc::PublisherRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<eventarc::PublisherConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

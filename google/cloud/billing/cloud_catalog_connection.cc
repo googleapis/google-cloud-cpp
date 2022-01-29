@@ -71,7 +71,7 @@ std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
   auto stub = billing_internal::CreateDefaultCloudCatalogStub(background->cq(),
                                                               options);
   return std::make_shared<billing_internal::CloudCatalogConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -87,9 +87,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<billing::CloudCatalogConnection> MakeCloudCatalogConnection(
     std::shared_ptr<CloudCatalogStub> stub, Options options) {
   options = CloudCatalogDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<billing_internal::CloudCatalogConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

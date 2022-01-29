@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockApiGatewayServiceConnection
     : public apigateway::ApiGatewayServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::apigateway::v1::Gateway>, ListGateways,
               (google::cloud::apigateway::v1::ListGatewaysRequest request),
               (override));

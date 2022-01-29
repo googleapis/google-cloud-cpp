@@ -33,20 +33,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessApprovalConnectionImpl::AccessApprovalConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<accessapproval::AccessApprovalRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<accessapproval::AccessApprovalBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<accessapproval::
-                       AccessApprovalConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          accessapproval_internal::AccessApprovalDefaultOptions(
+              AccessApprovalConnection::options()))) {}
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalConnectionImpl::ListApprovalRequests(

@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockServiceUsageConnection : public serviceusage::ServiceUsageConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
       EnableService,

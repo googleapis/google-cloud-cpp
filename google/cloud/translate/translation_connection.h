@@ -53,6 +53,8 @@ class TranslationServiceConnection {
  public:
   virtual ~TranslationServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::translation::v3::TranslateTextResponse>
   TranslateText(
       google::cloud::translation::v3::TranslateTextRequest const& request);

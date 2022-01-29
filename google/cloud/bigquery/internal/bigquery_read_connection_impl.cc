@@ -33,18 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryReadConnectionImpl::BigQueryReadConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
-    Options const& options)
+    std::shared_ptr<bigquery_internal::BigQueryReadStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<bigquery::BigQueryReadRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<bigquery::BigQueryReadBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), bigquery_internal::BigQueryReadDefaultOptions(
+                                  BigQueryReadConnection::options()))) {}
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadConnectionImpl::CreateReadSession(

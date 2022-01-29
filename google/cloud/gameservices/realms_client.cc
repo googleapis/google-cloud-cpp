@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RealmsServiceClient::RealmsServiceClient(
     std::shared_ptr<RealmsServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(gameservices_internal::RealmsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          gameservices_internal::RealmsServiceDefaultOptions(
+              connection_->options()))) {}
 RealmsServiceClient::~RealmsServiceClient() = default;
 
 StreamRange<google::cloud::gaming::v1::Realm> RealmsServiceClient::ListRealms(

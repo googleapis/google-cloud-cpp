@@ -167,7 +167,7 @@ std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
   auto stub =
       iot_internal::CreateDefaultDeviceManagerStub(background->cq(), options);
   return std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -183,9 +183,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<iot::DeviceManagerConnection> MakeDeviceManagerConnection(
     std::shared_ptr<DeviceManagerStub> stub, Options options) {
   options = DeviceManagerDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

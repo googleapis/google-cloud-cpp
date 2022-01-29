@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsLoginServiceClient::OsLoginServiceClient(
     std::shared_ptr<OsLoginServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          oslogin_internal::OsLoginServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), oslogin_internal::OsLoginServiceDefaultOptions(
+                                  connection_->options()))) {}
 OsLoginServiceClient::~OsLoginServiceClient() = default;
 
 Status OsLoginServiceClient::DeletePosixAccount(std::string const& name,

@@ -49,6 +49,8 @@ class PredictionServiceConnection {
  public:
   virtual ~PredictionServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request);
 };

@@ -52,6 +52,8 @@ class ImageAnnotatorConnection {
  public:
   virtual ~ImageAnnotatorConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);

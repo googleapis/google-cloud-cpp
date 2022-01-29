@@ -48,7 +48,9 @@ class ReachabilityServiceConnectionImpl
   ReachabilityServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
   ListConnectivityTests(
@@ -90,7 +92,9 @@ class ReachabilityServiceConnectionImpl
           .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -101,7 +105,9 @@ class ReachabilityServiceConnectionImpl
           .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -116,17 +122,11 @@ class ReachabilityServiceConnectionImpl
                    ReachabilityServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<networkmanagement::
+                 ReachabilityServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub_;
-  std::unique_ptr<networkmanagement::ReachabilityServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      networkmanagement::ReachabilityServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -136,10 +136,14 @@ class ReachabilityServiceConnectionImpl
           .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

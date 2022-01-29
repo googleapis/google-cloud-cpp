@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockCloudSchedulerConnection
     : public scheduler::CloudSchedulerConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::scheduler::v1::Job>, ListJobs,
               (google::cloud::scheduler::v1::ListJobsRequest request),
               (override));

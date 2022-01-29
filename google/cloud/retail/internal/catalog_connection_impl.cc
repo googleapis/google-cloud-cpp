@@ -32,18 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CatalogServiceConnectionImpl::CatalogServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_internal::CatalogServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<retail_internal::CatalogServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<retail::CatalogServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<retail::CatalogServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<retail::CatalogServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::CatalogServiceDefaultOptions(
+                                  CatalogServiceConnection::options()))) {}
 
 StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceConnectionImpl::ListCatalogs(

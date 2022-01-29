@@ -86,7 +86,7 @@ std::shared_ptr<EventarcConnection> MakeEventarcConnection(Options options) {
   auto stub =
       eventarc_internal::CreateDefaultEventarcStub(background->cq(), options);
   return std::make_shared<eventarc_internal::EventarcConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -102,9 +102,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<eventarc::EventarcConnection> MakeEventarcConnection(
     std::shared_ptr<EventarcStub> stub, Options options) {
   options = EventarcDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<eventarc_internal::EventarcConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

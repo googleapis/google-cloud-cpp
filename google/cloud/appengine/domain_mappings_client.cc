@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DomainMappingsClient::DomainMappingsClient(
     std::shared_ptr<DomainMappingsConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(appengine_internal::DomainMappingsDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), appengine_internal::DomainMappingsDefaultOptions(
+                                  connection_->options()))) {}
 DomainMappingsClient::~DomainMappingsClient() = default;
 
 StreamRange<google::appengine::v1::DomainMapping>

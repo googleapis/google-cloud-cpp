@@ -46,7 +46,9 @@ class GoldenKitchenSinkConnectionImpl
   GoldenKitchenSinkConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
-    Options const& options);
+    Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
@@ -80,7 +82,7 @@ class GoldenKitchenSinkConnectionImpl
     if (options.has<golden::GoldenKitchenSinkRetryPolicyOption>()) {
       return options.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -88,7 +90,7 @@ class GoldenKitchenSinkConnectionImpl
     if (options.has<golden::GoldenKitchenSinkBackoffPolicyOption>()) {
       return options.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<golden::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
@@ -96,14 +98,13 @@ class GoldenKitchenSinkConnectionImpl
     if (options.has<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
       return options.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->
+clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub_;
-  std::unique_ptr<golden::GoldenKitchenSinkRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<golden::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,8 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContainerAnalysisClient::ContainerAnalysisClient(
     std::shared_ptr<ContainerAnalysisConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(containeranalysis_internal::ContainerAnalysisDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          containeranalysis_internal::ContainerAnalysisDefaultOptions(
+              connection_->options()))) {}
 ContainerAnalysisClient::~ContainerAnalysisClient() = default;
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(

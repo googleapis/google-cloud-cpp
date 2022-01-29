@@ -56,7 +56,7 @@ std::shared_ptr<TextToSpeechConnection> MakeTextToSpeechConnection(
   auto stub = texttospeech_internal::CreateDefaultTextToSpeechStub(
       background->cq(), options);
   return std::make_shared<texttospeech_internal::TextToSpeechConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -73,9 +73,9 @@ std::shared_ptr<texttospeech::TextToSpeechConnection>
 MakeTextToSpeechConnection(std::shared_ptr<TextToSpeechStub> stub,
                            Options options) {
   options = TextToSpeechDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<texttospeech_internal::TextToSpeechConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

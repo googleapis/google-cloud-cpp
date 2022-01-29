@@ -34,22 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VpcAccessServiceConnectionImpl::VpcAccessServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<vpcaccess::
-                       VpcAccessServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          vpcaccess_internal::VpcAccessServiceDefaultOptions(
+              VpcAccessServiceConnection::options()))) {}
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnectionImpl::CreateConnector(

@@ -27,7 +27,7 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection, Options options) : connection_(std::move(connection)), options_(golden_internal::GoldenThingAdminDefaultOptions(std::move(options))) {}
+GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection, Options options) : connection_(std::move(connection)), options_(internal::MergeOptions(std::move(options), golden_internal::GoldenThingAdminDefaultOptions(connection_->options()))) {}
 GoldenThingAdminClient::~GoldenThingAdminClient() = default;
 
 StreamRange<google::test::admin::database::v1::Database>

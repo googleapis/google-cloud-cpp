@@ -52,6 +52,8 @@ class CloudShellServiceConnection {
  public:
   virtual ~CloudShellServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request);
 

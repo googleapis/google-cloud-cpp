@@ -47,7 +47,9 @@ class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
   ProductServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<retail_internal::ProductServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       google::cloud::retail::v2::CreateProductRequest const& request) override;
@@ -88,7 +90,7 @@ class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
     if (options.has<retail::ProductServiceRetryPolicyOption>()) {
       return options.get<retail::ProductServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<retail::ProductServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -96,7 +98,7 @@ class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
     if (options.has<retail::ProductServiceBackoffPolicyOption>()) {
       return options.get<retail::ProductServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<retail::ProductServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<retail::ProductServiceConnectionIdempotencyPolicy>
@@ -108,26 +110,22 @@ class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
           .get<retail::ProductServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<retail::ProductServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::ProductServiceStub> stub_;
-  std::unique_ptr<retail::ProductServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::ProductServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<retail::ProductServicePollingPolicyOption>()) {
       return options.get<retail::ProductServicePollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<retail::ProductServicePollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<retail_internal::ProductServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

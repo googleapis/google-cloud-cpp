@@ -49,6 +49,8 @@ class CloudTasksConnection {
  public:
   virtual ~CloudTasksConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
       google::cloud::tasks::v2::ListQueuesRequest request);
 

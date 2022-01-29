@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockServiceControllerConnection
     : public servicecontrol::ServiceControllerConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::CheckResponse>, Check,
               (google::api::servicecontrol::v1::CheckRequest const& request),
               (override));

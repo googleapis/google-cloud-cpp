@@ -47,7 +47,9 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
   AdminServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<pubsublite_internal::AdminServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       google::cloud::pubsublite::v1::CreateTopicRequest const& request)
@@ -126,7 +128,7 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
     if (options.has<pubsublite::AdminServiceRetryPolicyOption>()) {
       return options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -135,7 +137,7 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
       return options.get<pubsublite::AdminServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<pubsublite::AdminServiceConnectionIdempotencyPolicy>
@@ -147,16 +149,10 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
           .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<pubsublite_internal::AdminServiceStub> stub_;
-  std::unique_ptr<pubsublite::AdminServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<pubsublite::AdminServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -164,10 +160,12 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
       return options.get<pubsublite::AdminServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<pubsublite::AdminServicePollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<pubsublite_internal::AdminServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

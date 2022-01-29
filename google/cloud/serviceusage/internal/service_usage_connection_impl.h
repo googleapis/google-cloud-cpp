@@ -47,7 +47,9 @@ class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
   ServiceUsageConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
   EnableService(google::api::serviceusage::v1::EnableServiceRequest const&
@@ -79,7 +81,7 @@ class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
       return options.get<serviceusage::ServiceUsageRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<serviceusage::ServiceUsageRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -88,7 +90,8 @@ class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
       return options.get<serviceusage::ServiceUsageBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<serviceusage::ServiceUsageBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy>
@@ -100,16 +103,10 @@ class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
           .get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub_;
-  std::unique_ptr<serviceusage::ServiceUsageRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -117,10 +114,13 @@ class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
       return options.get<serviceusage::ServiceUsagePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<serviceusage::ServiceUsagePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

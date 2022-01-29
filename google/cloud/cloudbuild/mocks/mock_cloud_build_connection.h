@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockCloudBuildConnection : public cloudbuild::CloudBuildConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v1::Build>>, CreateBuild,
       (google::devtools::cloudbuild::v1::CreateBuildRequest const& request),

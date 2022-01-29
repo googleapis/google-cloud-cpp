@@ -49,6 +49,8 @@ class IAMCredentialsConnection {
  public:
   virtual ~IAMCredentialsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       google::iam::credentials::v1::GenerateAccessTokenRequest const& request);

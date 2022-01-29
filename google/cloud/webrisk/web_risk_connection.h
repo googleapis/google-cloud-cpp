@@ -49,6 +49,8 @@ class WebRiskServiceConnection {
  public:
   virtual ~WebRiskServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);

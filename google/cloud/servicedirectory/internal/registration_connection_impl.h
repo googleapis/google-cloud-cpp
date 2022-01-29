@@ -45,7 +45,9 @@ class RegistrationServiceConnectionImpl
   RegistrationServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
@@ -125,7 +127,9 @@ class RegistrationServiceConnectionImpl
           .get<servicedirectory::RegistrationServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<servicedirectory::RegistrationServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -136,7 +140,9 @@ class RegistrationServiceConnectionImpl
           .get<servicedirectory::RegistrationServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<servicedirectory::RegistrationServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -151,17 +157,15 @@ class RegistrationServiceConnectionImpl
                    RegistrationServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<servicedirectory::
+                 RegistrationServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub_;
-  std::unique_ptr<servicedirectory::RegistrationServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      servicedirectory::RegistrationServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

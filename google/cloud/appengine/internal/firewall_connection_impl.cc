@@ -32,17 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallConnectionImpl::FirewallConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::FirewallStub> stub,
-    Options const& options)
+    std::shared_ptr<appengine_internal::FirewallStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<appengine::FirewallRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<appengine::FirewallBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<appengine::FirewallConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), appengine_internal::FirewallDefaultOptions(
+                                  FirewallConnection::options()))) {}
 
 StreamRange<google::appengine::v1::FirewallRule>
 FirewallConnectionImpl::ListIngressRules(

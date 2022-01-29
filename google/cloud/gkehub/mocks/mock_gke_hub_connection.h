@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockGkeHubConnection : public gkehub::GkeHubConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::gkehub::v1::Membership>,
               ListMemberships,
               (google::cloud::gkehub::v1::ListMembershipsRequest request),

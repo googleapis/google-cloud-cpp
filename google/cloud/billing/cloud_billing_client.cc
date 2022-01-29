@@ -30,8 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudBillingClient::CloudBillingClient(
     std::shared_ptr<CloudBillingConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          billing_internal::CloudBillingDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::CloudBillingDefaultOptions(
+                                  connection_->options()))) {}
 CloudBillingClient::~CloudBillingClient() = default;
 
 StatusOr<google::cloud::billing::v1::BillingAccount>

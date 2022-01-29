@@ -33,18 +33,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoMlConnectionImpl::AutoMlConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<automl_internal::AutoMlStub> stub, Options const& options)
+    std::shared_ptr<automl_internal::AutoMlStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<automl::AutoMlRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<automl::AutoMlBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<automl::AutoMlConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<automl::AutoMlPollingPolicyOption>()->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          automl_internal::AutoMlDefaultOptions(AutoMlConnection::options()))) {
+}
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlConnectionImpl::CreateDataset(

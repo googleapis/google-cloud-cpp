@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VersionsClient::VersionsClient(std::shared_ptr<VersionsConnection> connection,
                                Options options)
     : connection_(std::move(connection)),
-      options_(appengine_internal::VersionsDefaultOptions(std::move(options))) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          appengine_internal::VersionsDefaultOptions(connection_->options()))) {
 }
 VersionsClient::~VersionsClient() = default;
 

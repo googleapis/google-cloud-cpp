@@ -280,7 +280,7 @@ std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
   auto stub =
       dlp_internal::CreateDefaultDlpServiceStub(background->cq(), options);
   return std::make_shared<dlp_internal::DlpServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -296,9 +296,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<dlp::DlpServiceConnection> MakeDlpServiceConnection(
     std::shared_ptr<DlpServiceStub> stub, Options options) {
   options = DlpServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<dlp_internal::DlpServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

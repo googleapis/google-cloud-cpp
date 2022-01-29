@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessApprovalClient::AccessApprovalClient(
     std::shared_ptr<AccessApprovalConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(accessapproval_internal::AccessApprovalDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          accessapproval_internal::AccessApprovalDefaultOptions(
+              connection_->options()))) {}
 AccessApprovalClient::~AccessApprovalClient() = default;
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>

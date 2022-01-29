@@ -29,9 +29,10 @@ GameServerDeploymentsServiceClient::GameServerDeploymentsServiceClient(
     std::shared_ptr<GameServerDeploymentsServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(
+      options_(internal::MergeOptions(
+          std::move(options),
           gameservices_internal::GameServerDeploymentsServiceDefaultOptions(
-              std::move(options))) {}
+              connection_->options()))) {}
 GameServerDeploymentsServiceClient::~GameServerDeploymentsServiceClient() =
     default;
 

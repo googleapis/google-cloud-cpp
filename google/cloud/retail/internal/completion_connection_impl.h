@@ -47,7 +47,9 @@ class CompletionServiceConnectionImpl
   CompletionServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<retail_internal::CompletionServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request) override;
@@ -63,7 +65,7 @@ class CompletionServiceConnectionImpl
     if (options.has<retail::CompletionServiceRetryPolicyOption>()) {
       return options.get<retail::CompletionServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<retail::CompletionServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -72,7 +74,8 @@ class CompletionServiceConnectionImpl
       return options.get<retail::CompletionServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<retail::CompletionServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy>
@@ -84,16 +87,10 @@ class CompletionServiceConnectionImpl
           .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::CompletionServiceStub> stub_;
-  std::unique_ptr<retail::CompletionServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -101,10 +98,13 @@ class CompletionServiceConnectionImpl
       return options.get<retail::CompletionServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<retail::CompletionServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<retail_internal::CompletionServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

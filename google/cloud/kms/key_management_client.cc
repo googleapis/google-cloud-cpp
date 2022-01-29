@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyManagementServiceClient::KeyManagementServiceClient(
     std::shared_ptr<KeyManagementServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(kms_internal::KeyManagementServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), kms_internal::KeyManagementServiceDefaultOptions(
+                                  connection_->options()))) {}
 KeyManagementServiceClient::~KeyManagementServiceClient() = default;
 
 StreamRange<google::cloud::kms::v1::KeyRing>

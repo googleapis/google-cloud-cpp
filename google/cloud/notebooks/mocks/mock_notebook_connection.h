@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockNotebookServiceConnection
     : public notebooks::NotebookServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::notebooks::v1::Instance>,
               ListInstances,
               (google::cloud::notebooks::v1::ListInstancesRequest request),

@@ -32,20 +32,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IamCheckerConnectionImpl::IamCheckerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<policytroubleshooter_internal::IamCheckerStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<policytroubleshooter::IamCheckerRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<policytroubleshooter::IamCheckerBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<policytroubleshooter::
-                       IamCheckerConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          policytroubleshooter_internal::IamCheckerDefaultOptions(
+              IamCheckerConnection::options()))) {}
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerConnectionImpl::TroubleshootIamPolicy(

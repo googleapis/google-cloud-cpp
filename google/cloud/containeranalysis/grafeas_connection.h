@@ -49,6 +49,8 @@ class GrafeasConnection {
  public:
   virtual ~GrafeasConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<grafeas::v1::Occurrence> GetOccurrence(
       grafeas::v1::GetOccurrenceRequest const& request);
 

@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockTextToSpeechConnection : public texttospeech::TextToSpeechConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>, ListVoices,
       (google::cloud::texttospeech::v1::ListVoicesRequest const& request),

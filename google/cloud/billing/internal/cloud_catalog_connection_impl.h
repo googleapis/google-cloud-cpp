@@ -44,7 +44,9 @@ class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
   CloudCatalogConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<billing_internal::CloudCatalogStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::billing::v1::Service> ListServices(
       google::cloud::billing::v1::ListServicesRequest request) override;
@@ -58,7 +60,7 @@ class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
     if (options.has<billing::CloudCatalogRetryPolicyOption>()) {
       return options.get<billing::CloudCatalogRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<billing::CloudCatalogRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -66,7 +68,7 @@ class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
     if (options.has<billing::CloudCatalogBackoffPolicyOption>()) {
       return options.get<billing::CloudCatalogBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<billing::CloudCatalogBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy>
@@ -77,16 +79,14 @@ class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
           .get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_internal::CloudCatalogStub> stub_;
-  std::unique_ptr<billing::CloudCatalogRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

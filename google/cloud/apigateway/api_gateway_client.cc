@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApiGatewayServiceClient::ApiGatewayServiceClient(
     std::shared_ptr<ApiGatewayServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(apigateway_internal::ApiGatewayServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          apigateway_internal::ApiGatewayServiceDefaultOptions(
+              connection_->options()))) {}
 ApiGatewayServiceClient::~ApiGatewayServiceClient() = default;
 
 StreamRange<google::cloud::apigateway::v1::Gateway>

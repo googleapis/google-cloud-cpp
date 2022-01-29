@@ -34,27 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GameServerConfigsServiceConnectionImpl::GameServerConfigsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  gameservices::
-                      GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          gameservices_internal::GameServerConfigsServiceDefaultOptions(
+              GameServerConfigsServiceConnection::options()))) {}
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
 GameServerConfigsServiceConnectionImpl::ListGameServerConfigs(

@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VpcAccessServiceClient::VpcAccessServiceClient(
     std::shared_ptr<VpcAccessServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(vpcaccess_internal::VpcAccessServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          vpcaccess_internal::VpcAccessServiceDefaultOptions(
+              connection_->options()))) {}
 VpcAccessServiceClient::~VpcAccessServiceClient() = default;
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>

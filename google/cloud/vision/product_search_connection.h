@@ -53,6 +53,8 @@ class ProductSearchConnection {
  public:
   virtual ~ProductSearchConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
       google::cloud::vision::v1::CreateProductSetRequest const& request);
 

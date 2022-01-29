@@ -43,8 +43,9 @@ class CloudTasksConnectionImpl : public tasks::CloudTasksConnection {
 
   CloudTasksConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<tasks_internal::CloudTasksStub> stub,
-      Options const& options);
+      std::shared_ptr<tasks_internal::CloudTasksStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
       google::cloud::tasks::v2::ListQueuesRequest request) override;
@@ -100,7 +101,7 @@ class CloudTasksConnectionImpl : public tasks::CloudTasksConnection {
     if (options.has<tasks::CloudTasksRetryPolicyOption>()) {
       return options.get<tasks::CloudTasksRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<tasks::CloudTasksRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -108,7 +109,7 @@ class CloudTasksConnectionImpl : public tasks::CloudTasksConnection {
     if (options.has<tasks::CloudTasksBackoffPolicyOption>()) {
       return options.get<tasks::CloudTasksBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<tasks::CloudTasksBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<tasks::CloudTasksConnectionIdempotencyPolicy>
@@ -118,15 +119,13 @@ class CloudTasksConnectionImpl : public tasks::CloudTasksConnection {
       return options.get<tasks::CloudTasksConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<tasks::CloudTasksConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<tasks_internal::CloudTasksStub> stub_;
-  std::unique_ptr<tasks::CloudTasksRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<tasks::CloudTasksConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

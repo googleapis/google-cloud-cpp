@@ -34,23 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudFunctionsServiceConnectionImpl::CloudFunctionsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<functions::CloudFunctionsServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<functions::CloudFunctionsServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<functions::
-                       CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<functions::CloudFunctionsServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          functions_internal::CloudFunctionsServiceDefaultOptions(
+              CloudFunctionsServiceConnection::options()))) {}
 
 StreamRange<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceConnectionImpl::ListFunctions(

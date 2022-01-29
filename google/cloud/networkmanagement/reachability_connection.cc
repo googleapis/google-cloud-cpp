@@ -107,7 +107,7 @@ MakeReachabilityServiceConnection(Options options) {
       background->cq(), options);
   return std::make_shared<
       networkmanagement_internal::ReachabilityServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -124,10 +124,10 @@ std::shared_ptr<networkmanagement::ReachabilityServiceConnection>
 MakeReachabilityServiceConnection(std::shared_ptr<ReachabilityServiceStub> stub,
                                   Options options) {
   options = ReachabilityServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       networkmanagement_internal::ReachabilityServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

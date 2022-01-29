@@ -32,15 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMConnectionImpl::IAMConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_internal::IAMStub> stub, Options const& options)
+    std::shared_ptr<iam_internal::IAMStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<iam::IAMRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<iam::IAMBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<iam::IAMConnectionIdempotencyPolicyOption>()->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          iam_internal::IAMDefaultOptions(IAMConnection::options()))) {}
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
 IAMConnectionImpl::ListServiceAccounts(

@@ -52,6 +52,8 @@ class ApplicationsConnection {
  public:
   virtual ~ApplicationsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::appengine::v1::Application> GetApplication(
       google::appengine::v1::GetApplicationRequest const& request);
 

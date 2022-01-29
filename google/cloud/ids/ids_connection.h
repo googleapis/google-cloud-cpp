@@ -52,6 +52,8 @@ class IDSConnection {
  public:
   virtual ~IDSConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
       google::cloud::ids::v1::ListEndpointsRequest request);
 

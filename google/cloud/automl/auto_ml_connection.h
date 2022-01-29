@@ -52,6 +52,8 @@ class AutoMlConnection {
  public:
   virtual ~AutoMlConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       google::cloud::automl::v1::CreateDatasetRequest const& request);
 

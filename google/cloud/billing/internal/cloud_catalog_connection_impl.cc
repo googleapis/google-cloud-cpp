@@ -32,17 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudCatalogConnectionImpl::CloudCatalogConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<billing_internal::CloudCatalogStub> stub,
-    Options const& options)
+    std::shared_ptr<billing_internal::CloudCatalogStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<billing::CloudCatalogRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<billing::CloudCatalogBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::CloudCatalogDefaultOptions(
+                                  CloudCatalogConnection::options()))) {}
 
 StreamRange<google::cloud::billing::v1::Service>
 CloudCatalogConnectionImpl::ListServices(

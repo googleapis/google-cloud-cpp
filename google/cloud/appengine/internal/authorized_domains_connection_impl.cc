@@ -33,20 +33,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AuthorizedDomainsConnectionImpl::AuthorizedDomainsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<appengine_internal::AuthorizedDomainsStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<appengine::AuthorizedDomainsRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<appengine::AuthorizedDomainsBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<appengine::
-                       AuthorizedDomainsConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          appengine_internal::AuthorizedDomainsDefaultOptions(
+              AuthorizedDomainsConnection::options()))) {}
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
 AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(

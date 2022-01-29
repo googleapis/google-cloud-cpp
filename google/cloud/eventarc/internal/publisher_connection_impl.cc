@@ -31,17 +31,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<eventarc_internal::PublisherStub> stub,
-    Options const& options)
+    std::shared_ptr<eventarc_internal::PublisherStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<eventarc::PublisherRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<eventarc::PublisherBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), eventarc_internal::PublisherDefaultOptions(
+                                  PublisherConnection::options()))) {}
 
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>

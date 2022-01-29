@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 JobServiceClient::JobServiceClient(
     std::shared_ptr<JobServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(talent_internal::JobServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          talent_internal::JobServiceDefaultOptions(connection_->options()))) {}
 JobServiceClient::~JobServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceClient::CreateJob(

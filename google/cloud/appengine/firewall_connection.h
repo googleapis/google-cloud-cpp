@@ -49,6 +49,8 @@ class FirewallConnection {
  public:
   virtual ~FirewallConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
       google::appengine::v1::ListIngressRulesRequest request);
 
