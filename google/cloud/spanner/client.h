@@ -133,7 +133,9 @@ class Client {
    */
   explicit Client(std::shared_ptr<Connection> conn, Options opts = {})
       : conn_(std::move(conn)),
-        opts_(internal::MergeOptions(std::move(opts), conn_->options())) {}
+        opts_(internal::MergeOptions(
+            std::move(opts),
+            spanner_internal::DefaultOptions(conn_->options()))) {}
 
   //@{
   /// Backwards compatibility for `ClientOptions`.
