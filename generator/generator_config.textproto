@@ -347,6 +347,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Memcache
+service {
+  service_proto_path: "google/cloud/memcache/v1/cloud_memcache.proto"
+  product_path: "google/cloud/memcache"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Network Management
 service {
   service_proto_path: "google/cloud/networkmanagement/v1/reachability.proto"

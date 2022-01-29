@@ -122,6 +122,10 @@
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
+./include/google/cloud/memcache
+./include/google/cloud/memcache/internal
+./include/google/cloud/memcache/mocks
+./include/google/cloud/memcache/v1
 ./include/google/cloud/networkmanagement
 ./include/google/cloud/networkmanagement/internal
 ./include/google/cloud/networkmanagement/mocks
@@ -322,6 +326,7 @@
 ./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
+./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_networkmanagement
 ./lib64/cmake/google_cloud_cpp_notebooks
 ./lib64/cmake/google_cloud_cpp_orgpolicy

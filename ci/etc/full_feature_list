@@ -25,6 +25,7 @@ ids
 iot
 kms
 logging
+memcache
 networkmanagement
 notebooks
 orgpolicy
