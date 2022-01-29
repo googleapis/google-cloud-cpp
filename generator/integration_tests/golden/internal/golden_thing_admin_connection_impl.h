@@ -48,7 +48,9 @@ class GoldenThingAdminConnectionImpl
   GoldenThingAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
-    Options const& options);
+    Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) override;
@@ -116,7 +118,7 @@ class GoldenThingAdminConnectionImpl
     if (options.has<golden::GoldenThingAdminRetryPolicyOption>()) {
       return options.get<golden::GoldenThingAdminRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<golden::GoldenThingAdminRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -124,7 +126,7 @@ class GoldenThingAdminConnectionImpl
     if (options.has<golden::GoldenThingAdminBackoffPolicyOption>()) {
       return options.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<golden::GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy() {
@@ -132,24 +134,21 @@ class GoldenThingAdminConnectionImpl
     if (options.has<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
       return options.get<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()->
+clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<golden_internal::GoldenThingAdminStub> stub_;
-  std::unique_ptr<golden::GoldenThingAdminRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<golden::GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<golden::GoldenThingAdminPollingPolicyOption>()) {
       return options.get<golden::GoldenThingAdminPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<golden::GoldenThingAdminPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<golden_internal::GoldenThingAdminStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

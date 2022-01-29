@@ -51,6 +51,8 @@ class GoldenThingAdminConnection {
  public:
   virtual ~GoldenThingAdminConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request);
 

@@ -34,12 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GoldenThingAdminConnectionImpl::GoldenThingAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
-    Options const& options)
+    Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    retry_policy_prototype_(options.get<golden::GoldenThingAdminRetryPolicyOption>()->clone()),
-    backoff_policy_prototype_(options.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone()),
-    idempotency_policy_(options.get<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone()),
-    polling_policy_prototype_(options.get<golden::GoldenThingAdminPollingPolicyOption>()->clone()) {}
+    options_(golden_internal::GoldenThingAdminDefaultOptions(std::move(options))) {}
 
 StreamRange<google::test::admin::database::v1::Database>
 GoldenThingAdminConnectionImpl::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) {

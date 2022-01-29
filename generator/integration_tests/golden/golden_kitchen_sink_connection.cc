@@ -109,7 +109,7 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
   auto stub = golden_internal::CreateDefaultGoldenKitchenSinkStub(
     background->cq(), options);
   return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -126,9 +126,9 @@ std::shared_ptr<golden::GoldenKitchenSinkConnection>
 MakeGoldenKitchenSinkConnection(
     std::shared_ptr<GoldenKitchenSinkStub> stub, Options options) {
   options = GoldenKitchenSinkDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(),
-      std::move(stub), std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
