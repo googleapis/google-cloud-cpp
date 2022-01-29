@@ -33,19 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudRedisConnectionImpl::CloudRedisConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<redis_internal::CloudRedisStub> stub,
-    Options const& options)
+    std::shared_ptr<redis_internal::CloudRedisStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<redis::CloudRedisRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<redis::CloudRedisBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<redis::CloudRedisPollingPolicyOption>()->clone()) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      redis_internal::CloudRedisDefaultOptions(
+                                          CloudRedisConnection::options()))) {}
 
 StreamRange<google::cloud::redis::v1::Instance>
 CloudRedisConnectionImpl::ListInstances(

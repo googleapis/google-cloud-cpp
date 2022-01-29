@@ -53,6 +53,8 @@ class CloudMemcacheConnection {
  public:
   virtual ~CloudMemcacheConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
       google::cloud::memcache::v1::ListInstancesRequest request);
 

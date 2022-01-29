@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockAssetServiceConnection : public asset::AssetServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>,
               ExportAssets,
               (google::cloud::asset::v1::ExportAssetsRequest const& request),

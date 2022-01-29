@@ -52,6 +52,8 @@ class CloudRedisConnection {
  public:
   virtual ~CloudRedisConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::redis::v1::Instance> ListInstances(
       google::cloud::redis::v1::ListInstancesRequest request);
 

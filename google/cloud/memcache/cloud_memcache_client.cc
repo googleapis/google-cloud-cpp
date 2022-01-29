@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudMemcacheClient::CloudMemcacheClient(
     std::shared_ptr<CloudMemcacheConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          memcache_internal::CloudMemcacheDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), memcache_internal::CloudMemcacheDefaultOptions(
+                                  connection_->options()))) {}
 CloudMemcacheClient::~CloudMemcacheClient() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>

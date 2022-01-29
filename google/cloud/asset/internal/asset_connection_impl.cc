@@ -33,19 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssetServiceConnectionImpl::AssetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<asset_internal::AssetServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<asset_internal::AssetServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<asset::AssetServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<asset::AssetServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<asset::AssetServicePollingPolicyOption>()->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), asset_internal::AssetServiceDefaultOptions(
+                                  AssetServiceConnection::options()))) {}
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceConnectionImpl::ExportAssets(

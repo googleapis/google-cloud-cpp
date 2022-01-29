@@ -47,7 +47,9 @@ class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
   CloudMemcacheConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<memcache_internal::CloudMemcacheStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
       google::cloud::memcache::v1::ListInstancesRequest request) override;
@@ -81,7 +83,7 @@ class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
     if (options.has<memcache::CloudMemcacheRetryPolicyOption>()) {
       return options.get<memcache::CloudMemcacheRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<memcache::CloudMemcacheRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -89,7 +91,7 @@ class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
     if (options.has<memcache::CloudMemcacheBackoffPolicyOption>()) {
       return options.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<memcache::CloudMemcacheConnectionIdempotencyPolicy>
@@ -101,26 +103,22 @@ class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
           .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<memcache_internal::CloudMemcacheStub> stub_;
-  std::unique_ptr<memcache::CloudMemcacheRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<memcache::CloudMemcacheConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<memcache::CloudMemcachePollingPolicyOption>()) {
       return options.get<memcache::CloudMemcachePollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<memcache::CloudMemcachePollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<memcache_internal::CloudMemcacheStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

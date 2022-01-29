@@ -46,8 +46,9 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
 
   CloudRedisConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<redis_internal::CloudRedisStub> stub,
-      Options const& options);
+      std::shared_ptr<redis_internal::CloudRedisStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::redis::v1::Instance> ListInstances(
       google::cloud::redis::v1::ListInstancesRequest request) override;
@@ -83,7 +84,7 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
     if (options.has<redis::CloudRedisRetryPolicyOption>()) {
       return options.get<redis::CloudRedisRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<redis::CloudRedisRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -91,7 +92,7 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
     if (options.has<redis::CloudRedisBackoffPolicyOption>()) {
       return options.get<redis::CloudRedisBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<redis::CloudRedisBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<redis::CloudRedisConnectionIdempotencyPolicy>
@@ -101,25 +102,21 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
       return options.get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<redis_internal::CloudRedisStub> stub_;
-  std::unique_ptr<redis::CloudRedisRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<redis::CloudRedisConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<redis::CloudRedisPollingPolicyOption>()) {
       return options.get<redis::CloudRedisPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<redis::CloudRedisPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<redis_internal::CloudRedisStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
