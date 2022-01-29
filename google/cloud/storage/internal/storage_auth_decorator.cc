@@ -65,6 +65,14 @@ StorageAuth::ReadObject(std::unique_ptr<grpc::ClientContext> context,
   return child_->ReadObject(std::move(context), request);
 }
 
+StatusOr<google::storage::v2::Object> StorageAuth::UpdateObject(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateObjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateObject(context, request);
+}
+
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>

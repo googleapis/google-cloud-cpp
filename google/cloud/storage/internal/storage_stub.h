@@ -52,6 +52,10 @@ class StorageStub {
   ReadObject(std::unique_ptr<grpc::ClientContext> context,
              google::storage::v2::ReadObjectRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::v2::Object> UpdateObject(
+      grpc::ClientContext& context,
+      google::storage::v2::UpdateObjectRequest const& request) = 0;
+
   virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
@@ -102,6 +106,10 @@ class DefaultStorageStub : public StorageStub {
       google::storage::v2::ReadObjectResponse>>
   ReadObject(std::unique_ptr<grpc::ClientContext> client_context,
              google::storage::v2::ReadObjectRequest const& request) override;
+
+  StatusOr<google::storage::v2::Object> UpdateObject(
+      grpc::ClientContext& client_context,
+      google::storage::v2::UpdateObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,

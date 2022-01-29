@@ -92,6 +92,17 @@ StorageLogging::ReadObject(
       std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::Object> StorageLogging::UpdateObject(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateObjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::UpdateObjectRequest const& request) {
+        return child_->UpdateObject(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>

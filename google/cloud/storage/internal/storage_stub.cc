@@ -74,6 +74,17 @@ DefaultStorageStub::ReadObject(
                                                 std::move(stream));
 }
 
+StatusOr<google::storage::v2::Object> DefaultStorageStub::UpdateObject(
+    grpc::ClientContext& client_context,
+    google::storage::v2::UpdateObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->UpdateObject(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
