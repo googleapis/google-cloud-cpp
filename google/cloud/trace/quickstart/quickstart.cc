@@ -12,10 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/trace/ EDIT HERE .h"
+#include "google/cloud/trace/trace_client.h"
 #include "google/cloud/project.h"
+#include <google/protobuf/util/time_util.h>
 #include <iostream>
+#include <random>
 #include <stdexcept>
+#include <thread>
+
+std::string RandomHexDigits(std::mt19937_64& gen, int count) {
+  auto const digits = std::string{"0123456789abcdef"};
+  std::string sample;
+  std::generate_n(std::back_inserter(sample), count, [&] {
+    auto n = digits.size() - 1;
+    return digits[std::uniform_int_distribution<std::size_t>(0, n)(gen)];
+  });
+  return sample;
+}
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -24,13 +37,26 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace trace = ::google::cloud::trace;
-  auto client = trace::Client(trace::MakeConnection(/* EDIT HERE */));
+  namespace v2 = ::google::devtools::cloudtrace::v2;
+  using ::google::protobuf::util::TimeUtil;
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  auto client = trace::TraceServiceClient(trace::MakeTraceServiceConnection());
+
+  // Create a span ID using some random hex digits.
+  auto gen = std::mt19937_64(std::random_device{}());
+  v2::Span span;
+  auto span_id = RandomHexDigits(gen, 16);
+  span.set_name(std::string{"projects/"} + argv[1] + "/traces/" +
+                RandomHexDigits(gen, 32) + "/spans/" + span_id);
+  span.set_span_id(std::move(span_id));
+  *span.mutable_start_time() = TimeUtil::GetCurrentTime();
+  // Simulate a call using a small sleep
+  std::this_thread::sleep_for(std::chrono::milliseconds(2));
+  *span.mutable_end_time() = TimeUtil::GetCurrentTime();
+
+  auto response = client.CreateSpan(span);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

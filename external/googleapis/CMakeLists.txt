@@ -60,8 +60,6 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
     "google/cloud/orgpolicy/v1/orgpolicy.proto"
-    "google/devtools/cloudtrace/v2/trace.proto"
-    "google/devtools/cloudtrace/v2/tracing.proto"
     "google/devtools/source/v1/source_context.proto"
     "google/iam/v1/iam_policy.proto"
     "google/iam/v1/options.proto"

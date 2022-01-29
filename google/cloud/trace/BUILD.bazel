@@ -38,7 +38,7 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//google/devtools/cloudtrace/v2:trace_cc_grpc",
+        "@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_grpc",
     ],
 )
 

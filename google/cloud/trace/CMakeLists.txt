@@ -39,24 +39,18 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_trace_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/cloudtrace/v2/trace.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/cloudtrace/v2/tracing.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+add_library(google_cloud_cpp_trace_protos INTERFACE)
 external_googleapis_set_version_and_alias(trace_protos)
 target_link_libraries(
     google_cloud_cpp_trace_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::rpc_status_protos)
+    INTERFACE #
+              google-cloud-cpp::devtools_cloudtrace_v2_tracing_protos
+              google-cloud-cpp::api_annotations_protos
+              google-cloud-cpp::api_client_protos
+              google-cloud-cpp::api_field_behavior_protos
+              google-cloud-cpp::api_http_protos
+              google-cloud-cpp::api_resource_protos
+              google-cloud-cpp::rpc_status_protos)
 
 file(
     GLOB source_files
