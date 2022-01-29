@@ -57,11 +57,9 @@ Status MockConnectionGenerator::GenerateHeader() {
   HeaderPrint(R"""(
 class $mock_connection_class_name$ : public $product_namespace$::$connection_class_name$ {
  public:)""");
-  // Avoid an unsightly blank line at the start of the mock class by not
-  // printing a newline after the `public:` access qualifier. While almost any
-  // class we generate will have some member functions, if there are none, we
-  // need that newline.
-  if (methods().empty() && async_methods().empty()) HeaderPrint("\n");
+  HeaderPrint(R"""(
+  MOCK_METHOD(Options, options, (), (override));
+)""");
 
   for (auto const& method : methods()) {
     if (IsBidirStreaming(method)) {

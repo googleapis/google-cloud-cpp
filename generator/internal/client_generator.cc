@@ -334,7 +334,8 @@ Status ClientGenerator::GenerateCc() {
     "\n"
     "$client_class_name$::$client_class_name$(std::shared_ptr<$connection_class_name$> connection, Options options)"
     " : connection_(std::move(connection)),"
-    " options_($product_internal_namespace$::$service_name$DefaultOptions(std::move(options))) {}\n");
+    " options_(internal::MergeOptions(std::move(options),"
+    " $product_internal_namespace$::$service_name$DefaultOptions(connection_->options()))) {}\n");
   // clang-format on
 
   CcPrint(  // clang-format off
