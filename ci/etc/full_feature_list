@@ -35,6 +35,7 @@ policytroubleshooter
 privateca
 pubsublite
 recommender
+redis
 resourcemanager
 retail
 scheduler

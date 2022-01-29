@@ -450,6 +450,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Redis
+service {
+  service_proto_path: "google/cloud/redis/v1/cloud_redis.proto"
+  product_path: "google/cloud/redis"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Resource Manager
 service {
   service_proto_path: "google/cloud/resourcemanager/v3/folders.proto"
