@@ -46,8 +46,9 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
 
   AssetServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<asset_internal::AssetServiceStub> stub,
-      Options const& options);
+      std::shared_ptr<asset_internal::AssetServiceStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
@@ -102,7 +103,7 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
     if (options.has<asset::AssetServiceRetryPolicyOption>()) {
       return options.get<asset::AssetServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<asset::AssetServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -110,7 +111,7 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
     if (options.has<asset::AssetServiceBackoffPolicyOption>()) {
       return options.get<asset::AssetServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<asset::AssetServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<asset::AssetServiceConnectionIdempotencyPolicy>
@@ -121,25 +122,21 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
           .get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<asset_internal::AssetServiceStub> stub_;
-  std::unique_ptr<asset::AssetServiceRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<asset::AssetServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<asset::AssetServicePollingPolicyOption>()) {
       return options.get<asset::AssetServicePollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<asset::AssetServicePollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<asset_internal::AssetServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

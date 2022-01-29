@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudRedisClient::CloudRedisClient(
     std::shared_ptr<CloudRedisConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(redis_internal::CloudRedisDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          redis_internal::CloudRedisDefaultOptions(connection_->options()))) {}
 CloudRedisClient::~CloudRedisClient() = default;
 
 StreamRange<google::cloud::redis::v1::Instance> CloudRedisClient::ListInstances(

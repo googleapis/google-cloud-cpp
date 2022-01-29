@@ -147,7 +147,7 @@ std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
   auto stub =
       asset_internal::CreateDefaultAssetServiceStub(background->cq(), options);
   return std::make_shared<asset_internal::AssetServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -163,9 +163,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<asset::AssetServiceConnection> MakeAssetServiceConnection(
     std::shared_ptr<AssetServiceStub> stub, Options options) {
   options = AssetServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<asset_internal::AssetServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

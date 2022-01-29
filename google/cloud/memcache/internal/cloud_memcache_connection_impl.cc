@@ -33,20 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudMemcacheConnectionImpl::CloudMemcacheConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<memcache_internal::CloudMemcacheStub> stub,
-    Options const& options)
+    std::shared_ptr<memcache_internal::CloudMemcacheStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<memcache::CloudMemcacheRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<memcache::CloudMemcachePollingPolicyOption>()->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), memcache_internal::CloudMemcacheDefaultOptions(
+                                  CloudMemcacheConnection::options()))) {}
 
 StreamRange<google::cloud::memcache::v1::Instance>
 CloudMemcacheConnectionImpl::ListInstances(

@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AssetServiceClient::AssetServiceClient(
     std::shared_ptr<AssetServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(asset_internal::AssetServiceDefaultOptions(std::move(options))) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          asset_internal::AssetServiceDefaultOptions(connection_->options()))) {
 }
 AssetServiceClient::~AssetServiceClient() = default;
 

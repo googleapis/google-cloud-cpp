@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockCloudRedisConnection : public redis::CloudRedisConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::redis::v1::Instance>, ListInstances,
               (google::cloud::redis::v1::ListInstancesRequest request),
               (override));
