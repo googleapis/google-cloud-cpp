@@ -190,7 +190,9 @@ $connection_class_name$Impl::$connection_class_name$Impl(
     std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,
     Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    options_($product_internal_namespace$::$service_name$DefaultOptions(std::move(options))) {}
+    options_(internal::MergeOptions(std::move(options),
+      $product_internal_namespace$::$service_name$DefaultOptions(
+        $connection_class_name$::options()))) {}
 )""");
 
   for (auto const& method : methods()) {
