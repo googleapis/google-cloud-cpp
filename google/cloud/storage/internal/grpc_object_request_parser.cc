@@ -378,12 +378,15 @@ GrpcObjectRequestParser::ToProto(RewriteObjectRequest const& request) {
   auto status = SetCommonObjectParameters(result, request);
   if (!status.ok()) return status;
 
-  auto& destination = *result.mutable_destination();
-  destination.set_name(request.destination_object());
-  destination.set_bucket("projects/_/buckets/" + request.destination_bucket());
-  destination.set_kms_key(
-      request.GetOption<DestinationKmsKeyName>().value_or(""));
-  if (request.HasOption<WithObjectMetadata>()) {
+  result.set_destination_name(request.destination_object());
+  result.set_destination_bucket("projects/_/buckets/" +
+                                request.destination_bucket());
+
+  if (request.HasOption<WithObjectMetadata>() ||
+      request.HasOption<DestinationKmsKeyName>()) {
+    auto& destination = *result.mutable_destination();
+    destination.set_kms_key(
+        request.GetOption<DestinationKmsKeyName>().value_or(""));
     // Only a few fields can be set as part of the metadata request.
     auto m = request.GetOption<WithObjectMetadata>().value();
     destination.set_storage_class(m.storage_class());

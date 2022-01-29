@@ -157,7 +157,7 @@ TEST(GrpcClientFromProto, ObjectCustomerEncryptionRoundtrip) {
     encryption_algorithm: "test-encryption-algorithm"
     key_sha256_bytes: "01234567"
   )pb";
-  google::storage::v2::Object::CustomerEncryption start;
+  google::storage::v2::CustomerEncryption start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected =
       CustomerEncryption{"test-encryption-algorithm", "MDEyMzQ1Njc="};

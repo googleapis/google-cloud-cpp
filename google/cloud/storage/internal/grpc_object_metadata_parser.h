@@ -27,10 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 struct GrpcObjectMetadataParser {
-  static StatusOr<google::storage::v2::Object::CustomerEncryption> ToProto(
+  static StatusOr<google::storage::v2::CustomerEncryption> ToProto(
       CustomerEncryption rhs);
   static CustomerEncryption FromProto(
-      google::storage::v2::Object::CustomerEncryption rhs);
+      google::storage::v2::CustomerEncryption rhs);
 
   static std::string Crc32cFromProto(std::uint32_t);
   static StatusOr<std::uint32_t> Crc32cToProto(std::string const&);

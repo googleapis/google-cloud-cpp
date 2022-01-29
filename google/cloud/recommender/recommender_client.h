@@ -89,18 +89,21 @@ class RecommenderClient {
   //@}
 
   ///
-  /// Lists insights for a Cloud project. Requires the recommender.*.list IAM
-  /// permission for the specified insight type.
+  /// Lists insights for the specified Cloud Resource. Requires the
+  /// recommender.*.list IAM permission for the specified insight type.
   ///
   /// @param parent  Required. The container resource on which to execute the
   /// request.
   ///  Acceptable formats:
-  ///  1.
-  ///  "projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]",
+  ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  * `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
   ///  LOCATION here refers to GCP Locations:
   ///  https://cloud.google.com/about/locations/
   ///  INSIGHT_TYPE_ID refers to supported insight types:
-  ///  https://cloud.google.com/recommender/docs/insights/insight-types.)
+  ///  https://cloud.google.com/recommender/docs/insights/insight-types.
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
@@ -114,8 +117,8 @@ class RecommenderClient {
       std::string const& parent, Options options = {});
 
   ///
-  /// Lists insights for a Cloud project. Requires the recommender.*.list IAM
-  /// permission for the specified insight type.
+  /// Lists insights for the specified Cloud Resource. Requires the
+  /// recommender.*.list IAM permission for the specified insight type.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::ListInsightsRequest,google/cloud/recommender/v1/recommender_service.proto#L234}
@@ -142,7 +145,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetInsightRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L280}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L305}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -154,13 +157,13 @@ class RecommenderClient {
   /// for the specified insight type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::GetInsightRequest,google/cloud/recommender/v1/recommender_service.proto#L280}
+  /// @googleapis_link{google::cloud::recommender::v1::GetInsightRequest,google/cloud/recommender/v1/recommender_service.proto#L305}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetInsightRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L280}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L305}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -187,7 +190,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L291}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L316}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -205,13 +208,13 @@ class RecommenderClient {
   /// the recommender.*.update IAM permission for the specified insight.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkInsightAcceptedRequest,google/cloud/recommender/v1/recommender_service.proto#L291}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkInsightAcceptedRequest,google/cloud/recommender/v1/recommender_service.proto#L316}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L291}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L316}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -220,14 +223,17 @@ class RecommenderClient {
       Options options = {});
 
   ///
-  /// Lists recommendations for a Cloud project. Requires the recommender.*.list
-  /// IAM permission for the specified recommender.
+  /// Lists recommendations for the specified Cloud Resource. Requires the
+  /// recommender.*.list IAM permission for the specified recommender.
   ///
   /// @param parent  Required. The container resource on which to execute the
   /// request.
   ///  Acceptable formats:
-  ///  1.
-  ///  "projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]",
+  ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
   ///  LOCATION here refers to GCP Locations:
   ///  https://cloud.google.com/about/locations/
   ///  RECOMMENDER_ID refers to supported recommenders:
@@ -237,7 +243,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListRecommendationsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L309}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L334}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -245,28 +251,40 @@ class RecommenderClient {
   ListRecommendations(std::string const& parent, Options options = {});
 
   ///
-  /// Lists recommendations for a Cloud project. Requires the recommender.*.list
-  /// IAM permission for the specified recommender.
+  /// Lists recommendations for the specified Cloud Resource. Requires the
+  /// recommender.*.list IAM permission for the specified recommender.
   ///
   /// @param parent  Required. The container resource on which to execute the
   /// request.
   ///  Acceptable formats:
-  ///  1.
-  ///  "projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]",
+  ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
   ///  LOCATION here refers to GCP Locations:
   ///  https://cloud.google.com/about/locations/
   ///  RECOMMENDER_ID refers to supported recommenders:
   ///  https://cloud.google.com/recommender/docs/recommenders.
   /// @param filter  Filter expression to restrict the recommendations returned.
   /// Supported
-  ///  filter fields: state_info.state
-  ///  Eg: `state_info.state:"DISMISSED" or state_info.state:"FAILED"
+  ///  filter fields:
+  ///  * `state_info.state`
+  ///  * `recommenderSubtype`
+  ///  * `priority`
+  ///  Examples:
+  ///  * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+  ///  * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE`
+  ///  * `priority = P1 OR priority = P2`
+  ///  * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)`
+  ///  (These expressions are based on the filter language described at
+  ///  https://google.aip.dev/160)
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListRecommendationsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L309}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L334}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -275,17 +293,17 @@ class RecommenderClient {
                       Options options = {});
 
   ///
-  /// Lists recommendations for a Cloud project. Requires the recommender.*.list
-  /// IAM permission for the specified recommender.
+  /// Lists recommendations for the specified Cloud Resource. Requires the
+  /// recommender.*.list IAM permission for the specified recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::ListRecommendationsRequest,google/cloud/recommender/v1/recommender_service.proto#L309}
+  /// @googleapis_link{google::cloud::recommender::v1::ListRecommendationsRequest,google/cloud/recommender/v1/recommender_service.proto#L334}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.ListRecommendationsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L309}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L334}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -304,7 +322,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetRecommendationRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L355}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L405}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -316,13 +334,13 @@ class RecommenderClient {
   /// IAM permission for the specified recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::GetRecommendationRequest,google/cloud/recommender/v1/recommender_service.proto#L355}
+  /// @googleapis_link{google::cloud::recommender::v1::GetRecommendationRequest,google/cloud/recommender/v1/recommender_service.proto#L405}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.GetRecommendationRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L355}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L405}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -356,7 +374,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationClaimedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L366}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L416}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -380,13 +398,13 @@ class RecommenderClient {
   /// recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationClaimedRequest,google/cloud/recommender/v1/recommender_service.proto#L366}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationClaimedRequest,google/cloud/recommender/v1/recommender_service.proto#L416}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationClaimedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L366}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L416}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -422,7 +440,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationSucceededRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L386}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L436}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -446,13 +464,13 @@ class RecommenderClient {
   /// recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationSucceededRequest,google/cloud/recommender/v1/recommender_service.proto#L386}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationSucceededRequest,google/cloud/recommender/v1/recommender_service.proto#L436}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationSucceededRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L386}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L436}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -488,7 +506,7 @@ class RecommenderClient {
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationFailedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L406}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L456}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -512,13 +530,13 @@ class RecommenderClient {
   /// recommender.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationFailedRequest,google/cloud/recommender/v1/recommender_service.proto#L406}
+  /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationFailedRequest,google/cloud/recommender/v1/recommender_service.proto#L456}
   /// @param options  Optional. Operation options.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   /// [google.cloud.recommender.v1.MarkRecommendationFailedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L406}
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L456}
   /// [google.cloud.recommender.v1.Recommendation]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///

@@ -27,18 +27,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 CustomerEncryption GrpcObjectMetadataParser::FromProto(
-    google::storage::v2::Object::CustomerEncryption rhs) {
+    google::storage::v2::CustomerEncryption rhs) {
   CustomerEncryption result;
   result.encryption_algorithm = std::move(*rhs.mutable_encryption_algorithm());
   result.key_sha256 = Base64Encode(rhs.key_sha256_bytes());
   return result;
 }
 
-StatusOr<google::storage::v2::Object::CustomerEncryption>
+StatusOr<google::storage::v2::CustomerEncryption>
 GrpcObjectMetadataParser::ToProto(CustomerEncryption rhs) {
   auto key_sha256 = Base64Decode(rhs.key_sha256);
   if (!key_sha256) return std::move(key_sha256).status();
-  google::storage::v2::Object::CustomerEncryption result;
+  google::storage::v2::CustomerEncryption result;
   result.set_encryption_algorithm(std::move(rhs.encryption_algorithm));
   result.set_key_sha256_bytes(
       std::string(key_sha256->begin(), key_sha256->end()));
