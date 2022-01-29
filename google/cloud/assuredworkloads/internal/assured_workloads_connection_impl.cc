@@ -38,8 +38,10 @@ AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
+              AssuredWorkloadsServiceConnection::options()))) {}
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnectionImpl::CreateWorkload(

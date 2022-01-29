@@ -37,8 +37,10 @@ VpcAccessServiceConnectionImpl::VpcAccessServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(vpcaccess_internal::VpcAccessServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          vpcaccess_internal::VpcAccessServiceDefaultOptions(
+              VpcAccessServiceConnection::options()))) {}
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnectionImpl::CreateConnector(

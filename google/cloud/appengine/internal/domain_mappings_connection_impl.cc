@@ -37,8 +37,9 @@ DomainMappingsConnectionImpl::DomainMappingsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(appengine_internal::DomainMappingsDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), appengine_internal::DomainMappingsDefaultOptions(
+                                  DomainMappingsConnection::options()))) {}
 
 StreamRange<google::appengine::v1::DomainMapping>
 DomainMappingsConnectionImpl::ListDomainMappings(

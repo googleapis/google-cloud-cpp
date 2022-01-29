@@ -34,8 +34,9 @@ WebRiskServiceConnectionImpl::WebRiskServiceConnectionImpl(
     std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          webrisk_internal::WebRiskServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), webrisk_internal::WebRiskServiceDefaultOptions(
+                                  WebRiskServiceConnection::options()))) {}
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceConnectionImpl::ComputeThreatListDiff(

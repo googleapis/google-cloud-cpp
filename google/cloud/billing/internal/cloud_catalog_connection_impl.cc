@@ -35,8 +35,9 @@ CloudCatalogConnectionImpl::CloudCatalogConnectionImpl(
     std::shared_ptr<billing_internal::CloudCatalogStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          billing_internal::CloudCatalogDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::CloudCatalogDefaultOptions(
+                                  CloudCatalogConnection::options()))) {}
 
 StreamRange<google::cloud::billing::v1::Service>
 CloudCatalogConnectionImpl::ListServices(

@@ -35,8 +35,10 @@ ServiceControllerConnectionImpl::ServiceControllerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(servicecontrol_internal::ServiceControllerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicecontrol_internal::ServiceControllerDefaultOptions(
+              ServiceControllerConnection::options()))) {}
 
 StatusOr<google::api::servicecontrol::v1::CheckResponse>
 ServiceControllerConnectionImpl::Check(

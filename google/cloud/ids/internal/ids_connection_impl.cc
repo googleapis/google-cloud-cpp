@@ -36,7 +36,9 @@ IDSConnectionImpl::IDSConnectionImpl(
     std::shared_ptr<ids_internal::IDSStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(ids_internal::IDSDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          ids_internal::IDSDefaultOptions(IDSConnection::options()))) {}
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSConnectionImpl::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {

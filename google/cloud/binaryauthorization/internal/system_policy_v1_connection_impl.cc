@@ -35,8 +35,10 @@ SystemPolicyV1ConnectionImpl::SystemPolicyV1ConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(binaryauthorization_internal::SystemPolicyV1DefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          binaryauthorization_internal::SystemPolicyV1DefaultOptions(
+              SystemPolicyV1Connection::options()))) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1ConnectionImpl::GetSystemPolicy(

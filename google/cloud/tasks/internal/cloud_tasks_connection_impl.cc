@@ -35,7 +35,9 @@ CloudTasksConnectionImpl::CloudTasksConnectionImpl(
     std::shared_ptr<tasks_internal::CloudTasksStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(tasks_internal::CloudTasksDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      tasks_internal::CloudTasksDefaultOptions(
+                                          CloudTasksConnection::options()))) {}
 
 StreamRange<google::cloud::tasks::v2::Queue>
 CloudTasksConnectionImpl::ListQueues(

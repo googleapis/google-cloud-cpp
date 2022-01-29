@@ -36,8 +36,9 @@ CompletionServiceConnectionImpl::CompletionServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(retail_internal::CompletionServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::CompletionServiceDefaultOptions(
+                                  CompletionServiceConnection::options()))) {}
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceConnectionImpl::CompleteQuery(

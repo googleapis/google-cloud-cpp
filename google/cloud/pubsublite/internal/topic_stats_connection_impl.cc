@@ -35,8 +35,10 @@ TopicStatsServiceConnectionImpl::TopicStatsServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(pubsublite_internal::TopicStatsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          pubsublite_internal::TopicStatsServiceDefaultOptions(
+              TopicStatsServiceConnection::options()))) {}
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceConnectionImpl::ComputeMessageStats(

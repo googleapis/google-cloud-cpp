@@ -36,9 +36,9 @@ UserEventServiceConnectionImpl::UserEventServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          retail_internal::UserEventServiceDefaultOptions(std::move(options))) {
-}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::UserEventServiceDefaultOptions(
+                                  UserEventServiceConnection::options()))) {}
 
 StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceConnectionImpl::WriteUserEvent(

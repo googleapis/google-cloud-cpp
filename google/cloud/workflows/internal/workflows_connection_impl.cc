@@ -36,8 +36,9 @@ WorkflowsConnectionImpl::WorkflowsConnectionImpl(
     std::shared_ptr<workflows_internal::WorkflowsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          workflows_internal::WorkflowsDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), workflows_internal::WorkflowsDefaultOptions(
+                                  WorkflowsConnection::options()))) {}
 
 StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsConnectionImpl::ListWorkflows(

@@ -37,8 +37,10 @@ BigtableInstanceAdminConnectionImpl::BigtableInstanceAdminConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
+              BigtableInstanceAdminConnection::options()))) {}
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::CreateInstance(

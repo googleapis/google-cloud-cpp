@@ -37,8 +37,10 @@ GameServerConfigsServiceConnectionImpl::GameServerConfigsServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(gameservices_internal::GameServerConfigsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          gameservices_internal::GameServerConfigsServiceDefaultOptions(
+              GameServerConfigsServiceConnection::options()))) {}
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
 GameServerConfigsServiceConnectionImpl::ListGameServerConfigs(

@@ -37,8 +37,10 @@ ApiGatewayServiceConnectionImpl::ApiGatewayServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(apigateway_internal::ApiGatewayServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          apigateway_internal::ApiGatewayServiceDefaultOptions(
+              ApiGatewayServiceConnection::options()))) {}
 
 StreamRange<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceConnectionImpl::ListGateways(

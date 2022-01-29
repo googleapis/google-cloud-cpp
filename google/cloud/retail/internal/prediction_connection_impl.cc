@@ -35,8 +35,9 @@ PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(retail_internal::PredictionServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::PredictionServiceDefaultOptions(
+                                  PredictionServiceConnection::options()))) {}
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceConnectionImpl::Predict(

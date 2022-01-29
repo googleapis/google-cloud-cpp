@@ -36,8 +36,9 @@ InstancesConnectionImpl::InstancesConnectionImpl(
     std::shared_ptr<appengine_internal::InstancesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          appengine_internal::InstancesDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), appengine_internal::InstancesDefaultOptions(
+                                  InstancesConnection::options()))) {}
 
 StreamRange<google::appengine::v1::Instance>
 InstancesConnectionImpl::ListInstances(

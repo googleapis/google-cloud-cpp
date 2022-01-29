@@ -35,8 +35,9 @@ TenantServiceConnectionImpl::TenantServiceConnectionImpl(
     std::shared_ptr<talent_internal::TenantServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          talent_internal::TenantServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), talent_internal::TenantServiceDefaultOptions(
+                                  TenantServiceConnection::options()))) {}
 
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::CreateTenant(

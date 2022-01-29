@@ -35,8 +35,10 @@ QuotaControllerConnectionImpl::QuotaControllerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(servicecontrol_internal::QuotaControllerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicecontrol_internal::QuotaControllerDefaultOptions(
+              QuotaControllerConnection::options()))) {}
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerConnectionImpl::AllocateQuota(

@@ -37,8 +37,9 @@ NotebookServiceConnectionImpl::NotebookServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(notebooks_internal::NotebookServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), notebooks_internal::NotebookServiceDefaultOptions(
+                                  NotebookServiceConnection::options()))) {}
 
 StreamRange<google::cloud::notebooks::v1::Instance>
 NotebookServiceConnectionImpl::ListInstances(

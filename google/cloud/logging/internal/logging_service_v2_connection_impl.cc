@@ -36,8 +36,9 @@ LoggingServiceV2ConnectionImpl::LoggingServiceV2ConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(logging_internal::LoggingServiceV2DefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), logging_internal::LoggingServiceV2DefaultOptions(
+                                  LoggingServiceV2Connection::options()))) {}
 
 Status LoggingServiceV2ConnectionImpl::DeleteLog(
     google::logging::v2::DeleteLogRequest const& request) {

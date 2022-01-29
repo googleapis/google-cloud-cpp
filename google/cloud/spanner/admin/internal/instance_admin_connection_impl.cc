@@ -37,8 +37,10 @@ InstanceAdminConnectionImpl::InstanceAdminConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(spanner_admin_internal::InstanceAdminDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          spanner_admin_internal::InstanceAdminDefaultOptions(
+              InstanceAdminConnection::options()))) {}
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminConnectionImpl::ListInstanceConfigs(

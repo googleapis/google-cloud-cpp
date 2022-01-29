@@ -36,8 +36,10 @@ KeyManagementServiceConnectionImpl::KeyManagementServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(kms_internal::KeyManagementServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), kms_internal::KeyManagementServiceDefaultOptions(
+                                  KeyManagementServiceConnection::options()))) {
+}
 
 StreamRange<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnectionImpl::ListKeyRings(

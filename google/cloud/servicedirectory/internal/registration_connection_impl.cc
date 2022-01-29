@@ -36,8 +36,10 @@ RegistrationServiceConnectionImpl::RegistrationServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(servicedirectory_internal::RegistrationServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicedirectory_internal::RegistrationServiceDefaultOptions(
+              RegistrationServiceConnection::options()))) {}
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceConnectionImpl::CreateNamespace(

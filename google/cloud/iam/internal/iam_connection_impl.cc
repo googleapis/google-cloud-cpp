@@ -35,7 +35,9 @@ IAMConnectionImpl::IAMConnectionImpl(
     std::shared_ptr<iam_internal::IAMStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(iam_internal::IAMDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          iam_internal::IAMDefaultOptions(IAMConnection::options()))) {}
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
 IAMConnectionImpl::ListServiceAccounts(

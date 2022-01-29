@@ -36,8 +36,9 @@ ProductServiceConnectionImpl::ProductServiceConnectionImpl(
     std::shared_ptr<retail_internal::ProductServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          retail_internal::ProductServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::ProductServiceDefaultOptions(
+                                  ProductServiceConnection::options()))) {}
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceConnectionImpl::CreateProduct(

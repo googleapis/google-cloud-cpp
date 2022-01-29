@@ -37,8 +37,10 @@ CloudFunctionsServiceConnectionImpl::CloudFunctionsServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(functions_internal::CloudFunctionsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          functions_internal::CloudFunctionsServiceDefaultOptions(
+              CloudFunctionsServiceConnection::options()))) {}
 
 StreamRange<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceConnectionImpl::ListFunctions(

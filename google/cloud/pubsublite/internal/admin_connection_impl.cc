@@ -37,9 +37,9 @@ AdminServiceConnectionImpl::AdminServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          pubsublite_internal::AdminServiceDefaultOptions(std::move(options))) {
-}
+      options_(internal::MergeOptions(
+          std::move(options), pubsublite_internal::AdminServiceDefaultOptions(
+                                  AdminServiceConnection::options()))) {}
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceConnectionImpl::CreateTopic(

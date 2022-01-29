@@ -36,7 +36,10 @@ AutoMlConnectionImpl::AutoMlConnectionImpl(
     std::shared_ptr<automl_internal::AutoMlStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(automl_internal::AutoMlDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          automl_internal::AutoMlDefaultOptions(AutoMlConnection::options()))) {
+}
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlConnectionImpl::CreateDataset(

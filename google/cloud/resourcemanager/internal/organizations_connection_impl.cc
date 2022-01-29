@@ -36,8 +36,10 @@ OrganizationsConnectionImpl::OrganizationsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(resourcemanager_internal::OrganizationsDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          resourcemanager_internal::OrganizationsDefaultOptions(
+              OrganizationsConnection::options()))) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>
 OrganizationsConnectionImpl::GetOrganization(

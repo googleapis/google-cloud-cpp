@@ -37,8 +37,9 @@ ServiceUsageConnectionImpl::ServiceUsageConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(serviceusage_internal::ServiceUsageDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), serviceusage_internal::ServiceUsageDefaultOptions(
+                                  ServiceUsageConnection::options()))) {}
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
 ServiceUsageConnectionImpl::EnableService(

@@ -35,8 +35,10 @@ IamCheckerConnectionImpl::IamCheckerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(policytroubleshooter_internal::IamCheckerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          policytroubleshooter_internal::IamCheckerDefaultOptions(
+              IamCheckerConnection::options()))) {}
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerConnectionImpl::TroubleshootIamPolicy(

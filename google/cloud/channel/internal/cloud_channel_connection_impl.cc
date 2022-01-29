@@ -37,8 +37,10 @@ CloudChannelServiceConnectionImpl::CloudChannelServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(channel_internal::CloudChannelServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          channel_internal::CloudChannelServiceDefaultOptions(
+              CloudChannelServiceConnection::options()))) {}
 
 StreamRange<google::cloud::channel::v1::Customer>
 CloudChannelServiceConnectionImpl::ListCustomers(

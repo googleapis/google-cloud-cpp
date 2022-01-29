@@ -35,7 +35,9 @@ DeviceManagerConnectionImpl::DeviceManagerConnectionImpl(
     std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(iot_internal::DeviceManagerDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), iot_internal::DeviceManagerDefaultOptions(
+                                  DeviceManagerConnection::options()))) {}
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerConnectionImpl::CreateDeviceRegistry(

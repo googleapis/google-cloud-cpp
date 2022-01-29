@@ -35,8 +35,9 @@ ImageVersionsConnectionImpl::ImageVersionsConnectionImpl(
     std::shared_ptr<composer_internal::ImageVersionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          composer_internal::ImageVersionsDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), composer_internal::ImageVersionsDefaultOptions(
+                                  ImageVersionsConnection::options()))) {}
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 ImageVersionsConnectionImpl::ListImageVersions(

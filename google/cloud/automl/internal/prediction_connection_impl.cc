@@ -36,8 +36,9 @@ PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(automl_internal::PredictionServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), automl_internal::PredictionServiceDefaultOptions(
+                                  PredictionServiceConnection::options()))) {}
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceConnectionImpl::Predict(

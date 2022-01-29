@@ -36,9 +36,9 @@ CloudShellServiceConnectionImpl::CloudShellServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          shell_internal::CloudShellServiceDefaultOptions(std::move(options))) {
-}
+      options_(internal::MergeOptions(
+          std::move(options), shell_internal::CloudShellServiceDefaultOptions(
+                                  CloudShellServiceConnection::options()))) {}
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceConnectionImpl::GetEnvironment(

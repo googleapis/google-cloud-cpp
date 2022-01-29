@@ -36,7 +36,9 @@ JobServiceConnectionImpl::JobServiceConnectionImpl(
     std::shared_ptr<talent_internal::JobServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(talent_internal::JobServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      talent_internal::JobServiceDefaultOptions(
+                                          JobServiceConnection::options()))) {}
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceConnectionImpl::CreateJob(
     google::cloud::talent::v4::CreateJobRequest const& request) {

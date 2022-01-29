@@ -37,8 +37,10 @@ TranslationServiceConnectionImpl::TranslationServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(translate_internal::TranslationServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          translate_internal::TranslationServiceDefaultOptions(
+              TranslationServiceConnection::options()))) {}
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceConnectionImpl::TranslateText(

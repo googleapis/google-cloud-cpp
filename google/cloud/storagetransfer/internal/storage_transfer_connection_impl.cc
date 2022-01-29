@@ -37,8 +37,10 @@ StorageTransferServiceConnectionImpl::StorageTransferServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(storagetransfer_internal::StorageTransferServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          storagetransfer_internal::StorageTransferServiceDefaultOptions(
+              StorageTransferServiceConnection::options()))) {}
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 StorageTransferServiceConnectionImpl::GetGoogleServiceAccount(

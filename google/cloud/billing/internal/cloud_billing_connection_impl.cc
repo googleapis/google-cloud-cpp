@@ -35,8 +35,9 @@ CloudBillingConnectionImpl::CloudBillingConnectionImpl(
     std::shared_ptr<billing_internal::CloudBillingStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(
-          billing_internal::CloudBillingDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::CloudBillingDefaultOptions(
+                                  CloudBillingConnection::options()))) {}
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::GetBillingAccount(

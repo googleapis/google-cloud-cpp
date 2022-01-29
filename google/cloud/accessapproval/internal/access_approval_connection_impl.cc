@@ -36,8 +36,10 @@ AccessApprovalConnectionImpl::AccessApprovalConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(accessapproval_internal::AccessApprovalDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          accessapproval_internal::AccessApprovalDefaultOptions(
+              AccessApprovalConnection::options()))) {}
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalConnectionImpl::ListApprovalRequests(
