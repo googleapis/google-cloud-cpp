@@ -149,6 +149,10 @@ class CurlImpl {
   bool in_multi_;
   bool paused_;
 
+  // Track when status and headers from the response are received.
+  bool status_line_received_;
+  bool all_headers_received_;
+
   // Track the usage of the buffer provided to Read.
   absl::Span<char> buffer_;
 
@@ -156,9 +160,7 @@ class CurlImpl {
   // WriteCallback. However, the callback *must* save all the bytes, returning
   // fewer bytes read aborts the download. The application may have requested
   // fewer bytes in the call to `Read()`, so we need a place to store the
-  // additional bytes. Furthermore, when we first make the request we write all
-  // bytes received from libcurl to the spill buffer so the spill buffer is
-  // sized to accommodate the max number of bytes.
+  // additional bytes.
   std::array<char, kDefaultCurlWriteBufferSize> spill_;
   std::size_t spill_offset_;
 
