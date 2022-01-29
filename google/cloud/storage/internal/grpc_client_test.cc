@@ -204,9 +204,9 @@ TEST(GrpcClient, RewriteObject) {
         EXPECT_THAT(request.source_bucket(),
                     "projects/_/buckets/test-source-bucket");
         EXPECT_THAT(request.source_object(), "test-source-object");
-        EXPECT_THAT(request.destination().bucket(),
+        EXPECT_THAT(request.destination_bucket(),
                     "projects/_/buckets/test-bucket");
-        EXPECT_THAT(request.destination().name(), "test-object");
+        EXPECT_THAT(request.destination_name(), "test-object");
         return PermanentError();
       });
   auto client = GrpcClient::CreateMock(mock);
