@@ -190,6 +190,30 @@ TEST(GrpcClient, DeleteObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST(GrpcClient, PatchObject) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, UpdateObject)
+      .WillOnce([](grpc::ClientContext& context,
+                   v2::UpdateObjectRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.object().bucket(),
+                    "projects/_/buckets/test-source-bucket");
+        EXPECT_THAT(request.object().name(), "test-source-object");
+        return PermanentError();
+      });
+  auto client = GrpcClient::CreateMock(mock);
+  auto response = client->PatchObject(
+      PatchObjectRequest(
+          "test-source-bucket", "test-source-object",
+          ObjectMetadataPatchBuilder{}.SetCacheControl("no-cache"))
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST(GrpcClient, RewriteObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
