@@ -52,6 +52,8 @@ class ProjectsConnection {
  public:
   virtual ~ProjectsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       google::cloud::resourcemanager::v3::GetProjectRequest const& request);
 

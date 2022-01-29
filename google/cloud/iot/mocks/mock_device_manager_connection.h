@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockDeviceManagerConnection : public iot::DeviceManagerConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::iot::v1::DeviceRegistry>, CreateDeviceRegistry,
       (google::cloud::iot::v1::CreateDeviceRegistryRequest const& request),

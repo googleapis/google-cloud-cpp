@@ -49,6 +49,8 @@ class RecommenderConnection {
  public:
   virtual ~RecommenderConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
       google::cloud::recommender::v1::ListInsightsRequest request);
 

@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DlpServiceClient::DlpServiceClient(
     std::shared_ptr<DlpServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(dlp_internal::DlpServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          dlp_internal::DlpServiceDefaultOptions(connection_->options()))) {}
 DlpServiceClient::~DlpServiceClient() = default;
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>

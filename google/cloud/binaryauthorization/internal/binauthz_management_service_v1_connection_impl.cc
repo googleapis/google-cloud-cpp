@@ -36,25 +36,12 @@ BinauthzManagementServiceV1ConnectionImpl::
         std::shared_ptr<
             binaryauthorization_internal::BinauthzManagementServiceV1Stub>
             stub,
-        Options const& options)
+        Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<binaryauthorization::
-                       BinauthzManagementServiceV1RetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<binaryauthorization::
-                       BinauthzManagementServiceV1BackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  binaryauthorization::
-                      BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          binaryauthorization_internal::
+              BinauthzManagementServiceV1DefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1ConnectionImpl::GetPolicy(

@@ -36,27 +36,11 @@ CertificateAuthorityServiceConnectionImpl::
         std::unique_ptr<google::cloud::BackgroundThreads> background,
         std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub>
             stub,
-        Options const& options)
+        Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  privateca::
-                      CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(privateca_internal::CertificateAuthorityServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceConnectionImpl::CreateCertificate(

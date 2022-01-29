@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockFoldersConnection : public resourcemanager::FoldersConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::resourcemanager::v3::Folder>, GetFolder,
       (google::cloud::resourcemanager::v3::GetFolderRequest const& request),

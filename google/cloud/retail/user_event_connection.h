@@ -52,6 +52,8 @@ class UserEventServiceConnection {
  public:
   virtual ~UserEventServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       google::cloud::retail::v2::WriteUserEventRequest const& request);
 

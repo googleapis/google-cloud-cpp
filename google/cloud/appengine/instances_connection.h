@@ -52,6 +52,8 @@ class InstancesConnection {
  public:
   virtual ~InstancesConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::appengine::v1::Instance> ListInstances(
       google::appengine::v1::ListInstancesRequest request);
 

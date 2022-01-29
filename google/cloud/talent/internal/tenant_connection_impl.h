@@ -44,7 +44,9 @@ class TenantServiceConnectionImpl : public talent::TenantServiceConnection {
   TenantServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<talent_internal::TenantServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       google::cloud::talent::v4::CreateTenantRequest const& request) override;
@@ -67,7 +69,7 @@ class TenantServiceConnectionImpl : public talent::TenantServiceConnection {
     if (options.has<talent::TenantServiceRetryPolicyOption>()) {
       return options.get<talent::TenantServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<talent::TenantServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -75,7 +77,7 @@ class TenantServiceConnectionImpl : public talent::TenantServiceConnection {
     if (options.has<talent::TenantServiceBackoffPolicyOption>()) {
       return options.get<talent::TenantServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<talent::TenantServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<talent::TenantServiceConnectionIdempotencyPolicy>
@@ -86,16 +88,14 @@ class TenantServiceConnectionImpl : public talent::TenantServiceConnection {
           .get<talent::TenantServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<talent::TenantServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::TenantServiceStub> stub_;
-  std::unique_ptr<talent::TenantServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<talent::TenantServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

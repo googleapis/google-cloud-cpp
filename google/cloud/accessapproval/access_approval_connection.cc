@@ -102,7 +102,7 @@ std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
       background->cq(), options);
   return std::make_shared<
       accessapproval_internal::AccessApprovalConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -119,10 +119,10 @@ std::shared_ptr<accessapproval::AccessApprovalConnection>
 MakeAccessApprovalConnection(std::shared_ptr<AccessApprovalStub> stub,
                              Options options) {
   options = AccessApprovalDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       accessapproval_internal::AccessApprovalConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

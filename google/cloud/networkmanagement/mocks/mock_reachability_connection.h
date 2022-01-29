@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockReachabilityServiceConnection
     : public networkmanagement::ReachabilityServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>,
       ListConnectivityTests,

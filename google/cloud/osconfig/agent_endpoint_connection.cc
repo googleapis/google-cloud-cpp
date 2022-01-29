@@ -92,7 +92,7 @@ MakeAgentEndpointServiceConnection(Options options) {
       background->cq(), options);
   return std::make_shared<
       osconfig_internal::AgentEndpointServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -109,10 +109,10 @@ std::shared_ptr<osconfig::AgentEndpointServiceConnection>
 MakeAgentEndpointServiceConnection(
     std::shared_ptr<AgentEndpointServiceStub> stub, Options options) {
   options = AgentEndpointServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       osconfig_internal::AgentEndpointServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

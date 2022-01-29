@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BudgetServiceClient::BudgetServiceClient(
     std::shared_ptr<BudgetServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          billing_internal::BudgetServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), billing_internal::BudgetServiceDefaultOptions(
+                                  connection_->options()))) {}
 BudgetServiceClient::~BudgetServiceClient() = default;
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>

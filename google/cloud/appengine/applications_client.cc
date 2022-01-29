@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApplicationsClient::ApplicationsClient(
     std::shared_ptr<ApplicationsConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          appengine_internal::ApplicationsDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), appengine_internal::ApplicationsDefaultOptions(
+                                  connection_->options()))) {}
 ApplicationsClient::~ApplicationsClient() = default;
 
 StatusOr<google::appengine::v1::Application> ApplicationsClient::GetApplication(

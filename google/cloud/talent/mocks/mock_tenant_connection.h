@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockTenantServiceConnection : public talent::TenantServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, CreateTenant,
               (google::cloud::talent::v4::CreateTenantRequest const& request),
               (override));

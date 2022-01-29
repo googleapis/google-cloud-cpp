@@ -52,6 +52,8 @@ class VersionsConnection {
  public:
   virtual ~VersionsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::appengine::v1::Version> ListVersions(
       google::appengine::v1::ListVersionsRequest request);
 

@@ -48,7 +48,9 @@ class InstanceAdminConnectionImpl
   InstanceAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
@@ -98,7 +100,8 @@ class InstanceAdminConnectionImpl
       return options.get<spanner_admin::InstanceAdminRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<spanner_admin::InstanceAdminRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -107,7 +110,8 @@ class InstanceAdminConnectionImpl
       return options.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy>
@@ -119,16 +123,10 @@ class InstanceAdminConnectionImpl
           .get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub_;
-  std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -136,10 +134,13 @@ class InstanceAdminConnectionImpl
       return options.get<spanner_admin::InstanceAdminPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<spanner_admin::InstanceAdminPollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

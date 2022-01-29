@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WebSecurityScannerClient::WebSecurityScannerClient(
     std::shared_ptr<WebSecurityScannerConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(websecurityscanner_internal::WebSecurityScannerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          websecurityscanner_internal::WebSecurityScannerDefaultOptions(
+              connection_->options()))) {}
 WebSecurityScannerClient::~WebSecurityScannerClient() = default;
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>

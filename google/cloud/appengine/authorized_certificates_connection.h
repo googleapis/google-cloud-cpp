@@ -50,6 +50,8 @@ class AuthorizedCertificatesConnection {
  public:
   virtual ~AuthorizedCertificatesConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::appengine::v1::AuthorizedCertificate>
   ListAuthorizedCertificates(
       google::appengine::v1::ListAuthorizedCertificatesRequest request);

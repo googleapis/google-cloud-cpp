@@ -35,29 +35,11 @@ AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub>
         stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<assuredworkloads::
-                       AssuredWorkloadsServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  assuredworkloads::
-                      AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<assuredworkloads::
-                       AssuredWorkloadsServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
+          std::move(options))) {}
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnectionImpl::CreateWorkload(

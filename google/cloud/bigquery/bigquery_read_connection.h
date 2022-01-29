@@ -54,6 +54,8 @@ class BigQueryReadConnection {
  public:
   virtual ~BigQueryReadConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
   CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&

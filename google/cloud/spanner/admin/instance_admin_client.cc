@@ -30,8 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceAdminClient::InstanceAdminClient(
     std::shared_ptr<InstanceAdminConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(spanner_admin_internal::InstanceAdminDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          spanner_admin_internal::InstanceAdminDefaultOptions(
+              connection_->options()))) {}
 InstanceAdminClient::~InstanceAdminClient() = default;
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>

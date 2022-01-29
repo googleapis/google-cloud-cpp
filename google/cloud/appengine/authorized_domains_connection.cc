@@ -59,7 +59,7 @@ std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
   auto stub = appengine_internal::CreateDefaultAuthorizedDomainsStub(
       background->cq(), options);
   return std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -76,9 +76,9 @@ std::shared_ptr<appengine::AuthorizedDomainsConnection>
 MakeAuthorizedDomainsConnection(std::shared_ptr<AuthorizedDomainsStub> stub,
                                 Options options) {
   options = AuthorizedDomainsDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

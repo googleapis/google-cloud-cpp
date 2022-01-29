@@ -76,7 +76,7 @@ std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = ids_internal::CreateDefaultIDSStub(background->cq(), options);
   return std::make_shared<ids_internal::IDSConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -92,9 +92,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<ids::IDSConnection> MakeIDSConnection(
     std::shared_ptr<IDSStub> stub, Options options) {
   options = IDSDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<ids_internal::IDSConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

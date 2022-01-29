@@ -33,17 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommenderConnectionImpl::RecommenderConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<recommender_internal::RecommenderStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<recommender::RecommenderRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<recommender::RecommenderBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<recommender::RecommenderConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          recommender_internal::RecommenderDefaultOptions(std::move(options))) {
+}
 
 StreamRange<google::cloud::recommender::v1::Insight>
 RecommenderConnectionImpl::ListInsights(

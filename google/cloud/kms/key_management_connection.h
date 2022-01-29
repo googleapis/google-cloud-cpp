@@ -50,6 +50,8 @@ class KeyManagementServiceConnection {
  public:
   virtual ~KeyManagementServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
       google::cloud::kms::v1::ListKeyRingsRequest request);
 

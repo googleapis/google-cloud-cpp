@@ -33,18 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GkeHubConnectionImpl::GkeHubConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<gkehub_internal::GkeHubStub> stub, Options const& options)
+    std::shared_ptr<gkehub_internal::GkeHubStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<gkehub::GkeHubRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<gkehub::GkeHubBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<gkehub::GkeHubConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<gkehub::GkeHubPollingPolicyOption>()->clone()) {}
+      options_(gkehub_internal::GkeHubDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubConnectionImpl::ListMemberships(

@@ -48,7 +48,9 @@ class CertificateAuthorityServiceConnectionImpl
   CertificateAuthorityServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
@@ -202,7 +204,9 @@ class CertificateAuthorityServiceConnectionImpl
           .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -213,7 +217,9 @@ class CertificateAuthorityServiceConnectionImpl
           .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -229,17 +235,11 @@ class CertificateAuthorityServiceConnectionImpl
                   CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<privateca::
+                 CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub_;
-  std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -249,10 +249,14 @@ class CertificateAuthorityServiceConnectionImpl
           .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

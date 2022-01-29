@@ -50,6 +50,8 @@ class CloudBillingConnection {
  public:
   virtual ~CloudBillingConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
   GetBillingAccount(
       google::cloud::billing::v1::GetBillingAccountRequest const& request);

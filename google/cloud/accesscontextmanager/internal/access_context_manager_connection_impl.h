@@ -49,7 +49,9 @@ class AccessContextManagerConnectionImpl
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
           stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
   ListAccessPolicies(
@@ -178,7 +180,9 @@ class AccessContextManagerConnectionImpl
           .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -189,7 +193,9 @@ class AccessContextManagerConnectionImpl
           .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -204,18 +210,11 @@ class AccessContextManagerConnectionImpl
                    AccessContextManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<accesscontextmanager::
+                 AccessContextManagerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
-      stub_;
-  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -225,10 +224,15 @@ class AccessContextManagerConnectionImpl
           .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
+      stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

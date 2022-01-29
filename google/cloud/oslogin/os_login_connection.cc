@@ -77,7 +77,7 @@ std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
   auto stub = oslogin_internal::CreateDefaultOsLoginServiceStub(
       background->cq(), options);
   return std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -93,9 +93,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<oslogin::OsLoginServiceConnection> MakeOsLoginServiceConnection(
     std::shared_ptr<OsLoginServiceStub> stub, Options options) {
   options = OsLoginServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

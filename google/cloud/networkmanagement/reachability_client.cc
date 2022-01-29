@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReachabilityServiceClient::ReachabilityServiceClient(
     std::shared_ptr<ReachabilityServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(networkmanagement_internal::ReachabilityServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          networkmanagement_internal::ReachabilityServiceDefaultOptions(
+              connection_->options()))) {}
 ReachabilityServiceClient::~ReachabilityServiceClient() = default;
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>

@@ -33,19 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServicesConnectionImpl::ServicesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::ServicesStub> stub,
-    Options const& options)
+    std::shared_ptr<appengine_internal::ServicesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<appengine::ServicesRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<appengine::ServicesBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<appengine::ServicesConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<appengine::ServicesPollingPolicyOption>()->clone()) {}
+      options_(appengine_internal::ServicesDefaultOptions(std::move(options))) {
+}
 
 StreamRange<google::appengine::v1::Service>
 ServicesConnectionImpl::ListServices(

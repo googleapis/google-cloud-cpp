@@ -49,7 +49,7 @@ std::shared_ptr<EventServiceConnection> MakeEventServiceConnection(
   auto stub =
       talent_internal::CreateDefaultEventServiceStub(background->cq(), options);
   return std::make_shared<talent_internal::EventServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -65,9 +65,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<talent::EventServiceConnection> MakeEventServiceConnection(
     std::shared_ptr<EventServiceStub> stub, Options options) {
   options = EventServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<talent_internal::EventServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

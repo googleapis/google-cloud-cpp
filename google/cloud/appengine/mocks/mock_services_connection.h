@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockServicesConnection : public appengine::ServicesConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::appengine::v1::Service>, ListServices,
               (google::appengine::v1::ListServicesRequest request), (override));
 

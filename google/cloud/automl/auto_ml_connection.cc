@@ -188,7 +188,7 @@ std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {
   auto stub =
       automl_internal::CreateDefaultAutoMlStub(background->cq(), options);
   return std::make_shared<automl_internal::AutoMlConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -204,9 +204,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<automl::AutoMlConnection> MakeAutoMlConnection(
     std::shared_ptr<AutoMlStub> stub, Options options) {
   options = AutoMlDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<automl_internal::AutoMlConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

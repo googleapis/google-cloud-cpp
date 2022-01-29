@@ -32,19 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TextToSpeechConnectionImpl::TextToSpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<texttospeech::TextToSpeechRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<texttospeech::TextToSpeechBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(texttospeech_internal::TextToSpeechDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechConnectionImpl::ListVoices(

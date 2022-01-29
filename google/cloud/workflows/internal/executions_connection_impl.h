@@ -44,7 +44,9 @@ class ExecutionsConnectionImpl : public workflows::ExecutionsConnection {
   ExecutionsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<workflows_internal::ExecutionsStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::workflows::executions::v1::Execution>
   ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest
@@ -68,7 +70,7 @@ class ExecutionsConnectionImpl : public workflows::ExecutionsConnection {
     if (options.has<workflows::ExecutionsRetryPolicyOption>()) {
       return options.get<workflows::ExecutionsRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<workflows::ExecutionsRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -76,7 +78,7 @@ class ExecutionsConnectionImpl : public workflows::ExecutionsConnection {
     if (options.has<workflows::ExecutionsBackoffPolicyOption>()) {
       return options.get<workflows::ExecutionsBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<workflows::ExecutionsBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<workflows::ExecutionsConnectionIdempotencyPolicy>
@@ -87,16 +89,14 @@ class ExecutionsConnectionImpl : public workflows::ExecutionsConnection {
           .get<workflows::ExecutionsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<workflows::ExecutionsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<workflows_internal::ExecutionsStub> stub_;
-  std::unique_ptr<workflows::ExecutionsRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<workflows::ExecutionsConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

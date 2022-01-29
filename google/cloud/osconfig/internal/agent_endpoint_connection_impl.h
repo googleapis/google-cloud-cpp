@@ -45,7 +45,9 @@ class AgentEndpointServiceConnectionImpl
   AgentEndpointServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<osconfig_internal::AgentEndpointServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::osconfig::agentendpoint::v1::
                   ReceiveTaskNotificationResponse>
@@ -85,7 +87,8 @@ class AgentEndpointServiceConnectionImpl
       return options.get<osconfig::AgentEndpointServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<osconfig::AgentEndpointServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -94,7 +97,8 @@ class AgentEndpointServiceConnectionImpl
       return options.get<osconfig::AgentEndpointServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<osconfig::AgentEndpointServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<osconfig::AgentEndpointServiceConnectionIdempotencyPolicy>
@@ -108,16 +112,14 @@ class AgentEndpointServiceConnectionImpl
               osconfig::AgentEndpointServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<osconfig::AgentEndpointServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<osconfig_internal::AgentEndpointServiceStub> stub_;
-  std::unique_ptr<osconfig::AgentEndpointServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<osconfig::AgentEndpointServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

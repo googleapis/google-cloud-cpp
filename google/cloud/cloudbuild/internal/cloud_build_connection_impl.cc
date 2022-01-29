@@ -33,20 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudBuildConnectionImpl::CloudBuildConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub,
-    Options const& options)
+    std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<cloudbuild::CloudBuildRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<cloudbuild::CloudBuildBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<cloudbuild::CloudBuildPollingPolicyOption>()->clone()) {}
+      options_(
+          cloudbuild_internal::CloudBuildDefaultOptions(std::move(options))) {}
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::CreateBuild(

@@ -31,18 +31,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<oslogin::OsLoginServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<oslogin::OsLoginServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<oslogin::OsLoginServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          oslogin_internal::OsLoginServiceDefaultOptions(std::move(options))) {}
 
 Status OsLoginServiceConnectionImpl::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {

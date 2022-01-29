@@ -49,6 +49,8 @@ class TextToSpeechConnection {
  public:
   virtual ~TextToSpeechConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
   ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request);
 

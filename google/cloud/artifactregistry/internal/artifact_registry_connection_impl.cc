@@ -33,20 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ArtifactRegistryConnectionImpl::ArtifactRegistryConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<artifactregistry::
-                       ArtifactRegistryConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(artifactregistry_internal::ArtifactRegistryDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryConnectionImpl::ListDockerImages(

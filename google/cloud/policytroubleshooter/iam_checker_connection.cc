@@ -51,7 +51,7 @@ std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
       background->cq(), options);
   return std::make_shared<
       policytroubleshooter_internal::IamCheckerConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -68,10 +68,10 @@ std::shared_ptr<policytroubleshooter::IamCheckerConnection>
 MakeIamCheckerConnection(std::shared_ptr<IamCheckerStub> stub,
                          Options options) {
   options = IamCheckerDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       policytroubleshooter_internal::IamCheckerConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

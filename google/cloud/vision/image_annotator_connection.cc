@@ -72,7 +72,7 @@ std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
   auto stub = vision_internal::CreateDefaultImageAnnotatorStub(background->cq(),
                                                                options);
   return std::make_shared<vision_internal::ImageAnnotatorConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -88,9 +88,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<vision::ImageAnnotatorConnection> MakeImageAnnotatorConnection(
     std::shared_ptr<ImageAnnotatorStub> stub, Options options) {
   options = ImageAnnotatorDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<vision_internal::ImageAnnotatorConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

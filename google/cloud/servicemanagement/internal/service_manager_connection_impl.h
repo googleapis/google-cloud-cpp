@@ -48,7 +48,9 @@ class ServiceManagerConnectionImpl
   ServiceManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::api::servicemanagement::v1::ManagedService> ListServices(
       google::api::servicemanagement::v1::ListServicesRequest request) override;
@@ -122,7 +124,8 @@ class ServiceManagerConnectionImpl
       return options.get<servicemanagement::ServiceManagerRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<servicemanagement::ServiceManagerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -132,7 +135,8 @@ class ServiceManagerConnectionImpl
           .get<servicemanagement::ServiceManagerBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<servicemanagement::ServiceManagerBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<servicemanagement::ServiceManagerConnectionIdempotencyPolicy>
@@ -145,16 +149,11 @@ class ServiceManagerConnectionImpl
                    ServiceManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<servicemanagement::
+                 ServiceManagerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub_;
-  std::unique_ptr<servicemanagement::ServiceManagerRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<servicemanagement::ServiceManagerConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -163,10 +162,13 @@ class ServiceManagerConnectionImpl
           .get<servicemanagement::ServiceManagerPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<servicemanagement::ServiceManagerPollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

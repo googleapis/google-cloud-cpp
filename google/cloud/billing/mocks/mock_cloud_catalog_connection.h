@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockCloudCatalogConnection : public billing::CloudCatalogConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::billing::v1::Service>, ListServices,
               (google::cloud::billing::v1::ListServicesRequest request),
               (override));

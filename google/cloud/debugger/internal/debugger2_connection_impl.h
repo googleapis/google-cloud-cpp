@@ -42,8 +42,9 @@ class Debugger2ConnectionImpl : public debugger::Debugger2Connection {
 
   Debugger2ConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<debugger_internal::Debugger2Stub> stub,
-      Options const& options);
+      std::shared_ptr<debugger_internal::Debugger2Stub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
   SetBreakpoint(google::devtools::clouddebugger::v2::SetBreakpointRequest const&
@@ -72,7 +73,7 @@ class Debugger2ConnectionImpl : public debugger::Debugger2Connection {
     if (options.has<debugger::Debugger2RetryPolicyOption>()) {
       return options.get<debugger::Debugger2RetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<debugger::Debugger2RetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -80,7 +81,7 @@ class Debugger2ConnectionImpl : public debugger::Debugger2Connection {
     if (options.has<debugger::Debugger2BackoffPolicyOption>()) {
       return options.get<debugger::Debugger2BackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<debugger::Debugger2BackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<debugger::Debugger2ConnectionIdempotencyPolicy>
@@ -91,15 +92,13 @@ class Debugger2ConnectionImpl : public debugger::Debugger2Connection {
           .get<debugger::Debugger2ConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<debugger::Debugger2ConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<debugger_internal::Debugger2Stub> stub_;
-  std::unique_ptr<debugger::Debugger2RetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<debugger::Debugger2ConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

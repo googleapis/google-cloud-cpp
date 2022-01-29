@@ -44,7 +44,9 @@ class TopicStatsServiceConnectionImpl
   TopicStatsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
@@ -68,7 +70,8 @@ class TopicStatsServiceConnectionImpl
       return options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -77,7 +80,8 @@ class TopicStatsServiceConnectionImpl
       return options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
@@ -89,16 +93,14 @@ class TopicStatsServiceConnectionImpl
           .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub_;
-  std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

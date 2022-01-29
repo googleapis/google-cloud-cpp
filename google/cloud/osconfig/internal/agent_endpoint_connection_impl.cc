@@ -34,20 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AgentEndpointServiceConnectionImpl::AgentEndpointServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<osconfig_internal::AgentEndpointServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<osconfig::AgentEndpointServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<osconfig::AgentEndpointServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<osconfig::
-                       AgentEndpointServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(osconfig_internal::AgentEndpointServiceDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<
     google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>

@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockVideoIntelligenceServiceConnection
     : public videointelligence::VideoIntelligenceServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(future<StatusOr<
                   google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
               AnnotateVideo,

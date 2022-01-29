@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PredictionServiceClient::PredictionServiceClient(
     std::shared_ptr<PredictionServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(retail_internal::PredictionServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::PredictionServiceDefaultOptions(
+                                  connection_->options()))) {}
 PredictionServiceClient::~PredictionServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::PredictResponse>

@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataMigrationServiceClient::DataMigrationServiceClient(
     std::shared_ptr<DataMigrationServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(datamigration_internal::DataMigrationServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          datamigration_internal::DataMigrationServiceDefaultOptions(
+              connection_->options()))) {}
 DataMigrationServiceClient::~DataMigrationServiceClient() = default;
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>

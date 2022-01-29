@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceControllerClient::ServiceControllerClient(
     std::shared_ptr<ServiceControllerConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(servicecontrol_internal::ServiceControllerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicecontrol_internal::ServiceControllerDefaultOptions(
+              connection_->options()))) {}
 ServiceControllerClient::~ServiceControllerClient() = default;
 
 StatusOr<google::api::servicecontrol::v1::CheckResponse>

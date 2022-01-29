@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockProjectsConnection : public resourcemanager::ProjectsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::resourcemanager::v3::Project>, GetProject,
       (google::cloud::resourcemanager::v3::GetProjectRequest const& request),

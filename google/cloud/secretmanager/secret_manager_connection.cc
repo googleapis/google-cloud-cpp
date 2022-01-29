@@ -151,7 +151,7 @@ MakeSecretManagerServiceConnection(Options options) {
       background->cq(), options);
   return std::make_shared<
       secretmanager_internal::SecretManagerServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -168,10 +168,10 @@ std::shared_ptr<secretmanager::SecretManagerServiceConnection>
 MakeSecretManagerServiceConnection(
     std::shared_ptr<SecretManagerServiceStub> stub, Options options) {
   options = SecretManagerServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       secretmanager_internal::SecretManagerServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

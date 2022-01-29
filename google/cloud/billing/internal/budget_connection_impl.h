@@ -44,7 +44,9 @@ class BudgetServiceConnectionImpl : public billing::BudgetServiceConnection {
   BudgetServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<billing_internal::BudgetServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
@@ -71,7 +73,7 @@ class BudgetServiceConnectionImpl : public billing::BudgetServiceConnection {
     if (options.has<billing::BudgetServiceRetryPolicyOption>()) {
       return options.get<billing::BudgetServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<billing::BudgetServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -79,7 +81,7 @@ class BudgetServiceConnectionImpl : public billing::BudgetServiceConnection {
     if (options.has<billing::BudgetServiceBackoffPolicyOption>()) {
       return options.get<billing::BudgetServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<billing::BudgetServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy>
@@ -91,16 +93,14 @@ class BudgetServiceConnectionImpl : public billing::BudgetServiceConnection {
           .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_internal::BudgetServiceStub> stub_;
-  std::unique_ptr<billing::BudgetServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

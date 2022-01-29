@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockDatabaseAdminConnection
     : public spanner_admin::DatabaseAdminConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StreamRange<google::spanner::admin::database::v1::Database>,
       ListDatabases,

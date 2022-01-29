@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TranslationServiceClient::TranslationServiceClient(
     std::shared_ptr<TranslationServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(translate_internal::TranslationServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          translate_internal::TranslationServiceDefaultOptions(
+              connection_->options()))) {}
 TranslationServiceClient::~TranslationServiceClient() = default;
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>

@@ -53,6 +53,8 @@ class InstanceAdminConnection {
  public:
   virtual ~InstanceAdminConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
       google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);

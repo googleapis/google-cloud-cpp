@@ -50,6 +50,8 @@ class SearchServiceConnection {
  public:
   virtual ~SearchServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
   Search(google::cloud::retail::v2::SearchRequest request);
 };

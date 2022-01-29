@@ -89,7 +89,7 @@ MakeAssuredWorkloadsServiceConnection(Options options) {
           background->cq(), options);
   return std::make_shared<
       assuredworkloads_internal::AssuredWorkloadsServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -106,10 +106,10 @@ std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceConnection(
     std::shared_ptr<AssuredWorkloadsServiceStub> stub, Options options) {
   options = AssuredWorkloadsServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       assuredworkloads_internal::AssuredWorkloadsServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,17 +32,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudTasksConnectionImpl::CloudTasksConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<tasks_internal::CloudTasksStub> stub,
-    Options const& options)
+    std::shared_ptr<tasks_internal::CloudTasksStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<tasks::CloudTasksRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<tasks::CloudTasksBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<tasks::CloudTasksConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(tasks_internal::CloudTasksDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::tasks::v2::Queue>
 CloudTasksConnectionImpl::ListQueues(

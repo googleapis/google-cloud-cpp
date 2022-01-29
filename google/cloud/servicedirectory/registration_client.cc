@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegistrationServiceClient::RegistrationServiceClient(
     std::shared_ptr<RegistrationServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(servicedirectory_internal::RegistrationServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicedirectory_internal::RegistrationServiceDefaultOptions(
+              connection_->options()))) {}
 RegistrationServiceClient::~RegistrationServiceClient() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>

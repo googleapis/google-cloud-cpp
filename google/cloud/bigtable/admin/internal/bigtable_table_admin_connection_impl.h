@@ -48,7 +48,9 @@ class BigtableTableAdminConnectionImpl
   BigtableTableAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       google::bigtable::admin::v2::CreateTableRequest const& request) override;
@@ -118,7 +120,8 @@ class BigtableTableAdminConnectionImpl
       return options.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -128,7 +131,9 @@ class BigtableTableAdminConnectionImpl
           .get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicy>
@@ -142,16 +147,11 @@ class BigtableTableAdminConnectionImpl
                    BigtableTableAdminConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<bigtable_admin::
+                 BigtableTableAdminConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub_;
-  std::unique_ptr<bigtable_admin::BigtableTableAdminRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -160,10 +160,14 @@ class BigtableTableAdminConnectionImpl
           .get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

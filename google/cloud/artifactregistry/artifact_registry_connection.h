@@ -50,6 +50,8 @@ class ArtifactRegistryConnection {
  public:
   virtual ~ArtifactRegistryConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::devtools::artifactregistry::v1::DockerImage>
   ListDockerImages(
       google::devtools::artifactregistry::v1::ListDockerImagesRequest request);

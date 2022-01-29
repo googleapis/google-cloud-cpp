@@ -49,7 +49,9 @@ class GameServerDeploymentsServiceConnectionImpl
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub>
           stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::gaming::v1::GameServerDeployment>
   ListGameServerDeployments(
@@ -107,7 +109,9 @@ class GameServerDeploymentsServiceConnectionImpl
           .get<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<gameservices::GameServerDeploymentsServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -118,7 +122,9 @@ class GameServerDeploymentsServiceConnectionImpl
           .get<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<gameservices::GameServerDeploymentsServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -134,18 +140,12 @@ class GameServerDeploymentsServiceConnectionImpl
                   GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<
+            gameservices::
+                GameServerDeploymentsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub>
-      stub_;
-  std::unique_ptr<gameservices::GameServerDeploymentsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      gameservices::GameServerDeploymentsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -155,10 +155,15 @@ class GameServerDeploymentsServiceConnectionImpl
           .get<gameservices::GameServerDeploymentsServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<gameservices::GameServerDeploymentsServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub>
+      stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

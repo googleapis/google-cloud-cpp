@@ -34,20 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DomainMappingsConnectionImpl::DomainMappingsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<appengine_internal::DomainMappingsStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<appengine::DomainMappingsRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<appengine::DomainMappingsBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<appengine::DomainMappingsConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<appengine::DomainMappingsPollingPolicyOption>()
-              ->clone()) {}
+      options_(appengine_internal::DomainMappingsDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::appengine::v1::DomainMapping>
 DomainMappingsConnectionImpl::ListDomainMappings(

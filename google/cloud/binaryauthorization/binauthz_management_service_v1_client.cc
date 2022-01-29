@@ -29,9 +29,10 @@ BinauthzManagementServiceV1Client::BinauthzManagementServiceV1Client(
     std::shared_ptr<BinauthzManagementServiceV1Connection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(
-          binaryauthorization_internal::
-              BinauthzManagementServiceV1DefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), binaryauthorization_internal::
+                                  BinauthzManagementServiceV1DefaultOptions(
+                                      connection_->options()))) {}
 BinauthzManagementServiceV1Client::~BinauthzManagementServiceV1Client() =
     default;
 

@@ -48,6 +48,8 @@ class PublisherConnection {
  public:
   virtual ~PublisherConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::eventarc::publishing::v1::
                        PublishChannelConnectionEventsResponse>
   PublishChannelConnectionEvents(

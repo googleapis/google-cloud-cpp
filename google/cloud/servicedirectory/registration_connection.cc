@@ -176,7 +176,7 @@ MakeRegistrationServiceConnection(Options options) {
       background->cq(), options);
   return std::make_shared<
       servicedirectory_internal::RegistrationServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -193,10 +193,10 @@ std::shared_ptr<servicedirectory::RegistrationServiceConnection>
 MakeRegistrationServiceConnection(std::shared_ptr<RegistrationServiceStub> stub,
                                   Options options) {
   options = RegistrationServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       servicedirectory_internal::RegistrationServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

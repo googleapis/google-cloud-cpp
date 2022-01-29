@@ -53,6 +53,8 @@ class CertificateAuthorityServiceConnection {
  public:
   virtual ~CertificateAuthorityServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
       google::cloud::security::privateca::v1::CreateCertificateRequest const&

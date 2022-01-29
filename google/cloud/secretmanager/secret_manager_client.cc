@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecretManagerServiceClient::SecretManagerServiceClient(
     std::shared_ptr<SecretManagerServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(secretmanager_internal::SecretManagerServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          secretmanager_internal::SecretManagerServiceDefaultOptions(
+              connection_->options()))) {}
 SecretManagerServiceClient::~SecretManagerServiceClient() = default;
 
 StreamRange<google::cloud::secretmanager::v1::Secret>

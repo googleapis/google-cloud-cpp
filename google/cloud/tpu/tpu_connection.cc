@@ -136,7 +136,7 @@ std::shared_ptr<TpuConnection> MakeTpuConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = tpu_internal::CreateDefaultTpuStub(background->cq(), options);
   return std::make_shared<tpu_internal::TpuConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -152,9 +152,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<tpu::TpuConnection> MakeTpuConnection(
     std::shared_ptr<TpuStub> stub, Options options) {
   options = TpuDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<tpu_internal::TpuConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -52,6 +52,8 @@ class WorkflowsConnection {
  public:
   virtual ~WorkflowsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
       google::cloud::workflows::v1::ListWorkflowsRequest request);
 

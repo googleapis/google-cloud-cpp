@@ -53,6 +53,8 @@ class CloudFunctionsServiceConnection {
  public:
   virtual ~CloudFunctionsServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::functions::v1::CloudFunction>
   ListFunctions(google::cloud::functions::v1::ListFunctionsRequest request);
 

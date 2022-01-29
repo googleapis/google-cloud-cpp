@@ -52,6 +52,8 @@ class FoldersConnection {
  public:
   virtual ~FoldersConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       google::cloud::resourcemanager::v3::GetFolderRequest const& request);
 

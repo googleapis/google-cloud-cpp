@@ -299,7 +299,7 @@ MakeAccessContextManagerConnection(Options options) {
           background->cq(), options);
   return std::make_shared<
       accesscontextmanager_internal::AccessContextManagerConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -316,10 +316,10 @@ std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
 MakeAccessContextManagerConnection(
     std::shared_ptr<AccessContextManagerStub> stub, Options options) {
   options = AccessContextManagerDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       accesscontextmanager_internal::AccessContextManagerConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -123,7 +123,7 @@ std::shared_ptr<TranslationServiceConnection> MakeTranslationServiceConnection(
   auto stub = translate_internal::CreateDefaultTranslationServiceStub(
       background->cq(), options);
   return std::make_shared<translate_internal::TranslationServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -140,9 +140,9 @@ std::shared_ptr<translate::TranslationServiceConnection>
 MakeTranslationServiceConnection(std::shared_ptr<TranslationServiceStub> stub,
                                  Options options) {
   options = TranslationServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<translate_internal::TranslationServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

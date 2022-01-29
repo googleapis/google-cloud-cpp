@@ -51,7 +51,7 @@ std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
       background->cq(), options);
   return std::make_shared<
       binaryauthorization_internal::SystemPolicyV1ConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -68,10 +68,10 @@ std::shared_ptr<binaryauthorization::SystemPolicyV1Connection>
 MakeSystemPolicyV1Connection(std::shared_ptr<SystemPolicyV1Stub> stub,
                              Options options) {
   options = SystemPolicyV1DefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       binaryauthorization_internal::SystemPolicyV1ConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

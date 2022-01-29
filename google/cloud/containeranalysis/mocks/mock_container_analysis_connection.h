@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockContainerAnalysisConnection
     : public containeranalysis::ContainerAnalysisConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),
               (override));

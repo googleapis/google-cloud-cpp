@@ -34,23 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TranslationServiceConnectionImpl::TranslationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<translate_internal::TranslationServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<translate::TranslationServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<translate::TranslationServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<translate::
-                       TranslationServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<translate::TranslationServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(translate_internal::TranslationServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceConnectionImpl::TranslateText(

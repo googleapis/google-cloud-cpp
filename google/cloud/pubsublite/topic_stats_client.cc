@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TopicStatsServiceClient::TopicStatsServiceClient(
     std::shared_ptr<TopicStatsServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(pubsublite_internal::TopicStatsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          pubsublite_internal::TopicStatsServiceDefaultOptions(
+              connection_->options()))) {}
 TopicStatsServiceClient::~TopicStatsServiceClient() = default;
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>

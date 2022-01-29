@@ -45,7 +45,9 @@ class KeyManagementServiceConnectionImpl
   KeyManagementServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<kms_internal::KeyManagementServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
       google::cloud::kms::v1::ListKeyRingsRequest request) override;
@@ -139,7 +141,7 @@ class KeyManagementServiceConnectionImpl
     if (options.has<kms::KeyManagementServiceRetryPolicyOption>()) {
       return options.get<kms::KeyManagementServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<kms::KeyManagementServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -148,7 +150,8 @@ class KeyManagementServiceConnectionImpl
       return options.get<kms::KeyManagementServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<kms::KeyManagementServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<kms::KeyManagementServiceConnectionIdempotencyPolicy>
@@ -160,16 +163,14 @@ class KeyManagementServiceConnectionImpl
           .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<kms_internal::KeyManagementServiceStub> stub_;
-  std::unique_ptr<kms::KeyManagementServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<kms::KeyManagementServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

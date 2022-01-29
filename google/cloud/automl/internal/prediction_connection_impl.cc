@@ -33,20 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<automl_internal::PredictionServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<automl::PredictionServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<automl::PredictionServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<automl::PredictionServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<automl::PredictionServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(automl_internal::PredictionServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceConnectionImpl::Predict(

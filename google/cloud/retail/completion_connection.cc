@@ -59,7 +59,7 @@ std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
   auto stub = retail_internal::CreateDefaultCompletionServiceStub(
       background->cq(), options);
   return std::make_shared<retail_internal::CompletionServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -76,9 +76,9 @@ std::shared_ptr<retail::CompletionServiceConnection>
 MakeCompletionServiceConnection(std::shared_ptr<CompletionServiceStub> stub,
                                 Options options) {
   options = CompletionServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<retail_internal::CompletionServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

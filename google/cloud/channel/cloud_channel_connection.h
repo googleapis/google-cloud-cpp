@@ -53,6 +53,8 @@ class CloudChannelServiceConnection {
  public:
   virtual ~CloudChannelServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
       google::cloud::channel::v1::ListCustomersRequest request);
 

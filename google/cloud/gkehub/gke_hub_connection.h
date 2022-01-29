@@ -52,6 +52,8 @@ class GkeHubConnection {
  public:
   virtual ~GkeHubConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
       google::cloud::gkehub::v1::ListMembershipsRequest request);
 

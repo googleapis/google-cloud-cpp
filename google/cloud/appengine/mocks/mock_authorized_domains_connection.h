@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockAuthorizedDomainsConnection
     : public appengine::AuthorizedDomainsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::appengine::v1::AuthorizedDomain>,
               ListAuthorizedDomains,
               (google::appengine::v1::ListAuthorizedDomainsRequest request),

@@ -32,20 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageAnnotatorConnectionImpl::ImageAnnotatorConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<vision_internal::ImageAnnotatorStub> stub,
-    Options const& options)
+    std::shared_ptr<vision_internal::ImageAnnotatorStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<vision::ImageAnnotatorRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<vision::ImageAnnotatorPollingPolicyOption>()->clone()) {}
+      options_(
+          vision_internal::ImageAnnotatorDefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorConnectionImpl::BatchAnnotateImages(

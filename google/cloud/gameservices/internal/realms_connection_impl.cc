@@ -34,22 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RealmsServiceConnectionImpl::RealmsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<gameservices_internal::RealmsServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<gameservices::RealmsServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<gameservices::RealmsServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<gameservices::
-                       RealmsServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<gameservices::RealmsServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(gameservices_internal::RealmsServiceDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::cloud::gaming::v1::Realm>
 RealmsServiceConnectionImpl::ListRealms(

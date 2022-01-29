@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SearchServiceClient::SearchServiceClient(
     std::shared_ptr<SearchServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          retail_internal::SearchServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), retail_internal::SearchServiceDefaultOptions(
+                                  connection_->options()))) {}
 SearchServiceClient::~SearchServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>

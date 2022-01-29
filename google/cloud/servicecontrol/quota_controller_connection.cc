@@ -51,7 +51,7 @@ std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
       background->cq(), options);
   return std::make_shared<
       servicecontrol_internal::QuotaControllerConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -68,10 +68,10 @@ std::shared_ptr<servicecontrol::QuotaControllerConnection>
 MakeQuotaControllerConnection(std::shared_ptr<QuotaControllerStub> stub,
                               Options options) {
   options = QuotaControllerDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       servicecontrol_internal::QuotaControllerConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

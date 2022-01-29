@@ -52,6 +52,8 @@ class TpuConnection {
  public:
   virtual ~TpuConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::tpu::v1::Node> ListNodes(
       google::cloud::tpu::v1::ListNodesRequest request);
 

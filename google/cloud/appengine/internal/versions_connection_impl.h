@@ -46,8 +46,9 @@ class VersionsConnectionImpl : public appengine::VersionsConnection {
 
   VersionsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::VersionsStub> stub,
-      Options const& options);
+      std::shared_ptr<appengine_internal::VersionsStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::appengine::v1::Version> ListVersions(
       google::appengine::v1::ListVersionsRequest request) override;
@@ -70,7 +71,7 @@ class VersionsConnectionImpl : public appengine::VersionsConnection {
     if (options.has<appengine::VersionsRetryPolicyOption>()) {
       return options.get<appengine::VersionsRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<appengine::VersionsRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -78,7 +79,7 @@ class VersionsConnectionImpl : public appengine::VersionsConnection {
     if (options.has<appengine::VersionsBackoffPolicyOption>()) {
       return options.get<appengine::VersionsBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<appengine::VersionsBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy>
@@ -89,25 +90,21 @@ class VersionsConnectionImpl : public appengine::VersionsConnection {
           .get<appengine::VersionsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<appengine::VersionsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::VersionsStub> stub_;
-  std::unique_ptr<appengine::VersionsRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<appengine::VersionsPollingPolicyOption>()) {
       return options.get<appengine::VersionsPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<appengine::VersionsPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<appengine_internal::VersionsStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

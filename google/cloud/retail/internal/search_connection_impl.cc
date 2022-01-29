@@ -32,17 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SearchServiceConnectionImpl::SearchServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_internal::SearchServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<retail_internal::SearchServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<retail::SearchServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<retail::SearchServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          retail_internal::SearchServiceDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 SearchServiceConnectionImpl::Search(

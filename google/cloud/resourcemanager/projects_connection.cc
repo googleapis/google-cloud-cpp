@@ -136,7 +136,7 @@ std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
   auto stub = resourcemanager_internal::CreateDefaultProjectsStub(
       background->cq(), options);
   return std::make_shared<resourcemanager_internal::ProjectsConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -152,9 +152,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<resourcemanager::ProjectsConnection> MakeProjectsConnection(
     std::shared_ptr<ProjectsStub> stub, Options options) {
   options = ProjectsDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<resourcemanager_internal::ProjectsConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

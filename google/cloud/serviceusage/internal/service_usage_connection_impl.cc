@@ -34,22 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceUsageConnectionImpl::ServiceUsageConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<serviceusage::ServiceUsageRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<serviceusage::ServiceUsageBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<serviceusage::ServiceUsagePollingPolicyOption>()
-              ->clone()) {}
+      options_(serviceusage_internal::ServiceUsageDefaultOptions(
+          std::move(options))) {}
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
 ServiceUsageConnectionImpl::EnableService(

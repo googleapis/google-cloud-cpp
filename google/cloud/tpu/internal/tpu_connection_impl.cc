@@ -33,17 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TpuConnectionImpl::TpuConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<tpu_internal::TpuStub> stub, Options const& options)
+    std::shared_ptr<tpu_internal::TpuStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<tpu::TpuRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<tpu::TpuBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<tpu::TpuConnectionIdempotencyPolicyOption>()->clone()),
-      polling_policy_prototype_(
-          options.get<tpu::TpuPollingPolicyOption>()->clone()) {}
+      options_(tpu_internal::TpuDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::tpu::v1::Node> TpuConnectionImpl::ListNodes(
     google::cloud::tpu::v1::ListNodesRequest request) {

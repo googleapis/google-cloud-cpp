@@ -50,6 +50,8 @@ class AccessApprovalConnection {
  public:
   virtual ~AccessApprovalConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
   ListApprovalRequests(
       google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);

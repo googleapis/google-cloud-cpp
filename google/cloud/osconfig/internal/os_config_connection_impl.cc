@@ -33,17 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsConfigServiceConnectionImpl::OsConfigServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<osconfig_internal::OsConfigServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<osconfig::OsConfigServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<osconfig::OsConfigServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(osconfig_internal::OsConfigServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceConnectionImpl::ExecutePatchJob(

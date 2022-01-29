@@ -50,6 +50,8 @@ class CloudSchedulerConnection {
  public:
   virtual ~CloudSchedulerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
       google::cloud::scheduler::v1::ListJobsRequest request);
 

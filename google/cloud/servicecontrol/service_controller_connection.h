@@ -49,6 +49,8 @@ class ServiceControllerConnection {
  public:
   virtual ~ServiceControllerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       google::api::servicecontrol::v1::CheckRequest const& request);
 

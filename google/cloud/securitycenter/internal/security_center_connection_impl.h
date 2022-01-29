@@ -48,7 +48,9 @@ class SecurityCenterConnectionImpl
   SecurityCenterConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(
@@ -187,7 +189,8 @@ class SecurityCenterConnectionImpl
       return options.get<securitycenter::SecurityCenterRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<securitycenter::SecurityCenterRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -196,7 +199,8 @@ class SecurityCenterConnectionImpl
       return options.get<securitycenter::SecurityCenterBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<securitycenter::SecurityCenterBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<securitycenter::SecurityCenterConnectionIdempotencyPolicy>
@@ -209,16 +213,10 @@ class SecurityCenterConnectionImpl
               securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub_;
-  std::unique_ptr<securitycenter::SecurityCenterRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<securitycenter::SecurityCenterConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -226,10 +224,13 @@ class SecurityCenterConnectionImpl
       return options.get<securitycenter::SecurityCenterPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<securitycenter::SecurityCenterPollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

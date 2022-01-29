@@ -30,7 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudTasksClient::CloudTasksClient(
     std::shared_ptr<CloudTasksConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(tasks_internal::CloudTasksDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          tasks_internal::CloudTasksDefaultOptions(connection_->options()))) {}
 CloudTasksClient::~CloudTasksClient() = default;
 
 StreamRange<google::cloud::tasks::v2::Queue> CloudTasksClient::ListQueues(

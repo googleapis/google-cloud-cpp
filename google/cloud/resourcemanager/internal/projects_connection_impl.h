@@ -47,7 +47,9 @@ class ProjectsConnectionImpl : public resourcemanager::ProjectsConnection {
   ProjectsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<resourcemanager_internal::ProjectsStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       google::cloud::resourcemanager::v3::GetProjectRequest const& request)
@@ -95,7 +97,7 @@ class ProjectsConnectionImpl : public resourcemanager::ProjectsConnection {
     if (options.has<resourcemanager::ProjectsRetryPolicyOption>()) {
       return options.get<resourcemanager::ProjectsRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<resourcemanager::ProjectsRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -104,7 +106,8 @@ class ProjectsConnectionImpl : public resourcemanager::ProjectsConnection {
       return options.get<resourcemanager::ProjectsBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<resourcemanager::ProjectsBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<resourcemanager::ProjectsConnectionIdempotencyPolicy>
@@ -116,16 +119,10 @@ class ProjectsConnectionImpl : public resourcemanager::ProjectsConnection {
           .get<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcemanager_internal::ProjectsStub> stub_;
-  std::unique_ptr<resourcemanager::ProjectsRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<resourcemanager::ProjectsConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -133,10 +130,13 @@ class ProjectsConnectionImpl : public resourcemanager::ProjectsConnection {
       return options.get<resourcemanager::ProjectsPollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<resourcemanager::ProjectsPollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<resourcemanager_internal::ProjectsStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

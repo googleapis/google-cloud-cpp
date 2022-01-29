@@ -34,26 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReachabilityServiceConnectionImpl::ReachabilityServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<networkmanagement::
-                       ReachabilityServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(networkmanagement_internal::ReachabilityServiceDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceConnectionImpl::ListConnectivityTests(

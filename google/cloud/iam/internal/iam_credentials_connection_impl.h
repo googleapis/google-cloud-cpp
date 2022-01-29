@@ -42,8 +42,9 @@ class IAMCredentialsConnectionImpl : public iam::IAMCredentialsConnection {
 
   IAMCredentialsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
-      Options const& options);
+      std::shared_ptr<iam_internal::IAMCredentialsStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
@@ -66,7 +67,7 @@ class IAMCredentialsConnectionImpl : public iam::IAMCredentialsConnection {
     if (options.has<iam::IAMCredentialsRetryPolicyOption>()) {
       return options.get<iam::IAMCredentialsRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<iam::IAMCredentialsRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -74,7 +75,7 @@ class IAMCredentialsConnectionImpl : public iam::IAMCredentialsConnection {
     if (options.has<iam::IAMCredentialsBackoffPolicyOption>()) {
       return options.get<iam::IAMCredentialsBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<iam::IAMCredentialsBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<iam::IAMCredentialsConnectionIdempotencyPolicy>
@@ -85,15 +86,13 @@ class IAMCredentialsConnectionImpl : public iam::IAMCredentialsConnection {
           .get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMCredentialsStub> stub_;
-  std::unique_ptr<iam::IAMCredentialsRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<iam::IAMCredentialsConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

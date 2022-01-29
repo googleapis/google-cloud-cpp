@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OrgPolicyClient::OrgPolicyClient(
     std::shared_ptr<OrgPolicyConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          orgpolicy_internal::OrgPolicyDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), orgpolicy_internal::OrgPolicyDefaultOptions(
+                                  connection_->options()))) {}
 OrgPolicyClient::~OrgPolicyClient() = default;
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>

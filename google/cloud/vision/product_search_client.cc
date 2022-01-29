@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProductSearchClient::ProductSearchClient(
     std::shared_ptr<ProductSearchConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          vision_internal::ProductSearchDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), vision_internal::ProductSearchDefaultOptions(
+                                  connection_->options()))) {}
 ProductSearchClient::~ProductSearchClient() = default;
 
 StatusOr<google::cloud::vision::v1::ProductSet>

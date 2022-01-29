@@ -43,7 +43,9 @@ class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
   WebRiskServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
@@ -66,7 +68,7 @@ class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
     if (options.has<webrisk::WebRiskServiceRetryPolicyOption>()) {
       return options.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -74,7 +76,7 @@ class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
     if (options.has<webrisk::WebRiskServiceBackoffPolicyOption>()) {
       return options.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy>
@@ -86,16 +88,14 @@ class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
           .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub_;
-  std::unique_ptr<webrisk::WebRiskServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -43,8 +43,9 @@ class OrgPolicyConnectionImpl : public orgpolicy::OrgPolicyConnection {
 
   OrgPolicyConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub,
-      Options const& options);
+      std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
       google::cloud::orgpolicy::v2::ListConstraintsRequest request) override;
@@ -76,7 +77,7 @@ class OrgPolicyConnectionImpl : public orgpolicy::OrgPolicyConnection {
     if (options.has<orgpolicy::OrgPolicyRetryPolicyOption>()) {
       return options.get<orgpolicy::OrgPolicyRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<orgpolicy::OrgPolicyRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -84,7 +85,7 @@ class OrgPolicyConnectionImpl : public orgpolicy::OrgPolicyConnection {
     if (options.has<orgpolicy::OrgPolicyBackoffPolicyOption>()) {
       return options.get<orgpolicy::OrgPolicyBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<orgpolicy::OrgPolicyBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<orgpolicy::OrgPolicyConnectionIdempotencyPolicy>
@@ -95,16 +96,14 @@ class OrgPolicyConnectionImpl : public orgpolicy::OrgPolicyConnection {
           .get<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub_;
-  std::unique_ptr<orgpolicy::OrgPolicyRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<orgpolicy::OrgPolicyConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

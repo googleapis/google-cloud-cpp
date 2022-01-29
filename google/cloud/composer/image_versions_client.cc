@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageVersionsClient::ImageVersionsClient(
     std::shared_ptr<ImageVersionsConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          composer_internal::ImageVersionsDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), composer_internal::ImageVersionsDefaultOptions(
+                                  connection_->options()))) {}
 ImageVersionsClient::~ImageVersionsClient() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>

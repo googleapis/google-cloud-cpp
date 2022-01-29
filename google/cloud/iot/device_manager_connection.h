@@ -50,6 +50,8 @@ class DeviceManagerConnection {
  public:
   virtual ~DeviceManagerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       google::cloud::iot::v1::CreateDeviceRegistryRequest const& request);
 

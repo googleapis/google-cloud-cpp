@@ -31,17 +31,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EventServiceConnectionImpl::EventServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::EventServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<talent_internal::EventServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<talent::EventServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<talent::EventServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<talent::EventServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          talent_internal::EventServiceDefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceConnectionImpl::CreateClientEvent(

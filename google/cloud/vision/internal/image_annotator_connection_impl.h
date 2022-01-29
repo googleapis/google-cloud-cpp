@@ -46,7 +46,9 @@ class ImageAnnotatorConnectionImpl : public vision::ImageAnnotatorConnection {
   ImageAnnotatorConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<vision_internal::ImageAnnotatorStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
@@ -73,7 +75,7 @@ class ImageAnnotatorConnectionImpl : public vision::ImageAnnotatorConnection {
     if (options.has<vision::ImageAnnotatorRetryPolicyOption>()) {
       return options.get<vision::ImageAnnotatorRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<vision::ImageAnnotatorRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -81,7 +83,7 @@ class ImageAnnotatorConnectionImpl : public vision::ImageAnnotatorConnection {
     if (options.has<vision::ImageAnnotatorBackoffPolicyOption>()) {
       return options.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<vision::ImageAnnotatorConnectionIdempotencyPolicy>
@@ -93,26 +95,22 @@ class ImageAnnotatorConnectionImpl : public vision::ImageAnnotatorConnection {
           .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vision_internal::ImageAnnotatorStub> stub_;
-  std::unique_ptr<vision::ImageAnnotatorRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<vision::ImageAnnotatorConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<vision::ImageAnnotatorPollingPolicyOption>()) {
       return options.get<vision::ImageAnnotatorPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<vision::ImageAnnotatorPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<vision_internal::ImageAnnotatorStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

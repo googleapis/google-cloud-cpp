@@ -34,23 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudChannelServiceConnectionImpl::CloudChannelServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<channel_internal::CloudChannelServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<channel::CloudChannelServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<channel::CloudChannelServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<channel::
-                       CloudChannelServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<channel::CloudChannelServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(channel_internal::CloudChannelServiceDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::cloud::channel::v1::Customer>
 CloudChannelServiceConnectionImpl::ListCustomers(

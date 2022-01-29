@@ -56,6 +56,8 @@ class AgentEndpointServiceConnection {
  public:
   virtual ~AgentEndpointServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::osconfig::agentendpoint::v1::
                           ReceiveTaskNotificationResponse>
   ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::

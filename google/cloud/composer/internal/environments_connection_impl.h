@@ -47,7 +47,9 @@ class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
   EnvironmentsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<composer_internal::EnvironmentsStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
@@ -78,7 +80,7 @@ class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
     if (options.has<composer::EnvironmentsRetryPolicyOption>()) {
       return options.get<composer::EnvironmentsRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<composer::EnvironmentsRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -86,7 +88,7 @@ class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
     if (options.has<composer::EnvironmentsBackoffPolicyOption>()) {
       return options.get<composer::EnvironmentsBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<composer::EnvironmentsBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy>
@@ -98,26 +100,22 @@ class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
           .get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<composer_internal::EnvironmentsStub> stub_;
-  std::unique_ptr<composer::EnvironmentsRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<composer::EnvironmentsPollingPolicyOption>()) {
       return options.get<composer::EnvironmentsPollingPolicyOption>()->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<composer::EnvironmentsPollingPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<composer_internal::EnvironmentsStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

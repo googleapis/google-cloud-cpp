@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockCloudBillingConnection : public billing::CloudBillingConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::billing::v1::BillingAccount>, GetBillingAccount,
       (google::cloud::billing::v1::GetBillingAccountRequest const& request),

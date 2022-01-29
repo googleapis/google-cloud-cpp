@@ -50,6 +50,8 @@ class BudgetServiceConnection {
  public:
   virtual ~BudgetServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       google::cloud::billing::budgets::v1::CreateBudgetRequest const& request);
 

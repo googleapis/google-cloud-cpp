@@ -44,7 +44,9 @@ class LookupServiceConnectionImpl
   LookupServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
@@ -58,7 +60,8 @@ class LookupServiceConnectionImpl
       return options.get<servicedirectory::LookupServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<servicedirectory::LookupServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -67,7 +70,8 @@ class LookupServiceConnectionImpl
       return options.get<servicedirectory::LookupServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<servicedirectory::LookupServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<servicedirectory::LookupServiceConnectionIdempotencyPolicy>
@@ -80,16 +84,14 @@ class LookupServiceConnectionImpl
                    LookupServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<servicedirectory::LookupServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub_;
-  std::unique_ptr<servicedirectory::LookupServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<servicedirectory::LookupServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

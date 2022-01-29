@@ -33,22 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WebSecurityScannerConnectionImpl::WebSecurityScannerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<websecurityscanner::
-                       WebSecurityScannerConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(websecurityscanner_internal::WebSecurityScannerDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnectionImpl::CreateScanConfig(

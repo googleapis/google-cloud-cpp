@@ -50,6 +50,8 @@ class ImageVersionsConnection {
  public:
   virtual ~ImageVersionsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<
       google::cloud::orchestration::airflow::service::v1::ImageVersion>
   ListImageVersions(google::cloud::orchestration::airflow::service::v1::

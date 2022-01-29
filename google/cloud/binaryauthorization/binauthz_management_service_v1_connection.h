@@ -50,6 +50,8 @@ class BinauthzManagementServiceV1Connection {
  public:
   virtual ~BinauthzManagementServiceV1Connection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       google::cloud::binaryauthorization::v1::GetPolicyRequest const& request);
 

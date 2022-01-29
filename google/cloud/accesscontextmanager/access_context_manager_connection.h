@@ -53,6 +53,8 @@ class AccessContextManagerConnection {
  public:
   virtual ~AccessContextManagerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
   ListAccessPolicies(
       google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest

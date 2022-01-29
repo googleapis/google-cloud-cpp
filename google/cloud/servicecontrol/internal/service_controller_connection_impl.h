@@ -44,7 +44,9 @@ class ServiceControllerConnectionImpl
   ServiceControllerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<servicecontrol_internal::ServiceControllerStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       google::api::servicecontrol::v1::CheckRequest const& request) override;
@@ -59,7 +61,8 @@ class ServiceControllerConnectionImpl
       return options.get<servicecontrol::ServiceControllerRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<servicecontrol::ServiceControllerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -69,7 +72,8 @@ class ServiceControllerConnectionImpl
           .get<servicecontrol::ServiceControllerBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<servicecontrol::ServiceControllerBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<servicecontrol::ServiceControllerConnectionIdempotencyPolicy>
@@ -82,16 +86,15 @@ class ServiceControllerConnectionImpl
                    ServiceControllerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<servicecontrol::
+                 ServiceControllerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicecontrol_internal::ServiceControllerStub> stub_;
-  std::unique_ptr<servicecontrol::ServiceControllerRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<servicecontrol::ServiceControllerConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

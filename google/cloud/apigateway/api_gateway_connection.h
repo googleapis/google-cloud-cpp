@@ -53,6 +53,8 @@ class ApiGatewayServiceConnection {
  public:
   virtual ~ApiGatewayServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
       google::cloud::apigateway::v1::ListGatewaysRequest request);
 

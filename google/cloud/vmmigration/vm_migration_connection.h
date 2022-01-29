@@ -52,6 +52,8 @@ class VmMigrationConnection {
  public:
   virtual ~VmMigrationConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
       google::cloud::vmmigration::v1::ListSourcesRequest request);
 

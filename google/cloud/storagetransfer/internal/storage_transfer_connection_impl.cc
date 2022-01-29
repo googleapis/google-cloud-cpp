@@ -34,27 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StorageTransferServiceConnectionImpl::StorageTransferServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<storagetransfer_internal::StorageTransferServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<storagetransfer::StorageTransferServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<storagetransfer::StorageTransferServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  storagetransfer::
-                      StorageTransferServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<storagetransfer::StorageTransferServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(storagetransfer_internal::StorageTransferServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 StorageTransferServiceConnectionImpl::GetGoogleServiceAccount(

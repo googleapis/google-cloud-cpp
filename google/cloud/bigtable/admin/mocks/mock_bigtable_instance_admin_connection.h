@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockBigtableInstanceAdminConnection
     : public bigtable_admin::BigtableInstanceAdminConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::Instance>>, CreateInstance,
       (google::bigtable::admin::v2::CreateInstanceRequest const& request),

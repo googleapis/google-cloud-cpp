@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMCredentialsClient::IAMCredentialsClient(
     std::shared_ptr<IAMCredentialsConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(iam_internal::IAMCredentialsDefaultOptions(std::move(options))) {
+      options_(internal::MergeOptions(
+          std::move(options),
+          iam_internal::IAMCredentialsDefaultOptions(connection_->options()))) {
 }
 IAMCredentialsClient::~IAMCredentialsClient() = default;
 

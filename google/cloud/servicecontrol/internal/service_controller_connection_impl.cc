@@ -32,20 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceControllerConnectionImpl::ServiceControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicecontrol_internal::ServiceControllerStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<servicecontrol::ServiceControllerRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<servicecontrol::ServiceControllerBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<servicecontrol::
-                       ServiceControllerConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(servicecontrol_internal::ServiceControllerDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::api::servicecontrol::v1::CheckResponse>
 ServiceControllerConnectionImpl::Check(

@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockStorageTransferServiceConnection
     : public storagetransfer::StorageTransferServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::storagetransfer::v1::GoogleServiceAccount>,
       GetGoogleServiceAccount,

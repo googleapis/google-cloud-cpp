@@ -234,7 +234,7 @@ MakeKeyManagementServiceConnection(Options options) {
   auto stub = kms_internal::CreateDefaultKeyManagementServiceStub(
       background->cq(), options);
   return std::make_shared<kms_internal::KeyManagementServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -251,9 +251,9 @@ std::shared_ptr<kms::KeyManagementServiceConnection>
 MakeKeyManagementServiceConnection(
     std::shared_ptr<KeyManagementServiceStub> stub, Options options) {
   options = KeyManagementServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<kms_internal::KeyManagementServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

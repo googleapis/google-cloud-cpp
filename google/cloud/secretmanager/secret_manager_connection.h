@@ -50,6 +50,8 @@ class SecretManagerServiceConnection {
  public:
   virtual ~SecretManagerServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
       google::cloud::secretmanager::v1::ListSecretsRequest request);
 

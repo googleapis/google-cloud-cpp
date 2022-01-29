@@ -53,6 +53,8 @@ class GameServerConfigsServiceConnection {
  public:
   virtual ~GameServerConfigsServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::gaming::v1::GameServerConfig>
   ListGameServerConfigs(
       google::cloud::gaming::v1::ListGameServerConfigsRequest request);

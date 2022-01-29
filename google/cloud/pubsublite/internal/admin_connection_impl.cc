@@ -34,19 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AdminServiceConnectionImpl::AdminServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<pubsublite_internal::AdminServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<pubsublite::AdminServicePollingPolicyOption>()->clone()) {
+      options_(
+          pubsublite_internal::AdminServiceDefaultOptions(std::move(options))) {
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic>

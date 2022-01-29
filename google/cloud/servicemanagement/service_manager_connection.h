@@ -53,6 +53,8 @@ class ServiceManagerConnection {
  public:
   virtual ~ServiceManagerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::api::servicemanagement::v1::ManagedService>
   ListServices(google::api::servicemanagement::v1::ListServicesRequest request);
 

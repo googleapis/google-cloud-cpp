@@ -70,7 +70,7 @@ std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(Options options) {
   auto stub =
       debugger_internal::CreateDefaultDebugger2Stub(background->cq(), options);
   return std::make_shared<debugger_internal::Debugger2ConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -86,9 +86,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<debugger::Debugger2Connection> MakeDebugger2Connection(
     std::shared_ptr<Debugger2Stub> stub, Options options) {
   options = Debugger2DefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<debugger_internal::Debugger2ConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,8 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigtableTableAdminClient::BigtableTableAdminClient(
     std::shared_ptr<BigtableTableAdminConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(bigtable_admin_internal::BigtableTableAdminDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          bigtable_admin_internal::BigtableTableAdminDefaultOptions(
+              connection_->options()))) {}
 BigtableTableAdminClient::~BigtableTableAdminClient() = default;
 
 StatusOr<google::bigtable::admin::v2::Table>

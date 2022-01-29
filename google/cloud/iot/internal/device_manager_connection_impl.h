@@ -43,8 +43,9 @@ class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
 
   DeviceManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iot_internal::DeviceManagerStub> stub,
-      Options const& options);
+      std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       google::cloud::iot::v1::CreateDeviceRegistryRequest const& request)
@@ -119,7 +120,7 @@ class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
     if (options.has<iot::DeviceManagerRetryPolicyOption>()) {
       return options.get<iot::DeviceManagerRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<iot::DeviceManagerRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -127,7 +128,7 @@ class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
     if (options.has<iot::DeviceManagerBackoffPolicyOption>()) {
       return options.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
@@ -137,15 +138,13 @@ class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
       return options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iot_internal::DeviceManagerStub> stub_;
-  std::unique_ptr<iot::DeviceManagerRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

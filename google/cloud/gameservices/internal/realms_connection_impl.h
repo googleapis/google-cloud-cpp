@@ -48,7 +48,9 @@ class RealmsServiceConnectionImpl
   RealmsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<gameservices_internal::RealmsServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::gaming::v1::Realm> ListRealms(
       google::cloud::gaming::v1::ListRealmsRequest request) override;
@@ -76,7 +78,8 @@ class RealmsServiceConnectionImpl
       return options.get<gameservices::RealmsServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<gameservices::RealmsServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -85,7 +88,8 @@ class RealmsServiceConnectionImpl
       return options.get<gameservices::RealmsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<gameservices::RealmsServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy>
@@ -97,16 +101,10 @@ class RealmsServiceConnectionImpl
           .get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::RealmsServiceStub> stub_;
-  std::unique_ptr<gameservices::RealmsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -114,10 +112,13 @@ class RealmsServiceConnectionImpl
       return options.get<gameservices::RealmsServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<gameservices::RealmsServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<gameservices_internal::RealmsServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

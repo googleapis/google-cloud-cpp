@@ -49,6 +49,8 @@ class IAMConnection {
  public:
   virtual ~IAMConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::iam::admin::v1::ServiceAccount>
   ListServiceAccounts(
       google::iam::admin::v1::ListServiceAccountsRequest request);

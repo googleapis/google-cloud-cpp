@@ -33,19 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 JobServiceConnectionImpl::JobServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::JobServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<talent_internal::JobServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<talent::JobServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<talent::JobServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<talent::JobServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<talent::JobServicePollingPolicyOption>()->clone()) {}
+      options_(talent_internal::JobServiceDefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceConnectionImpl::CreateJob(
     google::cloud::talent::v4::CreateJobRequest const& request) {

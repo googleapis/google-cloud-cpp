@@ -44,7 +44,9 @@ class SystemPolicyV1ConnectionImpl
   SystemPolicyV1ConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<binaryauthorization_internal::SystemPolicyV1Stub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
@@ -59,7 +61,8 @@ class SystemPolicyV1ConnectionImpl
           .get<binaryauthorization::SystemPolicyV1RetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<binaryauthorization::SystemPolicyV1RetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -69,7 +72,9 @@ class SystemPolicyV1ConnectionImpl
           .get<binaryauthorization::SystemPolicyV1BackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<binaryauthorization::SystemPolicyV1BackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -83,17 +88,15 @@ class SystemPolicyV1ConnectionImpl
                    SystemPolicyV1ConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<binaryauthorization::
+                 SystemPolicyV1ConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<binaryauthorization_internal::SystemPolicyV1Stub> stub_;
-  std::unique_ptr<binaryauthorization::SystemPolicyV1RetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      binaryauthorization::SystemPolicyV1ConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

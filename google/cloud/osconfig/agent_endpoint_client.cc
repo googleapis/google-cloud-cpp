@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AgentEndpointServiceClient::AgentEndpointServiceClient(
     std::shared_ptr<AgentEndpointServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(osconfig_internal::AgentEndpointServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          osconfig_internal::AgentEndpointServiceDefaultOptions(
+              connection_->options()))) {}
 AgentEndpointServiceClient::~AgentEndpointServiceClient() = default;
 
 StreamRange<

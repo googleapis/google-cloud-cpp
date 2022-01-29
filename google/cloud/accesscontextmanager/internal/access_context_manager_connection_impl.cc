@@ -35,29 +35,12 @@ AccessContextManagerConnectionImpl::AccessContextManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
         stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options
-              .get<
-                  accesscontextmanager::AccessContextManagerRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<accesscontextmanager::
-                       AccessContextManagerBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<accesscontextmanager::
-                       AccessContextManagerConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<accesscontextmanager::
-                       AccessContextManagerPollingPolicyOption>()
-              ->clone()) {}
+      options_(
+          accesscontextmanager_internal::AccessContextManagerDefaultOptions(
+              std::move(options))) {}
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerConnectionImpl::ListAccessPolicies(

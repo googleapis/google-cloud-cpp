@@ -33,17 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyManagementServiceConnectionImpl::KeyManagementServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<kms_internal::KeyManagementServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<kms::KeyManagementServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<kms::KeyManagementServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(kms_internal::KeyManagementServiceDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnectionImpl::ListKeyRings(

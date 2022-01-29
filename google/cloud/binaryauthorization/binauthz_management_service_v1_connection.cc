@@ -98,7 +98,7 @@ MakeBinauthzManagementServiceV1Connection(Options options) {
       CreateDefaultBinauthzManagementServiceV1Stub(background->cq(), options);
   return std::make_shared<
       binaryauthorization_internal::BinauthzManagementServiceV1ConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -115,10 +115,10 @@ std::shared_ptr<binaryauthorization::BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1Connection(
     std::shared_ptr<BinauthzManagementServiceV1Stub> stub, Options options) {
   options = BinauthzManagementServiceV1DefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       binaryauthorization_internal::BinauthzManagementServiceV1ConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

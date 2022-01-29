@@ -85,7 +85,7 @@ std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
       background->cq(), options);
   return std::make_shared<
       resourcemanager_internal::OrganizationsConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -102,10 +102,10 @@ std::shared_ptr<resourcemanager::OrganizationsConnection>
 MakeOrganizationsConnection(std::shared_ptr<OrganizationsStub> stub,
                             Options options) {
   options = OrganizationsDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       resourcemanager_internal::OrganizationsConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

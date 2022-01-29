@@ -50,6 +50,8 @@ class OrganizationsConnection {
  public:
   virtual ~OrganizationsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::resourcemanager::v3::Organization>
   GetOrganization(
       google::cloud::resourcemanager::v3::GetOrganizationRequest const&

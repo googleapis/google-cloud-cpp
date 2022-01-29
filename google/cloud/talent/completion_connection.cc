@@ -48,7 +48,7 @@ std::shared_ptr<CompletionConnection> MakeCompletionConnection(
   auto stub =
       talent_internal::CreateDefaultCompletionStub(background->cq(), options);
   return std::make_shared<talent_internal::CompletionConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -64,9 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<talent::CompletionConnection> MakeCompletionConnection(
     std::shared_ptr<CompletionStub> stub, Options options) {
   options = CompletionDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<talent_internal::CompletionConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

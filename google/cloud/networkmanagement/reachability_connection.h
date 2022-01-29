@@ -53,6 +53,8 @@ class ReachabilityServiceConnection {
  public:
   virtual ~ReachabilityServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
   ListConnectivityTests(
       google::cloud::networkmanagement::v1::ListConnectivityTestsRequest

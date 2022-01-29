@@ -31,17 +31,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Controller2ConnectionImpl::Controller2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<debugger_internal::Controller2Stub> stub,
-    Options const& options)
+    std::shared_ptr<debugger_internal::Controller2Stub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<debugger::Controller2RetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<debugger::Controller2BackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<debugger::Controller2ConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          debugger_internal::Controller2DefaultOptions(std::move(options))) {}
 
 StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
 Controller2ConnectionImpl::RegisterDebuggee(

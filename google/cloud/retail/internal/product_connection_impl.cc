@@ -33,20 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProductServiceConnectionImpl::ProductServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_internal::ProductServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<retail_internal::ProductServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<retail::ProductServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<retail::ProductServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<retail::ProductServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<retail::ProductServicePollingPolicyOption>()->clone()) {}
+      options_(
+          retail_internal::ProductServiceDefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceConnectionImpl::CreateProduct(

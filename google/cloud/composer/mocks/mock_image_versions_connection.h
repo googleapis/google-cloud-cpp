@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockImageVersionsConnection : public composer::ImageVersionsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StreamRange<
           google::cloud::orchestration::airflow::service::v1::ImageVersion>,

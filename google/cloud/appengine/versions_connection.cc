@@ -85,7 +85,7 @@ std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {
   auto stub =
       appengine_internal::CreateDefaultVersionsStub(background->cq(), options);
   return std::make_shared<appengine_internal::VersionsConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -101,9 +101,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<appengine::VersionsConnection> MakeVersionsConnection(
     std::shared_ptr<VersionsStub> stub, Options options) {
   options = VersionsDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<appengine_internal::VersionsConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

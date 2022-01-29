@@ -53,6 +53,8 @@ class BigtableInstanceAdminConnection {
  public:
   virtual ~BigtableInstanceAdminConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<StatusOr<google::bigtable::admin::v2::Instance>>
   CreateInstance(
       google::bigtable::admin::v2::CreateInstanceRequest const& request);

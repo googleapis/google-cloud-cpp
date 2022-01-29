@@ -34,25 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigtableInstanceAdminConnectionImpl::BigtableInstanceAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigtable_admin_internal::BigtableInstanceAdminStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<bigtable_admin::
-                       BigtableInstanceAdminConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options
-              .get<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()
-              ->clone()) {}
+      options_(bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
+          std::move(options))) {}
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::CreateInstance(

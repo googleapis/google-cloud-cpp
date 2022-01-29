@@ -49,6 +49,8 @@ class LookupServiceConnection {
  public:
   virtual ~LookupServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
       google::cloud::servicedirectory::v1::ResolveServiceRequest const&

@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockSecurityCenterConnection
     : public securitycenter::SecurityCenterConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>,
               BulkMuteFindings,

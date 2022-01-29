@@ -53,6 +53,8 @@ class GameServerClustersServiceConnection {
  public:
   virtual ~GameServerClustersServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::gaming::v1::GameServerCluster>
   ListGameServerClusters(
       google::cloud::gaming::v1::ListGameServerClustersRequest request);

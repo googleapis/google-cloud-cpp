@@ -32,21 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContainerAnalysisConnectionImpl::ContainerAnalysisConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<containeranalysis_internal::ContainerAnalysisStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<containeranalysis::ContainerAnalysisRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options
-              .get<containeranalysis::ContainerAnalysisBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<containeranalysis::
-                       ContainerAnalysisConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(containeranalysis_internal::ContainerAnalysisDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {

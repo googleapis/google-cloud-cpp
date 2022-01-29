@@ -32,17 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExecutionsConnectionImpl::ExecutionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<workflows_internal::ExecutionsStub> stub,
-    Options const& options)
+    std::shared_ptr<workflows_internal::ExecutionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<workflows::ExecutionsRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<workflows::ExecutionsBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<workflows::ExecutionsConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          workflows_internal::ExecutionsDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::ListExecutions(

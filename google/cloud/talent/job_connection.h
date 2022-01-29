@@ -52,6 +52,8 @@ class JobServiceConnection {
  public:
   virtual ~JobServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::talent::v4::Job> CreateJob(
       google::cloud::talent::v4::CreateJobRequest const& request);
 

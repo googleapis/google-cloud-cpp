@@ -50,6 +50,8 @@ class CompanyServiceConnection {
  public:
   virtual ~CompanyServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       google::cloud::talent::v4::CreateCompanyRequest const& request);
 

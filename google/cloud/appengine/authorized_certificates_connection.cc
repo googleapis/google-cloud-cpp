@@ -84,7 +84,7 @@ MakeAuthorizedCertificatesConnection(Options options) {
       background->cq(), options);
   return std::make_shared<
       appengine_internal::AuthorizedCertificatesConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -101,10 +101,10 @@ std::shared_ptr<appengine::AuthorizedCertificatesConnection>
 MakeAuthorizedCertificatesConnection(
     std::shared_ptr<AuthorizedCertificatesStub> stub, Options options) {
   options = AuthorizedCertificatesDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       appengine_internal::AuthorizedCertificatesConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

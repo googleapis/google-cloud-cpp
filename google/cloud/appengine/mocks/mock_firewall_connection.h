@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockFirewallConnection : public appengine::FirewallConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::appengine::v1::FirewallRule>,
               ListIngressRules,
               (google::appengine::v1::ListIngressRulesRequest request),

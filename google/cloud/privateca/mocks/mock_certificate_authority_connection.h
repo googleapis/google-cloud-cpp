@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockCertificateAuthorityServiceConnection
     : public privateca::CertificateAuthorityServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::security::privateca::v1::Certificate>,
       CreateCertificate,

@@ -32,17 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OrgPolicyConnectionImpl::OrgPolicyConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub,
-    Options const& options)
+    std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<orgpolicy::OrgPolicyRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<orgpolicy::OrgPolicyBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<orgpolicy::OrgPolicyConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          orgpolicy_internal::OrgPolicyDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
 OrgPolicyConnectionImpl::ListConstraints(

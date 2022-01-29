@@ -33,19 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GrafeasConnectionImpl::GrafeasConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<containeranalysis_internal::GrafeasStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<containeranalysis::GrafeasRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<containeranalysis::GrafeasBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(containeranalysis_internal::GrafeasDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<grafeas::v1::Occurrence> GrafeasConnectionImpl::GetOccurrence(
     grafeas::v1::GetOccurrenceRequest const& request) {

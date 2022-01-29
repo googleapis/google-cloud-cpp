@@ -28,7 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GkeHubClient::GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
                            Options options)
     : connection_(std::move(connection)),
-      options_(gkehub_internal::GkeHubDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          gkehub_internal::GkeHubDefaultOptions(connection_->options()))) {}
 GkeHubClient::~GkeHubClient() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>

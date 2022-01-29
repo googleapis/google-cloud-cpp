@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockWebSecurityScannerConnection
     : public websecurityscanner::WebSecurityScannerConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>,
       CreateScanConfig,

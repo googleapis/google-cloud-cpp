@@ -50,6 +50,8 @@ class OsConfigServiceConnection {
  public:
   virtual ~OsConfigServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
       google::cloud::osconfig::v1::ExecutePatchJobRequest const& request);
 

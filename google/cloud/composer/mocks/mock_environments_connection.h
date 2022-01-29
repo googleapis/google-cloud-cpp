@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockEnvironmentsConnection : public composer::EnvironmentsConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,

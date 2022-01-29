@@ -109,7 +109,7 @@ std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
   auto stub = recommender_internal::CreateDefaultRecommenderStub(
       background->cq(), options);
   return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -125,9 +125,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<recommender::RecommenderConnection> MakeRecommenderConnection(
     std::shared_ptr<RecommenderStub> stub, Options options) {
   options = RecommenderDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

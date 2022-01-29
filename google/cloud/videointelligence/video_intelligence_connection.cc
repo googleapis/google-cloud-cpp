@@ -56,7 +56,7 @@ MakeVideoIntelligenceServiceConnection(Options options) {
           background->cq(), options);
   return std::make_shared<
       videointelligence_internal::VideoIntelligenceServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -73,10 +73,10 @@ std::shared_ptr<videointelligence::VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceConnection(
     std::shared_ptr<VideoIntelligenceServiceStub> stub, Options options) {
   options = VideoIntelligenceServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       videointelligence_internal::VideoIntelligenceServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

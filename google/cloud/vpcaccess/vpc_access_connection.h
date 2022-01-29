@@ -53,6 +53,8 @@ class VpcAccessServiceConnection {
  public:
   virtual ~VpcAccessServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
   CreateConnector(
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);

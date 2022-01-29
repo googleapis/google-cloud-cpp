@@ -161,7 +161,7 @@ std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
       background->cq(), options);
   return std::make_shared<
       websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -178,10 +178,10 @@ std::shared_ptr<websecurityscanner::WebSecurityScannerConnection>
 MakeWebSecurityScannerConnection(std::shared_ptr<WebSecurityScannerStub> stub,
                                  Options options) {
   options = WebSecurityScannerDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

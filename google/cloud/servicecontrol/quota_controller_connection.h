@@ -49,6 +49,8 @@ class QuotaControllerConnection {
  public:
   virtual ~QuotaControllerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(
       google::api::servicecontrol::v1::AllocateQuotaRequest const& request);

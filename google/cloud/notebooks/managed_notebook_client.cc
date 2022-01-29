@@ -29,8 +29,10 @@ ManagedNotebookServiceClient::ManagedNotebookServiceClient(
     std::shared_ptr<ManagedNotebookServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(notebooks_internal::ManagedNotebookServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          notebooks_internal::ManagedNotebookServiceDefaultOptions(
+              connection_->options()))) {}
 ManagedNotebookServiceClient::~ManagedNotebookServiceClient() = default;
 
 StreamRange<google::cloud::notebooks::v1::Runtime>

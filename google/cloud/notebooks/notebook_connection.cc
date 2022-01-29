@@ -315,7 +315,7 @@ std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
   auto stub = notebooks_internal::CreateDefaultNotebookServiceStub(
       background->cq(), options);
   return std::make_shared<notebooks_internal::NotebookServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -332,9 +332,9 @@ std::shared_ptr<notebooks::NotebookServiceConnection>
 MakeNotebookServiceConnection(std::shared_ptr<NotebookServiceStub> stub,
                               Options options) {
   options = NotebookServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<notebooks_internal::NotebookServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

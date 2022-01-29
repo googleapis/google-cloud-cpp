@@ -94,7 +94,7 @@ std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
   auto stub = scheduler_internal::CreateDefaultCloudSchedulerStub(
       background->cq(), options);
   return std::make_shared<scheduler_internal::CloudSchedulerConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -111,9 +111,9 @@ std::shared_ptr<scheduler::CloudSchedulerConnection>
 MakeCloudSchedulerConnection(std::shared_ptr<CloudSchedulerStub> stub,
                              Options options) {
   options = CloudSchedulerDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<scheduler_internal::CloudSchedulerConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

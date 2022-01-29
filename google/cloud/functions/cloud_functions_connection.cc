@@ -125,7 +125,7 @@ MakeCloudFunctionsServiceConnection(Options options) {
       background->cq(), options);
   return std::make_shared<
       functions_internal::CloudFunctionsServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -142,10 +142,10 @@ std::shared_ptr<functions::CloudFunctionsServiceConnection>
 MakeCloudFunctionsServiceConnection(
     std::shared_ptr<CloudFunctionsServiceStub> stub, Options options) {
   options = CloudFunctionsServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
       functions_internal::CloudFunctionsServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

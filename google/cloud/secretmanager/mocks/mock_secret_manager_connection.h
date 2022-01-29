@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockSecretManagerServiceConnection
     : public secretmanager::SecretManagerServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::secretmanager::v1::Secret>,
               ListSecrets,
               (google::cloud::secretmanager::v1::ListSecretsRequest request),

@@ -29,8 +29,10 @@ CloudFunctionsServiceClient::CloudFunctionsServiceClient(
     std::shared_ptr<CloudFunctionsServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(functions_internal::CloudFunctionsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          functions_internal::CloudFunctionsServiceDefaultOptions(
+              connection_->options()))) {}
 CloudFunctionsServiceClient::~CloudFunctionsServiceClient() = default;
 
 StreamRange<google::cloud::functions::v1::CloudFunction>

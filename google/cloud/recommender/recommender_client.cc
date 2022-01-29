@@ -28,9 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommenderClient::RecommenderClient(
     std::shared_ptr<RecommenderConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          recommender_internal::RecommenderDefaultOptions(std::move(options))) {
-}
+      options_(internal::MergeOptions(
+          std::move(options), recommender_internal::RecommenderDefaultOptions(
+                                  connection_->options()))) {}
 RecommenderClient::~RecommenderClient() = default;
 
 StreamRange<google::cloud::recommender::v1::Insight>

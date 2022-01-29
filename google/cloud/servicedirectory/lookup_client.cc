@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LookupServiceClient::LookupServiceClient(
     std::shared_ptr<LookupServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(servicedirectory_internal::LookupServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          servicedirectory_internal::LookupServiceDefaultOptions(
+              connection_->options()))) {}
 LookupServiceClient::~LookupServiceClient() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>

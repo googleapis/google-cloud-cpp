@@ -48,7 +48,9 @@ class DataMigrationServiceConnectionImpl
   DataMigrationServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
       google::cloud::clouddms::v1::ListMigrationJobsRequest request) override;
@@ -137,7 +139,8 @@ class DataMigrationServiceConnectionImpl
           .get<datamigration::DataMigrationServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<datamigration::DataMigrationServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -147,7 +150,9 @@ class DataMigrationServiceConnectionImpl
           .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -162,17 +167,11 @@ class DataMigrationServiceConnectionImpl
                    DataMigrationServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<datamigration::
+                 DataMigrationServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub_;
-  std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      datamigration::DataMigrationServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -181,10 +180,14 @@ class DataMigrationServiceConnectionImpl
           .get<datamigration::DataMigrationServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<datamigration::DataMigrationServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -48,7 +48,9 @@ class ManagedNotebookServiceConnectionImpl
   ManagedNotebookServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::notebooks::v1::Runtime> ListRuntimes(
       google::cloud::notebooks::v1::ListRuntimesRequest request) override;
@@ -90,7 +92,8 @@ class ManagedNotebookServiceConnectionImpl
       return options.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -100,7 +103,8 @@ class ManagedNotebookServiceConnectionImpl
           .get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy>
@@ -114,16 +118,11 @@ class ManagedNotebookServiceConnectionImpl
                    ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<notebooks::
+                 ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub_;
-  std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -132,10 +131,13 @@ class ManagedNotebookServiceConnectionImpl
           .get<notebooks::ManagedNotebookServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_.get<notebooks::ManagedNotebookServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockAgentEndpointServiceConnection
     : public osconfig::AgentEndpointServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StreamRange<google::cloud::osconfig::agentendpoint::v1::
                               ReceiveTaskNotificationResponse>,
               ReceiveTaskNotification,

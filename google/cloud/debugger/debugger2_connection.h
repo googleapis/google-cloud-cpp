@@ -48,6 +48,8 @@ class Debugger2Connection {
  public:
   virtual ~Debugger2Connection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
   SetBreakpoint(
       google::devtools::clouddebugger::v2::SetBreakpointRequest const& request);

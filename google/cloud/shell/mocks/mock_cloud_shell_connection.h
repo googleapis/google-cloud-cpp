@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockCloudShellServiceConnection
     : public shell::CloudShellServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::shell::v1::Environment>, GetEnvironment,
               (google::cloud::shell::v1::GetEnvironmentRequest const& request),
               (override));

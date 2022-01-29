@@ -34,23 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatabaseAdminConnectionImpl::DatabaseAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<spanner_admin::
-                       DatabaseAdminConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
-              ->clone()) {}
+      options_(spanner_admin_internal::DatabaseAdminDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::spanner::admin::database::v1::Database>
 DatabaseAdminConnectionImpl::ListDatabases(

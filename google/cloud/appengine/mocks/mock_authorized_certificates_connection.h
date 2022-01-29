@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockAuthorizedCertificatesConnection
     : public appengine::AuthorizedCertificatesConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StreamRange<google::appengine::v1::AuthorizedCertificate>,
       ListAuthorizedCertificates,

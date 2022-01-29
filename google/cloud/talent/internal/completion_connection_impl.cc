@@ -31,17 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompletionConnectionImpl::CompletionConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::CompletionStub> stub,
-    Options const& options)
+    std::shared_ptr<talent_internal::CompletionStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<talent::CompletionRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<talent::CompletionBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<talent::CompletionConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(talent_internal::CompletionDefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionConnectionImpl::CompleteQuery(

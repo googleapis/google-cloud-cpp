@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WorkflowsClient::WorkflowsClient(
     std::shared_ptr<WorkflowsConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          workflows_internal::WorkflowsDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), workflows_internal::WorkflowsDefaultOptions(
+                                  connection_->options()))) {}
 WorkflowsClient::~WorkflowsClient() = default;
 
 StreamRange<google::cloud::workflows::v1::Workflow>

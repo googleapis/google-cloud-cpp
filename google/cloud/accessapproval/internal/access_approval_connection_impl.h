@@ -45,7 +45,9 @@ class AccessApprovalConnectionImpl
   AccessApprovalConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
   ListApprovalRequests(
@@ -88,7 +90,8 @@ class AccessApprovalConnectionImpl
       return options.get<accessapproval::AccessApprovalRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<accessapproval::AccessApprovalRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -97,7 +100,8 @@ class AccessApprovalConnectionImpl
       return options.get<accessapproval::AccessApprovalBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<accessapproval::AccessApprovalBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<accessapproval::AccessApprovalConnectionIdempotencyPolicy>
@@ -110,16 +114,14 @@ class AccessApprovalConnectionImpl
               accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub_;
-  std::unique_ptr<accessapproval::AccessApprovalRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<accessapproval::AccessApprovalConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

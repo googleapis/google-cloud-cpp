@@ -31,18 +31,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WebRiskServiceConnectionImpl::WebRiskServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub,
-    Options const& options)
+    std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          webrisk_internal::WebRiskServiceDefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceConnectionImpl::ComputeThreatListDiff(

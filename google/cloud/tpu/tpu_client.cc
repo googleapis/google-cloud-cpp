@@ -27,7 +27,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TpuClient::TpuClient(std::shared_ptr<TpuConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(tpu_internal::TpuDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          tpu_internal::TpuDefaultOptions(connection_->options()))) {}
 TpuClient::~TpuClient() = default;
 
 StreamRange<google::cloud::tpu::v1::Node> TpuClient::ListNodes(

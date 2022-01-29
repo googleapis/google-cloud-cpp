@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SystemPolicyV1Client::SystemPolicyV1Client(
     std::shared_ptr<SystemPolicyV1Connection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(binaryauthorization_internal::SystemPolicyV1DefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          binaryauthorization_internal::SystemPolicyV1DefaultOptions(
+              connection_->options()))) {}
 SystemPolicyV1Client::~SystemPolicyV1Client() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>

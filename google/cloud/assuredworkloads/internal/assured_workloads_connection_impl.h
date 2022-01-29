@@ -49,7 +49,9 @@ class AssuredWorkloadsServiceConnectionImpl
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub>
           stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(
@@ -82,7 +84,9 @@ class AssuredWorkloadsServiceConnectionImpl
           .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -93,7 +97,9 @@ class AssuredWorkloadsServiceConnectionImpl
           .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -108,17 +114,11 @@ class AssuredWorkloadsServiceConnectionImpl
                    AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<assuredworkloads::
+                 AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub> stub_;
-  std::unique_ptr<assuredworkloads::AssuredWorkloadsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      assuredworkloads::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -128,10 +128,14 @@ class AssuredWorkloadsServiceConnectionImpl
           .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub> stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

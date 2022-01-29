@@ -50,6 +50,8 @@ class RegistrationServiceConnection {
  public:
   virtual ~RegistrationServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::cloud::servicedirectory::v1::Namespace>
   CreateNamespace(
       google::cloud::servicedirectory::v1::CreateNamespaceRequest const&

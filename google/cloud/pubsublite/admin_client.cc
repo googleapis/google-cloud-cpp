@@ -28,9 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AdminServiceClient::AdminServiceClient(
     std::shared_ptr<AdminServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          pubsublite_internal::AdminServiceDefaultOptions(std::move(options))) {
-}
+      options_(internal::MergeOptions(
+          std::move(options), pubsublite_internal::AdminServiceDefaultOptions(
+                                  connection_->options()))) {}
 AdminServiceClient::~AdminServiceClient() = default;
 
 StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceClient::CreateTopic(

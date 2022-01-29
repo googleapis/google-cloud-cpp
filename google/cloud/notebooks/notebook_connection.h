@@ -53,6 +53,8 @@ class NotebookServiceConnection {
  public:
   virtual ~NotebookServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::notebooks::v1::Instance> ListInstances(
       google::cloud::notebooks::v1::ListInstancesRequest request);
 

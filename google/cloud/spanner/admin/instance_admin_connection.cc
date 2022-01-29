@@ -128,7 +128,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
   auto stub = spanner_admin_internal::CreateDefaultInstanceAdminStub(
       background->cq(), options);
   return std::make_shared<spanner_admin_internal::InstanceAdminConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -146,9 +146,9 @@ std::shared_ptr<spanner_admin::InstanceAdminConnection>
 MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
                             Options options) {
   options = InstanceAdminDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<spanner_admin_internal::InstanceAdminConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

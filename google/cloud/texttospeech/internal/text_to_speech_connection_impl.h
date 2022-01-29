@@ -43,7 +43,9 @@ class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
   TextToSpeechConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       google::cloud::texttospeech::v1::ListVoicesRequest const& request)
@@ -61,7 +63,7 @@ class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
       return options.get<texttospeech::TextToSpeechRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<texttospeech::TextToSpeechRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -70,7 +72,8 @@ class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
       return options.get<texttospeech::TextToSpeechBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<texttospeech::TextToSpeechBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy>
@@ -82,16 +85,14 @@ class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
           .get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub_;
-  std::unique_ptr<texttospeech::TextToSpeechRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

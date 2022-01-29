@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockPredictionServiceConnection
     : public automl::PredictionServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::automl::v1::PredictResponse>, Predict,
               (google::cloud::automl::v1::PredictRequest const& request),
               (override));

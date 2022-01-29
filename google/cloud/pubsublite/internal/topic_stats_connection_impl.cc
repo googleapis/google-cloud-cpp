@@ -32,20 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TopicStatsServiceConnectionImpl::TopicStatsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<pubsublite::
-                       TopicStatsServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(pubsublite_internal::TopicStatsServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceConnectionImpl::ComputeMessageStats(

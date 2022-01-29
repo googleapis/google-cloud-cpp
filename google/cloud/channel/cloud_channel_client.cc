@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudChannelServiceClient::CloudChannelServiceClient(
     std::shared_ptr<CloudChannelServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(channel_internal::CloudChannelServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          channel_internal::CloudChannelServiceDefaultOptions(
+              connection_->options()))) {}
 CloudChannelServiceClient::~CloudChannelServiceClient() = default;
 
 StreamRange<google::cloud::channel::v1::Customer>

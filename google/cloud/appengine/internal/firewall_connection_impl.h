@@ -43,8 +43,9 @@ class FirewallConnectionImpl : public appengine::FirewallConnection {
 
   FirewallConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::FirewallStub> stub,
-      Options const& options);
+      std::shared_ptr<appengine_internal::FirewallStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
       google::appengine::v1::ListIngressRulesRequest request) override;
@@ -72,7 +73,7 @@ class FirewallConnectionImpl : public appengine::FirewallConnection {
     if (options.has<appengine::FirewallRetryPolicyOption>()) {
       return options.get<appengine::FirewallRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<appengine::FirewallRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -80,7 +81,7 @@ class FirewallConnectionImpl : public appengine::FirewallConnection {
     if (options.has<appengine::FirewallBackoffPolicyOption>()) {
       return options.get<appengine::FirewallBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<appengine::FirewallBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<appengine::FirewallConnectionIdempotencyPolicy>
@@ -91,15 +92,13 @@ class FirewallConnectionImpl : public appengine::FirewallConnection {
           .get<appengine::FirewallConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_.get<appengine::FirewallConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_internal::FirewallStub> stub_;
-  std::unique_ptr<appengine::FirewallRetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<appengine::FirewallConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -45,7 +45,9 @@ class OsConfigServiceConnectionImpl
   OsConfigServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<osconfig_internal::OsConfigServiceStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
       google::cloud::osconfig::v1::ExecutePatchJobRequest const& request)
@@ -88,7 +90,7 @@ class OsConfigServiceConnectionImpl
     if (options.has<osconfig::OsConfigServiceRetryPolicyOption>()) {
       return options.get<osconfig::OsConfigServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<osconfig::OsConfigServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -97,7 +99,8 @@ class OsConfigServiceConnectionImpl
       return options.get<osconfig::OsConfigServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<osconfig::OsConfigServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<osconfig::OsConfigServiceConnectionIdempotencyPolicy>
@@ -109,16 +112,14 @@ class OsConfigServiceConnectionImpl
           .get<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<osconfig_internal::OsConfigServiceStub> stub_;
-  std::unique_ptr<osconfig::OsConfigServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<osconfig::OsConfigServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

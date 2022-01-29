@@ -33,17 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudSchedulerConnectionImpl::CloudSchedulerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<scheduler_internal::CloudSchedulerStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<scheduler::CloudSchedulerRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<scheduler::CloudSchedulerBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(scheduler_internal::CloudSchedulerDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::ListJobs(

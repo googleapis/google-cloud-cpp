@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockBinauthzManagementServiceV1Connection
     : public binaryauthorization::BinauthzManagementServiceV1Connection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::binaryauthorization::v1::Policy>, GetPolicy,
       (google::cloud::binaryauthorization::v1::GetPolicyRequest const& request),

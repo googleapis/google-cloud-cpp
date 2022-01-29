@@ -42,8 +42,9 @@ class EventServiceConnectionImpl : public talent::EventServiceConnection {
 
   EventServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::EventServiceStub> stub,
-      Options const& options);
+      std::shared_ptr<talent_internal::EventServiceStub> stub, Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request)
@@ -55,7 +56,7 @@ class EventServiceConnectionImpl : public talent::EventServiceConnection {
     if (options.has<talent::EventServiceRetryPolicyOption>()) {
       return options.get<talent::EventServiceRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<talent::EventServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -63,7 +64,7 @@ class EventServiceConnectionImpl : public talent::EventServiceConnection {
     if (options.has<talent::EventServiceBackoffPolicyOption>()) {
       return options.get<talent::EventServiceBackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<talent::EventServiceBackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<talent::EventServiceConnectionIdempotencyPolicy>
@@ -74,16 +75,14 @@ class EventServiceConnectionImpl : public talent::EventServiceConnection {
           .get<talent::EventServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<talent::EventServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_internal::EventServiceStub> stub_;
-  std::unique_ptr<talent::EventServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<talent::EventServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

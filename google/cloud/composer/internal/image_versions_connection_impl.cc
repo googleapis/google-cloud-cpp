@@ -32,18 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageVersionsConnectionImpl::ImageVersionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<composer_internal::ImageVersionsStub> stub,
-    Options const& options)
+    std::shared_ptr<composer_internal::ImageVersionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<composer::ImageVersionsRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<composer::ImageVersionsBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(
+          composer_internal::ImageVersionsDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 ImageVersionsConnectionImpl::ListImageVersions(

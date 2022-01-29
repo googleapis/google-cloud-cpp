@@ -53,6 +53,8 @@ class RealmsServiceConnection {
  public:
   virtual ~RealmsServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::gaming::v1::Realm> ListRealms(
       google::cloud::gaming::v1::ListRealmsRequest request);
 

@@ -33,19 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WorkflowsConnectionImpl::WorkflowsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<workflows_internal::WorkflowsStub> stub,
-    Options const& options)
+    std::shared_ptr<workflows_internal::WorkflowsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<workflows::WorkflowsRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<workflows::WorkflowsBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<workflows::WorkflowsConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<workflows::WorkflowsPollingPolicyOption>()->clone()) {}
+      options_(
+          workflows_internal::WorkflowsDefaultOptions(std::move(options))) {}
 
 StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsConnectionImpl::ListWorkflows(

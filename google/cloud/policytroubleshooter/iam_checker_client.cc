@@ -28,8 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IamCheckerClient::IamCheckerClient(
     std::shared_ptr<IamCheckerConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(policytroubleshooter_internal::IamCheckerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          policytroubleshooter_internal::IamCheckerDefaultOptions(
+              connection_->options()))) {}
 IamCheckerClient::~IamCheckerClient() = default;
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>

@@ -29,9 +29,10 @@ VideoIntelligenceServiceClient::VideoIntelligenceServiceClient(
     std::shared_ptr<VideoIntelligenceServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(
+      options_(internal::MergeOptions(
+          std::move(options),
           videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
-              std::move(options))) {}
+              connection_->options()))) {}
 VideoIntelligenceServiceClient::~VideoIntelligenceServiceClient() = default;
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>

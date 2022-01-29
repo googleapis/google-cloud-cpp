@@ -29,8 +29,10 @@ AuthorizedCertificatesClient::AuthorizedCertificatesClient(
     std::shared_ptr<AuthorizedCertificatesConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(appengine_internal::AuthorizedCertificatesDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          appengine_internal::AuthorizedCertificatesDefaultOptions(
+              connection_->options()))) {}
 AuthorizedCertificatesClient::~AuthorizedCertificatesClient() = default;
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>

@@ -48,7 +48,9 @@ class VideoIntelligenceServiceConnectionImpl
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
           stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
   AnnotateVideo(
@@ -65,7 +67,9 @@ class VideoIntelligenceServiceConnectionImpl
           .get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()
           ->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_
+        .get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -76,7 +80,9 @@ class VideoIntelligenceServiceConnectionImpl
           .get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_
+        .get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<
@@ -91,18 +97,11 @@ class VideoIntelligenceServiceConnectionImpl
                    VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<videointelligence::
+                 VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
-      stub_;
-  std::unique_ptr<videointelligence::VideoIntelligenceServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<
-      videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
@@ -112,10 +111,15 @@ class VideoIntelligenceServiceConnectionImpl
           .get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()
           ->clone();
     }
-    return polling_policy_prototype_->clone();
+    return options_
+        .get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
+      stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

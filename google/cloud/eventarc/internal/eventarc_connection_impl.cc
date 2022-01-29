@@ -33,19 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EventarcConnectionImpl::EventarcConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<eventarc_internal::EventarcStub> stub,
-    Options const& options)
+    std::shared_ptr<eventarc_internal::EventarcStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<eventarc::EventarcRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<eventarc::EventarcBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options.get<eventarc::EventarcConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<eventarc::EventarcPollingPolicyOption>()->clone()) {}
+      options_(eventarc_internal::EventarcDefaultOptions(std::move(options))) {}
 
 StatusOr<google::cloud::eventarc::v1::Trigger>
 EventarcConnectionImpl::GetTrigger(

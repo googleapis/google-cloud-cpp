@@ -33,20 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EnvironmentsConnectionImpl::EnvironmentsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<composer_internal::EnvironmentsStub> stub,
-    Options const& options)
+    std::shared_ptr<composer_internal::EnvironmentsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<composer::EnvironmentsRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<composer::EnvironmentsBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<composer::EnvironmentsPollingPolicyOption>()->clone()) {}
+      options_(
+          composer_internal::EnvironmentsDefaultOptions(std::move(options))) {}
 
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>

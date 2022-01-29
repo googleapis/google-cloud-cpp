@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockLoggingServiceV2Connection
     : public logging::LoggingServiceV2Connection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(Status, DeleteLog,
               (google::logging::v2::DeleteLogRequest const& request),
               (override));

@@ -52,6 +52,8 @@ class CloudBuildConnection {
  public:
   virtual ~CloudBuildConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request);
 

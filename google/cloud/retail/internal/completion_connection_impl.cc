@@ -33,20 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CompletionServiceConnectionImpl::CompletionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_internal::CompletionServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<retail::CompletionServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<retail::CompletionServiceBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<retail::CompletionServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(retail_internal::CompletionServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceConnectionImpl::CompleteQuery(

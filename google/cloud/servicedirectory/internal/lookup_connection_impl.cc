@@ -32,20 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LookupServiceConnectionImpl::LookupServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<servicedirectory::LookupServiceRetryPolicyOption>()
-              ->clone()),
-      backoff_policy_prototype_(
-          options.get<servicedirectory::LookupServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<servicedirectory::
-                       LookupServiceConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(servicedirectory_internal::LookupServiceDefaultOptions(
+          std::move(options))) {}
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceConnectionImpl::ResolveService(

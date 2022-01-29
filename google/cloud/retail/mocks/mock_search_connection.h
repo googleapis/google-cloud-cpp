@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockSearchServiceConnection : public retail::SearchServiceConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(
       StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>,
       Search, (google::cloud::retail::v2::SearchRequest request), (override));

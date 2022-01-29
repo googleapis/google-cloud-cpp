@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockAutoMlConnection : public automl::AutoMlConnection {
  public:
+  MOCK_METHOD(Options, options, (), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Dataset>>,
               CreateDataset,
               (google::cloud::automl::v1::CreateDatasetRequest const& request),

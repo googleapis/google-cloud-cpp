@@ -53,6 +53,8 @@ class AssuredWorkloadsServiceConnection {
  public:
   virtual ~AssuredWorkloadsServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&

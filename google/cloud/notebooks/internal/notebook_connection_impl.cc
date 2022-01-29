@@ -34,22 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NotebookServiceConnectionImpl::NotebookServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<notebooks_internal::NotebookServiceStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<notebooks::NotebookServiceRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<notebooks::NotebookServiceBackoffPolicyOption>()
-              ->clone()),
-      idempotency_policy_(
-          options
-              .get<
-                  notebooks::NotebookServiceConnectionIdempotencyPolicyOption>()
-              ->clone()),
-      polling_policy_prototype_(
-          options.get<notebooks::NotebookServicePollingPolicyOption>()
-              ->clone()) {}
+      options_(notebooks_internal::NotebookServiceDefaultOptions(
+          std::move(options))) {}
 
 StreamRange<google::cloud::notebooks::v1::Instance>
 NotebookServiceConnectionImpl::ListInstances(

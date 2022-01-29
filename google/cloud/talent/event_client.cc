@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EventServiceClient::EventServiceClient(
     std::shared_ptr<EventServiceConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(
-          talent_internal::EventServiceDefaultOptions(std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), talent_internal::EventServiceDefaultOptions(
+                                  connection_->options()))) {}
 EventServiceClient::~EventServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::ClientEvent>

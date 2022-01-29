@@ -53,6 +53,8 @@ class DomainMappingsConnection {
  public:
   virtual ~DomainMappingsConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
       google::appengine::v1::ListDomainMappingsRequest request);
 

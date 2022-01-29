@@ -48,6 +48,8 @@ class IamCheckerConnection {
  public:
   virtual ~IamCheckerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
   TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::

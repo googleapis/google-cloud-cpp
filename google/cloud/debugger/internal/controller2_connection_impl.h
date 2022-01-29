@@ -43,7 +43,9 @@ class Controller2ConnectionImpl : public debugger::Controller2Connection {
   Controller2ConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<debugger_internal::Controller2Stub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
   RegisterDebuggee(
@@ -66,7 +68,7 @@ class Controller2ConnectionImpl : public debugger::Controller2Connection {
     if (options.has<debugger::Controller2RetryPolicyOption>()) {
       return options.get<debugger::Controller2RetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<debugger::Controller2RetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -74,7 +76,7 @@ class Controller2ConnectionImpl : public debugger::Controller2Connection {
     if (options.has<debugger::Controller2BackoffPolicyOption>()) {
       return options.get<debugger::Controller2BackoffPolicyOption>()->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<debugger::Controller2BackoffPolicyOption>()->clone();
   }
 
   std::unique_ptr<debugger::Controller2ConnectionIdempotencyPolicy>
@@ -85,16 +87,14 @@ class Controller2ConnectionImpl : public debugger::Controller2Connection {
           .get<debugger::Controller2ConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<debugger::Controller2ConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<debugger_internal::Controller2Stub> stub_;
-  std::unique_ptr<debugger::Controller2RetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<debugger::Controller2ConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
