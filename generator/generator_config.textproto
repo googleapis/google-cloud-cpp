@@ -720,6 +720,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Cloud Trace
+service {
+  service_proto_path: "google/devtools/cloudtrace/v2/tracing.proto"
+  product_path: "google/cloud/trace"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Translate
 service {
   service_proto_path: "google/cloud/translate/v3/translation_service.proto"
