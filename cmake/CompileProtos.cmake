@@ -419,7 +419,12 @@ macro (external_googleapis_install_pc_common target)
         " zlib"
         " libcares")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+    get_target_property(_target_type ${target} TYPE)
+    if ("${_target_type}" STREQUAL "INTERFACE_LIBRARY")
+        set(GOOGLE_CLOUD_CPP_PC_LIBS "")
+    else ()
+        set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+    endif ()
 endmacro ()
 
 # Use a function to create a scope for the variables.
