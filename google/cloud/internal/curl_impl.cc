@@ -181,6 +181,8 @@ CurlImpl::CurlImpl(CurlHandle handle,
       multi_(factory_->CreateMultiHandle()),
       in_multi_(false),
       paused_(false),
+      status_line_received_(false),
+      all_headers_received_(false),
       buffer_({nullptr, 0}),
       spill_offset_(0),
       options_(std::move(options)) {
@@ -241,21 +243,22 @@ CurlImpl::~CurlImpl() {
 std::size_t CurlImpl::WriteAllBytesToSpillBuffer(void* ptr, std::size_t size,
                                                  std::size_t nmemb) {
   // The size of the spill buffer is the same as the max size curl
-  // will write. libcurl should never give us more bytes than we have set in
-  // CURLOPT_BUFFERSIZE. If it does, this is an error in libcurl, and we
-  // cannot reliably recover from it.
-  if (size * nmemb > spill_.max_size()) {
-    GCP_LOG(FATAL) << absl::StrCat("libcurl attempted to write ",
-                                   std::to_string(size * nmemb),
-                                   "bytes into spill buffer size ",
-                                   std::to_string(spill_.max_size()))
+  // will write in one invocation. libcurl should never give us more bytes than
+  // we have set in CURLOPT_BUFFERSIZE, on a single write. However, libcurl can
+  // give us fewer bytes which can result in multiple calls to this function on
+  // the initial read.
+  if (size * nmemb > spill_.max_size() - spill_offset_) {
+    GCP_LOG(FATAL) << absl::StrCat(
+                          "libcurl attempted to write ",
+                          std::to_string(size * nmemb),
+                          " bytes into spill buffer with remaining capacity ",
+                          std::to_string(spill_.max_size() - spill_offset_))
                    << "\n";
   }
-  // As this function is only called on the first Read, the spill buffer should
-  // be empty so we can always copy the full contents of `ptr` into the spill
-  // buffer.
-  std::memcpy(spill_.data(), ptr, size * nmemb);
-  spill_offset_ = size * nmemb;
+  // As this function can be called multiple times on the first Read, the spill
+  // buffer may be written to several times before it is full.
+  std::memcpy(spill_.data() + spill_offset_, ptr, size * nmemb);
+  spill_offset_ += size * nmemb;
   TRACE_STATE() << ", copy full into spill"
                 << ", n=" << size * nmemb << "\n";
   return size * nmemb;
@@ -334,8 +337,20 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
   return WriteToUserBuffer(ptr, size, nmemb);
 }
 
+// libcurl invokes the HEADERFUNCTION exactly once for each header line received
+// and only a complete header line is passed to the function. Additionally, the
+// status line and blank lines preceding and following the headers are passed
+// to this function.
 std::size_t CurlImpl::HeaderCallback(char* contents, std::size_t size,
                                      std::size_t nitems) {
+  if (nitems == 2 && contents[0] == '\r' && contents[1] == '\n') {
+    if (!status_line_received_) {
+      status_line_received_ = true;
+    } else {
+      all_headers_received_ = true;
+      http_code_ = handle_.GetResponseCode();
+    }
+  }
   return CurlAppendHeaderData(received_headers_, contents, size * nitems);
 }
 
@@ -576,9 +591,11 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
 
   Status status;
   if (buffer_.empty()) {
-    status = PerformWorkUntil([this] {
-      return curl_closed_ || paused_ || spill_offset_ >= spill_.max_size();
-    });
+    // Once we have received the status and all the headers, we have read
+    // enough to satisfy calls to any of RestResponse's methods and can
+    // stop reading until we have a user buffer to write the payload.
+    status = PerformWorkUntil(
+        [this] { return curl_closed_ || paused_ || all_headers_received_; });
   } else {
     status = PerformWorkUntil(
         [this] { return curl_closed_ || paused_ || buffer_.empty(); });
