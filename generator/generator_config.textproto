@@ -412,14 +412,12 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-
 service {
   service_proto_path: "google/monitoring/metricsscope/v1/metrics_scopes.proto"
   product_path: "google/cloud/monitoring"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
-
 
 # Network Management
 service {
