@@ -235,6 +235,9 @@
 ./include/google/cloud/tpu/internal
 ./include/google/cloud/tpu/mocks
 ./include/google/cloud/tpu/v1
+./include/google/cloud/trace
+./include/google/cloud/trace/internal
+./include/google/cloud/trace/mocks
 ./include/google/cloud/translate
 ./include/google/cloud/translate/internal
 ./include/google/cloud/translate/mocks
@@ -276,6 +279,8 @@
 ./include/google/devtools/cloudbuild/v1
 ./include/google/devtools/clouddebugger
 ./include/google/devtools/clouddebugger/v2
+./include/google/devtools/cloudtrace
+./include/google/devtools/cloudtrace/v2
 ./include/google/devtools/containeranalysis
 ./include/google/devtools/containeranalysis/v1
 ./include/google/iam
@@ -357,6 +362,7 @@
 ./lib64/cmake/google_cloud_cpp_tasks
 ./lib64/cmake/google_cloud_cpp_texttospeech
 ./lib64/cmake/google_cloud_cpp_tpu
+./lib64/cmake/google_cloud_cpp_trace
 ./lib64/cmake/google_cloud_cpp_translate
 ./lib64/cmake/google_cloud_cpp_videointelligence
 ./lib64/cmake/google_cloud_cpp_vision

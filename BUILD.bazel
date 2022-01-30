@@ -895,6 +895,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-trace",
+    deps = [
+        "//google/cloud/trace:google_cloud_cpp_trace",
+    ],
+)
+
+cc_library(
+    name = "experimental-trace_mocks",
+    deps = [
+        "//google/cloud/trace:google_cloud_cpp_trace_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-translate",
     deps = [
         "//google/cloud/translate:google_cloud_cpp_translate",
