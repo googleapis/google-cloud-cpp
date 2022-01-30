@@ -61,6 +61,9 @@ struct GrpcObjectRequestParser {
       google::storage::v2::RewriteResponse const& response,
       Options const& options);
 
+  static StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
+      CopyObjectRequest const& request);
+
   static StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
       ResumableUploadRequest const& request);
 
