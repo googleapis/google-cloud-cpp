@@ -203,6 +203,64 @@ TEST(ObjectRequestsTest, Copy) {
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
 }
 
+TEST(ObjectRequestsTest, CopyAllOptions) {
+  CopyObjectRequest request("source-bucket", "source-object", "my-bucket",
+                            "my-object");
+  EXPECT_EQ("source-bucket", request.source_bucket());
+  EXPECT_EQ("source-object", request.source_object());
+  EXPECT_EQ("my-bucket", request.destination_bucket());
+  EXPECT_EQ("my-object", request.destination_object());
+  request.set_multiple_options(
+      DestinationPredefinedAcl("private"),
+      EncryptionKey::FromBinaryKey("1234ABCD"), IfGenerationMatch(1),
+      IfGenerationNotMatch(2), IfMetagenerationMatch(3),
+      IfMetagenerationNotMatch(4), IfSourceGenerationMatch(5),
+      IfSourceGenerationNotMatch(6), IfSourceMetagenerationMatch(7),
+      IfSourceMetagenerationNotMatch(8), Projection("full"),
+      SourceGeneration(7), SourceEncryptionKey::FromBinaryKey("ABCD1234"),
+      UserProject("my-project"),
+      WithObjectMetadata(ObjectMetadata().set_content_type("text/plain")));
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("my-object"));
+  EXPECT_THAT(actual, HasSubstr("source-bucket"));
+  EXPECT_THAT(actual, HasSubstr("=source-object"));
+  EXPECT_THAT(actual, HasSubstr("destinationPredefinedAcl=private"));
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-algorithm: AES256"));
+  // /bin/echo -n ABCD1234 | openssl base64 -e
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: MTIzNEFCQ0Q="));
+  // /bin/echo -n 1234ABCD | sha256sum | awk '{printf("%s", $1);}' |
+  //     xxd -r -p | openssl base64
+  EXPECT_THAT(actual,
+              HasSubstr("x-goog-encryption-key-sha256: "
+                        "xBECBA30JV48aHcnGxXLZMs2dEryI1CA+PZg8ODIRRk="));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationMatch=1"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationNotMatch=2"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationMatch=3"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=4"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceGenerationMatch=5"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceGenerationNotMatch=6"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceMetagenerationMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("ifSourceMetagenerationNotMatch=8"));
+  EXPECT_THAT(actual, HasSubstr("projection=full"));
+  EXPECT_THAT(actual, HasSubstr("sourceGeneration=7"));
+  EXPECT_THAT(actual,
+              HasSubstr("x-goog-copy-source-encryption-algorithm: AES256"));
+  // /bin/echo -n ABCD1234 | openssl base64 -e
+  EXPECT_THAT(actual,
+              HasSubstr("x-goog-copy-source-encryption-key: QUJDRDEyMzQ="));
+  // /bin/echo -n ABCD1234 | sha256sum | awk '{printf("%s", $1);}' |
+  //     xxd -r -p | openssl base64
+  EXPECT_THAT(actual,
+              HasSubstr("x-goog-copy-source-encryption-key-sha256: "
+                        "FjXIUlr7rljDe+3jyUQIROkUNyfMfBYL7WZew3jYomI="));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(actual, HasSubstr("text/plain"));
+}
+
 TEST(ObjectRequestsTest, ReadObjectRange) {
   ReadObjectRangeRequest request("my-bucket", "my-object");
 
