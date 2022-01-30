@@ -26,6 +26,7 @@ iot
 kms
 logging
 memcache
+monitoring
 networkmanagement
 notebooks
 orgpolicy

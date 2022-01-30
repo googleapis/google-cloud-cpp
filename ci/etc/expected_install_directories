@@ -126,6 +126,9 @@
 ./include/google/cloud/memcache/internal
 ./include/google/cloud/memcache/mocks
 ./include/google/cloud/memcache/v1
+./include/google/cloud/monitoring
+./include/google/cloud/monitoring/internal
+./include/google/cloud/monitoring/mocks
 ./include/google/cloud/networkmanagement
 ./include/google/cloud/networkmanagement/internal
 ./include/google/cloud/networkmanagement/mocks
@@ -293,6 +296,12 @@
 ./include/google/identity/accesscontextmanager/v1
 ./include/google/logging
 ./include/google/logging/v2
+./include/google/monitoring
+./include/google/monitoring/dashboard
+./include/google/monitoring/dashboard/v1
+./include/google/monitoring/metricsscope
+./include/google/monitoring/metricsscope/v1
+./include/google/monitoring/v3
 ./include/google/privacy
 ./include/google/privacy/dlp
 ./include/google/privacy/dlp/v2
@@ -336,6 +345,7 @@
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_memcache
+./lib64/cmake/google_cloud_cpp_monitoring
 ./lib64/cmake/google_cloud_cpp_networkmanagement
 ./lib64/cmake/google_cloud_cpp_notebooks
 ./lib64/cmake/google_cloud_cpp_orgpolicy
