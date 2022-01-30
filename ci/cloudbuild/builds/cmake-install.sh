@@ -110,8 +110,6 @@ expected_dirs+=(
   ./include/google/identity/accesscontextmanager/type
   ./include/google/logging/type
   ./include/google/longrunning
-  ./include/google/monitoring
-  ./include/google/monitoring/v3
   ./include/google/pubsub
   ./include/google/pubsub/v1
   ./include/google/rpc

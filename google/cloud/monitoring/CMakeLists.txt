@@ -38,62 +38,6 @@ if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
 
-include(CompileProtos)
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_monitoring_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/alertchart.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/common.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/dashboard.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/dashboards_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/drilldowns.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/layouts.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/metrics.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/scorecard.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/text.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/widget.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/dashboard/v1/xychart.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/metricsscope/v1/metrics_scope.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/metricsscope/v1/metrics_scopes.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/alert.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/alert_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/common.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/dropped_labels.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/group.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/group_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/metric.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/metric_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/mutation_record.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/notification.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/notification_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/query_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/service_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/span_context.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/uptime.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/monitoring/v3/uptime_service.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(monitoring_protos)
-target_link_libraries(
-    google_cloud_cpp_monitoring_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_distribution_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_label_protos
-           google-cloud-cpp::api_launch_stage_protos
-           google-cloud-cpp::api_metric_protos
-           google-cloud-cpp::api_monitored_resource_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::type_calendar_period_protos)
-
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -163,7 +107,7 @@ install(
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS google_cloud_cpp_monitoring google_cloud_cpp_monitoring_protos
+    TARGETS google_cloud_cpp_monitoring
     EXPORT google_cloud_cpp_monitoring-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -175,17 +119,13 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS google_cloud_cpp_monitoring google_cloud_cpp_monitoring_protos
+    TARGETS google_cloud_cpp_monitoring
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_proto_library_protos(
-    "google_cloud_cpp_monitoring_protos" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_proto_library_headers(
-    "google_cloud_cpp_monitoring_protos")
 google_cloud_cpp_install_headers("google_cloud_cpp_monitoring"
                                  "include/google/cloud/monitoring")
 google_cloud_cpp_install_headers("google_cloud_cpp_monitoring_mocks"
@@ -225,6 +165,3 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_monitoring-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_monitoring"
     COMPONENT google_cloud_cpp_development)
-
-external_googleapis_install_pc("google_cloud_cpp_monitoring_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")

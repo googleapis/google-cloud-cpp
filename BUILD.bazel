@@ -447,6 +447,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-monitoring",
+    deps = [
+        "//google/cloud/monitoring:google_cloud_cpp_monitoring",
+    ],
+)
+
+cc_library(
+    name = "experimental-monitoring_mocks",
+    deps = [
+        "//google/cloud/monitoring:google_cloud_cpp_monitoring_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-networkmanagement",
     deps = [
         "//google/cloud/networkmanagement:google_cloud_cpp_networkmanagement",

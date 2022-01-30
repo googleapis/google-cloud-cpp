@@ -3,7 +3,11 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Monitoring API][cloud-service-docs], a service to Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Cloud Monitoring documentation](https://cloud.google.com/monitoring/docs).
+[Cloud Monitoring API][cloud-service-docs], a service to manage your Cloud
+Monitoring data and configurations. This library is used to interact with the
+Cloud Monitoring API directly. If you are looking to instrument your application
+for Cloud Monitoring, we recommend using
+[OpenTelemetry](https://opentelemetry.io) or a similar framework.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,7 +42,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/monitoring/ EDIT HERE .h"
+#include "google/cloud/monitoring/alert_policy_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,12 +54,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace monitoring = ::google::cloud::monitoring;
-  auto client = monitoring::Client(monitoring::MakeConnection(/* EDIT HERE */));
+  auto client = monitoring::AlertPolicyServiceClient(
+      monitoring::MakeAlertPolicyServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListAlertPolicies(project.FullName())) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/monitoring/ EDIT HERE .h"
+#include "google/cloud/monitoring/alert_policy_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,12 +24,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace monitoring = ::google::cloud::monitoring;
-  auto client = monitoring::Client(monitoring::MakeConnection(/* EDIT HERE */));
+  auto client = monitoring::AlertPolicyServiceClient(
+      monitoring::MakeAlertPolicyServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListAlertPolicies(project.FullName())) {
+    if (!a) throw std::runtime_error(a.status().message());
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;

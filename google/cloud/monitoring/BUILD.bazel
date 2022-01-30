@@ -38,7 +38,9 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//google/monitoring/metricsscope/v1:monitoring_cc_grpc",
+        "@com_google_googleapis//google/monitoring/dashboard/v1:dashboard_cc_grpc",
+        "@com_google_googleapis//google/monitoring/metricsscope/v1:metricsscope_cc_grpc",
+        "@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc",
     ],
 )
 
