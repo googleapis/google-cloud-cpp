@@ -1,3 +1,17 @@
+@com_google_googleapis//google/monitoring/dashboard/v1:alertchart.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:common.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:dashboard.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:dashboards_service.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:drilldowns.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:layouts.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:metrics.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:scorecard.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:service.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:text.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:widget.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:xychart.proto
+@com_google_googleapis//google/monitoring/metricsscope/v1:metrics_scope.proto
+@com_google_googleapis//google/monitoring/metricsscope/v1:metrics_scopes.proto
 @com_google_googleapis//google/monitoring/v3:alert.proto
 @com_google_googleapis//google/monitoring/v3:alert_service.proto
 @com_google_googleapis//google/monitoring/v3:common.proto
