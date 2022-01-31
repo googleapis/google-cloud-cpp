@@ -2,8 +2,8 @@
 
 @mainpage Cloud Filestore API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Filestore API][cloud-service-docs], a service
-to The Cloud Filestore API is used for creating and managing cloud file servers.
+An idiomatic C++ client library for the [Cloud Filestore API][cloud-service-docs],
+a service create and manage cloud file servers.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 

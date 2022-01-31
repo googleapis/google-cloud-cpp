@@ -312,6 +312,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-filestore",
+    deps = [
+        "//google/cloud/filestore:google_cloud_cpp_filestore",
+    ],
+)
+
+cc_library(
+    name = "experimental-filestore_mocks",
+    deps = [
+        "//google/cloud/filestore:google_cloud_cpp_filestore_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-functions",
     deps = [
         "//google/cloud/functions:google_cloud_cpp_functions",

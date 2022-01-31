@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Filestore API][cloud-service-docs], a service to The Cloud Filestore API is used for creating and managing cloud file servers.
+[Cloud Filestore API][cloud-service-docs], a service to create and manage cloud
+file servers.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,8 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/filestore/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/filestore/cloud_filestore_manager_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -50,12 +50,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace filestore = ::google::cloud::filestore;
-  auto client = filestore::Client(filestore::MakeConnection(/* EDIT HERE */));
+  auto client = filestore::CloudFilestoreManagerClient(
+      filestore::MakeCloudFilestoreManagerConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto i : client.ListInstances(parent)) {
+    if (!i) throw std::runtime_error(i.status().message());
+    std::cout << i->DebugString() << "\n";
   }
 
   return 0;
