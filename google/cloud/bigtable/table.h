@@ -361,6 +361,8 @@ class Table {
   /**
    * Returns a Table that reuses the connection and configuration of this
    * Table, but with a different resource name.
+   *
+   * @note The app profile id is copied from this Table.
    */
   Table WithNewTarget(std::string project_id, std::string instance_id,
                       std::string table_id) const {
@@ -368,6 +370,24 @@ class Table {
     table.instance_id_ = std::move(instance_id);
     table.project_id_ = std::move(project_id);
     table.table_id_ = std::move(table_id);
+    table.table_name_ =
+        TableName(table.project_id_, table.instance_id_, table.table_id_);
+    table.metadata_update_policy_ =
+        MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
+    return table;
+  }
+
+  /**
+   * Returns a Table that reuses the connection and configuration of this
+   * Table, but with a different resource name.
+   */
+  Table WithNewTarget(std::string project_id, std::string instance_id,
+                      std::string app_profile_id, std::string table_id) const {
+    auto table = *this;
+    table.instance_id_ = std::move(instance_id);
+    table.project_id_ = std::move(project_id);
+    table.table_id_ = std::move(table_id);
+    table.app_profile_id_ = std::move(app_profile_id);
     table.table_name_ =
         TableName(table.project_id_, table.instance_id_, table.table_id_);
     table.metadata_update_policy_ =

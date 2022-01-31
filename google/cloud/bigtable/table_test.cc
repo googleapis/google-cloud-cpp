@@ -54,11 +54,13 @@ TEST_F(TableTest, StandaloneTableName) {
 
 TEST_F(TableTest, TableName) { EXPECT_EQ(kTableName, table_.table_name()); }
 
-TEST_F(TableTest, OverrideFields) {
-  Table table(client_, kTableId);
+TEST_F(TableTest, WithNewTarget) {
+  Table table(client_, "original-profile", kTableId);
   EXPECT_EQ(table.project_id(), kProjectId);
   EXPECT_EQ(table.instance_id(), kInstanceId);
+  EXPECT_EQ(table.table_id(), kTableId);
   EXPECT_EQ(table.table_name(), TableName(kProjectId, kInstanceId, kTableId));
+  EXPECT_EQ(table.app_profile_id(), "original-profile");
 
   std::string const other_project_id = "other-project";
   std::string const other_instance_id = "other-instance";
@@ -71,6 +73,30 @@ TEST_F(TableTest, OverrideFields) {
   EXPECT_EQ(other_table.table_id(), other_table_id);
   EXPECT_EQ(other_table.table_name(),
             TableName(other_project_id, other_instance_id, other_table_id));
+  EXPECT_EQ(other_table.app_profile_id(), "original-profile");
+}
+
+TEST_F(TableTest, WithNewTargetProfile) {
+  Table table(client_, "original-profile", kTableId);
+  EXPECT_EQ(table.project_id(), kProjectId);
+  EXPECT_EQ(table.instance_id(), kInstanceId);
+  EXPECT_EQ(table.table_id(), kTableId);
+  EXPECT_EQ(table.table_name(), TableName(kProjectId, kInstanceId, kTableId));
+  EXPECT_EQ(table.app_profile_id(), "original-profile");
+
+  std::string const other_project_id = "other-project";
+  std::string const other_instance_id = "other-instance";
+  std::string const other_table_id = "other-table";
+  std::string const other_profile_id = "other-profile";
+  auto other_table = table.WithNewTarget(other_project_id, other_instance_id,
+                                         other_profile_id, other_table_id);
+
+  EXPECT_EQ(other_table.project_id(), other_project_id);
+  EXPECT_EQ(other_table.instance_id(), other_instance_id);
+  EXPECT_EQ(other_table.table_id(), other_table_id);
+  EXPECT_EQ(other_table.table_name(),
+            TableName(other_project_id, other_instance_id, other_table_id));
+  EXPECT_EQ(other_table.app_profile_id(), other_profile_id);
 }
 
 TEST_F(TableTest, TableConstructor) {
