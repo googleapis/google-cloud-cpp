@@ -376,15 +376,33 @@ TEST(ObjectRequestsTest, Delete) {
 TEST(ObjectRequestsTest, Update) {
   ObjectMetadata meta = ObjectMetadata().set_content_type("application/json");
   UpdateObjectRequest request("my-bucket", "my-object", std::move(meta));
-  request.set_multiple_options(IfMetagenerationNotMatch(7),
-                               UserProject("my-project"));
+  request.set_multiple_options(
+      Generation(7), EncryptionKey::FromBinaryKey("1234ABCD"),
+      IfGenerationMatch(1), IfGenerationNotMatch(2), IfMetagenerationMatch(3),
+      IfMetagenerationNotMatch(4), PredefinedAcl("private"),
+      UserProject("my-project"));
   std::ostringstream os;
   os << request;
-  EXPECT_THAT(os.str(), HasSubstr("my-bucket"));
-  EXPECT_THAT(os.str(), HasSubstr("my-object"));
-  EXPECT_THAT(os.str(), HasSubstr("content_type=application/json"));
-  EXPECT_THAT(os.str(), HasSubstr("ifMetagenerationNotMatch=7"));
-  EXPECT_THAT(os.str(), HasSubstr("userProject=my-project"));
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("my-object"));
+  EXPECT_THAT(actual, HasSubstr("content_type=application/json"));
+  EXPECT_THAT(actual, HasSubstr("generation=7"));
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-algorithm: AES256"));
+  // /bin/echo -n 1234ABCD | openssl base64 -e
+  EXPECT_THAT(actual, HasSubstr("x-goog-encryption-key: MTIzNEFCQ0Q="));
+  // /bin/echo -n 1234ABCD | sha256sum | awk '{printf("%s", $1);}' |
+  //     xxd -r -p | openssl base64
+  EXPECT_THAT(actual,
+              HasSubstr("x-goog-encryption-key-sha256: "
+                        "xBECBA30JV48aHcnGxXLZMs2dEryI1CA+PZg8ODIRRk="));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationMatch=1"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationNotMatch=2"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationMatch=3"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=4"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=4"));
+  EXPECT_THAT(actual, HasSubstr("predefinedAcl=private"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
 }
 
 TEST(ObjectRequestsTest, Rewrite) {
