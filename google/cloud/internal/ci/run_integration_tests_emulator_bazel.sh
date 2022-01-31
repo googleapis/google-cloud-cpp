@@ -50,8 +50,7 @@ emulator_args=(
 )
 
 # We need to forward some environment variables suitable for running against
-# the emulator. Note that the HMAC service account is completely invalid and
-# it is not unique to each test, neither is a problem when using the emulator.
+# the emulator.
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${emulator_args[@]}" \
   "//google/cloud:internal_rest_client_integration_test"
 

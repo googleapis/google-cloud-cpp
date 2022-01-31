@@ -268,4 +268,8 @@ function integration::ctest_with_emulators() {
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Rest integration tests (with emulator)"
+  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }

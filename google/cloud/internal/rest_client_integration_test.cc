@@ -20,7 +20,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
-#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -55,13 +54,6 @@ class RestClientIntegrationTest : public ::testing::Test {
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
-  }
-
-  static std::string ReadFile(std::string const& filename) {
-    std::ifstream input{filename, std::ios::in};
-    std::ostringstream sstr;
-    sstr << input.rdbuf();
-    return sstr.str();
   }
 
   static void VerifyJsonPayloadResponse(
@@ -117,7 +109,7 @@ class RestClientIntegrationTest : public ::testing::Test {
 
 TEST_F(RestClientIntegrationTest, Get) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, {});
+  auto client = GetDefaultRestClient(url_, {});
   RestRequest request;
   request.SetPath("get");
   auto response_status = client->Get(request);
@@ -133,7 +125,7 @@ TEST_F(RestClientIntegrationTest, Get) {
 
 TEST_F(RestClientIntegrationTest, Delete) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, {});
+  auto client = GetDefaultRestClient(url_, {});
   RestRequest request;
   request.SetPath("delete");
   request.AddQueryParameter({"key", "value"});
@@ -160,7 +152,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
     "client_email": "bar-email@foo-project.iam.gserviceaccount.com",
 })""";
 
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("patch");
   request.AddQueryParameter({"type", "service_account"});
@@ -190,7 +182,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
 
 TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -234,7 +226,7 @@ TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
 
 TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -246,7 +238,7 @@ TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -258,7 +250,7 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeTwoSpans) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -278,7 +270,7 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeTwoSpans) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyMiddleSpan) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -297,7 +289,7 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyMiddleSpan) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyFirstSpan) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -315,11 +307,13 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyFirstSpan) {
 }
 
 TEST_F(RestClientIntegrationTest, ResponseBodyLargerThanSpillBuffer) {
-  std::string large_json_payload =
-      ReadFile("google/cloud/testing_util/rest_testing_large_json.json");
-  ASSERT_GT(large_json_payload.size(), 0);
+  nlohmann::json json;
+  for (int i = 0; i != 10000; ++i) {
+    json["row" + std::to_string(i)] = std::string(128, 'A');
+  }
+  auto large_json_payload = json.dump();
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = DefaultRestClient::GetRestClient(url_, options_);
+  auto client = GetPooledRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
   request.AddHeader("content-type", "application/json");

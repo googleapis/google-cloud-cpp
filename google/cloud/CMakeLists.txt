@@ -699,7 +699,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/rest_request_test.cc
             internal/rest_response_test.cc)
 
-        # List the unit tests, then setup the targets and dependencies.
+        # List the integration tests, then setup the targets and dependencies.
         set(google_cloud_cpp_rest_internal_integration_tests
             # cmake-format: sort
             internal/rest_client_integration_test.cc)

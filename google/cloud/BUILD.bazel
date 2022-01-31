@@ -192,7 +192,6 @@ load(":google_cloud_cpp_rest_internal_integration_tests.bzl", "google_cloud_cpp_
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    data = ["//google/cloud/testing_util:rest_testing_large_json.json"],
     tags = [
         "integration-test",
     ],
