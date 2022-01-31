@@ -125,8 +125,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Client::AsyncTailLogEntries(::google::cloud::Options options) {
-  ::google::cloud::internal::OptionsSpan span(
-      ::google::cloud::internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->AsyncTailLogEntries();
 }
 

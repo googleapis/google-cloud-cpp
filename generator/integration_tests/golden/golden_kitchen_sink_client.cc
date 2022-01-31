@@ -137,8 +137,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::AppendRowsRequest,
     google::test::admin::database::v1::AppendRowsResponse>>
 GoldenKitchenSinkClient::AsyncAppendRows(::google::cloud::Options options) {
-  ::google::cloud::internal::OptionsSpan span(
-      ::google::cloud::internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
   return connection_->AsyncAppendRows();
 }
 
