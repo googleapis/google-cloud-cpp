@@ -69,14 +69,17 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
 
 /// @test A test for setting metadata when table is known.
 TEST_F(MetadataUpdatePolicyTest, ModifiedTableName) {
-  std::string const new_project_id = "modified-project";
-  std::string const new_instance_id = "modified-instance";
-  table_->set_project_id(new_project_id);
-  table_->set_instance_id(new_instance_id);
+  std::string const other_project_id = "other-project";
+  std::string const other_instance_id = "other-instance";
+  std::string const other_table_id = "other-table";
+  auto other_table = table_->WithNewTarget(other_project_id, other_instance_id,
+                                           other_table_id);
 
   grpc::string expected =
-      "table_name=" + TableName(new_project_id, new_instance_id, kTableId);
-  auto reader = table_->ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
+      "table_name=" +
+      TableName(other_project_id, other_instance_id, other_table_id);
+  auto reader =
+      other_table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   // lets make the RPC call to send metadata
   reader.begin();
   // Get metadata from embedded server

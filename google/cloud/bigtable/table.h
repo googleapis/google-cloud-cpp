@@ -358,20 +358,21 @@ class Table {
   std::string const& instance_id() const { return instance_id_; }
   std::string const& table_id() const { return table_id_; }
 
-  /// Override the project id
-  void set_project_id(std::string project_id) {
-    project_id_ = std::move(project_id);
-    table_name_ = TableName(project_id_, instance_id_, table_id_);
-    metadata_update_policy_ =
-        MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME);
-  }
-
-  /// Override the instance id
-  void set_instance_id(std::string instance_id) {
-    instance_id_ = std::move(instance_id);
-    table_name_ = TableName(project_id_, instance_id_, table_id_);
-    metadata_update_policy_ =
-        MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME);
+  /**
+   * Returns a Table that reuses the connection and configuration of this
+   * Table, but with a different resource name.
+   */
+  Table WithNewTarget(std::string project_id, std::string instance_id,
+                      std::string table_id) const {
+    auto table = *this;
+    table.instance_id_ = std::move(instance_id);
+    table.project_id_ = std::move(project_id);
+    table.table_id_ = std::move(table_id);
+    table.table_name_ =
+        TableName(table.project_id_, table.instance_id_, table.table_id_);
+    table.metadata_update_policy_ =
+        MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
+    return table;
   }
 
   /**

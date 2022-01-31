@@ -60,15 +60,17 @@ TEST_F(TableTest, OverrideFields) {
   EXPECT_EQ(table.instance_id(), kInstanceId);
   EXPECT_EQ(table.table_name(), TableName(kProjectId, kInstanceId, kTableId));
 
-  std::string const new_project_id = "modified-project";
-  std::string const new_instance_id = "modified-instance";
-  table.set_project_id(new_project_id);
-  table.set_instance_id(new_instance_id);
+  std::string const other_project_id = "other-project";
+  std::string const other_instance_id = "other-instance";
+  std::string const other_table_id = "other-table";
+  auto other_table =
+      table.WithNewTarget(other_project_id, other_instance_id, other_table_id);
 
-  EXPECT_EQ(table.project_id(), new_project_id);
-  EXPECT_EQ(table.instance_id(), new_instance_id);
-  EXPECT_EQ(table.table_name(),
-            TableName(new_project_id, new_instance_id, kTableId));
+  EXPECT_EQ(other_table.project_id(), other_project_id);
+  EXPECT_EQ(other_table.instance_id(), other_instance_id);
+  EXPECT_EQ(other_table.table_id(), other_table_id);
+  EXPECT_EQ(other_table.table_name(),
+            TableName(other_project_id, other_instance_id, other_table_id));
 }
 
 TEST_F(TableTest, TableConstructor) {
