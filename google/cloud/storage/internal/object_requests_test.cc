@@ -211,6 +211,7 @@ TEST(ObjectRequestsTest, CopyAllOptions) {
   EXPECT_EQ("my-bucket", request.destination_bucket());
   EXPECT_EQ("my-object", request.destination_object());
   request.set_multiple_options(
+      DestinationKmsKeyName("test-only-kms-key"),
       DestinationPredefinedAcl("private"),
       EncryptionKey::FromBinaryKey("1234ABCD"), IfGenerationMatch(1),
       IfGenerationNotMatch(2), IfMetagenerationMatch(3),
@@ -228,6 +229,7 @@ TEST(ObjectRequestsTest, CopyAllOptions) {
   EXPECT_THAT(actual, HasSubstr("my-object"));
   EXPECT_THAT(actual, HasSubstr("source-bucket"));
   EXPECT_THAT(actual, HasSubstr("=source-object"));
+  EXPECT_THAT(actual, HasSubstr("destinationKmsKeyName=test-only-kms-key"));
   EXPECT_THAT(actual, HasSubstr("destinationPredefinedAcl=private"));
   EXPECT_THAT(actual, HasSubstr("x-goog-encryption-algorithm: AES256"));
   // /bin/echo -n ABCD1234 | openssl base64 -e

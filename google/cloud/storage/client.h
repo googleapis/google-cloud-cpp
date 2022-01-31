@@ -1012,13 +1012,13 @@ class Client {
    *     new object.
    * @param destination_object_name the name of the new object.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `DestinationPredefinedAcl`,
-   *     `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
-   *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`,
-   *     `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
-   *     `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *     `Projection`, `SourceGeneration`, `SourceEncryptionKey`, `UserProject`,
-   *     and `WithObjectMetadata`.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *     `DestinationPredefinedAcl`,`EncryptionKey`,`IfGenerationMatch`,
+   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `IfSourceGenerationMatch`,
+   *     `IfSourceGenerationNotMatch`, `IfSourceMetagenerationMatch`,
+   *     `IfSourceMetagenerationNotMatch`, `Projection`, `SourceGeneration`,
+   *     `SourceEncryptionKey`, `UserProject`, and `WithObjectMetadata`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
