@@ -366,15 +366,8 @@ class Table {
    */
   Table WithNewTarget(std::string project_id, std::string instance_id,
                       std::string table_id) const {
-    auto table = *this;
-    table.instance_id_ = std::move(instance_id);
-    table.project_id_ = std::move(project_id);
-    table.table_id_ = std::move(table_id);
-    table.table_name_ =
-        TableName(table.project_id_, table.instance_id_, table.table_id_);
-    table.metadata_update_policy_ =
-        MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
-    return table;
+    return WithNewTarget(std::move(project_id), std::move(instance_id),
+                         app_profile_id_, std::move(table_id));
   }
 
   /**
