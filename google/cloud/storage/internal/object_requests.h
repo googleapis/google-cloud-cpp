@@ -198,7 +198,7 @@ std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r);
  */
 class UpdateObjectRequest
     : public GenericObjectRequest<
-          UpdateObjectRequest, Generation, IfGenerationMatch,
+          UpdateObjectRequest, Generation, EncryptionKey, IfGenerationMatch,
           IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
           PredefinedAcl, Projection, UserProject> {
  public:
