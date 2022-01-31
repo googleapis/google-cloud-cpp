@@ -17,6 +17,7 @@
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/log.h"
 #include <nlohmann/json.hpp>
+#include <cctype>
 #include <iostream>
 
 namespace google {
