@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_client.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -31,14 +33,31 @@ namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::test::admin::database::v1::AppendRowsRequest;
+using ::google::test::admin::database::v1::AppendRowsResponse;
+using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::UnorderedElementsAreArray;
+
+class MockAppendRowsStream
+    : public AsyncStreamingReadWriteRpc<AppendRowsRequest, AppendRowsResponse> {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<absl::optional<AppendRowsResponse>>, Read, (), (override));
+  MOCK_METHOD(future<bool>, Write,
+              (AppendRowsRequest const&, grpc::WriteOptions), (override));
+  MOCK_METHOD(future<bool>, WritesDone, (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
+};
 
 TEST(GoldenKitchenSinkClientTest, CopyMoveEquality) {
   auto conn1 =
       std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
   auto conn2 =
       std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*conn1, options);
+  EXPECT_CALL(*conn2, options);
 
   GoldenKitchenSinkClient c1(conn1);
   GoldenKitchenSinkClient c2(conn2);
@@ -64,6 +83,8 @@ TEST(GoldenKitchenSinkClientTest, CopyMoveEquality) {
 
 TEST(GoldenKitchenSinkClientTest, GenerateAccessToken) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, options);
+
   std::string expected_name = "/projects/-/serviceAccounts/foo@bar.com";
   std::vector<std::string> expected_delegates = {"Tom", "Dick", "Harry"};
   std::vector<std::string> expected_scope = {"admin"};
@@ -99,6 +120,8 @@ TEST(GoldenKitchenSinkClientTest, GenerateAccessToken) {
 
 TEST(GoldenKitchenSinkClientTest, GenerateIdToken) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, options);
+
   std::string expected_name = "/projects/-/serviceAccounts/foo@bar.com";
   std::vector<std::string> expected_delegates = {"Tom", "Dick", "Harry"};
   std::string expected_audience = "Everyone";
@@ -134,6 +157,8 @@ TEST(GoldenKitchenSinkClientTest, GenerateIdToken) {
 
 TEST(GoldenKitchenSinkClientTest, WriteLogEntries) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, options);
+
   std::string expected_log_name = "projects/my_project/logs/my_log";
   std::map<std::string, std::string> expected_labels = {
       {"key1", "Tom"}, {"key2", "Dick"}, {"key3", "Harry"}};
@@ -162,6 +187,8 @@ TEST(GoldenKitchenSinkClientTest, WriteLogEntries) {
 
 TEST(GoldenKitchenSinkClientTest, ListLogs) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, options);
+
   std::string expected_parent = "projects/my-project";
   EXPECT_CALL(*mock, ListLogs)
       .Times(2)
@@ -195,6 +222,8 @@ TEST(GoldenKitchenSinkClientTest, ListLogs) {
 
 TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, options);
+
   std::vector<std::string> expected_resource_names = {"projects/my-project"};
   EXPECT_CALL(*mock, TailLogEntries)
       .Times(2)
@@ -227,6 +256,8 @@ TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
 
 TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, options);
+
   std::string expected_name =
       "/projects/my-project/serviceAccounts/foo@bar.com";
   std::vector<::google::test::admin::database::v1::
@@ -255,6 +286,62 @@ TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
                                   expected_key_types.end()};
   response = client.ListServiceAccountKeys(request);
   EXPECT_STATUS_OK(response);
+}
+
+TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly([] {
+    return Options{}.set<GrpcTracingOptionsOption>(
+        TracingOptions().SetOptions("truncate_string_field_longer_than=64"));
+  });
+
+  EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([] {
+    auto const& current = internal::CurrentOptions();
+    EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
+    EXPECT_TRUE(current.has<UserAgentProductsOption>());
+    EXPECT_EQ(current.get<GrpcTracingOptionsOption>()
+                  .truncate_string_field_longer_than(),
+              64);
+    EXPECT_THAT(current.get<UserAgentProductsOption>(),
+                Contains("test-only/1.0"));
+
+    auto stream = absl::make_unique<MockAppendRowsStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([] {
+      return make_ready_future(true);
+    });
+    EXPECT_CALL(*stream, Write)
+        .WillOnce([](AppendRowsRequest const& r, grpc::WriteOptions) {
+          EXPECT_EQ(r.stream(), "test-only-request-stream");
+          return make_ready_future(true);
+        });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([] {
+          AppendRowsResponse response;
+          response.set_response("test-only-response");
+          return make_ready_future(absl::make_optional(response));
+        })
+        .WillOnce([] {
+          return make_ready_future(absl::optional<AppendRowsResponse>());
+        });
+    EXPECT_CALL(*stream, Finish).WillOnce([] {
+      return make_ready_future(Status(StatusCode::kUnavailable, "try-again"));
+    });
+    return stream;
+  });
+  GoldenKitchenSinkClient client(std::move(mock));
+  auto stream = client.AsyncAppendRows(
+      Options{}.set<UserAgentProductsOption>({"test-only/1.0"}));
+  ASSERT_TRUE(stream->Start().get());
+  AppendRowsRequest request;
+  request.set_stream("test-only-request-stream");
+  ASSERT_TRUE(stream->Write(request, grpc::WriteOptions()).get());
+  auto read = stream->Read().get();
+  ASSERT_TRUE(read.has_value());
+  EXPECT_EQ(read->response(), "test-only-response");
+  read = stream->Read().get();
+  EXPECT_FALSE(read.has_value());
+  EXPECT_THAT(stream->Finish().get(),
+              StatusIs(StatusCode::kUnavailable, "try-again"));
 }
 
 }  // namespace

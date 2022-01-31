@@ -115,6 +115,16 @@ Status ClientGenerator::GenerateHeader() {
   // clang-format on
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$(Options options = {});
+)""");
+      continue;
+    }
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -343,6 +353,20 @@ Status ClientGenerator::GenerateCc() {
   // clang-format on
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    $request_type$,
+    $response_type$>>
+$client_class_name$::Async$method_name$(Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->Async$method_name$();
+}
+)""");
+      continue;
+    }
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
