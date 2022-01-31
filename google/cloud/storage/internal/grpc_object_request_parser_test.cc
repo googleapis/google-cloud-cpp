@@ -382,6 +382,78 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
+  google::storage::v2::UpdateObjectRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        object {
+          bucket: "projects/_/buckets/bucket-name"
+          name: "object-name"
+          generation: 7
+          acl { entity: "allUsers" role: "READER" }
+          content_encoding: "test-only-content-encoding"
+          content_disposition: "test-only-content-disposition"
+          cache_control: "test-only-cache-control"
+          content_language: "test-only-content-language"
+          content_type: "test-only-content-type"
+          temporary_hold: true
+          metadata { key: "key0" value: "value0" }
+          event_based_hold: true
+          custom_time { seconds: 1643126687 nanos: 123000000 }
+        }
+        predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        if_generation_match: 1
+        if_generation_not_match: 2
+        if_metageneration_match: 3
+        if_metageneration_not_match: 4
+        common_object_request_params: {
+          encryption_algorithm: "AES256"
+          encryption_key_bytes: "01234567"
+          encryption_key_sha256_bytes: "\222E\222\271\261\003\361O\203?\252\373g\364\200i\037\001\230\212\244W\300\006\027i\365\214\324s\021\274"
+        }
+        common_request_params: { user_project: "test-user-project" }
+        update_mask {}
+      )pb",
+      &expected));
+
+  UpdateObjectRequest req(
+      "bucket-name", "object-name",
+      ObjectMetadata{}
+          .set_acl(
+              {ObjectAccessControl{}.set_entity("allUsers").set_role("READER")})
+          .set_content_encoding("test-only-content-encoding")
+          .set_content_disposition("test-only-content-disposition")
+          .set_cache_control("test-only-cache-control")
+          .set_content_language("test-only-content-language")
+          .set_content_type("test-only-content-type")
+          .upsert_metadata("key0", "value0")
+          .set_temporary_hold(true)
+          .set_event_based_hold(true)
+          .set_custom_time(std::chrono::system_clock::time_point{} +
+                           std::chrono::seconds(1643126687) +
+                           std::chrono::milliseconds(123)));
+  req.set_multiple_options(
+      Generation(7), IfGenerationMatch(1), IfGenerationNotMatch(2),
+      IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
+      PredefinedAcl("projectPrivate"), EncryptionKey::FromBinaryKey("01234567"),
+      Projection("full"), UserProject("test-user-project"),
+      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+
+  auto actual = GrpcObjectRequestParser::ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths, we do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(
+      actual->update_mask().paths(),
+      UnorderedElementsAre("acl", "content_encoding", "content_disposition",
+                           "cache_control", "content_language", "content_type",
+                           "metadata", "temporary_hold", "event_based_hold",
+                           "custom_time"));
+  // Clear the paths, which we already compared, and test the rest
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(

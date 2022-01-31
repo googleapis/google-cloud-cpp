@@ -409,6 +409,59 @@ GrpcObjectRequestParser::ToProto(PatchObjectRequest const& request) {
   return result;
 }
 
+StatusOr<google::storage::v2::UpdateObjectRequest>
+GrpcObjectRequestParser::ToProto(UpdateObjectRequest const& request) {
+  google::storage::v2::UpdateObjectRequest result;
+  auto status = SetCommonObjectParameters(result, request);
+  if (!status.ok()) return status;
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  SetCommonParameters(result, request);
+  SetPredefinedAcl(result, request);
+
+  auto& object = *result.mutable_object();
+  object.set_bucket("projects/_/buckets/" + request.bucket_name());
+  object.set_name(request.object_name());
+  object.set_generation(request.GetOption<Generation>().value_or(0));
+
+  result.mutable_update_mask()->add_paths("acl");
+  for (auto const& a : request.metadata().acl()) {
+    *object.add_acl() = GrpcObjectAccessControlParser::ToProto(a);
+  }
+
+  // The semantics in gRPC are to replace any metadata attributes
+  result.mutable_update_mask()->add_paths("metadata");
+  for (auto const& kv : request.metadata().metadata()) {
+    (*object.mutable_metadata())[kv.first] = kv.second;
+  }
+
+  if (request.metadata().has_custom_time()) {
+    result.mutable_update_mask()->add_paths("custom_time");
+    *object.mutable_custom_time() = google::cloud::internal::ToProtoTimestamp(
+        request.metadata().custom_time());
+  }
+
+  // We need to check each modifiable field.
+  result.mutable_update_mask()->add_paths("cache_control");
+  object.set_cache_control(request.metadata().cache_control());
+  result.mutable_update_mask()->add_paths("content_disposition");
+  object.set_content_disposition(request.metadata().content_disposition());
+  result.mutable_update_mask()->add_paths("content_encoding");
+  object.set_content_encoding(request.metadata().content_encoding());
+  result.mutable_update_mask()->add_paths("content_language");
+  object.set_content_language(request.metadata().content_language());
+  result.mutable_update_mask()->add_paths("content_type");
+  object.set_content_type(request.metadata().content_type());
+
+  result.mutable_update_mask()->add_paths("event_based_hold");
+  object.set_event_based_hold(request.metadata().event_based_hold());
+
+  result.mutable_update_mask()->add_paths("temporary_hold");
+  object.set_temporary_hold(request.metadata().temporary_hold());
+
+  return result;
+}
+
 StatusOr<google::storage::v2::WriteObjectRequest>
 GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   google::storage::v2::WriteObjectRequest r;

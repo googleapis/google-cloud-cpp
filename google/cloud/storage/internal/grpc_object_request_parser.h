@@ -45,6 +45,8 @@ struct GrpcObjectRequestParser {
 
   static StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
       PatchObjectRequest const& request);
+  static StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
+      UpdateObjectRequest const& request);
 
   static StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
       InsertObjectMediaRequest const& request);
