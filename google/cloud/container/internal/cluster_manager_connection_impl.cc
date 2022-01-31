@@ -33,17 +33,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ClusterManagerConnectionImpl::ClusterManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<container_internal::ClusterManagerStub> stub,
-    Options const& options)
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      retry_policy_prototype_(
-          options.get<container::ClusterManagerRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          options.get<container::ClusterManagerBackoffPolicyOption>()->clone()),
-      idempotency_policy_(
-          options
-              .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
-              ->clone()) {}
+      options_(internal::MergeOptions(
+          std::move(options), container_internal::ClusterManagerDefaultOptions(
+                                  ClusterManagerConnection::options()))) {}
 
 StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerConnectionImpl::ListClusters(

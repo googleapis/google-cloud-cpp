@@ -45,7 +45,9 @@ class ClusterManagerConnectionImpl
   ClusterManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<container_internal::ClusterManagerStub> stub,
-      Options const& options);
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       google::container::v1::ListClustersRequest const& request) override;
@@ -154,7 +156,7 @@ class ClusterManagerConnectionImpl
     if (options.has<container::ClusterManagerRetryPolicyOption>()) {
       return options.get<container::ClusterManagerRetryPolicyOption>()->clone();
     }
-    return retry_policy_prototype_->clone();
+    return options_.get<container::ClusterManagerRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
@@ -163,7 +165,8 @@ class ClusterManagerConnectionImpl
       return options.get<container::ClusterManagerBackoffPolicyOption>()
           ->clone();
     }
-    return backoff_policy_prototype_->clone();
+    return options_.get<container::ClusterManagerBackoffPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<container::ClusterManagerConnectionIdempotencyPolicy>
@@ -175,16 +178,14 @@ class ClusterManagerConnectionImpl
           .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return idempotency_policy_->clone();
+    return options_
+        .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<container_internal::ClusterManagerStub> stub_;
-  std::unique_ptr<container::ClusterManagerRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<container::ClusterManagerConnectionIdempotencyPolicy>
-      idempotency_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

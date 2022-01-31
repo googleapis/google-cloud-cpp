@@ -28,8 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ClusterManagerClient::ClusterManagerClient(
     std::shared_ptr<ClusterManagerConnection> connection, Options options)
     : connection_(std::move(connection)),
-      options_(container_internal::ClusterManagerDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options), container_internal::ClusterManagerDefaultOptions(
+                                  connection_->options()))) {}
 ClusterManagerClient::~ClusterManagerClient() = default;
 
 StatusOr<google::container::v1::ListClustersResponse>

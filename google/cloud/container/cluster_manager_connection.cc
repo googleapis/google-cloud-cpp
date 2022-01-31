@@ -241,7 +241,7 @@ std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
   auto stub = container_internal::CreateDefaultClusterManagerStub(
       background->cq(), options);
   return std::make_shared<container_internal::ClusterManagerConnectionImpl>(
-      std::move(background), std::move(stub), options);
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -258,9 +258,9 @@ std::shared_ptr<container::ClusterManagerConnection>
 MakeClusterManagerConnection(std::shared_ptr<ClusterManagerStub> stub,
                              Options options) {
   options = ClusterManagerDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<container_internal::ClusterManagerConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

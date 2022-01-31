@@ -50,6 +50,8 @@ class ClusterManagerConnection {
  public:
   virtual ~ClusterManagerConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       google::container::v1::ListClustersRequest const& request);
 
