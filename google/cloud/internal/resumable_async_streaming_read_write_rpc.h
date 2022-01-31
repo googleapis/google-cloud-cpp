@@ -126,6 +126,7 @@ class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<Re
 
     auto const retry_policy = retry_policy_prototype_->clone();
     auto const backoff_policy = backoff_policy_prototype_->clone();
+    // why does resumable_streaming_read_rpc.h use has_received_data here?
     while (!retry_policy->IsExhausted()) {
       sleeper_(backoff_policy->OnCompletion());
       has_received_data_ = false;
