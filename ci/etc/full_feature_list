@@ -18,6 +18,7 @@ datamigration
 debugger
 dlp
 eventarc
+filestore
 functions
 gameservices
 gkehub
