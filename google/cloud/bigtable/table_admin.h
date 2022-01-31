@@ -219,6 +219,19 @@ class TableAdmin {
   std::string const& instance_name() const { return instance_name_; }
 
   /**
+   * Returns a TableAdmin that reuses the connection and configuration of this
+   * TableAdmin, but with a different resource name.
+   */
+  TableAdmin WithNewTarget(std::string project_id,
+                           std::string instance_id) const {
+    auto table = *this;
+    table.project_id_ = std::move(project_id);
+    table.instance_id_ = std::move(instance_id);
+    table.instance_name_ = table.InstanceName();
+    return table;
+  }
+
+  /**
    * Create a new table in the instance.
    *
    * @param table_id the name of the table relative to the instance managed by

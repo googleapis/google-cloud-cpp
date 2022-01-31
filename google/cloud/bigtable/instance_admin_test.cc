@@ -137,6 +137,13 @@ TEST_F(InstanceAdminTest, MoveAssignment) {
   EXPECT_EQ(expected, dest.project_id());
 }
 
+TEST_F(InstanceAdminTest, WithNewTarget) {
+  auto admin = InstanceAdmin(connection_, kProjectId);
+  auto other_admin = admin.WithNewTarget("other-project");
+  EXPECT_EQ(other_admin.project_id(), "other-project");
+  EXPECT_EQ(other_admin.project_name(), Project("other-project").FullName());
+}
+
 TEST_F(InstanceAdminTest, LegacyConstructorSharesConnection) {
   auto admin_client = MakeInstanceAdminClient("test-project");
   auto admin_1 = InstanceAdmin(admin_client);

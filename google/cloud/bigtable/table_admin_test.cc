@@ -27,15 +27,17 @@ using ::testing::ReturnRef;
 
 using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
 
-std::string const kProjectId = "the-project";
-std::string const kInstanceId = "the-instance";
+auto const* const kProjectId = "the-project";
+auto const* const kInstanceId = "the-instance";
+auto const* const kInstanceName = "projects/the-project/instances/the-instance";
 
 class TableAdminTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
+    EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(project_id_));
   }
 
+  std::string project_id_ = kProjectId;
   std::shared_ptr<MockAdminClient> client_ =
       std::make_shared<MockAdminClient>();
 };
@@ -44,7 +46,16 @@ TEST_F(TableAdminTest, ResourceNames) {
   TableAdmin tested(client_, kInstanceId);
   EXPECT_EQ(kProjectId, tested.project());
   EXPECT_EQ(kInstanceId, tested.instance_id());
-  EXPECT_EQ(InstanceName(kProjectId, kInstanceId), tested.instance_name());
+  EXPECT_EQ(kInstanceName, tested.instance_name());
+}
+
+TEST_F(TableAdminTest, WithNewTarget) {
+  auto admin = TableAdmin(client_, kInstanceId);
+  auto other_admin = admin.WithNewTarget("other-project", "other-instance");
+  EXPECT_EQ(other_admin.project(), "other-project");
+  EXPECT_EQ(other_admin.instance_id(), "other-instance");
+  EXPECT_EQ(other_admin.instance_name(),
+            InstanceName("other-project", "other-instance"));
 }
 
 }  // namespace
