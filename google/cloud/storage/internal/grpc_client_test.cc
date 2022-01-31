@@ -258,6 +258,32 @@ TEST(GrpcClient, DeleteObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST(GrpcClient, Update) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, UpdateObject)
+      .WillOnce([](grpc::ClientContext& context,
+                   google::storage::v2::UpdateObjectRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.object().bucket(),
+                    "projects/_/buckets/test-bucket");
+        EXPECT_THAT(request.object().name(), "test-object");
+        return PermanentError();
+      });
+  auto client = GrpcClient::CreateMock(mock);
+  auto response = client->UpdateObject(
+      UpdateObjectRequest("test-bucket", "test-object",
+                          // Typically, the metadata is first read from the
+                          // service as part of an OCC loop, for this test, just
+                          // use the default values for all fields
+                          ObjectMetadata{})
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST(GrpcClient, PatchObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)

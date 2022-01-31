@@ -105,6 +105,14 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   ASSERT_STATUS_OK(compose);
   ScheduleForDelete(*compose);
 
+  auto custom = std::chrono::system_clock::now() + std::chrono::hours(24);
+  auto desired_metadata = ObjectMetadata(*patch).set_custom_time(custom);
+  auto updated =
+      client->UpdateObject(bucket_name, object_name, desired_metadata);
+  ASSERT_STATUS_OK(updated);
+  ASSERT_TRUE(updated->has_custom_time());
+  ASSERT_EQ(updated->custom_time(), custom);
+
   auto del = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(del);
 
