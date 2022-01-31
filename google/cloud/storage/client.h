@@ -1017,8 +1017,8 @@ class Client {
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`,
    *     `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
    *     `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
-   *     `Projection`, `SourceGeneration`, `UserProject`, and
-   *     `WithObjectMetadata`.
+   *     `Projection`, `SourceGeneration`, `SourceEncryptionKey`, `UserProject`,
+   *     and `WithObjectMetadata`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this

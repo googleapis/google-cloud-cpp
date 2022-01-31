@@ -133,7 +133,7 @@ class CopyObjectRequest
           IfMetagenerationNotMatch, IfSourceGenerationMatch,
           IfSourceGenerationNotMatch, IfSourceMetagenerationMatch,
           IfSourceMetagenerationNotMatch, Projection, SourceGeneration,
-          UserProject, WithObjectMetadata> {
+          SourceEncryptionKey, UserProject, WithObjectMetadata> {
  public:
   CopyObjectRequest() = default;
   CopyObjectRequest(std::string source_bucket, std::string source_object,
