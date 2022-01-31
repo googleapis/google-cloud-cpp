@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_client.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -33,6 +35,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::AppendRowsRequest;
 using ::google::test::admin::database::v1::AppendRowsResponse;
+using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::UnorderedElementsAreArray;
 
@@ -287,9 +290,21 @@ TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
 
 TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, options).WillRepeatedly([] {
+    return Options{}.set<GrpcTracingOptionsOption>(
+        TracingOptions().SetOptions("truncate_string_field_longer_than=64"));
+  });
 
   EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([] {
+    auto const& current = internal::CurrentOptions();
+    EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
+    EXPECT_TRUE(current.has<UserAgentProductsOption>());
+    EXPECT_EQ(current.get<GrpcTracingOptionsOption>()
+                  .truncate_string_field_longer_than(),
+              64);
+    EXPECT_THAT(current.get<UserAgentProductsOption>(),
+                Contains("test-only/1.0"));
+
     auto stream = absl::make_unique<MockAppendRowsStream>();
     EXPECT_CALL(*stream, Start).WillOnce([] {
       return make_ready_future(true);
@@ -314,7 +329,8 @@ TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
     return stream;
   });
   GoldenKitchenSinkClient client(std::move(mock));
-  auto stream = client.AsyncAppendRows();
+  auto stream = client.AsyncAppendRows(
+      Options{}.set<UserAgentProductsOption>({"test-only/1.0"}));
   ASSERT_TRUE(stream->Start().get());
   AppendRowsRequest request;
   request.set_stream("test-only-request-stream");
