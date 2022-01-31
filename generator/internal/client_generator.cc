@@ -121,7 +121,7 @@ Status ClientGenerator::GenerateHeader() {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(::google::cloud::Options options = {});
+  Async$method_name$(Options options = {});
 )""");
       continue;
     }
@@ -359,7 +359,7 @@ Status ClientGenerator::GenerateCc() {
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
-$client_class_name$::Async$method_name$(::google::cloud::Options options) {
+$client_class_name$::Async$method_name$(Options options) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
   return connection_->Async$method_name$();

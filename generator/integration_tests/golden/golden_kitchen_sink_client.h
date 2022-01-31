@@ -357,7 +357,7 @@ class GoldenKitchenSinkClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(::google::cloud::Options options = {});
+  AsyncAppendRows(Options options = {});
 
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;

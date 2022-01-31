@@ -345,7 +345,7 @@ class LoggingServiceV2Client {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries(::google::cloud::Options options = {});
+  AsyncTailLogEntries(Options options = {});
 
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;
