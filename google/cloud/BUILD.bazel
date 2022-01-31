@@ -186,3 +186,19 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
+
+load(":google_cloud_cpp_rest_internal_integration_tests.bzl", "google_cloud_cpp_rest_internal_integration_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    data = ["//google/cloud/testing_util:rest_testing_large_json.json"],
+    tags = [
+        "integration-test",
+    ],
+    deps = [
+        ":google_cloud_cpp_rest_internal",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_rest_internal_integration_tests]
