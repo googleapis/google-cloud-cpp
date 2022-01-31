@@ -555,6 +555,86 @@ RewriteObjectResponse GrpcObjectRequestParser::FromProto(
   return result;
 }
 
+StatusOr<google::storage::v2::RewriteObjectRequest>
+GrpcObjectRequestParser::ToProto(CopyObjectRequest const& request) {
+  google::storage::v2::RewriteObjectRequest result;
+  SetCommonParameters(result, request);
+  auto status = SetCommonObjectParameters(result, request);
+  if (!status.ok()) return status;
+
+  result.set_destination_name(request.destination_object());
+  result.set_destination_bucket("projects/_/buckets/" +
+                                request.destination_bucket());
+
+  if (request.HasOption<WithObjectMetadata>() ||
+      request.HasOption<DestinationKmsKeyName>()) {
+    auto& destination = *result.mutable_destination();
+    destination.set_kms_key(
+        request.GetOption<DestinationKmsKeyName>().value_or(""));
+    // Only a few fields can be set as part of the metadata request.
+    auto m = request.GetOption<WithObjectMetadata>().value();
+    destination.set_storage_class(m.storage_class());
+    destination.set_content_encoding(m.content_encoding());
+    destination.set_content_disposition(m.content_disposition());
+    destination.set_cache_control(m.cache_control());
+    destination.set_content_language(m.content_language());
+    destination.set_content_type(m.content_type());
+    destination.set_temporary_hold(m.temporary_hold());
+    for (auto const& kv : m.metadata()) {
+      (*destination.mutable_metadata())[kv.first] = kv.second;
+    }
+    if (m.event_based_hold()) {
+      // The proto is an optional<bool>, avoid setting it to `false`, seems
+      // confusing.
+      destination.set_event_based_hold(m.event_based_hold());
+    }
+    if (m.has_custom_time()) {
+      *destination.mutable_custom_time() =
+          google::cloud::internal::ToProtoTimestamp(m.custom_time());
+    }
+  }
+  result.set_source_bucket("projects/_/buckets/" + request.source_bucket());
+  result.set_source_object(request.source_object());
+  result.set_source_generation(
+      request.GetOption<SourceGeneration>().value_or(0));
+  if (request.HasOption<DestinationPredefinedAcl>()) {
+    result.set_destination_predefined_acl(
+        ToProtoObject(request.GetOption<DestinationPredefinedAcl>()));
+  }
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  if (request.HasOption<IfSourceGenerationMatch>()) {
+    result.set_if_source_generation_match(
+        request.GetOption<IfSourceGenerationMatch>().value());
+  }
+  if (request.HasOption<IfSourceGenerationNotMatch>()) {
+    result.set_if_source_generation_not_match(
+        request.GetOption<IfSourceGenerationNotMatch>().value());
+  }
+  if (request.HasOption<IfSourceMetagenerationMatch>()) {
+    result.set_if_source_metageneration_match(
+        request.GetOption<IfSourceMetagenerationMatch>().value());
+  }
+  if (request.HasOption<IfSourceMetagenerationNotMatch>()) {
+    result.set_if_source_metageneration_not_match(
+        request.GetOption<IfSourceMetagenerationNotMatch>().value());
+  }
+  if (request.HasOption<SourceEncryptionKey>()) {
+    auto data = request.template GetOption<SourceEncryptionKey>().value();
+    auto key_bytes = Base64Decode(data.key);
+    if (!key_bytes) return std::move(key_bytes).status();
+    auto key_sha256_bytes = Base64Decode(data.sha256);
+    if (!key_sha256_bytes) return std::move(key_sha256_bytes).status();
+
+    result.set_copy_source_encryption_algorithm(data.algorithm);
+    result.set_copy_source_encryption_key_bytes(
+        std::string{key_bytes->begin(), key_bytes->end()});
+    result.set_copy_source_encryption_key_sha256_bytes(
+        std::string{key_sha256_bytes->begin(), key_sha256_bytes->end()});
+  }
+  return result;
+}
+
 StatusOr<google::storage::v2::StartResumableWriteRequest>
 GrpcObjectRequestParser::ToProto(ResumableUploadRequest const& request) {
   google::storage::v2::StartResumableWriteRequest result;
