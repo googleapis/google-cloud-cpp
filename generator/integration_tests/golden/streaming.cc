@@ -11,11 +11,27 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_connection_impl.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
+namespace golden_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::AppendRowsRequest,
+    google::test::admin::database::v1::AppendRowsResponse>>
+GoldenKitchenSinkConnectionImpl::AsyncAppendRows() {
+  return stub_->AsyncAppendRows(
+      background_->cq(), absl::make_unique<grpc::ClientContext>());
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace golden_internal
+
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

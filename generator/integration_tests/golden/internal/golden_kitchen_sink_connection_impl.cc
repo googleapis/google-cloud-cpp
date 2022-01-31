@@ -146,14 +146,6 @@ GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& reques
       request, __func__);
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::test::admin::database::v1::AppendRowsRequest,
-    google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkConnectionImpl::AsyncAppendRows() {
-  return stub_->AsyncAppendRows(
-      background_->cq(), absl::make_unique<grpc::ClientContext>());
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
 }  // namespace cloud

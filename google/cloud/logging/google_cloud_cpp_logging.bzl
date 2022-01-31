@@ -39,6 +39,7 @@ google_cloud_cpp_logging_srcs = [
     "internal/logging_service_v2_option_defaults.cc",
     "internal/logging_service_v2_stub.cc",
     "internal/logging_service_v2_stub_factory.cc",
+    "internal/streaming.cc",
     "logging_service_v2_client.cc",
     "logging_service_v2_connection.cc",
     "logging_service_v2_connection_idempotency_policy.cc",

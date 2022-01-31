@@ -281,15 +281,10 @@ std::string ConnectionImplGenerator::AsyncMethodDeclaration(
 std::string ConnectionImplGenerator::MethodDefinition(
     google::protobuf::MethodDescriptor const& method) {
   if (IsBidirStreaming(method)) {
-    return R"""(
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    $request_type$,
-    $response_type$>>
-$connection_class_name$Impl::Async$method_name$() {
-  return stub_->Async$method_name$(
-      background_->cq(), absl::make_unique<grpc::ClientContext>());
-}
-)""";
+    // We do not generate definitions for bidir streaming RPCs. Their retry or
+    // resume loops are so custom (if possible at all), and their usage so rare,
+    // that it is easier to hand-craft these functions in a streaming.cc file.
+    return R"""()""";
   }
 
   if (IsStreamingRead(method)) {
