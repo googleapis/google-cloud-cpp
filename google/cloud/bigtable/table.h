@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/row_set.h"
@@ -212,7 +213,9 @@ class Table {
         std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
-        table_name_(TableName(client_, table_id)),
+        project_id_(client_->project_id()),
+        instance_id_(client_->instance_id()),
+        table_name_(TableName(project_id_, instance_id_, table_id)),
         table_id_(table_id),
         rpc_retry_policy_prototype_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
@@ -351,9 +354,25 @@ class Table {
 
   std::string const& table_name() const { return table_name_; }
   std::string const& app_profile_id() const { return app_profile_id_; }
-  std::string const& project_id() const { return client_->project_id(); }
-  std::string const& instance_id() const { return client_->instance_id(); }
+  std::string const& project_id() const { return project_id_; }
+  std::string const& instance_id() const { return instance_id_; }
   std::string const& table_id() const { return table_id_; }
+
+  /// Override the project id
+  void set_project_id(std::string project_id) {
+    project_id_ = std::move(project_id);
+    table_name_ = TableName(project_id_, instance_id_, table_id_);
+    metadata_update_policy_ =
+        MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME);
+  }
+
+  /// Override the instance id
+  void set_instance_id(std::string instance_id) {
+    instance_id_ = std::move(instance_id);
+    table_name_ = TableName(project_id_, instance_id_, table_id_);
+    metadata_update_policy_ =
+        MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME);
+  }
 
   /**
    * Attempts to apply the mutation to a row.
@@ -936,6 +955,8 @@ class Table {
   friend class MutationBatcher;
   std::shared_ptr<DataClient> client_;
   std::string app_profile_id_;
+  std::string project_id_;
+  std::string instance_id_;
   std::string table_name_;
   std::string table_id_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;

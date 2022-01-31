@@ -67,6 +67,25 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
   EXPECT_EQ(expected, range.first->second);
 }
 
+/// @test A test for setting metadata when table is known.
+TEST_F(MetadataUpdatePolicyTest, ModifiedTableName) {
+  std::string const new_project_id = "modified-project";
+  std::string const new_instance_id = "modified-instance";
+  table_->set_project_id(new_project_id);
+  table_->set_instance_id(new_instance_id);
+
+  grpc::string expected =
+      "table_name=" + TableName(new_project_id, new_instance_id, kTableId);
+  auto reader = table_->ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
+  // lets make the RPC call to send metadata
+  reader.begin();
+  // Get metadata from embedded server
+  auto client_metadata = bigtable_service_.client_metadata();
+  auto range = client_metadata.equal_range("x-goog-request-params");
+  ASSERT_EQ(1, std::distance(range.first, range.second));
+  EXPECT_EQ(expected, range.first->second);
+}
+
 /// @test A cloning test for normal construction of metadata .
 TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   auto const x_google_request_params = "parent=" + std::string(kInstanceName);
