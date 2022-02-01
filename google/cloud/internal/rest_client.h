@@ -66,6 +66,8 @@ class RestClient {
 // RestClient implementation using libcurl.
 class CurlRestClient : public RestClient {
  public:
+  static std::string HostHeader(Options const& options,
+                                std::string const& default_endpoint);
   ~CurlRestClient() override = default;
 
   CurlRestClient(CurlRestClient const&) = delete;

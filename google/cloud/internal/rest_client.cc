@@ -29,20 +29,6 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-std::string HostHeader(Options const& options,
-                       std::string const& default_endpoint) {
-  // If this function returns an empty string libcurl will fill out the `Host: `
-  // header based on the URL. In most cases this is the correct value. The main
-  // exception are applications using `VPC-SC`:
-  //     https://cloud.google.com/vpc/docs/configure-private-google-access
-  // In those cases the application would target an URL like
-  // `https://restricted.googleapis.com`, or `https://private.googleapis.com`,
-  // or their own proxy, and need to provide the target's service host.
-  auto const& endpoint = options.get<RestEndpointOption>();
-  if (absl::StrContains(endpoint, "googleapis.com"))
-    return absl::StrCat("Host: ", default_endpoint);
-  return {};
-}
 
 std::size_t constexpr kDefaultPooledCurlHandleFactorySize = 10;
 
@@ -68,6 +54,21 @@ Status MakeRequestWithPayload(
 }
 
 }  // namespace
+
+std::string CurlRestClient::HostHeader(Options const& options,
+                                       std::string const& default_endpoint) {
+  // If this function returns an empty string libcurl will fill out the `Host: `
+  // header based on the URL. In most cases this is the correct value. The main
+  // exception are applications using `VPC-SC`:
+  //     https://cloud.google.com/vpc/docs/configure-private-google-access
+  // In those cases the application would target an URL like
+  // `https://restricted.googleapis.com`, or `https://private.googleapis.com`,
+  // or their own proxy, and need to provide the target's service host.
+  auto const& endpoint = options.get<RestEndpointOption>();
+  if (absl::StrContains(endpoint, "googleapis.com"))
+    return absl::StrCat("Host: ", default_endpoint);
+  return {};
+}
 
 CurlRestClient::CurlRestClient(std::string endpoint_address,
                                std::shared_ptr<CurlHandleFactory> factory,

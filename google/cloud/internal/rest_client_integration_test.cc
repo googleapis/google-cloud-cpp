@@ -102,6 +102,20 @@ class RestClientIntegrationTest : public ::testing::Test {
     EXPECT_THAT(response_json.value(), Eq(parsed_payload));
   }
 
+  static StatusOr<std::unique_ptr<RestResponse>> RetryRestRequest(
+      std::function<StatusOr<std::unique_ptr<RestResponse>>()> const& request,
+      StatusCode expected_status = StatusCode::kOk) {
+    auto delay = std::chrono::seconds(1);
+    StatusOr<std::unique_ptr<RestResponse>> response;
+    for (auto i = 0; i != 3; ++i) {
+      response = request();
+      if (response.status().code() == expected_status) return response;
+      std::this_thread::sleep_for(delay);
+      delay *= 2;
+    }
+    return response;
+  }
+
   std::string json_payload_;
   std::string url_;
   Options options_;
@@ -112,7 +126,7 @@ TEST_F(RestClientIntegrationTest, Get) {
   auto client = GetDefaultRestClient(url_, {});
   RestRequest request;
   request.SetPath("get");
-  auto response_status = client->Get(request);
+  auto response_status = RetryRestRequest([&] { return client->Get(request); });
   EXPECT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
@@ -129,7 +143,8 @@ TEST_F(RestClientIntegrationTest, Delete) {
   RestRequest request;
   request.SetPath("delete");
   request.AddQueryParameter({"key", "value"});
-  auto response_status = client->Delete(request);
+  auto response_status =
+      RetryRestRequest([&] { return client->Delete(request); });
   EXPECT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
@@ -159,7 +174,8 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
   request.AddQueryParameter({"project_id", "foo-project"});
   absl::Span<char const> span = absl::MakeConstSpan(patch_json_payload);
   request.AddHeader("content-type", "application/json");
-  auto response_status = client->Patch(request, {span});
+  auto response_status =
+      RetryRestRequest([&] { return client->Patch(request, {span}); });
   EXPECT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
@@ -187,7 +203,8 @@ TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
   request.SetPath("anything");
 
   absl::Span<char const> span = absl::MakeConstSpan(json_payload_);
-  auto response_status = client->Post(request, {span});
+  auto response_status =
+      RetryRestRequest([&] { return client->Post(request, {span}); });
   EXPECT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
@@ -232,7 +249,8 @@ TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {
 
   absl::Span<char const> span = absl::MakeConstSpan(json_payload_);
   request.AddHeader("content-type", "application/json");
-  auto response_status = client->Post(request, {span});
+  auto response_status =
+      RetryRestRequest([&] { return client->Post(request, {span}); });
   VerifyJsonPayloadResponse("POST", json_payload_, std::move(response_status));
 }
 
@@ -244,7 +262,8 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
 
   absl::Span<char const> span = absl::MakeConstSpan(json_payload_);
   request.AddHeader("content-type", "application/json");
-  auto response_status = client->Put(request, {span});
+  auto response_status =
+      RetryRestRequest([&] { return client->Put(request, {span}); });
   VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
 }
 
@@ -255,16 +274,19 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeTwoSpans) {
   request.SetPath("anything");
 
   std::string payload1 = json_payload_.substr(0, json_payload_.size() / 4);
-  // Naive attempt to avoid the data pointers of payload1 and payload2 being
-  // contiguous.
   std::string gap = std::string(4096 * 4096, '/');
   std::string payload2 =
       json_payload_.substr(json_payload_.size() / 4, json_payload_.size());
-
-  absl::Span<char const> span1 = absl::MakeConstSpan(payload1);
-  absl::Span<char const> span2 = absl::MakeConstSpan(payload2);
+  // Ensure span1 and span2 are non-contiguous.
+  std::string concat = payload1 + gap + payload2;
+  absl::Span<char const> span1 =
+      absl::Span<char const>(concat.data(), payload1.size());
+  absl::Span<char const> span2 = absl::Span<char const>(
+      concat.data() + payload1.size() + gap.size(), payload2.size());
   request.AddHeader("content-type", "application/json");
-  auto response_status = client->Put(request, {span1, span2});
+  auto response_status = RetryRestRequest([&] {
+    return client->Put(request, {span1, span2});
+  });
   VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
 }
 
@@ -283,7 +305,9 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyMiddleSpan) {
   absl::Span<char const> empty_span = absl::MakeConstSpan(empty);
   absl::Span<char const> span2 = absl::MakeConstSpan(payload2);
   request.AddHeader("content-type", "application/json");
-  auto response_status = client->Put(request, {span1, empty_span, span2});
+  auto response_status = RetryRestRequest([&] {
+    return client->Put(request, {span1, empty_span, span2});
+  });
   VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
 }
 
@@ -302,7 +326,9 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyFirstSpan) {
   absl::Span<char const> empty_span = absl::MakeConstSpan(empty);
   absl::Span<char const> span2 = absl::MakeConstSpan(payload2);
   request.AddHeader("content-type", "application/json");
-  auto response_status = client->Put(request, {empty_span, span1, span2});
+  auto response_status = RetryRestRequest([&] {
+    return client->Put(request, {empty_span, span1, span2});
+  });
   VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
 }
 
@@ -313,12 +339,14 @@ TEST_F(RestClientIntegrationTest, ResponseBodyLargerThanSpillBuffer) {
   }
   auto large_json_payload = json.dump();
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  options_.set<ConnectionPoolSizeOption>(4);
   auto client = GetPooledRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
   request.AddHeader("content-type", "application/json");
-  auto response_status =
-      client->Put(request, {absl::MakeConstSpan(large_json_payload)});
+  auto response_status = RetryRestRequest([&] {
+    return client->Put(request, {absl::MakeConstSpan(large_json_payload)});
+  });
   VerifyJsonPayloadResponse("PUT", large_json_payload,
                             std::move(response_status));
 }
