@@ -14,6 +14,7 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
