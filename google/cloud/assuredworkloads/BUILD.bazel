@@ -34,6 +34,11 @@ cc_library(
         include = [HEADER_GLOB],
         exclude = [MOCK_HEADER_GLOB],
     ),
+    # TODO(#8198): Re-enable the macos build.
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//os:macos",
+    ],
     visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
