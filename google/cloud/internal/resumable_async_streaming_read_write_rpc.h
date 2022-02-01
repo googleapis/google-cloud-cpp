@@ -18,6 +18,9 @@
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/version.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/internal/async_sleeper.h"
+#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include <chrono>
 #include <memory>
 #include <thread>
@@ -72,13 +75,12 @@ using RequestUpdater = std::function<void(ResponseType const&, RequestType&)>;
 
 // TODO make latter 3 into interfaces
 // what will latter two interfaces contain?
-template <typename ResponseType, typename RequestType, typename RetryPolicy,
-          typename BackoffPolicy, typename Sleeper>
+template <typename ResponseType, typename RequestType>
 class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<RequestType, ResponseType> {
  public:
   ResumableAsyncStreamingReadWriteRpc(
       std::unique_ptr<RetryPolicy const> retry_policy,
-      std::unique_ptr<BackoffPolicy const> backoff_policy, Sleeper sleeper,
+      std::unique_ptr<BackoffPolicy const> backoff_policy, AsyncSleeper sleeper,
       AsyncStreamFactory<ResponseType, RequestType> stream_factory,
       RequestUpdater<ResponseType, RequestType> updater, RequestType request)
       : retry_policy_prototype_(std::move(retry_policy)),
@@ -96,19 +98,22 @@ class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<Re
 
   future<bool> Start() override {
     // TODO
-    return impl_->Start();
+    return impl_->Start().then([this](future<bool> start_fu) {
+      if (!start_fu.get()) {
+        return false;
+      }
+      this->pending_read_ = true;
+      this->ProcessRead();
+    });
   }
 
   future<StatusOr<Response>> Read() override {
     // currently working on
-    if (pending_read_) {
-      promise<StatusOr<Response>> p;
-      // use different status code
-      p.set_value(Status(StatusCode.kAlreadyExists, "Pending read operation already present."));
-      return p.get_future();
+    if (!pending_read_) {
+      pending_read_ = true;
+      ProcessRead();
     }
-    pending_read_ = true;
-    return std::async(ProcessRead, std::move(impl_->read()));
+    return read_future_;
   }
 
   future<bool> Write() override {
@@ -117,34 +122,34 @@ class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<Re
   }
 
  private:
-  StatusOr<Response> ProcessRead(future<absl::optional<Response>> fu) {
-    absl::optional<Response> optional_response = fu.get();
-    if (optional_response.has_value()) {
-      pending_read_ = false;
-      return StatusOr(optional_response.value());
-    }
-
-    auto const retry_policy = retry_policy_prototype_->clone();
-    auto const backoff_policy = backoff_policy_prototype_->clone();
-    // why does resumable_streaming_read_rpc.h use has_received_data here?
-    while (!retry_policy->IsExhausted()) {
-      sleeper_(backoff_policy->OnCompletion());
-      has_received_data_ = false;
-      // lock this, so calls to Write aren't corrupted?
-      impl_ = stream_factory_(request_);
-      auto fu_response = impl_->Read();
-      optional_response = fu.get();
+  void ProcessRead() {
+    read_future_ = impl_->Read().then([this](future<absl::optional<Response>> read_fu) {
+      absl::optional<Response> optional_response = read_fu.get();
       if (optional_response.has_value()) {
-        ResponseType response = optional_response.value();
-        updater_(response, request_);
-        has_received_data_ = true;
-        pending_read_ = false;
-        return response;
+        this->pending_read_ = false;
+        return StatusOr(optional_response.value());
       }
-    }
-    // how to get more specific status from absl::optional?
-    pending_read_ = false;
-    return StatusOr();
+
+      auto const retry_policy = this->retry_policy_prototype_->clone();
+      auto const backoff_policy = this->backoff_policy_prototype_->clone();
+      // why does resumable_streaming_read_rpc.h use has_received_data here?
+      while (!retry_policy->IsExhausted()) {
+        this->sleeper_(backoff_policy->OnCompletion()).sleep.get();
+        // lock this, so calls to Write aren't corrupted?
+        this->impl_ = stream_factory_(request_);
+        auto fu_response = this->impl_->Read();
+        optional_response = fu.get();
+        if (optional_response.has_value()) {
+          ResponseType response = optional_response.value();
+          this->updater_(response, request_);
+          this->pending_read_ = false;
+          return response;
+        }
+      }
+      // how to get more specific status from absl::optional?
+      this->pending_read_ = false;
+      return StatusOr();
+    });
   }
 
 //  StreamingRpcMetadata GetRequestMetadata() const override {
@@ -154,11 +159,13 @@ class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<Re
  private:
   std::unique_ptr<RetryPolicy const> const retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> const backoff_policy_prototype_;
-  Sleeper sleeper_;
+  AsyncSleeper sleeper_;
   StreamFactory<ResponseType, RequestType> const stream_factory_;
   RequestUpdater<ResponseType, RequestType> const updater_;
   RequestType request_;
   std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>> impl_;
+  future<StatusOr<Response>> read_future_;
+  std::mutex mu_;
   bool has_received_data_ = false;
   bool pending_read_ = false;
   bool pending_write_ = false;
