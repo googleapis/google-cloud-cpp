@@ -391,6 +391,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-iap",
+    deps = [
+        "//google/cloud/iap:google_cloud_cpp_iap",
+    ],
+)
+
+cc_library(
+    name = "experimental-iap_mocks",
+    deps = [
+        "//google/cloud/iap:google_cloud_cpp_iap_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-ids",
     deps = [
         "//google/cloud/ids:google_cloud_cpp_ids",

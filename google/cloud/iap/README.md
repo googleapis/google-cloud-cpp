@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Identity-Aware Proxy API][cloud-service-docs], a service to Controls access to cloud applications running on Google Cloud Platform.
+[Cloud Identity-Aware Proxy API][cloud-service-docs], a service to control
+access to applications running on Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,7 +39,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/iap/ EDIT HERE .h"
+#include "google/cloud/iap/identity_aware_proxy_o_auth_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,13 +51,15 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace iap = ::google::cloud::iap;
-  auto client = iap::Client(iap::MakeConnection(/* EDIT HERE */));
+  auto client = iap::IdentityAwareProxyOAuthServiceClient(
+      iap::MakeIdentityAwareProxyOAuthServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  google::cloud::iap::v1::ListBrandsRequest request;
+  request.set_parent(google::cloud::Project(argv[1]).FullName());
+  // ListBrands is not paginated, a single response includes all the "brands".
+  auto response = client.ListBrands(request);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

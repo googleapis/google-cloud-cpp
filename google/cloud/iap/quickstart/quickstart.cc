@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/iap/ EDIT HERE .h"
+#include "google/cloud/iap/identity_aware_proxy_o_auth_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,13 +24,15 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace iap = ::google::cloud::iap;
-  auto client = iap::Client(iap::MakeConnection(/* EDIT HERE */));
+  auto client = iap::IdentityAwareProxyOAuthServiceClient(
+      iap::MakeIdentityAwareProxyOAuthServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  google::cloud::iap::v1::ListBrandsRequest request;
+  request.set_parent(google::cloud::Project(argv[1]).FullName());
+  // ListBrands is not paginated, a single response includes all the "brands".
+  auto response = client.ListBrands(request);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

@@ -2,8 +2,8 @@
 
 @mainpage Cloud Identity-Aware Proxy API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Identity-Aware Proxy API][cloud-service-docs], a service
-to Controls access to cloud applications running on Google Cloud Platform.
+An idiomatic C++ client library for the [Cloud Identity-Aware Proxy API][cloud-service-docs],
+a service to control access to applications running on Google Cloud Platform.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
