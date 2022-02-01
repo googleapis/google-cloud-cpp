@@ -1223,12 +1223,13 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
 }
 
 TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
-  auto cancelled = false;
+  promise<bool> cancelled;
   promise<StatusOr<google::test::admin::database::v1::Database>> p(
-      [&p, &cancelled] {
-        cancelled = true;
-        p.set_value(Status(StatusCode::kDeadlineExceeded, "try again"));
-      });
+      [&cancelled] { cancelled.set_value(true); });
+  auto cancel_completed = cancelled.get_future().then([&](future<bool> f) {
+    p.set_value(Status(StatusCode::kDeadlineExceeded, "try again"));
+    return f.get();
+  });
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
@@ -1243,9 +1244,9 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::timeout,
             fut.wait_for(std::chrono::milliseconds(10)));
-  EXPECT_FALSE(cancelled);
+  EXPECT_FALSE(cancel_completed.is_ready());
   fut.cancel();
-  EXPECT_TRUE(cancelled);
+  EXPECT_TRUE(cancel_completed.get());
   auto db = fut.get();
   ASSERT_THAT(db, StatusIs(StatusCode::kDeadlineExceeded,
                            AllOf(HasSubstr("Retry loop cancelled"),
@@ -1305,10 +1306,11 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
 }
 
 TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
-  auto cancelled = false;
-  promise<Status> p([&p, &cancelled] {
-    cancelled = true;
+  promise<bool> cancelled;
+  promise<Status> p([&cancelled] { cancelled.set_value(true); });
+  auto cancel_completed = cancelled.get_future().then([&](future<bool> f) {
     p.set_value(Status(StatusCode::kDeadlineExceeded, "try again"));
+    return f.get();
   });
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
@@ -1331,9 +1333,9 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   auto fut = conn->AsyncDropDatabase(request);
   ASSERT_EQ(std::future_status::timeout,
             fut.wait_for(std::chrono::milliseconds(10)));
-  EXPECT_FALSE(cancelled);
+  EXPECT_FALSE(cancel_completed.is_ready());
   fut.cancel();
-  EXPECT_TRUE(cancelled);
+  EXPECT_TRUE(cancel_completed.get());
   auto status = fut.get();
   ASSERT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
                                AllOf(HasSubstr("Error in non-idempotent"),
