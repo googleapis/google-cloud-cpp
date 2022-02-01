@@ -165,7 +165,7 @@ cc_library(
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
     copts = select({
-        "@bazel_tools//src/conditions:windows":  [
+        "@bazel_tools//src/conditions:windows": [
             "/DWIN32_LEAN_AND_MEAN",
         ],
         "//conditions:default": [],
