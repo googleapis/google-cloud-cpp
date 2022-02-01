@@ -227,6 +227,7 @@ releasing them early in case they elicit some feedback that requires changes.
 * [Container Analysis](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/containeranalysis/README.md)
 * [Database Migration Service (DMS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datamigration/README.md)
 * [Eventarc](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/eventarc/README.md)
+* [Filestore](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/filestore/README.md)
 * [Game Servers](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gameservices/README.md)
 * [Google Kubernetes Engine (GKE)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/container/README.md)
 * [Memorystore for Memcached](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/memcache/README.md)

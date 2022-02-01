@@ -94,6 +94,10 @@
 ./include/google/cloud/eventarc/publishing
 ./include/google/cloud/eventarc/publishing/v1
 ./include/google/cloud/eventarc/v1
+./include/google/cloud/filestore
+./include/google/cloud/filestore/internal
+./include/google/cloud/filestore/mocks
+./include/google/cloud/filestore/v1
 ./include/google/cloud/functions
 ./include/google/cloud/functions/internal
 ./include/google/cloud/functions/mocks
@@ -342,6 +346,7 @@
 ./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_dlp
 ./lib64/cmake/google_cloud_cpp_eventarc
+./lib64/cmake/google_cloud_cpp_filestore
 ./lib64/cmake/google_cloud_cpp_functions
 ./lib64/cmake/google_cloud_cpp_gameservices
 ./lib64/cmake/google_cloud_cpp_gkehub
