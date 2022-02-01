@@ -16,11 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RESUMABLE_ASYNC_STREAMING_READ_WRITE_RPC_H
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/version.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_sleeper.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/backoff_policy.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
 #include <thread>
@@ -31,52 +31,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * `ResumableAsyncStreamingReadWriteRpc<ResponseType, RequestType>` uses callables
- * compatible with this `std::function<>` to create new streams.
+ * `ResumableAsyncStreamingReadWriteRpc<ResponseType, RequestType>` uses
+ * callables compatible with this `std::function<>` to create new streams.
  */
 template <typename ResponseType, typename RequestType>
-using AsyncStreamFactory =
-    std::function<std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>()>;
+using AsyncStreamFactory = std::function<std::unique_ptr<
+    AsyncStreamingReadWriteRpc<RequestType, ResponseType>>(RequestType)>;
 
 /**
- * `ResumableAsyncStreamingReadWriteRpc<ResponseType, RequestType>` uses callables
- * compatible with this `std::function<>` to update the request object after
- * each response. This is how users of the class can update the resume token or
- * any other parameters needed to restart a stream from the last received
- * message.
+ * `ResumableAsyncStreamingReadWriteRpc<ResponseType, RequestType>` uses
+ * callables compatible with this `std::function<>` to update the request object
+ * after each response. This is how users of the class can update the resume
+ * token or any other parameters needed to restart a stream from the last
+ * received message.
  */
 template <typename ResponseType, typename RequestType>
 using RequestUpdater = std::function<void(ResponseType const&, RequestType&)>;
 
-/**
- * A StreamingReadRpc that resumes on transient failures.
- *
- * This class implements the "resume loop", an analog to `RetryLoop()` for
- * streaming read RPCs.
- *
- * Often streaming read RPCs are used to implement "downloads", or large reads
- * over potentially unbounded amounts of data. Many services provide a mechanism
- * to "resume" these streaming RPCs if the operation is interrupted in the
- * middle. That is, the service may be able to restart the streaming RPC from
- * the item following the last received entry. This is useful because one may
- * not want to perform one half of a large download (think TiBs of data) more
- * than once.
- *
- * When the service provides such a "resume" mechanism it is typically
- * implemented as string or byte token returned in each response. Sending the
- * last received token in the "resume" request signals that the operation should
- * skip the data received before the token.
- *
- * When implementing the resume loop it is important to reset any retry policies
- * after any progress is made. The retry policy is interpreted as the limit on
- * the time or number of attempts to *start* a streaming RPC, not a limit on the
- * total time for the streaming RPC.
- */
+// Questions
+// are locks required because the user can spin up multiple threads to handle Read and Write in parallel?
+// where to start for implementing resumable/retry logic for Write since the future only receives a boolean? If it returns true, do we resume?
+// Will the request passed to the constructor be for read, and Write will attain its requests just through its arguments?
+// How will AsyncStreamFactory work for Read and Write?
+// Do I need two different streams, one for Read and one for Write?
+// https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/internal/async_read_write_stream_auth.h uses grpc::ClientContext instead?
 
-// TODO make latter 3 into interfaces
-// what will latter two interfaces contain?
 template <typename ResponseType, typename RequestType>
-class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<RequestType, ResponseType> {
+class ResumableAsyncStreamingReadWriteRpc
+    : public AsyncStreamingReadWriteRpc<RequestType, ResponseType> {
  public:
   ResumableAsyncStreamingReadWriteRpc(
       std::unique_ptr<RetryPolicy const> retry_policy,
@@ -92,71 +74,66 @@ class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<Re
         impl_(stream_factory_()) {}
 
   ResumableAsyncStreamingReadWriteRpc(ResumableStreamingReadRpc&&) = delete;
-  ResumableAsyncStreamingReadWriteRpc& operator=(ResumableStreamingReadRpc&&) = delete;
+  ResumableAsyncStreamingReadWriteRpc& operator=(ResumableStreamingReadRpc&&) =
+      delete;
 
   void Cancel() override { impl_->Cancel(); }
 
   future<bool> Start() override {
-    // TODO
     return impl_->Start().then([this](future<bool> start_fu) {
       if (!start_fu.get()) {
         return false;
       }
-      this->pending_read_ = true;
       this->ProcessRead();
     });
   }
 
   future<StatusOr<Response>> Read() override {
-    // currently working on
-    if (!pending_read_) {
-      pending_read_ = true;
+    std::lock_guard<std::mutex> g{mu_};
+    if (!read_future_.has_value()) {
       ProcessRead();
     }
-    return read_future_;
+    auto fu = read_future_.value();
+    read_future_ = absl::optional();
+    return fu;
   }
 
-  future<bool> Write() override {
-    // TODO
-    return future<bool>();
+  future<bool> Write(Request const& r, grpc::WriteOptions o) override {
+    std::lock_guard<std::mutex> g{mu_};
+    return impl_->Write(r, std::move(o));
+  }
+
+  future<bool> WritesDone() override {
+    std::lock_guard<std::mutex> g{mu_};
+    return impl_->WritesDone();
   }
 
  private:
   void ProcessRead() {
-    read_future_ = impl_->Read().then([this](future<absl::optional<Response>> read_fu) {
-      absl::optional<Response> optional_response = read_fu.get();
-      if (optional_response.has_value()) {
-        this->pending_read_ = false;
-        return StatusOr(optional_response.value());
-      }
+    read_future_ = make_optional(
+        impl_->Read().then([this](future<absl::optional<Response>> read_fu) {
+          absl::optional<Response> optional_response = read_fu.get();
+          if (optional_response.has_value()) {
+            return StatusOr(optional_response.value());
+          }
 
-      auto const retry_policy = this->retry_policy_prototype_->clone();
-      auto const backoff_policy = this->backoff_policy_prototype_->clone();
-      // why does resumable_streaming_read_rpc.h use has_received_data here?
-      while (!retry_policy->IsExhausted()) {
-        this->sleeper_(backoff_policy->OnCompletion()).sleep.get();
-        // lock this, so calls to Write aren't corrupted?
-        this->impl_ = stream_factory_(request_);
-        auto fu_response = this->impl_->Read();
-        optional_response = fu.get();
-        if (optional_response.has_value()) {
-          ResponseType response = optional_response.value();
-          this->updater_(response, request_);
-          this->pending_read_ = false;
-          return response;
-        }
-      }
-      // how to get more specific status from absl::optional?
-      this->pending_read_ = false;
-      return StatusOr();
-    });
+          auto const retry_policy = this->retry_policy_prototype_->clone();
+          auto const backoff_policy = this->backoff_policy_prototype_->clone();
+          while (!retry_policy->IsExhausted()) {
+            this->sleeper_(backoff_policy->OnCompletion()).sleep.get();
+            this->impl_ = stream_factory_(request_);
+            auto fu_response = this->impl_->Read();
+            optional_response = fu.get();
+            if (optional_response.has_value()) {
+              ResponseType response = optional_response.value();
+              this->updater_(response, request_);
+              return response;
+            }
+          }
+          return StatusOr();
+        }));
   }
 
-//  StreamingRpcMetadata GetRequestMetadata() const override {
-//    return impl_ ? impl_->GetRequestMetadata() : StreamingRpcMetadata{};
-//  }
-
- private:
   std::unique_ptr<RetryPolicy const> const retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> const backoff_policy_prototype_;
   AsyncSleeper sleeper_;
@@ -164,42 +141,23 @@ class ResumableAsyncStreamingReadWriteRpc : public AsyncStreamingReadWriteRpc<Re
   RequestUpdater<ResponseType, RequestType> const updater_;
   RequestType request_;
   std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>> impl_;
-  future<StatusOr<Response>> read_future_;
+  absl::optional<future<StatusOr<Response>>> read_future_;
   std::mutex mu_;
-  bool has_received_data_ = false;
-  bool pending_read_ = false;
-  bool pending_write_ = false;
 };
 
-// TODO refactor for current class
 /// A helper to apply type deduction.
-template <typename ResponseType, typename RequestType, typename RetryPolicy,
-          typename BackoffPolicy, typename Sleeper>
-std::shared_ptr<StreamingReadRpc<ResponseType>> MakeResumableStreamingReadRpc(
+template <typename ResponseType, typename RequestType>
+std::shared_ptr<StreamingReadRpc<ResponseType>>
+MakeAsyncResumableStreamingReadWriteRpc(
     std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy, Sleeper&& sleeper,
-    StreamFactory<ResponseType, RequestType> stream_factory,
+    std::unique_ptr<BackoffPolicy> backoff_policy, AsyncSleeper&& sleeper,
+    AsyncStreamFactory<ResponseType, RequestType> stream_factory,
     RequestUpdater<ResponseType, RequestType> updater, RequestType request) {
-  return std::make_shared<
-      ResumableStreamingReadRpc<ResponseType, RequestType, RetryPolicy,
-                                BackoffPolicy, absl::decay_t<Sleeper>>>(
+  return std::make_shared<ResumableStreamingReadRpc<ResponseType, RequestType>>(
       std::move(retry_policy), std::move(backoff_policy),
-      std::forward<Sleeper>(sleeper), std::move(stream_factory),
+      std::forward<AsyncSleeper>(sleeper), std::move(stream_factory),
       std::move(updater), std::forward<RequestType>(request));
 }
-
-/// A helper to apply type deduction, with the default sleeping strategy.
-template <typename ResponseType, typename RequestType, typename RetryPolicy,
-          typename BackoffPolicy>
-std::shared_ptr<StreamingReadRpc<ResponseType>> MakeResumableStreamingReadRpc(
-    std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    StreamFactory<ResponseType, RequestType> stream_factory,
-    RequestUpdater<ResponseType, RequestType> updater, RequestType request) {
-  return MakeResumableStreamingReadRpc(
-      std::move(retry_policy), std::move(backoff_policy),
-      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); },
-      std::move(stream_factory), std::move(updater), std::move(request));
 }
 
 }  // namespace internal
