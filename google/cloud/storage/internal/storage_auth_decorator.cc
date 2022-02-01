@@ -38,6 +38,14 @@ StatusOr<google::storage::v2::Bucket> StorageAuth::GetBucket(
   return child_->GetBucket(context, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageAuth::ComposeObject(
+    grpc::ClientContext& context,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ComposeObject(context, request);
+}
+
 Status StorageAuth::DeleteObject(
     grpc::ClientContext& context,
     google::storage::v2::DeleteObjectRequest const& request) {
