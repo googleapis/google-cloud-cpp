@@ -456,11 +456,22 @@ $client_class_name$::Async$method_name$(Options options) {
              "  internal::CheckExpectedOptions<$service_name$"
              "BackoffPolicyOption>(options, __func__);\n"
              "  internal::OptionsSpan span(internal::MergeOptions("
-             "std::move(options), options_));\n"
+             "std::move(options), options_));\n"},
+            {"  "},
+            {ProtoNameToCppName(
+                get_iam_policy_extension_->input_type()->full_name())},
+            {" get_request;\n"},
+            {"  get_request.set_resource(resource);\n"},
+            {"  "},
+            {ProtoNameToCppName(
+                set_iam_policy_extension_->input_type()->full_name())},
+            {" set_request;\n"
+             "  set_request.set_resource(resource);\n"
              "  auto backoff_policy = internal::CurrentOptions()"
              ".get<$service_name$BackoffPolicyOption>()->clone();\n"
-             "  for (;;) {\n"},
-            {"    auto recent = " + get_method_name + "(resource);\n"},
+             "  for (;;) {\n"
+             "    auto recent = connection_->"},
+            {get_method_name + "(get_request);\n"},
             {"    if (!recent) {\n"
              "      return recent.status();\n"
              "    }\n"
@@ -468,9 +479,10 @@ $client_class_name$::Async$method_name$(Options options) {
              "    if (!policy) {\n"
              "      return Status(StatusCode::kCancelled,"
              " \"updater did not yield a policy\");\n"
-             "    }\n"},
-            {"    auto result = " + set_method_name +
-             "(resource, *std::move(policy));\n"},
+             "    }\n"
+             "    *set_request.mutable_policy() = *std::move(policy);\n"
+             "    auto result = connection_->"},
+            {set_method_name + "(set_request);\n"},
             {"    if (result || result.status().code() != StatusCode::kAborted)"
              " {\n"
              "      return result;\n"

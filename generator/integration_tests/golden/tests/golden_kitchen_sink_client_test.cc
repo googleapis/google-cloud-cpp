@@ -222,7 +222,13 @@ TEST(GoldenKitchenSinkClientTest, ListLogs) {
 
 TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, options).WillRepeatedly([] {
+    return Options{}
+        .set<GrpcTracingOptionsOption>(
+            TracingOptions().SetOptions("truncate_string_field_longer_than=64"))
+        .set<EndpointOption>("override-me")
+        .set<UserAgentProductsOption>({"override-me"});
+  });
 
   std::vector<std::string> expected_resource_names = {"projects/my-project"};
   EXPECT_CALL(*mock, TailLogEntries)
@@ -231,6 +237,16 @@ TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
           [expected_resource_names](
               ::google::test::admin::database::v1::TailLogEntriesRequest const&
                   request) {
+            auto const& current = internal::CurrentOptions();
+            EXPECT_TRUE(current.has<EndpointOption>());
+            EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
+            EXPECT_TRUE(current.has<UserAgentProductsOption>());
+            EXPECT_EQ(current.get<EndpointOption>(), "test-endpoint");
+            EXPECT_EQ(current.get<GrpcTracingOptionsOption>()
+                          .truncate_string_field_longer_than(),
+                      64);
+            EXPECT_THAT(current.get<UserAgentProductsOption>(),
+                        Contains("test-only/1.0"));
             EXPECT_THAT(request.resource_names(),
                         ElementsAreArray(expected_resource_names));
             return google::cloud::internal::MakeStreamRange<
@@ -240,15 +256,19 @@ TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
                   return Status(StatusCode::kPermissionDenied, "uh-oh");
                 });
           });
-  GoldenKitchenSinkClient client(std::move(mock));
-  auto range = client.TailLogEntries(expected_resource_names);
+  GoldenKitchenSinkClient client(
+      std::move(mock), Options{}
+                           .set<EndpointOption>("test-endpoint")
+                           .set<UserAgentProductsOption>({"override-me-too"}));
+  auto options = Options{}.set<UserAgentProductsOption>({"test-only/1.0"});
+  auto range = client.TailLogEntries(expected_resource_names, options);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
   ::google::test::admin::database::v1::TailLogEntriesRequest request;
   *request.mutable_resource_names() = {expected_resource_names.begin(),
                                        expected_resource_names.end()};
-  range = client.TailLogEntries(request);
+  range = client.TailLogEntries(request, options);
   begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
@@ -291,14 +311,19 @@ TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
 TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
   auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return Options{}.set<GrpcTracingOptionsOption>(
-        TracingOptions().SetOptions("truncate_string_field_longer_than=64"));
+    return Options{}
+        .set<GrpcTracingOptionsOption>(
+            TracingOptions().SetOptions("truncate_string_field_longer_than=64"))
+        .set<EndpointOption>("override-me")
+        .set<UserAgentProductsOption>({"override-me"});
   });
 
   EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([] {
     auto const& current = internal::CurrentOptions();
+    EXPECT_TRUE(current.has<EndpointOption>());
     EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
     EXPECT_TRUE(current.has<UserAgentProductsOption>());
+    EXPECT_EQ(current.get<EndpointOption>(), "test-endpoint");
     EXPECT_EQ(current.get<GrpcTracingOptionsOption>()
                   .truncate_string_field_longer_than(),
               64);
@@ -328,7 +353,10 @@ TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
     });
     return stream;
   });
-  GoldenKitchenSinkClient client(std::move(mock));
+  GoldenKitchenSinkClient client(
+      std::move(mock), Options{}
+                           .set<EndpointOption>("test-endpoint")
+                           .set<UserAgentProductsOption>({"override-me-too"}));
   auto stream = client.AsyncAppendRows(
       Options{}.set<UserAgentProductsOption>({"test-only/1.0"}));
   ASSERT_TRUE(stream->Start().get());

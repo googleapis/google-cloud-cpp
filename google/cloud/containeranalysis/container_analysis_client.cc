@@ -53,11 +53,15 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
       options, __func__);
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(options), options_));
+  google::iam::v1::GetIamPolicyRequest get_request;
+  get_request.set_resource(resource);
+  google::iam::v1::SetIamPolicyRequest set_request;
+  set_request.set_resource(resource);
   auto backoff_policy = internal::CurrentOptions()
                             .get<ContainerAnalysisBackoffPolicyOption>()
                             ->clone();
   for (;;) {
-    auto recent = GetIamPolicy(resource);
+    auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
       return recent.status();
     }
@@ -65,7 +69,8 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
     if (!policy) {
       return Status(StatusCode::kCancelled, "updater did not yield a policy");
     }
-    auto result = SetIamPolicy(resource, *std::move(policy));
+    *set_request.mutable_policy() = *std::move(policy);
+    auto result = connection_->SetIamPolicy(set_request);
     if (result || result.status().code() != StatusCode::kAborted) {
       return result;
     }
