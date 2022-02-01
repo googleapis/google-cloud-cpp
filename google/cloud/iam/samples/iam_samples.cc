@@ -208,12 +208,9 @@ std::string CreateServiceAccountKey(std::vector<std::string> const& argv) {
             TYPE_GOOGLE_CREDENTIALS_FILE,
         google::iam::admin::v1::ServiceAccountKeyAlgorithm::KEY_ALG_RSA_2048);
     if (!response) throw std::runtime_error(response.status().message());
-    // The private_key_data field in the response contains the 
-    // service account key in JSON format.
-    // TODO(Developer): Save the key to a secure location.
-    // You cannot download it later.
     std::cout << "ServiceAccountKey successfully created: "
-              << response->DebugString() << "\n";
+                << response->DebugString() << "\n";
+                <<  "Please save the key in a secure location, as they cannot be downloaded later\n";
     return response->name();
   }
   //! [END iam_create_key] [iam-create-service-account-key]
