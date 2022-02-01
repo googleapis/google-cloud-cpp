@@ -207,6 +207,62 @@ google::storage::v2::PredefinedObjectAcl GrpcObjectRequestParser::ToProtoObject(
   return ToProtoObjectAcl(acl.value());
 }
 
+StatusOr<google::storage::v2::ComposeObjectRequest>
+GrpcObjectRequestParser::ToProto(ComposeObjectRequest const& request) {
+  google::storage::v2::ComposeObjectRequest result;
+  auto status = SetCommonObjectParameters(result, request);
+  if (!status.ok()) return status;
+  SetCommonParameters(result, request);
+
+  auto& destination = *result.mutable_destination();
+  destination.set_bucket("projects/_/buckets/" + request.bucket_name());
+  destination.set_name(request.object_name());
+  if (request.HasOption<WithObjectMetadata>()) {
+    auto metadata = request.GetOption<WithObjectMetadata>().value();
+    for (auto const& a : metadata.acl()) {
+      *destination.add_acl() = GrpcObjectAccessControlParser::ToProto(a);
+    }
+    for (auto const& kv : metadata.metadata()) {
+      (*destination.mutable_metadata())[kv.first] = kv.second;
+    }
+    destination.set_content_encoding(metadata.content_encoding());
+    destination.set_content_disposition(metadata.content_disposition());
+    destination.set_cache_control(metadata.cache_control());
+    destination.set_content_language(metadata.content_language());
+    destination.set_content_type(metadata.content_type());
+    destination.set_temporary_hold(metadata.temporary_hold());
+    destination.set_event_based_hold(metadata.event_based_hold());
+    if (metadata.has_custom_time()) {
+      *destination.mutable_custom_time() =
+          google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
+    }
+  }
+  for (auto const& s : request.source_objects()) {
+    google::storage::v2::ComposeObjectRequest::SourceObject source;
+    source.set_name(s.object_name);
+    source.set_generation(s.generation.value_or(0));
+    if (s.if_generation_match.has_value()) {
+      source.mutable_object_preconditions()->set_if_generation_match(
+          *s.if_generation_match);
+    }
+    *result.add_source_objects() = std::move(source);
+  }
+  if (request.HasOption<DestinationPredefinedAcl>()) {
+    result.set_destination_predefined_acl(
+        ToProtoObject(request.GetOption<DestinationPredefinedAcl>()));
+  }
+  if (request.HasOption<IfGenerationMatch>()) {
+    result.set_if_generation_match(
+        request.GetOption<IfGenerationMatch>().value());
+  }
+  if (request.HasOption<IfMetagenerationMatch>()) {
+    result.set_if_metageneration_match(
+        request.GetOption<IfMetagenerationMatch>().value());
+  }
+  result.set_kms_key(request.GetOption<KmsKeyName>().value_or(""));
+  return result;
+}
+
 google::storage::v2::DeleteObjectRequest GrpcObjectRequestParser::ToProto(
     DeleteObjectRequest const& request) {
   google::storage::v2::DeleteObjectRequest result;
