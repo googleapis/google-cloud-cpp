@@ -1226,7 +1226,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   promise<bool> cancelled;
   promise<StatusOr<google::test::admin::database::v1::Database>> p(
       [&cancelled] { cancelled.set_value(true); });
-  auto cancel_completed = cancelled.get_future().then([&](future<bool> f) {
+  auto cancel_completed = cancelled.get_future().then([&p](future<bool> f) {
     p.set_value(Status(StatusCode::kDeadlineExceeded, "try again"));
     return f.get();
   });
@@ -1234,8 +1234,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .WillOnce(
-          [&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-              ::google::test::admin::database::v1::GetDatabaseRequest const&) {
+          [&p](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+               ::google::test::admin::database::v1::GetDatabaseRequest const&) {
             return p.get_future();
           });
 
@@ -1308,7 +1308,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
 TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   promise<bool> cancelled;
   promise<Status> p([&cancelled] { cancelled.set_value(true); });
-  auto cancel_completed = cancelled.get_future().then([&](future<bool> f) {
+  auto cancel_completed = cancelled.get_future().then([&p](future<bool> f) {
     p.set_value(Status(StatusCode::kDeadlineExceeded, "try again"));
     return f.get();
   });
