@@ -371,6 +371,14 @@ service {
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
 }
 
+# Managed Microsoft Active Directory (Managed Microsoft AD or Managed Identities)
+service {
+  service_proto_path: "google/cloud/managedidentities/v1/managed_identities_service.proto"
+  product_path: "google/cloud/managedidentities"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Memcache
 service {
   service_proto_path: "google/cloud/memcache/v1/cloud_memcache.proto"
