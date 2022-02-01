@@ -211,6 +211,7 @@ releasing them early in case they elicit some feedback that requires changes.
 * [Cloud Composer](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/composer/README.md)
 * [Cloud Data Loss Prevention (DLP)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dlp/README.md)
 * [Cloud Debugger](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/debugger/README.md)
+* [Filestore](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/filestore/README.md)
 * [Cloud Functions](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/functions/README.md)
 * [Cloud Intrusion Detection System (IDS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/ids/README.md)
 * [Cloud IoT](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iot/README.md)
