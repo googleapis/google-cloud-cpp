@@ -133,6 +133,10 @@
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
+./include/google/cloud/managedidentities
+./include/google/cloud/managedidentities/internal
+./include/google/cloud/managedidentities/mocks
+./include/google/cloud/managedidentities/v1
 ./include/google/cloud/memcache
 ./include/google/cloud/memcache/internal
 ./include/google/cloud/memcache/mocks
@@ -360,6 +364,7 @@
 ./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms
 ./lib64/cmake/google_cloud_cpp_logging
+./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_monitoring
 ./lib64/cmake/google_cloud_cpp_networkmanagement
