@@ -164,9 +164,17 @@ cc_library(
     name = "google_cloud_cpp_rest_internal",
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
+    copts = select({
+        "@bazel_tools//src/conditions:windows":  [
+            "/DWIN32_LEAN_AND_MEAN",
+        ],
+        "//conditions:default": [],
+    }),
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_common",
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/functional:function_ref",
