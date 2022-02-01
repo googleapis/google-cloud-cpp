@@ -8,6 +8,7 @@ extend-exclude = [
     "google/cloud/gameservices/game_server_deployments_client.h",
     "google/cloud/storagetransfer/storage_transfer_client.h",
     "google/cloud/monitoring/uptime_check_client.h",
+    "google/cloud/managedidentities/managed_identities_client.h",
     # Files with crypto-keys in them
     "google/cloud/internal/grpc_service_account_authentication_test.cc",
     "google/cloud/storage/client_options_test.cc",
