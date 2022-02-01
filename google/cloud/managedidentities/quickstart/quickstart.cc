@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/managedidentities/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/managedidentities/managed_identities_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -24,13 +23,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace managedidentities = ::google::cloud::managedidentities;
-  auto client = managedidentities::Client(
-      managedidentities::MakeConnection(/* EDIT HERE */));
+  auto client = managedidentities::ManagedIdentitiesServiceClient(
+      managedidentities::MakeManagedIdentitiesServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto d : client.ListDomains(parent)) {
+    if (!d) throw std::runtime_error(d.status().message());
+    std::cout << d->DebugString() << "\n";
   }
 
   return 0;

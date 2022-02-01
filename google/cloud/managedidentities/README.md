@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Managed Service for Microsoft Active Directory API][cloud-service-docs], a service to The Managed Service for Microsoft Active Directory API is used for managing a highly available, hardened service running Microsoft Active Directory (AD).
+[Managed Service for Microsoft Active Directory API][cloud-service-docs],
+a service to manage highly available, hardened Microsoft Active Directory
+domains hosted by Google Cloud.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/managedidentities
+[cloud-service-docs]: https://cloud.google.com/managed-microsoft-ad
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-managedidentities/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/managedidentities
 
@@ -38,8 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/managedidentities/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/managedidentities/managed_identities_client.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -50,13 +51,13 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace managedidentities = ::google::cloud::managedidentities;
-  auto client = managedidentities::Client(
-      managedidentities::MakeConnection(/* EDIT HERE */));
+  auto client = managedidentities::ManagedIdentitiesServiceClient(
+      managedidentities::MakeManagedIdentitiesServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto d : client.ListDomains(parent)) {
+    if (!d) throw std::runtime_error(d.status().message());
+    std::cout << d->DebugString() << "\n";
   }
 
   return 0;

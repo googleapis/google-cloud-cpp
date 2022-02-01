@@ -2,8 +2,10 @@
 
 @mainpage Managed Service for Microsoft Active Directory API C++ Client Library
 
-An idiomatic C++ client library for the [Managed Service for Microsoft Active Directory API][cloud-service-docs], a service
-to The Managed Service for Microsoft Active Directory API is used for managing a highly available, hardened service running Microsoft Active Directory (AD).
+An idiomatic C++ client library for the
+[Managed Service for Microsoft Active Directory API][cloud-service-docs],
+a service to manage highly available, hardened Microsoft Active Directory
+domains hosted by Google Cloud.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +83,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/managedidentities
+[cloud-service-docs]: https://cloud.google.com/managed-microsoft-ad
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
