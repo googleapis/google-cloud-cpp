@@ -56,18 +56,6 @@ if (Test-Path env:TEMP) {
 }
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Using ${download_dir} as download directory"
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-Get-CimInstance -Class CIM_LogicalDisk | `
-    Select-Object -Property DeviceID, DriveType, VolumeName, `
-        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bazel Root (${bazel_root}) size"
-Get-Item -ErrorAction SilentlyContinue "${bazel_root}"  | `
-    Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
-    Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
-    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
-
 $build_flags = @(
     "--keep_going",
     "--per_file_copt=^//google/cloud@-W3",
@@ -226,17 +214,5 @@ if (Integration-Tests-Enabled) {
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazelisk $common_flags shutdown
 bazelisk shutdown
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
-Get-CimInstance -Class CIM_LogicalDisk | `
-    Select-Object -Property DeviceID, DriveType, VolumeName, `
-        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
-        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
-
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bazel Root (${bazel_root}) size"
-Get-Item -ErrorAction SilentlyContinue "${bazel_root}"  | `
-    Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
-    Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
-    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
