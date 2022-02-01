@@ -197,6 +197,17 @@ class InstanceAdmin {
   /// The project id, i.e., `project_name()` without the `projects/` prefix.
   std::string const& project_id() const { return project_id_; }
 
+  /**
+   * Returns an InstanceAdmin that reuses the connection and configuration of
+   * this InstanceAdmin, but with a different resource name.
+   */
+  InstanceAdmin WithNewTarget(std::string project_id) const {
+    auto admin = *this;
+    admin.project_id_ = std::move(project_id);
+    admin.project_name_ = Project(admin.project_id_).FullName();
+    return admin;
+  }
+
   /// Return the fully qualified name of the given instance_id.
   std::string InstanceName(std::string const& instance_id) const {
     return google::cloud::bigtable::InstanceName(project_id_, instance_id);
