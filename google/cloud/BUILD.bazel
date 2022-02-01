@@ -55,7 +55,7 @@ load(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
@@ -165,7 +165,7 @@ cc_library(
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
     copts = select({
-        "@bazel_tools//src/conditions:windows": [
+        "@platforms//os:windows": [
             "/DWIN32_LEAN_AND_MEAN",
         ],
         "//conditions:default": [],

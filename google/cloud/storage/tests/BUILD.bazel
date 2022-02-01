@@ -39,7 +39,7 @@ cc_proto_library(
     timeout = "long",
     srcs = [test],
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": [
             "-lpthread",
             "-ldl",
