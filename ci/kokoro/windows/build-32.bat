@@ -16,7 +16,7 @@ REM Install Bazelisk.
 @echo %date% %time%
 @cd github\google-cloud-cpp
 @powershell -exec bypass ci\kokoro\windows\install-bazelisk.ps1
-@if %ERRORLEVEL% neq 0 exit /b 1
+@if ERRORLEVEL 1 exit /b 1
 
 REM Change PATH to install the Bazelisk version we just installed
 @set PATH=C:\bin;%PATH%
@@ -27,7 +27,7 @@ call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC
 REM The remaining of the build script is implemented in PowerShell.
 @echo %date% %time%
 powershell -exec bypass ci\kokoro\windows\build.ps1
-if %ERRORLEVEL% neq 0 exit /b 1
+@if ERRORLEVEL 1 exit /b 1
 
 @echo DONE "============================================="
 @echo %date% %time%
