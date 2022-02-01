@@ -114,6 +114,10 @@
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
+./include/google/cloud/iap
+./include/google/cloud/iap/internal
+./include/google/cloud/iap/mocks
+./include/google/cloud/iap/v1
 ./include/google/cloud/ids
 ./include/google/cloud/ids/internal
 ./include/google/cloud/ids/mocks
@@ -351,6 +355,7 @@
 ./lib64/cmake/google_cloud_cpp_gameservices
 ./lib64/cmake/google_cloud_cpp_gkehub
 ./lib64/cmake/google_cloud_cpp_iam
+./lib64/cmake/google_cloud_cpp_iap
 ./lib64/cmake/google_cloud_cpp_ids
 ./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms

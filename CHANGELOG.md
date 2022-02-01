@@ -230,6 +230,7 @@ releasing them early in case they elicit some feedback that requires changes.
 * [Filestore](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/filestore/README.md)
 * [Game Servers](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gameservices/README.md)
 * [Google Kubernetes Engine (GKE)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/container/README.md)
+* [Identity-Aware Proxy (IAP)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iap/README.md)
 * [Memorystore for Memcached](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/memcache/README.md)
 * [Memorystore for Redis](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/redis/README.md)
 * [Migrate for Compute Engine](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vmmigration/README.md)
