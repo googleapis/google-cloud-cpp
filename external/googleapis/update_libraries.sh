@@ -93,6 +93,7 @@ declare -A -r LIBRARIES=(
   ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_cc_grpc"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
+  ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
   ["monitoring"]="$(
     printf ",%s" \

@@ -90,6 +90,22 @@
 
 ## v1.37.0 - TBD
 
+### New Libraries
+
+<!-- TODO: update library count with next release -->
+
+We are introducing client libraries for more (TBD) GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
+
+<details>
+<summary> Expand to see the full list of new libraries...</summary>
+<br>
+
+* [Managed Service for Microsoft Active Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/managedidentities/README.md)
+
+</details>
+
 ## v1.36.0 - 2022-02
 
 ### Bazel support

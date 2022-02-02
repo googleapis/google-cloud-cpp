@@ -475,6 +475,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-managedidentities",
+    deps = [
+        "//google/cloud/managedidentities:google_cloud_cpp_managedidentities",
+    ],
+)
+
+cc_library(
+    name = "experimental-managedidentities_mocks",
+    deps = [
+        "//google/cloud/managedidentities:google_cloud_cpp_managedidentities_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-memcache",
     deps = [
         "//google/cloud/memcache:google_cloud_cpp_memcache",
