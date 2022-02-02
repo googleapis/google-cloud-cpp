@@ -14,6 +14,7 @@ cloudbuild
 composer
 container
 containeranalysis
+datacatalog
 datamigration
 debugger
 dlp

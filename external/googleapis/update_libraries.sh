@@ -59,6 +59,7 @@ declare -A -r LIBRARIES=(
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
+  ["datacatalog"]="@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc"
   ["datamigration"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_cc_grpc" \

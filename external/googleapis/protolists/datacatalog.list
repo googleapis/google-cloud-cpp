@@ -1,0 +1,13 @@
+@com_google_googleapis//google/cloud/datacatalog/v1:bigquery.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:common.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:data_source.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:gcs_fileset_spec.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:policytagmanager.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:policytagmanagerserialization.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:schema.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:search.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:table_spec.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:tags.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:timestamps.proto
+@com_google_googleapis//google/cloud/datacatalog/v1:usage.proto

@@ -102,6 +102,7 @@ releasing them early in case they elicit some feedback that requires changes.
 <summary> Expand to see the full list of new libraries...</summary>
 <br>
 
+* [Data Catalog](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datacatalog/README.md)
 * [Managed Service for Microsoft Active Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/managedidentities/README.md)
 
 </details>
