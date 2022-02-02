@@ -210,7 +210,8 @@ std::string CreateServiceAccountKey(std::vector<std::string> const& argv) {
     if (!response) throw std::runtime_error(response.status().message());
     std::cout << "ServiceAccountKey successfully created: "
               << response->DebugString() << "\n"
-              << "Please save the key in a secure location, as they cannot be downloaded later\n";
+              << "Please save the key in a secure location, as they cannot "
+                 "be downloaded later\n";
     return response->name();
   }
   //! [END iam_create_key] [iam-create-service-account-key]
