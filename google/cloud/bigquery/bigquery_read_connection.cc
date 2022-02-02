@@ -34,6 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryReadConnection::~BigQueryReadConnection() = default;
 
+void BigQueryReadReadRowsStreamingUpdater(
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
+  return bigquery_internal::BigQueryReadReadRowsStreamingUpdater(response,
+                                                                 request);
+}
+
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadConnection::CreateReadSession(
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&) {
