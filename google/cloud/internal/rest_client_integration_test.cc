@@ -60,7 +60,7 @@ class RestClientIntegrationTest : public ::testing::Test {
   static void VerifyJsonPayloadResponse(
       std::string const& method, std::string const& json_payload,
       StatusOr<std::unique_ptr<RestResponse>> response_status) {
-    EXPECT_STATUS_OK(response_status);
+    ASSERT_STATUS_OK(response_status);
     auto response = std::move(response_status.value());
     EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
     auto headers = response->Headers();
@@ -128,7 +128,7 @@ TEST_F(RestClientIntegrationTest, Get) {
   RestRequest request;
   request.SetPath("get");
   auto response_status = RetryRestRequest([&] { return client->Get(request); });
-  EXPECT_STATUS_OK(response_status);
+  ASSERT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
   EXPECT_GT(response->Headers().size(), 0);
@@ -146,7 +146,7 @@ TEST_F(RestClientIntegrationTest, Delete) {
   request.AddQueryParameter({"key", "value"});
   auto response_status =
       RetryRestRequest([&] { return client->Delete(request); });
-  EXPECT_STATUS_OK(response_status);
+  ASSERT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
   EXPECT_GT(response->Headers().size(), 0);
@@ -177,7 +177,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
   request.AddHeader("content-type", "application/json");
   auto response_status =
       RetryRestRequest([&] { return client->Patch(request, {span}); });
-  EXPECT_STATUS_OK(response_status);
+  ASSERT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
   auto body = ReadAll(std::move(payload));
@@ -206,7 +206,7 @@ TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
   absl::Span<char const> span = absl::MakeConstSpan(json_payload_);
   auto response_status =
       RetryRestRequest([&] { return client->Post(request, {span}); });
-  EXPECT_STATUS_OK(response_status);
+  ASSERT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
   auto headers = response->Headers();
