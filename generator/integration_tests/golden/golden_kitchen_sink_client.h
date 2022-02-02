@@ -354,6 +354,11 @@ class GoldenKitchenSinkClient {
   Status
   DoNothing(google::protobuf::Empty const& request, Options options = {});
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::test::admin::database::v1::AppendRowsRequest,
+      google::test::admin::database::v1::AppendRowsResponse>>
+  AsyncAppendRows(Options options = {});
+
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;
   Options options_;

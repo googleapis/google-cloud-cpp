@@ -42,7 +42,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
     tags = [
@@ -67,7 +67,7 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
     deps = [

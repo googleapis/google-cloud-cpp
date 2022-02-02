@@ -88,17 +88,26 @@
   https://github.com/googleapis/google-cloud-cpp/issues/5976.
 </details>
 
-## v1.36.0 - TBD
+## v1.37.0 - TBD
+
+## v1.36.0 - 2022-02
 
 ### Bazel support
 
-**BREAKING CHANGE:** In
-https://github.com/googleapis/google-cloud-cpp/pull/8095 we stopped testing
-with Bazel 3.5 and moved most of our Bazel tests to Bazel 4.0, which is now our
-minimum supported Bazel version. In
-https://github.com/googleapis/google-cloud-cpp/pull/8099, we also added a
-`bazel-latest` build to ensure that we always work with the newest Bazel
-release (currently 5.0). For more info about Bazel, see https://bazel.build/.
+**BREAKING CHANGE:** We stopped testing with Bazel 3.5 and moved most of our
+Bazel tests to Bazel 4.0, which is now our minimum supported Bazel version. We
+also added a `bazel-latest` build to ensure that we always work with the newest
+Bazel release (currently 5.0). For more details on the changes, see [#8095] and
+[#8099]. For more info about Bazel, see https://bazel.build/.
+
+[#8095]: https://github.com/googleapis/google-cloud-cpp/pull/8095
+[#8099]: https://github.com/googleapis/google-cloud-cpp/pull/8099
+
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+* feat(generator): merge connection options into client options ([#8158](https://github.com/googleapis/google-cloud-cpp/pull/8158))
+* feat(generator): connection respects per call policies ([#8013](https://github.com/googleapis/google-cloud-cpp/pull/8013))
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
@@ -135,8 +144,53 @@ library. For more information on these new classes, see our
 Again, we apologize for making this breaking change, but we believe it is in the
 best long-term interest of our customers.
 
+**OTHER CHANGES**:
+
+* fix(generator): fix options handling in SetIamPolicy() OCC loop ([#8203](https://github.com/googleapis/google-cloud-cpp/pull/8203))
+* feat(bigtable): cheap Admin creation with different resource name ([#8194](https://github.com/googleapis/google-cloud-cpp/pull/8194))
+* feat(bigtable): cheap Table creation with different resource name ([#8172](https://github.com/googleapis/google-cloud-cpp/pull/8172))
+* feat(generator): merge connection options into client options ([#8158](https://github.com/googleapis/google-cloud-cpp/pull/8158))
+* feat(generator): connection respects per call policies ([#8013](https://github.com/googleapis/google-cloud-cpp/pull/8013))
+* fix(bigtable): polling policy clones initial state ([#7854](https://github.com/googleapis/google-cloud-cpp/pull/7854))
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
+
 [Cloud Bigtable Admin API]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [Architecture Design]: https://github.com/googleapis/google-cloud-cpp/blob/main/ARCHITECTURE.md#the-client-classes
+
+### [Cloud Tasks](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tasks/README.md)
+
+* fix(generator): fix options handling in SetIamPolicy() OCC loop ([#8203](https://github.com/googleapis/google-cloud-cpp/pull/8203))
+* feat(generator): merge connection options into client options ([#8158](https://github.com/googleapis/google-cloud-cpp/pull/8158))
+* feat(generator): connection respects per call policies ([#8013](https://github.com/googleapis/google-cloud-cpp/pull/8013))
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
+
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+* fix(generator): fix options handling in SetIamPolicy() OCC loop ([#8203](https://github.com/googleapis/google-cloud-cpp/pull/8203))
+* feat(generator): merge connection options into client options ([#8158](https://github.com/googleapis/google-cloud-cpp/pull/8158))
+* feat(generator): connection respects per call policies ([#8013](https://github.com/googleapis/google-cloud-cpp/pull/8013))
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
+
+### [Secret Manager](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/secretmanager/README.md)
+
+* fix(generator): fix options handling in SetIamPolicy() OCC loop ([#8203](https://github.com/googleapis/google-cloud-cpp/pull/8203))
+* feat(generator): merge connection options into client options ([#8158](https://github.com/googleapis/google-cloud-cpp/pull/8158))
+* feat(generator): connection respects per call policies ([#8013](https://github.com/googleapis/google-cloud-cpp/pull/8013))
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* fix(generator): fix options handling in SetIamPolicy() OCC loop ([#8203](https://github.com/googleapis/google-cloud-cpp/pull/8203))
+* feat(generator): merge connection options into client options ([#8158](https://github.com/googleapis/google-cloud-cpp/pull/8158))
+* feat(spanner): merge connection options into client options ([#8090](https://github.com/googleapis/google-cloud-cpp/pull/8090))
+* fix(spanner): apply policy options in (generated) client ctor ([#8064](https://github.com/googleapis/google-cloud-cpp/pull/8064))
+* feat(generator): connection respects per call policies ([#8013](https://github.com/googleapis/google-cloud-cpp/pull/8013))
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
+* feat(spanner): support unified credentials ([#7824](https://github.com/googleapis/google-cloud-cpp/pull/7824))
 
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
 
@@ -183,6 +237,101 @@ failure, which is easier to detect and repair than a run-time error in
 your tests.
 
 [#7835]: https://github.com/googleapis/google-cloud-cpp/issues/7835
+
+**OTHER CHANGES**:
+
+* fix(storage): missing options in UpdateObject() ([#8193](https://github.com/googleapis/google-cloud-cpp/pull/8193))
+* fix(storage): missing kms key option in CopyObject() ([#8188](https://github.com/googleapis/google-cloud-cpp/pull/8188))
+* fix(storage): missing option for CopyObject() ([#8171](https://github.com/googleapis/google-cloud-cpp/pull/8171))
+* fix(storage): add missing options for PatchObject() ([#8137](https://github.com/googleapis/google-cloud-cpp/pull/8137))
+* feat(storage): per-upload buffer size configuration ([#8096](https://github.com/googleapis/google-cloud-cpp/pull/8096))
+* fix(storage): improve JSON validation ([#8033](https://github.com/googleapis/google-cloud-cpp/pull/8033))
+* fix(storage)!: handle missing range header in uploads ([#7877](https://github.com/googleapis/google-cloud-cpp/pull/7877))
+* cleanup(storage)!: uploads track committed_size ([#7868](https://github.com/googleapis/google-cloud-cpp/pull/7868))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* fix(generator): fix options handling in SetIamPolicy() OCC loop ([#8203](https://github.com/googleapis/google-cloud-cpp/pull/8203))
+* feat(generator): `*Client` with bidir streaming RPCs ([#8187](https://github.com/googleapis/google-cloud-cpp/pull/8187))
+* feat(generator): merge connection options into client options ([#8158](https://github.com/googleapis/google-cloud-cpp/pull/8158))
+* feat(generator): better metadata decorators for bidir streaming RPCs ([#8077](https://github.com/googleapis/google-cloud-cpp/pull/8077))
+* feat(generator): connection respects per call policies ([#8013](https://github.com/googleapis/google-cloud-cpp/pull/8013))
+* feat(pubsublite): add TopicStats service ([#7966](https://github.com/googleapis/google-cloud-cpp/pull/7966))
+* fix(generator): bidir streaming RPCs improvements ([#7937](https://github.com/googleapis/google-cloud-cpp/pull/7937))
+* feat(generator): support bidir streams in Connection ([#7933](https://github.com/googleapis/google-cloud-cpp/pull/7933))
+* fix(common): polling policy clones initial state ([#7858](https://github.com/googleapis/google-cloud-cpp/pull/7858))
+* fix: add mock library aliases ([#7844](https://github.com/googleapis/google-cloud-cpp/pull/7844))
+
+### New Libraries
+
+We are introducing client libraries for many (>50) GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
+
+<details>
+<summary> Expand to see the full list of new libraries...</summary>
+<br>
+
+* [Access Approval](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/accessapproval/README.md)
+* [Access Context Manager](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/accesscontextmanager/README.md)
+* [Anthos GKE API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gkehub/README.md)
+* [API Gateway](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/apigateway/README.md)
+* [App Engine Admin API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/appengine/README.md)
+* [Artifact Registry](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/artifactregistry/README.md)
+* [Assured Workloads](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/assuredworkloads/README.md)
+* [AutoML](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/automl/README.md)
+* [Binary Authorization](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/binaryauthorization/README.md)
+* [Certificate Authority Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/privateca/README.md)
+* [Channel Services](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/channel/README.md)
+* [Cloud Asset Inventory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/asset/README.md)
+* [Cloud Billing](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/billing/README.md)
+* [Cloud Build](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/cloudbuild/README.md)
+* [Cloud Composer](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/composer/README.md)
+* [Cloud Data Loss Prevention (DLP)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dlp/README.md)
+* [Cloud Debugger](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/debugger/README.md)
+* [Cloud Functions](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/functions/README.md)
+* [Cloud Intrusion Detection System (IDS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/ids/README.md)
+* [Cloud IoT](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iot/README.md)
+* [Cloud Key Management Service (KMS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/kms/README.md)
+* [Cloud Scheduler](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/scheduler/README.md)
+* [Cloud Shell](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/shell/README.md)
+* [Cloud TPU](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tpu/README.md)
+* [Cloud Trace](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/trace/README.md)
+* [Cloud Translation](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/translate/README.md)
+* [Cloud Vision](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vision/README.md)
+* [Compute Engine OS Config](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/osconfig/README.md)
+* [Compute Engine OS Login](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/oslogin/README.md)
+* [Connectivity Tests](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/networkmanagement/README.md)
+* [Container Analysis](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/containeranalysis/README.md)
+* [Database Migration Service (DMS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datamigration/README.md)
+* [Eventarc](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/eventarc/README.md)
+* [Filestore](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/filestore/README.md)
+* [Game Servers](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gameservices/README.md)
+* [Google Kubernetes Engine (GKE)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/container/README.md)
+* [Identity-Aware Proxy (IAP)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iap/README.md)
+* [Memorystore for Memcached](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/memcache/README.md)
+* [Memorystore for Redis](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/redis/README.md)
+* [Migrate for Compute Engine](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vmmigration/README.md)
+* [Organization Policy Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/orgpolicy/README.md)
+* [Policy Troubleshooter](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/policytroubleshooter/README.md)
+* [Recommender](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/recommender/README.md)
+* [Resource Manager](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/resourcemanager/README.md)
+* [Retail](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/retail/README.md)
+* [Security Command Center](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/securitycenter/README.md)
+* [Serverless VPC Access](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vpcaccess/README.md)
+* [Service Control](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicecontrol/README.md)
+* [Service Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicedirectory/README.md)
+* [Service Management](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicemanagement/README.md)
+* [Service Usage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/serviceusage/README.md)
+* [Storage Transfer Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storagetransfer/README.md)
+* [Talent Solution](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/talent/README.md)
+* [Text-to-Speech](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/texttospeech/README.md)
+* [Vertex AI Workbench](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/notebooks/README.md)
+* [Video Intelligence API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/videointelligence/README.md)
+* [Web Risk](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/webrisk/README.md)
+* [Web Security Scanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/websecurityscanner/README.md)
+* [Workflows](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/workflows/README.md)
+</details>
 
 ## v1.35.0 - 2022-01
 

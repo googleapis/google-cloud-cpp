@@ -31,7 +31,7 @@ cc_library(
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
     copts = select({
-        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
@@ -56,7 +56,7 @@ cc_library(
     srcs = google_cloud_cpp_storage_srcs,
     hdrs = google_cloud_cpp_storage_hdrs,
     copts = select({
-        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     visibility = [
@@ -94,7 +94,7 @@ cc_library(
     srcs = storage_client_testing_srcs,
     hdrs = storage_client_testing_hdrs,
     copts = select({
-        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     deps = [
@@ -116,11 +116,11 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     copts = select({
-        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
@@ -142,11 +142,11 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     copts = select({
-        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
     deps = [

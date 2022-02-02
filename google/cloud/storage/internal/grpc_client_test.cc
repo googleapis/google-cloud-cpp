@@ -27,6 +27,7 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::GetMetadata;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -104,6 +105,65 @@ TEST(GrpcClient, InsertObjectMedia) {
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST(GrpcClient, CopyObject) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, RewriteObject)
+      .WillOnce([](grpc::ClientContext& context,
+                   v2::RewriteObjectRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        // Map JSON names to the `resource` subobject
+                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+        EXPECT_THAT(request.source_bucket(),
+                    "projects/_/buckets/test-source-bucket");
+        EXPECT_THAT(request.source_object(), "test-source-object");
+        EXPECT_THAT(request.destination_bucket(),
+                    "projects/_/buckets/test-bucket");
+        EXPECT_THAT(request.destination_name(), "test-object");
+        return PermanentError();
+      });
+  auto client = GrpcClient::CreateMock(mock);
+  auto response = client->CopyObject(
+      CopyObjectRequest("test-source-bucket", "test-source-object",
+                        "test-bucket", "test-object")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST(GrpcClient, CopyObjectTooLarge) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, RewriteObject)
+      .WillOnce([](grpc::ClientContext& context,
+                   v2::RewriteObjectRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        // Map JSON names to the `resource` subobject
+                        Pair("x-goog-fieldmask", "resource(field1,field2)")));
+        EXPECT_THAT(request.source_bucket(),
+                    "projects/_/buckets/test-source-bucket");
+        EXPECT_THAT(request.source_object(), "test-source-object");
+        EXPECT_THAT(request.destination_bucket(),
+                    "projects/_/buckets/test-bucket");
+        EXPECT_THAT(request.destination_name(), "test-object");
+        v2::RewriteResponse response;
+        response.set_done(false);
+        response.set_rewrite_token("test-only-token");
+        return response;
+      });
+  auto client = GrpcClient::CreateMock(mock);
+  auto response = client->CopyObject(
+      CopyObjectRequest("test-source-bucket", "test-source-object",
+                        "test-bucket", "test-object")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_THAT(response.status(), StatusIs(StatusCode::kOutOfRange));
 }
 
 TEST(GrpcClient, GetObjectMetadata) {

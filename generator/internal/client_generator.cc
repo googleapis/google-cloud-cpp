@@ -115,6 +115,16 @@ Status ClientGenerator::GenerateHeader() {
   // clang-format on
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      $request_type$,
+      $response_type$>>
+  Async$method_name$(Options options = {});
+)""");
+      continue;
+    }
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -343,6 +353,20 @@ Status ClientGenerator::GenerateCc() {
   // clang-format on
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
+    if (IsBidirStreaming(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    $request_type$,
+    $response_type$>>
+$client_class_name$::Async$method_name$(Options options) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(options), options_));
+  return connection_->Async$method_name$();
+}
+)""");
+      continue;
+    }
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -432,11 +456,22 @@ Status ClientGenerator::GenerateCc() {
              "  internal::CheckExpectedOptions<$service_name$"
              "BackoffPolicyOption>(options, __func__);\n"
              "  internal::OptionsSpan span(internal::MergeOptions("
-             "std::move(options), options_));\n"
+             "std::move(options), options_));\n"},
+            {"  "},
+            {ProtoNameToCppName(
+                get_iam_policy_extension_->input_type()->full_name())},
+            {" get_request;\n"},
+            {"  get_request.set_resource(resource);\n"},
+            {"  "},
+            {ProtoNameToCppName(
+                set_iam_policy_extension_->input_type()->full_name())},
+            {" set_request;\n"
+             "  set_request.set_resource(resource);\n"
              "  auto backoff_policy = internal::CurrentOptions()"
              ".get<$service_name$BackoffPolicyOption>()->clone();\n"
-             "  for (;;) {\n"},
-            {"    auto recent = " + get_method_name + "(resource);\n"},
+             "  for (;;) {\n"
+             "    auto recent = connection_->"},
+            {get_method_name + "(get_request);\n"},
             {"    if (!recent) {\n"
              "      return recent.status();\n"
              "    }\n"
@@ -444,9 +479,10 @@ Status ClientGenerator::GenerateCc() {
              "    if (!policy) {\n"
              "      return Status(StatusCode::kCancelled,"
              " \"updater did not yield a policy\");\n"
-             "    }\n"},
-            {"    auto result = " + set_method_name +
-             "(resource, *std::move(policy));\n"},
+             "    }\n"
+             "    *set_request.mutable_policy() = *std::move(policy);\n"
+             "    auto result = connection_->"},
+            {set_method_name + "(set_request);\n"},
             {"    if (result || result.status().code() != StatusCode::kAborted)"
              " {\n"
              "      return result;\n"

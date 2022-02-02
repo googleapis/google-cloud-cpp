@@ -242,6 +242,20 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-container",
+    deps = [
+        "//google/cloud/container:google_cloud_cpp_container",
+    ],
+)
+
+cc_library(
+    name = "experimental-container_mocks",
+    deps = [
+        "//google/cloud/container:google_cloud_cpp_container_mocks",
+    ],
+)
+
+cc_library(
     name = "experimental-containeranalysis",
     deps = [
         "//google/cloud/containeranalysis:google_cloud_cpp_containeranalysis",
@@ -294,6 +308,20 @@ cc_library(
     name = "experimental-dlp_mocks",
     deps = [
         "//google/cloud/dlp:google_cloud_cpp_dlp_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-filestore",
+    deps = [
+        "//google/cloud/filestore:google_cloud_cpp_filestore",
+    ],
+)
+
+cc_library(
+    name = "experimental-filestore_mocks",
+    deps = [
+        "//google/cloud/filestore:google_cloud_cpp_filestore_mocks",
     ],
 )
 
@@ -373,6 +401,20 @@ cc_library(
     name = "iam_mocks",
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam_mocks",
+    ],
+)
+
+cc_library(
+    name = "experimental-iap",
+    deps = [
+        "//google/cloud/iap:google_cloud_cpp_iap",
+    ],
+)
+
+cc_library(
+    name = "experimental-iap_mocks",
+    deps = [
+        "//google/cloud/iap:google_cloud_cpp_iap_mocks",
     ],
 )
 

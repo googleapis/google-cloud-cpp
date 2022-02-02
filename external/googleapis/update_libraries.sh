@@ -55,7 +55,9 @@ declare -A -r LIBRARIES=(
   ["binaryauthorization"]="@com_google_googleapis//google/cloud/binaryauthorization/v1:binaryauthorization_cc_grpc"
   ["channel"]="@com_google_googleapis//google/cloud/channel/v1:channel_cc_grpc"
   ["cloudbuild"]="@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc"
+  ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
+  ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
   ["datamigration"]="$(
     printf ",%s" \
@@ -70,6 +72,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc" \
       "@com_google_googleapis//google/cloud/eventarc/publishing/v1:publishing_cc_grpc"
   )"
+  ["filestore"]="@com_google_googleapis//google/cloud/filestore/v1:filestore_cc_grpc"
   ["functions"]="@com_google_googleapis//google/cloud/functions/v1:functions_cc_grpc"
   ["gameservices"]="@com_google_googleapis//google/cloud/gaming/v1:gaming_cc_grpc"
   ["gkehub"]="$(
@@ -84,6 +87,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc" \
       "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc"
   )"
+  ["iap"]="@com_google_googleapis//google/cloud/iap/v1:iap_cc_grpc"
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
   ["iot"]="@com_google_googleapis//google/cloud/iot/v1:iot_cc_grpc"
   ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_cc_grpc"

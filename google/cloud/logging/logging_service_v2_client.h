@@ -342,6 +342,11 @@ class LoggingServiceV2Client {
   StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request, Options options = {});
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::logging::v2::TailLogEntriesRequest,
+      google::logging::v2::TailLogEntriesResponse>>
+  AsyncTailLogEntries(Options options = {});
+
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;
   Options options_;

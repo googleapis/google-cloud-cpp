@@ -128,12 +128,13 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
  */
 class CopyObjectRequest
     : public GenericRequest<
-          CopyObjectRequest, DestinationPredefinedAcl, EncryptionKey,
-          IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
-          IfMetagenerationNotMatch, IfSourceGenerationMatch,
-          IfSourceGenerationNotMatch, IfSourceMetagenerationMatch,
-          IfSourceMetagenerationNotMatch, Projection, SourceGeneration,
-          SourceEncryptionKey, UserProject, WithObjectMetadata> {
+          CopyObjectRequest, DestinationKmsKeyName, DestinationPredefinedAcl,
+          EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
+          IfMetagenerationMatch, IfMetagenerationNotMatch,
+          IfSourceGenerationMatch, IfSourceGenerationNotMatch,
+          IfSourceMetagenerationMatch, IfSourceMetagenerationNotMatch,
+          Projection, SourceGeneration, SourceEncryptionKey, UserProject,
+          WithObjectMetadata> {
  public:
   CopyObjectRequest() = default;
   CopyObjectRequest(std::string source_bucket, std::string source_object,
@@ -197,7 +198,7 @@ std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r);
  */
 class UpdateObjectRequest
     : public GenericObjectRequest<
-          UpdateObjectRequest, Generation, IfGenerationMatch,
+          UpdateObjectRequest, Generation, EncryptionKey, IfGenerationMatch,
           IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
           PredefinedAcl, Projection, UserProject> {
  public:

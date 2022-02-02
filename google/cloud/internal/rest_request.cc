@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/log.h"
+#include <cctype>
 
 namespace google {
 namespace cloud {

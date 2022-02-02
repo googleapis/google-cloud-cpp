@@ -343,7 +343,7 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
 // to this function.
 std::size_t CurlImpl::HeaderCallback(char* contents, std::size_t size,
                                      std::size_t nitems) {
-  if (nitems == 2 && contents[0] == '\r' && contents[1] == '\n') {
+  if (nitems * size == 2 && contents[0] == '\r' && contents[1] == '\n') {
     if (!status_line_received_) {
       status_line_received_ = true;
     } else {
@@ -592,7 +592,7 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   Status status;
   if (buffer_.empty()) {
     // Once we have received the status and all the headers, we have read
-    // enough to satisfy calls to any of RestResponse's methods and can
+    // enough to satisfy calls to any of RestResponse's methods, and we can
     // stop reading until we have a user buffer to write the payload.
     status = PerformWorkUntil(
         [this] { return curl_closed_ || paused_ || all_headers_received_; });
@@ -621,6 +621,8 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
 
 Status CurlImpl::MakeRequestImpl() {
   TRACE_STATE() << "url_ " << url_ << "\n";
+  // Setting BUFFERSIZE is a request, not an order. libcurl can and will write
+  // fewer bytes as it wishes.
   handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultCurlWriteBufferSize);
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());

@@ -263,8 +263,19 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   return ObjectMetadata{};
 }
 
-StatusOr<ObjectMetadata> GrpcClient::CopyObject(CopyObjectRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<ObjectMetadata> GrpcClient::CopyObject(
+    CopyObjectRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request, "resource");
+  auto response = stub_->RewriteObject(context, *proto);
+  if (!response) return std::move(response).status();
+  if (!response->done()) {
+    return Status(
+        StatusCode::kOutOfRange,
+        "Object too large, use RewriteObject() instead of CopyObject()");
+  }
+  return GrpcObjectMetadataParser::FromProto(response->resource(), options_);
 }
 
 StatusOr<ObjectMetadata> GrpcClient::GetObjectMetadata(

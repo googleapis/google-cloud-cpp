@@ -36,7 +36,7 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
     tags = [
@@ -55,7 +55,7 @@ load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     linkopts = select({
-        "@bazel_tools//src/conditions:windows": [],
+        "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
