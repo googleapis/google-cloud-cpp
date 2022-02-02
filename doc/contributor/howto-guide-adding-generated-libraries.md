@@ -36,9 +36,16 @@ bazel --batch query --noshow_progress --noshow_loading_progress \
 If this fails, send a CL to add the rule. Wait until that is submitted and
 exported before proceeding any further.
 
+## Edit the top-level CHANGELOG file
+
+Announce the new library in the CHANGELOG for the next release.
+
 ## Edit the scripts and configuration
 
-Update the `external/googleapis/update_libraries.sh` script, for example:
+Update the `external/googleapis/update_libraries.sh` script.
+
+<details>
+<summary>Expand for an example</summary>
 
 ```diff
 diff --git a/external/googleapis/update_libraries.sh b/external/googleapis/update_libraries.sh
@@ -58,6 +65,7 @@ index cdaa0bc9f..b0381d72d 100755
      printf ",%s" \
        "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc" \
 ```
+</details>
 
 ## Update the Generator Configuration
 
@@ -67,7 +75,9 @@ example, [here][retryable-status-codes].
 [retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
 
 Manually edit `generator/generator_config.textproto` and add the new service.
-For example:
+
+<details>
+<summary>Expand for an example</summary>
 
 ```diff
 diff --git a/generator/generator_config.textproto b/generator/generator_config.textproto
@@ -87,6 +97,7 @@ index ab033dde9..3753287d8 100644
 +}
 +
 ```
+</details>
 
 ## Commit these changes
 
@@ -100,7 +111,7 @@ git commit -m"feat(${library}): generate library" external/ generator/
 ## Update the list of proto files and proto dependencies
 
 ```shell
-external/googleapis/update_libraries.sh
+external/googleapis/update_libraries.sh "${library}"
 ```
 
 ## Run the Scaffold Generator
@@ -188,8 +199,10 @@ ci/cloudbuild/build.sh -t cmake-install-pr
 ```
 
 It is somewhat common for the `cmake-install` build to fail due to expected
-install directories. If this happens, make an edit to `cmake-install.sh`. For
-example:
+install directories. If this happens, make an edit to `cmake-install.sh`.
+
+<details>
+<summary>Expand for an example</summary>
 
 ```diff
 diff --git a/ci/cloudbuild/builds/cmake-install.sh b/ci/cloudbuild/builds/cmake-install.sh
@@ -207,6 +220,7 @@ index c4ce00489..1858b48dc 100755
    ./include/google/cloud/spanner/internal
    ./include/google/cloud/spanner/mocks
 ```
+</details>
 
 ## Commit these changes
 
