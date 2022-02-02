@@ -75,7 +75,10 @@ class ResumableAsyncStreamingReadWriteRpc
   ResumableAsyncStreamingReadWriteRpc& operator=(ResumableStreamingReadRpc&&) =
       delete;
 
-  void Cancel() override { impl_->Cancel(); }
+  void Cancel() override {
+    std::lock_guard<std::mutex> g{mu_};
+    impl_->Cancel();
+  }
 
   future<bool> Start() override {
     return impl_->Start().then([this](future<bool> start_fu) {
