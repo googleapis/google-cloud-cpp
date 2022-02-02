@@ -52,6 +52,7 @@ using StreamReinitializer = std::function<void(
 
 // TODOs
 // DRY retry loop
+// update Write/WritesDone status through Status() function
 
 template <typename ResponseType, typename RequestType>
 class ResumableAsyncStreamingReadWriteRpc
