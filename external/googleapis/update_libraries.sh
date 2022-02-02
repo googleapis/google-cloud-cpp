@@ -167,7 +167,13 @@ declare -A -r LIBRARIES=(
   )"
 )
 
-for library in "${!LIBRARIES[@]}"; do
+if [[ $# -eq 0 ]]; then
+  keys=("${!LIBRARIES[@]}")
+else
+  keys=("$@")
+fi
+
+for library in "${keys[@]}"; do
   IFS=',' read -r -a rules <<<"${LIBRARIES[$library]}"
   files=(
     "external/googleapis/protolists/${library}.list"
