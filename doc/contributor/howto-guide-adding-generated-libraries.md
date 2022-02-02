@@ -166,6 +166,11 @@ The generated quickstart will need some editing. Use a simple operation, maybe
 an admin operation listing top-level resources, to demonstrate how to use the
 API.
 
+Also edit the tests so this new quickstart receives the right command-line
+arguments in the CI builds.
+
+- `google/cloud/${library}/CMakeLists.txt`
+
 ## Update the README files
 
 The following files probably need some light copy-editing to read less like they
