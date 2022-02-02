@@ -25,6 +25,12 @@ StatusOr<google::storage::v2::Bucket> StorageRoundRobin::GetBucket(
   return Child()->GetBucket(context, request);
 }
 
+StatusOr<google::storage::v2::Bucket> StorageRoundRobin::CreateBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateBucketRequest const& request) {
+  return Child()->CreateBucket(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageRoundRobin::ComposeObject(
     grpc::ClientContext& context,
     google::storage::v2::ComposeObjectRequest const& request) {
