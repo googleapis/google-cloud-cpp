@@ -737,15 +737,6 @@ enum RestoreSourceType {
   BACKUP = 1;
 }
 
-// A service account is a special type of Google account that belongs to your
-// application or a virtual machine (VM), instead of to an individual end user.
-// Your application assumes the identity of the service account to call Google
-// APIs, so that the users aren't directly involved.
-//
-// Service account credentials are used to temporarily assume the identity
-// of the service account. Supported credential types include OAuth 2.0 access
-// tokens, OpenID Connect ID tokens, self-signed JSON Web Tokens (JWTs), and
-// more.
 service GoldenKitchenSink {
   option (google.api.default_host) = "goldenkitchensink.googleapis.com";
   option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/cloud-platform";
