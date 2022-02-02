@@ -206,16 +206,17 @@ class ResumableAsyncStreamingReadWriteRpc
 
 /// A helper to apply type deduction.
 template <typename ResponseType, typename RequestType>
-std::shared_ptr<StreamingReadRpc<ResponseType>>
+std::shared_ptr<AsyncStreamingReadWriteRpc<ResponseType, RequestType>>
 MakeAsyncResumableStreamingReadWriteRpc(
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, AsyncSleeper&& sleeper,
     AsyncStreamFactory<ResponseType, RequestType> stream_factory,
-    RequestUpdater<ResponseType, RequestType> updater, RequestType request) {
-  return std::make_shared<ResumableStreamingReadRpc<ResponseType, RequestType>>(
+    StreamReinitializer<ResponseType, RequestType> reinitializer) {
+  return std::make_shared<
+      AsyncStreamingReadWriteRpc<ResponseType, RequestType>>(
       std::move(retry_policy), std::move(backoff_policy),
       std::forward<AsyncSleeper>(sleeper), std::move(stream_factory),
-      std::move(updater), std::forward<RequestType>(request));
+      std::move(reinitializer));
 }
 }
 
