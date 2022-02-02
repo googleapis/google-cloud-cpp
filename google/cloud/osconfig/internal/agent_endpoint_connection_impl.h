@@ -37,6 +37,12 @@ namespace cloud {
 namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void AgentEndpointServiceReceiveTaskNotificationStreamingUpdater(
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationResponse const& response,
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest&
+        request);
+
 class AgentEndpointServiceConnectionImpl
     : public osconfig::AgentEndpointServiceConnection {
  public:

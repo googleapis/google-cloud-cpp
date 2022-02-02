@@ -72,7 +72,7 @@ BigQueryReadConnectionImpl::ReadRows(
       google::cloud::bigquery::storage::v1::ReadRowsResponse,
       google::cloud::bigquery::storage::v1::ReadRowsRequest>(
       retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-      factory, bigquery::BigQueryReadReadRowsStreamingUpdater, request);
+      factory, BigQueryReadReadRowsStreamingUpdater, request);
   return internal::MakeStreamRange(
       internal::StreamReader<
           google::cloud::bigquery::storage::v1::ReadRowsResponse>(

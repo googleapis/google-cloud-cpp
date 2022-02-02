@@ -46,12 +46,6 @@ using AgentEndpointServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         osconfig_internal::AgentEndpointServiceRetryTraits>;
 
-void AgentEndpointServiceReceiveTaskNotificationStreamingUpdater(
-    google::cloud::osconfig::agentendpoint::v1::
-        ReceiveTaskNotificationResponse const& response,
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest&
-        request);
-
 class AgentEndpointServiceConnection {
  public:
   virtual ~AgentEndpointServiceConnection() = 0;

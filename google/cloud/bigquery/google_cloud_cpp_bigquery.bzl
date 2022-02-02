@@ -43,5 +43,5 @@ google_cloud_cpp_bigquery_srcs = [
     "internal/bigquery_read_option_defaults.cc",
     "internal/bigquery_read_stub.cc",
     "internal/bigquery_read_stub_factory.cc",
-    "streaming.cc",
+    "internal/streaming.cc",
 ]

@@ -69,6 +69,21 @@ Status ConnectionImplGenerator::GenerateHeader() {
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
+  // streaming updater functions
+  for (auto const& method : methods()) {
+    HeaderPrintMethod(
+        method,
+        {MethodPattern(
+            {// clang-format off
+   {"\n"
+    "void $service_name$$method_name$StreamingUpdater(\n"
+    "    $response_type$ const& response,\n"
+    "    $request_type$& request);\n"}
+     }, IsStreamingRead)},
+             // clang-format on
+        __FILE__, __LINE__);
+  }
+
   HeaderPrint(R"""(
 class $connection_class_name$Impl
     : public $product_namespace$::$connection_class_name$ {
@@ -302,7 +317,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
       internal::MakeResumableStreamingReadRpc<$response_type$, $request_type$>(
           retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
           factory,
-          $product_namespace$::$service_name$$method_name$StreamingUpdater,
+          $service_name$$method_name$StreamingUpdater,
           request);
   return internal::MakeStreamRange(internal::StreamReader<$response_type$>(
       [resumable]{return resumable->Read();}));

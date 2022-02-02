@@ -82,21 +82,6 @@ Status ConnectionGenerator::GenerateHeader() {
                 // clang-format on
   );
 
-  // streaming updater functions
-  for (auto const& method : methods()) {
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-            {// clang-format off
-   {"\n"
-    "void $service_name$$method_name$StreamingUpdater(\n"
-    "    $response_type$ const& response,\n"
-    "    $request_type$& request);\n"}
-     }, IsStreamingRead)},
-             // clang-format on
-        __FILE__, __LINE__);
-  }
-
   // Abstract interface Connection base class
   HeaderPrint(  // clang-format off
     "\n"

@@ -23,7 +23,6 @@ filegroup(
     srcs = glob([
         "*.*",
         "internal/retry_traits.h",
-        "streaming.cc",
     ]),
 )
 
