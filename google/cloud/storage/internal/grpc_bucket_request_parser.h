@@ -29,6 +29,9 @@ namespace internal {
 struct GrpcBucketRequestParser {
   static google::storage::v2::GetBucketRequest ToProto(
       GetBucketMetadataRequest const& request);
+
+  static google::storage::v2::CreateBucketRequest ToProto(
+      CreateBucketRequest const& request);
 };
 
 }  // namespace internal

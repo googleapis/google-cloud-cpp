@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_bucket_request_parser.h"
+#include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_common_request_params.h"
+#include "google/cloud/storage/internal/grpc_predefined_acl_parser.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -37,6 +39,31 @@ google::storage::v2::GetBucketRequest GrpcBucketRequestParser::ToProto(
   }
   auto projection = request.GetOption<Projection>().value_or("");
   if (projection == "full") result.mutable_read_mask()->add_paths("*");
+  return result;
+}
+
+google::storage::v2::CreateBucketRequest GrpcBucketRequestParser::ToProto(
+    CreateBucketRequest const& request) {
+  google::storage::v2::CreateBucketRequest result;
+  result.set_parent("projects/" + request.project_id());
+  result.set_bucket_id(request.metadata().name());
+  if (request.HasOption<PredefinedAcl>()) {
+    result.set_predefined_acl(GrpcPredefinedAclParser::ToProtoBucket(
+        request.GetOption<PredefinedAcl>()));
+  }
+  if (request.HasOption<PredefinedDefaultObjectAcl>()) {
+    result.set_predefined_default_object_acl(
+        GrpcPredefinedAclParser::ToProtoObject(
+            request.GetOption<PredefinedDefaultObjectAcl>()));
+  }
+  *result.mutable_bucket() =
+      GrpcBucketMetadataParser::ToProto(request.metadata());
+  // Ignore fields commonly set by ToProto().
+  result.mutable_bucket()->set_name("");
+  result.mutable_bucket()->set_bucket_id("");
+  result.mutable_bucket()->clear_create_time();
+  result.mutable_bucket()->clear_update_time();
+  result.mutable_bucket()->clear_project();
   return result;
 }
 
