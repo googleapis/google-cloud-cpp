@@ -138,7 +138,7 @@ function integration::bazel_with_emulators() {
 
   production_integration_tests=(
     # gRPC Utils integration tests
-    "google/cloud:all"
+    "google/cloud:internal_grpc_impersonate_service_account_integration_test"
     # Generator integration tests
     "generator/..."
     # BigQuery integration tests
@@ -172,6 +172,10 @@ function integration::bazel_with_emulators() {
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}"
+
+  io::log_h2 "Running REST integration tests (with emulator)"
+  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
   # This test is run separately because the access token changes every time and
@@ -263,5 +267,9 @@ function integration::ctest_with_emulators() {
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Rest integration tests (with emulator)"
+  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }

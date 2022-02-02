@@ -634,6 +634,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_wrappers.h
         internal/http_payload.cc
         internal/http_payload.h
+        internal/rest_client.cc
+        internal/rest_client.h
         internal/rest_options.h
         internal/rest_request.cc
         internal/rest_request.h
@@ -694,19 +696,32 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/curl_impl_test.cc
             internal/curl_wrappers_test.cc
             internal/http_payload_test.cc
+            internal/rest_client_test.cc
             internal/rest_request_test.cc
             internal/rest_response_test.cc)
+
+        # List the integration tests, then setup the targets and dependencies.
+        set(google_cloud_cpp_rest_internal_integration_tests
+            # cmake-format: sort
+            internal/rest_client_integration_test.cc)
 
         # Export the list of unit and integration tests so the Bazel BUILD file
         # can pick them up.
         export_list_to_bazel(
             "google_cloud_cpp_rest_internal_unit_tests.bzl"
             "google_cloud_cpp_rest_internal_unit_tests" YEAR 2021)
+        export_list_to_bazel(
+            "google_cloud_cpp_rest_internal_integration_tests.bzl"
+            "google_cloud_cpp_rest_internal_integration_tests" YEAR 2022)
 
         foreach (fname ${google_cloud_cpp_rest_internal_unit_tests})
             google_cloud_cpp_rest_internal_add_test("${fname}" "")
         endforeach ()
 
+        foreach (fname ${google_cloud_cpp_rest_internal_integration_tests})
+            google_cloud_cpp_rest_internal_add_test(
+                "${fname}" "integration-test;integration-test-emulator")
+        endforeach ()
     endif ()
 
     # Install the libraries and headers in the locations determined by
