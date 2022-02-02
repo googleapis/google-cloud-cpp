@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Google Cloud Data Catalog API][cloud-service-docs], a service to A fully managed and highly scalable data discovery and metadata management service.
+[Google Cloud Data Catalog API][cloud-service-docs], a fully managed and highly
+scalable data discovery and metadata management service.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/datacatalog
+[cloud-service-docs]: https://cloud.google.com/data-catalog
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-datacatalog/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/datacatalog
 
@@ -38,23 +39,23 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/datacatalog/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/datacatalog/data_catalog_client.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace datacatalog = ::google::cloud::datacatalog;
   auto client =
-      datacatalog::Client(datacatalog::MakeConnection(/* EDIT HERE */));
+      datacatalog::DataCatalogClient(datacatalog::MakeDataCatalogConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListEntryGroups(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
