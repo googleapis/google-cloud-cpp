@@ -22,28 +22,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-google::storage::v2::PredefinedBucketAcl GrpcBucketRequestParser::ToProtoBucket(
-    PredefinedAcl const& acl) {
-  auto const& value = acl.value();
-  if (value == PredefinedAcl::AuthenticatedRead().value()) {
-    return google::storage::v2::BUCKET_ACL_AUTHENTICATED_READ;
-  }
-  if (value == PredefinedAcl::Private().value()) {
-    return google::storage::v2::BUCKET_ACL_PRIVATE;
-  }
-  if (value == PredefinedAcl::ProjectPrivate().value()) {
-    return google::storage::v2::BUCKET_ACL_PROJECT_PRIVATE;
-  }
-  if (value == PredefinedAcl::PublicRead().value()) {
-    return google::storage::v2::BUCKET_ACL_PUBLIC_READ;
-  }
-  if (value == PredefinedAcl::PublicReadWrite().value()) {
-    return google::storage::v2::BUCKET_ACL_PUBLIC_READ_WRITE;
-  }
-  GCP_LOG(ERROR) << "Unknown predefinedAcl value " << value;
-  return google::storage::v2::PREDEFINED_BUCKET_ACL_UNSPECIFIED;
-}
-
 google::storage::v2::GetBucketRequest GrpcBucketRequestParser::ToProto(
     GetBucketMetadataRequest const& request) {
   google::storage::v2::GetBucketRequest result;

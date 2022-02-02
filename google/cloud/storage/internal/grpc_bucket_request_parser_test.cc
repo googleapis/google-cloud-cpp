@@ -28,25 +28,6 @@ namespace {
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
 
-TEST(GrpcBucketRequestParser, PredefinedAclObject) {
-  EXPECT_EQ(v2::BUCKET_ACL_AUTHENTICATED_READ,
-            GrpcBucketRequestParser::ToProtoBucket(
-                PredefinedAcl::AuthenticatedRead()));
-  EXPECT_EQ(v2::BUCKET_ACL_PRIVATE,
-            GrpcBucketRequestParser::ToProtoBucket(PredefinedAcl::Private()));
-  EXPECT_EQ(
-      v2::BUCKET_ACL_PROJECT_PRIVATE,
-      GrpcBucketRequestParser::ToProtoBucket(PredefinedAcl::ProjectPrivate()));
-  EXPECT_EQ(v2::BUCKET_ACL_PUBLIC_READ, GrpcBucketRequestParser::ToProtoBucket(
-                                            PredefinedAcl::PublicRead()));
-  EXPECT_EQ(
-      v2::BUCKET_ACL_PUBLIC_READ_WRITE,
-      GrpcBucketRequestParser::ToProtoBucket(PredefinedAcl::PublicReadWrite()));
-  EXPECT_EQ(v2::PREDEFINED_BUCKET_ACL_UNSPECIFIED,
-            GrpcBucketRequestParser::ToProtoBucket(
-                PredefinedAcl::BucketOwnerFullControl()));
-}
-
 TEST(GrpcBucketRequestParser, GetBucketMetadataAllOptions) {
   v2::GetBucketRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
