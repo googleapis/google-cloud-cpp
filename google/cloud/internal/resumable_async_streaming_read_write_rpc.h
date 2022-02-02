@@ -46,8 +46,8 @@ using AsyncStreamFactory = std::function<
  * received message.
  */
 template <typename ResponseType, typename RequestType>
-using StreamReinitializer = std::function<void(
-    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>,
+using StreamReinitializer = std::function<future<Status>(
+    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>&,
     RequestType&)>;
 
 // TODOs
@@ -157,7 +157,11 @@ class ResumableAsyncStreamingReadWriteRpc
             if (!start) {
               continue;
             }
-            this->reinitializer_(this->impl_, r);
+            Status reinitialize_status =
+                this->reinitializer_(this->impl_, r).get();
+            if (!reinitialize_status.ok()) {
+              continue;
+            }
             return StatusOr(
                 Status(StatusCode.kDataLoss, "Stream failed, May try again"));
           }
@@ -186,7 +190,11 @@ class ResumableAsyncStreamingReadWriteRpc
             if (!start) {
               continue;
             }
-            this->reinitializer_(this->impl_, r);
+            Status reinitialize_status =
+                this->reinitializer_(this->impl_, r).get();
+            if (!reinitialize_status.ok()) {
+              continue;
+            }
           }
           return false;
         }));
@@ -196,7 +204,7 @@ class ResumableAsyncStreamingReadWriteRpc
   std::unique_ptr<BackoffPolicy const> const backoff_policy_prototype_;
   AsyncSleeper sleeper_;
   StreamFactory<ResponseType, RequestType> const stream_factory_;
-  RequestUpdater<ResponseType, RequestType> const reinitializer_;
+  StreamReinitializer<ResponseType, RequestType> const reinitializer_;
   std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>> impl_;
   std::mutex mu_;
   absl::optional<Status> finish_status_;
