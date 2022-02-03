@@ -125,6 +125,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_websecurityscanner_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(websecurityscanner_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(
+        websecurityscanner_quickstart
+        PRIVATE google-cloud-cpp::experimental-websecurityscanner)
+    google_cloud_cpp_add_common_options(websecurityscanner_quickstart)
+    add_test(
+        NAME websecurityscanner_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:websecurityscanner_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(websecurityscanner_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

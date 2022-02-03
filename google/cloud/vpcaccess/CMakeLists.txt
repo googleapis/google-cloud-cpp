@@ -116,6 +116,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_vpcaccess_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(vpcaccess_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(vpcaccess_quickstart
+                          PRIVATE google-cloud-cpp::experimental-vpcaccess)
+    google_cloud_cpp_add_common_options(vpcaccess_quickstart)
+    add_test(
+        NAME vpcaccess_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:vpcaccess_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_REGION)
+    set_tests_properties(vpcaccess_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

@@ -16,6 +16,8 @@
 # Common configuration parameters.
 #
 $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Many tests and quickstarts need a location, this is typically a region.
+$env:GOOGLE_CLOUD_REGION="us-central1"
 $env:GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
 $env:GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
 $env:GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
