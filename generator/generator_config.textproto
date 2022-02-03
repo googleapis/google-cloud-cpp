@@ -93,9 +93,6 @@ service {
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2021"
   omitted_services: ["BigQueryWrite"]
-  # TODO(#xxxx): Once deprecated streaming function is removed, connection
-  # generation can be re-enabled.
-  omit_connection: true
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
