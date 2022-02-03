@@ -307,8 +307,8 @@ Status IsContextMDValid(
 
 std::multimap<std::string, std::string> GetMetadata(
     grpc::ClientContext& context) {
-  static auto* const state = new GetMetadataState;
-  return state->GetMetadata(context);
+  static auto* const kState = new GetMetadataState;
+  return kState->GetMetadata(context);
 }
 
 }  // namespace testing_util
