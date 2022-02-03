@@ -46,9 +46,9 @@ using AsyncStreamFactory = std::function<
  * received message.
  */
 template <typename ResponseType, typename RequestType>
-using StreamReinitializer = std::function<future<Status>(
-    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>&,
-    RequestType&)>;
+using StreamReinitializer = std::function<future<StatusOr<
+    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>(
+    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>)>;
 
 // TODOs
 // DRY retry loop
@@ -91,10 +91,10 @@ class ResumableAsyncStreamingReadWriteRpc
     });
   }
 
-  future<StatusOr<Response>> Read(Request const& r) override {
+  future<StatusOr<Response>> Read() override {
     std::lock_guard<std::mutex> g{mu_};
     if (!read_future_.has_value()) {
-      ProcessRead(r);
+      ProcessRead();
     }
     return read_future_.value();
   }
@@ -142,9 +142,9 @@ class ResumableAsyncStreamingReadWriteRpc
   virtual future<Status> Status() = 0;
 
  private:
-  void ProcessRead(Request const& r) {
+  void ProcessRead() {
     read_future_ = make_optional(
-        impl_->Read().then([this, r](future<absl::optional<Response>> read_fu) {
+        impl_->Read().then([this](future<absl::optional<Response>> read_fu) {
           this->read_future_ = absl::optional();
           absl::optional<Response> optional_response = read_fu.get();
           if (optional_response.has_value()) {
@@ -160,11 +160,14 @@ class ResumableAsyncStreamingReadWriteRpc
             if (!start) {
               continue;
             }
-            Status reinitialize_status =
-                this->reinitializer_(this->impl_, r).get();
-            if (!reinitialize_status.ok()) {
+            StatusOr<std::unique_ptr<
+                AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>
+                reinitialize_response =
+                    this->reinitializer_(std::move(this->impl_)).get();
+            if (!reinitialize_response.ok()) {
               continue;
             }
+            this->impl_ = std::move(*reinitialize_response);
             return StatusOr(
                 Status(StatusCode.kDataLoss, "Stream failed, May try again"));
           }
@@ -193,11 +196,14 @@ class ResumableAsyncStreamingReadWriteRpc
             if (!start) {
               continue;
             }
-            Status reinitialize_status =
-                this->reinitializer_(this->impl_, r).get();
-            if (!reinitialize_status.ok()) {
+            StatusOr<std::unique_ptr<
+                AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>
+                reinitialize_response =
+                    this->reinitializer_(std::move(this->impl_)).get();
+            if (!reinitialize_response.ok()) {
               continue;
             }
+            this->impl_ = std::move(*reinitialize_response);
           }
           return false;
         }));

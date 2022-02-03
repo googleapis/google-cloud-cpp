@@ -69,6 +69,7 @@ add_library(
     internal/api_client_header.cc
     internal/api_client_header.h
     internal/attributes.h
+    internal/async_sleeper.h
     internal/backoff_policy.cc
     internal/backoff_policy.h
     internal/base64_transforms.cc
@@ -110,7 +111,6 @@ add_library(
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
-    internal/async_sleeper.h
     internal/status_payload_keys.cc
     internal/status_payload_keys.h
     internal/strerror.cc
