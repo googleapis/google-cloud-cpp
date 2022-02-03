@@ -14,9 +14,9 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "google/cloud/credentials.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -37,8 +37,11 @@ Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "uh-oh");
 }
 
-std::shared_ptr<GrpcClient> CreateTestClient(std::shared_ptr<storage_internal::StorageStub> stub) {
-  return GrpcClient::CreateMock(stub, Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
+std::shared_ptr<GrpcClient> CreateTestClient(
+    std::shared_ptr<storage_internal::StorageStub> stub) {
+  return GrpcClient::CreateMock(
+      std::move(stub),
+      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
 }
 
 TEST(GrpcClient, QueryResumableUpload) {
