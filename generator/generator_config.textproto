@@ -761,7 +761,6 @@ service {
     "GetNotification",
     "CreateNotification",
     "ListNotifications",
-    "ComposeObject",
     "CreateHmacKey",
     "DeleteHmacKey",
     "GetHmacKey",

@@ -39,6 +39,13 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::GetBucket(
   return child_->GetBucket(context, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
+    grpc::ClientContext& context,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  SetMetadata(context, {});
+  return child_->ComposeObject(context, request);
+}
+
 Status StorageMetadata::DeleteObject(
     grpc::ClientContext& context,
     google::storage::v2::DeleteObjectRequest const& request) {

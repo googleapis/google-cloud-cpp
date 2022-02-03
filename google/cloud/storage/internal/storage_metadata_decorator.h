@@ -38,6 +38,10 @@ class StorageMetadata : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetBucketRequest const& request) override;
 
+  StatusOr<google::storage::v2::Object> ComposeObject(
+      grpc::ClientContext& context,
+      google::storage::v2::ComposeObjectRequest const& request) override;
+
   Status DeleteObject(
       grpc::ClientContext& context,
       google::storage::v2::DeleteObjectRequest const& request) override;

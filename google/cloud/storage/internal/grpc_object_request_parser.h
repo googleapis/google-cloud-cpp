@@ -31,6 +31,9 @@ struct GrpcObjectRequestParser {
   static google::storage::v2::PredefinedObjectAcl ToProtoObject(
       DestinationPredefinedAcl const& acl);
 
+  static StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
+      ComposeObjectRequest const& request);
+
   static google::storage::v2::DeleteObjectRequest ToProto(
       DeleteObjectRequest const& request);
 

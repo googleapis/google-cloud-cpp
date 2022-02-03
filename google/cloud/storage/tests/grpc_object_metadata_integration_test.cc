@@ -57,6 +57,7 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   auto object_name = MakeRandomObjectName();
   auto rewrite_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
+  auto compose_name = MakeRandomObjectName();
 
   auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
                                      IfGenerationMatch(0));
@@ -93,6 +94,16 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
       ObjectMetadataPatchBuilder{}.SetCacheControl("no-cache"));
   ASSERT_STATUS_OK(patch);
   EXPECT_EQ(patch->cache_control(), "no-cache");
+
+  auto compose = client->ComposeObject(
+      bucket_name,
+      {
+          ComposeSourceObject{object_name, absl::nullopt, absl::nullopt},
+          ComposeSourceObject{object_name, absl::nullopt, absl::nullopt},
+      },
+      compose_name);
+  ASSERT_STATUS_OK(compose);
+  ScheduleForDelete(*compose);
 
   auto del = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(del);
