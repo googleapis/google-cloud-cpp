@@ -49,6 +49,7 @@ EXPERIMENTAL_LIBRARIES = [
     "ids",
     "iot",
     "kms",
+    "language",
     "logging",
     "managedidentities",
     "memcache",

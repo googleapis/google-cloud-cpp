@@ -385,6 +385,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Language
+service {
+  service_proto_path: "google/cloud/language/v1/language_service.proto"
+  product_path: "google/cloud/language"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"

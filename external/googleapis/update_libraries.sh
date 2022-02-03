@@ -92,6 +92,7 @@ declare -A -r LIBRARIES=(
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
   ["iot"]="@com_google_googleapis//google/cloud/iot/v1:iot_cc_grpc"
   ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_cc_grpc"
+  ["language"]="@com_google_googleapis//google/cloud/language/v1:language_cc_grpc"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"

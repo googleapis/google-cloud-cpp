@@ -104,6 +104,7 @@ releasing them early in case they elicit some feedback that requires changes.
 
 * [Data Catalog](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datacatalog/README.md)
 * [Managed Service for Microsoft Active Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/managedidentities/README.md)
+* [Natural Language AI](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/language/README.md)
 
 </details>
 
