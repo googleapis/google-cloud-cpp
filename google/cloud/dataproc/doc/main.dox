@@ -2,8 +2,11 @@
 
 @mainpage Cloud Dataproc API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Dataproc API][cloud-service-docs], a service
-to Manages Hadoop-based clusters and jobs on Google Cloud Platform.
+An idiomatic C++ client library for the [Cloud Dataproc API][cloud-service-docs],
+a fully managed and highly scalable service for running Apache Spark, Apache
+Flink, Presto, and 30+ open source tools and frameworks. Use Dataproc for data
+lake modernization, ETL, and secure data science, at planet scale, fully
+integrated with Google Cloud, at a fraction of the cost.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
