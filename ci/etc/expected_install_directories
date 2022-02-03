@@ -79,6 +79,10 @@
 ./include/google/cloud/containeranalysis
 ./include/google/cloud/containeranalysis/internal
 ./include/google/cloud/containeranalysis/mocks
+./include/google/cloud/datacatalog
+./include/google/cloud/datacatalog/internal
+./include/google/cloud/datacatalog/mocks
+./include/google/cloud/datacatalog/v1
 ./include/google/cloud/datamigration
 ./include/google/cloud/datamigration/internal
 ./include/google/cloud/datamigration/mocks
@@ -130,9 +134,17 @@
 ./include/google/cloud/kms/internal
 ./include/google/cloud/kms/mocks
 ./include/google/cloud/kms/v1
+./include/google/cloud/language
+./include/google/cloud/language/internal
+./include/google/cloud/language/mocks
+./include/google/cloud/language/v1
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
+./include/google/cloud/managedidentities
+./include/google/cloud/managedidentities/internal
+./include/google/cloud/managedidentities/mocks
+./include/google/cloud/managedidentities/v1
 ./include/google/cloud/memcache
 ./include/google/cloud/memcache/internal
 ./include/google/cloud/memcache/mocks
@@ -346,6 +358,7 @@
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_container
 ./lib64/cmake/google_cloud_cpp_containeranalysis
+./lib64/cmake/google_cloud_cpp_datacatalog
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_dlp
@@ -359,7 +372,9 @@
 ./lib64/cmake/google_cloud_cpp_ids
 ./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms
+./lib64/cmake/google_cloud_cpp_language
 ./lib64/cmake/google_cloud_cpp_logging
+./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_monitoring
 ./lib64/cmake/google_cloud_cpp_networkmanagement

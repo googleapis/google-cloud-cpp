@@ -59,6 +59,7 @@ declare -A -r LIBRARIES=(
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
+  ["datacatalog"]="@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc"
   ["datamigration"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_cc_grpc" \
@@ -91,8 +92,10 @@ declare -A -r LIBRARIES=(
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
   ["iot"]="@com_google_googleapis//google/cloud/iot/v1:iot_cc_grpc"
   ["kms"]="@com_google_googleapis//google/cloud/kms/v1:kms_cc_grpc"
+  ["language"]="@com_google_googleapis//google/cloud/language/v1:language_cc_grpc"
   ["logging_type"]="@com_google_googleapis//google/logging/type:type_cc_grpc"
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
+  ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
   ["monitoring"]="$(
     printf ",%s" \
@@ -166,7 +169,13 @@ declare -A -r LIBRARIES=(
   )"
 )
 
-for library in "${!LIBRARIES[@]}"; do
+if [[ $# -eq 0 ]]; then
+  keys=("${!LIBRARIES[@]}")
+else
+  keys=("$@")
+fi
+
+for library in "${keys[@]}"; do
   IFS=',' read -r -a rules <<<"${LIBRARIES[$library]}"
   files=(
     "external/googleapis/protolists/${library}.list"

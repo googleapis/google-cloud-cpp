@@ -350,8 +350,14 @@ StatusOr<ObjectMetadata> GrpcClient::PatchObject(
 }
 
 StatusOr<ObjectMetadata> GrpcClient::ComposeObject(
-    ComposeObjectRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ComposeObjectRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->ComposeObject(context, *proto);
+  if (!response) return std::move(response).status();
+  return GrpcObjectMetadataParser::FromProto(*response, options_);
 }
 
 StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(

@@ -324,14 +324,14 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
     return 0;
   }
 
-  // If buffer_size_ is 0 then this is the initial call to make the request, and
-  // we need to stash the received bytes into the spill buffer so that we can
-  // make the response code and headers available without requiring the user to
-  // read the payload of the response. Any payload bytes sequestered in the
-  // spill buffer will be the first returned to the user on attempts to read
-  // the payload. Only after the spill buffer has been emptied will we read more
-  // from handle_.
-  if (buffer_.empty()) {
+  // If headers have not been received and buffer_size_ is 0 then this is the
+  // initial call to make the request, and we need to stash the received bytes
+  // into the spill buffer so that we can make the response code and headers
+  // available without requiring the user to read the payload of the response.
+  // Any payload bytes sequestered in the spill buffer will be the first
+  // returned to the user on attempts to read the payload. Only after the spill
+  // buffer has been emptied will we read more from handle_.
+  if (!all_headers_received_ && buffer_.empty()) {
     return WriteAllBytesToSpillBuffer(ptr, size, nmemb);
   }
   return WriteToUserBuffer(ptr, size, nmemb);

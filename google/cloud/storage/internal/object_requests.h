@@ -233,6 +233,10 @@ class ComposeObjectRequest
                                 std::vector<ComposeSourceObject> source_objects,
                                 std::string destination_object_name);
 
+  std::vector<ComposeSourceObject> source_objects() const {
+    return source_objects_;
+  }
+
   /// Returns the request as the JSON API payload.
   std::string JsonPayload() const;
 

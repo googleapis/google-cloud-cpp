@@ -14,6 +14,7 @@ cloudbuild
 composer
 container
 containeranalysis
+datacatalog
 datamigration
 debugger
 dlp
@@ -27,7 +28,9 @@ iap
 ids
 iot
 kms
+language
 logging
+managedidentities
 memcache
 monitoring
 networkmanagement

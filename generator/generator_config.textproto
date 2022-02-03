@@ -219,6 +219,28 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Data Catalog
+service {
+  service_proto_path: "google/cloud/datacatalog/v1/datacatalog.proto"
+  product_path: "google/cloud/datacatalog"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/datacatalog/v1/policytagmanager.proto"
+  product_path: "google/cloud/datacatalog"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/datacatalog/v1/policytagmanagerserialization.proto"
+  product_path: "google/cloud/datacatalog"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Database Migration
 service {
   service_proto_path: "google/cloud/clouddms/v1/clouddms.proto"
@@ -363,12 +385,28 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Language
+service {
+  service_proto_path: "google/cloud/language/v1/language_service.proto"
+  product_path: "google/cloud/language"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"
   product_path: "google/cloud/logging"
   initial_copyright_year: "2021"
   retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
+}
+
+# Managed Microsoft Active Directory (Managed Microsoft AD or Managed Identities)
+service {
+  service_proto_path: "google/cloud/managedidentities/v1/managed_identities_service.proto"
+  product_path: "google/cloud/managedidentities"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Memcache
@@ -731,7 +769,6 @@ service {
     "GetNotification",
     "CreateNotification",
     "ListNotifications",
-    "ComposeObject",
     "CreateHmacKey",
     "DeleteHmacKey",
     "GetHmacKey",

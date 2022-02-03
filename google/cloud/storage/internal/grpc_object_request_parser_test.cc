@@ -86,6 +86,85 @@ TEST(GrpcObjectRequestParser, PredefinedAclObject) {
       GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
 }
 
+TEST(GrpcObjectRequestParser, ComposeObjectRequestAllOptions) {
+  google::storage::v2::ComposeObjectRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        destination {
+          bucket: "projects/_/buckets/bucket-name"
+          name: "object-name"
+          acl { entity: "allUsers" role: "READER" }
+          content_encoding: "test-only-content-encoding"
+          content_disposition: "test-only-content-disposition"
+          cache_control: "test-only-cache-control"
+          content_language: "test-only-content-language"
+          content_type: "test-only-content-type"
+          temporary_hold: true
+          metadata { key: "key0" value: "value0" }
+          event_based_hold: true
+          custom_time { seconds: 1643126687 nanos: 123000000 }
+        }
+        source_objects { name: "source-object-1" }
+        source_objects {
+          name: "source-object-2"
+          generation: 27
+          object_preconditions { if_generation_match: 28 }
+        }
+        source_objects { name: "source-object-3" generation: 37 }
+        source_objects {
+          name: "source-object-4"
+          object_preconditions { if_generation_match: 48 }
+        }
+        destination_predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        if_generation_match: 1
+        if_metageneration_match: 3
+        kms_key: "test-only-kms-key"
+        common_object_request_params: {
+          encryption_algorithm: "AES256"
+          encryption_key_bytes: "01234567"
+          encryption_key_sha256_bytes: "\222E\222\271\261\003\361O\203?\252\373g\364\200i\037\001\230\212\244W\300\006\027i\365\214\324s\021\274"
+        }
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  ComposeObjectRequest req(
+      "bucket-name",
+      {
+          ComposeSourceObject{"source-object-1", absl::nullopt, absl::nullopt},
+          ComposeSourceObject{"source-object-2", 27, 28},
+          ComposeSourceObject{"source-object-3", 37, absl::nullopt},
+          ComposeSourceObject{"source-object-4", absl::nullopt, 48},
+      },
+      "object-name");
+  req.set_multiple_options(
+      EncryptionKey::FromBinaryKey("01234567"),
+      DestinationPredefinedAcl("projectPrivate"),
+      KmsKeyName("test-only-kms-key"), IfGenerationMatch(1),
+      IfMetagenerationMatch(3), UserProject("test-user-project"),
+      WithObjectMetadata(
+          ObjectMetadata{}
+              .set_acl({ObjectAccessControl{}
+                            .set_entity("allUsers")
+                            .set_role("READER")})
+              .set_content_encoding("test-only-content-encoding")
+              .set_content_disposition("test-only-content-disposition")
+              .set_cache_control("test-only-cache-control")
+              .set_content_language("test-only-content-language")
+              .set_content_type("test-only-content-type")
+              .upsert_metadata("key0", "value0")
+              .set_temporary_hold(true)
+              .set_event_based_hold(true)
+              .set_custom_time(std::chrono::system_clock::time_point{} +
+                               std::chrono::seconds(1643126687) +
+                               std::chrono::milliseconds(123))),
+      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+
+  auto actual = GrpcObjectRequestParser::ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, DeleteObjectAllFields) {
   google::storage::v2::DeleteObjectRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(

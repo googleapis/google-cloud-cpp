@@ -20,117 +20,127 @@ exports_files([
     "LICENSE",
 ])
 
-cc_library(
-    name = "experimental-accessapproval",
-    deps = [
-        "//google/cloud/accessapproval:google_cloud_cpp_accessapproval",
-    ],
-)
+EXPERIMENTAL_LIBRARIES = [
+    "accessapproval",
+    "accesscontextmanager",
+    "apigateway",
+    "appengine",
+    "artifactregistry",
+    "asset",
+    "assuredworkloads",
+    "automl",
+    "billing",
+    "binaryauthorization",
+    "channel",
+    "cloudbuild",
+    "composer",
+    "container",
+    "containeranalysis",
+    "datacatalog",
+    "datamigration",
+    "debugger",
+    "dlp",
+    "eventarc",
+    "filestore",
+    "functions",
+    "gameservices",
+    "gkehub",
+    "iap",
+    "ids",
+    "iot",
+    "kms",
+    "language",
+    "logging",
+    "managedidentities",
+    "memcache",
+    "monitoring",
+    "networkmanagement",
+    "notebooks",
+    "orgpolicy",
+    "osconfig",
+    "oslogin",
+    "policytroubleshooter",
+    "privateca",
+    "pubsublite",
+    "recommender",
+    "redis",
+    "resourcemanager",
+    "retail",
+    "scheduler",
+    "securitycenter",
+    "servicecontrol",
+    "servicedirectory",
+    "servicemanagement",
+    "serviceusage",
+    "shell",
+    "storagetransfer",
+    "talent",
+    "texttospeech",
+    "tpu",
+    "trace",
+    "translate",
+    "videointelligence",
+    "vision",
+    "vmmigration",
+    "vpcaccess",
+    "webrisk",
+    "websecurityscanner",
+    "workflows",
+]
 
-cc_library(
-    name = "experimental-accessapproval_mocks",
-    deps = [
-        "//google/cloud/accessapproval:google_cloud_cpp_accessapproval_mocks",
-    ],
-)
+TRANSITION_LIBRARIES = [
+    "secretmanager",
+    "tasks",
+]
 
-cc_library(
-    name = "experimental-apigateway",
-    deps = [
-        "//google/cloud/apigateway:google_cloud_cpp_apigateway",
-    ],
-)
+GA_LIBRARIES = [
+]
 
-cc_library(
-    name = "experimental-apigateway_mocks",
+[cc_library(
+    name = "experimental-{library}".format(library = library),
     deps = [
-        "//google/cloud/apigateway:google_cloud_cpp_apigateway_mocks",
+        "//google/cloud/{library}:google_cloud_cpp_{library}".format(library = library),
     ],
-)
+) for library in EXPERIMENTAL_LIBRARIES]
 
-cc_library(
-    name = "experimental-accesscontextmanager",
+[cc_library(
+    name = "experimental-{library}_mocks".format(library = library),
     deps = [
-        "//google/cloud/accesscontextmanager:google_cloud_cpp_accesscontextmanager",
+        "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
     ],
-)
+) for library in EXPERIMENTAL_LIBRARIES]
 
-cc_library(
-    name = "experimental-accesscontextmanager_mocks",
+[cc_library(
+    name = "experimental-{library}".format(library = library),
+    deprecation = "this library is now GA, please use //:{library} instead.".format(library = library),
+    tags = ["manual"],
     deps = [
-        "//google/cloud/accesscontextmanager:google_cloud_cpp_accesscontextmanager_mocks",
+        "//google/cloud/{library}:google_cloud_cpp_{library}".format(library = library),
     ],
-)
+) for library in TRANSITION_LIBRARIES]
 
-cc_library(
-    name = "experimental-appengine",
+[cc_library(
+    name = "experimental-{library}_mocks".format(library = library),
+    deprecation = "this library is now GA, please use //:{library}_mocks instead.".format(library = library),
+    tags = ["manual"],
     deps = [
-        "//google/cloud/appengine:google_cloud_cpp_appengine",
+        "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
     ],
-)
+) for library in TRANSITION_LIBRARIES]
 
-cc_library(
-    name = "experimental-appengine_mocks",
+[cc_library(
+    name = "{library}".format(library = library),
     deps = [
-        "//google/cloud/appengine:google_cloud_cpp_appengine_mocks",
+        "//google/cloud/{library}:google_cloud_cpp_{library}".format(library = library),
     ],
-)
+) for library in GA_LIBRARIES + TRANSITION_LIBRARIES]
 
-cc_library(
-    name = "experimental-artifactregistry",
+[cc_library(
+    name = "{library}_mocks".format(library = library),
     deps = [
-        "//google/cloud/artifactregistry:google_cloud_cpp_artifactregistry",
+        "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
     ],
-)
-
-cc_library(
-    name = "experimental-artifactregistry_mocks",
-    deps = [
-        "//google/cloud/artifactregistry:google_cloud_cpp_artifactregistry_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-asset",
-    deps = [
-        "//google/cloud/asset:google_cloud_cpp_asset",
-    ],
-)
-
-cc_library(
-    name = "experimental-asset_mocks",
-    deps = [
-        "//google/cloud/asset:google_cloud_cpp_asset_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-assuredworkloads",
-    deps = [
-        "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads",
-    ],
-)
-
-cc_library(
-    name = "experimental-assuredworkloads_mocks",
-    deps = [
-        "//google/cloud/assuredworkloads:google_cloud_cpp_assuredworkloads_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-automl",
-    deps = [
-        "//google/cloud/automl:google_cloud_cpp_automl",
-    ],
-)
-
-cc_library(
-    name = "experimental-automl_mocks",
-    deps = [
-        "//google/cloud/automl:google_cloud_cpp_automl_mocks",
-    ],
-)
+) for library in GA_LIBRARIES + TRANSITION_LIBRARIES]
 
 cc_library(
     name = "bigquery",
@@ -172,216 +182,6 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-billing",
-    deps = [
-        "//google/cloud/billing:google_cloud_cpp_billing",
-    ],
-)
-
-cc_library(
-    name = "experimental-billing_mocks",
-    deps = [
-        "//google/cloud/billing:google_cloud_cpp_billing_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-binaryauthorization",
-    deps = [
-        "//google/cloud/binaryauthorization:google_cloud_cpp_binaryauthorization",
-    ],
-)
-
-cc_library(
-    name = "experimental-binaryauthorization_mocks",
-    deps = [
-        "//google/cloud/binaryauthorization:google_cloud_cpp_binaryauthorization_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-channel",
-    deps = [
-        "//google/cloud/channel:google_cloud_cpp_channel",
-    ],
-)
-
-cc_library(
-    name = "experimental-channel_mocks",
-    deps = [
-        "//google/cloud/channel:google_cloud_cpp_channel_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-cloudbuild",
-    deps = [
-        "//google/cloud/cloudbuild:google_cloud_cpp_cloudbuild",
-    ],
-)
-
-cc_library(
-    name = "experimental-cloudbuild_mocks",
-    deps = [
-        "//google/cloud/cloudbuild:google_cloud_cpp_cloudbuild_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-composer",
-    deps = [
-        "//google/cloud/composer:google_cloud_cpp_composer",
-    ],
-)
-
-cc_library(
-    name = "experimental-composer_mocks",
-    deps = [
-        "//google/cloud/composer:google_cloud_cpp_composer_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-container",
-    deps = [
-        "//google/cloud/container:google_cloud_cpp_container",
-    ],
-)
-
-cc_library(
-    name = "experimental-container_mocks",
-    deps = [
-        "//google/cloud/container:google_cloud_cpp_container_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-containeranalysis",
-    deps = [
-        "//google/cloud/containeranalysis:google_cloud_cpp_containeranalysis",
-    ],
-)
-
-cc_library(
-    name = "experimental-containeranalysis_mocks",
-    deps = [
-        "//google/cloud/containeranalysis:google_cloud_cpp_containeranalysis_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-datamigration",
-    deps = [
-        "//google/cloud/datamigration:google_cloud_cpp_datamigration",
-    ],
-)
-
-cc_library(
-    name = "experimental-datamigration_mocks",
-    deps = [
-        "//google/cloud/datamigration:google_cloud_cpp_datamigration_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-debugger",
-    deps = [
-        "//google/cloud/debugger:google_cloud_cpp_debugger",
-    ],
-)
-
-cc_library(
-    name = "experimental-debugger_mocks",
-    deps = [
-        "//google/cloud/debugger:google_cloud_cpp_debugger_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-dlp",
-    deps = [
-        "//google/cloud/dlp:google_cloud_cpp_dlp",
-    ],
-)
-
-cc_library(
-    name = "experimental-dlp_mocks",
-    deps = [
-        "//google/cloud/dlp:google_cloud_cpp_dlp_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-filestore",
-    deps = [
-        "//google/cloud/filestore:google_cloud_cpp_filestore",
-    ],
-)
-
-cc_library(
-    name = "experimental-filestore_mocks",
-    deps = [
-        "//google/cloud/filestore:google_cloud_cpp_filestore_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-functions",
-    deps = [
-        "//google/cloud/functions:google_cloud_cpp_functions",
-    ],
-)
-
-cc_library(
-    name = "experimental-functions_mocks",
-    deps = [
-        "//google/cloud/functions:google_cloud_cpp_functions_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-eventarc",
-    deps = [
-        "//google/cloud/eventarc:google_cloud_cpp_eventarc",
-    ],
-)
-
-cc_library(
-    name = "experimental-eventarc_mocks",
-    deps = [
-        "//google/cloud/eventarc:google_cloud_cpp_eventarc_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-gameservices",
-    deps = [
-        "//google/cloud/gameservices:google_cloud_cpp_gameservices",
-    ],
-)
-
-cc_library(
-    name = "experimental-gameservices_mocks",
-    deps = [
-        "//google/cloud/gameservices:google_cloud_cpp_gameservices_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-gkehub",
-    deps = [
-        "//google/cloud/gkehub:google_cloud_cpp_gkehub",
-    ],
-)
-
-cc_library(
-    name = "experimental-gkehub_mocks",
-    deps = [
-        "//google/cloud/gkehub:google_cloud_cpp_gkehub_mocks",
-    ],
-)
-
-cc_library(
     name = "iam",
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam",
@@ -405,202 +205,6 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-iap",
-    deps = [
-        "//google/cloud/iap:google_cloud_cpp_iap",
-    ],
-)
-
-cc_library(
-    name = "experimental-iap_mocks",
-    deps = [
-        "//google/cloud/iap:google_cloud_cpp_iap_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-ids",
-    deps = [
-        "//google/cloud/ids:google_cloud_cpp_ids",
-    ],
-)
-
-cc_library(
-    name = "experimental-ids_mocks",
-    deps = [
-        "//google/cloud/ids:google_cloud_cpp_ids_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-iot",
-    deps = [
-        "//google/cloud/iot:google_cloud_cpp_iot",
-    ],
-)
-
-cc_library(
-    name = "experimental-iot_mocks",
-    deps = [
-        "//google/cloud/iot:google_cloud_cpp_iot_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-kms",
-    deps = [
-        "//google/cloud/kms:google_cloud_cpp_kms",
-    ],
-)
-
-cc_library(
-    name = "experimental-kms_mocks",
-    deps = [
-        "//google/cloud/kms:google_cloud_cpp_kms_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-logging",
-    deps = [
-        "//google/cloud/logging:google_cloud_cpp_logging",
-    ],
-)
-
-cc_library(
-    name = "experimental-logging_mocks",
-    deps = [
-        "//google/cloud/logging:google_cloud_cpp_logging_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-memcache",
-    deps = [
-        "//google/cloud/memcache:google_cloud_cpp_memcache",
-    ],
-)
-
-cc_library(
-    name = "experimental-memcache_mocks",
-    deps = [
-        "//google/cloud/memcache:google_cloud_cpp_memcache_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-monitoring",
-    deps = [
-        "//google/cloud/monitoring:google_cloud_cpp_monitoring",
-    ],
-)
-
-cc_library(
-    name = "experimental-monitoring_mocks",
-    deps = [
-        "//google/cloud/monitoring:google_cloud_cpp_monitoring_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-networkmanagement",
-    deps = [
-        "//google/cloud/networkmanagement:google_cloud_cpp_networkmanagement",
-    ],
-)
-
-cc_library(
-    name = "experimental-networkmanagement_mocks",
-    deps = [
-        "//google/cloud/networkmanagement:google_cloud_cpp_networkmanagement_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-notebooks",
-    deps = [
-        "//google/cloud/notebooks:google_cloud_cpp_notebooks",
-    ],
-)
-
-cc_library(
-    name = "experimental-notebooks_mocks",
-    deps = [
-        "//google/cloud/notebooks:google_cloud_cpp_notebooks_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-orgpolicy",
-    deps = [
-        "//google/cloud/orgpolicy:google_cloud_cpp_orgpolicy",
-    ],
-)
-
-cc_library(
-    name = "experimental-orgpolicy_mocks",
-    deps = [
-        "//google/cloud/orgpolicy:google_cloud_cpp_orgpolicy_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-osconfig",
-    deps = [
-        "//google/cloud/osconfig:google_cloud_cpp_osconfig",
-    ],
-)
-
-cc_library(
-    name = "experimental-osconfig_mocks",
-    deps = [
-        "//google/cloud/osconfig:google_cloud_cpp_osconfig_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-oslogin",
-    deps = [
-        "//google/cloud/oslogin:google_cloud_cpp_oslogin",
-    ],
-)
-
-cc_library(
-    name = "experimental-oslogin_mocks",
-    deps = [
-        "//google/cloud/oslogin:google_cloud_cpp_oslogin_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-policytroubleshooter",
-    deps = [
-        "//google/cloud/policytroubleshooter:google_cloud_cpp_policytroubleshooter",
-    ],
-)
-
-cc_library(
-    name = "experimental-policytroubleshooter_mocks",
-    deps = [
-        "//google/cloud/policytroubleshooter:google_cloud_cpp_policytroubleshooter_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-privateca",
-    deps = [
-        "//google/cloud/privateca:google_cloud_cpp_privateca",
-    ],
-)
-
-cc_library(
-    name = "experimental-privateca_mocks",
-    deps = [
-        "//google/cloud/privateca:google_cloud_cpp_privateca_mocks",
-    ],
-)
-
-cc_library(
     name = "pubsub",
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",
@@ -615,207 +219,11 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-pubsublite",
-    deps = [
-        "//google/cloud/pubsublite:google_cloud_cpp_pubsublite",
-    ],
-)
-
-cc_library(
-    name = "experimental-pubsublite_mocks",
-    deps = [
-        "//google/cloud/pubsublite:google_cloud_cpp_pubsublite_mocks",
-    ],
-)
-
-cc_library(
     name = "pubsub_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
     tags = ["manual"],
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub",
-    ],
-)
-
-cc_library(
-    name = "experimental-recommender",
-    deps = [
-        "//google/cloud/recommender:google_cloud_cpp_recommender",
-    ],
-)
-
-cc_library(
-    name = "experimental-recommender_mocks",
-    deps = [
-        "//google/cloud/recommender:google_cloud_cpp_recommender_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-redis",
-    deps = [
-        "//google/cloud/redis:google_cloud_cpp_redis",
-    ],
-)
-
-cc_library(
-    name = "experimental-redis_mocks",
-    deps = [
-        "//google/cloud/redis:google_cloud_cpp_redis_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-resourcemanager",
-    deps = [
-        "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager",
-    ],
-)
-
-cc_library(
-    name = "experimental-resourcemanager_mocks",
-    deps = [
-        "//google/cloud/resourcemanager:google_cloud_cpp_resourcemanager_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-retail",
-    deps = [
-        "//google/cloud/retail:google_cloud_cpp_retail",
-    ],
-)
-
-cc_library(
-    name = "experimental-retail_mocks",
-    deps = [
-        "//google/cloud/retail:google_cloud_cpp_retail_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-scheduler",
-    deps = [
-        "//google/cloud/scheduler:google_cloud_cpp_scheduler",
-    ],
-)
-
-cc_library(
-    name = "experimental-scheduler_mocks",
-    deps = [
-        "//google/cloud/scheduler:google_cloud_cpp_scheduler_mocks",
-    ],
-)
-
-cc_library(
-    name = "secretmanager",
-    deps = [
-        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager",
-    ],
-)
-
-cc_library(
-    name = "secretmanager_mocks",
-    deps = [
-        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-secretmanager",
-    deps = [
-        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager",
-    ],
-)
-
-cc_library(
-    name = "experimental-secretmanager_mocks",
-    deps = [
-        "//google/cloud/secretmanager:google_cloud_cpp_secretmanager_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-securitycenter",
-    deps = [
-        "//google/cloud/securitycenter:google_cloud_cpp_securitycenter",
-    ],
-)
-
-cc_library(
-    name = "experimental-securitycenter_mocks",
-    deps = [
-        "//google/cloud/securitycenter:google_cloud_cpp_securitycenter_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-servicecontrol",
-    deps = [
-        "//google/cloud/servicecontrol:google_cloud_cpp_servicecontrol",
-    ],
-)
-
-cc_library(
-    name = "experimental-servicecontrol_mocks",
-    deps = [
-        "//google/cloud/servicecontrol:google_cloud_cpp_servicecontrol_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-servicedirectory",
-    deps = [
-        "//google/cloud/servicedirectory:google_cloud_cpp_servicedirectory",
-    ],
-)
-
-cc_library(
-    name = "experimental-servicedirectory_mocks",
-    deps = [
-        "//google/cloud/servicedirectory:google_cloud_cpp_servicedirectory_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-servicemanagement",
-    deps = [
-        "//google/cloud/servicemanagement:google_cloud_cpp_servicemanagement",
-    ],
-)
-
-cc_library(
-    name = "experimental-servicemanagement_mocks",
-    deps = [
-        "//google/cloud/servicemanagement:google_cloud_cpp_servicemanagement_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-serviceusage",
-    deps = [
-        "//google/cloud/serviceusage:google_cloud_cpp_serviceusage",
-    ],
-)
-
-cc_library(
-    name = "experimental-serviceusage_mocks",
-    deps = [
-        "//google/cloud/serviceusage:google_cloud_cpp_serviceusage_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-shell",
-    deps = [
-        "//google/cloud/shell:google_cloud_cpp_shell",
-    ],
-)
-
-cc_library(
-    name = "experimental-shell_mocks",
-    deps = [
-        "//google/cloud/shell:google_cloud_cpp_shell_mocks",
     ],
 )
 
@@ -863,215 +271,5 @@ cc_library(
     tags = ["manual"],
     deps = [
         "//google/cloud/storage:google_cloud_cpp_storage",
-    ],
-)
-
-cc_library(
-    name = "experimental-storagetransfer",
-    deps = [
-        "//google/cloud/storagetransfer:google_cloud_cpp_storagetransfer",
-    ],
-)
-
-cc_library(
-    name = "experimental-storagetransfer_mocks",
-    deps = [
-        "//google/cloud/storagetransfer:google_cloud_cpp_storagetransfer_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-talent",
-    deps = [
-        "//google/cloud/talent:google_cloud_cpp_talent",
-    ],
-)
-
-cc_library(
-    name = "experimental-talent_mocks",
-    deps = [
-        "//google/cloud/talent:google_cloud_cpp_talent_mocks",
-    ],
-)
-
-cc_library(
-    name = "tasks",
-    deps = [
-        "//google/cloud/tasks:google_cloud_cpp_tasks",
-    ],
-)
-
-cc_library(
-    name = "tasks_mocks",
-    deps = [
-        "//google/cloud/tasks:google_cloud_cpp_tasks_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-tasks",
-    deps = [
-        "//google/cloud/tasks:google_cloud_cpp_tasks",
-    ],
-)
-
-cc_library(
-    name = "experimental-tasks_mocks",
-    deps = [
-        "//google/cloud/tasks:google_cloud_cpp_tasks_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-texttospeech",
-    deps = [
-        "//google/cloud/texttospeech:google_cloud_cpp_texttospeech",
-    ],
-)
-
-cc_library(
-    name = "experimental-texttospeech_mocks",
-    deps = [
-        "//google/cloud/texttospeech:google_cloud_cpp_texttospeech_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-tpu",
-    deps = [
-        "//google/cloud/tpu:google_cloud_cpp_tpu",
-    ],
-)
-
-cc_library(
-    name = "experimental-tpu_mocks",
-    deps = [
-        "//google/cloud/tpu:google_cloud_cpp_tpu_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-trace",
-    deps = [
-        "//google/cloud/trace:google_cloud_cpp_trace",
-    ],
-)
-
-cc_library(
-    name = "experimental-trace_mocks",
-    deps = [
-        "//google/cloud/trace:google_cloud_cpp_trace_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-translate",
-    deps = [
-        "//google/cloud/translate:google_cloud_cpp_translate",
-    ],
-)
-
-cc_library(
-    name = "experimental-translate_mocks",
-    deps = [
-        "//google/cloud/translate:google_cloud_cpp_translate_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-videointelligence",
-    deps = [
-        "//google/cloud/videointelligence:google_cloud_cpp_videointelligence",
-    ],
-)
-
-cc_library(
-    name = "experimental-videointelligence_mocks",
-    deps = [
-        "//google/cloud/videointelligence:google_cloud_cpp_videointelligence_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-vision",
-    deps = [
-        "//google/cloud/vision:google_cloud_cpp_vision",
-    ],
-)
-
-cc_library(
-    name = "experimental-vision_mocks",
-    deps = [
-        "//google/cloud/vision:google_cloud_cpp_vision_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-vmmigration",
-    deps = [
-        "//google/cloud/vmmigration:google_cloud_cpp_vmmigration",
-    ],
-)
-
-cc_library(
-    name = "experimental-vmmigration_mocks",
-    deps = [
-        "//google/cloud/vmmigration:google_cloud_cpp_vmmigration_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-vpcaccess",
-    deps = [
-        "//google/cloud/vpcaccess:google_cloud_cpp_vpcaccess",
-    ],
-)
-
-cc_library(
-    name = "experimental-vpcaccess_mocks",
-    deps = [
-        "//google/cloud/vpcaccess:google_cloud_cpp_vpcaccess_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-webrisk",
-    deps = [
-        "//google/cloud/webrisk:google_cloud_cpp_webrisk",
-    ],
-)
-
-cc_library(
-    name = "experimental-webrisk_mocks",
-    deps = [
-        "//google/cloud/webrisk:google_cloud_cpp_webrisk_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-websecurityscanner",
-    deps = [
-        "//google/cloud/websecurityscanner:google_cloud_cpp_websecurityscanner",
-    ],
-)
-
-cc_library(
-    name = "experimental-websecurityscanner_mocks",
-    deps = [
-        "//google/cloud/websecurityscanner:google_cloud_cpp_websecurityscanner_mocks",
-    ],
-)
-
-cc_library(
-    name = "experimental-workflows",
-    deps = [
-        "//google/cloud/workflows:google_cloud_cpp_workflows",
-    ],
-)
-
-cc_library(
-    name = "experimental-workflows_mocks",
-    deps = [
-        "//google/cloud/workflows:google_cloud_cpp_workflows_mocks",
     ],
 )
