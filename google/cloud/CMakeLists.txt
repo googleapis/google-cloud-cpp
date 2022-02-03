@@ -91,6 +91,7 @@ add_library(
     internal/future_fwd.h
     internal/future_impl.cc
     internal/future_impl.h
+    internal/future_then_async.h
     internal/future_then_impl.h
     internal/future_then_meta.h
     internal/getenv.cc
@@ -216,6 +217,7 @@ if (BUILD_TESTING)
         internal/env_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
+        internal/future_then_async_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
