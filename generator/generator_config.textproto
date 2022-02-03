@@ -202,6 +202,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Contact Center AI Insights
+service {
+  service_proto_path: "google/cloud/contactcenterinsights/v1/contact_center_insights.proto"
+  product_path: "google/cloud/contactcenterinsights"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Container
 service {
   service_proto_path: "google/container/v1/cluster_service.proto"
