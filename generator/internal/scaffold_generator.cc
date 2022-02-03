@@ -356,12 +356,12 @@ MOCK_HEADER_GLOB = "mocks/*.h"
 cc_library(
     name = "google_cloud_cpp_$library$",
     srcs = glob(
-        include=[SOURCE_GLOB],
-        exclude=[MOCK_SOURCE_GLOB],
+        include = [SOURCE_GLOB],
+        exclude = [MOCK_SOURCE_GLOB],
     ),
     hdrs = glob(
-        include=[HEADER_GLOB],
-        exclude=[MOCK_HEADER_GLOB],
+        include = [HEADER_GLOB],
+        exclude = [MOCK_HEADER_GLOB],
     ),
     visibility = ["//:__pkg__"],
     deps = [
@@ -374,10 +374,10 @@ cc_library(
 cc_library(
     name = "google_cloud_cpp_$library$_mocks",
     srcs = glob(
-        include=[MOCK_SOURCE_GLOB],
+        include = [MOCK_SOURCE_GLOB],
     ),
     hdrs = glob(
-        include=[MOCK_HEADER_GLOB],
+        include = [MOCK_HEADER_GLOB],
     ),
     visibility = ["//:__pkg__"],
     deps = [
