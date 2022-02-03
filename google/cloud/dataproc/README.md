@@ -3,7 +3,11 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Dataproc API][cloud-service-docs], a service to Manages Hadoop-based clusters and jobs on Google Cloud Platform.
+[Cloud Dataproc API][cloud-service-docs], a fully managed and highly scalable
+service for running Apache Spark, Apache Flink, Presto, and 30+ open source
+tools and frameworks. Use Dataproc for data lake modernization, ETL, and secure
+data science, at planet scale, fully integrated with Google Cloud, at a fraction
+of the cost.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -38,24 +42,34 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/dataproc/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/dataproc/cluster_controller_client.h"
+#include "google/cloud/common_options.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id region\n";
     return 1;
   }
 
+  namespace gc = ::google::cloud;
   namespace dataproc = ::google::cloud::dataproc;
-  auto client = dataproc::Client(dataproc::MakeConnection(/* EDIT HERE */));
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  std::string const project_id = argv[1];
+  std::string const region = argv[2];
+
+  gc::Options options;
+  if (region != "global") {
+    options.set<gc::EndpointOption>(region + "-dataproc.googleapis.com:443");
+  }
+
+  auto client = dataproc::ClusterControllerClient(
+      dataproc::MakeClusterControllerConnection(options));
+
+  for (auto c : client.ListClusters(project_id, region)) {
+    if (!c) throw std::runtime_error(c.status().message());
+    std::cout << c->cluster_name() << "\n";
   }
 
   return 0;

@@ -40,6 +40,7 @@ EXPERIMENTAL_LIBRARIES = [
     "containeranalysis",
     "datacatalog",
     "datamigration",
+    "dataproc",
     "debugger",
     "dlp",
     "eventarc",
