@@ -16,6 +16,7 @@ container
 containeranalysis
 datacatalog
 datamigration
+dataproc
 debugger
 dlp
 eventarc
