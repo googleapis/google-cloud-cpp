@@ -634,6 +634,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_wrappers.h
         internal/http_payload.cc
         internal/http_payload.h
+        internal/oauth2_credentials.cc
+        internal/oauth2_credentials.h
+        internal/oauth2_error_credentials.cc
+        internal/oauth2_error_credentials.h
         internal/rest_client.cc
         internal/rest_client.h
         internal/rest_options.h
