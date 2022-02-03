@@ -134,6 +134,10 @@
 ./include/google/cloud/kms/internal
 ./include/google/cloud/kms/mocks
 ./include/google/cloud/kms/v1
+./include/google/cloud/language
+./include/google/cloud/language/internal
+./include/google/cloud/language/mocks
+./include/google/cloud/language/v1
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks
@@ -368,6 +372,7 @@
 ./lib64/cmake/google_cloud_cpp_ids
 ./lib64/cmake/google_cloud_cpp_iot
 ./lib64/cmake/google_cloud_cpp_kms
+./lib64/cmake/google_cloud_cpp_language
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_memcache
