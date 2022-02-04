@@ -72,12 +72,12 @@ cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 io::log_h2 "Running unit tests"
 ctest_args=(
-    # Print the full output on failures
-    --output-on-failure
-    # Run many tests in parallel, use -j for compatibility with old versions
-    -j "$(nproc)"
-    # Make the output shorter on interactive tests
-    --progress
+  # Print the full output on failures
+  --output-on-failure
+  # Run many tests in parallel, use -j for compatibility with old versions
+  -j "$(nproc)"
+  # Make the output shorter on interactive tests
+  --progress
 )
 (
   cd "${BINARY_DIR}"
