@@ -292,16 +292,8 @@ $connection_class_name$::Async$method_name$() {
                  // clang-format off
    {"\nStreamRange<$range_output_type$> $connection_class_name$::$method_name$(\n"
     "    $request_type$ request) {\n"
-    "  return google::cloud::internal::MakePaginationRange<StreamRange<\n"
-    "    $range_output_type$>>(\n"
-    "    std::move(request),\n"
-    "    []($request_type$ const&) {\n"
-    "      return StatusOr<$response_type$>(\n"
-    "          Status(StatusCode::kUnimplemented, \"not implemented\"));\n"
-    "    },\n"
-    "    []($response_type$ const&) {\n"
-    "      return std::vector<$range_output_type$>();\n"
-    "    });\n"
+    "  return google::cloud::internal::MakeUnimplementedPaginationRange<\n"
+    "      StreamRange<$range_output_type$>>();\n"
     "}\n"
                      // clang-format on
                  },
