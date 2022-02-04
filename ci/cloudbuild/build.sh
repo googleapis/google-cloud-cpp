@@ -295,7 +295,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   if [[ "${TRIGGER_TYPE}" == "manual" ]]; then
     build_flags+=("--quiet")
   fi
-  io::run docker build "${build_flags[@]}"  ci
+  io::run docker build "${build_flags[@]}" ci
   io::log_h2 "Starting docker container: ${image}"
   run_flags=(
     "--interactive"
