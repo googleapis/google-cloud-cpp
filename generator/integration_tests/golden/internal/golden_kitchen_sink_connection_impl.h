@@ -38,6 +38,10 @@ namespace cloud {
 namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
+    google::test::admin::database::v1::TailLogEntriesResponse const& response,
+    google::test::admin::database::v1::TailLogEntriesRequest& request);
+
 class GoldenKitchenSinkConnectionImpl
     : public golden::GoldenKitchenSinkConnection {
  public:

@@ -117,7 +117,7 @@ GoldenKitchenSinkConnectionImpl::TailLogEntries(google::test::admin::database::v
       internal::MakeResumableStreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse, google::test::admin::database::v1::TailLogEntriesRequest>(
           retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
           factory,
-          golden::GoldenKitchenSinkTailLogEntriesStreamingUpdater,
+          GoldenKitchenSinkTailLogEntriesStreamingUpdater,
           request);
   return internal::MakeStreamRange(internal::StreamReader<google::test::admin::database::v1::TailLogEntriesResponse>(
       [resumable]{return resumable->Read();}));
