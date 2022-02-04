@@ -634,6 +634,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_wrappers.h
         internal/http_payload.cc
         internal/http_payload.h
+        internal/oauth2_access_token_credentials.cc
+        internal/oauth2_access_token_credentials.h
+        internal/oauth2_anonymous_credentials.cc
+        internal/oauth2_anonymous_credentials.h
         internal/oauth2_credentials.cc
         internal/oauth2_credentials.h
         internal/oauth2_error_credentials.cc
@@ -700,6 +704,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/curl_impl_test.cc
             internal/curl_wrappers_test.cc
             internal/http_payload_test.cc
+            internal/oauth2_access_token_credentials_test.cc
+            internal/oauth2_anonymous_credentials_test.cc
             internal/rest_client_test.cc
             internal/rest_request_test.cc
             internal/rest_response_test.cc)
