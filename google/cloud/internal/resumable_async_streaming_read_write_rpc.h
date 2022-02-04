@@ -213,7 +213,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           absl::optional<Response> optional_response =
               optional_response_future.get();
           if (optional_response.has_value()) {
-            return optional_response.value();
+            return make_ready_future(optional_response);
           }
           std::shared_ptr<RetryPolicy const> retry_policy =
               this->retry_policy_prototype_->clone();
