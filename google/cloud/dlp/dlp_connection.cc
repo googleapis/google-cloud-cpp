@@ -89,8 +89,8 @@ DlpServiceConnection::ListInspectTemplates(
       StreamRange<google::privacy::dlp::v2::InspectTemplate>>(
       std::move(request),
       [](google::privacy::dlp::v2::ListInspectTemplatesRequest const&) {
-        return StatusOr<
-            google::privacy::dlp::v2::ListInspectTemplatesResponse>{};
+        return StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::privacy::dlp::v2::ListInspectTemplatesResponse const&) {
         return std::vector<google::privacy::dlp::v2::InspectTemplate>();
@@ -128,7 +128,8 @@ DlpServiceConnection::ListDeidentifyTemplates(
       std::move(request),
       [](google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const&) {
         return StatusOr<
-            google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>{};
+            google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::privacy::dlp::v2::ListDeidentifyTemplatesResponse const&) {
         return std::vector<google::privacy::dlp::v2::DeidentifyTemplate>();
@@ -171,7 +172,8 @@ DlpServiceConnection::ListJobTriggers(
       StreamRange<google::privacy::dlp::v2::JobTrigger>>(
       std::move(request),
       [](google::privacy::dlp::v2::ListJobTriggersRequest const&) {
-        return StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>{};
+        return StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::privacy::dlp::v2::ListJobTriggersResponse const&) {
         return std::vector<google::privacy::dlp::v2::JobTrigger>();
@@ -200,7 +202,8 @@ StreamRange<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::ListDlpJobs(
       StreamRange<google::privacy::dlp::v2::DlpJob>>(
       std::move(request),
       [](google::privacy::dlp::v2::ListDlpJobsRequest const&) {
-        return StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>{};
+        return StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::privacy::dlp::v2::ListDlpJobsResponse const&) {
         return std::vector<google::privacy::dlp::v2::DlpJob>();
@@ -247,8 +250,8 @@ DlpServiceConnection::ListStoredInfoTypes(
       StreamRange<google::privacy::dlp::v2::StoredInfoType>>(
       std::move(request),
       [](google::privacy::dlp::v2::ListStoredInfoTypesRequest const&) {
-        return StatusOr<
-            google::privacy::dlp::v2::ListStoredInfoTypesResponse>{};
+        return StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::privacy::dlp::v2::ListStoredInfoTypesResponse const&) {
         return std::vector<google::privacy::dlp::v2::StoredInfoType>();

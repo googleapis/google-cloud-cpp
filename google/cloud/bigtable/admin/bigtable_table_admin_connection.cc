@@ -48,7 +48,8 @@ BigtableTableAdminConnection::ListTables(
       StreamRange<google::bigtable::admin::v2::Table>>(
       std::move(request),
       [](google::bigtable::admin::v2::ListTablesRequest const&) {
-        return StatusOr<google::bigtable::admin::v2::ListTablesResponse>{};
+        return StatusOr<google::bigtable::admin::v2::ListTablesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::bigtable::admin::v2::ListTablesResponse const&) {
         return std::vector<google::bigtable::admin::v2::Table>();
@@ -121,7 +122,8 @@ BigtableTableAdminConnection::ListBackups(
       StreamRange<google::bigtable::admin::v2::Backup>>(
       std::move(request),
       [](google::bigtable::admin::v2::ListBackupsRequest const&) {
-        return StatusOr<google::bigtable::admin::v2::ListBackupsResponse>{};
+        return StatusOr<google::bigtable::admin::v2::ListBackupsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::bigtable::admin::v2::ListBackupsResponse const&) {
         return std::vector<google::bigtable::admin::v2::Backup>();

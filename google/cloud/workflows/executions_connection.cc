@@ -43,7 +43,8 @@ ExecutionsConnection::ListExecutions(
       [](google::cloud::workflows::executions::v1::
              ListExecutionsRequest const&) {
         return StatusOr<
-            google::cloud::workflows::executions::v1::ListExecutionsResponse>{};
+            google::cloud::workflows::executions::v1::ListExecutionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::workflows::executions::v1::
              ListExecutionsResponse const&) {

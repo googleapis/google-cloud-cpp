@@ -59,7 +59,8 @@ StreamRange<std::string> GoldenKitchenSinkConnection::ListLogs(
     std::string>>(
     std::move(request),
     [](google::test::admin::database::v1::ListLogsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListLogsResponse>{};
+      return StatusOr<google::test::admin::database::v1::ListLogsResponse>(
+          Status(StatusCode::kUnimplemented, "not implemented"));
     },
     [](google::test::admin::database::v1::ListLogsResponse const&) {
       return std::vector<std::string>();

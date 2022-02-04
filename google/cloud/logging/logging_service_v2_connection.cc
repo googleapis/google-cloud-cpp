@@ -52,7 +52,8 @@ LoggingServiceV2Connection::ListLogEntries(
       StreamRange<google::logging::v2::LogEntry>>(
       std::move(request),
       [](google::logging::v2::ListLogEntriesRequest const&) {
-        return StatusOr<google::logging::v2::ListLogEntriesResponse>{};
+        return StatusOr<google::logging::v2::ListLogEntriesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::logging::v2::ListLogEntriesResponse const&) {
         return std::vector<google::logging::v2::LogEntry>();
@@ -67,7 +68,8 @@ LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
       std::move(request),
       [](google::logging::v2::ListMonitoredResourceDescriptorsRequest const&) {
         return StatusOr<
-            google::logging::v2::ListMonitoredResourceDescriptorsResponse>{};
+            google::logging::v2::ListMonitoredResourceDescriptorsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::logging::v2::ListMonitoredResourceDescriptorsResponse const&) {
         return std::vector<google::api::MonitoredResourceDescriptor>();
@@ -79,7 +81,8 @@ StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       std::move(request),
       [](google::logging::v2::ListLogsRequest const&) {
-        return StatusOr<google::logging::v2::ListLogsResponse>{};
+        return StatusOr<google::logging::v2::ListLogsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::logging::v2::ListLogsResponse const&) {
         return std::vector<std::string>();

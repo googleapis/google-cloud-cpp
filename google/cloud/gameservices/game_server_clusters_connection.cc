@@ -44,7 +44,8 @@ GameServerClustersServiceConnection::ListGameServerClusters(
       std::move(request),
       [](google::cloud::gaming::v1::ListGameServerClustersRequest const&) {
         return StatusOr<
-            google::cloud::gaming::v1::ListGameServerClustersResponse>{};
+            google::cloud::gaming::v1::ListGameServerClustersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::gaming::v1::ListGameServerClustersResponse const&) {
         return std::vector<google::cloud::gaming::v1::GameServerCluster>();

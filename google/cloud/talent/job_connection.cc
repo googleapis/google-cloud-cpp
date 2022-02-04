@@ -85,7 +85,8 @@ StreamRange<google::cloud::talent::v4::Job> JobServiceConnection::ListJobs(
       StreamRange<google::cloud::talent::v4::Job>>(
       std::move(request),
       [](google::cloud::talent::v4::ListJobsRequest const&) {
-        return StatusOr<google::cloud::talent::v4::ListJobsResponse>{};
+        return StatusOr<google::cloud::talent::v4::ListJobsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::talent::v4::ListJobsResponse const&) {
         return std::vector<google::cloud::talent::v4::Job>();

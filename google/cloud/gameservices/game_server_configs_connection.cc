@@ -44,7 +44,8 @@ GameServerConfigsServiceConnection::ListGameServerConfigs(
       std::move(request),
       [](google::cloud::gaming::v1::ListGameServerConfigsRequest const&) {
         return StatusOr<
-            google::cloud::gaming::v1::ListGameServerConfigsResponse>{};
+            google::cloud::gaming::v1::ListGameServerConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::gaming::v1::ListGameServerConfigsResponse const&) {
         return std::vector<google::cloud::gaming::v1::GameServerConfig>();

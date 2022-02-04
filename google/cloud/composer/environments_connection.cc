@@ -62,7 +62,8 @@ EnvironmentsConnection::ListEnvironments(
       [](google::cloud::orchestration::airflow::service::v1::
              ListEnvironmentsRequest const&) {
         return StatusOr<google::cloud::orchestration::airflow::service::v1::
-                            ListEnvironmentsResponse>{};
+                            ListEnvironmentsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::orchestration::airflow::service::v1::
              ListEnvironmentsResponse const&) {

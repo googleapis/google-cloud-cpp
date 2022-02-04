@@ -41,7 +41,8 @@ StreamRange<google::appengine::v1::Instance> InstancesConnection::ListInstances(
       StreamRange<google::appengine::v1::Instance>>(
       std::move(request),
       [](google::appengine::v1::ListInstancesRequest const&) {
-        return StatusOr<google::appengine::v1::ListInstancesResponse>{};
+        return StatusOr<google::appengine::v1::ListInstancesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::appengine::v1::ListInstancesResponse const&) {
         return std::vector<google::appengine::v1::Instance>();

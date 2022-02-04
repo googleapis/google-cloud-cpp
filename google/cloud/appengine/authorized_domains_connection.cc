@@ -41,7 +41,8 @@ AuthorizedDomainsConnection::ListAuthorizedDomains(
       StreamRange<google::appengine::v1::AuthorizedDomain>>(
       std::move(request),
       [](google::appengine::v1::ListAuthorizedDomainsRequest const&) {
-        return StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>{};
+        return StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::appengine::v1::ListAuthorizedDomainsResponse const&) {
         return std::vector<google::appengine::v1::AuthorizedDomain>();

@@ -49,7 +49,8 @@ StreamRange<google::cloud::asset::v1::Asset> AssetServiceConnection::ListAssets(
       StreamRange<google::cloud::asset::v1::Asset>>(
       std::move(request),
       [](google::cloud::asset::v1::ListAssetsRequest const&) {
-        return StatusOr<google::cloud::asset::v1::ListAssetsResponse>{};
+        return StatusOr<google::cloud::asset::v1::ListAssetsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::asset::v1::ListAssetsResponse const&) {
         return std::vector<google::cloud::asset::v1::Asset>();
@@ -95,7 +96,8 @@ AssetServiceConnection::SearchAllResources(
       StreamRange<google::cloud::asset::v1::ResourceSearchResult>>(
       std::move(request),
       [](google::cloud::asset::v1::SearchAllResourcesRequest const&) {
-        return StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>{};
+        return StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::asset::v1::SearchAllResourcesResponse const&) {
         return std::vector<google::cloud::asset::v1::ResourceSearchResult>();
@@ -109,8 +111,8 @@ AssetServiceConnection::SearchAllIamPolicies(
       StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>(
       std::move(request),
       [](google::cloud::asset::v1::SearchAllIamPoliciesRequest const&) {
-        return StatusOr<
-            google::cloud::asset::v1::SearchAllIamPoliciesResponse>{};
+        return StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::asset::v1::SearchAllIamPoliciesResponse const&) {
         return std::vector<google::cloud::asset::v1::IamPolicySearchResult>();

@@ -59,7 +59,8 @@ ManagedIdentitiesServiceConnection::ListDomains(
       std::move(request),
       [](google::cloud::managedidentities::v1::ListDomainsRequest const&) {
         return StatusOr<
-            google::cloud::managedidentities::v1::ListDomainsResponse>{};
+            google::cloud::managedidentities::v1::ListDomainsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::managedidentities::v1::ListDomainsResponse const&) {
         return std::vector<google::cloud::managedidentities::v1::Domain>();

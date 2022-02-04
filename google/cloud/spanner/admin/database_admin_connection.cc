@@ -43,7 +43,8 @@ DatabaseAdminConnection::ListDatabases(
       std::move(request),
       [](google::spanner::admin::database::v1::ListDatabasesRequest const&) {
         return StatusOr<
-            google::spanner::admin::database::v1::ListDatabasesResponse>{};
+            google::spanner::admin::database::v1::ListDatabasesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::spanner::admin::database::v1::ListDatabasesResponse const&) {
         return std::vector<google::spanner::admin::database::v1::Database>();
@@ -133,7 +134,8 @@ DatabaseAdminConnection::ListBackups(
       std::move(request),
       [](google::spanner::admin::database::v1::ListBackupsRequest const&) {
         return StatusOr<
-            google::spanner::admin::database::v1::ListBackupsResponse>{};
+            google::spanner::admin::database::v1::ListBackupsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::spanner::admin::database::v1::ListBackupsResponse const&) {
         return std::vector<google::spanner::admin::database::v1::Backup>();
@@ -158,7 +160,8 @@ DatabaseAdminConnection::ListDatabaseOperations(
       [](google::spanner::admin::database::v1::
              ListDatabaseOperationsRequest const&) {
         return StatusOr<google::spanner::admin::database::v1::
-                            ListDatabaseOperationsResponse>{};
+                            ListDatabaseOperationsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::spanner::admin::database::v1::
              ListDatabaseOperationsResponse const&) {
@@ -174,8 +177,9 @@ DatabaseAdminConnection::ListBackupOperations(
       std::move(request),
       [](google::spanner::admin::database::v1::
              ListBackupOperationsRequest const&) {
-        return StatusOr<google::spanner::admin::database::v1::
-                            ListBackupOperationsResponse>{};
+        return StatusOr<
+            google::spanner::admin::database::v1::ListBackupOperationsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::spanner::admin::database::v1::
              ListBackupOperationsResponse const&) {

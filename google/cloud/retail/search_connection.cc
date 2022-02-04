@@ -41,7 +41,8 @@ SearchServiceConnection::Search(
       StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
       std::move(request),
       [](google::cloud::retail::v2::SearchRequest const&) {
-        return StatusOr<google::cloud::retail::v2::SearchResponse>{};
+        return StatusOr<google::cloud::retail::v2::SearchResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::retail::v2::SearchResponse const&) {
         return std::vector<

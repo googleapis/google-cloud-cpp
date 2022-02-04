@@ -64,7 +64,8 @@ DeviceManagerConnection::ListDeviceRegistries(
       StreamRange<google::cloud::iot::v1::DeviceRegistry>>(
       std::move(request),
       [](google::cloud::iot::v1::ListDeviceRegistriesRequest const&) {
-        return StatusOr<google::cloud::iot::v1::ListDeviceRegistriesResponse>{};
+        return StatusOr<google::cloud::iot::v1::ListDeviceRegistriesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::iot::v1::ListDeviceRegistriesResponse const&) {
         return std::vector<google::cloud::iot::v1::DeviceRegistry>();
@@ -98,7 +99,8 @@ DeviceManagerConnection::ListDevices(
       StreamRange<google::cloud::iot::v1::Device>>(
       std::move(request),
       [](google::cloud::iot::v1::ListDevicesRequest const&) {
-        return StatusOr<google::cloud::iot::v1::ListDevicesResponse>{};
+        return StatusOr<google::cloud::iot::v1::ListDevicesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::iot::v1::ListDevicesResponse const&) {
         return std::vector<google::cloud::iot::v1::Device>();

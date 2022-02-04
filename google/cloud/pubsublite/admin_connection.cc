@@ -59,7 +59,8 @@ AdminServiceConnection::ListTopics(
       StreamRange<google::cloud::pubsublite::v1::Topic>>(
       std::move(request),
       [](google::cloud::pubsublite::v1::ListTopicsRequest const&) {
-        return StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse>{};
+        return StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::pubsublite::v1::ListTopicsResponse const&) {
         return std::vector<google::cloud::pubsublite::v1::Topic>();
@@ -83,7 +84,8 @@ StreamRange<std::string> AdminServiceConnection::ListTopicSubscriptions(
       std::move(request),
       [](google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&) {
         return StatusOr<
-            google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse>{};
+            google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse const&) {
         return std::vector<std::string>();
@@ -110,7 +112,8 @@ AdminServiceConnection::ListSubscriptions(
       std::move(request),
       [](google::cloud::pubsublite::v1::ListSubscriptionsRequest const&) {
         return StatusOr<
-            google::cloud::pubsublite::v1::ListSubscriptionsResponse>{};
+            google::cloud::pubsublite::v1::ListSubscriptionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::pubsublite::v1::ListSubscriptionsResponse const&) {
         return std::vector<google::cloud::pubsublite::v1::Subscription>();
@@ -156,7 +159,8 @@ AdminServiceConnection::ListReservations(
       std::move(request),
       [](google::cloud::pubsublite::v1::ListReservationsRequest const&) {
         return StatusOr<
-            google::cloud::pubsublite::v1::ListReservationsResponse>{};
+            google::cloud::pubsublite::v1::ListReservationsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::pubsublite::v1::ListReservationsResponse const&) {
         return std::vector<google::cloud::pubsublite::v1::Reservation>();
@@ -180,7 +184,8 @@ StreamRange<std::string> AdminServiceConnection::ListReservationTopics(
       std::move(request),
       [](google::cloud::pubsublite::v1::ListReservationTopicsRequest const&) {
         return StatusOr<
-            google::cloud::pubsublite::v1::ListReservationTopicsResponse>{};
+            google::cloud::pubsublite::v1::ListReservationTopicsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::pubsublite::v1::ListReservationTopicsResponse const&) {
         return std::vector<std::string>();

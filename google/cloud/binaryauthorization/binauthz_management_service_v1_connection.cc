@@ -73,7 +73,8 @@ BinauthzManagementServiceV1Connection::ListAttestors(
       std::move(request),
       [](google::cloud::binaryauthorization::v1::ListAttestorsRequest const&) {
         return StatusOr<
-            google::cloud::binaryauthorization::v1::ListAttestorsResponse>{};
+            google::cloud::binaryauthorization::v1::ListAttestorsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::binaryauthorization::v1::ListAttestorsResponse const&) {
         return std::vector<google::cloud::binaryauthorization::v1::Attestor>();

@@ -42,7 +42,8 @@ ApiGatewayServiceConnection::ListGateways(
       StreamRange<google::cloud::apigateway::v1::Gateway>>(
       std::move(request),
       [](google::cloud::apigateway::v1::ListGatewaysRequest const&) {
-        return StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>{};
+        return StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::apigateway::v1::ListGatewaysResponse const&) {
         return std::vector<google::cloud::apigateway::v1::Gateway>();
@@ -86,7 +87,8 @@ ApiGatewayServiceConnection::ListApis(
       StreamRange<google::cloud::apigateway::v1::Api>>(
       std::move(request),
       [](google::cloud::apigateway::v1::ListApisRequest const&) {
-        return StatusOr<google::cloud::apigateway::v1::ListApisResponse>{};
+        return StatusOr<google::cloud::apigateway::v1::ListApisResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::apigateway::v1::ListApisResponse const&) {
         return std::vector<google::cloud::apigateway::v1::Api>();
@@ -130,8 +132,8 @@ ApiGatewayServiceConnection::ListApiConfigs(
       StreamRange<google::cloud::apigateway::v1::ApiConfig>>(
       std::move(request),
       [](google::cloud::apigateway::v1::ListApiConfigsRequest const&) {
-        return StatusOr<
-            google::cloud::apigateway::v1::ListApiConfigsResponse>{};
+        return StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::apigateway::v1::ListApiConfigsResponse const&) {
         return std::vector<google::cloud::apigateway::v1::ApiConfig>();

@@ -54,7 +54,8 @@ StreamRange<google::cloud::automl::v1::Dataset> AutoMlConnection::ListDatasets(
       StreamRange<google::cloud::automl::v1::Dataset>>(
       std::move(request),
       [](google::cloud::automl::v1::ListDatasetsRequest const&) {
-        return StatusOr<google::cloud::automl::v1::ListDatasetsResponse>{};
+        return StatusOr<google::cloud::automl::v1::ListDatasetsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::automl::v1::ListDatasetsResponse const&) {
         return std::vector<google::cloud::automl::v1::Dataset>();
@@ -115,7 +116,8 @@ StreamRange<google::cloud::automl::v1::Model> AutoMlConnection::ListModels(
       StreamRange<google::cloud::automl::v1::Model>>(
       std::move(request),
       [](google::cloud::automl::v1::ListModelsRequest const&) {
-        return StatusOr<google::cloud::automl::v1::ListModelsResponse>{};
+        return StatusOr<google::cloud::automl::v1::ListModelsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::automl::v1::ListModelsResponse const&) {
         return std::vector<google::cloud::automl::v1::Model>();
@@ -173,7 +175,8 @@ AutoMlConnection::ListModelEvaluations(
       std::move(request),
       [](google::cloud::automl::v1::ListModelEvaluationsRequest const&) {
         return StatusOr<
-            google::cloud::automl::v1::ListModelEvaluationsResponse>{};
+            google::cloud::automl::v1::ListModelEvaluationsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::automl::v1::ListModelEvaluationsResponse const&) {
         return std::vector<google::cloud::automl::v1::ModelEvaluation>();

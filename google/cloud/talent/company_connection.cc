@@ -64,7 +64,8 @@ CompanyServiceConnection::ListCompanies(
       StreamRange<google::cloud::talent::v4::Company>>(
       std::move(request),
       [](google::cloud::talent::v4::ListCompaniesRequest const&) {
-        return StatusOr<google::cloud::talent::v4::ListCompaniesResponse>{};
+        return StatusOr<google::cloud::talent::v4::ListCompaniesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::talent::v4::ListCompaniesResponse const&) {
         return std::vector<google::cloud::talent::v4::Company>();

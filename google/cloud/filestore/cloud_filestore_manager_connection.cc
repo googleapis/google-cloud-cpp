@@ -42,7 +42,8 @@ CloudFilestoreManagerConnection::ListInstances(
       StreamRange<google::cloud::filestore::v1::Instance>>(
       std::move(request),
       [](google::cloud::filestore::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::filestore::v1::ListInstancesResponse>{};
+        return StatusOr<google::cloud::filestore::v1::ListInstancesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::filestore::v1::ListInstancesResponse const&) {
         return std::vector<google::cloud::filestore::v1::Instance>();
@@ -94,7 +95,8 @@ CloudFilestoreManagerConnection::ListBackups(
       StreamRange<google::cloud::filestore::v1::Backup>>(
       std::move(request),
       [](google::cloud::filestore::v1::ListBackupsRequest const&) {
-        return StatusOr<google::cloud::filestore::v1::ListBackupsResponse>{};
+        return StatusOr<google::cloud::filestore::v1::ListBackupsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::filestore::v1::ListBackupsResponse const&) {
         return std::vector<google::cloud::filestore::v1::Backup>();

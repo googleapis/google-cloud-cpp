@@ -41,8 +41,8 @@ OrgPolicyConnection::ListConstraints(
       StreamRange<google::cloud::orgpolicy::v2::Constraint>>(
       std::move(request),
       [](google::cloud::orgpolicy::v2::ListConstraintsRequest const&) {
-        return StatusOr<
-            google::cloud::orgpolicy::v2::ListConstraintsResponse>{};
+        return StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::orgpolicy::v2::ListConstraintsResponse const&) {
         return std::vector<google::cloud::orgpolicy::v2::Constraint>();
@@ -56,7 +56,8 @@ OrgPolicyConnection::ListPolicies(
       StreamRange<google::cloud::orgpolicy::v2::Policy>>(
       std::move(request),
       [](google::cloud::orgpolicy::v2::ListPoliciesRequest const&) {
-        return StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>{};
+        return StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::orgpolicy::v2::ListPoliciesResponse const&) {
         return std::vector<google::cloud::orgpolicy::v2::Policy>();

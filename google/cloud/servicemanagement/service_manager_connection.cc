@@ -43,7 +43,8 @@ ServiceManagerConnection::ListServices(
       std::move(request),
       [](google::api::servicemanagement::v1::ListServicesRequest const&) {
         return StatusOr<
-            google::api::servicemanagement::v1::ListServicesResponse>{};
+            google::api::servicemanagement::v1::ListServicesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::api::servicemanagement::v1::ListServicesResponse const&) {
         return std::vector<
@@ -88,7 +89,8 @@ StreamRange<google::api::Service> ServiceManagerConnection::ListServiceConfigs(
       std::move(request),
       [](google::api::servicemanagement::v1::ListServiceConfigsRequest const&) {
         return StatusOr<
-            google::api::servicemanagement::v1::ListServiceConfigsResponse>{};
+            google::api::servicemanagement::v1::ListServiceConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::api::servicemanagement::v1::
              ListServiceConfigsResponse const&) {
@@ -123,7 +125,8 @@ ServiceManagerConnection::ListServiceRollouts(
       [](google::api::servicemanagement::v1::
              ListServiceRolloutsRequest const&) {
         return StatusOr<
-            google::api::servicemanagement::v1::ListServiceRolloutsResponse>{};
+            google::api::servicemanagement::v1::ListServiceRolloutsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::api::servicemanagement::v1::
              ListServiceRolloutsResponse const&) {

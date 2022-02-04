@@ -49,7 +49,8 @@ OrganizationsConnection::SearchOrganizations(
       [](google::cloud::resourcemanager::v3::
              SearchOrganizationsRequest const&) {
         return StatusOr<
-            google::cloud::resourcemanager::v3::SearchOrganizationsResponse>{};
+            google::cloud::resourcemanager::v3::SearchOrganizationsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::resourcemanager::v3::
              SearchOrganizationsResponse const&) {

@@ -43,7 +43,8 @@ MetricServiceConnection::ListMonitoredResourceDescriptors(
       [](google::monitoring::v3::
              ListMonitoredResourceDescriptorsRequest const&) {
         return StatusOr<
-            google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>{};
+            google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::
              ListMonitoredResourceDescriptorsResponse const&) {
@@ -64,8 +65,8 @@ MetricServiceConnection::ListMetricDescriptors(
       StreamRange<google::api::MetricDescriptor>>(
       std::move(request),
       [](google::monitoring::v3::ListMetricDescriptorsRequest const&) {
-        return StatusOr<
-            google::monitoring::v3::ListMetricDescriptorsResponse>{};
+        return StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListMetricDescriptorsResponse const&) {
         return std::vector<google::api::MetricDescriptor>();
@@ -96,7 +97,8 @@ MetricServiceConnection::ListTimeSeries(
       StreamRange<google::monitoring::v3::TimeSeries>>(
       std::move(request),
       [](google::monitoring::v3::ListTimeSeriesRequest const&) {
-        return StatusOr<google::monitoring::v3::ListTimeSeriesResponse>{};
+        return StatusOr<google::monitoring::v3::ListTimeSeriesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListTimeSeriesResponse const&) {
         return std::vector<google::monitoring::v3::TimeSeries>();

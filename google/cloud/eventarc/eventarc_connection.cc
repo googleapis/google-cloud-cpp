@@ -47,7 +47,8 @@ EventarcConnection::ListTriggers(
       StreamRange<google::cloud::eventarc::v1::Trigger>>(
       std::move(request),
       [](google::cloud::eventarc::v1::ListTriggersRequest const&) {
-        return StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>{};
+        return StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::eventarc::v1::ListTriggersResponse const&) {
         return std::vector<google::cloud::eventarc::v1::Trigger>();

@@ -49,7 +49,8 @@ ProjectsConnection::ListProjects(
       std::move(request),
       [](google::cloud::resourcemanager::v3::ListProjectsRequest const&) {
         return StatusOr<
-            google::cloud::resourcemanager::v3::ListProjectsResponse>{};
+            google::cloud::resourcemanager::v3::ListProjectsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::resourcemanager::v3::ListProjectsResponse const&) {
         return std::vector<google::cloud::resourcemanager::v3::Project>();
@@ -64,7 +65,8 @@ ProjectsConnection::SearchProjects(
       std::move(request),
       [](google::cloud::resourcemanager::v3::SearchProjectsRequest const&) {
         return StatusOr<
-            google::cloud::resourcemanager::v3::SearchProjectsResponse>{};
+            google::cloud::resourcemanager::v3::SearchProjectsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::resourcemanager::v3::SearchProjectsResponse const&) {
         return std::vector<google::cloud::resourcemanager::v3::Project>();

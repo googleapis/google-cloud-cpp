@@ -45,7 +45,8 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListOccurrences(
       StreamRange<grafeas::v1::Occurrence>>(
       std::move(request),
       [](grafeas::v1::ListOccurrencesRequest const&) {
-        return StatusOr<grafeas::v1::ListOccurrencesResponse>{};
+        return StatusOr<grafeas::v1::ListOccurrencesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](grafeas::v1::ListOccurrencesResponse const&) {
         return std::vector<grafeas::v1::Occurrence>();
@@ -89,7 +90,8 @@ StreamRange<grafeas::v1::Note> GrafeasConnection::ListNotes(
       StreamRange<grafeas::v1::Note>>(
       std::move(request),
       [](grafeas::v1::ListNotesRequest const&) {
-        return StatusOr<grafeas::v1::ListNotesResponse>{};
+        return StatusOr<grafeas::v1::ListNotesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](grafeas::v1::ListNotesResponse const&) {
         return std::vector<grafeas::v1::Note>();
@@ -122,7 +124,8 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListNoteOccurrences(
       StreamRange<grafeas::v1::Occurrence>>(
       std::move(request),
       [](grafeas::v1::ListNoteOccurrencesRequest const&) {
-        return StatusOr<grafeas::v1::ListNoteOccurrencesResponse>{};
+        return StatusOr<grafeas::v1::ListNoteOccurrencesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](grafeas::v1::ListNoteOccurrencesResponse const&) {
         return std::vector<grafeas::v1::Occurrence>();

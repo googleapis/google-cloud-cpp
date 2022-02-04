@@ -54,7 +54,8 @@ ServiceMonitoringServiceConnection::ListServices(
       StreamRange<google::monitoring::v3::Service>>(
       std::move(request),
       [](google::monitoring::v3::ListServicesRequest const&) {
-        return StatusOr<google::monitoring::v3::ListServicesResponse>{};
+        return StatusOr<google::monitoring::v3::ListServicesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListServicesResponse const&) {
         return std::vector<google::monitoring::v3::Service>();
@@ -92,7 +93,8 @@ ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
       std::move(request),
       [](google::monitoring::v3::ListServiceLevelObjectivesRequest const&) {
         return StatusOr<
-            google::monitoring::v3::ListServiceLevelObjectivesResponse>{};
+            google::monitoring::v3::ListServiceLevelObjectivesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListServiceLevelObjectivesResponse const&) {
         return std::vector<google::monitoring::v3::ServiceLevelObjective>();

@@ -42,7 +42,8 @@ AuthorizedCertificatesConnection::ListAuthorizedCertificates(
       std::move(request),
       [](google::appengine::v1::ListAuthorizedCertificatesRequest const&) {
         return StatusOr<
-            google::appengine::v1::ListAuthorizedCertificatesResponse>{};
+            google::appengine::v1::ListAuthorizedCertificatesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::appengine::v1::ListAuthorizedCertificatesResponse const&) {
         return std::vector<google::appengine::v1::AuthorizedCertificate>();

@@ -67,7 +67,8 @@ IdentityAwareProxyOAuthServiceConnection::ListIdentityAwareProxyClients(
       std::move(request),
       [](google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&) {
         return StatusOr<
-            google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>{};
+            google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse const&) {
         return std::vector<google::cloud::iap::v1::IdentityAwareProxyClient>();

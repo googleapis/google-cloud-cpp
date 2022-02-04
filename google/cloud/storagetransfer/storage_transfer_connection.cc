@@ -66,8 +66,8 @@ StorageTransferServiceConnection::ListTransferJobs(
       StreamRange<google::storagetransfer::v1::TransferJob>>(
       std::move(request),
       [](google::storagetransfer::v1::ListTransferJobsRequest const&) {
-        return StatusOr<
-            google::storagetransfer::v1::ListTransferJobsResponse>{};
+        return StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::storagetransfer::v1::ListTransferJobsResponse const&) {
         return std::vector<google::storagetransfer::v1::TransferJob>();

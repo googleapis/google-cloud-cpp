@@ -64,7 +64,8 @@ ServiceUsageConnection::ListServices(
       StreamRange<google::api::serviceusage::v1::Service>>(
       std::move(request),
       [](google::api::serviceusage::v1::ListServicesRequest const&) {
-        return StatusOr<google::api::serviceusage::v1::ListServicesResponse>{};
+        return StatusOr<google::api::serviceusage::v1::ListServicesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::api::serviceusage::v1::ListServicesResponse const&) {
         return std::vector<google::api::serviceusage::v1::Service>();

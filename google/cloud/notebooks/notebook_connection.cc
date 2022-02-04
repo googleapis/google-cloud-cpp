@@ -42,7 +42,8 @@ NotebookServiceConnection::ListInstances(
       StreamRange<google::cloud::notebooks::v1::Instance>>(
       std::move(request),
       [](google::cloud::notebooks::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListInstancesResponse>{};
+        return StatusOr<google::cloud::notebooks::v1::ListInstancesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::notebooks::v1::ListInstancesResponse const&) {
         return std::vector<google::cloud::notebooks::v1::Instance>();
@@ -194,8 +195,8 @@ NotebookServiceConnection::ListEnvironments(
       StreamRange<google::cloud::notebooks::v1::Environment>>(
       std::move(request),
       [](google::cloud::notebooks::v1::ListEnvironmentsRequest const&) {
-        return StatusOr<
-            google::cloud::notebooks::v1::ListEnvironmentsResponse>{};
+        return StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::notebooks::v1::ListEnvironmentsResponse const&) {
         return std::vector<google::cloud::notebooks::v1::Environment>();
@@ -231,7 +232,8 @@ NotebookServiceConnection::ListSchedules(
       StreamRange<google::cloud::notebooks::v1::Schedule>>(
       std::move(request),
       [](google::cloud::notebooks::v1::ListSchedulesRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>{};
+        return StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::notebooks::v1::ListSchedulesResponse const&) {
         return std::vector<google::cloud::notebooks::v1::Schedule>();
@@ -275,7 +277,8 @@ NotebookServiceConnection::ListExecutions(
       StreamRange<google::cloud::notebooks::v1::Execution>>(
       std::move(request),
       [](google::cloud::notebooks::v1::ListExecutionsRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>{};
+        return StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::notebooks::v1::ListExecutionsResponse const&) {
         return std::vector<google::cloud::notebooks::v1::Execution>();

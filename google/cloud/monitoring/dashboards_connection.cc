@@ -48,7 +48,8 @@ DashboardsServiceConnection::ListDashboards(
       std::move(request),
       [](google::monitoring::dashboard::v1::ListDashboardsRequest const&) {
         return StatusOr<
-            google::monitoring::dashboard::v1::ListDashboardsResponse>{};
+            google::monitoring::dashboard::v1::ListDashboardsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::dashboard::v1::ListDashboardsResponse const&) {
         return std::vector<google::monitoring::dashboard::v1::Dashboard>();

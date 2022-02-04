@@ -43,7 +43,8 @@ AccessApprovalConnection::ListApprovalRequests(
       [](google::cloud::accessapproval::v1::
              ListApprovalRequestsMessage const&) {
         return StatusOr<
-            google::cloud::accessapproval::v1::ListApprovalRequestsResponse>{};
+            google::cloud::accessapproval::v1::ListApprovalRequestsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::accessapproval::v1::
              ListApprovalRequestsResponse const&) {

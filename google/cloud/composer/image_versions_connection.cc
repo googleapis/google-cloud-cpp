@@ -44,7 +44,8 @@ ImageVersionsConnection::ListImageVersions(
       [](google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsRequest const&) {
         return StatusOr<google::cloud::orchestration::airflow::service::v1::
-                            ListImageVersionsResponse>{};
+                            ListImageVersionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsResponse const&) {

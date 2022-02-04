@@ -60,7 +60,8 @@ BudgetServiceConnection::ListBudgets(
       std::move(request),
       [](google::cloud::billing::budgets::v1::ListBudgetsRequest const&) {
         return StatusOr<
-            google::cloud::billing::budgets::v1::ListBudgetsResponse>{};
+            google::cloud::billing::budgets::v1::ListBudgetsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::billing::budgets::v1::ListBudgetsResponse const&) {
         return std::vector<google::cloud::billing::budgets::v1::Budget>();

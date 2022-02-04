@@ -63,7 +63,8 @@ TenantServiceConnection::ListTenants(
       StreamRange<google::cloud::talent::v4::Tenant>>(
       std::move(request),
       [](google::cloud::talent::v4::ListTenantsRequest const&) {
-        return StatusOr<google::cloud::talent::v4::ListTenantsResponse>{};
+        return StatusOr<google::cloud::talent::v4::ListTenantsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::talent::v4::ListTenantsResponse const&) {
         return std::vector<google::cloud::talent::v4::Tenant>();

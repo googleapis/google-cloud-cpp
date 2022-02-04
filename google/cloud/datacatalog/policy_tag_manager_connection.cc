@@ -58,8 +58,8 @@ PolicyTagManagerConnection::ListTaxonomies(
       StreamRange<google::cloud::datacatalog::v1::Taxonomy>>(
       std::move(request),
       [](google::cloud::datacatalog::v1::ListTaxonomiesRequest const&) {
-        return StatusOr<
-            google::cloud::datacatalog::v1::ListTaxonomiesResponse>{};
+        return StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::datacatalog::v1::ListTaxonomiesResponse const&) {
         return std::vector<google::cloud::datacatalog::v1::Taxonomy>();
@@ -96,8 +96,8 @@ PolicyTagManagerConnection::ListPolicyTags(
       StreamRange<google::cloud::datacatalog::v1::PolicyTag>>(
       std::move(request),
       [](google::cloud::datacatalog::v1::ListPolicyTagsRequest const&) {
-        return StatusOr<
-            google::cloud::datacatalog::v1::ListPolicyTagsResponse>{};
+        return StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::datacatalog::v1::ListPolicyTagsResponse const&) {
         return std::vector<google::cloud::datacatalog::v1::PolicyTag>();

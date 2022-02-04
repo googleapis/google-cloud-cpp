@@ -41,7 +41,8 @@ StreamRange<google::appengine::v1::Service> ServicesConnection::ListServices(
       StreamRange<google::appengine::v1::Service>>(
       std::move(request),
       [](google::appengine::v1::ListServicesRequest const&) {
-        return StatusOr<google::appengine::v1::ListServicesResponse>{};
+        return StatusOr<google::appengine::v1::ListServicesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::appengine::v1::ListServicesResponse const&) {
         return std::vector<google::appengine::v1::Service>();

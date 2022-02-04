@@ -42,7 +42,8 @@ CloudFunctionsServiceConnection::ListFunctions(
       StreamRange<google::cloud::functions::v1::CloudFunction>>(
       std::move(request),
       [](google::cloud::functions::v1::ListFunctionsRequest const&) {
-        return StatusOr<google::cloud::functions::v1::ListFunctionsResponse>{};
+        return StatusOr<google::cloud::functions::v1::ListFunctionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::functions::v1::ListFunctionsResponse const&) {
         return std::vector<google::cloud::functions::v1::CloudFunction>();

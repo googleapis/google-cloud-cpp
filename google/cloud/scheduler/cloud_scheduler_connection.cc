@@ -41,7 +41,8 @@ CloudSchedulerConnection::ListJobs(
       StreamRange<google::cloud::scheduler::v1::Job>>(
       std::move(request),
       [](google::cloud::scheduler::v1::ListJobsRequest const&) {
-        return StatusOr<google::cloud::scheduler::v1::ListJobsResponse>{};
+        return StatusOr<google::cloud::scheduler::v1::ListJobsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::scheduler::v1::ListJobsResponse const&) {
         return std::vector<google::cloud::scheduler::v1::Job>();

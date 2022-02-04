@@ -41,7 +41,8 @@ StreamRange<google::appengine::v1::Version> VersionsConnection::ListVersions(
       StreamRange<google::appengine::v1::Version>>(
       std::move(request),
       [](google::appengine::v1::ListVersionsRequest const&) {
-        return StatusOr<google::appengine::v1::ListVersionsResponse>{};
+        return StatusOr<google::appengine::v1::ListVersionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::appengine::v1::ListVersionsResponse const&) {
         return std::vector<google::appengine::v1::Version>();

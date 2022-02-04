@@ -48,7 +48,8 @@ ProductSearchConnection::ListProductSets(
       StreamRange<google::cloud::vision::v1::ProductSet>>(
       std::move(request),
       [](google::cloud::vision::v1::ListProductSetsRequest const&) {
-        return StatusOr<google::cloud::vision::v1::ListProductSetsResponse>{};
+        return StatusOr<google::cloud::vision::v1::ListProductSetsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::vision::v1::ListProductSetsResponse const&) {
         return std::vector<google::cloud::vision::v1::ProductSet>();
@@ -85,7 +86,8 @@ ProductSearchConnection::ListProducts(
       StreamRange<google::cloud::vision::v1::Product>>(
       std::move(request),
       [](google::cloud::vision::v1::ListProductsRequest const&) {
-        return StatusOr<google::cloud::vision::v1::ListProductsResponse>{};
+        return StatusOr<google::cloud::vision::v1::ListProductsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::vision::v1::ListProductsResponse const&) {
         return std::vector<google::cloud::vision::v1::Product>();
@@ -127,8 +129,8 @@ ProductSearchConnection::ListReferenceImages(
       StreamRange<google::cloud::vision::v1::ReferenceImage>>(
       std::move(request),
       [](google::cloud::vision::v1::ListReferenceImagesRequest const&) {
-        return StatusOr<
-            google::cloud::vision::v1::ListReferenceImagesResponse>{};
+        return StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::vision::v1::ListReferenceImagesResponse const&) {
         return std::vector<google::cloud::vision::v1::ReferenceImage>();
@@ -159,7 +161,8 @@ ProductSearchConnection::ListProductsInProductSet(
       std::move(request),
       [](google::cloud::vision::v1::ListProductsInProductSetRequest const&) {
         return StatusOr<
-            google::cloud::vision::v1::ListProductsInProductSetResponse>{};
+            google::cloud::vision::v1::ListProductsInProductSetResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::vision::v1::ListProductsInProductSetResponse const&) {
         return std::vector<google::cloud::vision::v1::Product>();

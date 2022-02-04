@@ -42,7 +42,8 @@ CloudChannelServiceConnection::ListCustomers(
       StreamRange<google::cloud::channel::v1::Customer>>(
       std::move(request),
       [](google::cloud::channel::v1::ListCustomersRequest const&) {
-        return StatusOr<google::cloud::channel::v1::ListCustomersResponse>{};
+        return StatusOr<google::cloud::channel::v1::ListCustomersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListCustomersResponse const&) {
         return std::vector<google::cloud::channel::v1::Customer>();
@@ -99,7 +100,8 @@ CloudChannelServiceConnection::ListEntitlements(
       StreamRange<google::cloud::channel::v1::Entitlement>>(
       std::move(request),
       [](google::cloud::channel::v1::ListEntitlementsRequest const&) {
-        return StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>{};
+        return StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListEntitlementsResponse const&) {
         return std::vector<google::cloud::channel::v1::Entitlement>();
@@ -114,7 +116,8 @@ CloudChannelServiceConnection::ListTransferableSkus(
       std::move(request),
       [](google::cloud::channel::v1::ListTransferableSkusRequest const&) {
         return StatusOr<
-            google::cloud::channel::v1::ListTransferableSkusResponse>{};
+            google::cloud::channel::v1::ListTransferableSkusResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListTransferableSkusResponse const&) {
         return std::vector<google::cloud::channel::v1::TransferableSku>();
@@ -129,7 +132,8 @@ CloudChannelServiceConnection::ListTransferableOffers(
       std::move(request),
       [](google::cloud::channel::v1::ListTransferableOffersRequest const&) {
         return StatusOr<
-            google::cloud::channel::v1::ListTransferableOffersResponse>{};
+            google::cloud::channel::v1::ListTransferableOffersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListTransferableOffersResponse const&) {
         return std::vector<google::cloud::channel::v1::TransferableOffer>();
@@ -230,7 +234,8 @@ CloudChannelServiceConnection::ListChannelPartnerLinks(
       std::move(request),
       [](google::cloud::channel::v1::ListChannelPartnerLinksRequest const&) {
         return StatusOr<
-            google::cloud::channel::v1::ListChannelPartnerLinksResponse>{};
+            google::cloud::channel::v1::ListChannelPartnerLinksResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListChannelPartnerLinksResponse const&) {
         return std::vector<google::cloud::channel::v1::ChannelPartnerLink>();
@@ -268,7 +273,8 @@ CloudChannelServiceConnection::ListProducts(
       StreamRange<google::cloud::channel::v1::Product>>(
       std::move(request),
       [](google::cloud::channel::v1::ListProductsRequest const&) {
-        return StatusOr<google::cloud::channel::v1::ListProductsResponse>{};
+        return StatusOr<google::cloud::channel::v1::ListProductsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListProductsResponse const&) {
         return std::vector<google::cloud::channel::v1::Product>();
@@ -282,7 +288,8 @@ CloudChannelServiceConnection::ListSkus(
       StreamRange<google::cloud::channel::v1::Sku>>(
       std::move(request),
       [](google::cloud::channel::v1::ListSkusRequest const&) {
-        return StatusOr<google::cloud::channel::v1::ListSkusResponse>{};
+        return StatusOr<google::cloud::channel::v1::ListSkusResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListSkusResponse const&) {
         return std::vector<google::cloud::channel::v1::Sku>();
@@ -296,7 +303,8 @@ CloudChannelServiceConnection::ListOffers(
       StreamRange<google::cloud::channel::v1::Offer>>(
       std::move(request),
       [](google::cloud::channel::v1::ListOffersRequest const&) {
-        return StatusOr<google::cloud::channel::v1::ListOffersResponse>{};
+        return StatusOr<google::cloud::channel::v1::ListOffersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListOffersResponse const&) {
         return std::vector<google::cloud::channel::v1::Offer>();
@@ -311,7 +319,8 @@ CloudChannelServiceConnection::ListPurchasableSkus(
       std::move(request),
       [](google::cloud::channel::v1::ListPurchasableSkusRequest const&) {
         return StatusOr<
-            google::cloud::channel::v1::ListPurchasableSkusResponse>{};
+            google::cloud::channel::v1::ListPurchasableSkusResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListPurchasableSkusResponse const&) {
         return std::vector<google::cloud::channel::v1::PurchasableSku>();
@@ -326,7 +335,8 @@ CloudChannelServiceConnection::ListPurchasableOffers(
       std::move(request),
       [](google::cloud::channel::v1::ListPurchasableOffersRequest const&) {
         return StatusOr<
-            google::cloud::channel::v1::ListPurchasableOffersResponse>{};
+            google::cloud::channel::v1::ListPurchasableOffersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListPurchasableOffersResponse const&) {
         return std::vector<google::cloud::channel::v1::PurchasableOffer>();
@@ -350,7 +360,8 @@ StreamRange<std::string> CloudChannelServiceConnection::ListSubscribers(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       std::move(request),
       [](google::cloud::channel::v1::ListSubscribersRequest const&) {
-        return StatusOr<google::cloud::channel::v1::ListSubscribersResponse>{};
+        return StatusOr<google::cloud::channel::v1::ListSubscribersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::channel::v1::ListSubscribersResponse const&) {
         return std::vector<std::string>();

@@ -48,7 +48,8 @@ CloudBillingConnection::ListBillingAccounts(
       std::move(request),
       [](google::cloud::billing::v1::ListBillingAccountsRequest const&) {
         return StatusOr<
-            google::cloud::billing::v1::ListBillingAccountsResponse>{};
+            google::cloud::billing::v1::ListBillingAccountsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::billing::v1::ListBillingAccountsResponse const&) {
         return std::vector<google::cloud::billing::v1::BillingAccount>();
@@ -75,7 +76,8 @@ CloudBillingConnection::ListProjectBillingInfo(
       std::move(request),
       [](google::cloud::billing::v1::ListProjectBillingInfoRequest const&) {
         return StatusOr<
-            google::cloud::billing::v1::ListProjectBillingInfoResponse>{};
+            google::cloud::billing::v1::ListProjectBillingInfoResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::billing::v1::ListProjectBillingInfoResponse const&) {
         return std::vector<google::cloud::billing::v1::ProjectBillingInfo>();

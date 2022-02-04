@@ -41,7 +41,8 @@ AlertPolicyServiceConnection::ListAlertPolicies(
       StreamRange<google::monitoring::v3::AlertPolicy>>(
       std::move(request),
       [](google::monitoring::v3::ListAlertPoliciesRequest const&) {
-        return StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>{};
+        return StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListAlertPoliciesResponse const&) {
         return std::vector<google::monitoring::v3::AlertPolicy>();

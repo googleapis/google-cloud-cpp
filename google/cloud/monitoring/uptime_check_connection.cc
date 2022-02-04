@@ -41,8 +41,8 @@ UptimeCheckServiceConnection::ListUptimeCheckConfigs(
       StreamRange<google::monitoring::v3::UptimeCheckConfig>>(
       std::move(request),
       [](google::monitoring::v3::ListUptimeCheckConfigsRequest const&) {
-        return StatusOr<
-            google::monitoring::v3::ListUptimeCheckConfigsResponse>{};
+        return StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListUptimeCheckConfigsResponse const&) {
         return std::vector<google::monitoring::v3::UptimeCheckConfig>();
@@ -79,7 +79,8 @@ UptimeCheckServiceConnection::ListUptimeCheckIps(
       StreamRange<google::monitoring::v3::UptimeCheckIp>>(
       std::move(request),
       [](google::monitoring::v3::ListUptimeCheckIpsRequest const&) {
-        return StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>{};
+        return StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListUptimeCheckIpsResponse const&) {
         return std::vector<google::monitoring::v3::UptimeCheckIp>();

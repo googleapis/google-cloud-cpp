@@ -69,7 +69,8 @@ AssuredWorkloadsServiceConnection::ListWorkloads(
       std::move(request),
       [](google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&) {
         return StatusOr<
-            google::cloud::assuredworkloads::v1::ListWorkloadsResponse>{};
+            google::cloud::assuredworkloads::v1::ListWorkloadsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::assuredworkloads::v1::ListWorkloadsResponse const&) {
         return std::vector<google::cloud::assuredworkloads::v1::Workload>();

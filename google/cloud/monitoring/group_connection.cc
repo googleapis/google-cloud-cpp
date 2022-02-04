@@ -40,7 +40,8 @@ StreamRange<google::monitoring::v3::Group> GroupServiceConnection::ListGroups(
       StreamRange<google::monitoring::v3::Group>>(
       std::move(request),
       [](google::monitoring::v3::ListGroupsRequest const&) {
-        return StatusOr<google::monitoring::v3::ListGroupsResponse>{};
+        return StatusOr<google::monitoring::v3::ListGroupsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListGroupsResponse const&) {
         return std::vector<google::monitoring::v3::Group>();
@@ -74,7 +75,8 @@ GroupServiceConnection::ListGroupMembers(
       StreamRange<google::api::MonitoredResource>>(
       std::move(request),
       [](google::monitoring::v3::ListGroupMembersRequest const&) {
-        return StatusOr<google::monitoring::v3::ListGroupMembersResponse>{};
+        return StatusOr<google::monitoring::v3::ListGroupMembersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListGroupMembersResponse const&) {
         return std::vector<google::api::MonitoredResource>();

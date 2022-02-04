@@ -42,7 +42,8 @@ CloudRedisConnection::ListInstances(
       StreamRange<google::cloud::redis::v1::Instance>>(
       std::move(request),
       [](google::cloud::redis::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::redis::v1::ListInstancesResponse>{};
+        return StatusOr<google::cloud::redis::v1::ListInstancesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::redis::v1::ListInstancesResponse const&) {
         return std::vector<google::cloud::redis::v1::Instance>();

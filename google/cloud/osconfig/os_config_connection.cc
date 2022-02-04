@@ -59,7 +59,8 @@ OsConfigServiceConnection::ListPatchJobs(
       StreamRange<google::cloud::osconfig::v1::PatchJob>>(
       std::move(request),
       [](google::cloud::osconfig::v1::ListPatchJobsRequest const&) {
-        return StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>{};
+        return StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::osconfig::v1::ListPatchJobsResponse const&) {
         return std::vector<google::cloud::osconfig::v1::PatchJob>();
@@ -75,7 +76,8 @@ OsConfigServiceConnection::ListPatchJobInstanceDetails(
       [](google::cloud::osconfig::v1::
              ListPatchJobInstanceDetailsRequest const&) {
         return StatusOr<
-            google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>{};
+            google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::osconfig::v1::
              ListPatchJobInstanceDetailsResponse const&) {
@@ -104,7 +106,8 @@ OsConfigServiceConnection::ListPatchDeployments(
       std::move(request),
       [](google::cloud::osconfig::v1::ListPatchDeploymentsRequest const&) {
         return StatusOr<
-            google::cloud::osconfig::v1::ListPatchDeploymentsResponse>{};
+            google::cloud::osconfig::v1::ListPatchDeploymentsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::osconfig::v1::ListPatchDeploymentsResponse const&) {
         return std::vector<google::cloud::osconfig::v1::PatchDeployment>();

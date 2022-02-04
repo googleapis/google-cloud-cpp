@@ -41,8 +41,8 @@ DataCatalogConnection::SearchCatalog(
       StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>(
       std::move(request),
       [](google::cloud::datacatalog::v1::SearchCatalogRequest const&) {
-        return StatusOr<
-            google::cloud::datacatalog::v1::SearchCatalogResponse>{};
+        return StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::datacatalog::v1::SearchCatalogResponse const&) {
         return std::vector<
@@ -81,7 +81,8 @@ DataCatalogConnection::ListEntryGroups(
       std::move(request),
       [](google::cloud::datacatalog::v1::ListEntryGroupsRequest const&) {
         return StatusOr<
-            google::cloud::datacatalog::v1::ListEntryGroupsResponse>{};
+            google::cloud::datacatalog::v1::ListEntryGroupsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::datacatalog::v1::ListEntryGroupsResponse const&) {
         return std::vector<google::cloud::datacatalog::v1::EntryGroup>();
@@ -123,7 +124,8 @@ DataCatalogConnection::ListEntries(
       StreamRange<google::cloud::datacatalog::v1::Entry>>(
       std::move(request),
       [](google::cloud::datacatalog::v1::ListEntriesRequest const&) {
-        return StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse>{};
+        return StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::datacatalog::v1::ListEntriesResponse const&) {
         return std::vector<google::cloud::datacatalog::v1::Entry>();
@@ -205,7 +207,8 @@ DataCatalogConnection::ListTags(
       StreamRange<google::cloud::datacatalog::v1::Tag>>(
       std::move(request),
       [](google::cloud::datacatalog::v1::ListTagsRequest const&) {
-        return StatusOr<google::cloud::datacatalog::v1::ListTagsResponse>{};
+        return StatusOr<google::cloud::datacatalog::v1::ListTagsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::datacatalog::v1::ListTagsResponse const&) {
         return std::vector<google::cloud::datacatalog::v1::Tag>();

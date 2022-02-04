@@ -41,7 +41,8 @@ CloudCatalogConnection::ListServices(
       StreamRange<google::cloud::billing::v1::Service>>(
       std::move(request),
       [](google::cloud::billing::v1::ListServicesRequest const&) {
-        return StatusOr<google::cloud::billing::v1::ListServicesResponse>{};
+        return StatusOr<google::cloud::billing::v1::ListServicesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::billing::v1::ListServicesResponse const&) {
         return std::vector<google::cloud::billing::v1::Service>();
@@ -54,7 +55,8 @@ StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
       StreamRange<google::cloud::billing::v1::Sku>>(
       std::move(request),
       [](google::cloud::billing::v1::ListSkusRequest const&) {
-        return StatusOr<google::cloud::billing::v1::ListSkusResponse>{};
+        return StatusOr<google::cloud::billing::v1::ListSkusResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::billing::v1::ListSkusResponse const&) {
         return std::vector<google::cloud::billing::v1::Sku>();

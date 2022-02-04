@@ -42,7 +42,8 @@ DomainMappingsConnection::ListDomainMappings(
       StreamRange<google::appengine::v1::DomainMapping>>(
       std::move(request),
       [](google::appengine::v1::ListDomainMappingsRequest const&) {
-        return StatusOr<google::appengine::v1::ListDomainMappingsResponse>{};
+        return StatusOr<google::appengine::v1::ListDomainMappingsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::appengine::v1::ListDomainMappingsResponse const&) {
         return std::vector<google::appengine::v1::DomainMapping>();

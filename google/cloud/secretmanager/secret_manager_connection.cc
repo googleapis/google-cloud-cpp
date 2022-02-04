@@ -41,8 +41,8 @@ SecretManagerServiceConnection::ListSecrets(
       StreamRange<google::cloud::secretmanager::v1::Secret>>(
       std::move(request),
       [](google::cloud::secretmanager::v1::ListSecretsRequest const&) {
-        return StatusOr<
-            google::cloud::secretmanager::v1::ListSecretsResponse>{};
+        return StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::secretmanager::v1::ListSecretsResponse const&) {
         return std::vector<google::cloud::secretmanager::v1::Secret>();
@@ -86,7 +86,8 @@ SecretManagerServiceConnection::ListSecretVersions(
       std::move(request),
       [](google::cloud::secretmanager::v1::ListSecretVersionsRequest const&) {
         return StatusOr<
-            google::cloud::secretmanager::v1::ListSecretVersionsResponse>{};
+            google::cloud::secretmanager::v1::ListSecretVersionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::secretmanager::v1::ListSecretVersionsResponse const&) {
         return std::vector<google::cloud::secretmanager::v1::SecretVersion>();

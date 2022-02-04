@@ -57,7 +57,8 @@ CertificateAuthorityServiceConnection::ListCertificates(
       [](google::cloud::security::privateca::v1::
              ListCertificatesRequest const&) {
         return StatusOr<
-            google::cloud::security::privateca::v1::ListCertificatesResponse>{};
+            google::cloud::security::privateca::v1::ListCertificatesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::security::privateca::v1::
              ListCertificatesResponse const&) {
@@ -139,7 +140,8 @@ CertificateAuthorityServiceConnection::ListCertificateAuthorities(
       [](google::cloud::security::privateca::v1::
              ListCertificateAuthoritiesRequest const&) {
         return StatusOr<google::cloud::security::privateca::v1::
-                            ListCertificateAuthoritiesResponse>{};
+                            ListCertificateAuthoritiesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::security::privateca::v1::
              ListCertificateAuthoritiesResponse const&) {
@@ -205,7 +207,8 @@ CertificateAuthorityServiceConnection::ListCaPools(
       std::move(request),
       [](google::cloud::security::privateca::v1::ListCaPoolsRequest const&) {
         return StatusOr<
-            google::cloud::security::privateca::v1::ListCaPoolsResponse>{};
+            google::cloud::security::privateca::v1::ListCaPoolsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::security::privateca::v1::ListCaPoolsResponse const&) {
         return std::vector<google::cloud::security::privateca::v1::CaPool>();
@@ -243,7 +246,8 @@ CertificateAuthorityServiceConnection::ListCertificateRevocationLists(
       [](google::cloud::security::privateca::v1::
              ListCertificateRevocationListsRequest const&) {
         return StatusOr<google::cloud::security::privateca::v1::
-                            ListCertificateRevocationListsResponse>{};
+                            ListCertificateRevocationListsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::security::privateca::v1::
              ListCertificateRevocationListsResponse const&) {
@@ -297,7 +301,8 @@ CertificateAuthorityServiceConnection::ListCertificateTemplates(
       [](google::cloud::security::privateca::v1::
              ListCertificateTemplatesRequest const&) {
         return StatusOr<google::cloud::security::privateca::v1::
-                            ListCertificateTemplatesResponse>{};
+                            ListCertificateTemplatesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::security::privateca::v1::
              ListCertificateTemplatesResponse const&) {

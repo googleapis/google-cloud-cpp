@@ -42,7 +42,8 @@ ManagedNotebookServiceConnection::ListRuntimes(
       StreamRange<google::cloud::notebooks::v1::Runtime>>(
       std::move(request),
       [](google::cloud::notebooks::v1::ListRuntimesRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>{};
+        return StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::notebooks::v1::ListRuntimesResponse const&) {
         return std::vector<google::cloud::notebooks::v1::Runtime>();

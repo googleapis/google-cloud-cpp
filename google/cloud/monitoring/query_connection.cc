@@ -41,7 +41,8 @@ QueryServiceConnection::QueryTimeSeries(
       StreamRange<google::monitoring::v3::TimeSeriesData>>(
       std::move(request),
       [](google::monitoring::v3::QueryTimeSeriesRequest const&) {
-        return StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>{};
+        return StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::QueryTimeSeriesResponse const&) {
         return std::vector<google::monitoring::v3::TimeSeriesData>();

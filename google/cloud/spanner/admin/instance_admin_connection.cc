@@ -43,8 +43,9 @@ InstanceAdminConnection::ListInstanceConfigs(
       std::move(request),
       [](google::spanner::admin::instance::v1::
              ListInstanceConfigsRequest const&) {
-        return StatusOr<google::spanner::admin::instance::v1::
-                            ListInstanceConfigsResponse>{};
+        return StatusOr<
+            google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::spanner::admin::instance::v1::
              ListInstanceConfigsResponse const&) {
@@ -67,7 +68,8 @@ InstanceAdminConnection::ListInstances(
       std::move(request),
       [](google::spanner::admin::instance::v1::ListInstancesRequest const&) {
         return StatusOr<
-            google::spanner::admin::instance::v1::ListInstancesResponse>{};
+            google::spanner::admin::instance::v1::ListInstancesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::spanner::admin::instance::v1::ListInstancesResponse const&) {
         return std::vector<google::spanner::admin::instance::v1::Instance>();

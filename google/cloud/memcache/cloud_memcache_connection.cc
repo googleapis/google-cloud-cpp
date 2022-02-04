@@ -42,7 +42,8 @@ CloudMemcacheConnection::ListInstances(
       StreamRange<google::cloud::memcache::v1::Instance>>(
       std::move(request),
       [](google::cloud::memcache::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::memcache::v1::ListInstancesResponse>{};
+        return StatusOr<google::cloud::memcache::v1::ListInstancesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::memcache::v1::ListInstancesResponse const&) {
         return std::vector<google::cloud::memcache::v1::Instance>();

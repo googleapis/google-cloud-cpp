@@ -43,7 +43,8 @@ ArtifactRegistryConnection::ListDockerImages(
       [](google::devtools::artifactregistry::v1::
              ListDockerImagesRequest const&) {
         return StatusOr<
-            google::devtools::artifactregistry::v1::ListDockerImagesResponse>{};
+            google::devtools::artifactregistry::v1::ListDockerImagesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::devtools::artifactregistry::v1::
              ListDockerImagesResponse const&) {
@@ -61,7 +62,8 @@ ArtifactRegistryConnection::ListRepositories(
       [](google::devtools::artifactregistry::v1::
              ListRepositoriesRequest const&) {
         return StatusOr<
-            google::devtools::artifactregistry::v1::ListRepositoriesResponse>{};
+            google::devtools::artifactregistry::v1::ListRepositoriesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::devtools::artifactregistry::v1::
              ListRepositoriesResponse const&) {

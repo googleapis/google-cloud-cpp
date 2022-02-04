@@ -56,7 +56,8 @@ VpcAccessServiceConnection::ListConnectors(
       StreamRange<google::cloud::vpcaccess::v1::Connector>>(
       std::move(request),
       [](google::cloud::vpcaccess::v1::ListConnectorsRequest const&) {
-        return StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>{};
+        return StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::vpcaccess::v1::ListConnectorsResponse const&) {
         return std::vector<google::cloud::vpcaccess::v1::Connector>();

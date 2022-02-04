@@ -41,7 +41,8 @@ FirewallConnection::ListIngressRules(
       StreamRange<google::appengine::v1::FirewallRule>>(
       std::move(request),
       [](google::appengine::v1::ListIngressRulesRequest const&) {
-        return StatusOr<google::appengine::v1::ListIngressRulesResponse>{};
+        return StatusOr<google::appengine::v1::ListIngressRulesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::appengine::v1::ListIngressRulesResponse const&) {
         return std::vector<google::appengine::v1::FirewallRule>();

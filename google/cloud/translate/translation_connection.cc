@@ -90,8 +90,8 @@ TranslationServiceConnection::ListGlossaries(
       StreamRange<google::cloud::translation::v3::Glossary>>(
       std::move(request),
       [](google::cloud::translation::v3::ListGlossariesRequest const&) {
-        return StatusOr<
-            google::cloud::translation::v3::ListGlossariesResponse>{};
+        return StatusOr<google::cloud::translation::v3::ListGlossariesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::translation::v3::ListGlossariesResponse const&) {
         return std::vector<google::cloud::translation::v3::Glossary>();

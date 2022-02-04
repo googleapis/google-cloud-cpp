@@ -223,7 +223,8 @@ ClusterManagerConnection::ListUsableSubnetworks(
       StreamRange<google::container::v1::UsableSubnetwork>>(
       std::move(request),
       [](google::container::v1::ListUsableSubnetworksRequest const&) {
-        return StatusOr<google::container::v1::ListUsableSubnetworksResponse>{};
+        return StatusOr<google::container::v1::ListUsableSubnetworksResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::container::v1::ListUsableSubnetworksResponse const&) {
         return std::vector<google::container::v1::UsableSubnetwork>();

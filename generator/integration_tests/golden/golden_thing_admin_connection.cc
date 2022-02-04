@@ -41,7 +41,8 @@ StreamRange<google::test::admin::database::v1::Database> GoldenThingAdminConnect
     google::test::admin::database::v1::Database>>(
     std::move(request),
     [](google::test::admin::database::v1::ListDatabasesRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListDatabasesResponse>{};
+      return StatusOr<google::test::admin::database::v1::ListDatabasesResponse>(
+          Status(StatusCode::kUnimplemented, "not implemented"));
     },
     [](google::test::admin::database::v1::ListDatabasesResponse const&) {
       return std::vector<google::test::admin::database::v1::Database>();
@@ -132,7 +133,8 @@ StreamRange<google::test::admin::database::v1::Backup> GoldenThingAdminConnectio
     google::test::admin::database::v1::Backup>>(
     std::move(request),
     [](google::test::admin::database::v1::ListBackupsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListBackupsResponse>{};
+      return StatusOr<google::test::admin::database::v1::ListBackupsResponse>(
+          Status(StatusCode::kUnimplemented, "not implemented"));
     },
     [](google::test::admin::database::v1::ListBackupsResponse const&) {
       return std::vector<google::test::admin::database::v1::Backup>();
@@ -153,7 +155,8 @@ StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListData
     google::longrunning::Operation>>(
     std::move(request),
     [](google::test::admin::database::v1::ListDatabaseOperationsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>{};
+      return StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>(
+          Status(StatusCode::kUnimplemented, "not implemented"));
     },
     [](google::test::admin::database::v1::ListDatabaseOperationsResponse const&) {
       return std::vector<google::longrunning::Operation>();
@@ -166,7 +169,8 @@ StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListBack
     google::longrunning::Operation>>(
     std::move(request),
     [](google::test::admin::database::v1::ListBackupOperationsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>{};
+      return StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>(
+          Status(StatusCode::kUnimplemented, "not implemented"));
     },
     [](google::test::admin::database::v1::ListBackupOperationsResponse const&) {
       return std::vector<google::longrunning::Operation>();

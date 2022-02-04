@@ -59,7 +59,8 @@ WebSecurityScannerConnection::ListScanConfigs(
       std::move(request),
       [](google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&) {
         return StatusOr<
-            google::cloud::websecurityscanner::v1::ListScanConfigsResponse>{};
+            google::cloud::websecurityscanner::v1::ListScanConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::websecurityscanner::v1::
              ListScanConfigsResponse const&) {
@@ -93,7 +94,8 @@ WebSecurityScannerConnection::ListScanRuns(
       std::move(request),
       [](google::cloud::websecurityscanner::v1::ListScanRunsRequest const&) {
         return StatusOr<
-            google::cloud::websecurityscanner::v1::ListScanRunsResponse>{};
+            google::cloud::websecurityscanner::v1::ListScanRunsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::websecurityscanner::v1::ListScanRunsResponse const&) {
         return std::vector<google::cloud::websecurityscanner::v1::ScanRun>();
@@ -114,7 +116,8 @@ WebSecurityScannerConnection::ListCrawledUrls(
       std::move(request),
       [](google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&) {
         return StatusOr<
-            google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>{};
+            google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::websecurityscanner::v1::
              ListCrawledUrlsResponse const&) {
@@ -136,7 +139,8 @@ WebSecurityScannerConnection::ListFindings(
       std::move(request),
       [](google::cloud::websecurityscanner::v1::ListFindingsRequest const&) {
         return StatusOr<
-            google::cloud::websecurityscanner::v1::ListFindingsResponse>{};
+            google::cloud::websecurityscanner::v1::ListFindingsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::websecurityscanner::v1::ListFindingsResponse const&) {
         return std::vector<google::cloud::websecurityscanner::v1::Finding>();

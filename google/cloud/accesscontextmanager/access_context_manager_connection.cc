@@ -45,7 +45,8 @@ AccessContextManagerConnection::ListAccessPolicies(
       [](google::identity::accesscontextmanager::v1::
              ListAccessPoliciesRequest const&) {
         return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListAccessPoliciesResponse>{};
+                            ListAccessPoliciesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::identity::accesscontextmanager::v1::
              ListAccessPoliciesResponse const&) {
@@ -98,7 +99,8 @@ AccessContextManagerConnection::ListAccessLevels(
       [](google::identity::accesscontextmanager::v1::
              ListAccessLevelsRequest const&) {
         return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListAccessLevelsResponse>{};
+                            ListAccessLevelsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::identity::accesscontextmanager::v1::
              ListAccessLevelsResponse const&) {
@@ -162,7 +164,8 @@ AccessContextManagerConnection::ListServicePerimeters(
       [](google::identity::accesscontextmanager::v1::
              ListServicePerimetersRequest const&) {
         return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListServicePerimetersResponse>{};
+                            ListServicePerimetersResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::identity::accesscontextmanager::v1::
              ListServicePerimetersResponse const&) {
@@ -239,7 +242,8 @@ AccessContextManagerConnection::ListGcpUserAccessBindings(
       [](google::identity::accesscontextmanager::v1::
              ListGcpUserAccessBindingsRequest const&) {
         return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListGcpUserAccessBindingsResponse>{};
+                            ListGcpUserAccessBindingsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::identity::accesscontextmanager::v1::
              ListGcpUserAccessBindingsResponse const&) {

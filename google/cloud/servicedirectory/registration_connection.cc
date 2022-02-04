@@ -48,7 +48,8 @@ RegistrationServiceConnection::ListNamespaces(
       std::move(request),
       [](google::cloud::servicedirectory::v1::ListNamespacesRequest const&) {
         return StatusOr<
-            google::cloud::servicedirectory::v1::ListNamespacesResponse>{};
+            google::cloud::servicedirectory::v1::ListNamespacesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::servicedirectory::v1::ListNamespacesResponse const&) {
         return std::vector<google::cloud::servicedirectory::v1::Namespace>();
@@ -86,7 +87,8 @@ RegistrationServiceConnection::ListServices(
       std::move(request),
       [](google::cloud::servicedirectory::v1::ListServicesRequest const&) {
         return StatusOr<
-            google::cloud::servicedirectory::v1::ListServicesResponse>{};
+            google::cloud::servicedirectory::v1::ListServicesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::servicedirectory::v1::ListServicesResponse const&) {
         return std::vector<google::cloud::servicedirectory::v1::Service>();
@@ -124,7 +126,8 @@ RegistrationServiceConnection::ListEndpoints(
       std::move(request),
       [](google::cloud::servicedirectory::v1::ListEndpointsRequest const&) {
         return StatusOr<
-            google::cloud::servicedirectory::v1::ListEndpointsResponse>{};
+            google::cloud::servicedirectory::v1::ListEndpointsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::servicedirectory::v1::ListEndpointsResponse const&) {
         return std::vector<google::cloud::servicedirectory::v1::Endpoint>();

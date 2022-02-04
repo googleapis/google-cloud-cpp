@@ -41,7 +41,8 @@ RecommenderConnection::ListInsights(
       StreamRange<google::cloud::recommender::v1::Insight>>(
       std::move(request),
       [](google::cloud::recommender::v1::ListInsightsRequest const&) {
-        return StatusOr<google::cloud::recommender::v1::ListInsightsResponse>{};
+        return StatusOr<google::cloud::recommender::v1::ListInsightsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::recommender::v1::ListInsightsResponse const&) {
         return std::vector<google::cloud::recommender::v1::Insight>();
@@ -68,7 +69,8 @@ RecommenderConnection::ListRecommendations(
       std::move(request),
       [](google::cloud::recommender::v1::ListRecommendationsRequest const&) {
         return StatusOr<
-            google::cloud::recommender::v1::ListRecommendationsResponse>{};
+            google::cloud::recommender::v1::ListRecommendationsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::recommender::v1::ListRecommendationsResponse const&) {
         return std::vector<google::cloud::recommender::v1::Recommendation>();

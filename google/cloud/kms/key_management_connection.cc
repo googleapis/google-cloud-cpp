@@ -41,7 +41,8 @@ KeyManagementServiceConnection::ListKeyRings(
       StreamRange<google::cloud::kms::v1::KeyRing>>(
       std::move(request),
       [](google::cloud::kms::v1::ListKeyRingsRequest const&) {
-        return StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>{};
+        return StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::kms::v1::ListKeyRingsResponse const&) {
         return std::vector<google::cloud::kms::v1::KeyRing>();
@@ -55,7 +56,8 @@ KeyManagementServiceConnection::ListCryptoKeys(
       StreamRange<google::cloud::kms::v1::CryptoKey>>(
       std::move(request),
       [](google::cloud::kms::v1::ListCryptoKeysRequest const&) {
-        return StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse>{};
+        return StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::kms::v1::ListCryptoKeysResponse const&) {
         return std::vector<google::cloud::kms::v1::CryptoKey>();
@@ -69,8 +71,8 @@ KeyManagementServiceConnection::ListCryptoKeyVersions(
       StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>(
       std::move(request),
       [](google::cloud::kms::v1::ListCryptoKeyVersionsRequest const&) {
-        return StatusOr<
-            google::cloud::kms::v1::ListCryptoKeyVersionsResponse>{};
+        return StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::kms::v1::ListCryptoKeyVersionsResponse const&) {
         return std::vector<google::cloud::kms::v1::CryptoKeyVersion>();
@@ -84,7 +86,8 @@ KeyManagementServiceConnection::ListImportJobs(
       StreamRange<google::cloud::kms::v1::ImportJob>>(
       std::move(request),
       [](google::cloud::kms::v1::ListImportJobsRequest const&) {
-        return StatusOr<google::cloud::kms::v1::ListImportJobsResponse>{};
+        return StatusOr<google::cloud::kms::v1::ListImportJobsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::kms::v1::ListImportJobsResponse const&) {
         return std::vector<google::cloud::kms::v1::ImportJob>();

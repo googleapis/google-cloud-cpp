@@ -40,7 +40,8 @@ StreamRange<google::cloud::tasks::v2::Queue> CloudTasksConnection::ListQueues(
       StreamRange<google::cloud::tasks::v2::Queue>>(
       std::move(request),
       [](google::cloud::tasks::v2::ListQueuesRequest const&) {
-        return StatusOr<google::cloud::tasks::v2::ListQueuesResponse>{};
+        return StatusOr<google::cloud::tasks::v2::ListQueuesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::tasks::v2::ListQueuesResponse const&) {
         return std::vector<google::cloud::tasks::v2::Queue>();
@@ -104,7 +105,8 @@ StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnection::ListTasks(
       StreamRange<google::cloud::tasks::v2::Task>>(
       std::move(request),
       [](google::cloud::tasks::v2::ListTasksRequest const&) {
-        return StatusOr<google::cloud::tasks::v2::ListTasksResponse>{};
+        return StatusOr<google::cloud::tasks::v2::ListTasksResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::tasks::v2::ListTasksResponse const&) {
         return std::vector<google::cloud::tasks::v2::Task>();

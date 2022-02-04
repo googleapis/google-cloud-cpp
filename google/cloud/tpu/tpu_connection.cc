@@ -41,7 +41,8 @@ StreamRange<google::cloud::tpu::v1::Node> TpuConnection::ListNodes(
       StreamRange<google::cloud::tpu::v1::Node>>(
       std::move(request),
       [](google::cloud::tpu::v1::ListNodesRequest const&) {
-        return StatusOr<google::cloud::tpu::v1::ListNodesResponse>{};
+        return StatusOr<google::cloud::tpu::v1::ListNodesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::tpu::v1::ListNodesResponse const&) {
         return std::vector<google::cloud::tpu::v1::Node>();
@@ -95,8 +96,8 @@ TpuConnection::ListTensorFlowVersions(
       StreamRange<google::cloud::tpu::v1::TensorFlowVersion>>(
       std::move(request),
       [](google::cloud::tpu::v1::ListTensorFlowVersionsRequest const&) {
-        return StatusOr<
-            google::cloud::tpu::v1::ListTensorFlowVersionsResponse>{};
+        return StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::tpu::v1::ListTensorFlowVersionsResponse const&) {
         return std::vector<google::cloud::tpu::v1::TensorFlowVersion>();
@@ -116,7 +117,8 @@ TpuConnection::ListAcceleratorTypes(
       StreamRange<google::cloud::tpu::v1::AcceleratorType>>(
       std::move(request),
       [](google::cloud::tpu::v1::ListAcceleratorTypesRequest const&) {
-        return StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>{};
+        return StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::tpu::v1::ListAcceleratorTypesResponse const&) {
         return std::vector<google::cloud::tpu::v1::AcceleratorType>();

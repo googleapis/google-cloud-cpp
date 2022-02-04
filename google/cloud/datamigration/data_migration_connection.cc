@@ -42,8 +42,8 @@ DataMigrationServiceConnection::ListMigrationJobs(
       StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
       std::move(request),
       [](google::cloud::clouddms::v1::ListMigrationJobsRequest const&) {
-        return StatusOr<
-            google::cloud::clouddms::v1::ListMigrationJobsResponse>{};
+        return StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::clouddms::v1::ListMigrationJobsResponse const&) {
         return std::vector<google::cloud::clouddms::v1::MigrationJob>();
@@ -142,7 +142,8 @@ DataMigrationServiceConnection::ListConnectionProfiles(
       std::move(request),
       [](google::cloud::clouddms::v1::ListConnectionProfilesRequest const&) {
         return StatusOr<
-            google::cloud::clouddms::v1::ListConnectionProfilesResponse>{};
+            google::cloud::clouddms::v1::ListConnectionProfilesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::clouddms::v1::ListConnectionProfilesResponse const&) {
         return std::vector<google::cloud::clouddms::v1::ConnectionProfile>();

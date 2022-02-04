@@ -54,7 +54,8 @@ ProductServiceConnection::ListProducts(
       StreamRange<google::cloud::retail::v2::Product>>(
       std::move(request),
       [](google::cloud::retail::v2::ListProductsRequest const&) {
-        return StatusOr<google::cloud::retail::v2::ListProductsResponse>{};
+        return StatusOr<google::cloud::retail::v2::ListProductsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::retail::v2::ListProductsResponse const&) {
         return std::vector<google::cloud::retail::v2::Product>();

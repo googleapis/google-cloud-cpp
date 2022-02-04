@@ -43,8 +43,9 @@ NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
       std::move(request),
       [](google::monitoring::v3::
              ListNotificationChannelDescriptorsRequest const&) {
-        return StatusOr<google::monitoring::v3::
-                            ListNotificationChannelDescriptorsResponse>{};
+        return StatusOr<
+            google::monitoring::v3::ListNotificationChannelDescriptorsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::
              ListNotificationChannelDescriptorsResponse const&) {
@@ -67,7 +68,8 @@ NotificationChannelServiceConnection::ListNotificationChannels(
       std::move(request),
       [](google::monitoring::v3::ListNotificationChannelsRequest const&) {
         return StatusOr<
-            google::monitoring::v3::ListNotificationChannelsResponse>{};
+            google::monitoring::v3::ListNotificationChannelsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::monitoring::v3::ListNotificationChannelsResponse const&) {
         return std::vector<google::monitoring::v3::NotificationChannel>();

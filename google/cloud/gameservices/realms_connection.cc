@@ -42,7 +42,8 @@ RealmsServiceConnection::ListRealms(
       StreamRange<google::cloud::gaming::v1::Realm>>(
       std::move(request),
       [](google::cloud::gaming::v1::ListRealmsRequest const&) {
-        return StatusOr<google::cloud::gaming::v1::ListRealmsResponse>{};
+        return StatusOr<google::cloud::gaming::v1::ListRealmsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::gaming::v1::ListRealmsResponse const&) {
         return std::vector<google::cloud::gaming::v1::Realm>();

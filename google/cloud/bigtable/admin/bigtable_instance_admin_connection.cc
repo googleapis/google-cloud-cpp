@@ -134,7 +134,8 @@ BigtableInstanceAdminConnection::ListAppProfiles(
       StreamRange<google::bigtable::admin::v2::AppProfile>>(
       std::move(request),
       [](google::bigtable::admin::v2::ListAppProfilesRequest const&) {
-        return StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>{};
+        return StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::bigtable::admin::v2::ListAppProfilesResponse const&) {
         return std::vector<google::bigtable::admin::v2::AppProfile>();

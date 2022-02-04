@@ -45,7 +45,8 @@ ReachabilityServiceConnection::ListConnectivityTests(
       [](google::cloud::networkmanagement::v1::
              ListConnectivityTestsRequest const&) {
         return StatusOr<google::cloud::networkmanagement::v1::
-                            ListConnectivityTestsResponse>{};
+                            ListConnectivityTestsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::networkmanagement::v1::
              ListConnectivityTestsResponse const&) {

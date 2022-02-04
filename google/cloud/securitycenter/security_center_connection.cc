@@ -113,8 +113,8 @@ SecurityCenterConnection::GroupAssets(
       StreamRange<google::cloud::securitycenter::v1::GroupResult>>(
       std::move(request),
       [](google::cloud::securitycenter::v1::GroupAssetsRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::GroupAssetsResponse>{};
+        return StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::securitycenter::v1::GroupAssetsResponse const&) {
         return std::vector<google::cloud::securitycenter::v1::GroupResult>();
@@ -129,7 +129,8 @@ SecurityCenterConnection::GroupFindings(
       std::move(request),
       [](google::cloud::securitycenter::v1::GroupFindingsRequest const&) {
         return StatusOr<
-            google::cloud::securitycenter::v1::GroupFindingsResponse>{};
+            google::cloud::securitycenter::v1::GroupFindingsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::securitycenter::v1::GroupFindingsResponse const&) {
         return std::vector<google::cloud::securitycenter::v1::GroupResult>();
@@ -144,8 +145,8 @@ SecurityCenterConnection::ListAssets(
       google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>>(
       std::move(request),
       [](google::cloud::securitycenter::v1::ListAssetsRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::ListAssetsResponse>{};
+        return StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::securitycenter::v1::ListAssetsResponse const&) {
         return std::vector<google::cloud::securitycenter::v1::
@@ -163,7 +164,8 @@ SecurityCenterConnection::ListFindings(
       std::move(request),
       [](google::cloud::securitycenter::v1::ListFindingsRequest const&) {
         return StatusOr<
-            google::cloud::securitycenter::v1::ListFindingsResponse>{};
+            google::cloud::securitycenter::v1::ListFindingsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::securitycenter::v1::ListFindingsResponse const&) {
         return std::vector<google::cloud::securitycenter::v1::
@@ -179,7 +181,8 @@ SecurityCenterConnection::ListMuteConfigs(
       std::move(request),
       [](google::cloud::securitycenter::v1::ListMuteConfigsRequest const&) {
         return StatusOr<
-            google::cloud::securitycenter::v1::ListMuteConfigsResponse>{};
+            google::cloud::securitycenter::v1::ListMuteConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::securitycenter::v1::ListMuteConfigsResponse const&) {
         return std::vector<google::cloud::securitycenter::v1::MuteConfig>();
@@ -194,8 +197,9 @@ SecurityCenterConnection::ListNotificationConfigs(
       std::move(request),
       [](google::cloud::securitycenter::v1::
              ListNotificationConfigsRequest const&) {
-        return StatusOr<google::cloud::securitycenter::v1::
-                            ListNotificationConfigsResponse>{};
+        return StatusOr<
+            google::cloud::securitycenter::v1::ListNotificationConfigsResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::securitycenter::v1::
              ListNotificationConfigsResponse const&) {
@@ -211,8 +215,8 @@ SecurityCenterConnection::ListSources(
       StreamRange<google::cloud::securitycenter::v1::Source>>(
       std::move(request),
       [](google::cloud::securitycenter::v1::ListSourcesRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::ListSourcesResponse>{};
+        return StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse>(
+            Status(StatusCode::kUnimplemented, "not implemented"));
       },
       [](google::cloud::securitycenter::v1::ListSourcesResponse const&) {
         return std::vector<google::cloud::securitycenter::v1::Source>();
