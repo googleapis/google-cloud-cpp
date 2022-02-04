@@ -50,17 +50,11 @@ CloudBuildConnection::GetBuild(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::Build>
-CloudBuildConnection::ListBuilds(
-    google::devtools::cloudbuild::v1::ListBuildsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::cloudbuild::v1::Build>>(
-      std::move(request),
-      [](google::devtools::cloudbuild::v1::ListBuildsRequest const&) {
-        return StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>{};
-      },
-      [](google::devtools::cloudbuild::v1::ListBuildsResponse const&) {
-        return std::vector<google::devtools::cloudbuild::v1::Build>();
-      });
+    CloudBuildConnection::ListBuilds(
+        google::devtools::cloudbuild::v1::
+            ListBuildsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::cloudbuild::v1::Build>>();
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
@@ -98,18 +92,11 @@ CloudBuildConnection::GetBuildTrigger(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
-CloudBuildConnection::ListBuildTriggers(
-    google::devtools::cloudbuild::v1::ListBuildTriggersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>(
-      std::move(request),
-      [](google::devtools::cloudbuild::v1::ListBuildTriggersRequest const&) {
-        return StatusOr<
-            google::devtools::cloudbuild::v1::ListBuildTriggersResponse>{};
-      },
-      [](google::devtools::cloudbuild::v1::ListBuildTriggersResponse const&) {
-        return std::vector<google::devtools::cloudbuild::v1::BuildTrigger>();
-      });
+    CloudBuildConnection::ListBuildTriggers(
+        google::devtools::cloudbuild::v1::
+            ListBuildTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>();
 }
 
 Status CloudBuildConnection::DeleteBuildTrigger(
@@ -169,18 +156,11 @@ CloudBuildConnection::UpdateWorkerPool(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
-CloudBuildConnection::ListWorkerPools(
-    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>(
-      std::move(request),
-      [](google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const&) {
-        return StatusOr<
-            google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>{};
-      },
-      [](google::devtools::cloudbuild::v1::ListWorkerPoolsResponse const&) {
-        return std::vector<google::devtools::cloudbuild::v1::WorkerPool>();
-      });
+    CloudBuildConnection::ListWorkerPools(
+        google::devtools::cloudbuild::v1::
+            ListWorkerPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>();
 }
 
 std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(

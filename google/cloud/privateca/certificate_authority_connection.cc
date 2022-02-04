@@ -49,21 +49,11 @@ CertificateAuthorityServiceConnection::GetCertificate(
 }
 
 StreamRange<google::cloud::security::privateca::v1::Certificate>
-CertificateAuthorityServiceConnection::ListCertificates(
-    google::cloud::security::privateca::v1::ListCertificatesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::security::privateca::v1::Certificate>>(
-      std::move(request),
-      [](google::cloud::security::privateca::v1::
-             ListCertificatesRequest const&) {
-        return StatusOr<
-            google::cloud::security::privateca::v1::ListCertificatesResponse>{};
-      },
-      [](google::cloud::security::privateca::v1::
-             ListCertificatesResponse const&) {
-        return std::vector<
-            google::cloud::security::privateca::v1::Certificate>();
-      });
+    CertificateAuthorityServiceConnection::ListCertificates(
+        google::cloud::security::privateca::v1::
+            ListCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::security::privateca::v1::Certificate>>();
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -130,22 +120,11 @@ CertificateAuthorityServiceConnection::GetCertificateAuthority(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
-CertificateAuthorityServiceConnection::ListCertificateAuthorities(
-    google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::security::privateca::v1::CertificateAuthority>>(
-      std::move(request),
-      [](google::cloud::security::privateca::v1::
-             ListCertificateAuthoritiesRequest const&) {
-        return StatusOr<google::cloud::security::privateca::v1::
-                            ListCertificateAuthoritiesResponse>{};
-      },
-      [](google::cloud::security::privateca::v1::
-             ListCertificateAuthoritiesResponse const&) {
-        return std::vector<
-            google::cloud::security::privateca::v1::CertificateAuthority>();
-      });
+    CertificateAuthorityServiceConnection::ListCertificateAuthorities(
+        google::cloud::security::privateca::v1::
+            ListCertificateAuthoritiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::security::privateca::v1::CertificateAuthority>>();
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -198,18 +177,11 @@ CertificateAuthorityServiceConnection::GetCaPool(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CaPool>
-CertificateAuthorityServiceConnection::ListCaPools(
-    google::cloud::security::privateca::v1::ListCaPoolsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::security::privateca::v1::CaPool>>(
-      std::move(request),
-      [](google::cloud::security::privateca::v1::ListCaPoolsRequest const&) {
-        return StatusOr<
-            google::cloud::security::privateca::v1::ListCaPoolsResponse>{};
-      },
-      [](google::cloud::security::privateca::v1::ListCaPoolsResponse const&) {
-        return std::vector<google::cloud::security::privateca::v1::CaPool>();
-      });
+    CertificateAuthorityServiceConnection::ListCaPools(
+        google::cloud::security::privateca::v1::
+            ListCaPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::security::privateca::v1::CaPool>>();
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -234,22 +206,11 @@ CertificateAuthorityServiceConnection::GetCertificateRevocationList(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
-CertificateAuthorityServiceConnection::ListCertificateRevocationLists(
-    google::cloud::security::privateca::v1::
-        ListCertificateRevocationListsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::security::privateca::v1::CertificateRevocationList>>(
-      std::move(request),
-      [](google::cloud::security::privateca::v1::
-             ListCertificateRevocationListsRequest const&) {
-        return StatusOr<google::cloud::security::privateca::v1::
-                            ListCertificateRevocationListsResponse>{};
-      },
-      [](google::cloud::security::privateca::v1::
-             ListCertificateRevocationListsResponse const&) {
-        return std::vector<google::cloud::security::privateca::v1::
-                               CertificateRevocationList>();
-      });
+    CertificateAuthorityServiceConnection::ListCertificateRevocationLists(
+        google::cloud::security::privateca::v1::
+            ListCertificateRevocationListsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::security::privateca::v1::CertificateRevocationList>>();
 }
 
 future<
@@ -288,22 +249,11 @@ CertificateAuthorityServiceConnection::GetCertificateTemplate(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
-CertificateAuthorityServiceConnection::ListCertificateTemplates(
-    google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>>(
-      std::move(request),
-      [](google::cloud::security::privateca::v1::
-             ListCertificateTemplatesRequest const&) {
-        return StatusOr<google::cloud::security::privateca::v1::
-                            ListCertificateTemplatesResponse>{};
-      },
-      [](google::cloud::security::privateca::v1::
-             ListCertificateTemplatesResponse const&) {
-        return std::vector<
-            google::cloud::security::privateca::v1::CertificateTemplate>();
-      });
+    CertificateAuthorityServiceConnection::ListCertificateTemplates(
+        google::cloud::security::privateca::v1::
+            ListCertificateTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::security::privateca::v1::CertificateTemplate>>();
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>

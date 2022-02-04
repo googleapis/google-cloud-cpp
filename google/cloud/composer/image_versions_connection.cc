@@ -35,22 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageVersionsConnection::~ImageVersionsConnection() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-ImageVersionsConnection::ListImageVersions(
-    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::orchestration::airflow::service::v1::ImageVersion>>(
-      std::move(request),
-      [](google::cloud::orchestration::airflow::service::v1::
-             ListImageVersionsRequest const&) {
-        return StatusOr<google::cloud::orchestration::airflow::service::v1::
-                            ListImageVersionsResponse>{};
-      },
-      [](google::cloud::orchestration::airflow::service::v1::
-             ListImageVersionsResponse const&) {
-        return std::vector<
-            google::cloud::orchestration::airflow::service::v1::ImageVersion>();
-      });
+    ImageVersionsConnection::ListImageVersions(
+        google::cloud::orchestration::airflow::service::v1::
+            ListImageVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::orchestration::airflow::service::v1::ImageVersion>>();
 }
 
 std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(

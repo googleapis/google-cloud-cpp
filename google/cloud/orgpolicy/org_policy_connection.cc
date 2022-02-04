@@ -35,32 +35,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OrgPolicyConnection::~OrgPolicyConnection() = default;
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
-OrgPolicyConnection::ListConstraints(
-    google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::orgpolicy::v2::Constraint>>(
-      std::move(request),
-      [](google::cloud::orgpolicy::v2::ListConstraintsRequest const&) {
-        return StatusOr<
-            google::cloud::orgpolicy::v2::ListConstraintsResponse>{};
-      },
-      [](google::cloud::orgpolicy::v2::ListConstraintsResponse const&) {
-        return std::vector<google::cloud::orgpolicy::v2::Constraint>();
-      });
+    OrgPolicyConnection::ListConstraints(
+        google::cloud::orgpolicy::v2::
+            ListConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::Constraint>>();
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyConnection::ListPolicies(
-    google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::orgpolicy::v2::Policy>>(
-      std::move(request),
-      [](google::cloud::orgpolicy::v2::ListPoliciesRequest const&) {
-        return StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>{};
-      },
-      [](google::cloud::orgpolicy::v2::ListPoliciesResponse const&) {
-        return std::vector<google::cloud::orgpolicy::v2::Policy>();
-      });
+    OrgPolicyConnection::ListPolicies(
+        google::cloud::orgpolicy::v2::
+            ListPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::Policy>>();
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyConnection::GetPolicy(

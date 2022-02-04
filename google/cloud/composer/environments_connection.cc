@@ -53,22 +53,11 @@ EnvironmentsConnection::GetEnvironment(
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsConnection::ListEnvironments(
-    google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::orchestration::airflow::service::v1::Environment>>(
-      std::move(request),
-      [](google::cloud::orchestration::airflow::service::v1::
-             ListEnvironmentsRequest const&) {
-        return StatusOr<google::cloud::orchestration::airflow::service::v1::
-                            ListEnvironmentsResponse>{};
-      },
-      [](google::cloud::orchestration::airflow::service::v1::
-             ListEnvironmentsResponse const&) {
-        return std::vector<
-            google::cloud::orchestration::airflow::service::v1::Environment>();
-      });
+    EnvironmentsConnection::ListEnvironments(
+        google::cloud::orchestration::airflow::service::v1::
+            ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::orchestration::airflow::service::v1::Environment>>();
 }
 
 future<

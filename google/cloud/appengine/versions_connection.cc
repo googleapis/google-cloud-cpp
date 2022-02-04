@@ -36,16 +36,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VersionsConnection::~VersionsConnection() = default;
 
 StreamRange<google::appengine::v1::Version> VersionsConnection::ListVersions(
-    google::appengine::v1::ListVersionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::appengine::v1::Version>>(
-      std::move(request),
-      [](google::appengine::v1::ListVersionsRequest const&) {
-        return StatusOr<google::appengine::v1::ListVersionsResponse>{};
-      },
-      [](google::appengine::v1::ListVersionsResponse const&) {
-        return std::vector<google::appengine::v1::Version>();
-      });
+    google::appengine::v1::
+        ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::appengine::v1::Version>>();
 }
 
 StatusOr<google::appengine::v1::Version> VersionsConnection::GetVersion(

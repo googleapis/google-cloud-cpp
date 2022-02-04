@@ -37,18 +37,11 @@ GameServerDeploymentsServiceConnection::
     ~GameServerDeploymentsServiceConnection() = default;
 
 StreamRange<google::cloud::gaming::v1::GameServerDeployment>
-GameServerDeploymentsServiceConnection::ListGameServerDeployments(
-    google::cloud::gaming::v1::ListGameServerDeploymentsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gaming::v1::GameServerDeployment>>(
-      std::move(request),
-      [](google::cloud::gaming::v1::ListGameServerDeploymentsRequest const&) {
-        return StatusOr<
-            google::cloud::gaming::v1::ListGameServerDeploymentsResponse>{};
-      },
-      [](google::cloud::gaming::v1::ListGameServerDeploymentsResponse const&) {
-        return std::vector<google::cloud::gaming::v1::GameServerDeployment>();
-      });
+    GameServerDeploymentsServiceConnection::ListGameServerDeployments(
+        google::cloud::gaming::v1::
+            ListGameServerDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gaming::v1::GameServerDeployment>>();
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeployment>

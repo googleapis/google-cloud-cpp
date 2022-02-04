@@ -35,17 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommenderConnection::~RecommenderConnection() = default;
 
 StreamRange<google::cloud::recommender::v1::Insight>
-RecommenderConnection::ListInsights(
-    google::cloud::recommender::v1::ListInsightsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::recommender::v1::Insight>>(
-      std::move(request),
-      [](google::cloud::recommender::v1::ListInsightsRequest const&) {
-        return StatusOr<google::cloud::recommender::v1::ListInsightsResponse>{};
-      },
-      [](google::cloud::recommender::v1::ListInsightsResponse const&) {
-        return std::vector<google::cloud::recommender::v1::Insight>();
-      });
+    RecommenderConnection::ListInsights(
+        google::cloud::recommender::v1::
+            ListInsightsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::recommender::v1::Insight>>();
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
@@ -61,18 +55,11 @@ RecommenderConnection::MarkInsightAccepted(
 }
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
-RecommenderConnection::ListRecommendations(
-    google::cloud::recommender::v1::ListRecommendationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::recommender::v1::Recommendation>>(
-      std::move(request),
-      [](google::cloud::recommender::v1::ListRecommendationsRequest const&) {
-        return StatusOr<
-            google::cloud::recommender::v1::ListRecommendationsResponse>{};
-      },
-      [](google::cloud::recommender::v1::ListRecommendationsResponse const&) {
-        return std::vector<google::cloud::recommender::v1::Recommendation>();
-      });
+    RecommenderConnection::ListRecommendations(
+        google::cloud::recommender::v1::
+            ListRecommendationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::recommender::v1::Recommendation>>();
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>

@@ -50,17 +50,11 @@ VpcAccessServiceConnection::GetConnector(
 }
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>
-VpcAccessServiceConnection::ListConnectors(
-    google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vpcaccess::v1::Connector>>(
-      std::move(request),
-      [](google::cloud::vpcaccess::v1::ListConnectorsRequest const&) {
-        return StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>{};
-      },
-      [](google::cloud::vpcaccess::v1::ListConnectorsResponse const&) {
-        return std::vector<google::cloud::vpcaccess::v1::Connector>();
-      });
+    VpcAccessServiceConnection::ListConnectors(
+        google::cloud::vpcaccess::v1::
+            ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vpcaccess::v1::Connector>>();
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>

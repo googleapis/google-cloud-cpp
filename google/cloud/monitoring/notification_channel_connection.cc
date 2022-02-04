@@ -36,21 +36,11 @@ NotificationChannelServiceConnection::~NotificationChannelServiceConnection() =
     default;
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
-    google::monitoring::v3::ListNotificationChannelDescriptorsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::NotificationChannelDescriptor>>(
-      std::move(request),
-      [](google::monitoring::v3::
-             ListNotificationChannelDescriptorsRequest const&) {
-        return StatusOr<google::monitoring::v3::
-                            ListNotificationChannelDescriptorsResponse>{};
-      },
-      [](google::monitoring::v3::
-             ListNotificationChannelDescriptorsResponse const&) {
-        return std::vector<
-            google::monitoring::v3::NotificationChannelDescriptor>();
-      });
+    NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
+        google::monitoring::v3::
+            ListNotificationChannelDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::NotificationChannelDescriptor>>();
 }
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
@@ -60,18 +50,11 @@ NotificationChannelServiceConnection::GetNotificationChannelDescriptor(
 }
 
 StreamRange<google::monitoring::v3::NotificationChannel>
-NotificationChannelServiceConnection::ListNotificationChannels(
-    google::monitoring::v3::ListNotificationChannelsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::NotificationChannel>>(
-      std::move(request),
-      [](google::monitoring::v3::ListNotificationChannelsRequest const&) {
-        return StatusOr<
-            google::monitoring::v3::ListNotificationChannelsResponse>{};
-      },
-      [](google::monitoring::v3::ListNotificationChannelsResponse const&) {
-        return std::vector<google::monitoring::v3::NotificationChannel>();
-      });
+    NotificationChannelServiceConnection::ListNotificationChannels(
+        google::monitoring::v3::
+            ListNotificationChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::NotificationChannel>>();
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>

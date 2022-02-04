@@ -36,16 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
 StreamRange<google::test::admin::database::v1::Database> GoldenThingAdminConnection::ListDatabases(
-    google::test::admin::database::v1::ListDatabasesRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::test::admin::database::v1::Database>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListDatabasesRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListDatabasesResponse>{};
-    },
-    [](google::test::admin::database::v1::ListDatabasesResponse const&) {
-      return std::vector<google::test::admin::database::v1::Database>();
-    });
+    google::test::admin::database::v1::ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::test::admin::database::v1::Database>>();
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -127,16 +120,9 @@ GoldenThingAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::test::admin::database::v1::Backup> GoldenThingAdminConnection::ListBackups(
-    google::test::admin::database::v1::ListBackupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::test::admin::database::v1::Backup>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListBackupsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListBackupsResponse>{};
-    },
-    [](google::test::admin::database::v1::ListBackupsResponse const&) {
-      return std::vector<google::test::admin::database::v1::Backup>();
-    });
+    google::test::admin::database::v1::ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::test::admin::database::v1::Backup>>();
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -148,29 +134,15 @@ GoldenThingAdminConnection::RestoreDatabase(
 }
 
 StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListDatabaseOperations(
-    google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::longrunning::Operation>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListDatabaseOperationsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>{};
-    },
-    [](google::test::admin::database::v1::ListDatabaseOperationsResponse const&) {
-      return std::vector<google::longrunning::Operation>();
-    });
+    google::test::admin::database::v1::ListDatabaseOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListBackupOperations(
-    google::test::admin::database::v1::ListBackupOperationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::longrunning::Operation>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListBackupOperationsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>{};
-    },
-    [](google::test::admin::database::v1::ListBackupOperationsResponse const&) {
-      return std::vector<google::longrunning::Operation>();
-    });
+    google::test::admin::database::v1::ListBackupOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

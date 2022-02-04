@@ -36,18 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
 StreamRange<google::spanner::admin::database::v1::Database>
-DatabaseAdminConnection::ListDatabases(
-    google::spanner::admin::database::v1::ListDatabasesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::spanner::admin::database::v1::Database>>(
-      std::move(request),
-      [](google::spanner::admin::database::v1::ListDatabasesRequest const&) {
-        return StatusOr<
-            google::spanner::admin::database::v1::ListDatabasesResponse>{};
-      },
-      [](google::spanner::admin::database::v1::ListDatabasesResponse const&) {
-        return std::vector<google::spanner::admin::database::v1::Database>();
-      });
+    DatabaseAdminConnection::ListDatabases(
+        google::spanner::admin::database::v1::
+            ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::database::v1::Database>>();
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -126,18 +119,11 @@ Status DatabaseAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::spanner::admin::database::v1::Backup>
-DatabaseAdminConnection::ListBackups(
-    google::spanner::admin::database::v1::ListBackupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::spanner::admin::database::v1::Backup>>(
-      std::move(request),
-      [](google::spanner::admin::database::v1::ListBackupsRequest const&) {
-        return StatusOr<
-            google::spanner::admin::database::v1::ListBackupsResponse>{};
-      },
-      [](google::spanner::admin::database::v1::ListBackupsResponse const&) {
-        return std::vector<google::spanner::admin::database::v1::Backup>();
-      });
+    DatabaseAdminConnection::ListBackups(
+        google::spanner::admin::database::v1::
+            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::database::v1::Backup>>();
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -149,38 +135,19 @@ DatabaseAdminConnection::RestoreDatabase(
 }
 
 StreamRange<google::longrunning::Operation>
-DatabaseAdminConnection::ListDatabaseOperations(
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
-      std::move(request),
-      [](google::spanner::admin::database::v1::
-             ListDatabaseOperationsRequest const&) {
-        return StatusOr<google::spanner::admin::database::v1::
-                            ListDatabaseOperationsResponse>{};
-      },
-      [](google::spanner::admin::database::v1::
-             ListDatabaseOperationsResponse const&) {
-        return std::vector<google::longrunning::Operation>();
-      });
+    DatabaseAdminConnection::ListDatabaseOperations(
+        google::spanner::admin::database::v1::
+            ListDatabaseOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 StreamRange<google::longrunning::Operation>
-DatabaseAdminConnection::ListBackupOperations(
-    google::spanner::admin::database::v1::ListBackupOperationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::longrunning::Operation>>(
-      std::move(request),
-      [](google::spanner::admin::database::v1::
-             ListBackupOperationsRequest const&) {
-        return StatusOr<google::spanner::admin::database::v1::
-                            ListBackupOperationsResponse>{};
-      },
-      [](google::spanner::admin::database::v1::
-             ListBackupOperationsResponse const&) {
-        return std::vector<google::longrunning::Operation>();
-      });
+    DatabaseAdminConnection::ListBackupOperations(
+        google::spanner::admin::database::v1::
+            ListBackupOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(

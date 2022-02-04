@@ -36,16 +36,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IDSConnection::~IDSConnection() = default;
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSConnection::ListEndpoints(
-    google::cloud::ids::v1::ListEndpointsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::ids::v1::Endpoint>>(
-      std::move(request),
-      [](google::cloud::ids::v1::ListEndpointsRequest const&) {
-        return StatusOr<google::cloud::ids::v1::ListEndpointsResponse>{};
-      },
-      [](google::cloud::ids::v1::ListEndpointsResponse const&) {
-        return std::vector<google::cloud::ids::v1::Endpoint>();
-      });
+    google::cloud::ids::v1::
+        ListEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::ids::v1::Endpoint>>();
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSConnection::GetEndpoint(

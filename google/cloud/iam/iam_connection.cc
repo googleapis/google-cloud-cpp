@@ -35,17 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMConnection::~IAMConnection() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
-IAMConnection::ListServiceAccounts(
-    google::iam::admin::v1::ListServiceAccountsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::iam::admin::v1::ServiceAccount>>(
-      std::move(request),
-      [](google::iam::admin::v1::ListServiceAccountsRequest const&) {
-        return StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>{};
-      },
-      [](google::iam::admin::v1::ListServiceAccountsResponse const&) {
-        return std::vector<google::iam::admin::v1::ServiceAccount>();
-      });
+    IAMConnection::ListServiceAccounts(
+        google::iam::admin::v1::
+            ListServiceAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::iam::admin::v1::ServiceAccount>>();
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -133,29 +127,17 @@ IAMConnection::TestIamPermissions(
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMConnection::QueryGrantableRoles(
-    google::iam::admin::v1::QueryGrantableRolesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::iam::admin::v1::Role>>(
-      std::move(request),
-      [](google::iam::admin::v1::QueryGrantableRolesRequest const&) {
-        return StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>{};
-      },
-      [](google::iam::admin::v1::QueryGrantableRolesResponse const&) {
-        return std::vector<google::iam::admin::v1::Role>();
-      });
+    google::iam::admin::v1::
+        QueryGrantableRolesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::iam::admin::v1::Role>>();
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMConnection::ListRoles(
-    google::iam::admin::v1::ListRolesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::iam::admin::v1::Role>>(
-      std::move(request),
-      [](google::iam::admin::v1::ListRolesRequest const&) {
-        return StatusOr<google::iam::admin::v1::ListRolesResponse>{};
-      },
-      [](google::iam::admin::v1::ListRolesResponse const&) {
-        return std::vector<google::iam::admin::v1::Role>();
-      });
+    google::iam::admin::v1::
+        ListRolesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::iam::admin::v1::Role>>();
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMConnection::GetRole(
@@ -184,18 +166,11 @@ StatusOr<google::iam::admin::v1::Role> IAMConnection::UndeleteRole(
 }
 
 StreamRange<google::iam::admin::v1::Permission>
-IAMConnection::QueryTestablePermissions(
-    google::iam::admin::v1::QueryTestablePermissionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::iam::admin::v1::Permission>>(
-      std::move(request),
-      [](google::iam::admin::v1::QueryTestablePermissionsRequest const&) {
-        return StatusOr<
-            google::iam::admin::v1::QueryTestablePermissionsResponse>{};
-      },
-      [](google::iam::admin::v1::QueryTestablePermissionsResponse const&) {
-        return std::vector<google::iam::admin::v1::Permission>();
-      });
+    IAMConnection::QueryTestablePermissions(
+        google::iam::admin::v1::
+            QueryTestablePermissionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::iam::admin::v1::Permission>>();
 }
 
 StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>

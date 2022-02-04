@@ -35,39 +35,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-ArtifactRegistryConnection::ListDockerImages(
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::artifactregistry::v1::DockerImage>>(
-      std::move(request),
-      [](google::devtools::artifactregistry::v1::
-             ListDockerImagesRequest const&) {
-        return StatusOr<
-            google::devtools::artifactregistry::v1::ListDockerImagesResponse>{};
-      },
-      [](google::devtools::artifactregistry::v1::
-             ListDockerImagesResponse const&) {
-        return std::vector<
-            google::devtools::artifactregistry::v1::DockerImage>();
-      });
+    ArtifactRegistryConnection::ListDockerImages(
+        google::devtools::artifactregistry::v1::
+            ListDockerImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::DockerImage>>();
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryConnection::ListRepositories(
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::artifactregistry::v1::Repository>>(
-      std::move(request),
-      [](google::devtools::artifactregistry::v1::
-             ListRepositoriesRequest const&) {
-        return StatusOr<
-            google::devtools::artifactregistry::v1::ListRepositoriesResponse>{};
-      },
-      [](google::devtools::artifactregistry::v1::
-             ListRepositoriesResponse const&) {
-        return std::vector<
-            google::devtools::artifactregistry::v1::Repository>();
-      });
+    ArtifactRegistryConnection::ListRepositories(
+        google::devtools::artifactregistry::v1::
+            ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::Repository>>();
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>

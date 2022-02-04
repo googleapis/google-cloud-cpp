@@ -41,20 +41,11 @@ OrganizationsConnection::GetOrganization(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Organization>
-OrganizationsConnection::SearchOrganizations(
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcemanager::v3::Organization>>(
-      std::move(request),
-      [](google::cloud::resourcemanager::v3::
-             SearchOrganizationsRequest const&) {
-        return StatusOr<
-            google::cloud::resourcemanager::v3::SearchOrganizationsResponse>{};
-      },
-      [](google::cloud::resourcemanager::v3::
-             SearchOrganizationsResponse const&) {
-        return std::vector<google::cloud::resourcemanager::v3::Organization>();
-      });
+    OrganizationsConnection::SearchOrganizations(
+        google::cloud::resourcemanager::v3::
+            SearchOrganizationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::resourcemanager::v3::Organization>>();
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsConnection::GetIamPolicy(

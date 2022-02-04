@@ -35,17 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudSchedulerConnection::~CloudSchedulerConnection() = default;
 
 StreamRange<google::cloud::scheduler::v1::Job>
-CloudSchedulerConnection::ListJobs(
-    google::cloud::scheduler::v1::ListJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::scheduler::v1::Job>>(
-      std::move(request),
-      [](google::cloud::scheduler::v1::ListJobsRequest const&) {
-        return StatusOr<google::cloud::scheduler::v1::ListJobsResponse>{};
-      },
-      [](google::cloud::scheduler::v1::ListJobsResponse const&) {
-        return std::vector<google::cloud::scheduler::v1::Job>();
-      });
+    CloudSchedulerConnection::ListJobs(
+        google::cloud::scheduler::v1::
+            ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::scheduler::v1::Job>>();
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::GetJob(

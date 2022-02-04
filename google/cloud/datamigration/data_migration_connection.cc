@@ -36,18 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataMigrationServiceConnection::~DataMigrationServiceConnection() = default;
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceConnection::ListMigrationJobs(
-    google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
-      std::move(request),
-      [](google::cloud::clouddms::v1::ListMigrationJobsRequest const&) {
-        return StatusOr<
-            google::cloud::clouddms::v1::ListMigrationJobsResponse>{};
-      },
-      [](google::cloud::clouddms::v1::ListMigrationJobsResponse const&) {
-        return std::vector<google::cloud::clouddms::v1::MigrationJob>();
-      });
+    DataMigrationServiceConnection::ListMigrationJobs(
+        google::cloud::clouddms::v1::
+            ListMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::MigrationJob>>();
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
@@ -135,18 +128,11 @@ DataMigrationServiceConnection::GenerateSshScript(
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceConnection::ListConnectionProfiles(
-    google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>(
-      std::move(request),
-      [](google::cloud::clouddms::v1::ListConnectionProfilesRequest const&) {
-        return StatusOr<
-            google::cloud::clouddms::v1::ListConnectionProfilesResponse>{};
-      },
-      [](google::cloud::clouddms::v1::ListConnectionProfilesResponse const&) {
-        return std::vector<google::cloud::clouddms::v1::ConnectionProfile>();
-      });
+    DataMigrationServiceConnection::ListConnectionProfiles(
+        google::cloud::clouddms::v1::
+            ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>();
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>

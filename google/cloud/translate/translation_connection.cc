@@ -84,18 +84,11 @@ TranslationServiceConnection::CreateGlossary(
 }
 
 StreamRange<google::cloud::translation::v3::Glossary>
-TranslationServiceConnection::ListGlossaries(
-    google::cloud::translation::v3::ListGlossariesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::translation::v3::Glossary>>(
-      std::move(request),
-      [](google::cloud::translation::v3::ListGlossariesRequest const&) {
-        return StatusOr<
-            google::cloud::translation::v3::ListGlossariesResponse>{};
-      },
-      [](google::cloud::translation::v3::ListGlossariesResponse const&) {
-        return std::vector<google::cloud::translation::v3::Glossary>();
-      });
+    TranslationServiceConnection::ListGlossaries(
+        google::cloud::translation::v3::
+            ListGlossariesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::translation::v3::Glossary>>();
 }
 
 StatusOr<google::cloud::translation::v3::Glossary>

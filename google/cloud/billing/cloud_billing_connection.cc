@@ -41,18 +41,11 @@ CloudBillingConnection::GetBillingAccount(
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
-CloudBillingConnection::ListBillingAccounts(
-    google::cloud::billing::v1::ListBillingAccountsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::billing::v1::BillingAccount>>(
-      std::move(request),
-      [](google::cloud::billing::v1::ListBillingAccountsRequest const&) {
-        return StatusOr<
-            google::cloud::billing::v1::ListBillingAccountsResponse>{};
-      },
-      [](google::cloud::billing::v1::ListBillingAccountsResponse const&) {
-        return std::vector<google::cloud::billing::v1::BillingAccount>();
-      });
+    CloudBillingConnection::ListBillingAccounts(
+        google::cloud::billing::v1::
+            ListBillingAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::billing::v1::BillingAccount>>();
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
@@ -68,18 +61,11 @@ CloudBillingConnection::CreateBillingAccount(
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingConnection::ListProjectBillingInfo(
-    google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>(
-      std::move(request),
-      [](google::cloud::billing::v1::ListProjectBillingInfoRequest const&) {
-        return StatusOr<
-            google::cloud::billing::v1::ListProjectBillingInfoResponse>{};
-      },
-      [](google::cloud::billing::v1::ListProjectBillingInfoResponse const&) {
-        return std::vector<google::cloud::billing::v1::ProjectBillingInfo>();
-      });
+    CloudBillingConnection::ListProjectBillingInfo(
+        google::cloud::billing::v1::
+            ListProjectBillingInfoRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>();
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>

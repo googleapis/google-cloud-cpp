@@ -42,17 +42,11 @@ BigtableTableAdminConnection::CreateTable(
 }
 
 StreamRange<google::bigtable::admin::v2::Table>
-BigtableTableAdminConnection::ListTables(
-    google::bigtable::admin::v2::ListTablesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::bigtable::admin::v2::Table>>(
-      std::move(request),
-      [](google::bigtable::admin::v2::ListTablesRequest const&) {
-        return StatusOr<google::bigtable::admin::v2::ListTablesResponse>{};
-      },
-      [](google::bigtable::admin::v2::ListTablesResponse const&) {
-        return std::vector<google::bigtable::admin::v2::Table>();
-      });
+    BigtableTableAdminConnection::ListTables(
+        google::bigtable::admin::v2::
+            ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::Table>>();
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -115,17 +109,11 @@ Status BigtableTableAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::bigtable::admin::v2::Backup>
-BigtableTableAdminConnection::ListBackups(
-    google::bigtable::admin::v2::ListBackupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::bigtable::admin::v2::Backup>>(
-      std::move(request),
-      [](google::bigtable::admin::v2::ListBackupsRequest const&) {
-        return StatusOr<google::bigtable::admin::v2::ListBackupsResponse>{};
-      },
-      [](google::bigtable::admin::v2::ListBackupsResponse const&) {
-        return std::vector<google::bigtable::admin::v2::Backup>();
-      });
+    BigtableTableAdminConnection::ListBackups(
+        google::bigtable::admin::v2::
+            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::Backup>>();
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>

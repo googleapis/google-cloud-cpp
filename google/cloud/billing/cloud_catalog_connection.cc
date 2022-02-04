@@ -35,30 +35,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudCatalogConnection::~CloudCatalogConnection() = default;
 
 StreamRange<google::cloud::billing::v1::Service>
-CloudCatalogConnection::ListServices(
-    google::cloud::billing::v1::ListServicesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::billing::v1::Service>>(
-      std::move(request),
-      [](google::cloud::billing::v1::ListServicesRequest const&) {
-        return StatusOr<google::cloud::billing::v1::ListServicesResponse>{};
-      },
-      [](google::cloud::billing::v1::ListServicesResponse const&) {
-        return std::vector<google::cloud::billing::v1::Service>();
-      });
+    CloudCatalogConnection::ListServices(
+        google::cloud::billing::v1::
+            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::billing::v1::Service>>();
 }
 
 StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
-    google::cloud::billing::v1::ListSkusRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::billing::v1::Sku>>(
-      std::move(request),
-      [](google::cloud::billing::v1::ListSkusRequest const&) {
-        return StatusOr<google::cloud::billing::v1::ListSkusResponse>{};
-      },
-      [](google::cloud::billing::v1::ListSkusResponse const&) {
-        return std::vector<google::cloud::billing::v1::Sku>();
-      });
+    google::cloud::billing::v1::
+        ListSkusRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::billing::v1::Sku>>();
 }
 
 std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
