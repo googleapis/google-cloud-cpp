@@ -26,6 +26,6 @@ mapfile -t cmake_args < <(cmake::common_args)
 
 cmake "${cmake_args[@]}" -DCMAKE_CXX_STANDARD=20
 mapfile -t ctest_args < <(ctest::common_args)
-env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
+env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
 integration::ctest_with_emulators "cmake-out"

@@ -32,7 +32,7 @@ cmake "${cmake_args[@]}" \
   -DBUILD_SHARED_LIBS=ON
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
-env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
+env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 cmake --install cmake-out
 
 # Tests the installed artifacts by building and running the quickstarts.
