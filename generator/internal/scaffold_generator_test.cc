@@ -201,6 +201,9 @@ target_link_libraries(google_cloud_cpp_test_protos PUBLIC #
     google-cloud-cpp::api_annotations_protos
     google-cloud-cpp::api_http_protos)
 )"""));
+
+  EXPECT_THAT(actual, HasSubstr(R"""(add_executable(test_quickstart)"""));
+  EXPECT_THAT(actual, HasSubstr(R"""(EDIT HERE)"""));
 }
 
 TEST_F(ScaffoldGenerator, DoxygenMainPage) {
