@@ -26,10 +26,12 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
- * Interface for OAuth 2.0 credentials used to access Google Cloud services.
+ * Interface for OAuth 2.0 credentials for use with Google's Unified Auth Client
+ * (GUAC) library. Internally, GUAC credentials are mapped to the appropriate
+ * OAuth 2.0 credential for use with GCP services with a REST API.
  *
  * Instantiating a specific kind of `Credentials` should usually be done via the
- * convenience methods declared in google_credentials.h.
+ * GUAC convenience methods declared in google/cloud/credentials.h.
  *
  * @see https://cloud.google.com/docs/authentication/ for an overview of
  * authenticating to Google Cloud Platform APIs.
