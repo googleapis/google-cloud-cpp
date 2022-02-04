@@ -291,7 +291,7 @@ $connection_class_name$::Async$method_name$() {
              {
                  // clang-format off
    {"\nStreamRange<$range_output_type$> $connection_class_name$::$method_name$(\n"
-    "    $request_type$ request) {\n"
+    "    $request_type$) {\n"
     "  return google::cloud::internal::MakeUnimplementedPaginationRange<\n"
     "      StreamRange<$range_output_type$>>();\n"
     "}\n"
