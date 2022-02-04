@@ -159,6 +159,7 @@ releasing them early in case they elicit some feedback that requires changes.
 <br>
 
 * [Apigee Hybrid](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/apigeeconnect/README.md)
+* [Cloud Profiler](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/cloudprofiler/README.md)
 * [Contact Center AI Insights](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/contactcenterinsights/README.md)
 * [Data Catalog](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datacatalog/README.md)
 * [Dataproc](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dataproc/README.md)

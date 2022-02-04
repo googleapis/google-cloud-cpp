@@ -225,6 +225,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Cloud Profiler
+service {
+  service_proto_path: "google/devtools/cloudprofiler/v2/profiler.proto"
+  product_path: "google/cloud/cloudprofiler"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Composer
 service {
   service_proto_path: "google/cloud/orchestration/airflow/service/v1/environments.proto"
