@@ -37,16 +37,8 @@ ServicesConnection::~ServicesConnection() = default;
 
 StreamRange<google::appengine::v1::Service> ServicesConnection::ListServices(
     google::appengine::v1::ListServicesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::appengine::v1::Service>>(
-      std::move(request),
-      [](google::appengine::v1::ListServicesRequest const&) {
-        return StatusOr<google::appengine::v1::ListServicesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::appengine::v1::ListServicesResponse const&) {
-        return std::vector<google::appengine::v1::Service>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::appengine::v1::Service>>();
 }
 
 StatusOr<google::appengine::v1::Service> ServicesConnection::GetService(

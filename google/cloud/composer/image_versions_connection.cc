@@ -38,20 +38,8 @@ StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 ImageVersionsConnection::ListImageVersions(
     google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
         request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::orchestration::airflow::service::v1::ImageVersion>>(
-      std::move(request),
-      [](google::cloud::orchestration::airflow::service::v1::
-             ListImageVersionsRequest const&) {
-        return StatusOr<google::cloud::orchestration::airflow::service::v1::
-                            ListImageVersionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::orchestration::airflow::service::v1::
-             ListImageVersionsResponse const&) {
-        return std::vector<
-            google::cloud::orchestration::airflow::service::v1::ImageVersion>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::orchestration::airflow::service::v1::ImageVersion>>();
 }
 
 std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(

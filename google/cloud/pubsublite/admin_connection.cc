@@ -55,16 +55,8 @@ AdminServiceConnection::GetTopicPartitions(
 StreamRange<google::cloud::pubsublite::v1::Topic>
 AdminServiceConnection::ListTopics(
     google::cloud::pubsublite::v1::ListTopicsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::pubsublite::v1::Topic>>(
-      std::move(request),
-      [](google::cloud::pubsublite::v1::ListTopicsRequest const&) {
-        return StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::pubsublite::v1::ListTopicsResponse const&) {
-        return std::vector<google::cloud::pubsublite::v1::Topic>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::pubsublite::v1::Topic>>();
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
@@ -80,16 +72,8 @@ Status AdminServiceConnection::DeleteTopic(
 
 StreamRange<std::string> AdminServiceConnection::ListTopicSubscriptions(
     google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
-      [](google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&) {
-        return StatusOr<
-            google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse const&) {
-        return std::vector<std::string>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::string>>();
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
@@ -107,17 +91,8 @@ AdminServiceConnection::GetSubscription(
 StreamRange<google::cloud::pubsublite::v1::Subscription>
 AdminServiceConnection::ListSubscriptions(
     google::cloud::pubsublite::v1::ListSubscriptionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::pubsublite::v1::Subscription>>(
-      std::move(request),
-      [](google::cloud::pubsublite::v1::ListSubscriptionsRequest const&) {
-        return StatusOr<
-            google::cloud::pubsublite::v1::ListSubscriptionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::pubsublite::v1::ListSubscriptionsResponse const&) {
-        return std::vector<google::cloud::pubsublite::v1::Subscription>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::pubsublite::v1::Subscription>>();
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
@@ -154,17 +129,8 @@ AdminServiceConnection::GetReservation(
 StreamRange<google::cloud::pubsublite::v1::Reservation>
 AdminServiceConnection::ListReservations(
     google::cloud::pubsublite::v1::ListReservationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::pubsublite::v1::Reservation>>(
-      std::move(request),
-      [](google::cloud::pubsublite::v1::ListReservationsRequest const&) {
-        return StatusOr<
-            google::cloud::pubsublite::v1::ListReservationsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::pubsublite::v1::ListReservationsResponse const&) {
-        return std::vector<google::cloud::pubsublite::v1::Reservation>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::pubsublite::v1::Reservation>>();
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
@@ -180,16 +146,8 @@ Status AdminServiceConnection::DeleteReservation(
 
 StreamRange<std::string> AdminServiceConnection::ListReservationTopics(
     google::cloud::pubsublite::v1::ListReservationTopicsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
-      [](google::cloud::pubsublite::v1::ListReservationTopicsRequest const&) {
-        return StatusOr<
-            google::cloud::pubsublite::v1::ListReservationTopicsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::pubsublite::v1::ListReservationTopicsResponse const&) {
-        return std::vector<std::string>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::string>>();
 }
 
 std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(

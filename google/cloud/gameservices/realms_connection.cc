@@ -38,16 +38,8 @@ RealmsServiceConnection::~RealmsServiceConnection() = default;
 StreamRange<google::cloud::gaming::v1::Realm>
 RealmsServiceConnection::ListRealms(
     google::cloud::gaming::v1::ListRealmsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gaming::v1::Realm>>(
-      std::move(request),
-      [](google::cloud::gaming::v1::ListRealmsRequest const&) {
-        return StatusOr<google::cloud::gaming::v1::ListRealmsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::gaming::v1::ListRealmsResponse const&) {
-        return std::vector<google::cloud::gaming::v1::Realm>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gaming::v1::Realm>>();
 }
 
 StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceConnection::GetRealm(

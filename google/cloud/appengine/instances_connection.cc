@@ -37,16 +37,8 @@ InstancesConnection::~InstancesConnection() = default;
 
 StreamRange<google::appengine::v1::Instance> InstancesConnection::ListInstances(
     google::appengine::v1::ListInstancesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::appengine::v1::Instance>>(
-      std::move(request),
-      [](google::appengine::v1::ListInstancesRequest const&) {
-        return StatusOr<google::appengine::v1::ListInstancesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::appengine::v1::ListInstancesResponse const&) {
-        return std::vector<google::appengine::v1::Instance>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::appengine::v1::Instance>>();
 }
 
 StatusOr<google::appengine::v1::Instance> InstancesConnection::GetInstance(

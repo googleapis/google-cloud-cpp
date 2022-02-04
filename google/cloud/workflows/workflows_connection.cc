@@ -38,16 +38,8 @@ WorkflowsConnection::~WorkflowsConnection() = default;
 StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsConnection::ListWorkflows(
     google::cloud::workflows::v1::ListWorkflowsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::workflows::v1::Workflow>>(
-      std::move(request),
-      [](google::cloud::workflows::v1::ListWorkflowsRequest const&) {
-        return StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::workflows::v1::ListWorkflowsResponse const&) {
-        return std::vector<google::cloud::workflows::v1::Workflow>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::workflows::v1::Workflow>>();
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow>

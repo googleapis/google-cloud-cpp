@@ -39,20 +39,8 @@ StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerConnection::ListAccessPolicies(
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
         request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessPoliciesRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListAccessPoliciesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessPoliciesResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::AccessPolicy>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
@@ -93,20 +81,8 @@ StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
 AccessContextManagerConnection::ListAccessLevels(
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
         request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessLevelsRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListAccessLevelsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessLevelsResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::AccessLevel>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
@@ -158,20 +134,8 @@ StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
 AccessContextManagerConnection::ListServicePerimeters(
     google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
         request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListServicePerimetersRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListServicePerimetersResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListServicePerimetersResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::ServicePerimeter>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::identity::accesscontextmanager::v1::ServicePerimeter>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
@@ -236,20 +200,8 @@ StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
 AccessContextManagerConnection::ListGcpUserAccessBindings(
     google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
         request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListGcpUserAccessBindingsRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListGcpUserAccessBindingsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListGcpUserAccessBindingsResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::GcpUserAccessBinding>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>

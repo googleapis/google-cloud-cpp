@@ -48,45 +48,21 @@ LoggingServiceV2Connection::WriteLogEntries(
 StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2Connection::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::logging::v2::LogEntry>>(
-      std::move(request),
-      [](google::logging::v2::ListLogEntriesRequest const&) {
-        return StatusOr<google::logging::v2::ListLogEntriesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::logging::v2::ListLogEntriesResponse const&) {
-        return std::vector<google::logging::v2::LogEntry>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::logging::v2::LogEntry>>();
 }
 
 StreamRange<google::api::MonitoredResourceDescriptor>
 LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
     google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::MonitoredResourceDescriptor>>(
-      std::move(request),
-      [](google::logging::v2::ListMonitoredResourceDescriptorsRequest const&) {
-        return StatusOr<
-            google::logging::v2::ListMonitoredResourceDescriptorsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::logging::v2::ListMonitoredResourceDescriptorsResponse const&) {
-        return std::vector<google::api::MonitoredResourceDescriptor>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::MonitoredResourceDescriptor>>();
 }
 
 StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
     google::logging::v2::ListLogsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
-      [](google::logging::v2::ListLogsRequest const&) {
-        return StatusOr<google::logging::v2::ListLogsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::logging::v2::ListLogsResponse const&) {
-        return std::vector<std::string>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::string>>();
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

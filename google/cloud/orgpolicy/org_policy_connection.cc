@@ -37,31 +37,15 @@ OrgPolicyConnection::~OrgPolicyConnection() = default;
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
 OrgPolicyConnection::ListConstraints(
     google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::orgpolicy::v2::Constraint>>(
-      std::move(request),
-      [](google::cloud::orgpolicy::v2::ListConstraintsRequest const&) {
-        return StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::orgpolicy::v2::ListConstraintsResponse const&) {
-        return std::vector<google::cloud::orgpolicy::v2::Constraint>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::Constraint>>();
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyConnection::ListPolicies(
     google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::orgpolicy::v2::Policy>>(
-      std::move(request),
-      [](google::cloud::orgpolicy::v2::ListPoliciesRequest const&) {
-        return StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::orgpolicy::v2::ListPoliciesResponse const&) {
-        return std::vector<google::cloud::orgpolicy::v2::Policy>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::Policy>>();
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyConnection::GetPolicy(

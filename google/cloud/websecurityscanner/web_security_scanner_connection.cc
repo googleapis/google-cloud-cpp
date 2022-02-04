@@ -54,18 +54,8 @@ WebSecurityScannerConnection::GetScanConfig(
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnection::ListScanConfigs(
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>(
-      std::move(request),
-      [](google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&) {
-        return StatusOr<
-            google::cloud::websecurityscanner::v1::ListScanConfigsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::websecurityscanner::v1::
-             ListScanConfigsResponse const&) {
-        return std::vector<google::cloud::websecurityscanner::v1::ScanConfig>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>();
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
@@ -89,17 +79,8 @@ WebSecurityScannerConnection::GetScanRun(
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerConnection::ListScanRuns(
     google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>(
-      std::move(request),
-      [](google::cloud::websecurityscanner::v1::ListScanRunsRequest const&) {
-        return StatusOr<
-            google::cloud::websecurityscanner::v1::ListScanRunsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::websecurityscanner::v1::ListScanRunsResponse const&) {
-        return std::vector<google::cloud::websecurityscanner::v1::ScanRun>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>();
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
@@ -111,18 +92,8 @@ WebSecurityScannerConnection::StopScanRun(
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
 WebSecurityScannerConnection::ListCrawledUrls(
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>(
-      std::move(request),
-      [](google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&) {
-        return StatusOr<
-            google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::websecurityscanner::v1::
-             ListCrawledUrlsResponse const&) {
-        return std::vector<google::cloud::websecurityscanner::v1::CrawledUrl>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>();
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
@@ -134,17 +105,8 @@ WebSecurityScannerConnection::GetFinding(
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerConnection::ListFindings(
     google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::websecurityscanner::v1::Finding>>(
-      std::move(request),
-      [](google::cloud::websecurityscanner::v1::ListFindingsRequest const&) {
-        return StatusOr<
-            google::cloud::websecurityscanner::v1::ListFindingsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::websecurityscanner::v1::ListFindingsResponse const&) {
-        return std::vector<google::cloud::websecurityscanner::v1::Finding>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::websecurityscanner::v1::Finding>>();
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>

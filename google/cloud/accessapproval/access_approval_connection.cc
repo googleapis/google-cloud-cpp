@@ -37,20 +37,8 @@ AccessApprovalConnection::~AccessApprovalConnection() = default;
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalConnection::ListApprovalRequests(
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>(
-      std::move(request),
-      [](google::cloud::accessapproval::v1::
-             ListApprovalRequestsMessage const&) {
-        return StatusOr<
-            google::cloud::accessapproval::v1::ListApprovalRequestsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::accessapproval::v1::
-             ListApprovalRequestsResponse const&) {
-        return std::vector<
-            google::cloud::accessapproval::v1::ApprovalRequest>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>();
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>

@@ -39,17 +39,8 @@ GameServerClustersServiceConnection::~GameServerClustersServiceConnection() =
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceConnection::ListGameServerClusters(
     google::cloud::gaming::v1::ListGameServerClustersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gaming::v1::GameServerCluster>>(
-      std::move(request),
-      [](google::cloud::gaming::v1::ListGameServerClustersRequest const&) {
-        return StatusOr<
-            google::cloud::gaming::v1::ListGameServerClustersResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::gaming::v1::ListGameServerClustersResponse const&) {
-        return std::vector<google::cloud::gaming::v1::GameServerCluster>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gaming::v1::GameServerCluster>>();
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerCluster>

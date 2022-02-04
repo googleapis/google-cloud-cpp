@@ -39,20 +39,8 @@ StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceConnection::ListConnectivityTests(
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
         request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      std::move(request),
-      [](google::cloud::networkmanagement::v1::
-             ListConnectivityTestsRequest const&) {
-        return StatusOr<google::cloud::networkmanagement::v1::
-                            ListConnectivityTestsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::networkmanagement::v1::
-             ListConnectivityTestsResponse const&) {
-        return std::vector<
-            google::cloud::networkmanagement::v1::ConnectivityTest>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>();
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>

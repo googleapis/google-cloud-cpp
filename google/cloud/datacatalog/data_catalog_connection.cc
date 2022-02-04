@@ -37,17 +37,8 @@ DataCatalogConnection::~DataCatalogConnection() = default;
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogConnection::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>(
-      std::move(request),
-      [](google::cloud::datacatalog::v1::SearchCatalogRequest const&) {
-        return StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::datacatalog::v1::SearchCatalogResponse const&) {
-        return std::vector<
-            google::cloud::datacatalog::v1::SearchCatalogResult>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>();
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
@@ -76,17 +67,8 @@ Status DataCatalogConnection::DeleteEntryGroup(
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnection::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datacatalog::v1::EntryGroup>>(
-      std::move(request),
-      [](google::cloud::datacatalog::v1::ListEntryGroupsRequest const&) {
-        return StatusOr<
-            google::cloud::datacatalog::v1::ListEntryGroupsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::datacatalog::v1::ListEntryGroupsResponse const&) {
-        return std::vector<google::cloud::datacatalog::v1::EntryGroup>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::EntryGroup>>();
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
@@ -120,16 +102,8 @@ DataCatalogConnection::LookupEntry(
 StreamRange<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnection::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datacatalog::v1::Entry>>(
-      std::move(request),
-      [](google::cloud::datacatalog::v1::ListEntriesRequest const&) {
-        return StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::datacatalog::v1::ListEntriesResponse const&) {
-        return std::vector<google::cloud::datacatalog::v1::Entry>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::Entry>>();
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
@@ -203,16 +177,8 @@ Status DataCatalogConnection::DeleteTag(
 StreamRange<google::cloud::datacatalog::v1::Tag>
 DataCatalogConnection::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datacatalog::v1::Tag>>(
-      std::move(request),
-      [](google::cloud::datacatalog::v1::ListTagsRequest const&) {
-        return StatusOr<google::cloud::datacatalog::v1::ListTagsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::datacatalog::v1::ListTagsResponse const&) {
-        return std::vector<google::cloud::datacatalog::v1::Tag>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::Tag>>();
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogConnection::SetIamPolicy(

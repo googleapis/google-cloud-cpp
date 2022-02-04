@@ -38,16 +38,8 @@ VmMigrationConnection::~VmMigrationConnection() = default;
 StreamRange<google::cloud::vmmigration::v1::Source>
 VmMigrationConnection::ListSources(
     google::cloud::vmmigration::v1::ListSourcesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::Source>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::ListSourcesRequest const&) {
-        return StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::ListSourcesResponse const&) {
-        return std::vector<google::cloud::vmmigration::v1::Source>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::Source>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::Source>
@@ -89,18 +81,8 @@ VmMigrationConnection::FetchInventory(
 StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationConnection::ListUtilizationReports(
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::UtilizationReport>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&) {
-        return StatusOr<
-            google::cloud::vmmigration::v1::ListUtilizationReportsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::
-             ListUtilizationReportsResponse const&) {
-        return std::vector<google::cloud::vmmigration::v1::UtilizationReport>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::UtilizationReport>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
@@ -128,20 +110,8 @@ VmMigrationConnection::DeleteUtilizationReport(
 StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationConnection::ListDatacenterConnectors(
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::
-             ListDatacenterConnectorsRequest const&) {
-        return StatusOr<
-            google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::
-             ListDatacenterConnectorsResponse const&) {
-        return std::vector<
-            google::cloud::vmmigration::v1::DatacenterConnector>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -177,17 +147,8 @@ VmMigrationConnection::CreateMigratingVm(
 StreamRange<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationConnection::ListMigratingVms(
     google::cloud::vmmigration::v1::ListMigratingVmsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::MigratingVm>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::ListMigratingVmsRequest const&) {
-        return StatusOr<
-            google::cloud::vmmigration::v1::ListMigratingVmsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::ListMigratingVmsResponse const&) {
-        return std::vector<google::cloud::vmmigration::v1::MigratingVm>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::MigratingVm>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
@@ -263,16 +224,8 @@ VmMigrationConnection::CancelCloneJob(
 StreamRange<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationConnection::ListCloneJobs(
     google::cloud::vmmigration::v1::ListCloneJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::CloneJob>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::ListCloneJobsRequest const&) {
-        return StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::ListCloneJobsResponse const&) {
-        return std::vector<google::cloud::vmmigration::v1::CloneJob>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::CloneJob>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
@@ -300,17 +253,8 @@ VmMigrationConnection::CancelCutoverJob(
 StreamRange<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationConnection::ListCutoverJobs(
     google::cloud::vmmigration::v1::ListCutoverJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::CutoverJob>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::ListCutoverJobsRequest const&) {
-        return StatusOr<
-            google::cloud::vmmigration::v1::ListCutoverJobsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::ListCutoverJobsResponse const&) {
-        return std::vector<google::cloud::vmmigration::v1::CutoverJob>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::CutoverJob>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
@@ -322,16 +266,8 @@ VmMigrationConnection::GetCutoverJob(
 StreamRange<google::cloud::vmmigration::v1::Group>
 VmMigrationConnection::ListGroups(
     google::cloud::vmmigration::v1::ListGroupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::Group>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::ListGroupsRequest const&) {
-        return StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::ListGroupsResponse const&) {
-        return std::vector<google::cloud::vmmigration::v1::Group>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::Group>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::Group> VmMigrationConnection::GetGroup(
@@ -382,17 +318,8 @@ VmMigrationConnection::RemoveGroupMigration(
 StreamRange<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationConnection::ListTargetProjects(
     google::cloud::vmmigration::v1::ListTargetProjectsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vmmigration::v1::TargetProject>>(
-      std::move(request),
-      [](google::cloud::vmmigration::v1::ListTargetProjectsRequest const&) {
-        return StatusOr<
-            google::cloud::vmmigration::v1::ListTargetProjectsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::vmmigration::v1::ListTargetProjectsResponse const&) {
-        return std::vector<google::cloud::vmmigration::v1::TargetProject>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::TargetProject>>();
 }
 
 StatusOr<google::cloud::vmmigration::v1::TargetProject>

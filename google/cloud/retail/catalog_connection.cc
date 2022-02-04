@@ -37,16 +37,8 @@ CatalogServiceConnection::~CatalogServiceConnection() = default;
 StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceConnection::ListCatalogs(
     google::cloud::retail::v2::ListCatalogsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::retail::v2::Catalog>>(
-      std::move(request),
-      [](google::cloud::retail::v2::ListCatalogsRequest const&) {
-        return StatusOr<google::cloud::retail::v2::ListCatalogsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::retail::v2::ListCatalogsResponse const&) {
-        return std::vector<google::cloud::retail::v2::Catalog>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::retail::v2::Catalog>>();
 }
 
 StatusOr<google::cloud::retail::v2::Catalog>

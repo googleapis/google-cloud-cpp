@@ -37,61 +37,29 @@ KeyManagementServiceConnection::~KeyManagementServiceConnection() = default;
 StreamRange<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnection::ListKeyRings(
     google::cloud::kms::v1::ListKeyRingsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::kms::v1::KeyRing>>(
-      std::move(request),
-      [](google::cloud::kms::v1::ListKeyRingsRequest const&) {
-        return StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::kms::v1::ListKeyRingsResponse const&) {
-        return std::vector<google::cloud::kms::v1::KeyRing>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::kms::v1::KeyRing>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceConnection::ListCryptoKeys(
     google::cloud::kms::v1::ListCryptoKeysRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::kms::v1::CryptoKey>>(
-      std::move(request),
-      [](google::cloud::kms::v1::ListCryptoKeysRequest const&) {
-        return StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::kms::v1::ListCryptoKeysResponse const&) {
-        return std::vector<google::cloud::kms::v1::CryptoKey>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::kms::v1::CryptoKey>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceConnection::ListCryptoKeyVersions(
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>(
-      std::move(request),
-      [](google::cloud::kms::v1::ListCryptoKeyVersionsRequest const&) {
-        return StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::kms::v1::ListCryptoKeyVersionsResponse const&) {
-        return std::vector<google::cloud::kms::v1::CryptoKeyVersion>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>();
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceConnection::ListImportJobs(
     google::cloud::kms::v1::ListImportJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::kms::v1::ImportJob>>(
-      std::move(request),
-      [](google::cloud::kms::v1::ListImportJobsRequest const&) {
-        return StatusOr<google::cloud::kms::v1::ListImportJobsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::kms::v1::ListImportJobsResponse const&) {
-        return std::vector<google::cloud::kms::v1::ImportJob>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::kms::v1::ImportJob>>();
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>

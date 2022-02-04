@@ -62,16 +62,8 @@ StorageTransferServiceConnection::GetTransferJob(
 StreamRange<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceConnection::ListTransferJobs(
     google::storagetransfer::v1::ListTransferJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::storagetransfer::v1::TransferJob>>(
-      std::move(request),
-      [](google::storagetransfer::v1::ListTransferJobsRequest const&) {
-        return StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::storagetransfer::v1::ListTransferJobsResponse const&) {
-        return std::vector<google::storagetransfer::v1::TransferJob>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storagetransfer::v1::TransferJob>>();
 }
 
 Status StorageTransferServiceConnection::PauseTransferOperation(

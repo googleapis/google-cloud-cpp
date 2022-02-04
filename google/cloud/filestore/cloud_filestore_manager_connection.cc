@@ -38,16 +38,8 @@ CloudFilestoreManagerConnection::~CloudFilestoreManagerConnection() = default;
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerConnection::ListInstances(
     google::cloud::filestore::v1::ListInstancesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::filestore::v1::Instance>>(
-      std::move(request),
-      [](google::cloud::filestore::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::filestore::v1::ListInstancesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::filestore::v1::ListInstancesResponse const&) {
-        return std::vector<google::cloud::filestore::v1::Instance>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::filestore::v1::Instance>>();
 }
 
 StatusOr<google::cloud::filestore::v1::Instance>
@@ -91,16 +83,8 @@ CloudFilestoreManagerConnection::DeleteInstance(
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerConnection::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::filestore::v1::Backup>>(
-      std::move(request),
-      [](google::cloud::filestore::v1::ListBackupsRequest const&) {
-        return StatusOr<google::cloud::filestore::v1::ListBackupsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::filestore::v1::ListBackupsResponse const&) {
-        return std::vector<google::cloud::filestore::v1::Backup>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::filestore::v1::Backup>>();
 }
 
 StatusOr<google::cloud::filestore::v1::Backup>

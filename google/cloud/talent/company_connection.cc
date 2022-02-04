@@ -60,16 +60,8 @@ Status CompanyServiceConnection::DeleteCompany(
 StreamRange<google::cloud::talent::v4::Company>
 CompanyServiceConnection::ListCompanies(
     google::cloud::talent::v4::ListCompaniesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::talent::v4::Company>>(
-      std::move(request),
-      [](google::cloud::talent::v4::ListCompaniesRequest const&) {
-        return StatusOr<google::cloud::talent::v4::ListCompaniesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::talent::v4::ListCompaniesResponse const&) {
-        return std::vector<google::cloud::talent::v4::Company>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::talent::v4::Company>>();
 }
 
 std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(

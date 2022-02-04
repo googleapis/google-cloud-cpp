@@ -85,16 +85,8 @@ DlpServiceConnection::GetInspectTemplate(
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceConnection::ListInspectTemplates(
     google::privacy::dlp::v2::ListInspectTemplatesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::privacy::dlp::v2::InspectTemplate>>(
-      std::move(request),
-      [](google::privacy::dlp::v2::ListInspectTemplatesRequest const&) {
-        return StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::privacy::dlp::v2::ListInspectTemplatesResponse const&) {
-        return std::vector<google::privacy::dlp::v2::InspectTemplate>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::InspectTemplate>>();
 }
 
 Status DlpServiceConnection::DeleteInspectTemplate(
@@ -123,17 +115,8 @@ DlpServiceConnection::GetDeidentifyTemplate(
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceConnection::ListDeidentifyTemplates(
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>(
-      std::move(request),
-      [](google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const&) {
-        return StatusOr<
-            google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::privacy::dlp::v2::ListDeidentifyTemplatesResponse const&) {
-        return std::vector<google::privacy::dlp::v2::DeidentifyTemplate>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>();
 }
 
 Status DlpServiceConnection::DeleteDeidentifyTemplate(
@@ -168,16 +151,8 @@ DlpServiceConnection::GetJobTrigger(
 StreamRange<google::privacy::dlp::v2::JobTrigger>
 DlpServiceConnection::ListJobTriggers(
     google::privacy::dlp::v2::ListJobTriggersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::privacy::dlp::v2::JobTrigger>>(
-      std::move(request),
-      [](google::privacy::dlp::v2::ListJobTriggersRequest const&) {
-        return StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::privacy::dlp::v2::ListJobTriggersResponse const&) {
-        return std::vector<google::privacy::dlp::v2::JobTrigger>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::JobTrigger>>();
 }
 
 Status DlpServiceConnection::DeleteJobTrigger(
@@ -198,16 +173,8 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::CreateDlpJob(
 
 StreamRange<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::ListDlpJobs(
     google::privacy::dlp::v2::ListDlpJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::privacy::dlp::v2::DlpJob>>(
-      std::move(request),
-      [](google::privacy::dlp::v2::ListDlpJobsRequest const&) {
-        return StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::privacy::dlp::v2::ListDlpJobsResponse const&) {
-        return std::vector<google::privacy::dlp::v2::DlpJob>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::DlpJob>>();
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::GetDlpJob(
@@ -246,16 +213,8 @@ DlpServiceConnection::GetStoredInfoType(
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceConnection::ListStoredInfoTypes(
     google::privacy::dlp::v2::ListStoredInfoTypesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::privacy::dlp::v2::StoredInfoType>>(
-      std::move(request),
-      [](google::privacy::dlp::v2::ListStoredInfoTypesRequest const&) {
-        return StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::privacy::dlp::v2::ListStoredInfoTypesResponse const&) {
-        return std::vector<google::privacy::dlp::v2::StoredInfoType>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::StoredInfoType>>();
 }
 
 Status DlpServiceConnection::DeleteStoredInfoType(

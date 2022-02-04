@@ -38,16 +38,8 @@ ManagedNotebookServiceConnection::~ManagedNotebookServiceConnection() = default;
 StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceConnection::ListRuntimes(
     google::cloud::notebooks::v1::ListRuntimesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::notebooks::v1::Runtime>>(
-      std::move(request),
-      [](google::cloud::notebooks::v1::ListRuntimesRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::notebooks::v1::ListRuntimesResponse const&) {
-        return std::vector<google::cloud::notebooks::v1::Runtime>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::notebooks::v1::Runtime>>();
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>

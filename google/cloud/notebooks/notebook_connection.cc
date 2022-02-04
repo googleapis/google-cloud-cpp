@@ -38,16 +38,8 @@ NotebookServiceConnection::~NotebookServiceConnection() = default;
 StreamRange<google::cloud::notebooks::v1::Instance>
 NotebookServiceConnection::ListInstances(
     google::cloud::notebooks::v1::ListInstancesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::notebooks::v1::Instance>>(
-      std::move(request),
-      [](google::cloud::notebooks::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListInstancesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::notebooks::v1::ListInstancesResponse const&) {
-        return std::vector<google::cloud::notebooks::v1::Instance>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::notebooks::v1::Instance>>();
 }
 
 StatusOr<google::cloud::notebooks::v1::Instance>
@@ -191,16 +183,8 @@ NotebookServiceConnection::UpgradeInstanceInternal(
 StreamRange<google::cloud::notebooks::v1::Environment>
 NotebookServiceConnection::ListEnvironments(
     google::cloud::notebooks::v1::ListEnvironmentsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::notebooks::v1::Environment>>(
-      std::move(request),
-      [](google::cloud::notebooks::v1::ListEnvironmentsRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::notebooks::v1::ListEnvironmentsResponse const&) {
-        return std::vector<google::cloud::notebooks::v1::Environment>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::notebooks::v1::Environment>>();
 }
 
 StatusOr<google::cloud::notebooks::v1::Environment>
@@ -228,16 +212,8 @@ NotebookServiceConnection::DeleteEnvironment(
 StreamRange<google::cloud::notebooks::v1::Schedule>
 NotebookServiceConnection::ListSchedules(
     google::cloud::notebooks::v1::ListSchedulesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::notebooks::v1::Schedule>>(
-      std::move(request),
-      [](google::cloud::notebooks::v1::ListSchedulesRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::notebooks::v1::ListSchedulesResponse const&) {
-        return std::vector<google::cloud::notebooks::v1::Schedule>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::notebooks::v1::Schedule>>();
 }
 
 StatusOr<google::cloud::notebooks::v1::Schedule>
@@ -273,16 +249,8 @@ NotebookServiceConnection::TriggerSchedule(
 StreamRange<google::cloud::notebooks::v1::Execution>
 NotebookServiceConnection::ListExecutions(
     google::cloud::notebooks::v1::ListExecutionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::notebooks::v1::Execution>>(
-      std::move(request),
-      [](google::cloud::notebooks::v1::ListExecutionsRequest const&) {
-        return StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::notebooks::v1::ListExecutionsResponse const&) {
-        return std::vector<google::cloud::notebooks::v1::Execution>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::notebooks::v1::Execution>>();
 }
 
 StatusOr<google::cloud::notebooks::v1::Execution>

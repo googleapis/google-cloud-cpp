@@ -50,16 +50,8 @@ ServiceMonitoringServiceConnection::GetService(
 StreamRange<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnection::ListServices(
     google::monitoring::v3::ListServicesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::Service>>(
-      std::move(request),
-      [](google::monitoring::v3::ListServicesRequest const&) {
-        return StatusOr<google::monitoring::v3::ListServicesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListServicesResponse const&) {
-        return std::vector<google::monitoring::v3::Service>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::Service>>();
 }
 
 StatusOr<google::monitoring::v3::Service>
@@ -88,17 +80,8 @@ ServiceMonitoringServiceConnection::GetServiceLevelObjective(
 StreamRange<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
     google::monitoring::v3::ListServiceLevelObjectivesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::ServiceLevelObjective>>(
-      std::move(request),
-      [](google::monitoring::v3::ListServiceLevelObjectivesRequest const&) {
-        return StatusOr<
-            google::monitoring::v3::ListServiceLevelObjectivesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListServiceLevelObjectivesResponse const&) {
-        return std::vector<google::monitoring::v3::ServiceLevelObjective>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::ServiceLevelObjective>>();
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>

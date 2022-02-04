@@ -37,16 +37,8 @@ IDSConnection::~IDSConnection() = default;
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSConnection::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::ids::v1::Endpoint>>(
-      std::move(request),
-      [](google::cloud::ids::v1::ListEndpointsRequest const&) {
-        return StatusOr<google::cloud::ids::v1::ListEndpointsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::ids::v1::ListEndpointsResponse const&) {
-        return std::vector<google::cloud::ids::v1::Endpoint>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::ids::v1::Endpoint>>();
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSConnection::GetEndpoint(

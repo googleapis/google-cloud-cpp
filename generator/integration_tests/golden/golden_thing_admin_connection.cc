@@ -37,16 +37,8 @@ GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
 StreamRange<google::test::admin::database::v1::Database> GoldenThingAdminConnection::ListDatabases(
     google::test::admin::database::v1::ListDatabasesRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::test::admin::database::v1::Database>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListDatabasesRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListDatabasesResponse>(
-          Status(StatusCode::kUnimplemented, "not implemented"));
-    },
-    [](google::test::admin::database::v1::ListDatabasesResponse const&) {
-      return std::vector<google::test::admin::database::v1::Database>();
-    });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::test::admin::database::v1::Database>>();
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -129,16 +121,8 @@ GoldenThingAdminConnection::DeleteBackup(
 
 StreamRange<google::test::admin::database::v1::Backup> GoldenThingAdminConnection::ListBackups(
     google::test::admin::database::v1::ListBackupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::test::admin::database::v1::Backup>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListBackupsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListBackupsResponse>(
-          Status(StatusCode::kUnimplemented, "not implemented"));
-    },
-    [](google::test::admin::database::v1::ListBackupsResponse const&) {
-      return std::vector<google::test::admin::database::v1::Backup>();
-    });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::test::admin::database::v1::Backup>>();
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -151,30 +135,14 @@ GoldenThingAdminConnection::RestoreDatabase(
 
 StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListDatabaseOperations(
     google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::longrunning::Operation>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListDatabaseOperationsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>(
-          Status(StatusCode::kUnimplemented, "not implemented"));
-    },
-    [](google::test::admin::database::v1::ListDatabaseOperationsResponse const&) {
-      return std::vector<google::longrunning::Operation>();
-    });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListBackupOperations(
     google::test::admin::database::v1::ListBackupOperationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    google::longrunning::Operation>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListBackupOperationsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>(
-          Status(StatusCode::kUnimplemented, "not implemented"));
-    },
-    [](google::test::admin::database::v1::ListBackupOperationsResponse const&) {
-      return std::vector<google::longrunning::Operation>();
-    });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

@@ -36,16 +36,8 @@ CloudTasksConnection::~CloudTasksConnection() = default;
 
 StreamRange<google::cloud::tasks::v2::Queue> CloudTasksConnection::ListQueues(
     google::cloud::tasks::v2::ListQueuesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::tasks::v2::Queue>>(
-      std::move(request),
-      [](google::cloud::tasks::v2::ListQueuesRequest const&) {
-        return StatusOr<google::cloud::tasks::v2::ListQueuesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::tasks::v2::ListQueuesResponse const&) {
-        return std::vector<google::cloud::tasks::v2::Queue>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::tasks::v2::Queue>>();
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::GetQueue(
@@ -101,16 +93,8 @@ CloudTasksConnection::TestIamPermissions(
 
 StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnection::ListTasks(
     google::cloud::tasks::v2::ListTasksRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::tasks::v2::Task>>(
-      std::move(request),
-      [](google::cloud::tasks::v2::ListTasksRequest const&) {
-        return StatusOr<google::cloud::tasks::v2::ListTasksResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::tasks::v2::ListTasksResponse const&) {
-        return std::vector<google::cloud::tasks::v2::Task>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::tasks::v2::Task>>();
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::GetTask(

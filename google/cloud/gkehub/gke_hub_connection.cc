@@ -38,30 +38,14 @@ GkeHubConnection::~GkeHubConnection() = default;
 StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubConnection::ListMemberships(
     google::cloud::gkehub::v1::ListMembershipsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gkehub::v1::Membership>>(
-      std::move(request),
-      [](google::cloud::gkehub::v1::ListMembershipsRequest const&) {
-        return StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::gkehub::v1::ListMembershipsResponse const&) {
-        return std::vector<google::cloud::gkehub::v1::Membership>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Membership>>();
 }
 
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubConnection::ListFeatures(
     google::cloud::gkehub::v1::ListFeaturesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gkehub::v1::Feature>>(
-      std::move(request),
-      [](google::cloud::gkehub::v1::ListFeaturesRequest const&) {
-        return StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::gkehub::v1::ListFeaturesResponse const&) {
-        return std::vector<google::cloud::gkehub::v1::Feature>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Feature>>();
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubConnection::GetMembership(

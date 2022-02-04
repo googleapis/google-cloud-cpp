@@ -37,16 +37,8 @@ AuthorizedDomainsConnection::~AuthorizedDomainsConnection() = default;
 StreamRange<google::appengine::v1::AuthorizedDomain>
 AuthorizedDomainsConnection::ListAuthorizedDomains(
     google::appengine::v1::ListAuthorizedDomainsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::appengine::v1::AuthorizedDomain>>(
-      std::move(request),
-      [](google::appengine::v1::ListAuthorizedDomainsRequest const&) {
-        return StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::appengine::v1::ListAuthorizedDomainsResponse const&) {
-        return std::vector<google::appengine::v1::AuthorizedDomain>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::appengine::v1::AuthorizedDomain>>();
 }
 
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(

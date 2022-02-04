@@ -43,17 +43,8 @@ RegistrationServiceConnection::CreateNamespace(
 StreamRange<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceConnection::ListNamespaces(
     google::cloud::servicedirectory::v1::ListNamespacesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::servicedirectory::v1::Namespace>>(
-      std::move(request),
-      [](google::cloud::servicedirectory::v1::ListNamespacesRequest const&) {
-        return StatusOr<
-            google::cloud::servicedirectory::v1::ListNamespacesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::servicedirectory::v1::ListNamespacesResponse const&) {
-        return std::vector<google::cloud::servicedirectory::v1::Namespace>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::servicedirectory::v1::Namespace>>();
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
@@ -82,17 +73,8 @@ RegistrationServiceConnection::CreateService(
 StreamRange<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceConnection::ListServices(
     google::cloud::servicedirectory::v1::ListServicesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::servicedirectory::v1::Service>>(
-      std::move(request),
-      [](google::cloud::servicedirectory::v1::ListServicesRequest const&) {
-        return StatusOr<
-            google::cloud::servicedirectory::v1::ListServicesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::servicedirectory::v1::ListServicesResponse const&) {
-        return std::vector<google::cloud::servicedirectory::v1::Service>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::servicedirectory::v1::Service>>();
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
@@ -121,17 +103,8 @@ RegistrationServiceConnection::CreateEndpoint(
 StreamRange<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceConnection::ListEndpoints(
     google::cloud::servicedirectory::v1::ListEndpointsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::servicedirectory::v1::Endpoint>>(
-      std::move(request),
-      [](google::cloud::servicedirectory::v1::ListEndpointsRequest const&) {
-        return StatusOr<
-            google::cloud::servicedirectory::v1::ListEndpointsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::servicedirectory::v1::ListEndpointsResponse const&) {
-        return std::vector<google::cloud::servicedirectory::v1::Endpoint>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::servicedirectory::v1::Endpoint>>();
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>

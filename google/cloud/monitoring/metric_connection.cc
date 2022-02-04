@@ -37,19 +37,8 @@ MetricServiceConnection::~MetricServiceConnection() = default;
 StreamRange<google::api::MonitoredResourceDescriptor>
 MetricServiceConnection::ListMonitoredResourceDescriptors(
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::MonitoredResourceDescriptor>>(
-      std::move(request),
-      [](google::monitoring::v3::
-             ListMonitoredResourceDescriptorsRequest const&) {
-        return StatusOr<
-            google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::
-             ListMonitoredResourceDescriptorsResponse const&) {
-        return std::vector<google::api::MonitoredResourceDescriptor>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::MonitoredResourceDescriptor>>();
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
@@ -61,16 +50,8 @@ MetricServiceConnection::GetMonitoredResourceDescriptor(
 StreamRange<google::api::MetricDescriptor>
 MetricServiceConnection::ListMetricDescriptors(
     google::monitoring::v3::ListMetricDescriptorsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::MetricDescriptor>>(
-      std::move(request),
-      [](google::monitoring::v3::ListMetricDescriptorsRequest const&) {
-        return StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListMetricDescriptorsResponse const&) {
-        return std::vector<google::api::MetricDescriptor>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::MetricDescriptor>>();
 }
 
 StatusOr<google::api::MetricDescriptor>
@@ -93,16 +74,8 @@ Status MetricServiceConnection::DeleteMetricDescriptor(
 StreamRange<google::monitoring::v3::TimeSeries>
 MetricServiceConnection::ListTimeSeries(
     google::monitoring::v3::ListTimeSeriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::TimeSeries>>(
-      std::move(request),
-      [](google::monitoring::v3::ListTimeSeriesRequest const&) {
-        return StatusOr<google::monitoring::v3::ListTimeSeriesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListTimeSeriesResponse const&) {
-        return std::vector<google::monitoring::v3::TimeSeries>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::TimeSeries>>();
 }
 
 Status MetricServiceConnection::CreateTimeSeries(

@@ -50,16 +50,8 @@ ProductServiceConnection::GetProduct(
 StreamRange<google::cloud::retail::v2::Product>
 ProductServiceConnection::ListProducts(
     google::cloud::retail::v2::ListProductsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::retail::v2::Product>>(
-      std::move(request),
-      [](google::cloud::retail::v2::ListProductsRequest const&) {
-        return StatusOr<google::cloud::retail::v2::ListProductsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::retail::v2::ListProductsResponse const&) {
-        return std::vector<google::cloud::retail::v2::Product>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::retail::v2::Product>>();
 }
 
 StatusOr<google::cloud::retail::v2::Product>

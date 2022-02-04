@@ -38,16 +38,8 @@ ApiGatewayServiceConnection::~ApiGatewayServiceConnection() = default;
 StreamRange<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceConnection::ListGateways(
     google::cloud::apigateway::v1::ListGatewaysRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::apigateway::v1::Gateway>>(
-      std::move(request),
-      [](google::cloud::apigateway::v1::ListGatewaysRequest const&) {
-        return StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::apigateway::v1::ListGatewaysResponse const&) {
-        return std::vector<google::cloud::apigateway::v1::Gateway>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::apigateway::v1::Gateway>>();
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
@@ -83,16 +75,8 @@ ApiGatewayServiceConnection::DeleteGateway(
 StreamRange<google::cloud::apigateway::v1::Api>
 ApiGatewayServiceConnection::ListApis(
     google::cloud::apigateway::v1::ListApisRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::apigateway::v1::Api>>(
-      std::move(request),
-      [](google::cloud::apigateway::v1::ListApisRequest const&) {
-        return StatusOr<google::cloud::apigateway::v1::ListApisResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::apigateway::v1::ListApisResponse const&) {
-        return std::vector<google::cloud::apigateway::v1::Api>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::apigateway::v1::Api>>();
 }
 
 StatusOr<google::cloud::apigateway::v1::Api>
@@ -128,16 +112,8 @@ ApiGatewayServiceConnection::DeleteApi(
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceConnection::ListApiConfigs(
     google::cloud::apigateway::v1::ListApiConfigsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::apigateway::v1::ApiConfig>>(
-      std::move(request),
-      [](google::cloud::apigateway::v1::ListApiConfigsRequest const&) {
-        return StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::apigateway::v1::ListApiConfigsResponse const&) {
-        return std::vector<google::cloud::apigateway::v1::ApiConfig>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::apigateway::v1::ApiConfig>>();
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>

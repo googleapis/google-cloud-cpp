@@ -219,16 +219,8 @@ ClusterManagerConnection::SetMaintenancePolicy(
 StreamRange<google::container::v1::UsableSubnetwork>
 ClusterManagerConnection::ListUsableSubnetworks(
     google::container::v1::ListUsableSubnetworksRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::container::v1::UsableSubnetwork>>(
-      std::move(request),
-      [](google::container::v1::ListUsableSubnetworksRequest const&) {
-        return StatusOr<google::container::v1::ListUsableSubnetworksResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::container::v1::ListUsableSubnetworksResponse const&) {
-        return std::vector<google::container::v1::UsableSubnetwork>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::container::v1::UsableSubnetwork>>();
 }
 
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(

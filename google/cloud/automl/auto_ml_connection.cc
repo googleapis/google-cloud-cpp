@@ -50,16 +50,8 @@ StatusOr<google::cloud::automl::v1::Dataset> AutoMlConnection::GetDataset(
 
 StreamRange<google::cloud::automl::v1::Dataset> AutoMlConnection::ListDatasets(
     google::cloud::automl::v1::ListDatasetsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::automl::v1::Dataset>>(
-      std::move(request),
-      [](google::cloud::automl::v1::ListDatasetsRequest const&) {
-        return StatusOr<google::cloud::automl::v1::ListDatasetsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::automl::v1::ListDatasetsResponse const&) {
-        return std::vector<google::cloud::automl::v1::Dataset>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::automl::v1::Dataset>>();
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlConnection::UpdateDataset(
@@ -112,16 +104,8 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlConnection::GetModel(
 
 StreamRange<google::cloud::automl::v1::Model> AutoMlConnection::ListModels(
     google::cloud::automl::v1::ListModelsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::automl::v1::Model>>(
-      std::move(request),
-      [](google::cloud::automl::v1::ListModelsRequest const&) {
-        return StatusOr<google::cloud::automl::v1::ListModelsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::automl::v1::ListModelsResponse const&) {
-        return std::vector<google::cloud::automl::v1::Model>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::automl::v1::Model>>();
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -170,17 +154,8 @@ AutoMlConnection::GetModelEvaluation(
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
 AutoMlConnection::ListModelEvaluations(
     google::cloud::automl::v1::ListModelEvaluationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::automl::v1::ModelEvaluation>>(
-      std::move(request),
-      [](google::cloud::automl::v1::ListModelEvaluationsRequest const&) {
-        return StatusOr<
-            google::cloud::automl::v1::ListModelEvaluationsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::automl::v1::ListModelEvaluationsResponse const&) {
-        return std::vector<google::cloud::automl::v1::ModelEvaluation>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::automl::v1::ModelEvaluation>>();
 }
 
 std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {

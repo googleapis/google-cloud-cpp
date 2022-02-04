@@ -38,20 +38,8 @@ InstanceAdminConnection::~InstanceAdminConnection() = default;
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminConnection::ListInstanceConfigs(
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>(
-      std::move(request),
-      [](google::spanner::admin::instance::v1::
-             ListInstanceConfigsRequest const&) {
-        return StatusOr<
-            google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::spanner::admin::instance::v1::
-             ListInstanceConfigsResponse const&) {
-        return std::vector<
-            google::spanner::admin::instance::v1::InstanceConfig>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>();
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
@@ -63,17 +51,8 @@ InstanceAdminConnection::GetInstanceConfig(
 StreamRange<google::spanner::admin::instance::v1::Instance>
 InstanceAdminConnection::ListInstances(
     google::spanner::admin::instance::v1::ListInstancesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::spanner::admin::instance::v1::Instance>>(
-      std::move(request),
-      [](google::spanner::admin::instance::v1::ListInstancesRequest const&) {
-        return StatusOr<
-            google::spanner::admin::instance::v1::ListInstancesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::spanner::admin::instance::v1::ListInstancesResponse const&) {
-        return std::vector<google::spanner::admin::instance::v1::Instance>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::instance::v1::Instance>>();
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>

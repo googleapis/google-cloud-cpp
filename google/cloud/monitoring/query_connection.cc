@@ -37,16 +37,8 @@ QueryServiceConnection::~QueryServiceConnection() = default;
 StreamRange<google::monitoring::v3::TimeSeriesData>
 QueryServiceConnection::QueryTimeSeries(
     google::monitoring::v3::QueryTimeSeriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::TimeSeriesData>>(
-      std::move(request),
-      [](google::monitoring::v3::QueryTimeSeriesRequest const&) {
-        return StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::QueryTimeSeriesResponse const&) {
-        return std::vector<google::monitoring::v3::TimeSeriesData>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::TimeSeriesData>>();
 }
 
 std::shared_ptr<QueryServiceConnection> MakeQueryServiceConnection(

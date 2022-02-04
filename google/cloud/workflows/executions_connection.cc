@@ -37,20 +37,8 @@ ExecutionsConnection::~ExecutionsConnection() = default;
 StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnection::ListExecutions(
     google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::workflows::executions::v1::Execution>>(
-      std::move(request),
-      [](google::cloud::workflows::executions::v1::
-             ListExecutionsRequest const&) {
-        return StatusOr<
-            google::cloud::workflows::executions::v1::ListExecutionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::workflows::executions::v1::
-             ListExecutionsResponse const&) {
-        return std::vector<
-            google::cloud::workflows::executions::v1::Execution>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::workflows::executions::v1::Execution>>();
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>

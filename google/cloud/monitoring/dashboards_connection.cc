@@ -43,17 +43,8 @@ DashboardsServiceConnection::CreateDashboard(
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceConnection::ListDashboards(
     google::monitoring::dashboard::v1::ListDashboardsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::dashboard::v1::Dashboard>>(
-      std::move(request),
-      [](google::monitoring::dashboard::v1::ListDashboardsRequest const&) {
-        return StatusOr<
-            google::monitoring::dashboard::v1::ListDashboardsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::dashboard::v1::ListDashboardsResponse const&) {
-        return std::vector<google::monitoring::dashboard::v1::Dashboard>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::dashboard::v1::Dashboard>>();
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>

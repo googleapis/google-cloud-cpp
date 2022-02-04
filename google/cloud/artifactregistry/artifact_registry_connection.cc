@@ -37,39 +37,15 @@ ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryConnection::ListDockerImages(
     google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::artifactregistry::v1::DockerImage>>(
-      std::move(request),
-      [](google::devtools::artifactregistry::v1::
-             ListDockerImagesRequest const&) {
-        return StatusOr<
-            google::devtools::artifactregistry::v1::ListDockerImagesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::devtools::artifactregistry::v1::
-             ListDockerImagesResponse const&) {
-        return std::vector<
-            google::devtools::artifactregistry::v1::DockerImage>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::DockerImage>>();
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryConnection::ListRepositories(
     google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::devtools::artifactregistry::v1::Repository>>(
-      std::move(request),
-      [](google::devtools::artifactregistry::v1::
-             ListRepositoriesRequest const&) {
-        return StatusOr<
-            google::devtools::artifactregistry::v1::ListRepositoriesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::devtools::artifactregistry::v1::
-             ListRepositoriesResponse const&) {
-        return std::vector<
-            google::devtools::artifactregistry::v1::Repository>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::Repository>>();
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>

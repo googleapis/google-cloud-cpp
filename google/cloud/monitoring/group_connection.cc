@@ -36,16 +36,8 @@ GroupServiceConnection::~GroupServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::Group> GroupServiceConnection::ListGroups(
     google::monitoring::v3::ListGroupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::Group>>(
-      std::move(request),
-      [](google::monitoring::v3::ListGroupsRequest const&) {
-        return StatusOr<google::monitoring::v3::ListGroupsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListGroupsResponse const&) {
-        return std::vector<google::monitoring::v3::Group>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::Group>>();
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceConnection::GetGroup(
@@ -71,16 +63,8 @@ Status GroupServiceConnection::DeleteGroup(
 StreamRange<google::api::MonitoredResource>
 GroupServiceConnection::ListGroupMembers(
     google::monitoring::v3::ListGroupMembersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::MonitoredResource>>(
-      std::move(request),
-      [](google::monitoring::v3::ListGroupMembersRequest const&) {
-        return StatusOr<google::monitoring::v3::ListGroupMembersResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListGroupMembersResponse const&) {
-        return std::vector<google::api::MonitoredResource>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::MonitoredResource>>();
 }
 
 std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(

@@ -37,17 +37,8 @@ AuthorizedCertificatesConnection::~AuthorizedCertificatesConnection() = default;
 StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesConnection::ListAuthorizedCertificates(
     google::appengine::v1::ListAuthorizedCertificatesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::appengine::v1::AuthorizedCertificate>>(
-      std::move(request),
-      [](google::appengine::v1::ListAuthorizedCertificatesRequest const&) {
-        return StatusOr<
-            google::appengine::v1::ListAuthorizedCertificatesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::appengine::v1::ListAuthorizedCertificatesResponse const&) {
-        return std::vector<google::appengine::v1::AuthorizedCertificate>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::appengine::v1::AuthorizedCertificate>>();
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>

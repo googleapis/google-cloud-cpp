@@ -38,16 +38,8 @@ DataMigrationServiceConnection::~DataMigrationServiceConnection() = default;
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceConnection::ListMigrationJobs(
     google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
-      std::move(request),
-      [](google::cloud::clouddms::v1::ListMigrationJobsRequest const&) {
-        return StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::clouddms::v1::ListMigrationJobsResponse const&) {
-        return std::vector<google::cloud::clouddms::v1::MigrationJob>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::MigrationJob>>();
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
@@ -137,17 +129,8 @@ DataMigrationServiceConnection::GenerateSshScript(
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceConnection::ListConnectionProfiles(
     google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>(
-      std::move(request),
-      [](google::cloud::clouddms::v1::ListConnectionProfilesRequest const&) {
-        return StatusOr<
-            google::cloud::clouddms::v1::ListConnectionProfilesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::clouddms::v1::ListConnectionProfilesResponse const&) {
-        return std::vector<google::cloud::clouddms::v1::ConnectionProfile>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>();
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>

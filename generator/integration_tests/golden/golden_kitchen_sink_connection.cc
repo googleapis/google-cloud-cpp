@@ -55,16 +55,8 @@ GoldenKitchenSinkConnection::WriteLogEntries(
 
 StreamRange<std::string> GoldenKitchenSinkConnection::ListLogs(
     google::test::admin::database::v1::ListLogsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-    std::string>>(
-    std::move(request),
-    [](google::test::admin::database::v1::ListLogsRequest const&) {
-      return StatusOr<google::test::admin::database::v1::ListLogsResponse>(
-          Status(StatusCode::kUnimplemented, "not implemented"));
-    },
-    [](google::test::admin::database::v1::ListLogsResponse const&) {
-      return std::vector<std::string>();
-    });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::string>>();
 }
 
 StreamRange<google::test::admin::database::v1::TailLogEntriesResponse> GoldenKitchenSinkConnection::TailLogEntries(

@@ -37,16 +37,8 @@ UptimeCheckServiceConnection::~UptimeCheckServiceConnection() = default;
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnection::ListUptimeCheckConfigs(
     google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::UptimeCheckConfig>>(
-      std::move(request),
-      [](google::monitoring::v3::ListUptimeCheckConfigsRequest const&) {
-        return StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListUptimeCheckConfigsResponse const&) {
-        return std::vector<google::monitoring::v3::UptimeCheckConfig>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::UptimeCheckConfig>>();
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
@@ -75,16 +67,8 @@ Status UptimeCheckServiceConnection::DeleteUptimeCheckConfig(
 StreamRange<google::monitoring::v3::UptimeCheckIp>
 UptimeCheckServiceConnection::ListUptimeCheckIps(
     google::monitoring::v3::ListUptimeCheckIpsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::UptimeCheckIp>>(
-      std::move(request),
-      [](google::monitoring::v3::ListUptimeCheckIpsRequest const&) {
-        return StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::monitoring::v3::ListUptimeCheckIpsResponse const&) {
-        return std::vector<google::monitoring::v3::UptimeCheckIp>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::UptimeCheckIp>>();
 }
 
 std::shared_ptr<UptimeCheckServiceConnection> MakeUptimeCheckServiceConnection(

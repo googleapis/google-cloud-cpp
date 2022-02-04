@@ -41,16 +41,8 @@ StatusOr<grafeas::v1::Occurrence> GrafeasConnection::GetOccurrence(
 
 StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListOccurrences(
     grafeas::v1::ListOccurrencesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<grafeas::v1::Occurrence>>(
-      std::move(request),
-      [](grafeas::v1::ListOccurrencesRequest const&) {
-        return StatusOr<grafeas::v1::ListOccurrencesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](grafeas::v1::ListOccurrencesResponse const&) {
-        return std::vector<grafeas::v1::Occurrence>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<grafeas::v1::Occurrence>>();
 }
 
 Status GrafeasConnection::DeleteOccurrence(
@@ -86,16 +78,8 @@ StatusOr<grafeas::v1::Note> GrafeasConnection::GetNote(
 
 StreamRange<grafeas::v1::Note> GrafeasConnection::ListNotes(
     grafeas::v1::ListNotesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<grafeas::v1::Note>>(
-      std::move(request),
-      [](grafeas::v1::ListNotesRequest const&) {
-        return StatusOr<grafeas::v1::ListNotesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](grafeas::v1::ListNotesResponse const&) {
-        return std::vector<grafeas::v1::Note>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<grafeas::v1::Note>>();
 }
 
 Status GrafeasConnection::DeleteNote(grafeas::v1::DeleteNoteRequest const&) {
@@ -120,16 +104,8 @@ StatusOr<grafeas::v1::Note> GrafeasConnection::UpdateNote(
 
 StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListNoteOccurrences(
     grafeas::v1::ListNoteOccurrencesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<grafeas::v1::Occurrence>>(
-      std::move(request),
-      [](grafeas::v1::ListNoteOccurrencesRequest const&) {
-        return StatusOr<grafeas::v1::ListNoteOccurrencesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](grafeas::v1::ListNoteOccurrencesResponse const&) {
-        return std::vector<grafeas::v1::Occurrence>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<grafeas::v1::Occurrence>>();
 }
 
 std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options) {

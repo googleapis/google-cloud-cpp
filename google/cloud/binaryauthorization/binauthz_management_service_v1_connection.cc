@@ -68,17 +68,8 @@ BinauthzManagementServiceV1Connection::UpdateAttestor(
 StreamRange<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1Connection::ListAttestors(
     google::cloud::binaryauthorization::v1::ListAttestorsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::binaryauthorization::v1::Attestor>>(
-      std::move(request),
-      [](google::cloud::binaryauthorization::v1::ListAttestorsRequest const&) {
-        return StatusOr<
-            google::cloud::binaryauthorization::v1::ListAttestorsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::binaryauthorization::v1::ListAttestorsResponse const&) {
-        return std::vector<google::cloud::binaryauthorization::v1::Attestor>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::binaryauthorization::v1::Attestor>>();
 }
 
 Status BinauthzManagementServiceV1Connection::DeleteAttestor(

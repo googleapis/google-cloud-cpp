@@ -44,33 +44,15 @@ ProjectsConnection::GetProject(
 StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsConnection::ListProjects(
     google::cloud::resourcemanager::v3::ListProjectsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcemanager::v3::Project>>(
-      std::move(request),
-      [](google::cloud::resourcemanager::v3::ListProjectsRequest const&) {
-        return StatusOr<
-            google::cloud::resourcemanager::v3::ListProjectsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::resourcemanager::v3::ListProjectsResponse const&) {
-        return std::vector<google::cloud::resourcemanager::v3::Project>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsConnection::SearchProjects(
     google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcemanager::v3::Project>>(
-      std::move(request),
-      [](google::cloud::resourcemanager::v3::SearchProjectsRequest const&) {
-        return StatusOr<
-            google::cloud::resourcemanager::v3::SearchProjectsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::resourcemanager::v3::SearchProjectsResponse const&) {
-        return std::vector<google::cloud::resourcemanager::v3::Project>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>

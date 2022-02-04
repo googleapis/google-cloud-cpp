@@ -62,17 +62,8 @@ IdentityAwareProxyOAuthServiceConnection::CreateIdentityAwareProxyClient(
 StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceConnection::ListIdentityAwareProxyClients(
     google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>>(
-      std::move(request),
-      [](google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&) {
-        return StatusOr<
-            google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse const&) {
-        return std::vector<google::cloud::iap::v1::IdentityAwareProxyClient>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>>();
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>

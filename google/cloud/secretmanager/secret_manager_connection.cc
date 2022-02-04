@@ -37,16 +37,8 @@ SecretManagerServiceConnection::~SecretManagerServiceConnection() = default;
 StreamRange<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceConnection::ListSecrets(
     google::cloud::secretmanager::v1::ListSecretsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::secretmanager::v1::Secret>>(
-      std::move(request),
-      [](google::cloud::secretmanager::v1::ListSecretsRequest const&) {
-        return StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::secretmanager::v1::ListSecretsResponse const&) {
-        return std::vector<google::cloud::secretmanager::v1::Secret>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::secretmanager::v1::Secret>>();
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
@@ -81,17 +73,8 @@ Status SecretManagerServiceConnection::DeleteSecret(
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceConnection::ListSecretVersions(
     google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::secretmanager::v1::SecretVersion>>(
-      std::move(request),
-      [](google::cloud::secretmanager::v1::ListSecretVersionsRequest const&) {
-        return StatusOr<
-            google::cloud::secretmanager::v1::ListSecretVersionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::secretmanager::v1::ListSecretVersionsResponse const&) {
-        return std::vector<google::cloud::secretmanager::v1::SecretVersion>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::secretmanager::v1::SecretVersion>>();
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>

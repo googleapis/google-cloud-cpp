@@ -54,17 +54,8 @@ ManagedIdentitiesServiceConnection::ResetAdminPassword(
 StreamRange<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceConnection::ListDomains(
     google::cloud::managedidentities::v1::ListDomainsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::managedidentities::v1::Domain>>(
-      std::move(request),
-      [](google::cloud::managedidentities::v1::ListDomainsRequest const&) {
-        return StatusOr<
-            google::cloud::managedidentities::v1::ListDomainsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::managedidentities::v1::ListDomainsResponse const&) {
-        return std::vector<google::cloud::managedidentities::v1::Domain>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::managedidentities::v1::Domain>>();
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>

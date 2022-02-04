@@ -37,16 +37,8 @@ FirewallConnection::~FirewallConnection() = default;
 StreamRange<google::appengine::v1::FirewallRule>
 FirewallConnection::ListIngressRules(
     google::appengine::v1::ListIngressRulesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::appengine::v1::FirewallRule>>(
-      std::move(request),
-      [](google::appengine::v1::ListIngressRulesRequest const&) {
-        return StatusOr<google::appengine::v1::ListIngressRulesResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::appengine::v1::ListIngressRulesResponse const&) {
-        return std::vector<google::appengine::v1::FirewallRule>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::appengine::v1::FirewallRule>>();
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>

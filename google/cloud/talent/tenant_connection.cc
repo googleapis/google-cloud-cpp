@@ -59,16 +59,8 @@ Status TenantServiceConnection::DeleteTenant(
 StreamRange<google::cloud::talent::v4::Tenant>
 TenantServiceConnection::ListTenants(
     google::cloud::talent::v4::ListTenantsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::talent::v4::Tenant>>(
-      std::move(request),
-      [](google::cloud::talent::v4::ListTenantsRequest const&) {
-        return StatusOr<google::cloud::talent::v4::ListTenantsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::talent::v4::ListTenantsResponse const&) {
-        return std::vector<google::cloud::talent::v4::Tenant>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::talent::v4::Tenant>>();
 }
 
 std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(

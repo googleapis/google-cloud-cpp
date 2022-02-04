@@ -38,16 +38,8 @@ CloudFunctionsServiceConnection::~CloudFunctionsServiceConnection() = default;
 StreamRange<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceConnection::ListFunctions(
     google::cloud::functions::v1::ListFunctionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::functions::v1::CloudFunction>>(
-      std::move(request),
-      [](google::cloud::functions::v1::ListFunctionsRequest const&) {
-        return StatusOr<google::cloud::functions::v1::ListFunctionsResponse>(
-            Status(StatusCode::kUnimplemented, "not implemented"));
-      },
-      [](google::cloud::functions::v1::ListFunctionsResponse const&) {
-        return std::vector<google::cloud::functions::v1::CloudFunction>();
-      });
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::functions::v1::CloudFunction>>();
 }
 
 StatusOr<google::cloud::functions::v1::CloudFunction>
