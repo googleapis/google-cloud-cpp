@@ -27,9 +27,9 @@ To run the quickstart examples you will need a working Google Cloud Platform
 steps in detail.
 
 To create conversations before running the program, follow
-[these instructions][create-conversations]. For a sample chat conversation, you
-can use `gs://cloud-samples-data/ccai/chat_sample.json` as the Transcript URI.
-For a sample voice conversation, you can use
+[this tutorial][create-conversations]. For a sample chat conversation, you can
+use `gs://cloud-samples-data/ccai/chat_sample.json` as the Transcript URI. For a
+sample voice conversation, you can use
 `gs://cloud-samples-data/ccai/voice_6912.txt` as the Transcript URI.
 
 [create-conversations]: https://cloud.google.com/contact-center/insights/docs/create-analyze-conversation-ui

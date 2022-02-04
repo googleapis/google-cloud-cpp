@@ -40,7 +40,7 @@ this library.
 <!-- inject-quickstart-start -->
 ```cc
 #include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
-#include "absl/time/time.h"
+#include <google/protobuf/util/time_util.h>
 #include <iostream>
 #include <stdexcept>
 
@@ -58,9 +58,10 @@ int main(int argc, char* argv[]) try {
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
   for (auto c : client.ListConversations(parent)) {
     if (!c) throw std::runtime_error(c.status().message());
-    absl::Duration d = absl::Seconds(c->duration().seconds());
+
+    using ::google::protobuf::util::TimeUtil;
     std::cout << c->name() << "\n";
-    std::cout << "Duration: " << absl::FormatDuration(d)
+    std::cout << "Duration: " << TimeUtil::ToString(c->duration())
               << "; Turns: " << c->turn_count() << "\n\n";
   }
 
