@@ -51,7 +51,7 @@ CloudBuildConnection::GetBuild(
 
 StreamRange<google::devtools::cloudbuild::v1::Build>
 CloudBuildConnection::ListBuilds(
-    google::devtools::cloudbuild::v1::ListBuildsRequest request) {
+    google::devtools::cloudbuild::v1::ListBuildsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::Build>>();
 }
@@ -92,7 +92,7 @@ CloudBuildConnection::GetBuildTrigger(
 
 StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildConnection::ListBuildTriggers(
-    google::devtools::cloudbuild::v1::ListBuildTriggersRequest request) {
+    google::devtools::cloudbuild::v1::ListBuildTriggersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>();
 }
@@ -155,7 +155,7 @@ CloudBuildConnection::UpdateWorkerPool(
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildConnection::ListWorkerPools(
-    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request) {
+    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>();
 }

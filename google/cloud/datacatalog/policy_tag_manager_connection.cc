@@ -53,7 +53,7 @@ PolicyTagManagerConnection::UpdateTaxonomy(
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerConnection::ListTaxonomies(
-    google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
+    google::cloud::datacatalog::v1::ListTaxonomiesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Taxonomy>>();
 }
@@ -83,7 +83,7 @@ PolicyTagManagerConnection::UpdatePolicyTag(
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerConnection::ListPolicyTags(
-    google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
+    google::cloud::datacatalog::v1::ListPolicyTagsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::PolicyTag>>();
 }

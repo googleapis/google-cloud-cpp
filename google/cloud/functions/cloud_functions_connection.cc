@@ -37,7 +37,7 @@ CloudFunctionsServiceConnection::~CloudFunctionsServiceConnection() = default;
 
 StreamRange<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceConnection::ListFunctions(
-    google::cloud::functions::v1::ListFunctionsRequest request) {
+    google::cloud::functions::v1::ListFunctionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::functions::v1::CloudFunction>>();
 }

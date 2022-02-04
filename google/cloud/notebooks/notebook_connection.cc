@@ -37,7 +37,7 @@ NotebookServiceConnection::~NotebookServiceConnection() = default;
 
 StreamRange<google::cloud::notebooks::v1::Instance>
 NotebookServiceConnection::ListInstances(
-    google::cloud::notebooks::v1::ListInstancesRequest request) {
+    google::cloud::notebooks::v1::ListInstancesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Instance>>();
 }
@@ -182,7 +182,7 @@ NotebookServiceConnection::UpgradeInstanceInternal(
 
 StreamRange<google::cloud::notebooks::v1::Environment>
 NotebookServiceConnection::ListEnvironments(
-    google::cloud::notebooks::v1::ListEnvironmentsRequest request) {
+    google::cloud::notebooks::v1::ListEnvironmentsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Environment>>();
 }
@@ -211,7 +211,7 @@ NotebookServiceConnection::DeleteEnvironment(
 
 StreamRange<google::cloud::notebooks::v1::Schedule>
 NotebookServiceConnection::ListSchedules(
-    google::cloud::notebooks::v1::ListSchedulesRequest request) {
+    google::cloud::notebooks::v1::ListSchedulesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Schedule>>();
 }
@@ -248,7 +248,7 @@ NotebookServiceConnection::TriggerSchedule(
 
 StreamRange<google::cloud::notebooks::v1::Execution>
 NotebookServiceConnection::ListExecutions(
-    google::cloud::notebooks::v1::ListExecutionsRequest request) {
+    google::cloud::notebooks::v1::ListExecutionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Execution>>();
 }

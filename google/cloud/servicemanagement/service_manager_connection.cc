@@ -37,7 +37,7 @@ ServiceManagerConnection::~ServiceManagerConnection() = default;
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerConnection::ListServices(
-    google::api::servicemanagement::v1::ListServicesRequest request) {
+    google::api::servicemanagement::v1::ListServicesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::ManagedService>>();
 }
@@ -73,7 +73,7 @@ ServiceManagerConnection::UndeleteService(
 }
 
 StreamRange<google::api::Service> ServiceManagerConnection::ListServiceConfigs(
-    google::api::servicemanagement::v1::ListServiceConfigsRequest request) {
+    google::api::servicemanagement::v1::ListServiceConfigsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::Service>>();
 }
@@ -98,7 +98,7 @@ ServiceManagerConnection::SubmitConfigSource(
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
 ServiceManagerConnection::ListServiceRollouts(
-    google::api::servicemanagement::v1::ListServiceRolloutsRequest request) {
+    google::api::servicemanagement::v1::ListServiceRolloutsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::Rollout>>();
 }

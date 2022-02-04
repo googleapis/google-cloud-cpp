@@ -35,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudTasksConnection::~CloudTasksConnection() = default;
 
 StreamRange<google::cloud::tasks::v2::Queue> CloudTasksConnection::ListQueues(
-    google::cloud::tasks::v2::ListQueuesRequest request) {
+    google::cloud::tasks::v2::ListQueuesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tasks::v2::Queue>>();
 }
@@ -92,7 +92,7 @@ CloudTasksConnection::TestIamPermissions(
 }
 
 StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnection::ListTasks(
-    google::cloud::tasks::v2::ListTasksRequest request) {
+    google::cloud::tasks::v2::ListTasksRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tasks::v2::Task>>();
 }

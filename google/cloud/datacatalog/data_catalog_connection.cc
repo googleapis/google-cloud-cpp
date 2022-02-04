@@ -36,7 +36,7 @@ DataCatalogConnection::~DataCatalogConnection() = default;
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogConnection::SearchCatalog(
-    google::cloud::datacatalog::v1::SearchCatalogRequest request) {
+    google::cloud::datacatalog::v1::SearchCatalogRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>();
 }
@@ -66,7 +66,7 @@ Status DataCatalogConnection::DeleteEntryGroup(
 
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnection::ListEntryGroups(
-    google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
+    google::cloud::datacatalog::v1::ListEntryGroupsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::EntryGroup>>();
 }
@@ -101,7 +101,7 @@ DataCatalogConnection::LookupEntry(
 
 StreamRange<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnection::ListEntries(
-    google::cloud::datacatalog::v1::ListEntriesRequest request) {
+    google::cloud::datacatalog::v1::ListEntriesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Entry>>();
 }
@@ -176,7 +176,7 @@ Status DataCatalogConnection::DeleteTag(
 
 StreamRange<google::cloud::datacatalog::v1::Tag>
 DataCatalogConnection::ListTags(
-    google::cloud::datacatalog::v1::ListTagsRequest request) {
+    google::cloud::datacatalog::v1::ListTagsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Tag>>();
 }

@@ -37,7 +37,7 @@ WorkflowsConnection::~WorkflowsConnection() = default;
 
 StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsConnection::ListWorkflows(
-    google::cloud::workflows::v1::ListWorkflowsRequest request) {
+    google::cloud::workflows::v1::ListWorkflowsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::v1::Workflow>>();
 }

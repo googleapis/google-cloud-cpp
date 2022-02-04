@@ -36,13 +36,13 @@ CloudCatalogConnection::~CloudCatalogConnection() = default;
 
 StreamRange<google::cloud::billing::v1::Service>
 CloudCatalogConnection::ListServices(
-    google::cloud::billing::v1::ListServicesRequest request) {
+    google::cloud::billing::v1::ListServicesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::Service>>();
 }
 
 StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
-    google::cloud::billing::v1::ListSkusRequest request) {
+    google::cloud::billing::v1::ListSkusRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::Sku>>();
 }

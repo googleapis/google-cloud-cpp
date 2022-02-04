@@ -59,7 +59,7 @@ ServiceUsageConnection::GetService(
 
 StreamRange<google::api::serviceusage::v1::Service>
 ServiceUsageConnection::ListServices(
-    google::api::serviceusage::v1::ListServicesRequest request) {
+    google::api::serviceusage::v1::ListServicesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::serviceusage::v1::Service>>();
 }

@@ -37,7 +37,7 @@ NotificationChannelServiceConnection::~NotificationChannelServiceConnection() =
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
-    google::monitoring::v3::ListNotificationChannelDescriptorsRequest request) {
+    google::monitoring::v3::ListNotificationChannelDescriptorsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannelDescriptor>>();
 }
@@ -50,7 +50,7 @@ NotificationChannelServiceConnection::GetNotificationChannelDescriptor(
 
 StreamRange<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceConnection::ListNotificationChannels(
-    google::monitoring::v3::ListNotificationChannelsRequest request) {
+    google::monitoring::v3::ListNotificationChannelsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannel>>();
 }

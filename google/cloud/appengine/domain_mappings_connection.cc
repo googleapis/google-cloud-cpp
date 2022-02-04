@@ -37,7 +37,7 @@ DomainMappingsConnection::~DomainMappingsConnection() = default;
 
 StreamRange<google::appengine::v1::DomainMapping>
 DomainMappingsConnection::ListDomainMappings(
-    google::appengine::v1::ListDomainMappingsRequest request) {
+    google::appengine::v1::ListDomainMappingsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::DomainMapping>>();
 }

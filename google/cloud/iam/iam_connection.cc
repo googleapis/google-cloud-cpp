@@ -36,7 +36,7 @@ IAMConnection::~IAMConnection() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
 IAMConnection::ListServiceAccounts(
-    google::iam::admin::v1::ListServiceAccountsRequest request) {
+    google::iam::admin::v1::ListServiceAccountsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::ServiceAccount>>();
 }
@@ -126,13 +126,13 @@ IAMConnection::TestIamPermissions(
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMConnection::QueryGrantableRoles(
-    google::iam::admin::v1::QueryGrantableRolesRequest request) {
+    google::iam::admin::v1::QueryGrantableRolesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::Role>>();
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMConnection::ListRoles(
-    google::iam::admin::v1::ListRolesRequest request) {
+    google::iam::admin::v1::ListRolesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::Role>>();
 }
@@ -164,7 +164,7 @@ StatusOr<google::iam::admin::v1::Role> IAMConnection::UndeleteRole(
 
 StreamRange<google::iam::admin::v1::Permission>
 IAMConnection::QueryTestablePermissions(
-    google::iam::admin::v1::QueryTestablePermissionsRequest request) {
+    google::iam::admin::v1::QueryTestablePermissionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::Permission>>();
 }

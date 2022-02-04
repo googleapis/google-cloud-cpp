@@ -54,14 +54,14 @@ OsConfigServiceConnection::CancelPatchJob(
 
 StreamRange<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceConnection::ListPatchJobs(
-    google::cloud::osconfig::v1::ListPatchJobsRequest request) {
+    google::cloud::osconfig::v1::ListPatchJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJob>>();
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
 OsConfigServiceConnection::ListPatchJobInstanceDetails(
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request) {
+    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>>();
 }
@@ -80,7 +80,7 @@ OsConfigServiceConnection::GetPatchDeployment(
 
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceConnection::ListPatchDeployments(
-    google::cloud::osconfig::v1::ListPatchDeploymentsRequest request) {
+    google::cloud::osconfig::v1::ListPatchDeploymentsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchDeployment>>();
 }

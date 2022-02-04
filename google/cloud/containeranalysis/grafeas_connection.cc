@@ -40,7 +40,7 @@ StatusOr<grafeas::v1::Occurrence> GrafeasConnection::GetOccurrence(
 }
 
 StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListOccurrences(
-    grafeas::v1::ListOccurrencesRequest request) {
+    grafeas::v1::ListOccurrencesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<grafeas::v1::Occurrence>>();
 }
@@ -77,7 +77,7 @@ StatusOr<grafeas::v1::Note> GrafeasConnection::GetNote(
 }
 
 StreamRange<grafeas::v1::Note> GrafeasConnection::ListNotes(
-    grafeas::v1::ListNotesRequest request) {
+    grafeas::v1::ListNotesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<grafeas::v1::Note>>();
 }
@@ -103,7 +103,7 @@ StatusOr<grafeas::v1::Note> GrafeasConnection::UpdateNote(
 }
 
 StreamRange<grafeas::v1::Occurrence> GrafeasConnection::ListNoteOccurrences(
-    grafeas::v1::ListNoteOccurrencesRequest request) {
+    grafeas::v1::ListNoteOccurrencesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<grafeas::v1::Occurrence>>();
 }

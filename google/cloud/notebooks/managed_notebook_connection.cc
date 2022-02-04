@@ -37,7 +37,7 @@ ManagedNotebookServiceConnection::~ManagedNotebookServiceConnection() = default;
 
 StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceConnection::ListRuntimes(
-    google::cloud::notebooks::v1::ListRuntimesRequest request) {
+    google::cloud::notebooks::v1::ListRuntimesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Runtime>>();
 }

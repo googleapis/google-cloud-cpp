@@ -36,7 +36,7 @@ AccessApprovalConnection::~AccessApprovalConnection() = default;
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalConnection::ListApprovalRequests(
-    google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>();
 }

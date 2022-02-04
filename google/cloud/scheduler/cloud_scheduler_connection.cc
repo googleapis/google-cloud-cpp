@@ -36,7 +36,7 @@ CloudSchedulerConnection::~CloudSchedulerConnection() = default;
 
 StreamRange<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnection::ListJobs(
-    google::cloud::scheduler::v1::ListJobsRequest request) {
+    google::cloud::scheduler::v1::ListJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::scheduler::v1::Job>>();
 }

@@ -36,7 +36,7 @@ AuthorizedCertificatesConnection::~AuthorizedCertificatesConnection() = default;
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesConnection::ListAuthorizedCertificates(
-    google::appengine::v1::ListAuthorizedCertificatesRequest request) {
+    google::appengine::v1::ListAuthorizedCertificatesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedCertificate>>();
 }

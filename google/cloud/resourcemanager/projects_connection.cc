@@ -43,14 +43,14 @@ ProjectsConnection::GetProject(
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsConnection::ListProjects(
-    google::cloud::resourcemanager::v3::ListProjectsRequest request) {
+    google::cloud::resourcemanager::v3::ListProjectsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsConnection::SearchProjects(
-    google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
+    google::cloud::resourcemanager::v3::SearchProjectsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }

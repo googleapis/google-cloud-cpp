@@ -218,7 +218,7 @@ ClusterManagerConnection::SetMaintenancePolicy(
 
 StreamRange<google::container::v1::UsableSubnetwork>
 ClusterManagerConnection::ListUsableSubnetworks(
-    google::container::v1::ListUsableSubnetworksRequest request) {
+    google::container::v1::ListUsableSubnetworksRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::container::v1::UsableSubnetwork>>();
 }

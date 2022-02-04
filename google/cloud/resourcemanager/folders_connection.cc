@@ -43,14 +43,14 @@ FoldersConnection::GetFolder(
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersConnection::ListFolders(
-    google::cloud::resourcemanager::v3::ListFoldersRequest request) {
+    google::cloud::resourcemanager::v3::ListFoldersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Folder>>();
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersConnection::SearchFolders(
-    google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
+    google::cloud::resourcemanager::v3::SearchFoldersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Folder>>();
 }

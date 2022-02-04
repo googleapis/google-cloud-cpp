@@ -53,7 +53,7 @@ ManagedIdentitiesServiceConnection::ResetAdminPassword(
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceConnection::ListDomains(
-    google::cloud::managedidentities::v1::ListDomainsRequest request) {
+    google::cloud::managedidentities::v1::ListDomainsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedidentities::v1::Domain>>();
 }

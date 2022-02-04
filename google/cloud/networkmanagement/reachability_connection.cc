@@ -37,8 +37,7 @@ ReachabilityServiceConnection::~ReachabilityServiceConnection() = default;
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceConnection::ListConnectivityTests(
-    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-        request) {
+    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>();
 }

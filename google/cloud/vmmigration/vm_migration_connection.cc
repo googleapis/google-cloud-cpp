@@ -37,7 +37,7 @@ VmMigrationConnection::~VmMigrationConnection() = default;
 
 StreamRange<google::cloud::vmmigration::v1::Source>
 VmMigrationConnection::ListSources(
-    google::cloud::vmmigration::v1::ListSourcesRequest request) {
+    google::cloud::vmmigration::v1::ListSourcesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Source>>();
 }
@@ -80,7 +80,7 @@ VmMigrationConnection::FetchInventory(
 
 StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationConnection::ListUtilizationReports(
-    google::cloud::vmmigration::v1::ListUtilizationReportsRequest request) {
+    google::cloud::vmmigration::v1::ListUtilizationReportsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::UtilizationReport>>();
 }
@@ -109,7 +109,7 @@ VmMigrationConnection::DeleteUtilizationReport(
 
 StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationConnection::ListDatacenterConnectors(
-    google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request) {
+    google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>>();
 }
@@ -146,7 +146,7 @@ VmMigrationConnection::CreateMigratingVm(
 
 StreamRange<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationConnection::ListMigratingVms(
-    google::cloud::vmmigration::v1::ListMigratingVmsRequest request) {
+    google::cloud::vmmigration::v1::ListMigratingVmsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::MigratingVm>>();
 }
@@ -223,7 +223,7 @@ VmMigrationConnection::CancelCloneJob(
 
 StreamRange<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationConnection::ListCloneJobs(
-    google::cloud::vmmigration::v1::ListCloneJobsRequest request) {
+    google::cloud::vmmigration::v1::ListCloneJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CloneJob>>();
 }
@@ -252,7 +252,7 @@ VmMigrationConnection::CancelCutoverJob(
 
 StreamRange<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationConnection::ListCutoverJobs(
-    google::cloud::vmmigration::v1::ListCutoverJobsRequest request) {
+    google::cloud::vmmigration::v1::ListCutoverJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CutoverJob>>();
 }
@@ -265,7 +265,7 @@ VmMigrationConnection::GetCutoverJob(
 
 StreamRange<google::cloud::vmmigration::v1::Group>
 VmMigrationConnection::ListGroups(
-    google::cloud::vmmigration::v1::ListGroupsRequest request) {
+    google::cloud::vmmigration::v1::ListGroupsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Group>>();
 }
@@ -317,7 +317,7 @@ VmMigrationConnection::RemoveGroupMigration(
 
 StreamRange<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationConnection::ListTargetProjects(
-    google::cloud::vmmigration::v1::ListTargetProjectsRequest request) {
+    google::cloud::vmmigration::v1::ListTargetProjectsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::TargetProject>>();
 }

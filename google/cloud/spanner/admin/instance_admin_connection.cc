@@ -37,7 +37,7 @@ InstanceAdminConnection::~InstanceAdminConnection() = default;
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminConnection::ListInstanceConfigs(
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
+    google::spanner::admin::instance::v1::ListInstanceConfigsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>();
 }
@@ -50,7 +50,7 @@ InstanceAdminConnection::GetInstanceConfig(
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
 InstanceAdminConnection::ListInstances(
-    google::spanner::admin::instance::v1::ListInstancesRequest request) {
+    google::spanner::admin::instance::v1::ListInstancesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::instance::v1::Instance>>();
 }

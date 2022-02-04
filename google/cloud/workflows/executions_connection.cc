@@ -36,7 +36,7 @@ ExecutionsConnection::~ExecutionsConnection() = default;
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnection::ListExecutions(
-    google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
+    google::cloud::workflows::executions::v1::ListExecutionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::executions::v1::Execution>>();
 }

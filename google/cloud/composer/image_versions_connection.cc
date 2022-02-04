@@ -36,8 +36,8 @@ ImageVersionsConnection::~ImageVersionsConnection() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 ImageVersionsConnection::ListImageVersions(
-    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
-        request) {
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::orchestration::airflow::service::v1::ImageVersion>>();
 }

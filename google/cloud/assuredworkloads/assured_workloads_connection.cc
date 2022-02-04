@@ -63,7 +63,7 @@ AssuredWorkloadsServiceConnection::GetWorkload(
 
 StreamRange<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceConnection::ListWorkloads(
-    google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
+    google::cloud::assuredworkloads::v1::ListWorkloadsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::assuredworkloads::v1::Workload>>();
 }

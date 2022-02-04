@@ -36,7 +36,7 @@ AlertPolicyServiceConnection::~AlertPolicyServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceConnection::ListAlertPolicies(
-    google::monitoring::v3::ListAlertPoliciesRequest request) {
+    google::monitoring::v3::ListAlertPoliciesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::AlertPolicy>>();
 }

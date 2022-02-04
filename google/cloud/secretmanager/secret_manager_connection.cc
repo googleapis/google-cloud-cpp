@@ -36,7 +36,7 @@ SecretManagerServiceConnection::~SecretManagerServiceConnection() = default;
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceConnection::ListSecrets(
-    google::cloud::secretmanager::v1::ListSecretsRequest request) {
+    google::cloud::secretmanager::v1::ListSecretsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::Secret>>();
 }
@@ -72,7 +72,7 @@ Status SecretManagerServiceConnection::DeleteSecret(
 
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceConnection::ListSecretVersions(
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
+    google::cloud::secretmanager::v1::ListSecretVersionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::SecretVersion>>();
 }

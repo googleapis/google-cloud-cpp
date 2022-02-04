@@ -36,7 +36,7 @@ MetricServiceConnection::~MetricServiceConnection() = default;
 
 StreamRange<google::api::MonitoredResourceDescriptor>
 MetricServiceConnection::ListMonitoredResourceDescriptors(
-    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
+    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>();
 }
@@ -49,7 +49,7 @@ MetricServiceConnection::GetMonitoredResourceDescriptor(
 
 StreamRange<google::api::MetricDescriptor>
 MetricServiceConnection::ListMetricDescriptors(
-    google::monitoring::v3::ListMetricDescriptorsRequest request) {
+    google::monitoring::v3::ListMetricDescriptorsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MetricDescriptor>>();
 }
@@ -73,7 +73,7 @@ Status MetricServiceConnection::DeleteMetricDescriptor(
 
 StreamRange<google::monitoring::v3::TimeSeries>
 MetricServiceConnection::ListTimeSeries(
-    google::monitoring::v3::ListTimeSeriesRequest request) {
+    google::monitoring::v3::ListTimeSeriesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::TimeSeries>>();
 }

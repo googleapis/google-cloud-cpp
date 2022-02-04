@@ -59,7 +59,7 @@ Status DeviceManagerConnection::DeleteDeviceRegistry(
 
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerConnection::ListDeviceRegistries(
-    google::cloud::iot::v1::ListDeviceRegistriesRequest request) {
+    google::cloud::iot::v1::ListDeviceRegistriesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::iot::v1::DeviceRegistry>>();
 }
@@ -86,7 +86,7 @@ Status DeviceManagerConnection::DeleteDevice(
 
 StreamRange<google::cloud::iot::v1::Device>
 DeviceManagerConnection::ListDevices(
-    google::cloud::iot::v1::ListDevicesRequest request) {
+    google::cloud::iot::v1::ListDevicesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::iot::v1::Device>>();
 }

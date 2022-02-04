@@ -37,13 +37,13 @@ GkeHubConnection::~GkeHubConnection() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubConnection::ListMemberships(
-    google::cloud::gkehub::v1::ListMembershipsRequest request) {
+    google::cloud::gkehub::v1::ListMembershipsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkehub::v1::Membership>>();
 }
 
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubConnection::ListFeatures(
-    google::cloud::gkehub::v1::ListFeaturesRequest request) {
+    google::cloud::gkehub::v1::ListFeaturesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkehub::v1::Feature>>();
 }

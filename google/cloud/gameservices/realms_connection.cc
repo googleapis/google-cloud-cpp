@@ -37,7 +37,7 @@ RealmsServiceConnection::~RealmsServiceConnection() = default;
 
 StreamRange<google::cloud::gaming::v1::Realm>
 RealmsServiceConnection::ListRealms(
-    google::cloud::gaming::v1::ListRealmsRequest request) {
+    google::cloud::gaming::v1::ListRealmsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::Realm>>();
 }

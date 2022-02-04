@@ -49,7 +49,7 @@ ServiceMonitoringServiceConnection::GetService(
 
 StreamRange<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnection::ListServices(
-    google::monitoring::v3::ListServicesRequest request) {
+    google::monitoring::v3::ListServicesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::Service>>();
 }
@@ -79,7 +79,7 @@ ServiceMonitoringServiceConnection::GetServiceLevelObjective(
 
 StreamRange<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
-    google::monitoring::v3::ListServiceLevelObjectivesRequest request) {
+    google::monitoring::v3::ListServiceLevelObjectivesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::ServiceLevelObjective>>();
 }

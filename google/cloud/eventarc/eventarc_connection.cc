@@ -42,7 +42,7 @@ StatusOr<google::cloud::eventarc::v1::Trigger> EventarcConnection::GetTrigger(
 
 StreamRange<google::cloud::eventarc::v1::Trigger>
 EventarcConnection::ListTriggers(
-    google::cloud::eventarc::v1::ListTriggersRequest request) {
+    google::cloud::eventarc::v1::ListTriggersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::eventarc::v1::Trigger>>();
 }

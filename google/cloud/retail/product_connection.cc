@@ -49,7 +49,7 @@ ProductServiceConnection::GetProduct(
 
 StreamRange<google::cloud::retail::v2::Product>
 ProductServiceConnection::ListProducts(
-    google::cloud::retail::v2::ListProductsRequest request) {
+    google::cloud::retail::v2::ListProductsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Product>>();
 }

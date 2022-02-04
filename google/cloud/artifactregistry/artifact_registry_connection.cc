@@ -36,14 +36,14 @@ ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryConnection::ListDockerImages(
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
+    google::devtools::artifactregistry::v1::ListDockerImagesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::DockerImage>>();
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryConnection::ListRepositories(
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
+    google::devtools::artifactregistry::v1::ListRepositoriesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Repository>>();
 }

@@ -51,7 +51,7 @@ VpcAccessServiceConnection::GetConnector(
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceConnection::ListConnectors(
-    google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
+    google::cloud::vpcaccess::v1::ListConnectorsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vpcaccess::v1::Connector>>();
 }

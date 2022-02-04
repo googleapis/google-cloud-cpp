@@ -43,7 +43,7 @@ ProductSearchConnection::CreateProductSet(
 
 StreamRange<google::cloud::vision::v1::ProductSet>
 ProductSearchConnection::ListProductSets(
-    google::cloud::vision::v1::ListProductSetsRequest request) {
+    google::cloud::vision::v1::ListProductSetsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ProductSet>>();
 }
@@ -73,7 +73,7 @@ ProductSearchConnection::CreateProduct(
 
 StreamRange<google::cloud::vision::v1::Product>
 ProductSearchConnection::ListProducts(
-    google::cloud::vision::v1::ListProductsRequest request) {
+    google::cloud::vision::v1::ListProductsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }
@@ -108,7 +108,7 @@ Status ProductSearchConnection::DeleteReferenceImage(
 
 StreamRange<google::cloud::vision::v1::ReferenceImage>
 ProductSearchConnection::ListReferenceImages(
-    google::cloud::vision::v1::ListReferenceImagesRequest request) {
+    google::cloud::vision::v1::ListReferenceImagesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ReferenceImage>>();
 }
@@ -131,7 +131,7 @@ Status ProductSearchConnection::RemoveProductFromProductSet(
 
 StreamRange<google::cloud::vision::v1::Product>
 ProductSearchConnection::ListProductsInProductSet(
-    google::cloud::vision::v1::ListProductsInProductSetRequest request) {
+    google::cloud::vision::v1::ListProductsInProductSetRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }

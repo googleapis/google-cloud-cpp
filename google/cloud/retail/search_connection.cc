@@ -35,8 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SearchServiceConnection::~SearchServiceConnection() = default;
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-SearchServiceConnection::Search(
-    google::cloud::retail::v2::SearchRequest request) {
+SearchServiceConnection::Search(google::cloud::retail::v2::SearchRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>();
 }

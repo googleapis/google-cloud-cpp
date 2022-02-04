@@ -44,7 +44,7 @@ AssetServiceConnection::ExportAssets(
 }
 
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceConnection::ListAssets(
-    google::cloud::asset::v1::ListAssetsRequest request) {
+    google::cloud::asset::v1::ListAssetsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::Asset>>();
 }
@@ -83,14 +83,14 @@ Status AssetServiceConnection::DeleteFeed(
 
 StreamRange<google::cloud::asset::v1::ResourceSearchResult>
 AssetServiceConnection::SearchAllResources(
-    google::cloud::asset::v1::SearchAllResourcesRequest request) {
+    google::cloud::asset::v1::SearchAllResourcesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::ResourceSearchResult>>();
 }
 
 StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
 AssetServiceConnection::SearchAllIamPolicies(
-    google::cloud::asset::v1::SearchAllIamPoliciesRequest request) {
+    google::cloud::asset::v1::SearchAllIamPoliciesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>();
 }

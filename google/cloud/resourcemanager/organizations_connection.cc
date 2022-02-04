@@ -42,7 +42,7 @@ OrganizationsConnection::GetOrganization(
 
 StreamRange<google::cloud::resourcemanager::v3::Organization>
 OrganizationsConnection::SearchOrganizations(
-    google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Organization>>();
 }

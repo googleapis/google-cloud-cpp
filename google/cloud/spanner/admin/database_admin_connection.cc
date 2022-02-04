@@ -37,7 +37,7 @@ DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
 StreamRange<google::spanner::admin::database::v1::Database>
 DatabaseAdminConnection::ListDatabases(
-    google::spanner::admin::database::v1::ListDatabasesRequest request) {
+    google::spanner::admin::database::v1::ListDatabasesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::database::v1::Database>>();
 }
@@ -119,7 +119,7 @@ Status DatabaseAdminConnection::DeleteBackup(
 
 StreamRange<google::spanner::admin::database::v1::Backup>
 DatabaseAdminConnection::ListBackups(
-    google::spanner::admin::database::v1::ListBackupsRequest request) {
+    google::spanner::admin::database::v1::ListBackupsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::database::v1::Backup>>();
 }
@@ -134,15 +134,14 @@ DatabaseAdminConnection::RestoreDatabase(
 
 StreamRange<google::longrunning::Operation>
 DatabaseAdminConnection::ListDatabaseOperations(
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest
-        request) {
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
 StreamRange<google::longrunning::Operation>
 DatabaseAdminConnection::ListBackupOperations(
-    google::spanner::admin::database::v1::ListBackupOperationsRequest request) {
+    google::spanner::admin::database::v1::ListBackupOperationsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }

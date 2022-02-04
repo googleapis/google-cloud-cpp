@@ -80,7 +80,7 @@ JobServiceConnection::BatchDeleteJobs(
 }
 
 StreamRange<google::cloud::talent::v4::Job> JobServiceConnection::ListJobs(
-    google::cloud::talent::v4::ListJobsRequest request) {
+    google::cloud::talent::v4::ListJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::talent::v4::Job>>();
 }

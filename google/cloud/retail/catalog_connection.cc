@@ -36,7 +36,7 @@ CatalogServiceConnection::~CatalogServiceConnection() = default;
 
 StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceConnection::ListCatalogs(
-    google::cloud::retail::v2::ListCatalogsRequest request) {
+    google::cloud::retail::v2::ListCatalogsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Catalog>>();
 }

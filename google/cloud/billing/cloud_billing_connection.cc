@@ -42,7 +42,7 @@ CloudBillingConnection::GetBillingAccount(
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnection::ListBillingAccounts(
-    google::cloud::billing::v1::ListBillingAccountsRequest request) {
+    google::cloud::billing::v1::ListBillingAccountsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::BillingAccount>>();
 }
@@ -61,7 +61,7 @@ CloudBillingConnection::CreateBillingAccount(
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingConnection::ListProjectBillingInfo(
-    google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
+    google::cloud::billing::v1::ListProjectBillingInfoRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>();
 }

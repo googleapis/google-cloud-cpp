@@ -59,7 +59,7 @@ Status CompanyServiceConnection::DeleteCompany(
 
 StreamRange<google::cloud::talent::v4::Company>
 CompanyServiceConnection::ListCompanies(
-    google::cloud::talent::v4::ListCompaniesRequest request) {
+    google::cloud::talent::v4::ListCompaniesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::talent::v4::Company>>();
 }

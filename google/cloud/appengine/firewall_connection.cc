@@ -36,7 +36,7 @@ FirewallConnection::~FirewallConnection() = default;
 
 StreamRange<google::appengine::v1::FirewallRule>
 FirewallConnection::ListIngressRules(
-    google::appengine::v1::ListIngressRulesRequest request) {
+    google::appengine::v1::ListIngressRulesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::FirewallRule>>();
 }

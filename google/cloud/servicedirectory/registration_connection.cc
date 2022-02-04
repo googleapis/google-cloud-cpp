@@ -42,7 +42,7 @@ RegistrationServiceConnection::CreateNamespace(
 
 StreamRange<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceConnection::ListNamespaces(
-    google::cloud::servicedirectory::v1::ListNamespacesRequest request) {
+    google::cloud::servicedirectory::v1::ListNamespacesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Namespace>>();
 }
@@ -72,7 +72,7 @@ RegistrationServiceConnection::CreateService(
 
 StreamRange<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceConnection::ListServices(
-    google::cloud::servicedirectory::v1::ListServicesRequest request) {
+    google::cloud::servicedirectory::v1::ListServicesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Service>>();
 }
@@ -102,7 +102,7 @@ RegistrationServiceConnection::CreateEndpoint(
 
 StreamRange<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceConnection::ListEndpoints(
-    google::cloud::servicedirectory::v1::ListEndpointsRequest request) {
+    google::cloud::servicedirectory::v1::ListEndpointsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Endpoint>>();
 }

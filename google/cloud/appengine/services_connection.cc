@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServicesConnection::~ServicesConnection() = default;
 
 StreamRange<google::appengine::v1::Service> ServicesConnection::ListServices(
-    google::appengine::v1::ListServicesRequest request) {
+    google::appengine::v1::ListServicesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::Service>>();
 }

@@ -37,8 +37,7 @@ AccessContextManagerConnection::~AccessContextManagerConnection() = default;
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerConnection::ListAccessPolicies(
-    google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
-        request) {
+    google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>();
 }
@@ -79,8 +78,7 @@ AccessContextManagerConnection::DeleteAccessPolicy(
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
 AccessContextManagerConnection::ListAccessLevels(
-    google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
-        request) {
+    google::identity::accesscontextmanager::v1::ListAccessLevelsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>();
 }
@@ -132,8 +130,7 @@ AccessContextManagerConnection::ReplaceAccessLevels(
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
 AccessContextManagerConnection::ListServicePerimeters(
-    google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
-        request) {
+    google::identity::accesscontextmanager::v1::ListServicePerimetersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::ServicePerimeter>>();
 }
@@ -198,8 +195,8 @@ AccessContextManagerConnection::CommitServicePerimeters(
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
 AccessContextManagerConnection::ListGcpUserAccessBindings(
-    google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
-        request) {
+    google::identity::accesscontextmanager::v1::
+        ListGcpUserAccessBindingsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>();
 }

@@ -38,7 +38,7 @@ GameServerClustersServiceConnection::~GameServerClustersServiceConnection() =
 
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceConnection::ListGameServerClusters(
-    google::cloud::gaming::v1::ListGameServerClustersRequest request) {
+    google::cloud::gaming::v1::ListGameServerClustersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::GameServerCluster>>();
 }

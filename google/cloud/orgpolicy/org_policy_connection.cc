@@ -36,14 +36,14 @@ OrgPolicyConnection::~OrgPolicyConnection() = default;
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
 OrgPolicyConnection::ListConstraints(
-    google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
+    google::cloud::orgpolicy::v2::ListConstraintsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Constraint>>();
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyConnection::ListPolicies(
-    google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
+    google::cloud::orgpolicy::v2::ListPoliciesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Policy>>();
 }

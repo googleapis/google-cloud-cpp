@@ -54,7 +54,7 @@ AdminServiceConnection::GetTopicPartitions(
 
 StreamRange<google::cloud::pubsublite::v1::Topic>
 AdminServiceConnection::ListTopics(
-    google::cloud::pubsublite::v1::ListTopicsRequest request) {
+    google::cloud::pubsublite::v1::ListTopicsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Topic>>();
 }
@@ -71,7 +71,7 @@ Status AdminServiceConnection::DeleteTopic(
 }
 
 StreamRange<std::string> AdminServiceConnection::ListTopicSubscriptions(
-    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) {
+    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }
@@ -90,7 +90,7 @@ AdminServiceConnection::GetSubscription(
 
 StreamRange<google::cloud::pubsublite::v1::Subscription>
 AdminServiceConnection::ListSubscriptions(
-    google::cloud::pubsublite::v1::ListSubscriptionsRequest request) {
+    google::cloud::pubsublite::v1::ListSubscriptionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Subscription>>();
 }
@@ -128,7 +128,7 @@ AdminServiceConnection::GetReservation(
 
 StreamRange<google::cloud::pubsublite::v1::Reservation>
 AdminServiceConnection::ListReservations(
-    google::cloud::pubsublite::v1::ListReservationsRequest request) {
+    google::cloud::pubsublite::v1::ListReservationsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Reservation>>();
 }
@@ -145,7 +145,7 @@ Status AdminServiceConnection::DeleteReservation(
 }
 
 StreamRange<std::string> AdminServiceConnection::ListReservationTopics(
-    google::cloud::pubsublite::v1::ListReservationTopicsRequest request) {
+    google::cloud::pubsublite::v1::ListReservationTopicsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }

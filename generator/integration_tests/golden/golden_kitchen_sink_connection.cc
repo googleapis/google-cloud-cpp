@@ -54,7 +54,7 @@ GoldenKitchenSinkConnection::WriteLogEntries(
 }
 
 StreamRange<std::string> GoldenKitchenSinkConnection::ListLogs(
-    google::test::admin::database::v1::ListLogsRequest request) {
+    google::test::admin::database::v1::ListLogsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }

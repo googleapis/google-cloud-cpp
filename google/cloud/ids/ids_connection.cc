@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IDSConnection::~IDSConnection() = default;
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSConnection::ListEndpoints(
-    google::cloud::ids::v1::ListEndpointsRequest request) {
+    google::cloud::ids::v1::ListEndpointsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::ids::v1::Endpoint>>();
 }

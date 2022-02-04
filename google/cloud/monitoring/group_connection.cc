@@ -35,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GroupServiceConnection::~GroupServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::Group> GroupServiceConnection::ListGroups(
-    google::monitoring::v3::ListGroupsRequest request) {
+    google::monitoring::v3::ListGroupsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::Group>>();
 }
@@ -62,7 +62,7 @@ Status GroupServiceConnection::DeleteGroup(
 
 StreamRange<google::api::MonitoredResource>
 GroupServiceConnection::ListGroupMembers(
-    google::monitoring::v3::ListGroupMembersRequest request) {
+    google::monitoring::v3::ListGroupMembersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResource>>();
 }

@@ -38,7 +38,7 @@ GameServerConfigsServiceConnection::~GameServerConfigsServiceConnection() =
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
 GameServerConfigsServiceConnection::ListGameServerConfigs(
-    google::cloud::gaming::v1::ListGameServerConfigsRequest request) {
+    google::cloud::gaming::v1::ListGameServerConfigsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::GameServerConfig>>();
 }

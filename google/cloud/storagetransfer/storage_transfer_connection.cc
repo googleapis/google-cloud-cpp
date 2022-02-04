@@ -61,7 +61,7 @@ StorageTransferServiceConnection::GetTransferJob(
 
 StreamRange<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceConnection::ListTransferJobs(
-    google::storagetransfer::v1::ListTransferJobsRequest request) {
+    google::storagetransfer::v1::ListTransferJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storagetransfer::v1::TransferJob>>();
 }

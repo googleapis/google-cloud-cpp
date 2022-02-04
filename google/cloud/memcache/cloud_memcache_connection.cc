@@ -37,7 +37,7 @@ CloudMemcacheConnection::~CloudMemcacheConnection() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>
 CloudMemcacheConnection::ListInstances(
-    google::cloud::memcache::v1::ListInstancesRequest request) {
+    google::cloud::memcache::v1::ListInstancesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::memcache::v1::Instance>>();
 }

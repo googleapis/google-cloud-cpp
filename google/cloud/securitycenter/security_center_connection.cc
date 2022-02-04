@@ -108,14 +108,14 @@ SecurityCenterConnection::GetSource(
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
 SecurityCenterConnection::GroupAssets(
-    google::cloud::securitycenter::v1::GroupAssetsRequest request) {
+    google::cloud::securitycenter::v1::GroupAssetsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
 SecurityCenterConnection::GroupFindings(
-    google::cloud::securitycenter::v1::GroupFindingsRequest request) {
+    google::cloud::securitycenter::v1::GroupFindingsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
@@ -123,7 +123,7 @@ SecurityCenterConnection::GroupFindings(
 StreamRange<
     google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
 SecurityCenterConnection::ListAssets(
-    google::cloud::securitycenter::v1::ListAssetsRequest request) {
+    google::cloud::securitycenter::v1::ListAssetsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::
                       ListAssetsResult>>();
@@ -132,7 +132,7 @@ SecurityCenterConnection::ListAssets(
 StreamRange<
     google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
 SecurityCenterConnection::ListFindings(
-    google::cloud::securitycenter::v1::ListFindingsRequest request) {
+    google::cloud::securitycenter::v1::ListFindingsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
                       ListFindingsResult>>();
@@ -140,21 +140,21 @@ SecurityCenterConnection::ListFindings(
 
 StreamRange<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterConnection::ListMuteConfigs(
-    google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
+    google::cloud::securitycenter::v1::ListMuteConfigsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::MuteConfig>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterConnection::ListNotificationConfigs(
-    google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
+    google::cloud::securitycenter::v1::ListNotificationConfigsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::Source>
 SecurityCenterConnection::ListSources(
-    google::cloud::securitycenter::v1::ListSourcesRequest request) {
+    google::cloud::securitycenter::v1::ListSourcesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::Source>>();
 }

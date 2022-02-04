@@ -84,7 +84,7 @@ DlpServiceConnection::GetInspectTemplate(
 
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceConnection::ListInspectTemplates(
-    google::privacy::dlp::v2::ListInspectTemplatesRequest request) {
+    google::privacy::dlp::v2::ListInspectTemplatesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::InspectTemplate>>();
 }
@@ -114,7 +114,7 @@ DlpServiceConnection::GetDeidentifyTemplate(
 
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceConnection::ListDeidentifyTemplates(
-    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) {
+    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>();
 }
@@ -150,7 +150,7 @@ DlpServiceConnection::GetJobTrigger(
 
 StreamRange<google::privacy::dlp::v2::JobTrigger>
 DlpServiceConnection::ListJobTriggers(
-    google::privacy::dlp::v2::ListJobTriggersRequest request) {
+    google::privacy::dlp::v2::ListJobTriggersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::JobTrigger>>();
 }
@@ -172,7 +172,7 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::CreateDlpJob(
 }
 
 StreamRange<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::ListDlpJobs(
-    google::privacy::dlp::v2::ListDlpJobsRequest request) {
+    google::privacy::dlp::v2::ListDlpJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DlpJob>>();
 }
@@ -212,7 +212,7 @@ DlpServiceConnection::GetStoredInfoType(
 
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceConnection::ListStoredInfoTypes(
-    google::privacy::dlp::v2::ListStoredInfoTypesRequest request) {
+    google::privacy::dlp::v2::ListStoredInfoTypesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::StoredInfoType>>();
 }

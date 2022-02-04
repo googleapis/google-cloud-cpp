@@ -36,28 +36,28 @@ KeyManagementServiceConnection::~KeyManagementServiceConnection() = default;
 
 StreamRange<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnection::ListKeyRings(
-    google::cloud::kms::v1::ListKeyRingsRequest request) {
+    google::cloud::kms::v1::ListKeyRingsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::KeyRing>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceConnection::ListCryptoKeys(
-    google::cloud::kms::v1::ListCryptoKeysRequest request) {
+    google::cloud::kms::v1::ListCryptoKeysRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKey>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceConnection::ListCryptoKeyVersions(
-    google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) {
+    google::cloud::kms::v1::ListCryptoKeyVersionsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>();
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceConnection::ListImportJobs(
-    google::cloud::kms::v1::ListImportJobsRequest request) {
+    google::cloud::kms::v1::ListImportJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::ImportJob>>();
 }

@@ -37,7 +37,7 @@ CloudFilestoreManagerConnection::~CloudFilestoreManagerConnection() = default;
 
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerConnection::ListInstances(
-    google::cloud::filestore::v1::ListInstancesRequest request) {
+    google::cloud::filestore::v1::ListInstancesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::filestore::v1::Instance>>();
 }
@@ -82,7 +82,7 @@ CloudFilestoreManagerConnection::DeleteInstance(
 
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerConnection::ListBackups(
-    google::cloud::filestore::v1::ListBackupsRequest request) {
+    google::cloud::filestore::v1::ListBackupsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::filestore::v1::Backup>>();
 }

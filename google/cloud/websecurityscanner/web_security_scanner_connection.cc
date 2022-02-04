@@ -53,7 +53,7 @@ WebSecurityScannerConnection::GetScanConfig(
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnection::ListScanConfigs(
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
+    google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>();
 }
@@ -78,7 +78,7 @@ WebSecurityScannerConnection::GetScanRun(
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerConnection::ListScanRuns(
-    google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
+    google::cloud::websecurityscanner::v1::ListScanRunsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>();
 }
@@ -91,7 +91,7 @@ WebSecurityScannerConnection::StopScanRun(
 
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
 WebSecurityScannerConnection::ListCrawledUrls(
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
+    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>();
 }
@@ -104,7 +104,7 @@ WebSecurityScannerConnection::GetFinding(
 
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerConnection::ListFindings(
-    google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
+    google::cloud::websecurityscanner::v1::ListFindingsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::Finding>>();
 }

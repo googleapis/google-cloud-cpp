@@ -42,7 +42,7 @@ DashboardsServiceConnection::CreateDashboard(
 
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceConnection::ListDashboards(
-    google::monitoring::dashboard::v1::ListDashboardsRequest request) {
+    google::monitoring::dashboard::v1::ListDashboardsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::dashboard::v1::Dashboard>>();
 }

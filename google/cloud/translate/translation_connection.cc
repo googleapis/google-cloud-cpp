@@ -85,7 +85,7 @@ TranslationServiceConnection::CreateGlossary(
 
 StreamRange<google::cloud::translation::v3::Glossary>
 TranslationServiceConnection::ListGlossaries(
-    google::cloud::translation::v3::ListGlossariesRequest request) {
+    google::cloud::translation::v3::ListGlossariesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::Glossary>>();
 }

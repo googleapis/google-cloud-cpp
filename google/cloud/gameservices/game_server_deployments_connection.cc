@@ -38,7 +38,7 @@ GameServerDeploymentsServiceConnection::
 
 StreamRange<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceConnection::ListGameServerDeployments(
-    google::cloud::gaming::v1::ListGameServerDeploymentsRequest request) {
+    google::cloud::gaming::v1::ListGameServerDeploymentsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::GameServerDeployment>>();
 }

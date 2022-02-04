@@ -37,7 +37,7 @@ CloudChannelServiceConnection::~CloudChannelServiceConnection() = default;
 
 StreamRange<google::cloud::channel::v1::Customer>
 CloudChannelServiceConnection::ListCustomers(
-    google::cloud::channel::v1::ListCustomersRequest request) {
+    google::cloud::channel::v1::ListCustomersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::Customer>>();
 }
@@ -87,21 +87,21 @@ CloudChannelServiceConnection::ProvisionCloudIdentity(
 
 StreamRange<google::cloud::channel::v1::Entitlement>
 CloudChannelServiceConnection::ListEntitlements(
-    google::cloud::channel::v1::ListEntitlementsRequest request) {
+    google::cloud::channel::v1::ListEntitlementsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::Entitlement>>();
 }
 
 StreamRange<google::cloud::channel::v1::TransferableSku>
 CloudChannelServiceConnection::ListTransferableSkus(
-    google::cloud::channel::v1::ListTransferableSkusRequest request) {
+    google::cloud::channel::v1::ListTransferableSkusRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::TransferableSku>>();
 }
 
 StreamRange<google::cloud::channel::v1::TransferableOffer>
 CloudChannelServiceConnection::ListTransferableOffers(
-    google::cloud::channel::v1::ListTransferableOffersRequest request) {
+    google::cloud::channel::v1::ListTransferableOffersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::TransferableOffer>>();
 }
@@ -194,7 +194,7 @@ CloudChannelServiceConnection::TransferEntitlementsToGoogle(
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceConnection::ListChannelPartnerLinks(
-    google::cloud::channel::v1::ListChannelPartnerLinksRequest request) {
+    google::cloud::channel::v1::ListChannelPartnerLinksRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::ChannelPartnerLink>>();
 }
@@ -225,35 +225,35 @@ CloudChannelServiceConnection::LookupOffer(
 
 StreamRange<google::cloud::channel::v1::Product>
 CloudChannelServiceConnection::ListProducts(
-    google::cloud::channel::v1::ListProductsRequest request) {
+    google::cloud::channel::v1::ListProductsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::Product>>();
 }
 
 StreamRange<google::cloud::channel::v1::Sku>
 CloudChannelServiceConnection::ListSkus(
-    google::cloud::channel::v1::ListSkusRequest request) {
+    google::cloud::channel::v1::ListSkusRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::Sku>>();
 }
 
 StreamRange<google::cloud::channel::v1::Offer>
 CloudChannelServiceConnection::ListOffers(
-    google::cloud::channel::v1::ListOffersRequest request) {
+    google::cloud::channel::v1::ListOffersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::Offer>>();
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableSku>
 CloudChannelServiceConnection::ListPurchasableSkus(
-    google::cloud::channel::v1::ListPurchasableSkusRequest request) {
+    google::cloud::channel::v1::ListPurchasableSkusRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::PurchasableSku>>();
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableOffer>
 CloudChannelServiceConnection::ListPurchasableOffers(
-    google::cloud::channel::v1::ListPurchasableOffersRequest request) {
+    google::cloud::channel::v1::ListPurchasableOffersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::PurchasableOffer>>();
 }
@@ -271,7 +271,7 @@ CloudChannelServiceConnection::UnregisterSubscriber(
 }
 
 StreamRange<std::string> CloudChannelServiceConnection::ListSubscribers(
-    google::cloud::channel::v1::ListSubscribersRequest request) {
+    google::cloud::channel::v1::ListSubscribersRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }

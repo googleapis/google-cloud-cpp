@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstancesConnection::~InstancesConnection() = default;
 
 StreamRange<google::appengine::v1::Instance> InstancesConnection::ListInstances(
-    google::appengine::v1::ListInstancesRequest request) {
+    google::appengine::v1::ListInstancesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::Instance>>();
 }

@@ -58,7 +58,7 @@ Status TenantServiceConnection::DeleteTenant(
 
 StreamRange<google::cloud::talent::v4::Tenant>
 TenantServiceConnection::ListTenants(
-    google::cloud::talent::v4::ListTenantsRequest request) {
+    google::cloud::talent::v4::ListTenantsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::talent::v4::Tenant>>();
 }

@@ -36,7 +36,7 @@ RecommenderConnection::~RecommenderConnection() = default;
 
 StreamRange<google::cloud::recommender::v1::Insight>
 RecommenderConnection::ListInsights(
-    google::cloud::recommender::v1::ListInsightsRequest request) {
+    google::cloud::recommender::v1::ListInsightsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::recommender::v1::Insight>>();
 }
@@ -55,7 +55,7 @@ RecommenderConnection::MarkInsightAccepted(
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
 RecommenderConnection::ListRecommendations(
-    google::cloud::recommender::v1::ListRecommendationsRequest request) {
+    google::cloud::recommender::v1::ListRecommendationsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::recommender::v1::Recommendation>>();
 }

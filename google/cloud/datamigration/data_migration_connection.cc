@@ -37,7 +37,7 @@ DataMigrationServiceConnection::~DataMigrationServiceConnection() = default;
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceConnection::ListMigrationJobs(
-    google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
+    google::cloud::clouddms::v1::ListMigrationJobsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::MigrationJob>>();
 }
@@ -128,7 +128,7 @@ DataMigrationServiceConnection::GenerateSshScript(
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceConnection::ListConnectionProfiles(
-    google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
+    google::cloud::clouddms::v1::ListConnectionProfilesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>();
 }

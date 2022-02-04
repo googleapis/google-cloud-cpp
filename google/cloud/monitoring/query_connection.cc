@@ -36,7 +36,7 @@ QueryServiceConnection::~QueryServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
 QueryServiceConnection::QueryTimeSeries(
-    google::monitoring::v3::QueryTimeSeriesRequest request) {
+    google::monitoring::v3::QueryTimeSeriesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::TimeSeriesData>>();
 }

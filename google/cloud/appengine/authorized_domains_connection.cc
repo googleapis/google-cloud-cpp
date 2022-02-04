@@ -36,7 +36,7 @@ AuthorizedDomainsConnection::~AuthorizedDomainsConnection() = default;
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
 AuthorizedDomainsConnection::ListAuthorizedDomains(
-    google::appengine::v1::ListAuthorizedDomainsRequest request) {
+    google::appengine::v1::ListAuthorizedDomainsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedDomain>>();
 }

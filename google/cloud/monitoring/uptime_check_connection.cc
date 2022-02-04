@@ -36,7 +36,7 @@ UptimeCheckServiceConnection::~UptimeCheckServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnection::ListUptimeCheckConfigs(
-    google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
+    google::monitoring::v3::ListUptimeCheckConfigsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckConfig>>();
 }
@@ -66,7 +66,7 @@ Status UptimeCheckServiceConnection::DeleteUptimeCheckConfig(
 
 StreamRange<google::monitoring::v3::UptimeCheckIp>
 UptimeCheckServiceConnection::ListUptimeCheckIps(
-    google::monitoring::v3::ListUptimeCheckIpsRequest request) {
+    google::monitoring::v3::ListUptimeCheckIpsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckIp>>();
 }

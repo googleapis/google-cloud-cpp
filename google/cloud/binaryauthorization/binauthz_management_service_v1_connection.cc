@@ -67,7 +67,7 @@ BinauthzManagementServiceV1Connection::UpdateAttestor(
 
 StreamRange<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1Connection::ListAttestors(
-    google::cloud::binaryauthorization::v1::ListAttestorsRequest request) {
+    google::cloud::binaryauthorization::v1::ListAttestorsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::binaryauthorization::v1::Attestor>>();
 }

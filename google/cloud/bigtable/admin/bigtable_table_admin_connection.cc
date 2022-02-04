@@ -43,7 +43,7 @@ BigtableTableAdminConnection::CreateTable(
 
 StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnection::ListTables(
-    google::bigtable::admin::v2::ListTablesRequest request) {
+    google::bigtable::admin::v2::ListTablesRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::Table>>();
 }
@@ -109,7 +109,7 @@ Status BigtableTableAdminConnection::DeleteBackup(
 
 StreamRange<google::bigtable::admin::v2::Backup>
 BigtableTableAdminConnection::ListBackups(
-    google::bigtable::admin::v2::ListBackupsRequest request) {
+    google::bigtable::admin::v2::ListBackupsRequest) {
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::Backup>>();
 }
