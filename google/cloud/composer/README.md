@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) try {
       composer::EnvironmentsClient(composer::MakeEnvironmentsConnection());
 
   auto const parent =
-      std::string("projects/") + argv[0] + "/locations/" + argv[1];
+      std::string("projects/") + argv[1] + "/locations/" + argv[2];
   for (auto e : client.ListEnvironments(parent)) {
     if (!e) throw std::runtime_error(e.status().message());
     std::cout << e->DebugString() << "\n";

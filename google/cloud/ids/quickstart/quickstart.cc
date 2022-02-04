@@ -13,21 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/ids/ids_client.h"
-#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
   namespace ids = ::google::cloud::ids;
   auto client = ids::IDSClient(ids::MakeIDSConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  auto const parent = project.FullName() + "/locations/" + argv[2];
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
   for (auto ep : client.ListEndpoints(parent)) {
     if (!ep) throw std::runtime_error(ep.status().message());
     std::cout << ep->DebugString() << "\n";

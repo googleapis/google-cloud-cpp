@@ -108,6 +108,20 @@ target_compile_options(google_cloud_cpp_logging_mocks
 
 add_subdirectory(integration_tests)
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(logging_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(logging_quickstart
+                          PRIVATE google-cloud-cpp::experimental-logging)
+    google_cloud_cpp_add_common_options(logging_quickstart)
+    add_test(
+        NAME logging_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:logging_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(logging_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

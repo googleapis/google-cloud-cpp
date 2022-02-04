@@ -116,6 +116,20 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_vmmigration_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(vmmigration_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(vmmigration_quickstart
+                          PRIVATE google-cloud-cpp::experimental-vmmigration)
+    google_cloud_cpp_add_common_options(vmmigration_quickstart)
+    add_test(
+        NAME vmmigration_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:vmmigration_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(vmmigration_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

@@ -17,16 +17,15 @@
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
   namespace gkehub = ::google::cloud::gkehub;
   auto client = gkehub::GkeHubClient(gkehub::MakeGkeHubConnection());
 
-  auto const location =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  auto const location = std::string{"projects/"} + argv[1] + "/locations/-";
   for (auto r : client.ListMemberships(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
