@@ -84,8 +84,9 @@ TranslationServiceConnection::CreateGlossary(
 }
 
 StreamRange<google::cloud::translation::v3::Glossary>
-TranslationServiceConnection::ListGlossaries(
-    google::cloud::translation::v3::ListGlossariesRequest) {
+    TranslationServiceConnection::ListGlossaries(
+        google::cloud::translation::v3::
+            ListGlossariesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::translation::v3::Glossary>>();
 }

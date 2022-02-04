@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VersionsConnection::~VersionsConnection() = default;
 
 StreamRange<google::appengine::v1::Version> VersionsConnection::ListVersions(
-    google::appengine::v1::ListVersionsRequest) {
+    google::appengine::v1::
+        ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::Version>>();
 }

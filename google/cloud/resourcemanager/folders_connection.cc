@@ -42,15 +42,17 @@ FoldersConnection::GetFolder(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersConnection::ListFolders(
-    google::cloud::resourcemanager::v3::ListFoldersRequest) {
+    FoldersConnection::ListFolders(
+        google::cloud::resourcemanager::v3::
+            ListFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Folder>>();
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersConnection::SearchFolders(
-    google::cloud::resourcemanager::v3::SearchFoldersRequest) {
+    FoldersConnection::SearchFolders(
+        google::cloud::resourcemanager::v3::
+            SearchFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Folder>>();
 }

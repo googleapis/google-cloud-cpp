@@ -83,8 +83,9 @@ DlpServiceConnection::GetInspectTemplate(
 }
 
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceConnection::ListInspectTemplates(
-    google::privacy::dlp::v2::ListInspectTemplatesRequest) {
+    DlpServiceConnection::ListInspectTemplates(
+        google::privacy::dlp::v2::
+            ListInspectTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::InspectTemplate>>();
 }
@@ -113,8 +114,9 @@ DlpServiceConnection::GetDeidentifyTemplate(
 }
 
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceConnection::ListDeidentifyTemplates(
-    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest) {
+    DlpServiceConnection::ListDeidentifyTemplates(
+        google::privacy::dlp::v2::
+            ListDeidentifyTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>();
 }
@@ -149,8 +151,9 @@ DlpServiceConnection::GetJobTrigger(
 }
 
 StreamRange<google::privacy::dlp::v2::JobTrigger>
-DlpServiceConnection::ListJobTriggers(
-    google::privacy::dlp::v2::ListJobTriggersRequest) {
+    DlpServiceConnection::ListJobTriggers(
+        google::privacy::dlp::v2::
+            ListJobTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::JobTrigger>>();
 }
@@ -172,7 +175,8 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::CreateDlpJob(
 }
 
 StreamRange<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::ListDlpJobs(
-    google::privacy::dlp::v2::ListDlpJobsRequest) {
+    google::privacy::dlp::v2::
+        ListDlpJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DlpJob>>();
 }
@@ -211,8 +215,9 @@ DlpServiceConnection::GetStoredInfoType(
 }
 
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceConnection::ListStoredInfoTypes(
-    google::privacy::dlp::v2::ListStoredInfoTypesRequest) {
+    DlpServiceConnection::ListStoredInfoTypes(
+        google::privacy::dlp::v2::
+            ListStoredInfoTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::StoredInfoType>>();
 }

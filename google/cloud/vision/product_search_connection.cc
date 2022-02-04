@@ -42,8 +42,9 @@ ProductSearchConnection::CreateProductSet(
 }
 
 StreamRange<google::cloud::vision::v1::ProductSet>
-ProductSearchConnection::ListProductSets(
-    google::cloud::vision::v1::ListProductSetsRequest) {
+    ProductSearchConnection::ListProductSets(
+        google::cloud::vision::v1::
+            ListProductSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ProductSet>>();
 }
@@ -72,8 +73,9 @@ ProductSearchConnection::CreateProduct(
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchConnection::ListProducts(
-    google::cloud::vision::v1::ListProductsRequest) {
+    ProductSearchConnection::ListProducts(
+        google::cloud::vision::v1::
+            ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }
@@ -107,8 +109,9 @@ Status ProductSearchConnection::DeleteReferenceImage(
 }
 
 StreamRange<google::cloud::vision::v1::ReferenceImage>
-ProductSearchConnection::ListReferenceImages(
-    google::cloud::vision::v1::ListReferenceImagesRequest) {
+    ProductSearchConnection::ListReferenceImages(
+        google::cloud::vision::v1::
+            ListReferenceImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ReferenceImage>>();
 }
@@ -130,8 +133,9 @@ Status ProductSearchConnection::RemoveProductFromProductSet(
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchConnection::ListProductsInProductSet(
-    google::cloud::vision::v1::ListProductsInProductSetRequest) {
+    ProductSearchConnection::ListProductsInProductSet(
+        google::cloud::vision::v1::
+            ListProductsInProductSetRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }

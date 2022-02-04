@@ -53,15 +53,17 @@ OsConfigServiceConnection::CancelPatchJob(
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceConnection::ListPatchJobs(
-    google::cloud::osconfig::v1::ListPatchJobsRequest) {
+    OsConfigServiceConnection::ListPatchJobs(
+        google::cloud::osconfig::v1::
+            ListPatchJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJob>>();
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-OsConfigServiceConnection::ListPatchJobInstanceDetails(
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest) {
+    OsConfigServiceConnection::ListPatchJobInstanceDetails(
+        google::cloud::osconfig::v1::
+            ListPatchJobInstanceDetailsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>>();
 }
@@ -79,8 +81,9 @@ OsConfigServiceConnection::GetPatchDeployment(
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceConnection::ListPatchDeployments(
-    google::cloud::osconfig::v1::ListPatchDeploymentsRequest) {
+    OsConfigServiceConnection::ListPatchDeployments(
+        google::cloud::osconfig::v1::
+            ListPatchDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchDeployment>>();
 }

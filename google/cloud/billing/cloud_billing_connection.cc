@@ -41,8 +41,9 @@ CloudBillingConnection::GetBillingAccount(
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
-CloudBillingConnection::ListBillingAccounts(
-    google::cloud::billing::v1::ListBillingAccountsRequest) {
+    CloudBillingConnection::ListBillingAccounts(
+        google::cloud::billing::v1::
+            ListBillingAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::BillingAccount>>();
 }
@@ -60,8 +61,9 @@ CloudBillingConnection::CreateBillingAccount(
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingConnection::ListProjectBillingInfo(
-    google::cloud::billing::v1::ListProjectBillingInfoRequest) {
+    CloudBillingConnection::ListProjectBillingInfo(
+        google::cloud::billing::v1::
+            ListProjectBillingInfoRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>();
 }

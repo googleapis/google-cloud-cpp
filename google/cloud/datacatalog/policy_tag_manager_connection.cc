@@ -52,8 +52,9 @@ PolicyTagManagerConnection::UpdateTaxonomy(
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerConnection::ListTaxonomies(
-    google::cloud::datacatalog::v1::ListTaxonomiesRequest) {
+    PolicyTagManagerConnection::ListTaxonomies(
+        google::cloud::datacatalog::v1::
+            ListTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Taxonomy>>();
 }
@@ -82,8 +83,9 @@ PolicyTagManagerConnection::UpdatePolicyTag(
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerConnection::ListPolicyTags(
-    google::cloud::datacatalog::v1::ListPolicyTagsRequest) {
+    PolicyTagManagerConnection::ListPolicyTags(
+        google::cloud::datacatalog::v1::
+            ListPolicyTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::PolicyTag>>();
 }

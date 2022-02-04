@@ -52,8 +52,9 @@ WebSecurityScannerConnection::GetScanConfig(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerConnection::ListScanConfigs(
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {
+    WebSecurityScannerConnection::ListScanConfigs(
+        google::cloud::websecurityscanner::v1::
+            ListScanConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>();
 }
@@ -77,8 +78,9 @@ WebSecurityScannerConnection::GetScanRun(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerConnection::ListScanRuns(
-    google::cloud::websecurityscanner::v1::ListScanRunsRequest) {
+    WebSecurityScannerConnection::ListScanRuns(
+        google::cloud::websecurityscanner::v1::
+            ListScanRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>();
 }
@@ -90,8 +92,9 @@ WebSecurityScannerConnection::StopScanRun(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-WebSecurityScannerConnection::ListCrawledUrls(
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {
+    WebSecurityScannerConnection::ListCrawledUrls(
+        google::cloud::websecurityscanner::v1::
+            ListCrawledUrlsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>();
 }
@@ -103,8 +106,9 @@ WebSecurityScannerConnection::GetFinding(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
-WebSecurityScannerConnection::ListFindings(
-    google::cloud::websecurityscanner::v1::ListFindingsRequest) {
+    WebSecurityScannerConnection::ListFindings(
+        google::cloud::websecurityscanner::v1::
+            ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::Finding>>();
 }

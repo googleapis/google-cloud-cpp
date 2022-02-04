@@ -53,9 +53,9 @@ EnvironmentsConnection::GetEnvironment(
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsConnection::ListEnvironments(
-    google::cloud::orchestration::airflow::service::v1::
-        ListEnvironmentsRequest) {
+    EnvironmentsConnection::ListEnvironments(
+        google::cloud::orchestration::airflow::service::v1::
+            ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::orchestration::airflow::service::v1::Environment>>();
 }

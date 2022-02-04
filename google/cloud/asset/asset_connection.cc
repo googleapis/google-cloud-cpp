@@ -44,7 +44,8 @@ AssetServiceConnection::ExportAssets(
 }
 
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceConnection::ListAssets(
-    google::cloud::asset::v1::ListAssetsRequest) {
+    google::cloud::asset::v1::
+        ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::Asset>>();
 }
@@ -82,15 +83,17 @@ Status AssetServiceConnection::DeleteFeed(
 }
 
 StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-AssetServiceConnection::SearchAllResources(
-    google::cloud::asset::v1::SearchAllResourcesRequest) {
+    AssetServiceConnection::SearchAllResources(
+        google::cloud::asset::v1::
+            SearchAllResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::ResourceSearchResult>>();
 }
 
 StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-AssetServiceConnection::SearchAllIamPolicies(
-    google::cloud::asset::v1::SearchAllIamPoliciesRequest) {
+    AssetServiceConnection::SearchAllIamPolicies(
+        google::cloud::asset::v1::
+            SearchAllIamPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>();
 }

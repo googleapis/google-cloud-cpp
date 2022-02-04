@@ -36,8 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DomainMappingsConnection::~DomainMappingsConnection() = default;
 
 StreamRange<google::appengine::v1::DomainMapping>
-DomainMappingsConnection::ListDomainMappings(
-    google::appengine::v1::ListDomainMappingsRequest) {
+    DomainMappingsConnection::ListDomainMappings(
+        google::appengine::v1::
+            ListDomainMappingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::DomainMapping>>();
 }

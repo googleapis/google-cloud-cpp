@@ -53,8 +53,9 @@ AdminServiceConnection::GetTopicPartitions(
 }
 
 StreamRange<google::cloud::pubsublite::v1::Topic>
-AdminServiceConnection::ListTopics(
-    google::cloud::pubsublite::v1::ListTopicsRequest) {
+    AdminServiceConnection::ListTopics(
+        google::cloud::pubsublite::v1::
+            ListTopicsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Topic>>();
 }
@@ -71,7 +72,8 @@ Status AdminServiceConnection::DeleteTopic(
 }
 
 StreamRange<std::string> AdminServiceConnection::ListTopicSubscriptions(
-    google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest) {
+    google::cloud::pubsublite::v1::
+        ListTopicSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }
@@ -89,8 +91,9 @@ AdminServiceConnection::GetSubscription(
 }
 
 StreamRange<google::cloud::pubsublite::v1::Subscription>
-AdminServiceConnection::ListSubscriptions(
-    google::cloud::pubsublite::v1::ListSubscriptionsRequest) {
+    AdminServiceConnection::ListSubscriptions(
+        google::cloud::pubsublite::v1::
+            ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Subscription>>();
 }
@@ -127,8 +130,9 @@ AdminServiceConnection::GetReservation(
 }
 
 StreamRange<google::cloud::pubsublite::v1::Reservation>
-AdminServiceConnection::ListReservations(
-    google::cloud::pubsublite::v1::ListReservationsRequest) {
+    AdminServiceConnection::ListReservations(
+        google::cloud::pubsublite::v1::
+            ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Reservation>>();
 }
@@ -145,7 +149,8 @@ Status AdminServiceConnection::DeleteReservation(
 }
 
 StreamRange<std::string> AdminServiceConnection::ListReservationTopics(
-    google::cloud::pubsublite::v1::ListReservationTopicsRequest) {
+    google::cloud::pubsublite::v1::
+        ListReservationTopicsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<std::string>>();
 }

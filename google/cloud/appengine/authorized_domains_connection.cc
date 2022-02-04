@@ -35,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AuthorizedDomainsConnection::~AuthorizedDomainsConnection() = default;
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
-AuthorizedDomainsConnection::ListAuthorizedDomains(
-    google::appengine::v1::ListAuthorizedDomainsRequest) {
+    AuthorizedDomainsConnection::ListAuthorizedDomains(
+        google::appengine::v1::
+            ListAuthorizedDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedDomain>>();
 }

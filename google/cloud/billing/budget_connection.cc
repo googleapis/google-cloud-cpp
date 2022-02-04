@@ -53,8 +53,9 @@ BudgetServiceConnection::GetBudget(
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceConnection::ListBudgets(
-    google::cloud::billing::budgets::v1::ListBudgetsRequest) {
+    BudgetServiceConnection::ListBudgets(
+        google::cloud::billing::budgets::v1::
+            ListBudgetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::budgets::v1::Budget>>();
 }

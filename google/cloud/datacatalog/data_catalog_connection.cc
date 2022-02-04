@@ -35,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataCatalogConnection::~DataCatalogConnection() = default;
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-DataCatalogConnection::SearchCatalog(
-    google::cloud::datacatalog::v1::SearchCatalogRequest) {
+    DataCatalogConnection::SearchCatalog(
+        google::cloud::datacatalog::v1::
+            SearchCatalogRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>();
 }
@@ -65,8 +66,9 @@ Status DataCatalogConnection::DeleteEntryGroup(
 }
 
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogConnection::ListEntryGroups(
-    google::cloud::datacatalog::v1::ListEntryGroupsRequest) {
+    DataCatalogConnection::ListEntryGroups(
+        google::cloud::datacatalog::v1::
+            ListEntryGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::EntryGroup>>();
 }
@@ -100,8 +102,9 @@ DataCatalogConnection::LookupEntry(
 }
 
 StreamRange<google::cloud::datacatalog::v1::Entry>
-DataCatalogConnection::ListEntries(
-    google::cloud::datacatalog::v1::ListEntriesRequest) {
+    DataCatalogConnection::ListEntries(
+        google::cloud::datacatalog::v1::
+            ListEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Entry>>();
 }
@@ -175,8 +178,9 @@ Status DataCatalogConnection::DeleteTag(
 }
 
 StreamRange<google::cloud::datacatalog::v1::Tag>
-DataCatalogConnection::ListTags(
-    google::cloud::datacatalog::v1::ListTagsRequest) {
+    DataCatalogConnection::ListTags(
+        google::cloud::datacatalog::v1::
+            ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Tag>>();
 }

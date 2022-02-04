@@ -35,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 UptimeCheckServiceConnection::~UptimeCheckServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceConnection::ListUptimeCheckConfigs(
-    google::monitoring::v3::ListUptimeCheckConfigsRequest) {
+    UptimeCheckServiceConnection::ListUptimeCheckConfigs(
+        google::monitoring::v3::
+            ListUptimeCheckConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckConfig>>();
 }
@@ -65,8 +66,9 @@ Status UptimeCheckServiceConnection::DeleteUptimeCheckConfig(
 }
 
 StreamRange<google::monitoring::v3::UptimeCheckIp>
-UptimeCheckServiceConnection::ListUptimeCheckIps(
-    google::monitoring::v3::ListUptimeCheckIpsRequest) {
+    UptimeCheckServiceConnection::ListUptimeCheckIps(
+        google::monitoring::v3::
+            ListUptimeCheckIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckIp>>();
 }

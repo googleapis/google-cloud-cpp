@@ -35,14 +35,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudCatalogConnection::~CloudCatalogConnection() = default;
 
 StreamRange<google::cloud::billing::v1::Service>
-CloudCatalogConnection::ListServices(
-    google::cloud::billing::v1::ListServicesRequest) {
+    CloudCatalogConnection::ListServices(
+        google::cloud::billing::v1::
+            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::Service>>();
 }
 
 StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
-    google::cloud::billing::v1::ListSkusRequest) {
+    google::cloud::billing::v1::
+        ListSkusRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::Sku>>();
 }

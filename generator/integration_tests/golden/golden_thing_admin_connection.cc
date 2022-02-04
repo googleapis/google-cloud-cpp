@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
 StreamRange<google::test::admin::database::v1::Database> GoldenThingAdminConnection::ListDatabases(
-    google::test::admin::database::v1::ListDatabasesRequest) {
+    google::test::admin::database::v1::ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::test::admin::database::v1::Database>>();
 }
@@ -120,7 +120,7 @@ GoldenThingAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::test::admin::database::v1::Backup> GoldenThingAdminConnection::ListBackups(
-    google::test::admin::database::v1::ListBackupsRequest) {
+    google::test::admin::database::v1::ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::test::admin::database::v1::Backup>>();
 }
@@ -134,13 +134,13 @@ GoldenThingAdminConnection::RestoreDatabase(
 }
 
 StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListDatabaseOperations(
-    google::test::admin::database::v1::ListDatabaseOperationsRequest) {
+    google::test::admin::database::v1::ListDatabaseOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
 StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListBackupOperations(
-    google::test::admin::database::v1::ListBackupOperationsRequest) {
+    google::test::admin::database::v1::ListBackupOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }

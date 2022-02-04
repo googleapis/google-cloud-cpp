@@ -41,8 +41,9 @@ StatusOr<google::cloud::eventarc::v1::Trigger> EventarcConnection::GetTrigger(
 }
 
 StreamRange<google::cloud::eventarc::v1::Trigger>
-EventarcConnection::ListTriggers(
-    google::cloud::eventarc::v1::ListTriggersRequest) {
+    EventarcConnection::ListTriggers(
+        google::cloud::eventarc::v1::
+            ListTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::eventarc::v1::Trigger>>();
 }

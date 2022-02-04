@@ -36,14 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GkeHubConnection::~GkeHubConnection() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>
-GkeHubConnection::ListMemberships(
-    google::cloud::gkehub::v1::ListMembershipsRequest) {
+    GkeHubConnection::ListMemberships(
+        google::cloud::gkehub::v1::
+            ListMembershipsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkehub::v1::Membership>>();
 }
 
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubConnection::ListFeatures(
-    google::cloud::gkehub::v1::ListFeaturesRequest) {
+    google::cloud::gkehub::v1::
+        ListFeaturesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkehub::v1::Feature>>();
 }

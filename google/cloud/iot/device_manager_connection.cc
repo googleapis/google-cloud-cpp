@@ -58,8 +58,9 @@ Status DeviceManagerConnection::DeleteDeviceRegistry(
 }
 
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
-DeviceManagerConnection::ListDeviceRegistries(
-    google::cloud::iot::v1::ListDeviceRegistriesRequest) {
+    DeviceManagerConnection::ListDeviceRegistries(
+        google::cloud::iot::v1::
+            ListDeviceRegistriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::iot::v1::DeviceRegistry>>();
 }
@@ -84,9 +85,9 @@ Status DeviceManagerConnection::DeleteDevice(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::iot::v1::Device>
-DeviceManagerConnection::ListDevices(
-    google::cloud::iot::v1::ListDevicesRequest) {
+StreamRange<google::cloud::iot::v1::Device> DeviceManagerConnection::ListDevices(
+    google::cloud::iot::v1::
+        ListDevicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::iot::v1::Device>>();
 }

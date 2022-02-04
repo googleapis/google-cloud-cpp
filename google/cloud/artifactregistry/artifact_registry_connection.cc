@@ -35,15 +35,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-ArtifactRegistryConnection::ListDockerImages(
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest) {
+    ArtifactRegistryConnection::ListDockerImages(
+        google::devtools::artifactregistry::v1::
+            ListDockerImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::DockerImage>>();
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryConnection::ListRepositories(
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest) {
+    ArtifactRegistryConnection::ListRepositories(
+        google::devtools::artifactregistry::v1::
+            ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Repository>>();
 }

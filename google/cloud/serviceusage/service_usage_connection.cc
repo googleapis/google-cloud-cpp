@@ -58,8 +58,9 @@ ServiceUsageConnection::GetService(
 }
 
 StreamRange<google::api::serviceusage::v1::Service>
-ServiceUsageConnection::ListServices(
-    google::api::serviceusage::v1::ListServicesRequest) {
+    ServiceUsageConnection::ListServices(
+        google::api::serviceusage::v1::
+            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::serviceusage::v1::Service>>();
 }

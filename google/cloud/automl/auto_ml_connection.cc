@@ -49,7 +49,8 @@ StatusOr<google::cloud::automl::v1::Dataset> AutoMlConnection::GetDataset(
 }
 
 StreamRange<google::cloud::automl::v1::Dataset> AutoMlConnection::ListDatasets(
-    google::cloud::automl::v1::ListDatasetsRequest) {
+    google::cloud::automl::v1::
+        ListDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::automl::v1::Dataset>>();
 }
@@ -103,7 +104,8 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlConnection::GetModel(
 }
 
 StreamRange<google::cloud::automl::v1::Model> AutoMlConnection::ListModels(
-    google::cloud::automl::v1::ListModelsRequest) {
+    google::cloud::automl::v1::
+        ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::automl::v1::Model>>();
 }
@@ -152,8 +154,9 @@ AutoMlConnection::GetModelEvaluation(
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
-AutoMlConnection::ListModelEvaluations(
-    google::cloud::automl::v1::ListModelEvaluationsRequest) {
+    AutoMlConnection::ListModelEvaluations(
+        google::cloud::automl::v1::
+            ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::automl::v1::ModelEvaluation>>();
 }

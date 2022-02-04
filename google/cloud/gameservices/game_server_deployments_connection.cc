@@ -37,8 +37,9 @@ GameServerDeploymentsServiceConnection::
     ~GameServerDeploymentsServiceConnection() = default;
 
 StreamRange<google::cloud::gaming::v1::GameServerDeployment>
-GameServerDeploymentsServiceConnection::ListGameServerDeployments(
-    google::cloud::gaming::v1::ListGameServerDeploymentsRequest) {
+    GameServerDeploymentsServiceConnection::ListGameServerDeployments(
+        google::cloud::gaming::v1::
+            ListGameServerDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::GameServerDeployment>>();
 }

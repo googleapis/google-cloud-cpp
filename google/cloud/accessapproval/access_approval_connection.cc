@@ -35,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessApprovalConnection::~AccessApprovalConnection() = default;
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalConnection::ListApprovalRequests(
-    google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {
+    AccessApprovalConnection::ListApprovalRequests(
+        google::cloud::accessapproval::v1::
+            ListApprovalRequestsMessage) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>();
 }

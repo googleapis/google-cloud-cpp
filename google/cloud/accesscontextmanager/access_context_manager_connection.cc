@@ -36,8 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessContextManagerConnection::~AccessContextManagerConnection() = default;
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-AccessContextManagerConnection::ListAccessPolicies(
-    google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest) {
+    AccessContextManagerConnection::ListAccessPolicies(
+        google::identity::accesscontextmanager::v1::
+            ListAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>();
 }
@@ -77,8 +78,9 @@ AccessContextManagerConnection::DeleteAccessPolicy(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-AccessContextManagerConnection::ListAccessLevels(
-    google::identity::accesscontextmanager::v1::ListAccessLevelsRequest) {
+    AccessContextManagerConnection::ListAccessLevels(
+        google::identity::accesscontextmanager::v1::
+            ListAccessLevelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>();
 }
@@ -129,8 +131,9 @@ AccessContextManagerConnection::ReplaceAccessLevels(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-AccessContextManagerConnection::ListServicePerimeters(
-    google::identity::accesscontextmanager::v1::ListServicePerimetersRequest) {
+    AccessContextManagerConnection::ListServicePerimeters(
+        google::identity::accesscontextmanager::v1::
+            ListServicePerimetersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::ServicePerimeter>>();
 }
@@ -194,9 +197,9 @@ AccessContextManagerConnection::CommitServicePerimeters(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-AccessContextManagerConnection::ListGcpUserAccessBindings(
-    google::identity::accesscontextmanager::v1::
-        ListGcpUserAccessBindingsRequest) {
+    AccessContextManagerConnection::ListGcpUserAccessBindings(
+        google::identity::accesscontextmanager::v1::
+            ListGcpUserAccessBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>();
 }

@@ -36,8 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceAdminConnection::~InstanceAdminConnection() = default;
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-InstanceAdminConnection::ListInstanceConfigs(
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest) {
+    InstanceAdminConnection::ListInstanceConfigs(
+        google::spanner::admin::instance::v1::
+            ListInstanceConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>();
 }
@@ -49,8 +50,9 @@ InstanceAdminConnection::GetInstanceConfig(
 }
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
-InstanceAdminConnection::ListInstances(
-    google::spanner::admin::instance::v1::ListInstancesRequest) {
+    InstanceAdminConnection::ListInstances(
+        google::spanner::admin::instance::v1::
+            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::instance::v1::Instance>>();
 }

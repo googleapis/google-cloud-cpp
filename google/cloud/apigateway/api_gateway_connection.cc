@@ -36,8 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApiGatewayServiceConnection::~ApiGatewayServiceConnection() = default;
 
 StreamRange<google::cloud::apigateway::v1::Gateway>
-ApiGatewayServiceConnection::ListGateways(
-    google::cloud::apigateway::v1::ListGatewaysRequest) {
+    ApiGatewayServiceConnection::ListGateways(
+        google::cloud::apigateway::v1::
+            ListGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigateway::v1::Gateway>>();
 }
@@ -73,8 +74,9 @@ ApiGatewayServiceConnection::DeleteGateway(
 }
 
 StreamRange<google::cloud::apigateway::v1::Api>
-ApiGatewayServiceConnection::ListApis(
-    google::cloud::apigateway::v1::ListApisRequest) {
+    ApiGatewayServiceConnection::ListApis(
+        google::cloud::apigateway::v1::
+            ListApisRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigateway::v1::Api>>();
 }
@@ -110,8 +112,9 @@ ApiGatewayServiceConnection::DeleteApi(
 }
 
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
-ApiGatewayServiceConnection::ListApiConfigs(
-    google::cloud::apigateway::v1::ListApiConfigsRequest) {
+    ApiGatewayServiceConnection::ListApiConfigs(
+        google::cloud::apigateway::v1::
+            ListApiConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigateway::v1::ApiConfig>>();
 }

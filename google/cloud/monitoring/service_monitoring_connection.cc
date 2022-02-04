@@ -48,8 +48,9 @@ ServiceMonitoringServiceConnection::GetService(
 }
 
 StreamRange<google::monitoring::v3::Service>
-ServiceMonitoringServiceConnection::ListServices(
-    google::monitoring::v3::ListServicesRequest) {
+    ServiceMonitoringServiceConnection::ListServices(
+        google::monitoring::v3::
+            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::Service>>();
 }
@@ -78,8 +79,9 @@ ServiceMonitoringServiceConnection::GetServiceLevelObjective(
 }
 
 StreamRange<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
-    google::monitoring::v3::ListServiceLevelObjectivesRequest) {
+    ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
+        google::monitoring::v3::
+            ListServiceLevelObjectivesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::ServiceLevelObjective>>();
 }

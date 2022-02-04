@@ -35,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommenderConnection::~RecommenderConnection() = default;
 
 StreamRange<google::cloud::recommender::v1::Insight>
-RecommenderConnection::ListInsights(
-    google::cloud::recommender::v1::ListInsightsRequest) {
+    RecommenderConnection::ListInsights(
+        google::cloud::recommender::v1::
+            ListInsightsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::recommender::v1::Insight>>();
 }
@@ -54,8 +55,9 @@ RecommenderConnection::MarkInsightAccepted(
 }
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
-RecommenderConnection::ListRecommendations(
-    google::cloud::recommender::v1::ListRecommendationsRequest) {
+    RecommenderConnection::ListRecommendations(
+        google::cloud::recommender::v1::
+            ListRecommendationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::recommender::v1::Recommendation>>();
 }

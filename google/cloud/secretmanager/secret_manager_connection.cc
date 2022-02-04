@@ -35,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecretManagerServiceConnection::~SecretManagerServiceConnection() = default;
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceConnection::ListSecrets(
-    google::cloud::secretmanager::v1::ListSecretsRequest) {
+    SecretManagerServiceConnection::ListSecrets(
+        google::cloud::secretmanager::v1::
+            ListSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::Secret>>();
 }
@@ -71,8 +72,9 @@ Status SecretManagerServiceConnection::DeleteSecret(
 }
 
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnection::ListSecretVersions(
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest) {
+    SecretManagerServiceConnection::ListSecretVersions(
+        google::cloud::secretmanager::v1::
+            ListSecretVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::SecretVersion>>();
 }
