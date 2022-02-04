@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) try {
       memcache::CloudMemcacheClient(memcache::MakeCloudMemcacheConnection());
 
   auto const project_id = std::string(argv[1]);
-  auto const parent = "projects/" + project_id + "locations/-";
+  auto const parent = "projects/" + project_id + "/locations/-";
   for (auto r : client.ListInstances(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
