@@ -26,12 +26,13 @@ mapfile -t cmake_args < <(cmake::common_args)
 
 INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
 cmake "${cmake_args[@]}" \
+  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
-  -DBUILD_SHARED_LIBS=ON \
-  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
+  -DBUILD_SHARED_LIBS=ON
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
-cmake --build cmake-out --target install
+cmake --install cmake-out
 
 # Tests the installed artifacts by building and running the quickstarts.
 quickstart::build_gcs_grpc_quickstart "${INSTALL_PREFIX}"

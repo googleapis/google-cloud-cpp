@@ -33,9 +33,10 @@ mapfile -t cmake_args < <(cmake::common_args)
 
 # Compiles and installs all libraries and headers.
 cmake "${cmake_args[@]}" \
+  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development

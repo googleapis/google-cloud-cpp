@@ -30,11 +30,12 @@ INSTALL_PREFIX=/var/tmp/google-cloud-cpp
 # https://github.com/googleapis/google-cloud-cpp/issues/6313
 cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
 cmake --build cmake-out
-cmake --build cmake-out --target install
+cmake --install cmake-out
 
 # Uses `abi-dumper` to dump the ABI for the given library, which should be
 # installed at the given prefix. This function will be called from a subshell,
