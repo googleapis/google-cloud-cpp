@@ -82,9 +82,8 @@ Status ConnectionGenerator::GenerateHeader() {
                 // clang-format on
   );
 
-  // TODO(#xxxx): This is a special case for backwards compatibility of the
+  // TODO(#8234): This is a special case for backwards compatibility of the
   // streaming updated function.
-  std::cout << "serviceme = " << vars().at("service_name") << "\n";
   if (vars().at("service_name") == "BigQueryRead") {
     // streaming updater functions
     for (auto const& method : methods()) {
