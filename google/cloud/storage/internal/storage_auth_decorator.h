@@ -42,6 +42,10 @@ class StorageAuth : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetBucketRequest const& request) override;
 
+  StatusOr<google::storage::v2::Bucket> CreateBucket(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateBucketRequest const& request) override;
+
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,
       google::storage::v2::ComposeObjectRequest const& request) override;
