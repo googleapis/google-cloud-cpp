@@ -93,8 +93,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
             this->retry_policy_prototype_->clone();
         std::shared_ptr<BackoffPolicy const> backoff_policy backoff_policy =
             this->backoff_policy_prototype_->clone();
-        this->RetryLoop(retry_policy, backoff_policy, RetryType.Start);
-        return make_ready_future(true);
+        return this->RetryLoop(retry_policy, backoff_policy, RetryType.Start);
       }
       return make_ready_future(true);
     });
@@ -189,6 +188,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
                     if (retry_type == RetryType.Read) {
                       return make_ready_future(absl::optional());
                     }
+                    if (retry_type == RetryType.Status) {
+                      return make_ready_future(true);
+                    }
                     return make_ready_future(false);
                   });
             });
@@ -197,6 +199,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     current_status_ = Status(StatusCode.kUnavailable, "Permanent Error");
     if (retry_type == RetryType.Read) {
       return make_ready_future(absl::optional());
+    }
+    if (retry_type == RetryType.Status) {
+      return make_ready_future(true);
     }
     return make_ready_future(false);
   }
