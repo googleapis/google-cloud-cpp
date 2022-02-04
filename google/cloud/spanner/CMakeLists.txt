@@ -90,6 +90,7 @@ add_library(
     commit_options.cc
     commit_options.h
     commit_result.h
+    connection.cc
     connection.h
     connection_options.cc
     connection_options.h
