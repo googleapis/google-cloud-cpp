@@ -73,6 +73,10 @@
 ./include/google/cloud/composer
 ./include/google/cloud/composer/internal
 ./include/google/cloud/composer/mocks
+./include/google/cloud/contactcenterinsights
+./include/google/cloud/contactcenterinsights/internal
+./include/google/cloud/contactcenterinsights/mocks
+./include/google/cloud/contactcenterinsights/v1
 ./include/google/cloud/container
 ./include/google/cloud/container/internal
 ./include/google/cloud/container/mocks
@@ -356,6 +360,7 @@
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_composer
+./lib64/cmake/google_cloud_cpp_contactcenterinsights
 ./lib64/cmake/google_cloud_cpp_container
 ./lib64/cmake/google_cloud_cpp_containeranalysis
 ./lib64/cmake/google_cloud_cpp_datacatalog
