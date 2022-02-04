@@ -56,22 +56,11 @@ ContactCenterInsightsConnection::GetConversation(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
-ContactCenterInsightsConnection::ListConversations(
-    google::cloud::contactcenterinsights::v1::ListConversationsRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::contactcenterinsights::v1::Conversation>>(
-      std::move(request),
-      [](google::cloud::contactcenterinsights::v1::
-             ListConversationsRequest const&) {
-        return StatusOr<google::cloud::contactcenterinsights::v1::
-                            ListConversationsResponse>{};
-      },
-      [](google::cloud::contactcenterinsights::v1::
-             ListConversationsResponse const&) {
-        return std::vector<
-            google::cloud::contactcenterinsights::v1::Conversation>();
-      });
+    ContactCenterInsightsConnection::ListConversations(
+        google::cloud::contactcenterinsights::v1::
+            ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::contactcenterinsights::v1::Conversation>>();
 }
 
 Status ContactCenterInsightsConnection::DeleteConversation(
@@ -95,20 +84,11 @@ ContactCenterInsightsConnection::GetAnalysis(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
-ContactCenterInsightsConnection::ListAnalyses(
-    google::cloud::contactcenterinsights::v1::ListAnalysesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::contactcenterinsights::v1::Analysis>>(
-      std::move(request),
-      [](google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&) {
-        return StatusOr<
-            google::cloud::contactcenterinsights::v1::ListAnalysesResponse>{};
-      },
-      [](google::cloud::contactcenterinsights::v1::
-             ListAnalysesResponse const&) {
-        return std::vector<
-            google::cloud::contactcenterinsights::v1::Analysis>();
-      });
+    ContactCenterInsightsConnection::ListAnalyses(
+        google::cloud::contactcenterinsights::v1::
+            ListAnalysesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::contactcenterinsights::v1::Analysis>>();
 }
 
 Status ContactCenterInsightsConnection::DeleteAnalysis(
@@ -220,22 +200,11 @@ ContactCenterInsightsConnection::GetPhraseMatcher(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-ContactCenterInsightsConnection::ListPhraseMatchers(
-    google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>>(
-      std::move(request),
-      [](google::cloud::contactcenterinsights::v1::
-             ListPhraseMatchersRequest const&) {
-        return StatusOr<google::cloud::contactcenterinsights::v1::
-                            ListPhraseMatchersResponse>{};
-      },
-      [](google::cloud::contactcenterinsights::v1::
-             ListPhraseMatchersResponse const&) {
-        return std::vector<
-            google::cloud::contactcenterinsights::v1::PhraseMatcher>();
-      });
+    ContactCenterInsightsConnection::ListPhraseMatchers(
+        google::cloud::contactcenterinsights::v1::
+            ListPhraseMatchersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>>();
 }
 
 Status ContactCenterInsightsConnection::DeletePhraseMatcher(
@@ -282,18 +251,11 @@ ContactCenterInsightsConnection::GetView(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::View>
-ContactCenterInsightsConnection::ListViews(
-    google::cloud::contactcenterinsights::v1::ListViewsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::contactcenterinsights::v1::View>>(
-      std::move(request),
-      [](google::cloud::contactcenterinsights::v1::ListViewsRequest const&) {
-        return StatusOr<
-            google::cloud::contactcenterinsights::v1::ListViewsResponse>{};
-      },
-      [](google::cloud::contactcenterinsights::v1::ListViewsResponse const&) {
-        return std::vector<google::cloud::contactcenterinsights::v1::View>();
-      });
+    ContactCenterInsightsConnection::ListViews(
+        google::cloud::contactcenterinsights::v1::
+            ListViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::contactcenterinsights::v1::View>>();
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
