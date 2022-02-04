@@ -48,7 +48,7 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
  * error.
  */
 constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
-  return std::chrono::seconds(500);
+  return std::chrono::seconds(300);
 }
 
 /// The endpoint to fetch an OAuth 2.0 access token from.
