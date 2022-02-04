@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Contact Center AI Insights API][cloud-service-docs], a service to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Contact Center AI Insights API][cloud-service-docs], a service that helps users
+detect and visualize patterns in their contact center data.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +26,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/contactcenterinsights
+[cloud-service-docs]: https://cloud.google.com/contact-center/insights/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-contactcenterinsights/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/contactcenterinsights
 
@@ -38,25 +39,29 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/contactcenterinsights/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
+#include "absl/time/time.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace contactcenterinsights = ::google::cloud::contactcenterinsights;
-  auto client = contactcenterinsights::Client(
-      contactcenterinsights::MakeConnection(/* EDIT HERE */));
+  namespace ccai = ::google::cloud::contactcenterinsights;
+  auto client = ccai::ContactCenterInsightsClient(
+      ccai::MakeContactCenterInsightsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto c : client.ListConversations(parent)) {
+    if (!c) throw std::runtime_error(c.status().message());
+    absl::Duration d = absl::Seconds(c->duration().seconds());
+    std::cout << c->name() << "\n";
+    std::cout << "Duration: " << absl::FormatDuration(d)
+              << "; Turns: " << c->turn_count() << "\n\n";
   }
 
   return 0;

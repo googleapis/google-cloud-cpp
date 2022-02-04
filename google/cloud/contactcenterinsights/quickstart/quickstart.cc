@@ -12,25 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/contactcenterinsights/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
+#include "absl/time/time.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace contactcenterinsights = ::google::cloud::contactcenterinsights;
-  auto client = contactcenterinsights::Client(
-      contactcenterinsights::MakeConnection(/* EDIT HERE */));
+  namespace ccai = ::google::cloud::contactcenterinsights;
+  auto client = ccai::ContactCenterInsightsClient(
+      ccai::MakeContactCenterInsightsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto c : client.ListConversations(parent)) {
+    if (!c) throw std::runtime_error(c.status().message());
+    absl::Duration d = absl::Seconds(c->duration().seconds());
+    std::cout << c->name() << "\n";
+    std::cout << "Duration: " << absl::FormatDuration(d)
+              << "; Turns: " << c->turn_count() << "\n\n";
   }
 
   return 0;

@@ -2,8 +2,9 @@
 
 @mainpage Contact Center AI Insights API C++ Client Library
 
-An idiomatic C++ client library for the [Contact Center AI Insights API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the
+[Contact Center AI Insights API][cloud-service-docs], a service that helps users
+detect and visualize patterns in their contact center data.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/contactcenterinsights
+[cloud-service-docs]: https://cloud.google.com/contact-center/insights/docs
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
