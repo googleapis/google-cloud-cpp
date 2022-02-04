@@ -17,8 +17,8 @@
 # A CMake script to run the quickstart programs.
 #
 # This script runs the "quickstart" program for a given library. We use CMake as
-# a scripting language because we know CMake to be installed and usable for both
-# Windows, Linux, and macOS. At least while building with CMake.
+# a scripting language because we know (at least while building with CMake) that
+# CMake is installed and usable.
 #
 # The first two arguments for this script are always `-P` and the name of the
 # script itself.
