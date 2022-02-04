@@ -81,6 +81,9 @@
 ./include/google/cloud/cloudbuild/mocks
 ./include/google/cloud/clouddms
 ./include/google/cloud/clouddms/v1
+./include/google/cloud/cloudprofiler
+./include/google/cloud/cloudprofiler/internal
+./include/google/cloud/cloudprofiler/mocks
 ./include/google/cloud/composer
 ./include/google/cloud/composer/internal
 ./include/google/cloud/composer/mocks
@@ -334,6 +337,8 @@
 ./include/google/devtools/cloudbuild/v1
 ./include/google/devtools/clouddebugger
 ./include/google/devtools/clouddebugger/v2
+./include/google/devtools/cloudprofiler
+./include/google/devtools/cloudprofiler/v2
 ./include/google/devtools/cloudtrace
 ./include/google/devtools/cloudtrace/v2
 ./include/google/devtools/containeranalysis
@@ -383,6 +388,7 @@
 ./lib64/cmake/google_cloud_cpp_binaryauthorization
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
+./lib64/cmake/google_cloud_cpp_cloudprofiler
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_contactcenterinsights
 ./lib64/cmake/google_cloud_cpp_container
