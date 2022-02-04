@@ -25,6 +25,7 @@ export CXX=g++
 mapfile -t cmake_args < <(cmake::common_args)
 
 cmake "${cmake_args[@]}" -DCMAKE_CXX_STANDARD=20
+cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
