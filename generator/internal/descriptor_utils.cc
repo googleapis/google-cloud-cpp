@@ -354,7 +354,11 @@ std::string FormatApiMethodSignatureParameters(
     parameter_descriptor->GetSourceLocation(&loc);
     auto comment = absl::StrReplaceAll(
         EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
-        {{"\n\n", "\n  /// "}, {"\n", "\n  /// "}});
+        {{"\n\n", "\n  /// "},
+         {"\n", "\n  /// "},
+         // Doxygen cannot process this tag. One proto uses it in a comment.
+         {"<tbody>", "<!--<tbody>-->"},
+         {"</tbody>", "<!--</tbody>-->"}});
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
   }

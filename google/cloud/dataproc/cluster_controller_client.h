@@ -175,7 +175,7 @@ class ClusterControllerClient {
   ///  <strong>Note:</strong> Currently, only the following fields can be
   ///  updated:
   ///   <table>
-  ///   <tbody>
+  ///   <!--<tbody>-->
   ///   <tr>
   ///   <td><strong>Mask</strong></td>
   ///   <td><strong>Purpose</strong></td>
@@ -196,7 +196,7 @@ class ClusterControllerClient {
   ///   <td>config.autoscaling_config.policy_uri</td><td>Use, stop using, or
   ///   change autoscaling policies</td>
   ///   </tr>
-  ///   </tbody>
+  ///   <!--</tbody>-->
   ///   </table>
   /// @param options  Optional. Operation options.
   /// @return
