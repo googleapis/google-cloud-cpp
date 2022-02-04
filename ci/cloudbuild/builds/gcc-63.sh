@@ -29,6 +29,8 @@ cmake -GNinja -H. -Bcmake-out \
   -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
+# Cannot use `env -C` as the version of env on Ubuntu:16.04 this does not
+# support it
 (
   cd cmake-out
   ctest "${ctest_args[@]}" -LE "integration-test"

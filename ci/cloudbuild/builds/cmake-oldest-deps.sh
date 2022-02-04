@@ -37,17 +37,7 @@ cmake --build cmake-out/build
 
 io::log_h2 "Testing"
 
-ctest_flags=(
-  # Print the full output on failures
-  --output-on-failure
-  # Skip tests with the "integration-test" label, the intent is to run only
-  # unit tests
-  -LE "integration-test"
-  # Run many tests in parallel
-  --parallel "$(nproc)"
-  # On interactive builds print only a few lines instead of 2 lines per test
-  --progress
-)
-env -C cmake-out/build ctest "${ctest_flags[@]}"
+mapfile -t ctest_args < <(ctest::common_args)
+env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
 
 integration::ctest_with_emulators "cmake-out/build"
