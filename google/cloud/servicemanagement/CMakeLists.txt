@@ -138,6 +138,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_servicemanagement_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(servicemanagement_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(
+        servicemanagement_quickstart
+        PRIVATE google-cloud-cpp::experimental-servicemanagement)
+    google_cloud_cpp_add_common_options(servicemanagement_quickstart)
+    add_test(
+        NAME servicemanagement_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:servicemanagement_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(servicemanagement_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

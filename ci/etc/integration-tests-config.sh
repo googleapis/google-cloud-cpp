@@ -24,6 +24,8 @@ fi # include guard
 # Common configuration parameters.
 #
 export GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Many tests and quickstarts need a location, this is typically a region.
+export GOOGLE_CLOUD_REGION="us-central1"
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
 export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
 export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"

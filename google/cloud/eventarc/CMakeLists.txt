@@ -117,6 +117,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_eventarc_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(eventarc_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(eventarc_quickstart
+                          PRIVATE google-cloud-cpp::experimental-eventarc)
+    google_cloud_cpp_add_common_options(eventarc_quickstart)
+    add_test(
+        NAME eventarc_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:eventarc_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_REGION)
+    set_tests_properties(eventarc_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

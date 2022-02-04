@@ -108,6 +108,20 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_trace_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(trace_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(trace_quickstart
+                          PRIVATE google-cloud-cpp::experimental-trace)
+    google_cloud_cpp_add_common_options(trace_quickstart)
+    add_test(
+        NAME trace_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:trace_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(trace_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

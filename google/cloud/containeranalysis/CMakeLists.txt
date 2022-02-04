@@ -122,6 +122,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_containeranalysis_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(containeranalysis_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(
+        containeranalysis_quickstart
+        PRIVATE google-cloud-cpp::experimental-containeranalysis)
+    google_cloud_cpp_add_common_options(containeranalysis_quickstart)
+    add_test(
+        NAME containeranalysis_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:containeranalysis_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(containeranalysis_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
