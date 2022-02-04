@@ -43,4 +43,5 @@ quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
 # Verify the quickstart programs for generated libraries run. Note
 # that most of these run against production, and are therefore
 # integration tests with the usual flakiness issues.
+io::log_h2 "Running all other quickstart programs"
 env -C cmake-out ctest --output-on-failure -L quickstart --parallel "$(nproc)"
