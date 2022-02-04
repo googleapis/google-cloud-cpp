@@ -287,9 +287,15 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   mkdir -p "${out_cmake}" "${out_home}/.config/gcloud"
   image="gcb-${DISTRO_FLAG}:latest"
   io::log_h2 "Building docker image: ${image}"
-  io::run \
-    docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
-    -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile" ci
+  build_flags=(
+    -t "${image}"
+    "--build-arg=NCPU=$(nproc)"
+    -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile"
+  )
+  if [[ "${TRIGGER_TYPE}" == "manual" ]]; then
+    build_flags+=("--quiet")
+  fi
+  io::run docker build "${build_flags[@]}" ci
   io::log_h2 "Starting docker container: ${image}"
   run_flags=(
     "--interactive"
