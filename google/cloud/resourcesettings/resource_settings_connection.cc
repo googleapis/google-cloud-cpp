@@ -17,6 +17,7 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 #include "google/cloud/resourcesettings/resource_settings_connection.h"
+#include "google/cloud/resourcesettings/internal/resource_settings_connection_impl.h"
 #include "google/cloud/resourcesettings/internal/resource_settings_option_defaults.h"
 #include "google/cloud/resourcesettings/internal/resource_settings_stub_factory.h"
 #include "google/cloud/resourcesettings/resource_settings_options.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -36,18 +36,11 @@ ResourceSettingsServiceConnection::~ResourceSettingsServiceConnection() =
     default;
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceConnection::ListSettings(
-    google::cloud::resourcesettings::v1::ListSettingsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcesettings::v1::Setting>>(
-      std::move(request),
-      [](google::cloud::resourcesettings::v1::ListSettingsRequest const&) {
-        return StatusOr<
-            google::cloud::resourcesettings::v1::ListSettingsResponse>{};
-      },
-      [](google::cloud::resourcesettings::v1::ListSettingsResponse const&) {
-        return std::vector<google::cloud::resourcesettings::v1::Setting>();
-      });
+    ResourceSettingsServiceConnection::ListSettings(
+        google::cloud::resourcesettings::v1::
+            ListSettingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::resourcesettings::v1::Setting>>();
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
@@ -62,124 +55,6 @@ ResourceSettingsServiceConnection::UpdateSetting(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-class ResourceSettingsServiceConnectionImpl
-    : public ResourceSettingsServiceConnection {
- public:
-  ResourceSettingsServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<resourcesettings_internal::ResourceSettingsServiceStub>
-          stub,
-      Options const& options)
-      : background_(std::move(background)),
-        stub_(std::move(stub)),
-        retry_policy_prototype_(
-            options.get<ResourceSettingsServiceRetryPolicyOption>()->clone()),
-        backoff_policy_prototype_(
-            options.get<ResourceSettingsServiceBackoffPolicyOption>()->clone()),
-        idempotency_policy_(
-            options
-                .get<ResourceSettingsServiceConnectionIdempotencyPolicyOption>()
-                ->clone()) {}
-
-  ~ResourceSettingsServiceConnectionImpl() override = default;
-
-  StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
-      google::cloud::resourcesettings::v1::ListSettingsRequest request)
-      override {
-    request.clear_page_token();
-    auto stub = stub_;
-    auto retry = std::shared_ptr<ResourceSettingsServiceRetryPolicy const>(
-        retry_policy());
-    auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-    auto idempotency = idempotency_policy()->ListSettings(request);
-    char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<google::cloud::resourcesettings::v1::Setting>>(
-        std::move(request),
-        [stub, retry, backoff, idempotency, function_name](
-            google::cloud::resourcesettings::v1::ListSettingsRequest const& r) {
-          return google::cloud::internal::RetryLoop(
-              retry->clone(), backoff->clone(), idempotency,
-              [stub](grpc::ClientContext& context,
-                     google::cloud::resourcesettings::v1::
-                         ListSettingsRequest const& request) {
-                return stub->ListSettings(context, request);
-              },
-              r, function_name);
-        },
-        [](google::cloud::resourcesettings::v1::ListSettingsResponse r) {
-          std::vector<google::cloud::resourcesettings::v1::Setting> result(
-              r.settings().size());
-          auto& messages = *r.mutable_settings();
-          std::move(messages.begin(), messages.end(), result.begin());
-          return result;
-        });
-  }
-
-  StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->GetSetting(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::resourcesettings::v1::GetSettingRequest const&
-                   request) { return stub_->GetSetting(context, request); },
-        request, __func__);
-  }
-
-  StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
-      override {
-    return google::cloud::internal::RetryLoop(
-        retry_policy(), backoff_policy(),
-        idempotency_policy()->UpdateSetting(request),
-        [this](grpc::ClientContext& context,
-               google::cloud::resourcesettings::v1::UpdateSettingRequest const&
-                   request) { return stub_->UpdateSetting(context, request); },
-        request, __func__);
-  }
-
- private:
-  std::unique_ptr<ResourceSettingsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ResourceSettingsServiceRetryPolicyOption>()) {
-      return options.get<ResourceSettingsServiceRetryPolicyOption>()->clone();
-    }
-    return retry_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ResourceSettingsServiceBackoffPolicyOption>()) {
-      return options.get<ResourceSettingsServiceBackoffPolicyOption>()->clone();
-    }
-    return backoff_policy_prototype_->clone();
-  }
-
-  std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<ResourceSettingsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<ResourceSettingsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return idempotency_policy_->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcesettings_internal::ResourceSettingsServiceStub> stub_;
-  std::unique_ptr<ResourceSettingsServiceRetryPolicy const>
-      retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
-      idempotency_policy_;
-};
-}  // namespace
-
 std::shared_ptr<ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -191,8 +66,9 @@ MakeResourceSettingsServiceConnection(Options options) {
   auto stub =
       resourcesettings_internal::CreateDefaultResourceSettingsServiceStub(
           background->cq(), options);
-  return std::make_shared<ResourceSettingsServiceConnectionImpl>(
-      std::move(background), std::move(stub), options);
+  return std::make_shared<
+      resourcesettings_internal::ResourceSettingsServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -209,10 +85,10 @@ std::shared_ptr<resourcesettings::ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceConnection(
     std::shared_ptr<ResourceSettingsServiceStub> stub, Options options) {
   options = ResourceSettingsServiceDefaultOptions(std::move(options));
+  auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<
-      resourcesettings::ResourceSettingsServiceConnectionImpl>(
-      internal::MakeBackgroundThreadsFactory(options)(), std::move(stub),
-      std::move(options));
+      resourcesettings_internal::ResourceSettingsServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

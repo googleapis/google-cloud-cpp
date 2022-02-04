@@ -53,9 +53,11 @@ class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<ResourceSettingsServiceStub> child_;
   std::string api_client_header_;
-};  // ResourceSettingsServiceMetadata
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal

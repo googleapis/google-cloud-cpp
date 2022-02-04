@@ -50,6 +50,8 @@ class ResourceSettingsServiceConnection {
  public:
   virtual ~ResourceSettingsServiceConnection() = 0;
 
+  virtual Options options() { return Options{}; }
+
   virtual StreamRange<google::cloud::resourcesettings::v1::Setting>
   ListSettings(
       google::cloud::resourcesettings::v1::ListSettingsRequest request);

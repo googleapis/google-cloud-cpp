@@ -29,8 +29,10 @@ ResourceSettingsServiceClient::ResourceSettingsServiceClient(
     std::shared_ptr<ResourceSettingsServiceConnection> connection,
     Options options)
     : connection_(std::move(connection)),
-      options_(resourcesettings_internal::ResourceSettingsServiceDefaultOptions(
-          std::move(options))) {}
+      options_(internal::MergeOptions(
+          std::move(options),
+          resourcesettings_internal::ResourceSettingsServiceDefaultOptions(
+              connection_->options()))) {}
 ResourceSettingsServiceClient::~ResourceSettingsServiceClient() = default;
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>

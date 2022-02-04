@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_RESOURCE_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_RESOURCE_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h>
 #include <memory>
@@ -38,14 +38,14 @@ class ResourceSettingsServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
   clone() const = 0;
 
-  virtual google::cloud::internal::Idempotency ListSettings(
+  virtual google::cloud::Idempotency ListSettings(
       google::cloud::resourcesettings::v1::ListSettingsRequest request) = 0;
 
-  virtual google::cloud::internal::Idempotency GetSetting(
+  virtual google::cloud::Idempotency GetSetting(
       google::cloud::resourcesettings::v1::GetSettingRequest const&
           request) = 0;
 
-  virtual google::cloud::internal::Idempotency UpdateSetting(
+  virtual google::cloud::Idempotency UpdateSetting(
       google::cloud::resourcesettings::v1::UpdateSettingRequest const&
           request) = 0;
 };
