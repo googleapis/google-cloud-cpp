@@ -29,12 +29,6 @@ GoldenKitchenSinkConnectionImpl::AsyncAppendRows() {
       background_->cq(), absl::make_unique<grpc::ClientContext>());
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
-
-namespace golden {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
     ::google::test::admin::database::v1::TailLogEntriesResponse const&,
     ::google::test::admin::database::v1::TailLogEntriesRequest&) {
@@ -42,6 +36,6 @@ void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

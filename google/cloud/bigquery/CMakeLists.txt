@@ -55,8 +55,8 @@ add_library(
     internal/bigquery_read_stub.h
     internal/bigquery_read_stub_factory.cc
     internal/bigquery_read_stub_factory.h
-    retry_traits.h
-    streaming.cc)
+    internal/streaming.cc
+    retry_traits.h)
 target_include_directories(
     google_cloud_cpp_bigquery
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

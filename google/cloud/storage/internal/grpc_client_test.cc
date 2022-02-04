@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -36,6 +37,13 @@ Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "uh-oh");
 }
 
+std::shared_ptr<GrpcClient> CreateTestClient(
+    std::shared_ptr<storage_internal::StorageStub> stub) {
+  return GrpcClient::CreateMock(
+      std::move(stub),
+      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
+}
+
 TEST(GrpcClient, QueryResumableUpload) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, QueryWriteStatus)
@@ -50,7 +58,7 @@ TEST(GrpcClient, QueryResumableUpload) {
         EXPECT_EQ(request.upload_id(), "test-only-upload-id");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->QueryResumableUpload(
       QueryResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
@@ -70,7 +78,7 @@ TEST(GrpcClient, GetBucket) {
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->GetBucketMetadata(
       GetBucketMetadataRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
@@ -98,7 +106,7 @@ TEST(GrpcClient, InsertObjectMedia) {
             google::storage::v2::WriteObjectRequest,
             google::storage::v2::WriteObjectResponse>>(std::move(stream));
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->InsertObjectMedia(
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "How vexingly quick daft zebras jump!")
@@ -126,7 +134,7 @@ TEST(GrpcClient, CopyObject) {
         EXPECT_THAT(request.destination_name(), "test-object");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->CopyObject(
       CopyObjectRequest("test-source-bucket", "test-source-object",
                         "test-bucket", "test-object")
@@ -157,7 +165,7 @@ TEST(GrpcClient, CopyObjectTooLarge) {
         response.set_rewrite_token("test-only-token");
         return response;
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->CopyObject(
       CopyObjectRequest("test-source-bucket", "test-source-object",
                         "test-bucket", "test-object")
@@ -179,7 +187,7 @@ TEST(GrpcClient, GetObjectMetadata) {
         EXPECT_THAT(request.object(), "test-object");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
@@ -202,7 +210,7 @@ TEST(GrpcClient, ReadObject) {
         return std::unique_ptr<google::cloud::internal::StreamingReadRpc<
             google::storage::v2::ReadObjectResponse>>(std::move(stream));
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto stream = client->ReadObject(
       ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
@@ -221,7 +229,7 @@ TEST(GrpcClient, ListObjects) {
         EXPECT_THAT(request.parent(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->ListObjects(
       ListObjectsRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
@@ -242,7 +250,7 @@ TEST(GrpcClient, DeleteObject) {
         EXPECT_THAT(request.object(), "test-object");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->DeleteObject(
       DeleteObjectRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
@@ -264,7 +272,7 @@ TEST(GrpcClient, PatchObject) {
         EXPECT_THAT(request.object().name(), "test-source-object");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->PatchObject(
       PatchObjectRequest(
           "test-source-bucket", "test-source-object",
@@ -288,7 +296,7 @@ TEST(GrpcClient, ComposeObject) {
         EXPECT_THAT(request.destination().name(), "test-source-object");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->ComposeObject(
       ComposeObjectRequest("test-source-bucket", {}, "test-source-object")
           .set_multiple_options(Fields("field1,field2"),
@@ -315,7 +323,7 @@ TEST(GrpcClient, RewriteObject) {
         EXPECT_THAT(request.destination_name(), "test-object");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->RewriteObject(
       RewriteObjectRequest("test-source-bucket", "test-source-object",
                            "test-bucket", "test-object", "test-token")
@@ -341,7 +349,7 @@ TEST(GrpcClient, CreateResumableSession) {
                     "test-object");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->CreateResumableSession(
       ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
@@ -361,7 +369,7 @@ TEST(GrpcClient, GetServiceAccount) {
         EXPECT_THAT(request.project(), "projects/test-project-id");
         return PermanentError();
       });
-  auto client = GrpcClient::CreateMock(mock);
+  auto client = CreateTestClient(mock);
   auto response = client->GetServiceAccount(
       GetProjectServiceAccountRequest("test-project-id")
           .set_multiple_options(Fields("field1,field2"),

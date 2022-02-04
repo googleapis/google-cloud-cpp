@@ -53,7 +53,7 @@ google_cloud_cpp_generator_golden_files = [
     "internal/golden_thing_admin_stub.h",
     "internal/golden_thing_admin_stub_factory.cc",
     "internal/golden_thing_admin_stub_factory.h",
+    "internal/streaming.cc",
     "mocks/mock_golden_kitchen_sink_connection.h",
     "mocks/mock_golden_thing_admin_connection.h",
-    "streaming.cc",
 ]

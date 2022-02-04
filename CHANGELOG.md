@@ -88,6 +88,19 @@
   https://github.com/googleapis/google-cloud-cpp/issues/5976.
 </details>
 
+<details>
+<summary>2023-02-01: remove `BigQueryReadReadRowsStreamingUpdater` from
+`google::cloud::bigquery` namespace</summary>
+<br>
+
+* On 2023-02-01 (or shortly after) we will remove
+`BigQueryReadReadRowsStreamingUpdater` from its declaration in
+`google/cloud/bigquery/read_connection.h` and from the `google::cloud::bigquery`
+namespace. The function continues to exist but in an internal file and
+namesapce. For status on this see
+https://github.com/googleapis/google-cloud-cpp/issues/8234.
+</details>
+
 ## v1.37.0 - TBD
 
 ### New Libraries
