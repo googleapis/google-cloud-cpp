@@ -88,7 +88,12 @@ if (Test-Path env:RUNNING_CI) {
 # Get the number of processors to parallelize the tests
 $NCPU=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
 
-$ctest_flags = @("--output-on-failure", "-j", $NCPU, "-C", $env:CONFIG)
+$ctest_flags = @(
+    "--output-on-failure",
+    "-j", $NCPU,
+    "-C", $env:CONFIG,
+    "--progress"
+)
 ctest $ctest_flags -LE integration-test
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"

@@ -29,4 +29,6 @@ cmake -GNinja -H. -Bcmake-out \
   -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)" \
   -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
 cmake --build cmake-out
-env -C cmake-out ctest --output-on-failure -LE "integration-test" -j "$(nproc)"
+
+mapfile -t ctest_args < <(ctest::common_args)
+env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test

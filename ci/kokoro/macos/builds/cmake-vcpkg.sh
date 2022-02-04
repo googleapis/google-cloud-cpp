@@ -71,9 +71,10 @@ io::log_h2 "Compiling with ${NCPU} cpus"
 cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 io::log_h2 "Running unit tests"
+mapfile -t ctest_args < <(ctest::common_args)
 (
   cd "${BINARY_DIR}"
-  ctest -LE integration-test --output-on-failure -j "${NCPU}"
+  ctest "${ctest_args[@]}" -LE "integration-test"
 )
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
@@ -101,10 +102,9 @@ if should_run_integration_tests; then
     export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 
     cd "${BINARY_DIR}"
-    ctest \
+    ctest "${ctest_args[@]}" \
       -L 'integration-test-production' \
-      -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test)' \
-      --output-on-failure -j "${NCPU}"
+      -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test)'
   )
 fi
 

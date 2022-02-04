@@ -33,9 +33,6 @@ cmake --version
 # https://ninja-build.org/manual.html#_environment_variables
 export NINJA_STATUS="T+%es [%f/%t] "
 
-# Tells ctest to print the output of failed tests.
-export CTEST_OUTPUT_ON_FAILURE=1
-
 # This block is run the first (and only) time this script is sourced. It first
 # clears the ccache stats. Then it registers an exit handler that will display
 # the ccache stats when the calling script exits.
@@ -55,5 +52,18 @@ function cmake::common_args() {
     -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)"
   )
   args+=(-GNinja -S . -B cmake-out)
+  printf "%s\n" "${args[@]}"
+}
+
+function ctest::common_args() {
+  local args
+  args=(
+    # Print the full output on failures
+    --output-on-failure
+    # Run many tests in parallel, use -j for compatibility with old versions
+    -j "$(nproc)"
+    # Make the output shorter on interactive tests
+    --progress
+  )
   printf "%s\n" "${args[@]}"
 }
