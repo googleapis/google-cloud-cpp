@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/resourcesettings/ EDIT HERE .h"
+#include "google/cloud/resourcesettings/resource_settings_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,11 +24,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace resourcesettings = ::google::cloud::resourcesettings;
-  auto client = resourcesettings::Client(
-      resourcesettings::MakeConnection(/* EDIT HERE */));
+  auto client = resourcesettings::ResourceSettingsServiceClient(
+      resourcesettings::MakeResourceSettingsServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListSettings(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

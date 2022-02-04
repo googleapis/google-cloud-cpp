@@ -3,7 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Resource Settings API][cloud-service-docs], a service to The Resource Settings API allows users to control and modify the behavior of their GCP resources (e.g., VM, firewall, Project, etc.) across the Cloud Resource Hierarchy.
+[Resource Settings API][cloud-service-docs]. The Resource Settings API allows
+users to control and modify the behavior of their GCP resources (e.g., VM,
+firewall, Project, etc.) across the Cloud Resource Hierarchy.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +27,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/resourcesettings
+[cloud-service-docs]: https://cloud.google.com/resource-manager/docs/resource-settings/overview
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-resourcesettings/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/resourcesettings
 
@@ -38,7 +40,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/resourcesettings/ EDIT HERE .h"
+#include "google/cloud/resourcesettings/resource_settings_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,11 +52,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace resourcesettings = ::google::cloud::resourcesettings;
-  auto client = resourcesettings::Client(
-      resourcesettings::MakeConnection(/* EDIT HERE */));
+  auto client = resourcesettings::ResourceSettingsServiceClient(
+      resourcesettings::MakeResourceSettingsServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListSettings(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }
