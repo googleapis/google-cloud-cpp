@@ -17,6 +17,7 @@
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
 #include "google/cloud/assuredworkloads/internal/assured_workloads_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
@@ -99,6 +100,11 @@ void AssuredWorkloadsServiceMetadata::SetMetadata(
 void AssuredWorkloadsServiceMetadata::SetMetadata(
     grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

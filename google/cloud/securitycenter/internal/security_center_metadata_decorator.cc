@@ -17,6 +17,7 @@
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
 #include "google/cloud/securitycenter/internal/security_center_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/securitycenter/v1/securitycenter_service.grpc.pb.h>
@@ -318,6 +319,11 @@ void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context,
 
 void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

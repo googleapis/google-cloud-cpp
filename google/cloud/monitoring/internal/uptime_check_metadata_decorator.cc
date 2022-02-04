@@ -17,6 +17,7 @@
 // source: google/monitoring/v3/uptime_service.proto
 
 #include "google/cloud/monitoring/internal/uptime_check_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/uptime_service.grpc.pb.h>
@@ -89,6 +90,11 @@ void UptimeCheckServiceMetadata::SetMetadata(
 
 void UptimeCheckServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

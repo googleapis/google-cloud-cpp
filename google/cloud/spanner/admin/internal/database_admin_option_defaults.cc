@@ -42,6 +42,10 @@ Options DatabaseAdminDefaultOptions(Options options) {
     options.set<EndpointOption>(
         env && !env->empty() ? *env : "spanner.googleapis.com");
   }
+  if (!options.has<UserProjectOption>()) {
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
+  }
   if (auto emulator = internal::GetEnv("SPANNER_EMULATOR_HOST")) {
     options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
         grpc::InsecureChannelCredentials());

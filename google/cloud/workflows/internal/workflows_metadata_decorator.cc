@@ -17,6 +17,7 @@
 // source: google/cloud/workflows/v1/workflows.proto
 
 #include "google/cloud/workflows/internal/workflows_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/workflows/v1/workflows.grpc.pb.h>
@@ -99,6 +100,11 @@ void WorkflowsMetadata::SetMetadata(grpc::ClientContext& context,
 
 void WorkflowsMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

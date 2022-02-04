@@ -17,6 +17,7 @@
 // source: google/cloud/retail/v2/user_event_service.proto
 
 #include "google/cloud/retail/internal/user_event_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/retail/v2/user_event_service.grpc.pb.h>
@@ -100,6 +101,11 @@ void UserEventServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void UserEventServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

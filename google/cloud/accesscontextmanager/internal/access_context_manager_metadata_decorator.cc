@@ -17,6 +17,7 @@
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
@@ -286,6 +287,11 @@ void AccessContextManagerMetadata::SetMetadata(
 
 void AccessContextManagerMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
