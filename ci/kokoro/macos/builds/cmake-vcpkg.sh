@@ -71,7 +71,14 @@ io::log_h2 "Compiling with ${NCPU} cpus"
 cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 io::log_h2 "Running unit tests"
-mapfile -t ctest_args < <(ctest::common_args)
+ctest_args=(
+    # Print the full output on failures
+    --output-on-failure
+    # Run many tests in parallel, use -j for compatibility with old versions
+    -j "$(nproc)"
+    # Make the output shorter on interactive tests
+    --progress
+)
 (
   cd "${BINARY_DIR}"
   ctest "${ctest_args[@]}" -LE "integration-test"
