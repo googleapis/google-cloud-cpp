@@ -34,9 +34,10 @@ cc_library(
         include = [HEADER_GLOB],
         exclude = [MOCK_HEADER_GLOB],
     ),
-    # TODO(#8125): Re-enable the macos build.
+    # TODO(#8125): Re-enable the macos and Windows builds.
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
+        "@platforms//os:windows": ["@platforms//:incompatible"],
         "//conditions:default": [],
     }),
     visibility = ["//:__pkg__"],
