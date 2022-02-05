@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {

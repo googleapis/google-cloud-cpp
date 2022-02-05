@@ -16,8 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_ANONYMOUS_CREDENTIALS_H
 
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * object that is readable by the "allUsers" entity), which requires no
  * authentication or authorization.
  */
-class AnonymousCredentials : public Credentials {
+class AnonymousCredentials : public oauth2_internal::Credentials {
  public:
   AnonymousCredentials() = default;
 

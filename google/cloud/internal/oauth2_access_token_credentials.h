@@ -17,8 +17,10 @@
 
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

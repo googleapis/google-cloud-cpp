@@ -22,10 +22,8 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-class AnonymousCredentialsTest : public ::testing::Test {};
-
 /// @test Verify `AnonymousCredentials` works as expected.
-TEST_F(AnonymousCredentialsTest, AuthorizationHeaderReturnsEmptyString) {
+TEST(AnonymousCredentialsTest, AuthorizationHeaderReturnsEmptyString) {
   AnonymousCredentials credentials;
   auto header = credentials.AuthorizationHeader();
   ASSERT_STATUS_OK(header);
