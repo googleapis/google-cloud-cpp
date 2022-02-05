@@ -117,15 +117,14 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(tpu_quickstart "quickstart/quickstart.cc")
     target_link_libraries(tpu_quickstart
-            PRIVATE google-cloud-cpp::experimental-tpu)
+                          PRIVATE google-cloud-cpp::experimental-tpu)
     google_cloud_cpp_add_common_options(tpu_quickstart)
     add_test(
-            NAME tpu_quickstart
-            COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:tpu_quickstart> GOOGLE_CLOUD_PROJECT)
+        NAME tpu_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:tpu_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(tpu_quickstart
-            PROPERTIES LABELS "integration-test;quickstart")
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
