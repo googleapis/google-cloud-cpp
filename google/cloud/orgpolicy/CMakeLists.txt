@@ -26,10 +26,6 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::orgpolicy_protos)
 
-find_package(gRPC REQUIRED)
-find_package(ProtobufWithTargets REQUIRED)
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleCloudCppCommon)
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE

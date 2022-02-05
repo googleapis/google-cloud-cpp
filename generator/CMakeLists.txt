@@ -16,11 +16,9 @@
 
 set(DOXYGEN_EXCLUDE_SYMBOLS "generator_internal")
 set(DOXYGEN_EXAMPLE_PATH "")
-include(GoogleCloudCppCommon)
 
-find_package(absl CONFIG REQUIRED)
+include(GoogleCloudCppCommon)
 find_package(Protobuf REQUIRED)
-find_package(ProtobufWithTargets REQUIRED)
 include(IncludeNlohmannJson)
 
 add_library(

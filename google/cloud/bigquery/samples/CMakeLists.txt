@@ -15,7 +15,6 @@
 # ~~~
 
 function (bigquery_client_define_samples)
-    find_package(gRPC)
     set(bigquery_client_samples # cmake-format: sort
                                 bigquery_read_samples.cc)
     # Export the list of unit tests to a .bzl file so we do not need to maintain

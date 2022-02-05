@@ -28,8 +28,6 @@ set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::cloud_bigquery_protos)
 
 include(GoogleCloudCppCommon)
 
-find_package(absl CONFIG REQUIRED)
-
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     google_cloud_cpp_bigquery # cmake-format: sort

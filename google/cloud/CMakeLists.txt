@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(absl CONFIG REQUIRED)
-
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in
                ${CMAKE_CURRENT_SOURCE_DIR}/internal/version_info.h)
@@ -322,8 +320,6 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-    find_package(gRPC)
-
     # the library
     add_library(
         google_cloud_cpp_grpc_utils # cmake-format: sort
