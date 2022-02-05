@@ -77,13 +77,8 @@ for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")
 done
 
-# Create the test buckets in the emulator:
-printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}" |
-  curl -X POST -H "Content-Type: application/json" --data-binary @- \
-    "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
-printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" |
-  curl -X POST -H "Content-Type: application/json" --data-binary @- \
-    "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
+# Create any GCS resources needed to run the tests
+create_testbench_resources
 
 # This is just the SHA for the *description* of the testbench, it includes its
 # version and other info, but no details about the contents.
