@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/cloudbuild/cloud_build_client.h"
-#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -26,12 +25,10 @@ int main(int argc, char* argv[]) try {
   namespace cloudbuild = ::google::cloud::cloudbuild;
   auto client =
       cloudbuild::CloudBuildClient(cloudbuild::MakeCloudBuildConnection());
-
-  auto const project = google::cloud::Project(argv[1]);
-  auto const filter = "";  // Any filter expression
-  for (auto r : client.ListBuilds(project.FullName(), filter)) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
+  auto const* filter = R"""(status="WORKING")""";  // List only running builds
+  for (auto b : client.ListBuilds(argv[1], filter)) {
+    if (!b) throw std::runtime_error(b.status().message());
+    std::cout << b->DebugString() << "\n";
   }
 
   return 0;
