@@ -33,7 +33,6 @@ google_cloud_cpp_common_hdrs = [
     "internal/algorithm.h",
     "internal/api_client_header.h",
     "internal/attributes.h",
-    "internal/async_sleeper.h",
     "internal/backoff_policy.h",
     "internal/base64_transforms.h",
     "internal/big_endian.h",
