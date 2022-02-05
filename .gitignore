@@ -13,6 +13,9 @@ cmake-out/
 # Used by some IDEs and LSP plugins
 compile_commands.json
 
+# clangd writes index files here
+.cache
+
 # Backup files for Emacs
 *~
 
