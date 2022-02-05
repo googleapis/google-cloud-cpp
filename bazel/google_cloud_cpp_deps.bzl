@@ -26,6 +26,17 @@ def google_cloud_cpp_deps():
     override the version of the dependencies they want to use.
     """
 
+    # Load platforms, we use it directly
+    if "platforms" not in native.existing_rules():
+        http_archive(
+            name = "platforms",
+            urls = [
+                "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.4/platforms-0.0.4.tar.gz",
+                "https://github.com/bazelbuild/platforms/releases/download/0.0.4/platforms-0.0.4.tar.gz",
+            ],
+            sha256 = "079945598e4b6cc075846f7fd6a9d0857c33a7afc0de868c2ccb96405225135d",
+        )
+
     # Load rules_cc, used by googletest
     if "rules_cc" not in native.existing_rules():
         http_archive(
