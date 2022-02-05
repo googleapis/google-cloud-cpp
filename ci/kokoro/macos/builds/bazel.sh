@@ -48,7 +48,14 @@ readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 # not hit this cache.
 if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
   io::log "Using bazel remote cache: ${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
-  bazel_args+=("--remote_cache=${BAZEL_CACHE}/macos/${BUILD_NAME:-}")
+  bazel_args+=(
+    "--remote_cache=${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
+    # Reduce the timeout for the remote cache from the 60s default:
+    #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
+    # If the build machine has network problems we would rather build locally
+    # over blocking the build for 60s
+    "--remote_timeout=3"
+  )
   bazel_args+=("--google_credentials=${TEST_KEY_FILE_JSON}")
   # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
   # and https://github.com/bazelbuild/bazel/issues/3360

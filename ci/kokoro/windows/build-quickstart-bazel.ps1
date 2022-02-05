@@ -62,7 +62,14 @@ $build_flags=@()
 if ((Test-Path env:KOKORO_GFILE_DIR) -and
     (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
     Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
-    $build_flags += @("--remote_cache=${BAZEL_CACHE}/windows/${BuildName}")
+    $build_flags += @(
+        "--remote_cache=${BAZEL_CACHE}/windows/${BuildName}",
+        # Reduce the timeout for the remote cache from the 60s default:
+        #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
+        # If the build machine has network problems we would rather build locally
+        # over blocking the build for 60s
+        "--remote_timeout=3"
+        )
     $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
     # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
     # and https://github.com/bazelbuild/bazel/issues/3360
