@@ -121,7 +121,7 @@ time {
   # Removes trailing whitespace on lines
   expressions=("-e" "'s/[[:blank:]]\+$//'")
   # Removes trailing blank lines (see http://sed.sourceforge.net/sed1line.txt)
-  expressions+=("-e" "':a;/^\n*$/{\$d;N;ba;}'")
+  expressions+=("-e" "':x;/^\n*$/{\$d;N;bx;}'")
   git ls-files -z | grep -zv '\.gz$' |
     (xargs -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
