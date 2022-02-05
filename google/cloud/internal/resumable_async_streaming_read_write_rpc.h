@@ -190,6 +190,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         Status finish_status = finish_future.get();
         if (finish_status.ok()) {
           this->finish_status_ = absl::make_optional(finish_status);
+          this->status_mu_.lock();
+          status_promise_.value().set_value(Status(StatusCode.kOk, "Ok"));
+          this->status_mu_.unlock();
           return make_ready_future(true);
         }
         std::lock_guard(this->retry_loop_mu_);
