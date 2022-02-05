@@ -71,9 +71,18 @@ io::log_h2 "Compiling with ${NCPU} cpus"
 cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 io::log_h2 "Running unit tests"
+ctest_args=(
+  # Print the full output on failures
+  --output-on-failure
+  # Run many tests in parallel, use -j for compatibility with old versions
+  -j "$(nproc)"
+  # Make the output shorter on interactive tests
+  --progress
+)
+# Cannot use `env -C` as the version of env on macOS does not support that flag
 (
   cd "${BINARY_DIR}"
-  ctest -LE integration-test --output-on-failure -j "${NCPU}"
+  ctest "${ctest_args[@]}" -LE "integration-test"
 )
 
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
@@ -89,22 +98,24 @@ should_run_integration_tests() {
 
 if should_run_integration_tests; then
   io::log_h2 "Running integration tests"
-  (
-    export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="${TEST_KEY_FILE_JSON}"
-    export GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM="${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
-    export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
-    export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
-    export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
-    export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
-    export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
-    export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"
-    export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 
+  # Cannot use `env -C` as the version of env on macOS does not support that
+  # flag
+  (
     cd "${BINARY_DIR}"
-    ctest \
+    env \
+      GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="${TEST_KEY_FILE_JSON}" \
+      GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM="${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
+      GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json" \
+      GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json" \
+      GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes" \
+      GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING" \
+      GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams" \
+      GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512" \
+      CLOUD_STORAGE_ENABLE_TRACING="raw-client" \
+      ctest "${ctest_args[@]}" \
       -L 'integration-test-production' \
-      -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test)' \
-      --output-on-failure -j "${NCPU}"
+      -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test)'
   )
 fi
 

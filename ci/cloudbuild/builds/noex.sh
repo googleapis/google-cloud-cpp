@@ -26,6 +26,7 @@ mapfile -t cmake_args < <(cmake::common_args)
 
 cmake "${cmake_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
+mapfile -t ctest_args < <(ctest::common_args)
+env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
 integration::ctest_with_emulators "cmake-out"

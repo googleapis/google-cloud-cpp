@@ -34,7 +34,8 @@ cmake "${cmake_args[@]}" \
   -DBUILD_SHARED_LIBS=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
+mapfile -t ctest_args < <(ctest::common_args)
+env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 cmake --install cmake-out
 
 # Tests the installed artifacts by building and running the quickstarts.
@@ -45,4 +46,4 @@ quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
 # that most of these run against production, and are therefore
 # integration tests with the usual flakiness issues.
 io::log_h2 "Running all other quickstart programs"
-env -C cmake-out ctest --output-on-failure -L quickstart --parallel "$(nproc)"
+env -C cmake-out ctest "${ctest_args[@]}" -L "quickstart"

@@ -249,10 +249,7 @@ function integration::ctest_with_emulators() {
   fi
 
   local cmake_out="$1"
-  ctest_args=(
-    "--output-on-failure"
-    "--parallel" "$(nproc)"
-  )
+  mapfile -t ctest_args < <(ctest::common_args)
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
