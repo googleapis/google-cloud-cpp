@@ -50,6 +50,7 @@ function integration::bazel_args() {
   args+=(
     # Common settings
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+    # TODO(#7936) - prefer GOOGLE_CLOUD_CPP_TEST_REGION
     "--test_env=GOOGLE_CLOUD_REGION=${GOOGLE_CLOUD_REGION}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${GOOGLE_CLOUD_CPP_TEST_ZONE}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=${GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES}"

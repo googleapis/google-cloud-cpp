@@ -252,16 +252,16 @@ endif (BUILD_TESTING)
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(pubsublite_quickstart "quickstart/quickstart.cc")
     target_link_libraries(pubsublite_quickstart
-            PRIVATE google-cloud-cpp::experimental-pubsublite)
+                          PRIVATE google-cloud-cpp::experimental-pubsublite)
     google_cloud_cpp_add_common_options(pubsublite_quickstart)
     add_test(
-            NAME pubsublite_quickstart
-            COMMAND
+        NAME pubsublite_quickstart
+        COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:pubsublite_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_TEST_ZONE)
     set_tests_properties(pubsublite_quickstart
-            PROPERTIES LABELS "integration-test;quickstart")
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

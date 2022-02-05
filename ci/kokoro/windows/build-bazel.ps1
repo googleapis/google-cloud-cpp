@@ -168,6 +168,9 @@ if (Integration-Tests-Enabled) {
         "--test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}",
         "--test_env=GOOGLE_APPLICATION_CREDENTIALS=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
         "--test_env=GOOGLE_CLOUD_PROJECT=${env:GOOGLE_CLOUD_PROJECT}",
+        # TODO(#7936) - prefer GOOGLE_CLOUD_CPP_TEST_REGION
+        "--test_env=GOOGLE_CLOUD_REGION=${env:GOOGLE_CLOUD_REGION}",
+        "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${env:GOOGLE_CLOUD_CPP_TEST_ZONE}",
         "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes",
         "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING",
         "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams",
