@@ -26,7 +26,21 @@ StatusOr<std::string> EndpointFromZone(std::string const& zone_id) {
     return Status(StatusCode::kInvalidArgument,
                   "expected a zone id in <region>-[a-z] format");
   }
-  return zone_id.substr(0, n - 1) + "pubsublite.googleapis.com";
+  return EndpointFromRegion(zone_id.substr(0, n - 2));
+}
+
+StatusOr<std::string> EndpointFromRegion(std::string const& region_id) {
+  auto const n = region_id.size();
+  // These are not all the constraints in a region id. Typically, they are in
+  // the form <geo>-<direction><digit>. Full validation would require contacting
+  // a source of truth, seems like overkill for this application.
+  if (n < 2 || !std::isalpha(region_id.front()) ||
+      !std::isdigit(region_id.back())) {
+    return Status(
+        StatusCode::kInvalidArgument,
+        "region ids start with a alphabetic character and end with a digit");
+  }
+  return region_id + "-pubsublite.googleapis.com";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

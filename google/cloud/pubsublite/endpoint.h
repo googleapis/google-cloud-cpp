@@ -25,7 +25,23 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * Returns the appropriate endpoint given a zone name.
+ *
+ * Given a zone name in ${region}-[a-z] form it returns the appropriate regional
+ * endpoint to contact the Pub/Sub Lite service. Use the value returned to
+ * initialize the library via `google::cloud::EndpointOption`.
+ */
 StatusOr<std::string> EndpointFromZone(std::string const& zone_id);
+
+/**
+ * Returns the appropriate endpoint given a region name.
+ *
+ * Given a region name it returns the appropriate regional endpoint to contact
+ * the Pub/Sub Lite service. Use the value returned to initialize the library
+ * via `google::cloud::EndpointOption`.
+ */
+StatusOr<std::string> EndpointFromRegion(std::string const& region_id);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite

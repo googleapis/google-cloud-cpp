@@ -29,7 +29,18 @@ TEST(EndpointFromZone, Basic) {
   EXPECT_THAT(EndpointFromZone("a-"), StatusIs(StatusCode::kInvalidArgument));
   EXPECT_THAT(EndpointFromZone("-a"), StatusIs(StatusCode::kInvalidArgument));
   EXPECT_THAT(EndpointFromZone("aaa"), StatusIs(StatusCode::kInvalidArgument));
-  EXPECT_THAT(EndpointFromZone("a-b").value(), "a-pubsublite.googleapis.com");
+  EXPECT_THAT(EndpointFromZone("us-central1-b").value(),
+              "us-central1-pubsublite.googleapis.com");
+}
+
+TEST(EndpointFromRegion, Basic) {
+  EXPECT_THAT(EndpointFromRegion(""), StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(EndpointFromRegion("aaa"),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(EndpointFromRegion("1a1"),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(EndpointFromRegion("us-central1").value(),
+              "us-central1-pubsublite.googleapis.com");
 }
 
 }  // namespace
