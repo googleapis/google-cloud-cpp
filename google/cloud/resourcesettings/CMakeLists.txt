@@ -126,7 +126,6 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:resourcesettings_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
     )
     set_tests_properties(resourcesettings_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
