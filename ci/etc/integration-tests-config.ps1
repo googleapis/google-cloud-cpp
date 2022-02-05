@@ -25,7 +25,7 @@ $env:GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
 # environment variable the sample drivers run all the examples.
 $env:GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
 
-# A number of options to improve logging during the CI builds. The are useful
+# A number of options to improve logging during the CI builds. They are useful
 # when troubleshooting problems.
 $env:GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
 $env:GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
