@@ -72,6 +72,8 @@ add_library(
     admin_connection_idempotency_policy.cc
     admin_connection_idempotency_policy.h
     admin_options.h
+    endpoint.cc
+    endpoint.h
     internal/admin_auth_decorator.cc
     internal/admin_auth_decorator.h
     internal/admin_connection_impl.cc
@@ -210,7 +212,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     find_package(GTest CONFIG REQUIRED)
 
     set(pubsublite_unit_tests # cmake-format: sort
-                              internal/stream_factory_test.cc)
+                              endpoint_test.cc internal/stream_factory_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"
                          YEAR "2021")
@@ -246,6 +248,21 @@ endfunction ()
 if (BUILD_TESTING)
     google_cloud_cpp_pubsublite_client_define_tests()
 endif (BUILD_TESTING)
+
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_executable(pubsublite_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(pubsublite_quickstart
+                          PRIVATE google-cloud-cpp::experimental-pubsublite)
+    google_cloud_cpp_add_common_options(pubsublite_quickstart)
+    add_test(
+        NAME pubsublite_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:pubsublite_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_ZONE)
+    set_tests_properties(pubsublite_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

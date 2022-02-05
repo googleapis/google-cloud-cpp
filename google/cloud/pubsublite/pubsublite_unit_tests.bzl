@@ -17,5 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 pubsublite_unit_tests = [
+    "endpoint_test.cc",
     "internal/stream_factory_test.cc",
 ]
