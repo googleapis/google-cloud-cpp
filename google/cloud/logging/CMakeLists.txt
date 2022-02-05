@@ -109,7 +109,7 @@ target_compile_options(google_cloud_cpp_logging_mocks
 add_subdirectory(integration_tests)
 
 include(CTest)
-if (BUILD_TESTING)
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(logging_quickstart "quickstart/quickstart.cc")
     target_link_libraries(logging_quickstart
                           PRIVATE google-cloud-cpp::experimental-logging)
