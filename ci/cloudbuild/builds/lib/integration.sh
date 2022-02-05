@@ -22,14 +22,14 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_INTEGRATION_SH__++ != 0)); then
   return 0
 fi # include guard
 
-source module ci/lib/io.sh
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip uninstall -y --quiet googleapis-storage-testbench
-python3 -m pip install --upgrade --user --quiet "git+https://github.com/googleapis/storage-testbench@v0.14.0"
+python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
+  "git+https://github.com/googleapis/storage-testbench@v0.14.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
