@@ -123,10 +123,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(resourcesettings_quickstart)
     add_test(
         NAME resourcesettings_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:resourcesettings_quickstart> GOOGLE_CLOUD_PROJECT
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:resourcesettings_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(resourcesettings_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
