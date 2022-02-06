@@ -124,7 +124,7 @@ class RestClientIntegrationTest : public ::testing::Test {
 
 TEST_F(RestClientIntegrationTest, Get) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, {});
+  auto client = DefaultRestClient::GetRestClient(url_, {});
   RestRequest request;
   request.SetPath("get");
   auto response_status = RetryRestRequest([&] { return client->Get(request); });
@@ -140,7 +140,7 @@ TEST_F(RestClientIntegrationTest, Get) {
 
 TEST_F(RestClientIntegrationTest, Delete) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, {});
+  auto client = PooledRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("delete");
   request.AddQueryParameter({"key", "value"});
@@ -168,7 +168,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
     "client_email": "bar-email@foo-project.iam.gserviceaccount.com",
 })""";
 
-  auto client = GetDefaultRestClient(url_, options_);
+  auto client = DefaultRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("patch");
   request.AddQueryParameter({"type", "service_account"});
@@ -199,7 +199,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
 
 TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, options_);
+  auto client = DefaultRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -244,7 +244,7 @@ TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
 
 TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, options_);
+  auto client = DefaultRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -257,7 +257,7 @@ TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, options_);
+  auto client = DefaultRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -270,7 +270,7 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeTwoSpans) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, options_);
+  auto client = DefaultRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -293,7 +293,7 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeTwoSpans) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyMiddleSpan) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, options_);
+  auto client = DefaultRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -314,7 +314,7 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyMiddleSpan) {
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyFirstSpan) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, options_);
+  auto client = DefaultRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
 
@@ -341,7 +341,7 @@ TEST_F(RestClientIntegrationTest, ResponseBodyLargerThanSpillBuffer) {
   auto large_json_payload = json.dump();
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   options_.set<ConnectionPoolSizeOption>(4);
-  auto client = GetPooledRestClient(url_, options_);
+  auto client = PooledRestClient::GetRestClient(url_, options_);
   RestRequest request;
   request.SetPath("anything");
   request.AddHeader("content-type", "application/json");
