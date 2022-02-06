@@ -67,9 +67,15 @@ cmake -GNinja "${doc_args[@]}" -S . -B cmake-out
 cmake --build cmake-out --target google-cloud-cpp-protos
 cmake --build cmake-out --target doxygen-docs
 
-io::log_h2 "Installing the docuploader package $(date)"
-python3 -m pip install --user gcp-docuploader protobuf \
-  --upgrade --no-warn-script-location
+if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
+  io::log_h2 "Skipping upload of docs," \
+    "which can only be done in GCB project 'cloud-cpp-testing-resources'"
+  exit 0
+fi
+
+io::log_h2 "Installing the docuploader package"
+python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
+  --no-warn-script-location gcp-docuploader protobuf
 
 # For docuploader to work
 export LC_ALL=C.UTF-8
@@ -94,12 +100,6 @@ function upload_docs() {
     --language cpp
   env -C "${docs_dir}" python3 -m docuploader upload . --staging-bucket "${bucket}"
 }
-
-if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
-  io::log_h2 "Skipping upload of docs," \
-    "which can only be done in GCB project 'cloud-cpp-testing-resources'"
-  exit 0
-fi
 
 io::log_h2 "Publishing docs"
 io::log "version: ${version}"
