@@ -55,12 +55,12 @@ function bazel::common_args() {
     # Disables test caching on ci and daily builds to surface flaky tests.
     # Enables test caching on other builds to avoid surfacing unrelated flakes.
     case "${TRIGGER_TYPE}" in
-    ci | daily)
-      echo no
-      ;;
-    *)
-      echo auto
-      ;;
+      ci | daily)
+        echo no
+        ;;
+      *)
+        echo auto
+        ;;
     esac
   }
   local args=(
