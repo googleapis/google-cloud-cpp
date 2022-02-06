@@ -24,6 +24,7 @@ EXPERIMENTAL_LIBRARIES = [
     "accessapproval",
     "accesscontextmanager",
     "apigateway",
+    "apigeeconnect",
     "appengine",
     "artifactregistry",
     "asset",

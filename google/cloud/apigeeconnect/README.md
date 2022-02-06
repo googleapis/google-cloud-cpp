@@ -3,7 +3,11 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Apigee Connect API][cloud-service-docs], a service to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Apigee Hybrid][cloud-service-docs] management APIs. Apigee Hybrid is a platform
+for developing and managing API proxies that features a hybrid deployment model.
+The hybrid model includes a management plane hosted by Apigee in the Cloud and
+a runtime plane that you install and manage on one of the
+[supported Kubernetes platforms](https://cloud.google.com/apigee/docs/hybrid/supported-platforms).
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +29,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/apigeeconnect
+[cloud-service-docs]: https://cloud.google.com/apigee/docs/hybrid/
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-apigeeconnect/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/apigeeconnect
 
@@ -38,7 +42,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/apigeeconnect/ EDIT HERE .h"
+#include "google/cloud/apigeeconnect/connection_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,11 +54,11 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace apigeeconnect = ::google::cloud::apigeeconnect;
-  auto client =
-      apigeeconnect::Client(apigeeconnect::MakeConnection(/* EDIT HERE */));
+  auto client = apigeeconnect::ConnectionServiceClient(
+      apigeeconnect::MakeConnectionServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListConnections(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

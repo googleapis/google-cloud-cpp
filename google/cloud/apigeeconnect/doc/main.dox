@@ -2,8 +2,12 @@
 
 @mainpage Apigee Connect API C++ Client Library
 
-An idiomatic C++ client library for the [Apigee Connect API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the
+[Apigee Hybrid][cloud-service-docs] management APIs. Apigee Hybrid is a platform
+for developing and managing API proxies that features a hybrid deployment model.
+The hybrid model includes a management plane hosted by Apigee in the Cloud and
+a runtime plane that you install and manage on one of the
+[supported Kubernetes platforms](https://cloud.google.com/apigee/docs/hybrid/supported-platforms).
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +85,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/apigeeconnect
+[cloud-service-docs]: https://cloud.google.com/apigee/docs/hybrid/
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
