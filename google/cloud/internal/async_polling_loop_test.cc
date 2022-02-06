@@ -146,8 +146,12 @@ TEST(AsyncPollingLoopTest, ImmediateCancel) {
   auto pending =
       AsyncPollingLoop(cq, p.get_future(), MakePoll(mock), MakeCancel(mock),
                        std::move(policy), "test-function");
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   p.set_value(starting_op);
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
@@ -184,11 +188,11 @@ TEST(AsyncPollingLoopTest, PollThenSuccess) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   OptionsSpan span(Options{}.set<StringOption>("PollThenSuccess"));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -272,11 +276,11 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   OptionsSpan span(Options{}.set<StringOption>("PollThenEventualSuccess"));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -318,11 +322,11 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   OptionsSpan span(
       Options{}.set<StringOption>("PollThenExhaustedPollingPolicy"));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   EXPECT_THAT(actual,
               StatusIs(Not(Eq(StatusCode::kOk)),
                        AllOf(HasSubstr("test-function"),
@@ -367,11 +371,11 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   OptionsSpan span(
       Options{}.set<StringOption>("PollThenExhaustedPollingPolicyWithFailure"));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   ASSERT_THAT(actual,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
@@ -421,6 +425,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
   }
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(expected);
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -475,11 +480,15 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(starting_op);
   auto t = timer_sequencer.PopFront();
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   t.set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(
       Status{StatusCode::kCancelled, "test-function: operation cancelled"});
 
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
@@ -536,10 +545,14 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
   get_sequencer.PopFront().set_value(starting_op);
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   auto g = get_sequencer.PopFront();
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   g.set_value(
       Status{StatusCode::kCancelled, "test-function: operation cancelled"});
 
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
@@ -602,8 +615,12 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
   auto pending =
       AsyncPollingLoop(cq, p.get_future(), MakePoll(mock), MakeCancel(mock),
                        std::move(policy), "test-function");
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   p.set_value(starting_op);
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),

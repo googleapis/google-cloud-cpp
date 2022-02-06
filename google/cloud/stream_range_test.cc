@@ -68,6 +68,7 @@ TEST(StreamRange, OneElement) {
 
   internal::OptionsSpan span(Options{}.set<StringOption>("OneElement"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_TRUE(*it);
@@ -84,6 +85,7 @@ TEST(StreamRange, OneError) {
 
   internal::OptionsSpan span(Options{}.set<StringOption>("OneError"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_FALSE(*it);
@@ -102,6 +104,7 @@ TEST(StreamRange, FiveElements) {
 
   internal::OptionsSpan span(Options{}.set<StringOption>("FiveElements"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<int> v;
   for (StatusOr<int>& x : sr) {
     EXPECT_TRUE(x);
@@ -121,6 +124,7 @@ TEST(StreamRange, PostFixIteration) {
 
   internal::OptionsSpan span(Options{}.set<StringOption>("PostFixIteration"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<int> v;
   // NOLINTNEXTLINE(modernize-loop-convert)
   for (auto it = sr.begin(); it != sr.end(); it++) {
@@ -144,6 +148,7 @@ TEST(StreamRange, Distance) {
         if (counter++ < 1) return counter;
         return Status{};
       });
+  internal::OptionsSpan overlay1(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(1, std::distance(one.begin(), one.end()));
 
   // Range of five elements
@@ -155,6 +160,7 @@ TEST(StreamRange, Distance) {
         if (counter++ < 5) return counter;
         return Status{};
       });
+  internal::OptionsSpan overlay5(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(5, std::distance(five.begin(), five.end()));
 }
 
@@ -166,8 +172,9 @@ TEST(StreamRange, StreamError) {
     return Status(StatusCode::kUnknown, "oops");
   };
 
-  internal::OptionsSpan span5(Options{}.set<StringOption>("StreamError"));
+  internal::OptionsSpan span(Options{}.set<StringOption>("StreamError"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
 
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());

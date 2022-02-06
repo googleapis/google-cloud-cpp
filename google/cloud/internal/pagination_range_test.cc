@@ -97,6 +97,7 @@ TYPED_TEST(PaginationRangeTest, TypedEmpty) {
   auto range = MakePaginationRange<ItemRange>(
       Request{}, [&mock](Request const& r) { return mock.Loader(r); },
       [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_TRUE(range.begin() == range.end());
 }
 
@@ -116,6 +117,7 @@ TYPED_TEST(PaginationRangeTest, SinglePage) {
   auto range = MakePaginationRange<ItemRange>(
       Request{}, [&mock](Request const& r) { return mock.Loader(r); },
       [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<std::string> names;
   for (auto& p : range) {
     if (!p) break;
@@ -147,6 +149,7 @@ TYPED_TEST(PaginationRangeTest, NonProtoRange) {
         }
         return v;
       });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
 
   std::vector<std::string> names;
   for (auto& p : range) {
@@ -182,6 +185,7 @@ TYPED_TEST(PaginationRangeTest, TwoPages) {
   auto range = MakePaginationRange<ItemRange>(
       Request{}, [&mock](Request const& r) { return mock.Loader(r); },
       [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<std::string> names;
   for (auto& p : range) {
     if (!p) break;
@@ -222,6 +226,7 @@ TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
   auto range = MakePaginationRange<ItemRange>(
       Request{}, [&mock](Request const& r) { return mock.Loader(r); },
       [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<std::string> names;
   for (auto& p : range) {
     if (!p) {
@@ -256,6 +261,7 @@ TYPED_TEST(PaginationRangeTest, IteratorCoverage) {
   auto range = MakePaginationRange<ItemRange>(
       Request{}, [&mock](Request const& r) { return mock.Loader(r); },
       [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto i0 = range.begin();
   auto i1 = i0;
   EXPECT_TRUE(i0 == i1);

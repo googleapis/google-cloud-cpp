@@ -155,6 +155,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -208,6 +209,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -275,10 +277,14 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   // Wait until the polling loop is backing off for a second time.
   timer.PopFront().set_value();
   auto t = timer.PopFront();
-  // cancel the long running operation
-  pending.cancel();
+  {
+    // cancel the long running operation
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   // release timer
   t.set_value();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
 }

@@ -57,6 +57,7 @@ TEST(RetryLoopTest, Success) {
         return StatusOr<int>(2 * request);
       },
       42, "error message");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
 }
@@ -74,6 +75,7 @@ TEST(RetryLoopTest, TransientThenSuccess) {
         return StatusOr<int>(2 * request);
       },
       42, "error message");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
 }
@@ -91,6 +93,7 @@ TEST(RetryLoopTest, ReturnJustStatus) {
         return Status();
       },
       42, "error message");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
 }
 
@@ -127,6 +130,7 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
         return StatusOr<int>(2 * request);
       },
       42, "error message", [&sleep_for](ms p) { sleep_for.push_back(p); });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
   EXPECT_THAT(sleep_for,
@@ -144,6 +148,7 @@ TEST(RetryLoopTest, TransientFailureNonIdempotent) {
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
       42, "the answer to everything");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
@@ -161,6 +166,7 @@ TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
         return StatusOr<int>(Status(StatusCode::kPermissionDenied, "uh oh"));
       },
       42, "the answer to everything");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("uh oh"));
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
@@ -178,6 +184,7 @@ TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
       42, "the answer to everything");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
