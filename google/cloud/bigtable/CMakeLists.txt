@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
@@ -30,8 +28,6 @@ include(GoogleCloudCppCommon)
 # Configure the location of proto files, particularly the googleapis protos.
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
      "${PROJECT_SOURCE_DIR}")
-
-find_package(gRPC)
 
 # Enable unit tests
 include(CTest)

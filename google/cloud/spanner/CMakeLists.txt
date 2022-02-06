@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")

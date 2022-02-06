@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
@@ -311,7 +309,6 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    find_package(gRPC REQUIRED)
     add_library(
         google_cloud_cpp_storage_grpc
         grpc_plugin.cc

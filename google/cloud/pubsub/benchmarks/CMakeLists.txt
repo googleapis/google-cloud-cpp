@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(absl CONFIG REQUIRED)
-
 function (pubsub_client_define_benchmarks)
     set(pubsub_client_benchmark_programs # cmake-format: sort
                                          endurance.cc throughput.cc)
