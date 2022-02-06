@@ -108,23 +108,23 @@ PARSED="$(getopt -a \
 eval set -- "${PARSED}"
 
 case "$1" in
---generate)
-  generate_ci "$2"
-  generate_pr "$2"
-  ;;
--d | --describe)
-  describe_trigger "$2"
-  ;;
--i | --import)
-  import_trigger "$2"
-  ;;
--l | --list)
-  list_triggers
-  ;;
--h | --help)
-  print_usage
-  ;;
-*)
-  print_usage
-  ;;
+  --generate)
+    generate_ci "$2"
+    generate_pr "$2"
+    ;;
+  -d | --describe)
+    describe_trigger "$2"
+    ;;
+  -i | --import)
+    import_trigger "$2"
+    ;;
+  -l | --list)
+    list_triggers
+    ;;
+  -h | --help)
+    print_usage
+    ;;
+  *)
+    print_usage
+    ;;
 esac

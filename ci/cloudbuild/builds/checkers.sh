@@ -32,15 +32,15 @@ function sed_edit() {
   local files=()
   while [[ $# -gt 0 ]]; do
     case "$1" in
-    -e)
-      test $# -gt 1 || return 1
-      expressions+=("-e" "$2")
-      shift 2
-      ;;
-    *)
-      files+=("$1")
-      shift
-      ;;
+      -e)
+        test $# -gt 1 || return 1
+        expressions+=("-e" "$2")
+        shift 2
+        ;;
+      *)
+        files+=("$1")
+        shift
+        ;;
     esac
   done
   for file in "${files[@]}"; do
@@ -145,7 +145,7 @@ time {
 # Apply shfmt to format all shell scripts
 printf "%-30s" "Running shfmt:" >&2
 time {
-  git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w -i 2
+  git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w
 }
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.

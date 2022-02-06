@@ -106,48 +106,48 @@ DOCKER_FLAG="false"
 SHELL_FLAG="false"
 while true; do
   case "$1" in
-  --build)
-    BUILD_FLAG="$2"
-    shift 2
-    ;;
-  --distro)
-    DISTRO_FLAG="$2"
-    shift 2
-    ;;
-  -t | --trigger)
-    TRIGGER_FLAG="$2"
-    shift 2
-    ;;
-  -c | --cloud)
-    CLOUD_FLAG="$2"
-    shift 2
-    ;;
-  -l | --local)
-    LOCAL_FLAG="true"
-    shift
-    ;;
-  -d | --docker)
-    DOCKER_FLAG="true"
-    shift
-    ;;
-  -s | --docker-shell)
-    DOCKER_FLAG="true"
-    SHELL_FLAG="true"
-    shift
-    ;;
-  --docker-clean)
-    DOCKER_FLAG="true"
-    CLEAN_FLAG="true"
-    shift
-    ;;
-  -h | --help)
-    print_usage
-    exit 0
-    ;;
-  --)
-    shift
-    break
-    ;;
+    --build)
+      BUILD_FLAG="$2"
+      shift 2
+      ;;
+    --distro)
+      DISTRO_FLAG="$2"
+      shift 2
+      ;;
+    -t | --trigger)
+      TRIGGER_FLAG="$2"
+      shift 2
+      ;;
+    -c | --cloud)
+      CLOUD_FLAG="$2"
+      shift 2
+      ;;
+    -l | --local)
+      LOCAL_FLAG="true"
+      shift
+      ;;
+    -d | --docker)
+      DOCKER_FLAG="true"
+      shift
+      ;;
+    -s | --docker-shell)
+      DOCKER_FLAG="true"
+      SHELL_FLAG="true"
+      shift
+      ;;
+    --docker-clean)
+      DOCKER_FLAG="true"
+      CLEAN_FLAG="true"
+      shift
+      ;;
+    -h | --help)
+      print_usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
   esac
 done
 

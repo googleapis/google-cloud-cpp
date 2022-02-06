@@ -75,16 +75,16 @@ function die_with_message() {
 FORCE_FLAG="no"
 while getopts "fh" opt "$@"; do
   case "$opt" in
-  [f])
-    FORCE_FLAG="yes"
-    ;;
-  [h])
-    echo "${USAGE}"
-    exit 0
-    ;;
-  *)
-    die_with_message "${USAGE}"
-    ;;
+    [f])
+      FORCE_FLAG="yes"
+      ;;
+    [h])
+      echo "${USAGE}"
+      exit 0
+      ;;
+    *)
+      die_with_message "${USAGE}"
+      ;;
   esac
 done
 shift $((OPTIND - 1))
