@@ -38,6 +38,14 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# Apigee Connect
+service {
+  service_proto_path: "google/cloud/apigeeconnect/v1/connection.proto"
+  product_path: "google/cloud/apigeeconnect"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable", "kUnknown"]
+}
+
 # App Engine Admin
 service {
   service_proto_path: "google/appengine/v1/appengine.proto"

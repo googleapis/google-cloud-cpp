@@ -23,6 +23,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_cc_grpc"
   )"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
+  ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
   ["appengine"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc" \
