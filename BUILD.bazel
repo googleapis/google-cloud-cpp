@@ -66,6 +66,7 @@ EXPERIMENTAL_LIBRARIES = [
     "recommender",
     "redis",
     "resourcemanager",
+    "resourcesettings",
     "retail",
     "scheduler",
     "securitycenter",

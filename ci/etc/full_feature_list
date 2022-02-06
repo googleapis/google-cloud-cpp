@@ -45,6 +45,7 @@ pubsublite
 recommender
 redis
 resourcemanager
+resourcesettings
 retail
 scheduler
 secretmanager
