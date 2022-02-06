@@ -150,7 +150,6 @@ class CurlImpl {
   bool paused_;
 
   // Track when status and headers from the response are received.
-  bool status_line_received_;
   bool all_headers_received_;
 
   // Track the usage of the buffer provided to Read.

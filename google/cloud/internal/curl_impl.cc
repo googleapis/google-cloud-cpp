@@ -181,7 +181,6 @@ CurlImpl::CurlImpl(CurlHandle handle,
       multi_(factory_->CreateMultiHandle()),
       in_multi_(false),
       paused_(false),
-      status_line_received_(false),
       all_headers_received_(false),
       buffer_({nullptr, 0}),
       spill_offset_(0),
@@ -332,6 +331,8 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
   // returned to the user on attempts to read the payload. Only after the spill
   // buffer has been emptied will we read more from handle_.
   if (!all_headers_received_ && buffer_.empty()) {
+    all_headers_received_ = true;
+    http_code_ = handle_.GetResponseCode();
     return WriteAllBytesToSpillBuffer(ptr, size, nmemb);
   }
   return WriteToUserBuffer(ptr, size, nmemb);
@@ -343,14 +344,6 @@ std::size_t CurlImpl::WriteCallback(void* ptr, std::size_t size,
 // to this function.
 std::size_t CurlImpl::HeaderCallback(char* contents, std::size_t size,
                                      std::size_t nitems) {
-  if (nitems * size == 2 && contents[0] == '\r' && contents[1] == '\n') {
-    if (!status_line_received_) {
-      status_line_received_ = true;
-    } else {
-      all_headers_received_ = true;
-      http_code_ = handle_.GetResponseCode();
-    }
-  }
   return CurlAppendHeaderData(received_headers_, contents, size * nitems);
 }
 
@@ -429,13 +422,16 @@ std::size_t CurlImpl::DrainSpillBuffer() {
   handle_.FlushDebug(__func__);
   std::size_t free = buffer_.size();
   auto copy_count = (std::min)(free, spill_offset_);
-  TRACE_STATE() << ", drain n=" << copy_count << " from spill\n";
-  buffer_ = WriteToBuffer(buffer_, absl::Span<char>(spill_.data(), copy_count));
-  // TODO(#7958): Consider making the spill buffer a circular buffer and then
-  // we could remove this memmove step.
-  std::memmove(spill_.data(), spill_.data() + copy_count,
-               spill_.size() - copy_count);
-  spill_offset_ -= copy_count;
+  if (copy_count > 0) {
+    TRACE_STATE() << ", drain n=" << copy_count << " from spill\n";
+    buffer_ =
+        WriteToBuffer(buffer_, absl::Span<char>(spill_.data(), copy_count));
+    // TODO(#7958): Consider making the spill buffer a circular buffer and then
+    // we could remove this memmove step.
+    std::memmove(spill_.data(), spill_.data() + copy_count,
+                 spill_.size() - copy_count);
+    spill_offset_ -= copy_count;
+  }
   return copy_count;
 }
 
