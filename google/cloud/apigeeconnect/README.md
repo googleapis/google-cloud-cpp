@@ -9,6 +9,7 @@ The hybrid model includes a management plane hosted by Apigee in the Cloud and
 a runtime plane that you install and manage on one of the
 [supported Kubernetes platforms](https://cloud.google.com/apigee/docs/hybrid/supported-platforms).
 
+<!-- TODO(#7900) - consider the lack of quickstart testing before GA -->
 This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
@@ -43,13 +44,12 @@ this library.
 <!-- inject-quickstart-start -->
 ```cc
 #include "google/cloud/apigeeconnect/connection_client.h"
-#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id endpoint-id\n";
     return 1;
   }
 
@@ -57,8 +57,9 @@ int main(int argc, char* argv[]) try {
   auto client = apigeeconnect::ConnectionServiceClient(
       apigeeconnect::MakeConnectionServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.ListConnections(project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/endpoints/" + argv[2];
+  for (auto r : client.ListConnections(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

@@ -119,10 +119,14 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(apigeeconnect_quickstart)
     add_test(
         NAME apigeeconnect_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:apigeeconnect_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(apigeeconnect_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:apigeeconnect_quickstart> GOOGLE_CLOUD_PROJECT
+            "missing-endpoint")
+    set_tests_properties(
+        apigeeconnect_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Permanent error in ListConnections:")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
