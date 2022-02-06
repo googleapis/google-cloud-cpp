@@ -23,8 +23,7 @@ fi # include guard
 # The name of the project used to run the integration tests and examples.
 export GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
 # Many tests and quickstarts need a location, this is typically a region.
-# TODO(#7936) - prefer GOOGLE_CLOUD_CPP_TEST_REGION
-export GOOGLE_CLOUD_REGION="us-central1"
+export GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
 export GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
 

@@ -130,7 +130,7 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:servicedirectory_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_REGION)
+            GOOGLE_CLOUD_CPP_TEST_REGION)
     set_tests_properties(servicedirectory_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
