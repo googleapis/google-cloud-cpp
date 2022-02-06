@@ -46,7 +46,7 @@ class AsyncPollingLoopImpl
     auto self = shared_from_this();
     auto w = WeakFromThis();
     auto const& options = CurrentOptions();
-    promise_ = promise<StatusOr<Operation>>([w, options] {
+    promise_ = promise<StatusOr<Operation>>([w, options]() mutable {
       if (auto self = w.lock()) {
         OptionsSpan span(std::move(options));
         self->DoCancel();
