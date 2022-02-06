@@ -121,42 +121,44 @@ alternatives.
 ./ci/install-cloud-sdk.sh
 ```
 
-If you use an editor that uses `compile_commands.json` for autocomplete, one
-can generate it with CMake using
-[CMAKE_EXPORT_COMPILE_COMMANDS](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html).
-If you prefer using Bazel, the following steps will generate one for you.
+### (Optional) Enable clang-based tooling in your IDE
 
-First, install Bazelisk:
+Many IDEs use clang for smart code completion, refactoring, etc. To do this,
+clang needs to know how to compile each file. This is commonly done by creating
+a `compile_commands.json` file at the top of the repo, which CMake knows how to
+create for us.
 
-```console
-go get github.com/bazelbuild/bazelisk
-# Alternatively, if you have Go 1.17 or later
-go install github.com/bazelbuild/bazelisk@latest
+For the purposes of clang-tooling, it's best to build all the code and
+dependencies from source so that clangd can find all the symbols and jump you
+to the right spot in the source files. We prefer using `vcpkg` for this, so
+clone the vcpkg repo if you don't already have it checked out somewhere.
+
+```shell
+VCPKG_ROOT=~/vcpkg  # We'll use this later
+git clone https://github.com/microsoft/vcpkg "${VCPKG_ROOT}"
 ```
 
-Add Go binaries to your PATH:
+Next, use CMake with the
+[CMAKE_EXPORT_COMPILE_COMMANDS](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html)
+option to compile the `google-cloud-cpp` code, and tell it to use `vcpkg` to
+build all the dependencies.
 
-```console
-export PATH=$PATH:$(go env GOPATH)/bin
+```shell
+cmake -H. -B.build -GNinja \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  -DCMAKE_TOOLCHAIN_FILE="${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+cmake --build .build
 ```
 
-Name this script `bazel-compile-commands.sh`, add it to `~/.local/bin` and
-`chmod +x` it:
+Finally, symlink the `.build/compile_commands.json` file into the top of the repo.
 
-```console
-#!/bin/bash
-readonly TMP_DIR="$(mktemp -d "/tmp/bazel-compdb-temp-XXXXXXX")"
-trap "rm -rf ${TMP_DIR}" EXIT
-readonly REPO="https://github.com/grailbio/bazel-compilation-database"
-git clone --depth=1 "${REPO}" "${TMP_DIR}"
-CC=clang CXX=clang++ "${TMP_DIR}/generate.sh"
+```shell
+ln -s .build/compile_commands.json .
 ```
 
-Then from the directory where you've cloned `google-cloud-cpp`:
-
-```console
-bazel-compile-commands.sh --sandbox_writable_path=$HOME/.ccache
-```
+Note: It's also possible to create `compile_commands.json` using `bazel`, but
+it's not quite as easy. If you want to do that, take a look at
+https://github.com/grailbio/bazel-compilation-database.
 
 ### Clone and compile `google-cloud-cpp`
 
