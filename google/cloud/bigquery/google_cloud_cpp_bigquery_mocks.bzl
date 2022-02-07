@@ -18,6 +18,7 @@
 
 google_cloud_cpp_bigquery_mocks_hdrs = [
     "mocks/mock_bigquery_read_connection.h",
+    "mocks/mock_connection_connection.h",
 ]
 
 google_cloud_cpp_bigquery_mocks_srcs = [
