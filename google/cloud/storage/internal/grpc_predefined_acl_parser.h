@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_BUCKET_REQUEST_PARSER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_BUCKET_REQUEST_PARSER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_PREDEFINED_ACL_PARSER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_PREDEFINED_ACL_PARSER_H
 
-#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/storage/well_known_parameters.h"
 #include <google/storage/v2/storage.pb.h>
 
 namespace google {
@@ -25,10 +25,17 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/// Convert JSON requests to gRPC requests and gRPC responses to JSON responses
-struct GrpcBucketRequestParser {
-  static google::storage::v2::GetBucketRequest ToProto(
-      GetBucketMetadataRequest const& request);
+/// Convert JSON `predefined*Acl` strings into the proto enum values
+struct GrpcPredefinedAclParser {
+  static google::storage::v2::PredefinedObjectAcl ToProtoObject(
+      PredefinedAcl const& acl);
+  static google::storage::v2::PredefinedObjectAcl ToProtoObject(
+      DestinationPredefinedAcl const& acl);
+  static google::storage::v2::PredefinedObjectAcl ToProtoObject(
+      PredefinedDefaultObjectAcl const& acl);
+
+  static google::storage::v2::PredefinedBucketAcl ToProtoBucket(
+      PredefinedAcl const& acl);
 };
 
 }  // namespace internal
@@ -37,4 +44,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_BUCKET_REQUEST_PARSER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_PREDEFINED_ACL_PARSER_H

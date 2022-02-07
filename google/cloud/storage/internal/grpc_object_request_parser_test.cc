@@ -63,29 +63,6 @@ auto constexpr kText = "The quick brown fox jumps over the lazy dog";
 //     MD5         : 4ad12fa3657faa80c2b9a92d652c3721
 auto constexpr kAlt = "How vexingly quick daft zebras jump!";
 
-TEST(GrpcObjectRequestParser, PredefinedAclObject) {
-  EXPECT_EQ(storage_proto::OBJECT_ACL_AUTHENTICATED_READ,
-            GrpcObjectRequestParser::ToProtoObject(
-                PredefinedAcl::AuthenticatedRead()));
-  EXPECT_EQ(storage_proto::OBJECT_ACL_PRIVATE,
-            GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::Private()));
-  EXPECT_EQ(
-      storage_proto::OBJECT_ACL_PROJECT_PRIVATE,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::ProjectPrivate()));
-  EXPECT_EQ(
-      storage_proto::OBJECT_ACL_PUBLIC_READ,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicRead()));
-  EXPECT_EQ(
-      storage_proto::PREDEFINED_OBJECT_ACL_UNSPECIFIED,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::PublicReadWrite()));
-  EXPECT_EQ(google::storage::v2::OBJECT_ACL_BUCKET_OWNER_FULL_CONTROL,
-            GrpcObjectRequestParser::ToProtoObject(
-                PredefinedAcl::BucketOwnerFullControl()));
-  EXPECT_EQ(
-      google::storage::v2::OBJECT_ACL_BUCKET_OWNER_READ,
-      GrpcObjectRequestParser::ToProtoObject(PredefinedAcl::BucketOwnerRead()));
-}
-
 TEST(GrpcObjectRequestParser, ComposeObjectRequestAllOptions) {
   google::storage::v2::ComposeObjectRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
