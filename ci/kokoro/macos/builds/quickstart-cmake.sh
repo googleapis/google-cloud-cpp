@@ -33,7 +33,7 @@ vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
 VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-curl --retry 3 -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
+curl --retry-all-errors --retry 3 -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"
@@ -46,11 +46,9 @@ curl --retry 3 -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly CREDENTIALS_FILE="${CONFIG_DIR}/kokoro-run-key.json"
-readonly ROOTS_PEM_SOURCE="https://pki.google.com/roots.pem"
 if [[ -r "${CREDENTIALS_FILE}" ]]; then
+  # The driver script (../build.sh) should have downloaded this file.
   if [[ -r "${CONFIG_DIR}/roots.pem" ]]; then
-    run_quickstart="true"
-  elif curl -sSL --retry 10 -o "${CONFIG_DIR}/roots.pem" "${ROOTS_PEM_SOURCE}"; then
     run_quickstart="true"
   fi
 fi
@@ -86,7 +84,6 @@ build_quickstart() {
       args+=("${line}")
     done < <(quickstart::arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
-      "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
       "${binary_dir}/quickstart" "${args[@]}"
   fi
 }
