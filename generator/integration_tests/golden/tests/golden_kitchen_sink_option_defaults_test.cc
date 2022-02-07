@@ -15,7 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gtest/gtest.h>
 #include <memory>
 
@@ -25,7 +25,10 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
+
 TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
+  auto env = ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", absl::nullopt);
   Options options;
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("goldenkitchensink.googleapis.com",
@@ -33,18 +36,42 @@ TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
+  auto env =
+      ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("foo.googleapis.com", updated_options.get<EndpointOption>());
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, OptionEndpoint) {
-  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
+  auto env =
+      ScopedEnvironment("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("bar.googleapis.com", updated_options.get<EndpointOption>());
+}
+
+TEST(GoldenKitchenSinkDefaultOptions, DefaultUserProject) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  Options options;
+  auto updated_options = GoldenKitchenSinkDefaultOptions(options);
+  EXPECT_FALSE(updated_options.has<UserProjectOption>());
+  EXPECT_EQ("", updated_options.get<UserProjectOption>());
+}
+
+TEST(GoldenKitchenSinkDefaultOptions, EnvVarUserProject) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "test-project");
+  Options options;
+  auto updated_options = GoldenKitchenSinkDefaultOptions(options);
+  EXPECT_EQ("test-project", updated_options.get<UserProjectOption>());
+}
+
+TEST(GoldenKitchenSinkDefaultOptions, OptionUserProject) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "test-project");
+  auto options = Options{}.set<UserProjectOption>("another-project");
+  auto updated_options = GoldenKitchenSinkDefaultOptions(options);
+  EXPECT_EQ("another-project", updated_options.get<UserProjectOption>());
 }
 
 }  // namespace

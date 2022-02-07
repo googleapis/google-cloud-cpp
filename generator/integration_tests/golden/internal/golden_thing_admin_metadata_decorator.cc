@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/golden_thing_admin_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -224,6 +225,11 @@ void GoldenThingAdminMetadata::SetMetadata(grpc::ClientContext& context,
 
 void GoldenThingAdminMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata(
+        "x-goog-user-project", options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

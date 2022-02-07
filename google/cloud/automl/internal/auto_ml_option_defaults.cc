@@ -42,6 +42,10 @@ Options AutoMlDefaultOptions(Options options) {
     options.set<EndpointOption>(env && !env->empty() ? *env
                                                      : "automl.googleapis.com");
   }
+  if (!options.has<UserProjectOption>()) {
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
+  }
   if (!options.has<GrpcCredentialOption>()) {
     options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }

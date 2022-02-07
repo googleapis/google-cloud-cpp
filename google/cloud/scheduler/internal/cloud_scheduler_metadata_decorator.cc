@@ -17,6 +17,7 @@
 // source: google/cloud/scheduler/v1/cloudscheduler.proto
 
 #include "google/cloud/scheduler/internal/cloud_scheduler_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
@@ -98,6 +99,11 @@ void CloudSchedulerMetadata::SetMetadata(grpc::ClientContext& context,
 
 void CloudSchedulerMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

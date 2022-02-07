@@ -181,6 +181,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes({vars("metadata_header_path"),
                    "google/cloud/internal/api_client_header.h",
+                   "google/cloud/common_options.h",
                    "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
@@ -342,6 +343,11 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 
 void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata(
+        "x-goog-user-project", options.get<UserProjectOption>());
+  }
 }
 )""");
 

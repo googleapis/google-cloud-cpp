@@ -39,7 +39,12 @@ auto constexpr kBackoffScaling = 2.0;
 Options GoldenThingAdminDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env : "test.googleapis.com");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "test.googleapis.com");
+  }
+  if (!options.has<UserProjectOption>()) {
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
   }
   if (auto emulator = internal::GetEnv("GOLDEN_KITCHEN_SINK_EMULATOR_HOST")) {
     options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(

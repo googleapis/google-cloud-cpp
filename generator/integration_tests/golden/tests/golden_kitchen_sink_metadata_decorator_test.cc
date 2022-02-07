@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -36,7 +37,10 @@ using ::google::test::admin::database::v1::TailLogEntriesRequest;
 using ::google::test::admin::database::v1::TailLogEntriesResponse;
 using ::google::test::admin::database::v1::WriteObjectRequest;
 using ::google::test::admin::database::v1::WriteObjectResponse;
+using ::testing::_;
+using ::testing::Contains;
 using ::testing::Not;
+using ::testing::Pair;
 using ::testing::Return;
 
 class MetadataDecoratorTest : public ::testing::Test {
@@ -54,6 +58,47 @@ class MetadataDecoratorTest : public ::testing::Test {
   std::shared_ptr<MockGoldenKitchenSinkStub> mock_;
   std::string expected_api_client_header_;
 };
+
+/// Verify the x-goog-user-project metadata is set.
+TEST_F(MetadataDecoratorTest, UserProject) {
+  // We do this for a single RPC, we are using some knowledge of the
+  // implementation to assert that this is enough.
+  EXPECT_CALL(*mock_, GenerateAccessToken)
+      .WillOnce([](grpc::ClientContext& context,
+                   google::test::admin::database::v1::
+                       GenerateAccessTokenRequest const&) {
+        auto metadata = testing_util::GetMetadata(context);
+        EXPECT_THAT(metadata, Not(Contains(Pair("x-goog-user-project", _))));
+        return TransientError();
+      })
+      .WillOnce([](grpc::ClientContext& context,
+                   google::test::admin::database::v1::
+                       GenerateAccessTokenRequest const&) {
+        auto metadata = testing_util::GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    Contains(Pair("x-goog-user-project", "test-user-project")));
+        return TransientError();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  // First try without any UserProjectOption
+  {
+    internal::OptionsSpan span(Options{});
+    grpc::ClientContext context;
+    google::test::admin::database::v1::GenerateAccessTokenRequest request;
+    auto status = stub.GenerateAccessToken(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+  // Then try with a UserProjectOption
+  {
+    internal::OptionsSpan span(
+        Options{}.set<UserProjectOption>("test-user-project"));
+    grpc::ClientContext context;
+    google::test::admin::database::v1::GenerateAccessTokenRequest request;
+    auto status = stub.GenerateAccessToken(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+}
 
 TEST_F(MetadataDecoratorTest, GenerateAccessToken) {
   EXPECT_CALL(*mock_, GenerateAccessToken)

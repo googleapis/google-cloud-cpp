@@ -17,6 +17,7 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/services_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -90,6 +91,11 @@ void ServicesMetadata::SetMetadata(grpc::ClientContext& context,
 
 void ServicesMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

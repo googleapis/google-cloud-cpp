@@ -17,6 +17,7 @@
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
 #include "google/cloud/monitoring/internal/metrics_scopes_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/metricsscope/v1/metrics_scopes.grpc.pb.h>
@@ -97,6 +98,11 @@ void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context,
 
 void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,6 +17,7 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/internal/certificate_authority_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/security/privateca/v1/service.grpc.pb.h>
@@ -350,6 +351,11 @@ void CertificateAuthorityServiceMetadata::SetMetadata(
 void CertificateAuthorityServiceMetadata::SetMetadata(
     grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

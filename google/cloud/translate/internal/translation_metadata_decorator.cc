@@ -17,6 +17,7 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/internal/translation_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/translate/v3/translation_service.grpc.pb.h>
@@ -144,6 +145,11 @@ void TranslationServiceMetadata::SetMetadata(
 
 void TranslationServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

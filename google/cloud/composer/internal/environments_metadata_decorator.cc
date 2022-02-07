@@ -17,6 +17,7 @@
 // source: google/cloud/orchestration/airflow/service/v1/environments.proto
 
 #include "google/cloud/composer/internal/environments_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
@@ -107,6 +108,11 @@ void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context,
 
 void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

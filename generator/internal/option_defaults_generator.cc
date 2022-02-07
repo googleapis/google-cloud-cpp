@@ -92,12 +92,19 @@ Status OptionDefaultsGenerator::GenerateCc() {
   //  clang-format on
 
   CcPrint(  // clang-format off
-  {{"\n"
-    "Options $service_name$DefaultOptions(Options options) {\n"
-    "  if (!options.has<EndpointOption>()) {\n"
-    "    auto env = internal::GetEnv(\"$service_endpoint_env_var$\");\n"
-    "    options.set<EndpointOption>(env && !env->empty() ? *env : \"$service_endpoint$\");\n"
-    "  }\n"},
+  {{R"""(
+Options $service_name$DefaultOptions(Options options) {
+  if (!options.has<EndpointOption>()) {
+    auto env = internal::GetEnv("$service_endpoint_env_var$");
+    options.set<EndpointOption>(
+        env && !env->empty() ? *env : "$service_endpoint$");
+  }
+  if (!options.has<UserProjectOption>()) {
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
+  }
+)"""
+    },
    {[this]{return vars("emulator_endpoint_env_var").empty();}, "",
     "  if (auto emulator = internal::GetEnv(\"$emulator_endpoint_env_var$\")) {\n"
     "    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(\n"
