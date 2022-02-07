@@ -18,6 +18,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/functional/function_ref.h"
 #include <chrono>
 #include <string>
 #include <utility>
@@ -37,51 +38,39 @@ class RefreshingCredentialsWrapper {
     std::chrono::system_clock::time_point expiration_time;
   };
 
-  template <typename RefreshFunctor>
+  using RefreshFunctor = absl::FunctionRef<
+      StatusOr<RefreshingCredentialsWrapper::TemporaryToken>()>;
+
+  /**
+   * Returns an Authorization header obtained by invoking `refresh_fn`.
+   *
+   * Depending on the expiration of the currently held token, `refresh_fn` may
+   * or may not be called.
+   */
   StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
       std::chrono::system_clock::time_point now,
-      RefreshFunctor refresh_fn) const {
-    if (IsValid(now)) {
-      return temporary_token_.token;
-    }
+      RefreshFunctor refresh_fn) const;
 
-    // If successful refreshing token, return it. Otherwise, return the current
-    // token if it still has time left on it. If no valid token can be returned,
-    // return the status of the refresh failure.
-    StatusOr<TemporaryToken> new_token = refresh_fn();
-    if (new_token) {
-      temporary_token_ = *std::move(new_token);
-      return temporary_token_.token;
-    }
-    if (IsExpiringButValid(now)) {
-      return temporary_token_.token;
-    }
-    return new_token.status();
-  }
+  /**
+   * Returns whether the current access token should be considered valid.
+   */
+  bool IsValid(std::chrono::system_clock::time_point now) const;
 
+ private:
   /**
    * Returns whether the current access token should be considered expired.
    *
-   * When determining if a Credentials object needs to be refreshed, the IsValid
-   * method should be used instead; there may be cases where a Credentials is
-   * not expired but should be considered invalid.
+   * When determining if a Credentials object needs to be refreshed, the
+   * NeedsRefresh method should be used instead; there may be cases where a
+   * Credentials is not expired but should be refreshed.
    *
    * If a Credentials is close to expiration but not quite expired, this method
    * may still return false. This helps prevent the case where an access token
    * expires between when it is obtained and when it is used.
    */
   bool IsExpired(std::chrono::system_clock::time_point now) const;
+  bool NeedsRefresh(std::chrono::system_clock::time_point now) const;
 
-  /**
-   * Returns whether the current access token should be considered valid.
-   *
-   * This method should be used to determine whether a Credentials object needs
-   * to be refreshed.
-   */
-  bool IsValid(std::chrono::system_clock::time_point now) const;
-
- private:
-  bool IsExpiringButValid(std::chrono::system_clock::time_point now) const;
   mutable TemporaryToken temporary_token_;
 };
 

@@ -28,13 +28,31 @@ bool RefreshingCredentialsWrapper::IsExpired(
 
 bool RefreshingCredentialsWrapper::IsValid(
     std::chrono::system_clock::time_point now) const {
-  return !temporary_token_.token.second.empty() && !IsExpired(now);
+  return !temporary_token_.token.second.empty() &&
+         now <= temporary_token_.expiration_time;
 }
 
-bool RefreshingCredentialsWrapper::IsExpiringButValid(
+bool RefreshingCredentialsWrapper::NeedsRefresh(
     std::chrono::system_clock::time_point now) const {
-  return IsExpired(now) && !temporary_token_.token.second.empty() &&
-         now <= temporary_token_.expiration_time;
+  return temporary_token_.token.second.empty() || IsExpired(now);
+}
+
+StatusOr<std::pair<std::string, std::string>>
+RefreshingCredentialsWrapper::AuthorizationHeader(
+    std::chrono::system_clock::time_point now,
+    RefreshFunctor refresh_fn) const {
+  if (!NeedsRefresh(now)) return temporary_token_.token;
+
+  // If successful refreshing token, return it. Otherwise, return the current
+  // token if it still has time left on it. If no valid token can be returned,
+  // return the status of the refresh failure.
+  auto new_token = refresh_fn();
+  if (new_token) {
+    temporary_token_ = *std::move(new_token);
+    return temporary_token_.token;
+  }
+  if (IsValid(std::chrono::system_clock::now())) return temporary_token_.token;
+  return new_token.status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
