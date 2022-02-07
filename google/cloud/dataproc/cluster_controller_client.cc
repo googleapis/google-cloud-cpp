@@ -26,20 +26,18 @@ namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterControllerClient::ClusterControllerClient(
-    std::shared_ptr<ClusterControllerConnection> connection, Options options)
+    std::shared_ptr<ClusterControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dataproc_internal::ClusterControllerDefaultOptions(
-              connection_->options()))) {}
+          std::move(opts), dataproc_internal::ClusterControllerDefaultOptions(
+                               connection_->options()))) {}
 ClusterControllerClient::~ClusterControllerClient() = default;
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::CreateCluster(
     std::string const& project_id, std::string const& region,
-    google::cloud::dataproc::v1::Cluster const& cluster, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::Cluster const& cluster, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateClusterRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -50,9 +48,8 @@ ClusterControllerClient::CreateCluster(
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::CreateCluster(
     google::cloud::dataproc::v1::CreateClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(request);
 }
 
@@ -61,9 +58,8 @@ ClusterControllerClient::UpdateCluster(
     std::string const& project_id, std::string const& region,
     std::string const& cluster_name,
     google::cloud::dataproc::v1::Cluster const& cluster,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::UpdateClusterRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -76,27 +72,24 @@ ClusterControllerClient::UpdateCluster(
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::StopCluster(
     google::cloud::dataproc::v1::StopClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopCluster(request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartCluster(request);
 }
 
@@ -104,9 +97,8 @@ future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerClient::DeleteCluster(std::string const& project_id,
                                        std::string const& region,
                                        std::string const& cluster_name,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteClusterRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -117,9 +109,8 @@ ClusterControllerClient::DeleteCluster(std::string const& project_id,
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerClient::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(request);
 }
 
@@ -127,9 +118,8 @@ StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerClient::GetCluster(std::string const& project_id,
                                     std::string const& region,
                                     std::string const& cluster_name,
-                                    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::GetClusterRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -140,18 +130,15 @@ ClusterControllerClient::GetCluster(std::string const& project_id,
 StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerClient::GetCluster(
     google::cloud::dataproc::v1::GetClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCluster(request);
 }
 
 StreamRange<google::cloud::dataproc::v1::Cluster>
 ClusterControllerClient::ListClusters(std::string const& project_id,
-                                      std::string const& region,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                      std::string const& region, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListClustersRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -161,10 +148,8 @@ ClusterControllerClient::ListClusters(std::string const& project_id,
 StreamRange<google::cloud::dataproc::v1::Cluster>
 ClusterControllerClient::ListClusters(std::string const& project_id,
                                       std::string const& region,
-                                      std::string const& filter,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                      std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListClustersRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -174,9 +159,8 @@ ClusterControllerClient::ListClusters(std::string const& project_id,
 
 StreamRange<google::cloud::dataproc::v1::Cluster>
 ClusterControllerClient::ListClusters(
-    google::cloud::dataproc::v1::ListClustersRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::ListClustersRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListClusters(std::move(request));
 }
 
@@ -184,9 +168,8 @@ future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerClient::DiagnoseCluster(std::string const& project_id,
                                          std::string const& region,
                                          std::string const& cluster_name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DiagnoseClusterRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -197,9 +180,8 @@ ClusterControllerClient::DiagnoseCluster(std::string const& project_id,
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerClient::DiagnoseCluster(
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiagnoseCluster(request);
 }
 

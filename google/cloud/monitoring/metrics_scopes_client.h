@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MetricsScopesClient {
  public:
   explicit MetricsScopesClient(
-      std::shared_ptr<MetricsScopesConnection> connection,
-      Options options = {});
+      std::shared_ptr<MetricsScopesConnection> connection, Options opts = {});
   ~MetricsScopesClient();
 
   //@{
@@ -93,7 +92,8 @@ class MetricsScopesClient {
   /// @param name  Required. The resource name of the `Metrics Scope`.
   ///  Example:
   ///  `locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::metricsscope::v1::MetricsScope,google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
   ///
@@ -103,14 +103,15 @@ class MetricsScopesClient {
   /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
   ///
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns a specific `Metrics Scope`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::metricsscope::v1::GetMetricsScopeRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L90}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::metricsscope::v1::MetricsScope,google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
   ///
@@ -122,7 +123,7 @@ class MetricsScopesClient {
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns a list of every `Metrics Scope` that a specific `MonitoredProject`
@@ -131,7 +132,8 @@ class MetricsScopesClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L103}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse,google/monitoring/metricsscope/v1/metrics_scopes.proto#L111}
   ///
@@ -145,7 +147,7 @@ class MetricsScopesClient {
   ListMetricsScopesByMonitoredProject(
       google::monitoring::metricsscope::v1::
           ListMetricsScopesByMonitoredProjectRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Adds a `MonitoredProject` with the given project ID
@@ -161,7 +163,8 @@ class MetricsScopesClient {
   ///  Specify only the `monitored_project.name` field. All other fields are
   ///  ignored. The `monitored_project.name` must be in the format:
   ///  `locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects/{MONITORED_PROJECT_ID_OR_NUMBER}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::metricsscope::v1::MonitoredProject,google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
   ///
@@ -175,7 +178,7 @@ class MetricsScopesClient {
       std::string const& parent,
       google::monitoring::metricsscope::v1::MonitoredProject const&
           monitored_project,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Adds a `MonitoredProject` with the given project ID
@@ -183,7 +186,8 @@ class MetricsScopesClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L118}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::metricsscope::v1::MonitoredProject,google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
   ///
@@ -196,7 +200,7 @@ class MetricsScopesClient {
   CreateMonitoredProject(
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a `MonitoredProject` from the specified `Metrics Scope`.
@@ -207,7 +211,8 @@ class MetricsScopesClient {
   ///  Authorization requires the following [Google
   ///  IAM](https://cloud.google.com/iam) permissions on both the `Metrics
   ///  Scope` and on the `MonitoredProject`: `monitoring.metricsScopes.link`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::metricsscope::v1::OperationMetadata,google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
   ///
@@ -217,14 +222,15 @@ class MetricsScopesClient {
   /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
   ///
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(std::string const& name, Options options = {});
+  DeleteMonitoredProject(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a `MonitoredProject` from the specified `Metrics Scope`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L138}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::metricsscope::v1::OperationMetadata,google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
   ///
@@ -237,7 +243,7 @@ class MetricsScopesClient {
   DeleteMonitoredProject(
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<MetricsScopesConnection> connection_;

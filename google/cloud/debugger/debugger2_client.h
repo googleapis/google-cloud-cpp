@@ -72,7 +72,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Debugger2Client {
  public:
   explicit Debugger2Client(std::shared_ptr<Debugger2Connection> connection,
-                           Options options = {});
+                           Options opts = {});
   ~Debugger2Client();
 
   //@{
@@ -102,7 +102,8 @@ class Debugger2Client {
   ///  The field `location` of the breakpoint must be set.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::SetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L109}
   ///
@@ -115,14 +116,15 @@ class Debugger2Client {
   SetBreakpoint(
       std::string const& debuggee_id,
       google::devtools::clouddebugger::v2::Breakpoint const& breakpoint,
-      std::string const& client_version, Options options = {});
+      std::string const& client_version, Options opts = {});
 
   ///
   /// Sets the breakpoint to the debuggee.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::SetBreakpointRequest,google/devtools/clouddebugger/v2/debugger.proto#L95}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::SetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L109}
   ///
@@ -134,7 +136,7 @@ class Debugger2Client {
   StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
   SetBreakpoint(
       google::devtools::clouddebugger::v2::SetBreakpointRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets breakpoint information.
@@ -143,7 +145,8 @@ class Debugger2Client {
   /// @param breakpoint_id  Required. ID of the breakpoint to get.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::GetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L129}
   ///
@@ -155,14 +158,15 @@ class Debugger2Client {
   StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
   GetBreakpoint(std::string const& debuggee_id,
                 std::string const& breakpoint_id,
-                std::string const& client_version, Options options = {});
+                std::string const& client_version, Options opts = {});
 
   ///
   /// Gets breakpoint information.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::GetBreakpointRequest,google/devtools/clouddebugger/v2/debugger.proto#L116}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::GetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L129}
   ///
@@ -174,7 +178,7 @@ class Debugger2Client {
   StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
   GetBreakpoint(
       google::devtools::clouddebugger::v2::GetBreakpointRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the breakpoint from the debuggee.
@@ -184,22 +188,23 @@ class Debugger2Client {
   /// @param breakpoint_id  Required. ID of the breakpoint to delete.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.devtools.clouddebugger.v2.DeleteBreakpointRequest]:
   /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L136}
   ///
   Status DeleteBreakpoint(std::string const& debuggee_id,
                           std::string const& breakpoint_id,
-                          std::string const& client_version,
-                          Options options = {});
+                          std::string const& client_version, Options opts = {});
 
   ///
   /// Deletes the breakpoint from the debuggee.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::DeleteBreakpointRequest,google/devtools/clouddebugger/v2/debugger.proto#L136}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.devtools.clouddebugger.v2.DeleteBreakpointRequest]:
   /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L136}
@@ -207,7 +212,7 @@ class Debugger2Client {
   Status DeleteBreakpoint(
       google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all breakpoints for the debuggee.
@@ -216,7 +221,8 @@ class Debugger2Client {
   /// list.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListBreakpointsResponse,google/devtools/clouddebugger/v2/debugger.proto#L188}
   ///
@@ -227,14 +233,15 @@ class Debugger2Client {
   ///
   StatusOr<google::devtools::clouddebugger::v2::ListBreakpointsResponse>
   ListBreakpoints(std::string const& debuggee_id,
-                  std::string const& client_version, Options options = {});
+                  std::string const& client_version, Options opts = {});
 
   ///
   /// Lists all breakpoints for the debuggee.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListBreakpointsRequest,google/devtools/clouddebugger/v2/debugger.proto#L149}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListBreakpointsResponse,google/devtools/clouddebugger/v2/debugger.proto#L188}
   ///
@@ -247,7 +254,7 @@ class Debugger2Client {
   ListBreakpoints(
       google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all the debuggees that the user has access to.
@@ -256,7 +263,8 @@ class Debugger2Client {
   /// debuggees to list.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListDebuggeesResponse,google/devtools/clouddebugger/v2/debugger.proto#L215}
   ///
@@ -267,14 +275,15 @@ class Debugger2Client {
   ///
   StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
   ListDebuggees(std::string const& project, std::string const& client_version,
-                Options options = {});
+                Options opts = {});
 
   ///
   /// Lists all the debuggees that the user has access to.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListDebuggeesRequest,google/devtools/clouddebugger/v2/debugger.proto#L201}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListDebuggeesResponse,google/devtools/clouddebugger/v2/debugger.proto#L215}
   ///
@@ -286,7 +295,7 @@ class Debugger2Client {
   StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
   ListDebuggees(
       google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<Debugger2Connection> connection_;

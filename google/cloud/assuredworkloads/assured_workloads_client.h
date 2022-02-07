@@ -64,7 +64,7 @@ class AssuredWorkloadsServiceClient {
  public:
   explicit AssuredWorkloadsServiceClient(
       std::shared_ptr<AssuredWorkloadsServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~AssuredWorkloadsServiceClient();
 
   //@{
@@ -95,7 +95,8 @@ class AssuredWorkloadsServiceClient {
   /// @param parent  Required. The resource name of the new Workload's parent.
   ///  Must be of the form `organizations/{org_id}/locations/{location_id}`.
   /// @param workload  Required. Assured Workload to create
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -107,14 +108,15 @@ class AssuredWorkloadsServiceClient {
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(std::string const& parent,
                  google::cloud::assuredworkloads::v1::Workload const& workload,
-                 Options options = {});
+                 Options opts = {});
 
   ///
   /// Creates Assured Workload.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::assuredworkloads::v1::CreateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L101}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -126,7 +128,7 @@ class AssuredWorkloadsServiceClient {
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an existing workload.
@@ -139,7 +141,8 @@ class AssuredWorkloadsServiceClient {
   ///  updated. Format:
   ///  organizations/{org_id}/locations/{location_id}/workloads/{workload_id}
   /// @param update_mask  Required. The list of fields to be updated.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -150,7 +153,7 @@ class AssuredWorkloadsServiceClient {
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::Workload const& workload,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates an existing workload.
@@ -160,7 +163,8 @@ class AssuredWorkloadsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::assuredworkloads::v1::UpdateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L122}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -171,7 +175,7 @@ class AssuredWorkloadsServiceClient {
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the workload. Make sure that workload's direct children are
@@ -181,12 +185,13 @@ class AssuredWorkloadsServiceClient {
   /// @param name  Required. The `name` field is used to identify the workload.
   ///  Format:
   ///  organizations/{org_id}/locations/{location_id}/workloads/{workload_id}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
   /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
   ///
-  Status DeleteWorkload(std::string const& name, Options options = {});
+  Status DeleteWorkload(std::string const& name, Options opts = {});
 
   ///
   /// Deletes the workload. Make sure that workload's direct children are
@@ -195,14 +200,15 @@ class AssuredWorkloadsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::assuredworkloads::v1::DeleteWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
   /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L135}
   ///
   Status DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets Assured Workload associated with a CRM Node
@@ -213,7 +219,8 @@ class AssuredWorkloadsServiceClient {
   ///  "organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}".
   ///  For example,
   ///  "organizations/123/locations/us-east1/workloads/assured-workload-1".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -223,14 +230,15 @@ class AssuredWorkloadsServiceClient {
   /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets Assured Workload associated with a CRM Node
   ///
   /// @param request
   /// @googleapis_link{google::cloud::assuredworkloads::v1::GetWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L152}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -241,14 +249,15 @@ class AssuredWorkloadsServiceClient {
   ///
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
       google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists Assured Workloads under a CRM Node.
   ///
   /// @param parent  Required. Parent Resource to list workloads from.
   ///  Must be of the form `organizations/{org_id}/locations/{location}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -258,14 +267,15 @@ class AssuredWorkloadsServiceClient {
   /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Assured Workloads under a CRM Node.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::assuredworkloads::v1::ListWorkloadsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L167}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L201}
   ///
@@ -276,7 +286,7 @@ class AssuredWorkloadsServiceClient {
   ///
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AssuredWorkloadsServiceConnection> connection_;

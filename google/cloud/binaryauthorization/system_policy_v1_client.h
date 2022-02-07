@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SystemPolicyV1Client {
  public:
   explicit SystemPolicyV1Client(
-      std::shared_ptr<SystemPolicyV1Connection> connection,
-      Options options = {});
+      std::shared_ptr<SystemPolicyV1Connection> connection, Options opts = {});
   ~SystemPolicyV1Client();
 
   //@{
@@ -92,7 +91,8 @@ class SystemPolicyV1Client {
   /// @param name  Required. The resource name, in the format
   /// `locations/*/policy`.
   ///  Note that the system policy is not associated with a project.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
@@ -102,14 +102,15 @@ class SystemPolicyV1Client {
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the current system policy in the specified location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::GetSystemPolicyRequest,google/cloud/binaryauthorization/v1/service.proto#L258}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
@@ -121,7 +122,7 @@ class SystemPolicyV1Client {
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<SystemPolicyV1Connection> connection_;

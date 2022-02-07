@@ -26,19 +26,18 @@ namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoMlClient::AutoMlClient(std::shared_ptr<AutoMlConnection> connection,
-                           Options options)
+                           Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           automl_internal::AutoMlDefaultOptions(connection_->options()))) {}
 AutoMlClient::~AutoMlClient() = default;
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlClient::CreateDataset(std::string const& parent,
                             google::cloud::automl::v1::Dataset const& dataset,
-                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::CreateDatasetRequest request;
   request.set_parent(parent);
   *request.mutable_dataset() = dataset;
@@ -48,50 +47,43 @@ AutoMlClient::CreateDataset(std::string const& parent,
 future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlClient::CreateDataset(
     google::cloud::automl::v1::CreateDatasetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::GetDataset(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::GetDatasetRequest request;
   request.set_name(name);
   return connection_->GetDataset(request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::GetDataset(
-    google::cloud::automl::v1::GetDatasetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::GetDatasetRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataset(request);
 }
 
 StreamRange<google::cloud::automl::v1::Dataset> AutoMlClient::ListDatasets(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ListDatasetsRequest request;
   request.set_parent(parent);
   return connection_->ListDatasets(request);
 }
 
 StreamRange<google::cloud::automl::v1::Dataset> AutoMlClient::ListDatasets(
-    google::cloud::automl::v1::ListDatasetsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::ListDatasetsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatasets(std::move(request));
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::UpdateDataset(
     google::cloud::automl::v1::Dataset const& dataset,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::UpdateDatasetRequest request;
   *request.mutable_dataset() = dataset;
   *request.mutable_update_mask() = update_mask;
@@ -100,16 +92,14 @@ StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::UpdateDataset(
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::UpdateDataset(
     google::cloud::automl::v1::UpdateDatasetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataset(request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteDataset(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+AutoMlClient::DeleteDataset(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeleteDatasetRequest request;
   request.set_name(name);
   return connection_->DeleteDataset(request);
@@ -118,19 +108,16 @@ AutoMlClient::DeleteDataset(std::string const& name, Options options) {
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::DeleteDataset(
     google::cloud::automl::v1::DeleteDatasetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::ImportData(
     std::string const& name,
-    google::cloud::automl::v1::InputConfig const& input_config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::InputConfig const& input_config, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ImportDataRequest request;
   request.set_name(name);
   *request.mutable_input_config() = input_config;
@@ -139,10 +126,8 @@ AutoMlClient::ImportData(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::ImportData(
-    google::cloud::automl::v1::ImportDataRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::ImportDataRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(request);
 }
 
@@ -150,9 +135,8 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::ExportData(
     std::string const& name,
     google::cloud::automl::v1::OutputConfig const& output_config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ExportDataRequest request;
   request.set_name(name);
   *request.mutable_output_config() = output_config;
@@ -161,17 +145,14 @@ AutoMlClient::ExportData(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::ExportData(
-    google::cloud::automl::v1::ExportDataRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::ExportDataRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(request);
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
-AutoMlClient::GetAnnotationSpec(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+AutoMlClient::GetAnnotationSpec(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::GetAnnotationSpecRequest request;
   request.set_name(name);
   return connection_->GetAnnotationSpec(request);
@@ -180,17 +161,15 @@ AutoMlClient::GetAnnotationSpec(std::string const& name, Options options) {
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 AutoMlClient::GetAnnotationSpec(
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAnnotationSpec(request);
 }
 
 future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
     std::string const& parent, google::cloud::automl::v1::Model const& model,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::CreateModelRequest request;
   request.set_parent(parent);
   *request.mutable_model() = model;
@@ -199,49 +178,42 @@ future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
 
 future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
     google::cloud::automl::v1::CreateModelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlClient::GetModel(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::GetModelRequest request;
   request.set_name(name);
   return connection_->GetModel(request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlClient::GetModel(
-    google::cloud::automl::v1::GetModelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::GetModelRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModel(request);
 }
 
 StreamRange<google::cloud::automl::v1::Model> AutoMlClient::ListModels(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ListModelsRequest request;
   request.set_parent(parent);
   return connection_->ListModels(request);
 }
 
 StreamRange<google::cloud::automl::v1::Model> AutoMlClient::ListModels(
-    google::cloud::automl::v1::ListModelsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::ListModelsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModels(std::move(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteModel(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+AutoMlClient::DeleteModel(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeleteModelRequest request;
   request.set_name(name);
   return connection_->DeleteModel(request);
@@ -250,17 +222,15 @@ AutoMlClient::DeleteModel(std::string const& name, Options options) {
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::DeleteModel(
     google::cloud::automl::v1::DeleteModelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlClient::UpdateModel(
     google::cloud::automl::v1::Model const& model,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::UpdateModelRequest request;
   *request.mutable_model() = model;
   *request.mutable_update_mask() = update_mask;
@@ -269,16 +239,14 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlClient::UpdateModel(
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlClient::UpdateModel(
     google::cloud::automl::v1::UpdateModelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModel(request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeployModel(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+AutoMlClient::DeployModel(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeployModelRequest request;
   request.set_name(name);
   return connection_->DeployModel(request);
@@ -287,16 +255,14 @@ AutoMlClient::DeployModel(std::string const& name, Options options) {
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::DeployModel(
     google::cloud::automl::v1::DeployModelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeployModel(request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::UndeployModel(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+AutoMlClient::UndeployModel(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::UndeployModelRequest request;
   request.set_name(name);
   return connection_->UndeployModel(request);
@@ -305,9 +271,8 @@ AutoMlClient::UndeployModel(std::string const& name, Options options) {
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::UndeployModel(
     google::cloud::automl::v1::UndeployModelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeployModel(request);
 }
 
@@ -315,9 +280,8 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::ExportModel(
     std::string const& name,
     google::cloud::automl::v1::ModelExportOutputConfig const& output_config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ExportModelRequest request;
   request.set_name(name);
   *request.mutable_output_config() = output_config;
@@ -327,16 +291,14 @@ AutoMlClient::ExportModel(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlClient::ExportModel(
     google::cloud::automl::v1::ExportModelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(request);
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
-AutoMlClient::GetModelEvaluation(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+AutoMlClient::GetModelEvaluation(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::GetModelEvaluationRequest request;
   request.set_name(name);
   return connection_->GetModelEvaluation(request);
@@ -345,17 +307,15 @@ AutoMlClient::GetModelEvaluation(std::string const& name, Options options) {
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 AutoMlClient::GetModelEvaluation(
     google::cloud::automl::v1::GetModelEvaluationRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModelEvaluation(request);
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
 AutoMlClient::ListModelEvaluations(std::string const& parent,
-                                   std::string const& filter, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                   std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ListModelEvaluationsRequest request;
   request.set_parent(parent);
   request.set_filter(filter);
@@ -365,9 +325,8 @@ AutoMlClient::ListModelEvaluations(std::string const& parent,
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
 AutoMlClient::ListModelEvaluations(
     google::cloud::automl::v1::ListModelEvaluationsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModelEvaluations(std::move(request));
 }
 

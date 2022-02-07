@@ -26,11 +26,10 @@ namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuthorizedCertificatesClient::AuthorizedCertificatesClient(
-    std::shared_ptr<AuthorizedCertificatesConnection> connection,
-    Options options)
+    std::shared_ptr<AuthorizedCertificatesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           appengine_internal::AuthorizedCertificatesDefaultOptions(
               connection_->options()))) {}
 AuthorizedCertificatesClient::~AuthorizedCertificatesClient() = default;
@@ -38,44 +37,39 @@ AuthorizedCertificatesClient::~AuthorizedCertificatesClient() = default;
 StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesClient::ListAuthorizedCertificates(
     google::appengine::v1::ListAuthorizedCertificatesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAuthorizedCertificates(std::move(request));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesClient::GetAuthorizedCertificate(
     google::appengine::v1::GetAuthorizedCertificateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAuthorizedCertificate(request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesClient::CreateAuthorizedCertificate(
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAuthorizedCertificate(request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesClient::UpdateAuthorizedCertificate(
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAuthorizedCertificate(request);
 }
 
 Status AuthorizedCertificatesClient::DeleteAuthorizedCertificate(
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAuthorizedCertificate(request);
 }
 

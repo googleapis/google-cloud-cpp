@@ -26,19 +26,18 @@ namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceClient::LanguageServiceClient(
-    std::shared_ptr<LanguageServiceConnection> connection, Options options)
+    std::shared_ptr<LanguageServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), language_internal::LanguageServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), language_internal::LanguageServiceDefaultOptions(
+                               connection_->options()))) {}
 LanguageServiceClient::~LanguageServiceClient() = default;
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceClient::AnalyzeSentiment(
     google::cloud::language::v1::Document const& document,
-    google::cloud::language::v1::EncodingType encoding_type, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::EncodingType encoding_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeSentimentRequest request;
   *request.mutable_document() = document;
   request.set_encoding_type(encoding_type);
@@ -47,9 +46,8 @@ LanguageServiceClient::AnalyzeSentiment(
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceClient::AnalyzeSentiment(
-    google::cloud::language::v1::Document const& document, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::Document const& document, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeSentimentRequest request;
   *request.mutable_document() = document;
   return connection_->AnalyzeSentiment(request);
@@ -58,18 +56,16 @@ LanguageServiceClient::AnalyzeSentiment(
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceClient::AnalyzeSentiment(
     google::cloud::language::v1::AnalyzeSentimentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeSentiment(request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 LanguageServiceClient::AnalyzeEntities(
     google::cloud::language::v1::Document const& document,
-    google::cloud::language::v1::EncodingType encoding_type, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::EncodingType encoding_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeEntitiesRequest request;
   *request.mutable_document() = document;
   request.set_encoding_type(encoding_type);
@@ -78,9 +74,8 @@ LanguageServiceClient::AnalyzeEntities(
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 LanguageServiceClient::AnalyzeEntities(
-    google::cloud::language::v1::Document const& document, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::Document const& document, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeEntitiesRequest request;
   *request.mutable_document() = document;
   return connection_->AnalyzeEntities(request);
@@ -89,18 +84,16 @@ LanguageServiceClient::AnalyzeEntities(
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 LanguageServiceClient::AnalyzeEntities(
     google::cloud::language::v1::AnalyzeEntitiesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeEntities(request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 LanguageServiceClient::AnalyzeEntitySentiment(
     google::cloud::language::v1::Document const& document,
-    google::cloud::language::v1::EncodingType encoding_type, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::EncodingType encoding_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeEntitySentimentRequest request;
   *request.mutable_document() = document;
   request.set_encoding_type(encoding_type);
@@ -109,9 +102,8 @@ LanguageServiceClient::AnalyzeEntitySentiment(
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 LanguageServiceClient::AnalyzeEntitySentiment(
-    google::cloud::language::v1::Document const& document, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::Document const& document, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeEntitySentimentRequest request;
   *request.mutable_document() = document;
   return connection_->AnalyzeEntitySentiment(request);
@@ -120,18 +112,16 @@ LanguageServiceClient::AnalyzeEntitySentiment(
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 LanguageServiceClient::AnalyzeEntitySentiment(
     google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeEntitySentiment(request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 LanguageServiceClient::AnalyzeSyntax(
     google::cloud::language::v1::Document const& document,
-    google::cloud::language::v1::EncodingType encoding_type, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::EncodingType encoding_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeSyntaxRequest request;
   *request.mutable_document() = document;
   request.set_encoding_type(encoding_type);
@@ -140,9 +130,8 @@ LanguageServiceClient::AnalyzeSyntax(
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 LanguageServiceClient::AnalyzeSyntax(
-    google::cloud::language::v1::Document const& document, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::Document const& document, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnalyzeSyntaxRequest request;
   *request.mutable_document() = document;
   return connection_->AnalyzeSyntax(request);
@@ -151,17 +140,15 @@ LanguageServiceClient::AnalyzeSyntax(
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 LanguageServiceClient::AnalyzeSyntax(
     google::cloud::language::v1::AnalyzeSyntaxRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeSyntax(request);
 }
 
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
 LanguageServiceClient::ClassifyText(
-    google::cloud::language::v1::Document const& document, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::Document const& document, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::ClassifyTextRequest request;
   *request.mutable_document() = document;
   return connection_->ClassifyText(request);
@@ -170,9 +157,8 @@ LanguageServiceClient::ClassifyText(
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
 LanguageServiceClient::ClassifyText(
     google::cloud::language::v1::ClassifyTextRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ClassifyText(request);
 }
 
@@ -180,9 +166,8 @@ StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceClient::AnnotateText(
     google::cloud::language::v1::Document const& document,
     google::cloud::language::v1::AnnotateTextRequest::Features const& features,
-    google::cloud::language::v1::EncodingType encoding_type, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::language::v1::EncodingType encoding_type, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnnotateTextRequest request;
   *request.mutable_document() = document;
   *request.mutable_features() = features;
@@ -194,9 +179,8 @@ StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceClient::AnnotateText(
     google::cloud::language::v1::Document const& document,
     google::cloud::language::v1::AnnotateTextRequest::Features const& features,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::language::v1::AnnotateTextRequest request;
   *request.mutable_document() = document;
   *request.mutable_features() = features;
@@ -206,9 +190,8 @@ LanguageServiceClient::AnnotateText(
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceClient::AnnotateText(
     google::cloud::language::v1::AnnotateTextRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnnotateText(request);
 }
 

@@ -26,19 +26,18 @@ namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReachabilityServiceClient::ReachabilityServiceClient(
-    std::shared_ptr<ReachabilityServiceConnection> connection, Options options)
+    std::shared_ptr<ReachabilityServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           networkmanagement_internal::ReachabilityServiceDefaultOptions(
               connection_->options()))) {}
 ReachabilityServiceClient::~ReachabilityServiceClient() = default;
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceClient::ListConnectivityTests(std::string const& parent,
-                                                 Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkmanagement::v1::ListConnectivityTestsRequest request;
   request.set_parent(parent);
   return connection_->ListConnectivityTests(request);
@@ -47,17 +46,15 @@ ReachabilityServiceClient::ListConnectivityTests(std::string const& parent,
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceClient::ListConnectivityTests(
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnectivityTests(std::move(request));
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceClient::GetConnectivityTest(std::string const& name,
-                                               Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkmanagement::v1::GetConnectivityTestRequest request;
   request.set_name(name);
   return connection_->GetConnectivityTest(request);
@@ -67,9 +64,8 @@ StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceClient::GetConnectivityTest(
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnectivityTest(request);
 }
 
@@ -77,9 +73,8 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::CreateConnectivityTest(
     std::string const& parent, std::string const& test_id,
     google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkmanagement::v1::CreateConnectivityTestRequest request;
   request.set_parent(parent);
   request.set_test_id(test_id);
@@ -91,9 +86,8 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::CreateConnectivityTest(
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectivityTest(request);
 }
 
@@ -101,9 +95,8 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::UpdateConnectivityTest(
     google::protobuf::FieldMask const& update_mask,
     google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest request;
   *request.mutable_update_mask() = update_mask;
   *request.mutable_resource() = resource;
@@ -114,9 +107,8 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::UpdateConnectivityTest(
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectivityTest(request);
 }
 
@@ -124,17 +116,15 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::RerunConnectivityTest(
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RerunConnectivityTest(request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceClient::DeleteConnectivityTest(std::string const& name,
-                                                  Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest request;
   request.set_name(name);
   return connection_->DeleteConnectivityTest(request);
@@ -144,9 +134,8 @@ future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceClient::DeleteConnectivityTest(
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectivityTest(request);
 }
 

@@ -80,7 +80,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OrgPolicyClient {
  public:
   explicit OrgPolicyClient(std::shared_ptr<OrgPolicyConnection> connection,
-                           Options options = {});
+                           Options opts = {});
   ~OrgPolicyClient();
 
   //@{
@@ -111,7 +111,8 @@ class OrgPolicyClient {
   ///  * `projects/{project_id}`
   ///  * `folders/{folder_id}`
   ///  * `organizations/{organization_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Constraint,google/cloud/orgpolicy/v2/constraint.proto#L44}
   ///
@@ -121,14 +122,15 @@ class OrgPolicyClient {
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L44}
   ///
   StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists `Constraints` that could be applied on the specified resource.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orgpolicy::v2::ListConstraintsRequest,google/cloud/orgpolicy/v2/orgpolicy.proto#L343}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Constraint,google/cloud/orgpolicy/v2/constraint.proto#L44}
   ///
@@ -139,7 +141,7 @@ class OrgPolicyClient {
   ///
   StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
       google::cloud::orgpolicy::v2::ListConstraintsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Retrieves all of the `Policies` that exist on a particular resource.
@@ -152,7 +154,8 @@ class OrgPolicyClient {
   ///  * `projects/{project_id}`
   ///  * `folders/{folder_id}`
   ///  * `organizations/{organization_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -162,14 +165,15 @@ class OrgPolicyClient {
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
   StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Retrieves all of the `Policies` that exist on a particular resource.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orgpolicy::v2::ListPoliciesRequest,google/cloud/orgpolicy/v2/orgpolicy.proto#L379}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -180,7 +184,7 @@ class OrgPolicyClient {
   ///
   StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
       google::cloud::orgpolicy::v2::ListPoliciesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a `Policy` on a resource.
@@ -191,7 +195,8 @@ class OrgPolicyClient {
   ///
   /// @param name  Required. Resource name of the policy. See `Policy` for
   /// naming requirements.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -201,7 +206,7 @@ class OrgPolicyClient {
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a `Policy` on a resource.
@@ -212,7 +217,8 @@ class OrgPolicyClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orgpolicy::v2::GetPolicyRequest,google/cloud/orgpolicy/v2/orgpolicy.proto#L419}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -223,7 +229,7 @@ class OrgPolicyClient {
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
       google::cloud::orgpolicy::v2::GetPolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the effective `Policy` on a resource. This is the result of merging
@@ -235,7 +241,8 @@ class OrgPolicyClient {
   ///
   /// @param name  Required. The effective policy to compute. See `Policy` for
   /// naming rules.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -245,7 +252,7 @@ class OrgPolicyClient {
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the effective `Policy` on a resource. This is the result of merging
@@ -257,7 +264,8 @@ class OrgPolicyClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orgpolicy::v2::GetEffectivePolicyRequest,google/cloud/orgpolicy/v2/orgpolicy.proto#L431}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -268,7 +276,7 @@ class OrgPolicyClient {
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
       google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a Policy.
@@ -286,7 +294,8 @@ class OrgPolicyClient {
   ///  * `folders/{folder_id}`
   ///  * `organizations/{organization_id}`
   /// @param policy  Required. `Policy` to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -297,7 +306,7 @@ class OrgPolicyClient {
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
       std::string const& parent,
-      google::cloud::orgpolicy::v2::Policy const& policy, Options options = {});
+      google::cloud::orgpolicy::v2::Policy const& policy, Options opts = {});
 
   ///
   /// Creates a Policy.
@@ -309,7 +318,8 @@ class OrgPolicyClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orgpolicy::v2::CreatePolicyRequest,google/cloud/orgpolicy/v2/orgpolicy.proto#L443}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -320,7 +330,7 @@ class OrgPolicyClient {
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
       google::cloud::orgpolicy::v2::CreatePolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a Policy.
@@ -334,7 +344,8 @@ class OrgPolicyClient {
   /// fields.
   ///
   /// @param policy  Required. `Policy` to update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -344,7 +355,7 @@ class OrgPolicyClient {
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
-      google::cloud::orgpolicy::v2::Policy const& policy, Options options = {});
+      google::cloud::orgpolicy::v2::Policy const& policy, Options opts = {});
 
   ///
   /// Updates a Policy.
@@ -359,7 +370,8 @@ class OrgPolicyClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orgpolicy::v2::UpdatePolicyRequest,google/cloud/orgpolicy/v2/orgpolicy.proto#L463}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L192}
   ///
@@ -370,7 +382,7 @@ class OrgPolicyClient {
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
       google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a Policy.
@@ -380,12 +392,13 @@ class OrgPolicyClient {
   ///
   /// @param name  Required. Name of the policy to delete.
   ///  See `Policy` for naming rules.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]:
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L470}
   ///
-  Status DeletePolicy(std::string const& name, Options options = {});
+  Status DeletePolicy(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a Policy.
@@ -395,14 +408,15 @@ class OrgPolicyClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orgpolicy::v2::DeletePolicyRequest,google/cloud/orgpolicy/v2/orgpolicy.proto#L470}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]:
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L470}
   ///
   Status DeletePolicy(
       google::cloud::orgpolicy::v2::DeletePolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<OrgPolicyConnection> connection_;

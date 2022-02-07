@@ -64,7 +64,7 @@ class GameServerConfigsServiceClient {
  public:
   explicit GameServerConfigsServiceClient(
       std::shared_ptr<GameServerConfigsServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~GameServerConfigsServiceClient();
 
   //@{
@@ -96,7 +96,8 @@ class GameServerConfigsServiceClient {
   ///
   /// @param parent  Required. The parent resource name, in the following form:
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
@@ -106,7 +107,7 @@ class GameServerConfigsServiceClient {
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerConfig>
-  ListGameServerConfigs(std::string const& parent, Options options = {});
+  ListGameServerConfigs(std::string const& parent, Options opts = {});
 
   ///
   /// Lists game server configs in a given project, location, and game server
@@ -114,7 +115,8 @@ class GameServerConfigsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::ListGameServerConfigsRequest,google/cloud/gaming/v1/game_server_configs.proto#L30}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
@@ -126,7 +128,7 @@ class GameServerConfigsServiceClient {
   StreamRange<google::cloud::gaming::v1::GameServerConfig>
   ListGameServerConfigs(
       google::cloud::gaming::v1::ListGameServerConfigsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single game server config.
@@ -134,7 +136,8 @@ class GameServerConfigsServiceClient {
   /// @param name  Required. The name of the game server config to retrieve, in
   /// the following form:
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
@@ -144,14 +147,15 @@ class GameServerConfigsServiceClient {
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single game server config.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::GetGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L72}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
@@ -162,7 +166,7 @@ class GameServerConfigsServiceClient {
   ///
   StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
       google::cloud::gaming::v1::GetGameServerConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new game server config in a given project, location, and game
@@ -173,7 +177,8 @@ class GameServerConfigsServiceClient {
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/`.
   /// @param game_server_config  Required. The game server config resource to be
   /// created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
@@ -186,7 +191,7 @@ class GameServerConfigsServiceClient {
   CreateGameServerConfig(
       std::string const& parent,
       google::cloud::gaming::v1::GameServerConfig const& game_server_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new game server config in a given project, location, and game
@@ -195,7 +200,8 @@ class GameServerConfigsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::CreateGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L84}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L142}
   ///
@@ -207,7 +213,7 @@ class GameServerConfigsServiceClient {
   future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
   CreateGameServerConfig(
       google::cloud::gaming::v1::CreateGameServerConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single game server config. The deletion will fail if the game
@@ -216,7 +222,8 @@ class GameServerConfigsServiceClient {
   /// @param name  Required. The name of the game server config to delete, in
   /// the following form:
   ///  `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
@@ -226,7 +233,7 @@ class GameServerConfigsServiceClient {
   /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerConfig(std::string const& name, Options options = {});
+  DeleteGameServerConfig(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single game server config. The deletion will fail if the game
@@ -234,7 +241,8 @@ class GameServerConfigsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::DeleteGameServerConfigRequest,google/cloud/gaming/v1/game_server_configs.proto#L102}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
@@ -246,7 +254,7 @@ class GameServerConfigsServiceClient {
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
   DeleteGameServerConfig(
       google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<GameServerConfigsServiceConnection> connection_;

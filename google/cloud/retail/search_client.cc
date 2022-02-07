@@ -26,18 +26,17 @@ namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SearchServiceClient::SearchServiceClient(
-    std::shared_ptr<SearchServiceConnection> connection, Options options)
+    std::shared_ptr<SearchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), retail_internal::SearchServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), retail_internal::SearchServiceDefaultOptions(
+                               connection_->options()))) {}
 SearchServiceClient::~SearchServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 SearchServiceClient::Search(google::cloud::retail::v2::SearchRequest request,
-                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Search(std::move(request));
 }
 

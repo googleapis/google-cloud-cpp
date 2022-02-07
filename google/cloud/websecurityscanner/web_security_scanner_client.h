@@ -64,7 +64,7 @@ class WebSecurityScannerClient {
  public:
   explicit WebSecurityScannerClient(
       std::shared_ptr<WebSecurityScannerConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~WebSecurityScannerClient();
 
   //@{
@@ -93,7 +93,8 @@ class WebSecurityScannerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::CreateScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L142}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
@@ -105,14 +106,15 @@ class WebSecurityScannerClient {
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
       google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an existing ScanConfig and its child resources.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::DeleteScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L152}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.websecurityscanner.v1.DeleteScanConfigRequest]:
   /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L152}
@@ -120,14 +122,15 @@ class WebSecurityScannerClient {
   Status DeleteScanConfig(
       google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a ScanConfig.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::GetScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L159}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
@@ -139,14 +142,15 @@ class WebSecurityScannerClient {
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
       google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists ScanConfigs under a given project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ListScanConfigsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L166}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
@@ -158,14 +162,15 @@ class WebSecurityScannerClient {
   StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
   ListScanConfigs(
       google::cloud::websecurityscanner::v1::ListScanConfigsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a ScanConfig. This method support partial update of a ScanConfig.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::UpdateScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L183}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
@@ -177,14 +182,15 @@ class WebSecurityScannerClient {
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
       google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Start a ScanRun according to the given ScanConfig.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::StartScanRunRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L206}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
@@ -195,14 +201,15 @@ class WebSecurityScannerClient {
   ///
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
       google::cloud::websecurityscanner::v1::StartScanRunRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a ScanRun.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::GetScanRunRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L213}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
@@ -213,7 +220,7 @@ class WebSecurityScannerClient {
   ///
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
       google::cloud::websecurityscanner::v1::GetScanRunRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists ScanRuns under a given ScanConfig, in descending order of ScanRun
@@ -221,7 +228,8 @@ class WebSecurityScannerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ListScanRunsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L221}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
@@ -232,14 +240,15 @@ class WebSecurityScannerClient {
   ///
   StreamRange<google::cloud::websecurityscanner::v1::ScanRun> ListScanRuns(
       google::cloud::websecurityscanner::v1::ListScanRunsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Stops a ScanRun. The stopped ScanRun is returned.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::StopScanRunRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L248}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
@@ -250,14 +259,15 @@ class WebSecurityScannerClient {
   ///
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
       google::cloud::websecurityscanner::v1::StopScanRunRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// List CrawledUrls under a given ScanRun.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L256}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::CrawledUrl,google/cloud/websecurityscanner/v1/crawled_url.proto#L30}
   ///
@@ -269,14 +279,15 @@ class WebSecurityScannerClient {
   StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
   ListCrawledUrls(
       google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a Finding.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::GetFindingRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L284}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::Finding,google/cloud/websecurityscanner/v1/finding.proto#L33}
   ///
@@ -287,14 +298,15 @@ class WebSecurityScannerClient {
   ///
   StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
       google::cloud::websecurityscanner::v1::GetFindingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// List Findings under a given ScanRun.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ListFindingsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L292}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::Finding,google/cloud/websecurityscanner/v1/finding.proto#L33}
   ///
@@ -305,14 +317,15 @@ class WebSecurityScannerClient {
   ///
   StreamRange<google::cloud::websecurityscanner::v1::Finding> ListFindings(
       google::cloud::websecurityscanner::v1::ListFindingsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// List all FindingTypeStats under a given ScanRun.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L326}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L334}
   ///
@@ -325,7 +338,7 @@ class WebSecurityScannerClient {
   ListFindingTypeStats(
       google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<WebSecurityScannerConnection> connection_;

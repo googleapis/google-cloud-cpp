@@ -27,10 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoscalingPolicyServiceClient::AutoscalingPolicyServiceClient(
     std::shared_ptr<AutoscalingPolicyServiceConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           dataproc_internal::AutoscalingPolicyServiceDefaultOptions(
               connection_->options()))) {}
 AutoscalingPolicyServiceClient::~AutoscalingPolicyServiceClient() = default;
@@ -39,9 +39,8 @@ StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::CreateAutoscalingPolicy(
     std::string const& parent,
     google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest request;
   request.set_parent(parent);
   *request.mutable_policy() = policy;
@@ -51,18 +50,16 @@ AutoscalingPolicyServiceClient::CreateAutoscalingPolicy(
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::CreateAutoscalingPolicy(
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAutoscalingPolicy(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::UpdateAutoscalingPolicy(
     google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest request;
   *request.mutable_policy() = policy;
   return connection_->UpdateAutoscalingPolicy(request);
@@ -71,17 +68,15 @@ AutoscalingPolicyServiceClient::UpdateAutoscalingPolicy(
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::UpdateAutoscalingPolicy(
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAutoscalingPolicy(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::GetAutoscalingPolicy(std::string const& name,
-                                                     Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::GetAutoscalingPolicyRequest request;
   request.set_name(name);
   return connection_->GetAutoscalingPolicy(request);
@@ -90,17 +85,15 @@ AutoscalingPolicyServiceClient::GetAutoscalingPolicy(std::string const& name,
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::GetAutoscalingPolicy(
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAutoscalingPolicy(request);
 }
 
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::ListAutoscalingPolicies(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request;
   request.set_parent(parent);
   return connection_->ListAutoscalingPolicies(request);
@@ -109,16 +102,14 @@ AutoscalingPolicyServiceClient::ListAutoscalingPolicies(
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceClient::ListAutoscalingPolicies(
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAutoscalingPolicies(std::move(request));
 }
 
 Status AutoscalingPolicyServiceClient::DeleteAutoscalingPolicy(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest request;
   request.set_name(name);
   return connection_->DeleteAutoscalingPolicy(request);
@@ -126,9 +117,8 @@ Status AutoscalingPolicyServiceClient::DeleteAutoscalingPolicy(
 
 Status AutoscalingPolicyServiceClient::DeleteAutoscalingPolicy(
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAutoscalingPolicy(request);
 }
 

@@ -26,18 +26,17 @@ namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 JobControllerClient::JobControllerClient(
-    std::shared_ptr<JobControllerConnection> connection, Options options)
+    std::shared_ptr<JobControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), dataproc_internal::JobControllerDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), dataproc_internal::JobControllerDefaultOptions(
+                               connection_->options()))) {}
 JobControllerClient::~JobControllerClient() = default;
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::SubmitJob(
     std::string const& project_id, std::string const& region,
-    google::cloud::dataproc::v1::Job const& job, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::Job const& job, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::SubmitJobRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -47,18 +46,16 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::SubmitJob(
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::SubmitJob(
     google::cloud::dataproc::v1::SubmitJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitJob(request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerClient::SubmitJobAsOperation(
     std::string const& project_id, std::string const& region,
-    google::cloud::dataproc::v1::Job const& job, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::Job const& job, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::SubmitJobRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -69,17 +66,15 @@ JobControllerClient::SubmitJobAsOperation(
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerClient::SubmitJobAsOperation(
     google::cloud::dataproc::v1::SubmitJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitJobAsOperation(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::GetJob(
     std::string const& project_id, std::string const& region,
-    std::string const& job_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::GetJobRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -88,17 +83,14 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::GetJob(
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::GetJob(
-    google::cloud::dataproc::v1::GetJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::GetJobRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
 StreamRange<google::cloud::dataproc::v1::Job> JobControllerClient::ListJobs(
-    std::string const& project_id, std::string const& region, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& project_id, std::string const& region, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListJobsRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -107,9 +99,8 @@ StreamRange<google::cloud::dataproc::v1::Job> JobControllerClient::ListJobs(
 
 StreamRange<google::cloud::dataproc::v1::Job> JobControllerClient::ListJobs(
     std::string const& project_id, std::string const& region,
-    std::string const& filter, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListJobsRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -118,25 +109,22 @@ StreamRange<google::cloud::dataproc::v1::Job> JobControllerClient::ListJobs(
 }
 
 StreamRange<google::cloud::dataproc::v1::Job> JobControllerClient::ListJobs(
-    google::cloud::dataproc::v1::ListJobsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::ListJobsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::UpdateJob(
     google::cloud::dataproc::v1::UpdateJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateJob(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::CancelJob(
     std::string const& project_id, std::string const& region,
-    std::string const& job_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CancelJobRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -146,18 +134,15 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::CancelJob(
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::CancelJob(
     google::cloud::dataproc::v1::CancelJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelJob(request);
 }
 
 Status JobControllerClient::DeleteJob(std::string const& project_id,
                                       std::string const& region,
-                                      std::string const& job_id,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                      std::string const& job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteJobRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
@@ -167,9 +152,8 @@ Status JobControllerClient::DeleteJob(std::string const& project_id,
 
 Status JobControllerClient::DeleteJob(
     google::cloud::dataproc::v1::DeleteJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
 

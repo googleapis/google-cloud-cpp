@@ -62,7 +62,7 @@ class ConnectionServiceClient {
  public:
   explicit ConnectionServiceClient(
       std::shared_ptr<ConnectionServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ConnectionServiceClient();
 
   //@{
@@ -91,7 +91,8 @@ class ConnectionServiceClient {
   ///
   /// @param parent  Required. Parent name of the form:
   ///      `projects/{project_number or project_id}/endpoints/{endpoint}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigeeconnect::v1::Connection,google/cloud/apigeeconnect/v1/connection.proto#L86}
   ///
@@ -101,7 +102,7 @@ class ConnectionServiceClient {
   /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L86}
   ///
   StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists connections that are currently active for the given Apigee Connect
@@ -109,7 +110,8 @@ class ConnectionServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigeeconnect::v1::ListConnectionsRequest,google/cloud/apigeeconnect/v1/connection.proto#L52}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigeeconnect::v1::Connection,google/cloud/apigeeconnect/v1/connection.proto#L86}
   ///
@@ -120,7 +122,7 @@ class ConnectionServiceClient {
   ///
   StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
       google::cloud::apigeeconnect::v1::ListConnectionsRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ConnectionServiceConnection> connection_;

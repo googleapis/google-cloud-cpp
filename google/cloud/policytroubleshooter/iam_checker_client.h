@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IamCheckerClient {
  public:
   explicit IamCheckerClient(std::shared_ptr<IamCheckerConnection> connection,
-                            Options options = {});
+                            Options opts = {});
   ~IamCheckerClient();
 
   //@{
@@ -91,7 +91,8 @@ class IamCheckerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest,google/cloud/policytroubleshooter/v1/checker.proto#L51}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse,google/cloud/policytroubleshooter/v1/checker.proto#L58}
   ///
@@ -104,7 +105,7 @@ class IamCheckerClient {
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
   TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::
                             TroubleshootIamPolicyRequest const& request,
-                        Options options = {});
+                        Options opts = {});
 
  private:
   std::shared_ptr<IamCheckerConnection> connection_;

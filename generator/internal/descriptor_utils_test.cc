@@ -541,7 +541,8 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
   /// Leading comments about rpc Method0$$.
   ///
   /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L16}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
 )"""));
 }
@@ -555,7 +556,8 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   /// Leading comments about rpc $$Method6.
   ///
   /// @param labels  labels $$field comment.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
 )"""));
   EXPECT_THAT(
@@ -566,7 +568,8 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   ///
   /// @param name  name field$$ comment.
   /// @param labels  labels $$field comment.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
 )"""));
 }

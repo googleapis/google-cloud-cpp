@@ -26,11 +26,11 @@ namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WebRiskServiceClient::WebRiskServiceClient(
-    std::shared_ptr<WebRiskServiceConnection> connection, Options options)
+    std::shared_ptr<WebRiskServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), webrisk_internal::WebRiskServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), webrisk_internal::WebRiskServiceDefaultOptions(
+                               connection_->options()))) {}
 WebRiskServiceClient::~WebRiskServiceClient() = default;
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
@@ -39,9 +39,8 @@ WebRiskServiceClient::ComputeThreatListDiff(
     std::string const& version_token,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest::Constraints const&
         constraints,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::ComputeThreatListDiffRequest request;
   request.set_threat_type(threat_type);
   request.set_version_token(version_token);
@@ -52,9 +51,8 @@ WebRiskServiceClient::ComputeThreatListDiff(
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceClient::ComputeThreatListDiff(
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeThreatListDiff(request);
 }
 
@@ -62,9 +60,8 @@ StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceClient::SearchUris(
     std::string const& uri,
     std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::SearchUrisRequest request;
   request.set_uri(uri);
   *request.mutable_threat_types() = {threat_types.begin(), threat_types.end()};
@@ -74,9 +71,8 @@ WebRiskServiceClient::SearchUris(
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceClient::SearchUris(
     google::cloud::webrisk::v1::SearchUrisRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchUris(request);
 }
 
@@ -84,9 +80,8 @@ StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceClient::SearchHashes(
     std::string const& hash_prefix,
     std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::SearchHashesRequest request;
   request.set_hash_prefix(hash_prefix);
   *request.mutable_threat_types() = {threat_types.begin(), threat_types.end()};
@@ -96,18 +91,16 @@ WebRiskServiceClient::SearchHashes(
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceClient::SearchHashes(
     google::cloud::webrisk::v1::SearchHashesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchHashes(request);
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
 WebRiskServiceClient::CreateSubmission(
     std::string const& parent,
-    google::cloud::webrisk::v1::Submission const& submission, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::webrisk::v1::Submission const& submission, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::CreateSubmissionRequest request;
   request.set_parent(parent);
   *request.mutable_submission() = submission;
@@ -117,9 +110,8 @@ WebRiskServiceClient::CreateSubmission(
 StatusOr<google::cloud::webrisk::v1::Submission>
 WebRiskServiceClient::CreateSubmission(
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSubmission(request);
 }
 

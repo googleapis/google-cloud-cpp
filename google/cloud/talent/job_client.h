@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobServiceClient {
  public:
   explicit JobServiceClient(std::shared_ptr<JobServiceConnection> connection,
-                            Options options = {});
+                            Options opts = {});
   ~JobServiceClient();
 
   //@{
@@ -96,7 +96,8 @@ class JobServiceClient {
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param job  Required. The Job to be created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -107,7 +108,7 @@ class JobServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       std::string const& parent, google::cloud::talent::v4::Job const& job,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new job.
@@ -117,7 +118,8 @@ class JobServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::CreateJobRequest,google/cloud/talent/v4/job_service.proto#L169}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -128,7 +130,7 @@ class JobServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       google::cloud::talent::v4::CreateJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Begins executing a batch create jobs operation.
@@ -139,7 +141,8 @@ class JobServiceClient {
   ///  "projects/foo/tenants/bar".
   /// @param jobs  Required. The jobs to be created.
   ///  A maximum of 200 jobs can be created in a batch.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::BatchCreateJobsResponse,google/cloud/talent/v4/job_service.proto#L919}
   ///
@@ -151,14 +154,15 @@ class JobServiceClient {
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
   BatchCreateJobs(std::string const& parent,
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
-                  Options options = {});
+                  Options opts = {});
 
   ///
   /// Begins executing a batch create jobs operation.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::BatchCreateJobsRequest,google/cloud/talent/v4/job_service.proto#L827}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::BatchCreateJobsResponse,google/cloud/talent/v4/job_service.proto#L919}
   ///
@@ -170,7 +174,7 @@ class JobServiceClient {
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
   BatchCreateJobs(
       google::cloud::talent::v4::BatchCreateJobsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Retrieves the specified job, whose status is OPEN or recently EXPIRED
@@ -180,7 +184,8 @@ class JobServiceClient {
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
   ///  example, "projects/foo/tenants/bar/jobs/baz".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -190,7 +195,7 @@ class JobServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
   StatusOr<google::cloud::talent::v4::Job> GetJob(std::string const& name,
-                                                  Options options = {});
+                                                  Options opts = {});
 
   ///
   /// Retrieves the specified job, whose status is OPEN or recently EXPIRED
@@ -198,7 +203,8 @@ class JobServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::GetJobRequest,google/cloud/talent/v4/job_service.proto#L186}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -209,7 +215,7 @@ class JobServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Job> GetJob(
       google::cloud::talent::v4::GetJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates specified job.
@@ -225,7 +231,8 @@ class JobServiceClient {
   ///  all the fields are updated. A field mask to restrict the fields that are
   ///  updated. Only top level fields of [Job][google.cloud.talent.v4.Job] are
   ///  supported.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -236,7 +243,7 @@ class JobServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
       google::cloud::talent::v4::Job const& job,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates specified job.
@@ -246,7 +253,8 @@ class JobServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::UpdateJobRequest,google/cloud/talent/v4/job_service.proto#L201}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -257,7 +265,7 @@ class JobServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
       google::cloud::talent::v4::UpdateJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Begins executing a batch update jobs operation.
@@ -268,7 +276,8 @@ class JobServiceClient {
   ///  "projects/foo/tenants/bar".
   /// @param jobs  Required. The jobs to be updated.
   ///  A maximum of 200 jobs can be updated in a batch.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::BatchUpdateJobsResponse,google/cloud/talent/v4/job_service.proto#L927}
   ///
@@ -280,14 +289,15 @@ class JobServiceClient {
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
   BatchUpdateJobs(std::string const& parent,
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
-                  Options options = {});
+                  Options opts = {});
 
   ///
   /// Begins executing a batch update jobs operation.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::BatchUpdateJobsRequest,google/cloud/talent/v4/job_service.proto#L845}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::BatchUpdateJobsResponse,google/cloud/talent/v4/job_service.proto#L927}
   ///
@@ -299,7 +309,7 @@ class JobServiceClient {
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
   BatchUpdateJobs(
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the specified job.
@@ -311,12 +321,13 @@ class JobServiceClient {
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
   ///  example, "projects/foo/tenants/bar/jobs/baz".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.talent.v4.DeleteJobRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L216}
   ///
-  Status DeleteJob(std::string const& name, Options options = {});
+  Status DeleteJob(std::string const& name, Options opts = {});
 
   ///
   /// Deletes the specified job.
@@ -326,13 +337,14 @@ class JobServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::DeleteJobRequest,google/cloud/talent/v4/job_service.proto#L216}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.talent.v4.DeleteJobRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L216}
   ///
   Status DeleteJob(google::cloud::talent::v4::DeleteJobRequest const& request,
-                   Options options = {});
+                   Options opts = {});
 
   ///
   /// Begins executing a batch delete jobs operation.
@@ -346,7 +358,8 @@ class JobServiceClient {
   ///  The format is "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}".
   ///  For example, "projects/foo/tenants/bar/jobs/baz".
   ///  A maximum of 200 jobs can be deleted in a batch.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::BatchDeleteJobsResponse,google/cloud/talent/v4/job_service.proto#L935}
   ///
@@ -357,14 +370,15 @@ class JobServiceClient {
   ///
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
   BatchDeleteJobs(std::string const& parent,
-                  std::vector<std::string> const& names, Options options = {});
+                  std::vector<std::string> const& names, Options opts = {});
 
   ///
   /// Begins executing a batch delete jobs operation.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::BatchDeleteJobsRequest,google/cloud/talent/v4/job_service.proto#L879}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::BatchDeleteJobsResponse,google/cloud/talent/v4/job_service.proto#L935}
   ///
@@ -376,7 +390,7 @@ class JobServiceClient {
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
   BatchDeleteJobs(
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists jobs by filter.
@@ -403,7 +417,8 @@ class JobServiceClient {
   ///  status = "EXPIRED"
   ///  * requisitionId = "req-1"
   ///  * requisitionId = "req-1" AND status = "EXPIRED"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -413,15 +428,15 @@ class JobServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
-      std::string const& parent, std::string const& filter,
-      Options options = {});
+      std::string const& parent, std::string const& filter, Options opts = {});
 
   ///
   /// Lists jobs by filter.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::ListJobsRequest,google/cloud/talent/v4/job_service.proto#L231}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
@@ -431,7 +446,7 @@ class JobServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
-      google::cloud::talent::v4::ListJobsRequest request, Options options = {});
+      google::cloud::talent::v4::ListJobsRequest request, Options opts = {});
 
   ///
   /// Searches for jobs using the provided
@@ -444,7 +459,8 @@ class JobServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::SearchJobsRequest,google/cloud/talent/v4/job_service.proto#L328}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::SearchJobsResponse,google/cloud/talent/v4/job_service.proto#L750}
   ///
@@ -455,7 +471,7 @@ class JobServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
       google::cloud::talent::v4::SearchJobsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Searches for jobs using the provided
@@ -473,7 +489,8 @@ class JobServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::SearchJobsRequest,google/cloud/talent/v4/job_service.proto#L328}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::SearchJobsResponse,google/cloud/talent/v4/job_service.proto#L750}
   ///
@@ -484,7 +501,7 @@ class JobServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
       google::cloud::talent::v4::SearchJobsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<JobServiceConnection> connection_;

@@ -26,11 +26,10 @@ namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageTransferServiceClient::StorageTransferServiceClient(
-    std::shared_ptr<StorageTransferServiceConnection> connection,
-    Options options)
+    std::shared_ptr<StorageTransferServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           storagetransfer_internal::StorageTransferServiceDefaultOptions(
               connection_->options()))) {}
 StorageTransferServiceClient::~StorageTransferServiceClient() = default;
@@ -38,70 +37,62 @@ StorageTransferServiceClient::~StorageTransferServiceClient() = default;
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 StorageTransferServiceClient::GetGoogleServiceAccount(
     google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGoogleServiceAccount(request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceClient::CreateTransferJob(
     google::storagetransfer::v1::CreateTransferJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTransferJob(request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceClient::UpdateTransferJob(
     google::storagetransfer::v1::UpdateTransferJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTransferJob(request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceClient::GetTransferJob(
     google::storagetransfer::v1::GetTransferJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTransferJob(request);
 }
 
 StreamRange<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceClient::ListTransferJobs(
     google::storagetransfer::v1::ListTransferJobsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTransferJobs(std::move(request));
 }
 
 Status StorageTransferServiceClient::PauseTransferOperation(
     google::storagetransfer::v1::PauseTransferOperationRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseTransferOperation(request);
 }
 
 Status StorageTransferServiceClient::ResumeTransferOperation(
     google::storagetransfer::v1::ResumeTransferOperationRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeTransferOperation(request);
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceClient::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTransferJob(request);
 }
 

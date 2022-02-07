@@ -26,17 +26,16 @@ namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WorkflowsClient::WorkflowsClient(
-    std::shared_ptr<WorkflowsConnection> connection, Options options)
+    std::shared_ptr<WorkflowsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), workflows_internal::WorkflowsDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), workflows_internal::WorkflowsDefaultOptions(
+                               connection_->options()))) {}
 WorkflowsClient::~WorkflowsClient() = default;
 
 StreamRange<google::cloud::workflows::v1::Workflow>
-WorkflowsClient::ListWorkflows(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+WorkflowsClient::ListWorkflows(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::ListWorkflowsRequest request;
   request.set_parent(parent);
   return connection_->ListWorkflows(request);
@@ -44,17 +43,14 @@ WorkflowsClient::ListWorkflows(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsClient::ListWorkflows(
-    google::cloud::workflows::v1::ListWorkflowsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::workflows::v1::ListWorkflowsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkflows(std::move(request));
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsClient::GetWorkflow(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::GetWorkflowRequest request;
   request.set_name(name);
   return connection_->GetWorkflow(request);
@@ -62,9 +58,8 @@ StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsClient::GetWorkflow(
 
 StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsClient::GetWorkflow(
     google::cloud::workflows::v1::GetWorkflowRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkflow(request);
 }
 
@@ -72,9 +67,8 @@ future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsClient::CreateWorkflow(
     std::string const& parent,
     google::cloud::workflows::v1::Workflow const& workflow,
-    std::string const& workflow_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& workflow_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::CreateWorkflowRequest request;
   request.set_parent(parent);
   *request.mutable_workflow() = workflow;
@@ -85,16 +79,14 @@ WorkflowsClient::CreateWorkflow(
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsClient::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflow(request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-WorkflowsClient::DeleteWorkflow(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+WorkflowsClient::DeleteWorkflow(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::DeleteWorkflowRequest request;
   request.set_name(name);
   return connection_->DeleteWorkflow(request);
@@ -103,18 +95,16 @@ WorkflowsClient::DeleteWorkflow(std::string const& name, Options options) {
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsClient::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflow(request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsClient::UpdateWorkflow(
     google::cloud::workflows::v1::Workflow const& workflow,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::UpdateWorkflowRequest request;
   *request.mutable_workflow() = workflow;
   *request.mutable_update_mask() = update_mask;
@@ -124,9 +114,8 @@ WorkflowsClient::UpdateWorkflow(
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsClient::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkflow(request);
 }
 

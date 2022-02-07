@@ -26,20 +26,18 @@ namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ManagedNotebookServiceClient::ManagedNotebookServiceClient(
-    std::shared_ptr<ManagedNotebookServiceConnection> connection,
-    Options options)
+    std::shared_ptr<ManagedNotebookServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           notebooks_internal::ManagedNotebookServiceDefaultOptions(
               connection_->options()))) {}
 ManagedNotebookServiceClient::~ManagedNotebookServiceClient() = default;
 
 StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceClient::ListRuntimes(std::string const& parent,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::ListRuntimesRequest request;
   request.set_parent(parent);
   return connection_->ListRuntimes(request);
@@ -47,18 +45,15 @@ ManagedNotebookServiceClient::ListRuntimes(std::string const& parent,
 
 StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceClient::ListRuntimes(
-    google::cloud::notebooks::v1::ListRuntimesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::notebooks::v1::ListRuntimesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuntimes(std::move(request));
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceClient::GetRuntime(std::string const& name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::GetRuntimeRequest request;
   request.set_name(name);
   return connection_->GetRuntime(request);
@@ -67,18 +62,16 @@ ManagedNotebookServiceClient::GetRuntime(std::string const& name,
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceClient::GetRuntime(
     google::cloud::notebooks::v1::GetRuntimeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRuntime(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::CreateRuntime(
     std::string const& parent, std::string const& runtime_id,
-    google::cloud::notebooks::v1::Runtime const& runtime, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::notebooks::v1::Runtime const& runtime, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::CreateRuntimeRequest request;
   request.set_parent(parent);
   request.set_runtime_id(runtime_id);
@@ -89,17 +82,15 @@ ManagedNotebookServiceClient::CreateRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::CreateRuntime(
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRuntime(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceClient::DeleteRuntime(std::string const& name,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::DeleteRuntimeRequest request;
   request.set_name(name);
   return connection_->DeleteRuntime(request);
@@ -108,17 +99,15 @@ ManagedNotebookServiceClient::DeleteRuntime(std::string const& name,
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceClient::DeleteRuntime(
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRuntime(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::StartRuntime(std::string const& name,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::StartRuntimeRequest request;
   request.set_name(name);
   return connection_->StartRuntime(request);
@@ -127,17 +116,15 @@ ManagedNotebookServiceClient::StartRuntime(std::string const& name,
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::StartRuntime(
     google::cloud::notebooks::v1::StartRuntimeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartRuntime(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::StopRuntime(std::string const& name,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::StopRuntimeRequest request;
   request.set_name(name);
   return connection_->StopRuntime(request);
@@ -146,17 +133,15 @@ ManagedNotebookServiceClient::StopRuntime(std::string const& name,
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::StopRuntime(
     google::cloud::notebooks::v1::StopRuntimeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopRuntime(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::SwitchRuntime(std::string const& name,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::SwitchRuntimeRequest request;
   request.set_name(name);
   return connection_->SwitchRuntime(request);
@@ -165,17 +150,15 @@ ManagedNotebookServiceClient::SwitchRuntime(std::string const& name,
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::SwitchRuntime(
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SwitchRuntime(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::ResetRuntime(std::string const& name,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::ResetRuntimeRequest request;
   request.set_name(name);
   return connection_->ResetRuntime(request);
@@ -184,17 +167,15 @@ ManagedNotebookServiceClient::ResetRuntime(std::string const& name,
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::ResetRuntime(
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetRuntime(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::ReportRuntimeEvent(std::string const& name,
-                                                 Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::ReportRuntimeEventRequest request;
   request.set_name(name);
   return connection_->ReportRuntimeEvent(request);
@@ -203,9 +184,8 @@ ManagedNotebookServiceClient::ReportRuntimeEvent(std::string const& name,
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportRuntimeEvent(request);
 }
 

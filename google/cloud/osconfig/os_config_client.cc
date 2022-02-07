@@ -26,26 +26,24 @@ namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsConfigServiceClient::OsConfigServiceClient(
-    std::shared_ptr<OsConfigServiceConnection> connection, Options options)
+    std::shared_ptr<OsConfigServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), osconfig_internal::OsConfigServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), osconfig_internal::OsConfigServiceDefaultOptions(
+                               connection_->options()))) {}
 OsConfigServiceClient::~OsConfigServiceClient() = default;
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceClient::ExecutePatchJob(
     google::cloud::osconfig::v1::ExecutePatchJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExecutePatchJob(request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceClient::GetPatchJob(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+OsConfigServiceClient::GetPatchJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::GetPatchJobRequest request;
   request.set_name(name);
   return connection_->GetPatchJob(request);
@@ -54,26 +52,22 @@ OsConfigServiceClient::GetPatchJob(std::string const& name, Options options) {
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceClient::GetPatchJob(
     google::cloud::osconfig::v1::GetPatchJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPatchJob(request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceClient::CancelPatchJob(
     google::cloud::osconfig::v1::CancelPatchJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelPatchJob(request);
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceClient::ListPatchJobs(std::string const& parent,
-                                     Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+OsConfigServiceClient::ListPatchJobs(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListPatchJobsRequest request;
   request.set_parent(parent);
   return connection_->ListPatchJobs(request);
@@ -81,18 +75,15 @@ OsConfigServiceClient::ListPatchJobs(std::string const& parent,
 
 StreamRange<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceClient::ListPatchJobs(
-    google::cloud::osconfig::v1::ListPatchJobsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::osconfig::v1::ListPatchJobsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPatchJobs(std::move(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
 OsConfigServiceClient::ListPatchJobInstanceDetails(std::string const& parent,
-                                                   Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request;
   request.set_parent(parent);
   return connection_->ListPatchJobInstanceDetails(request);
@@ -101,9 +92,8 @@ OsConfigServiceClient::ListPatchJobInstanceDetails(std::string const& parent,
 StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
 OsConfigServiceClient::ListPatchJobInstanceDetails(
     google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPatchJobInstanceDetails(std::move(request));
 }
 
@@ -111,9 +101,8 @@ StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceClient::CreatePatchDeployment(
     std::string const& parent,
     google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
-    std::string const& patch_deployment_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& patch_deployment_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::CreatePatchDeploymentRequest request;
   request.set_parent(parent);
   *request.mutable_patch_deployment() = patch_deployment;
@@ -124,17 +113,15 @@ OsConfigServiceClient::CreatePatchDeployment(
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceClient::CreatePatchDeployment(
     google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePatchDeployment(request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceClient::GetPatchDeployment(std::string const& name,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::GetPatchDeploymentRequest request;
   request.set_name(name);
   return connection_->GetPatchDeployment(request);
@@ -143,17 +130,15 @@ OsConfigServiceClient::GetPatchDeployment(std::string const& name,
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceClient::GetPatchDeployment(
     google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPatchDeployment(request);
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceClient::ListPatchDeployments(std::string const& parent,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::ListPatchDeploymentsRequest request;
   request.set_parent(parent);
   return connection_->ListPatchDeployments(request);
@@ -162,16 +147,14 @@ OsConfigServiceClient::ListPatchDeployments(std::string const& parent,
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceClient::ListPatchDeployments(
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPatchDeployments(std::move(request));
 }
 
 Status OsConfigServiceClient::DeletePatchDeployment(std::string const& name,
-                                                    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::DeletePatchDeploymentRequest request;
   request.set_name(name);
   return connection_->DeletePatchDeployment(request);
@@ -179,9 +162,8 @@ Status OsConfigServiceClient::DeletePatchDeployment(std::string const& name,
 
 Status OsConfigServiceClient::DeletePatchDeployment(
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePatchDeployment(request);
 }
 

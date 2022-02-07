@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OsConfigServiceClient {
  public:
   explicit OsConfigServiceClient(
-      std::shared_ptr<OsConfigServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<OsConfigServiceConnection> connection, Options opts = {});
   ~OsConfigServiceClient();
 
   //@{
@@ -93,7 +92,8 @@ class OsConfigServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::ExecutePatchJobRequest,google/cloud/osconfig/v1/patch_jobs.proto#L34}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
@@ -104,7 +104,7 @@ class OsConfigServiceClient {
   ///
   StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
       google::cloud::osconfig::v1::ExecutePatchJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get the patch job. This can be used to track the progress of an
@@ -112,7 +112,8 @@ class OsConfigServiceClient {
   ///
   /// @param name  Required. Name of the patch in the form
   /// `projects/*/patchJobs/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
@@ -122,7 +123,7 @@ class OsConfigServiceClient {
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Get the patch job. This can be used to track the progress of an
@@ -130,7 +131,8 @@ class OsConfigServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::GetPatchJobRequest,google/cloud/osconfig/v1/patch_jobs.proto#L72}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
@@ -141,7 +143,7 @@ class OsConfigServiceClient {
   ///
   StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
       google::cloud::osconfig::v1::GetPatchJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Cancel a patch job. The patch job must be active. Canceled patch jobs
@@ -149,7 +151,8 @@ class OsConfigServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::CancelPatchJobRequest,google/cloud/osconfig/v1/patch_jobs.proto#L431}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
@@ -160,13 +163,14 @@ class OsConfigServiceClient {
   ///
   StatusOr<google::cloud::osconfig::v1::PatchJob> CancelPatchJob(
       google::cloud::osconfig::v1::CancelPatchJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get a list of patch jobs.
   ///
   /// @param parent  Required. In the form of `projects/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
@@ -176,14 +180,15 @@ class OsConfigServiceClient {
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Get a list of patch jobs.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::ListPatchJobsRequest,google/cloud/osconfig/v1/patch_jobs.proto#L140}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
@@ -194,14 +199,15 @@ class OsConfigServiceClient {
   ///
   StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
       google::cloud::osconfig::v1::ListPatchJobsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get a list of instance details for a given patch job.
   ///
   /// @param parent  Required. The parent for the instances are in the form of
   ///  `projects/*/patchJobs/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJobInstanceDetails,google/cloud/osconfig/v1/patch_jobs.proto#L119}
   ///
@@ -211,14 +217,15 @@ class OsConfigServiceClient {
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L119}
   ///
   StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-  ListPatchJobInstanceDetails(std::string const& parent, Options options = {});
+  ListPatchJobInstanceDetails(std::string const& parent, Options opts = {});
 
   ///
   /// Get a list of instance details for a given patch job.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest,google/cloud/osconfig/v1/patch_jobs.proto#L83}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchJobInstanceDetails,google/cloud/osconfig/v1/patch_jobs.proto#L119}
   ///
@@ -230,7 +237,7 @@ class OsConfigServiceClient {
   StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
   ListPatchJobInstanceDetails(
       google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create an OS Config patch deployment.
@@ -247,7 +254,8 @@ class OsConfigServiceClient {
   ///  * Must be between 1-63 characters.
   ///  * Must end with a number or a letter.
   ///  * Must be unique within the project.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
@@ -259,14 +267,15 @@ class OsConfigServiceClient {
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
       std::string const& parent,
       google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
-      std::string const& patch_deployment_id, Options options = {});
+      std::string const& patch_deployment_id, Options opts = {});
 
   ///
   /// Create an OS Config patch deployment.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::CreatePatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L203}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
@@ -277,7 +286,7 @@ class OsConfigServiceClient {
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
       google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get an OS Config patch deployment.
@@ -285,7 +294,8 @@ class OsConfigServiceClient {
   /// @param name  Required. The resource name of the patch deployment in the
   /// form
   ///  `projects/*/patchDeployments/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
@@ -295,14 +305,15 @@ class OsConfigServiceClient {
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Get an OS Config patch deployment.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::GetPatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L227}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
@@ -313,14 +324,15 @@ class OsConfigServiceClient {
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
       google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get a page of OS Config patch deployments.
   ///
   /// @param parent  Required. The resource name of the parent in the form
   /// `projects/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
@@ -330,14 +342,15 @@ class OsConfigServiceClient {
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
   StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-  ListPatchDeployments(std::string const& parent, Options options = {});
+  ListPatchDeployments(std::string const& parent, Options opts = {});
 
   ///
   /// Get a page of OS Config patch deployments.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::ListPatchDeploymentsRequest,google/cloud/osconfig/v1/patch_deployments.proto#L239}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L40}
   ///
@@ -349,7 +362,7 @@ class OsConfigServiceClient {
   StreamRange<google::cloud::osconfig::v1::PatchDeployment>
   ListPatchDeployments(
       google::cloud::osconfig::v1::ListPatchDeploymentsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Delete an OS Config patch deployment.
@@ -357,26 +370,28 @@ class OsConfigServiceClient {
   /// @param name  Required. The resource name of the patch deployment in the
   /// form
   ///  `projects/*/patchDeployments/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L269}
   ///
-  Status DeletePatchDeployment(std::string const& name, Options options = {});
+  Status DeletePatchDeployment(std::string const& name, Options opts = {});
 
   ///
   /// Delete an OS Config patch deployment.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::osconfig::v1::DeletePatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L269}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L269}
   ///
   Status DeletePatchDeployment(
       google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<OsConfigServiceConnection> connection_;

@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IDSClient {
  public:
   explicit IDSClient(std::shared_ptr<IDSConnection> connection,
-                     Options options = {});
+                     Options opts = {});
   ~IDSClient();
 
   //@{
@@ -89,7 +89,8 @@ class IDSClient {
   ///
   /// @param parent  Required. The parent, which owns this collection of
   /// endpoints.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
   ///
@@ -99,14 +100,15 @@ class IDSClient {
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
   ///
   StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Endpoints in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::ids::v1::ListEndpointsRequest,google/cloud/ids/v1/ids.proto#L159}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
   ///
@@ -116,15 +118,15 @@ class IDSClient {
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
   ///
   StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest request,
-      Options options = {});
+      google::cloud::ids::v1::ListEndpointsRequest request, Options opts = {});
 
   ///
   /// Gets details of a single Endpoint.
   ///
   /// @param name  Required. The name of the endpoint to retrieve.
   ///  Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
   ///
@@ -134,14 +136,15 @@ class IDSClient {
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L82}
   ///
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single Endpoint.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::ids::v1::GetEndpointRequest,google/cloud/ids/v1/ids.proto#L200}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
   ///
@@ -152,7 +155,7 @@ class IDSClient {
   ///
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
       google::cloud::ids::v1::GetEndpointRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Endpoint in a given project and location.
@@ -166,7 +169,8 @@ class IDSClient {
   ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
   ///  Values that do not match this pattern will trigger an INVALID_ARGUMENT
   ///  error.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
   ///
@@ -178,14 +182,15 @@ class IDSClient {
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       std::string const& parent,
       google::cloud::ids::v1::Endpoint const& endpoint,
-      std::string const& endpoint_id, Options options = {});
+      std::string const& endpoint_id, Options opts = {});
 
   ///
   /// Creates a new Endpoint in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::ids::v1::CreateEndpointRequest,google/cloud/ids/v1/ids.proto#L211}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L82}
   ///
@@ -196,13 +201,14 @@ class IDSClient {
   ///
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       google::cloud::ids::v1::CreateEndpointRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single Endpoint.
   ///
   /// @param name  Required. The name of the endpoint to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::OperationMetadata,google/cloud/ids/v1/ids.proto#L273}
   ///
@@ -212,14 +218,15 @@ class IDSClient {
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L273}
   ///
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single Endpoint.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::ids::v1::DeleteEndpointRequest,google/cloud/ids/v1/ids.proto#L247}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::OperationMetadata,google/cloud/ids/v1/ids.proto#L273}
   ///
@@ -230,7 +237,7 @@ class IDSClient {
   ///
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       google::cloud::ids::v1::DeleteEndpointRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<IDSConnection> connection_;

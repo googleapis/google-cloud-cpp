@@ -26,19 +26,18 @@ namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Controller2Client::Controller2Client(
-    std::shared_ptr<Controller2Connection> connection, Options options)
+    std::shared_ptr<Controller2Connection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), debugger_internal::Controller2DefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), debugger_internal::Controller2DefaultOptions(
+                               connection_->options()))) {}
 Controller2Client::~Controller2Client() = default;
 
 StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
 Controller2Client::RegisterDebuggee(
     google::devtools::clouddebugger::v2::Debuggee const& debuggee,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::clouddebugger::v2::RegisterDebuggeeRequest request;
   *request.mutable_debuggee() = debuggee;
   return connection_->RegisterDebuggee(request);
@@ -47,17 +46,15 @@ Controller2Client::RegisterDebuggee(
 StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
 Controller2Client::RegisterDebuggee(
     google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RegisterDebuggee(request);
 }
 
 StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
 Controller2Client::ListActiveBreakpoints(std::string const& debuggee_id,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest request;
   request.set_debuggee_id(debuggee_id);
   return connection_->ListActiveBreakpoints(request);
@@ -67,9 +64,8 @@ StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
 Controller2Client::ListActiveBreakpoints(
     google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListActiveBreakpoints(request);
 }
 
@@ -77,9 +73,8 @@ StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
 Controller2Client::UpdateActiveBreakpoint(
     std::string const& debuggee_id,
     google::devtools::clouddebugger::v2::Breakpoint const& breakpoint,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest request;
   request.set_debuggee_id(debuggee_id);
   *request.mutable_breakpoint() = breakpoint;
@@ -90,9 +85,8 @@ StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
 Controller2Client::UpdateActiveBreakpoint(
     google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateActiveBreakpoint(request);
 }
 

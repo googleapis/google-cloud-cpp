@@ -65,7 +65,7 @@ class GameServerClustersServiceClient {
  public:
   explicit GameServerClustersServiceClient(
       std::shared_ptr<GameServerClustersServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~GameServerClustersServiceClient();
 
   //@{
@@ -96,7 +96,8 @@ class GameServerClustersServiceClient {
   ///
   /// @param parent  Required. The parent resource name, in the following form:
   ///  "projects/{project}/locations/{location}/realms/{realm}".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -106,14 +107,15 @@ class GameServerClustersServiceClient {
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerCluster>
-  ListGameServerClusters(std::string const& parent, Options options = {});
+  ListGameServerClusters(std::string const& parent, Options opts = {});
 
   ///
   /// Lists game server clusters in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::ListGameServerClustersRequest,google/cloud/gaming/v1/game_server_clusters.proto#L46}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -125,7 +127,7 @@ class GameServerClustersServiceClient {
   StreamRange<google::cloud::gaming::v1::GameServerCluster>
   ListGameServerClusters(
       google::cloud::gaming::v1::ListGameServerClustersRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single game server cluster.
@@ -133,7 +135,8 @@ class GameServerClustersServiceClient {
   /// @param name  Required. The name of the game server cluster to retrieve, in
   /// the following form:
   ///  `projects/{project}/locations/{location}/realms/{realm-id}/gameServerClusters/{cluster}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -143,14 +146,15 @@ class GameServerClustersServiceClient {
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerCluster> GetGameServerCluster(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single game server cluster.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::GetGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L96}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -161,7 +165,7 @@ class GameServerClustersServiceClient {
   ///
   StatusOr<google::cloud::gaming::v1::GameServerCluster> GetGameServerCluster(
       google::cloud::gaming::v1::GetGameServerClusterRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new game server cluster in a given project and location.
@@ -172,7 +176,8 @@ class GameServerClustersServiceClient {
   /// be created.
   /// @param game_server_cluster_id  Required. The ID of the game server cluster
   /// resource to be created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -185,14 +190,15 @@ class GameServerClustersServiceClient {
   CreateGameServerCluster(
       std::string const& parent,
       google::cloud::gaming::v1::GameServerCluster const& game_server_cluster,
-      std::string const& game_server_cluster_id, Options options = {});
+      std::string const& game_server_cluster_id, Options opts = {});
 
   ///
   /// Creates a new game server cluster in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::CreateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L116}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -204,7 +210,7 @@ class GameServerClustersServiceClient {
   future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
   CreateGameServerCluster(
       google::cloud::gaming::v1::CreateGameServerClusterRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Previews creation of a new game server cluster in a given project and
@@ -212,7 +218,8 @@ class GameServerClustersServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L134}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L163}
   ///
@@ -225,7 +232,7 @@ class GameServerClustersServiceClient {
   PreviewCreateGameServerCluster(
       google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single game server cluster.
@@ -233,7 +240,8 @@ class GameServerClustersServiceClient {
   /// @param name  Required. The name of the game server cluster to delete, in
   /// the following form:
   ///  `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
@@ -243,14 +251,15 @@ class GameServerClustersServiceClient {
   /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerCluster(std::string const& name, Options options = {});
+  DeleteGameServerCluster(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single game server cluster.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::DeleteGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L176}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
   ///
@@ -262,14 +271,15 @@ class GameServerClustersServiceClient {
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
   DeleteGameServerCluster(
       google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Previews deletion of a single game server cluster.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L188}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L204}
   ///
@@ -282,7 +292,7 @@ class GameServerClustersServiceClient {
   PreviewDeleteGameServerCluster(
       google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Patches a single game server cluster.
@@ -294,7 +304,8 @@ class GameServerClustersServiceClient {
   /// must be supplied in
   ///  this field. For the `FieldMask` definition, see
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -306,14 +317,15 @@ class GameServerClustersServiceClient {
   future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
   UpdateGameServerCluster(
       google::cloud::gaming::v1::GameServerCluster const& game_server_cluster,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Patches a single game server cluster.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::UpdateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L213}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerCluster,google/cloud/gaming/v1/game_server_clusters.proto#L276}
   ///
@@ -325,14 +337,15 @@ class GameServerClustersServiceClient {
   future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
   UpdateGameServerCluster(
       google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Previews updating a GameServerCluster.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest,google/cloud/gaming/v1/game_server_clusters.proto#L225}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse,google/cloud/gaming/v1/game_server_clusters.proto#L240}
   ///
@@ -345,7 +358,7 @@ class GameServerClustersServiceClient {
   PreviewUpdateGameServerCluster(
       google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<GameServerClustersServiceConnection> connection_;

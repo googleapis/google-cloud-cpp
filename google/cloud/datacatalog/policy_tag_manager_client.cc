@@ -26,20 +26,18 @@ namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTagManagerClient::PolicyTagManagerClient(
-    std::shared_ptr<PolicyTagManagerConnection> connection, Options options)
+    std::shared_ptr<PolicyTagManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
-          datacatalog_internal::PolicyTagManagerDefaultOptions(
-              connection_->options()))) {}
+          std::move(opts), datacatalog_internal::PolicyTagManagerDefaultOptions(
+                               connection_->options()))) {}
 PolicyTagManagerClient::~PolicyTagManagerClient() = default;
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerClient::CreateTaxonomy(
     std::string const& parent,
-    google::cloud::datacatalog::v1::Taxonomy const& taxonomy, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::Taxonomy const& taxonomy, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::CreateTaxonomyRequest request;
   request.set_parent(parent);
   *request.mutable_taxonomy() = taxonomy;
@@ -49,16 +47,14 @@ PolicyTagManagerClient::CreateTaxonomy(
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerClient::CreateTaxonomy(
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTaxonomy(request);
 }
 
 Status PolicyTagManagerClient::DeleteTaxonomy(std::string const& name,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::DeleteTaxonomyRequest request;
   request.set_name(name);
   return connection_->DeleteTaxonomy(request);
@@ -66,17 +62,15 @@ Status PolicyTagManagerClient::DeleteTaxonomy(std::string const& name,
 
 Status PolicyTagManagerClient::DeleteTaxonomy(
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTaxonomy(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerClient::UpdateTaxonomy(
-    google::cloud::datacatalog::v1::Taxonomy const& taxonomy, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::Taxonomy const& taxonomy, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateTaxonomyRequest request;
   *request.mutable_taxonomy() = taxonomy;
   return connection_->UpdateTaxonomy(request);
@@ -85,17 +79,15 @@ PolicyTagManagerClient::UpdateTaxonomy(
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerClient::UpdateTaxonomy(
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTaxonomy(request);
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerClient::ListTaxonomies(std::string const& parent,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::ListTaxonomiesRequest request;
   request.set_parent(parent);
   return connection_->ListTaxonomies(request);
@@ -104,16 +96,14 @@ PolicyTagManagerClient::ListTaxonomies(std::string const& parent,
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerClient::ListTaxonomies(
     google::cloud::datacatalog::v1::ListTaxonomiesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTaxonomies(std::move(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerClient::GetTaxonomy(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+PolicyTagManagerClient::GetTaxonomy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::GetTaxonomyRequest request;
   request.set_name(name);
   return connection_->GetTaxonomy(request);
@@ -122,19 +112,16 @@ PolicyTagManagerClient::GetTaxonomy(std::string const& name, Options options) {
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerClient::GetTaxonomy(
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTaxonomy(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerClient::CreatePolicyTag(
     std::string const& parent,
-    google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::PolicyTag const& policy_tag, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::CreatePolicyTagRequest request;
   request.set_parent(parent);
   *request.mutable_policy_tag() = policy_tag;
@@ -144,16 +131,14 @@ PolicyTagManagerClient::CreatePolicyTag(
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerClient::CreatePolicyTag(
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyTag(request);
 }
 
 Status PolicyTagManagerClient::DeletePolicyTag(std::string const& name,
-                                               Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::DeletePolicyTagRequest request;
   request.set_name(name);
   return connection_->DeletePolicyTag(request);
@@ -161,18 +146,15 @@ Status PolicyTagManagerClient::DeletePolicyTag(std::string const& name,
 
 Status PolicyTagManagerClient::DeletePolicyTag(
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyTag(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerClient::UpdatePolicyTag(
-    google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::PolicyTag const& policy_tag, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdatePolicyTagRequest request;
   *request.mutable_policy_tag() = policy_tag;
   return connection_->UpdatePolicyTag(request);
@@ -181,17 +163,15 @@ PolicyTagManagerClient::UpdatePolicyTag(
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerClient::UpdatePolicyTag(
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePolicyTag(request);
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerClient::ListPolicyTags(std::string const& parent,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::ListPolicyTagsRequest request;
   request.set_parent(parent);
   return connection_->ListPolicyTags(request);
@@ -200,16 +180,14 @@ PolicyTagManagerClient::ListPolicyTags(std::string const& parent,
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerClient::ListPolicyTags(
     google::cloud::datacatalog::v1::ListPolicyTagsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPolicyTags(std::move(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerClient::GetPolicyTag(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+PolicyTagManagerClient::GetPolicyTag(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::GetPolicyTagRequest request;
   request.set_name(name);
   return connection_->GetPolicyTag(request);
@@ -218,32 +196,27 @@ PolicyTagManagerClient::GetPolicyTag(std::string const& name, Options options) {
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerClient::GetPolicyTag(
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPolicyTag(request);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyTagManagerClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 

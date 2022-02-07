@@ -26,17 +26,16 @@ namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CatalogServiceClient::CatalogServiceClient(
-    std::shared_ptr<CatalogServiceConnection> connection, Options options)
+    std::shared_ptr<CatalogServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), retail_internal::CatalogServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), retail_internal::CatalogServiceDefaultOptions(
+                               connection_->options()))) {}
 CatalogServiceClient::~CatalogServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::Catalog>
-CatalogServiceClient::ListCatalogs(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CatalogServiceClient::ListCatalogs(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::ListCatalogsRequest request;
   request.set_parent(parent);
   return connection_->ListCatalogs(request);
@@ -44,18 +43,16 @@ CatalogServiceClient::ListCatalogs(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceClient::ListCatalogs(
-    google::cloud::retail::v2::ListCatalogsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::retail::v2::ListCatalogsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCatalogs(std::move(request));
 }
 
 StatusOr<google::cloud::retail::v2::Catalog>
 CatalogServiceClient::UpdateCatalog(
     google::cloud::retail::v2::Catalog const& catalog,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateCatalogRequest request;
   *request.mutable_catalog() = catalog;
   *request.mutable_update_mask() = update_mask;
@@ -65,16 +62,14 @@ CatalogServiceClient::UpdateCatalog(
 StatusOr<google::cloud::retail::v2::Catalog>
 CatalogServiceClient::UpdateCatalog(
     google::cloud::retail::v2::UpdateCatalogRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCatalog(request);
 }
 
 Status CatalogServiceClient::SetDefaultBranch(std::string const& catalog,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::SetDefaultBranchRequest request;
   request.set_catalog(catalog);
   return connection_->SetDefaultBranch(request);
@@ -82,17 +77,15 @@ Status CatalogServiceClient::SetDefaultBranch(std::string const& catalog,
 
 Status CatalogServiceClient::SetDefaultBranch(
     google::cloud::retail::v2::SetDefaultBranchRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetDefaultBranch(request);
 }
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
 CatalogServiceClient::GetDefaultBranch(std::string const& catalog,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetDefaultBranchRequest request;
   request.set_catalog(catalog);
   return connection_->GetDefaultBranch(request);
@@ -101,9 +94,8 @@ CatalogServiceClient::GetDefaultBranch(std::string const& catalog,
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
 CatalogServiceClient::GetDefaultBranch(
     google::cloud::retail::v2::GetDefaultBranchRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDefaultBranch(request);
 }
 

@@ -80,7 +80,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Controller2Client {
  public:
   explicit Controller2Client(std::shared_ptr<Controller2Connection> connection,
-                             Options options = {});
+                             Options opts = {});
   ~Controller2Client();
 
   //@{
@@ -118,7 +118,8 @@ class Controller2Client {
   /// @param debuggee  Required. Debuggee information to register.
   ///  The fields `project`, `uniquifier`, `description` and `agent_version`
   ///  of the debuggee must be set.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L124}
   ///
@@ -130,7 +131,7 @@ class Controller2Client {
   StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
   RegisterDebuggee(
       google::devtools::clouddebugger::v2::Debuggee const& debuggee,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Registers the debuggee with the controller service.
@@ -146,7 +147,8 @@ class Controller2Client {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeRequest,google/devtools/clouddebugger/v2/controller.proto#L116}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L124}
   ///
@@ -159,7 +161,7 @@ class Controller2Client {
   RegisterDebuggee(
       google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the list of all active breakpoints for the debuggee.
@@ -177,7 +179,8 @@ class Controller2Client {
   /// setting those breakpoints again.
   ///
   /// @param debuggee_id  Required. Identifies the debuggee.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L154}
   ///
@@ -187,7 +190,7 @@ class Controller2Client {
   /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L154}
   ///
   StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
-  ListActiveBreakpoints(std::string const& debuggee_id, Options options = {});
+  ListActiveBreakpoints(std::string const& debuggee_id, Options opts = {});
 
   ///
   /// Returns the list of all active breakpoints for the debuggee.
@@ -206,7 +209,8 @@ class Controller2Client {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest,google/devtools/clouddebugger/v2/controller.proto#L134}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L154}
   ///
@@ -219,7 +223,7 @@ class Controller2Client {
   ListActiveBreakpoints(
       google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the breakpoint state or mutable fields.
@@ -235,7 +239,8 @@ class Controller2Client {
   /// @param breakpoint  Required. Updated breakpoint information.
   ///  The field `id` must be set.
   ///  The agent must echo all Breakpoint specification fields in the update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L182}
   ///
@@ -248,7 +253,7 @@ class Controller2Client {
   UpdateActiveBreakpoint(
       std::string const& debuggee_id,
       google::devtools::clouddebugger::v2::Breakpoint const& breakpoint,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the breakpoint state or mutable fields.
@@ -262,7 +267,8 @@ class Controller2Client {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest,google/devtools/clouddebugger/v2/controller.proto#L170}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L182}
   ///
@@ -275,7 +281,7 @@ class Controller2Client {
   UpdateActiveBreakpoint(
       google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<Controller2Connection> connection_;

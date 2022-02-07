@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OrganizationsClient {
  public:
   explicit OrganizationsClient(
-      std::shared_ptr<OrganizationsConnection> connection,
-      Options options = {});
+      std::shared_ptr<OrganizationsConnection> connection, Options opts = {});
   ~OrganizationsClient();
 
   //@{
@@ -93,7 +92,8 @@ class OrganizationsClient {
   /// This is the organization's
   ///  relative path in the API, formatted as "organizations/[organizationId]".
   ///  For example, "organizations/1234".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
@@ -103,7 +103,7 @@ class OrganizationsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Fetches an organization resource identified by the specified resource
@@ -111,7 +111,8 @@ class OrganizationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::GetOrganizationRequest,google/cloud/resourcemanager/v3/organizations.proto#L170}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
@@ -122,7 +123,7 @@ class OrganizationsClient {
   ///
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       google::cloud::resourcemanager::v3::GetOrganizationRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Searches organization resources that are visible to the user and satisfy
@@ -149,7 +150,8 @@ class OrganizationsClient {
   ///  resources with `owner.directory_customer_id` equal to `123456789`.
   ///  * Query `domain:google.com` returns Organization resources corresponding
   ///  to the domain `google.com`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
@@ -159,7 +161,7 @@ class OrganizationsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(std::string const& query, Options options = {});
+  SearchOrganizations(std::string const& query, Options opts = {});
 
   ///
   /// Searches organization resources that are visible to the user and satisfy
@@ -172,7 +174,8 @@ class OrganizationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::SearchOrganizationsRequest,google/cloud/resourcemanager/v3/organizations.proto#L183}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
   ///
@@ -184,7 +187,7 @@ class OrganizationsClient {
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(
       google::cloud::resourcemanager::v3::SearchOrganizationsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the access control policy for an organization resource. The policy
@@ -199,7 +202,8 @@ class OrganizationsClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -209,7 +213,7 @@ class OrganizationsClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Gets the access control policy for an organization resource. The policy
@@ -223,7 +227,8 @@ class OrganizationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -233,8 +238,7 @@ class OrganizationsClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Sets the access control policy on an organization resource. Replaces any
@@ -248,7 +252,8 @@ class OrganizationsClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -258,7 +263,7 @@ class OrganizationsClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Sets the access control policy on an organization resource. Replaces any
@@ -271,7 +276,8 @@ class OrganizationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -281,8 +287,7 @@ class OrganizationsClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns the permissions that a caller has on the specified organization.
@@ -299,7 +304,8 @@ class OrganizationsClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -310,7 +316,7 @@ class OrganizationsClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the permissions that a caller has on the specified organization.
@@ -321,7 +327,8 @@ class OrganizationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -332,7 +339,7 @@ class OrganizationsClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<OrganizationsConnection> connection_;

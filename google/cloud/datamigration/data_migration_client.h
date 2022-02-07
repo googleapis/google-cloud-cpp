@@ -64,7 +64,7 @@ class DataMigrationServiceClient {
  public:
   explicit DataMigrationServiceClient(
       std::shared_ptr<DataMigrationServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~DataMigrationServiceClient();
 
   //@{
@@ -93,7 +93,8 @@ class DataMigrationServiceClient {
   ///
   /// @param parent  Required. The parent, which owns this collection of
   /// migrationJobs.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -103,14 +104,15 @@ class DataMigrationServiceClient {
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
   StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists migration jobs in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::ListMigrationJobsRequest,google/cloud/clouddms/v1/clouddms.proto#L239}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -121,13 +123,14 @@ class DataMigrationServiceClient {
   ///
   StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
       google::cloud::clouddms::v1::ListMigrationJobsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single migration job.
   ///
   /// @param name  Required. Name of the migration job resource to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -137,14 +140,15 @@ class DataMigrationServiceClient {
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
   StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single migration job.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::GetMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L291}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -155,7 +159,7 @@ class DataMigrationServiceClient {
   ///
   StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
       google::cloud::clouddms::v1::GetMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new migration job in a given project and location.
@@ -166,7 +170,8 @@ class DataMigrationServiceClient {
   ///  job](https://cloud.google.com/database-migration/docs/reference/rest/v1/projects.locations.migrationJobs)
   ///  object.
   /// @param migration_job_id  Required. The ID of the instance to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -179,14 +184,15 @@ class DataMigrationServiceClient {
   CreateMigrationJob(
       std::string const& parent,
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
-      std::string const& migration_job_id, Options options = {});
+      std::string const& migration_job_id, Options opts = {});
 
   ///
   /// Creates a new migration job in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::CreateMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L303}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -198,7 +204,7 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   CreateMigrationJob(
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the parameters of a single migration job.
@@ -207,7 +213,8 @@ class DataMigrationServiceClient {
   /// @param update_mask  Required. Field mask is used to specify the fields to
   /// be overwritten in the
   ///  migration job resource by the update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -219,14 +226,15 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   UpdateMigrationJob(
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the parameters of a single migration job.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::UpdateMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L331}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -238,13 +246,14 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   UpdateMigrationJob(
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single migration job.
   ///
   /// @param name  Required. Name of the migration job resource to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::OperationMetadata,google/cloud/clouddms/v1/clouddms.proto#L601}
   ///
@@ -254,14 +263,15 @@ class DataMigrationServiceClient {
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L601}
   ///
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteMigrationJob(std::string const& name, Options options = {});
+  DeleteMigrationJob(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single migration job.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::DeleteMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L350}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::OperationMetadata,google/cloud/clouddms/v1/clouddms.proto#L601}
   ///
@@ -273,14 +283,15 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteMigrationJob(
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Start an already created migration job.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::StartMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L375}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -291,14 +302,15 @@ class DataMigrationServiceClient {
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Stops a running migration job.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::StopMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L383}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -309,7 +321,7 @@ class DataMigrationServiceClient {
   ///
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Resume a migration job that is currently stopped and is resumable (was
@@ -317,7 +329,8 @@ class DataMigrationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::ResumeMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L391}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -329,7 +342,7 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   ResumeMigrationJob(
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Promote a migration job, stopping replication to the destination and
@@ -337,7 +350,8 @@ class DataMigrationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::PromoteMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L399}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -349,7 +363,7 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   PromoteMigrationJob(
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Verify a migration job, making sure the destination can reach the source
@@ -357,7 +371,8 @@ class DataMigrationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::VerifyMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L407}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -369,7 +384,7 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   VerifyMigrationJob(
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Restart a stopped or failed migration job, resetting the destination
@@ -378,7 +393,8 @@ class DataMigrationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::RestartMigrationJobRequest,google/cloud/clouddms/v1/clouddms.proto#L415}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::MigrationJob,google/cloud/clouddms/v1/clouddms_resources.proto#L373}
   ///
@@ -390,7 +406,7 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   RestartMigrationJob(
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Generate a SSH configuration script to configure the reverse SSH
@@ -398,7 +414,8 @@ class DataMigrationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::GenerateSshScriptRequest,google/cloud/clouddms/v1/clouddms.proto#L423}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::SshScript,google/cloud/clouddms/v1/clouddms.proto#L464}
   ///
@@ -409,7 +426,7 @@ class DataMigrationServiceClient {
   ///
   StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Retrieve a list of all connection profiles in a given project and
@@ -417,7 +434,8 @@ class DataMigrationServiceClient {
   ///
   /// @param parent  Required. The parent, which owns this collection of
   /// connection profiles.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -427,7 +445,7 @@ class DataMigrationServiceClient {
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-  ListConnectionProfiles(std::string const& parent, Options options = {});
+  ListConnectionProfiles(std::string const& parent, Options opts = {});
 
   ///
   /// Retrieve a list of all connection profiles in a given project and
@@ -435,7 +453,8 @@ class DataMigrationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::ListConnectionProfilesRequest,google/cloud/clouddms/v1/clouddms.proto#L470}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -447,13 +466,14 @@ class DataMigrationServiceClient {
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
   ListConnectionProfiles(
       google::cloud::clouddms::v1::ListConnectionProfilesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single connection profile.
   ///
   /// @param name  Required. Name of the connection profile resource to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -463,14 +483,15 @@ class DataMigrationServiceClient {
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
   StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single connection profile.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::GetConnectionProfileRequest,google/cloud/clouddms/v1/clouddms.proto#L521}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -481,7 +502,7 @@ class DataMigrationServiceClient {
   ///
   StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
       google::cloud::clouddms::v1::GetConnectionProfileRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new connection profile in a given project and location.
@@ -491,7 +512,8 @@ class DataMigrationServiceClient {
   /// @param connection_profile  Required. The create request body including the
   /// connection profile data
   /// @param connection_profile_id  Required. The connection profile identifier.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -504,14 +526,15 @@ class DataMigrationServiceClient {
   CreateConnectionProfile(
       std::string const& parent,
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-      std::string const& connection_profile_id, Options options = {});
+      std::string const& connection_profile_id, Options opts = {});
 
   ///
   /// Creates a new connection profile in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::CreateConnectionProfileRequest,google/cloud/clouddms/v1/clouddms.proto#L532}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -524,7 +547,7 @@ class DataMigrationServiceClient {
   CreateConnectionProfile(
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update the configuration of a single connection profile.
@@ -534,7 +557,8 @@ class DataMigrationServiceClient {
   /// @param update_mask  Required. Field mask is used to specify the fields to
   /// be overwritten in the
   ///  connection profile resource by the update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -546,14 +570,15 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   UpdateConnectionProfile(
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Update the configuration of a single connection profile.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::UpdateConnectionProfileRequest,google/cloud/clouddms/v1/clouddms.proto#L558}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::ConnectionProfile,google/cloud/clouddms/v1/clouddms_resources.proto#L537}
   ///
@@ -566,7 +591,7 @@ class DataMigrationServiceClient {
   UpdateConnectionProfile(
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single Database Migration Service connection profile.
@@ -574,7 +599,8 @@ class DataMigrationServiceClient {
   /// active migration jobs.
   ///
   /// @param name  Required. Name of the connection profile resource to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::OperationMetadata,google/cloud/clouddms/v1/clouddms.proto#L601}
   ///
@@ -584,7 +610,7 @@ class DataMigrationServiceClient {
   /// @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L601}
   ///
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConnectionProfile(std::string const& name, Options options = {});
+  DeleteConnectionProfile(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single Database Migration Service connection profile.
@@ -593,7 +619,8 @@ class DataMigrationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::clouddms::v1::DeleteConnectionProfileRequest,google/cloud/clouddms/v1/clouddms.proto#L577}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::clouddms::v1::OperationMetadata,google/cloud/clouddms/v1/clouddms.proto#L601}
   ///
@@ -606,7 +633,7 @@ class DataMigrationServiceClient {
   DeleteConnectionProfile(
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<DataMigrationServiceConnection> connection_;

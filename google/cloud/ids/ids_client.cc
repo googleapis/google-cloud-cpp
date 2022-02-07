@@ -25,51 +25,45 @@ namespace cloud {
 namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IDSClient::IDSClient(std::shared_ptr<IDSConnection> connection, Options options)
+IDSClient::IDSClient(std::shared_ptr<IDSConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           ids_internal::IDSDefaultOptions(connection_->options()))) {}
 IDSClient::~IDSClient() = default;
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSClient::ListEndpoints(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::ids::v1::ListEndpointsRequest request;
   request.set_parent(parent);
   return connection_->ListEndpoints(request);
 }
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSClient::ListEndpoints(
-    google::cloud::ids::v1::ListEndpointsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::ids::v1::ListEndpointsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEndpoints(std::move(request));
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSClient::GetEndpoint(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::ids::v1::GetEndpointRequest request;
   request.set_name(name);
   return connection_->GetEndpoint(request);
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSClient::GetEndpoint(
-    google::cloud::ids::v1::GetEndpointRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::ids::v1::GetEndpointRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEndpoint(request);
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>> IDSClient::CreateEndpoint(
     std::string const& parent, google::cloud::ids::v1::Endpoint const& endpoint,
-    std::string const& endpoint_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& endpoint_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::ids::v1::CreateEndpointRequest request;
   request.set_parent(parent);
   *request.mutable_endpoint() = endpoint;
@@ -79,16 +73,14 @@ future<StatusOr<google::cloud::ids::v1::Endpoint>> IDSClient::CreateEndpoint(
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>> IDSClient::CreateEndpoint(
     google::cloud::ids::v1::CreateEndpointRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEndpoint(request);
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-IDSClient::DeleteEndpoint(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+IDSClient::DeleteEndpoint(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::ids::v1::DeleteEndpointRequest request;
   request.set_name(name);
   return connection_->DeleteEndpoint(request);
@@ -97,9 +89,8 @@ IDSClient::DeleteEndpoint(std::string const& name, Options options) {
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSClient::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEndpoint(request);
 }
 

@@ -64,7 +64,7 @@ class UserEventServiceClient {
  public:
   explicit UserEventServiceClient(
       std::shared_ptr<UserEventServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~UserEventServiceClient();
 
   //@{
@@ -92,7 +92,8 @@ class UserEventServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::WriteUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L118}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::UserEvent,google/cloud/retail/v2/user_event.proto#L37}
   ///
@@ -103,7 +104,7 @@ class UserEventServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       google::cloud::retail::v2::WriteUserEventRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Writes a single user event from the browser. This uses a GET request to
@@ -114,7 +115,8 @@ class UserEventServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::CollectUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L128}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::HttpBody,google/api/httpbody.proto#L71}
   ///
@@ -125,7 +127,7 @@ class UserEventServiceClient {
   ///
   StatusOr<google::api::HttpBody> CollectUserEvent(
       google::cloud::retail::v2::CollectUserEventRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes permanently all user events specified by the filter provided.
@@ -135,7 +137,8 @@ class UserEventServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsRequest,google/cloud/retail/v2/purge_config.proto#L36}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsResponse,google/cloud/retail/v2/purge_config.proto#L76}
   ///
@@ -147,7 +150,7 @@ class UserEventServiceClient {
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
   PurgeUserEvents(
       google::cloud::retail::v2::PurgeUserEventsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Bulk import of User events. Request processing might be
@@ -160,7 +163,8 @@ class UserEventServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L222}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L357}
   ///
@@ -172,7 +176,7 @@ class UserEventServiceClient {
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(
       google::cloud::retail::v2::ImportUserEventsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Triggers a user event rejoin operation with latest product catalog. Events
@@ -185,7 +189,8 @@ class UserEventServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsRequest,google/cloud/retail/v2/user_event_service.proto#L150}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsResponse,google/cloud/retail/v2/user_event_service.proto#L182}
   ///
@@ -197,7 +202,7 @@ class UserEventServiceClient {
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(
       google::cloud::retail::v2::RejoinUserEventsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<UserEventServiceConnection> connection_;

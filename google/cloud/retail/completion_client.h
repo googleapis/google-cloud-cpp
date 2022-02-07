@@ -67,7 +67,7 @@ class CompletionServiceClient {
  public:
   explicit CompletionServiceClient(
       std::shared_ptr<CompletionServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~CompletionServiceClient();
 
   //@{
@@ -99,7 +99,8 @@ class CompletionServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::CompleteQueryRequest,google/cloud/retail/v2/completion_service.proto#L78}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L151}
   ///
@@ -110,7 +111,7 @@ class CompletionServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Bulk import of processed completion dataset.
@@ -123,7 +124,8 @@ class CompletionServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L239}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L384}
   ///
@@ -135,7 +137,7 @@ class CompletionServiceClient {
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(
       google::cloud::retail::v2::ImportCompletionDataRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CompletionServiceConnection> connection_;

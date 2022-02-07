@@ -26,52 +26,46 @@ namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudRedisClient::CloudRedisClient(
-    std::shared_ptr<CloudRedisConnection> connection, Options options)
+    std::shared_ptr<CloudRedisConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           redis_internal::CloudRedisDefaultOptions(connection_->options()))) {}
 CloudRedisClient::~CloudRedisClient() = default;
 
 StreamRange<google::cloud::redis::v1::Instance> CloudRedisClient::ListInstances(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::ListInstancesRequest request;
   request.set_parent(parent);
   return connection_->ListInstances(request);
 }
 
 StreamRange<google::cloud::redis::v1::Instance> CloudRedisClient::ListInstances(
-    google::cloud::redis::v1::ListInstancesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::redis::v1::ListInstancesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisClient::GetInstance(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisClient::GetInstance(
-    google::cloud::redis::v1::GetInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::redis::v1::GetInstanceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::CreateInstance(
     std::string const& parent, std::string const& instance_id,
-    google::cloud::redis::v1::Instance const& instance, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::redis::v1::Instance const& instance, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::CreateInstanceRequest request;
   request.set_parent(parent);
   request.set_instance_id(instance_id);
@@ -82,18 +76,16 @@ CloudRedisClient::CreateInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::UpdateInstance(
     google::protobuf::FieldMask const& update_mask,
-    google::cloud::redis::v1::Instance const& instance, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::redis::v1::Instance const& instance, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::UpdateInstanceRequest request;
   *request.mutable_update_mask() = update_mask;
   *request.mutable_instance() = instance;
@@ -103,18 +95,16 @@ CloudRedisClient::UpdateInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::UpgradeInstance(std::string const& name,
                                   std::string const& redis_version,
-                                  Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::UpgradeInstanceRequest request;
   request.set_name(name);
   request.set_redis_version(redis_version);
@@ -124,19 +114,16 @@ CloudRedisClient::UpgradeInstance(std::string const& name,
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::UpgradeInstance(
     google::cloud::redis::v1::UpgradeInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpgradeInstance(request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::ImportInstance(
     std::string const& name,
-    google::cloud::redis::v1::InputConfig const& input_config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::redis::v1::InputConfig const& input_config, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::ImportInstanceRequest request;
   request.set_name(name);
   *request.mutable_input_config() = input_config;
@@ -146,19 +133,16 @@ CloudRedisClient::ImportInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportInstance(request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::ExportInstance(
     std::string const& name,
-    google::cloud::redis::v1::OutputConfig const& output_config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::redis::v1::OutputConfig const& output_config, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::ExportInstanceRequest request;
   request.set_name(name);
   *request.mutable_output_config() = output_config;
@@ -168,9 +152,8 @@ CloudRedisClient::ExportInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::ExportInstance(
     google::cloud::redis::v1::ExportInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportInstance(request);
 }
 
@@ -179,9 +162,8 @@ CloudRedisClient::FailoverInstance(
     std::string const& name,
     google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode
         data_protection_mode,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::FailoverInstanceRequest request;
   request.set_name(name);
   request.set_data_protection_mode(data_protection_mode);
@@ -191,16 +173,14 @@ CloudRedisClient::FailoverInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FailoverInstance(request);
 }
 
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-CloudRedisClient::DeleteInstance(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudRedisClient::DeleteInstance(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::DeleteInstanceRequest request;
   request.set_name(name);
   return connection_->DeleteInstance(request);
@@ -209,9 +189,8 @@ CloudRedisClient::DeleteInstance(std::string const& name, Options options) {
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
 CloudRedisClient::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 

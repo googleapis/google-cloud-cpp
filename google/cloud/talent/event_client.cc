@@ -26,20 +26,18 @@ namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EventServiceClient::EventServiceClient(
-    std::shared_ptr<EventServiceConnection> connection, Options options)
+    std::shared_ptr<EventServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), talent_internal::EventServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), talent_internal::EventServiceDefaultOptions(
+                               connection_->options()))) {}
 EventServiceClient::~EventServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceClient::CreateClientEvent(
     std::string const& parent,
-    google::cloud::talent::v4::ClientEvent const& client_event,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::talent::v4::ClientEvent const& client_event, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::CreateClientEventRequest request;
   request.set_parent(parent);
   *request.mutable_client_event() = client_event;
@@ -49,9 +47,8 @@ EventServiceClient::CreateClientEvent(
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceClient::CreateClientEvent(
     google::cloud::talent::v4::CreateClientEventRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateClientEvent(request);
 }
 

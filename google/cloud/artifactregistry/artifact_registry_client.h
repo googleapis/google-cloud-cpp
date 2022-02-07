@@ -75,7 +75,7 @@ class ArtifactRegistryClient {
  public:
   explicit ArtifactRegistryClient(
       std::shared_ptr<ArtifactRegistryConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ArtifactRegistryClient();
 
   //@{
@@ -103,7 +103,8 @@ class ArtifactRegistryClient {
   ///
   /// @param parent  Required. The name of the parent resource whose docker
   /// images will be listed.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::DockerImage,google/devtools/artifactregistry/v1/artifact.proto#L38}
   ///
@@ -113,14 +114,15 @@ class ArtifactRegistryClient {
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L38}
   ///
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-  ListDockerImages(std::string const& parent, Options options = {});
+  ListDockerImages(std::string const& parent, Options opts = {});
 
   ///
   /// Lists docker images.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::artifactregistry::v1::ListDockerImagesRequest,google/devtools/artifactregistry/v1/artifact.proto#L87}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::DockerImage,google/devtools/artifactregistry/v1/artifact.proto#L38}
   ///
@@ -132,14 +134,15 @@ class ArtifactRegistryClient {
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
   ListDockerImages(
       google::devtools::artifactregistry::v1::ListDockerImagesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists repositories.
   ///
   /// @param parent  Required. The name of the parent resource whose
   /// repositories will be listed.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Repository,google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
@@ -149,14 +152,15 @@ class ArtifactRegistryClient {
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
   StreamRange<google::devtools::artifactregistry::v1::Repository>
-  ListRepositories(std::string const& parent, Options options = {});
+  ListRepositories(std::string const& parent, Options opts = {});
 
   ///
   /// Lists repositories.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::artifactregistry::v1::ListRepositoriesRequest,google/devtools/artifactregistry/v1/repository.proto#L94}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Repository,google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
@@ -168,13 +172,14 @@ class ArtifactRegistryClient {
   StreamRange<google::devtools::artifactregistry::v1::Repository>
   ListRepositories(
       google::devtools::artifactregistry::v1::ListRepositoriesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a repository.
   ///
   /// @param name  Required. The name of the repository to retrieve.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Repository,google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
@@ -184,14 +189,15 @@ class ArtifactRegistryClient {
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
   StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a repository.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::artifactregistry::v1::GetRepositoryRequest,google/devtools/artifactregistry/v1/repository.proto#L121}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Repository,google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
@@ -203,7 +209,7 @@ class ArtifactRegistryClient {
   StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ArtifactRegistryConnection> connection_;

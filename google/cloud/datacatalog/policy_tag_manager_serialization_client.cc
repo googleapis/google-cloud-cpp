@@ -27,10 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTagManagerSerializationClient::PolicyTagManagerSerializationClient(
     std::shared_ptr<PolicyTagManagerSerializationConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           datacatalog_internal::PolicyTagManagerSerializationDefaultOptions(
               connection_->options()))) {}
 PolicyTagManagerSerializationClient::~PolicyTagManagerSerializationClient() =
@@ -39,27 +39,24 @@ PolicyTagManagerSerializationClient::~PolicyTagManagerSerializationClient() =
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationClient::ReplaceTaxonomy(
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReplaceTaxonomy(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationClient::ImportTaxonomies(
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportTaxonomies(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationClient::ExportTaxonomies(
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportTaxonomies(request);
 }
 

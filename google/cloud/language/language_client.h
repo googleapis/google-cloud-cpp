@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LanguageServiceClient {
  public:
   explicit LanguageServiceClient(
-      std::shared_ptr<LanguageServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<LanguageServiceConnection> connection, Options opts = {});
   ~LanguageServiceClient();
 
   //@{
@@ -92,7 +91,8 @@ class LanguageServiceClient {
   /// @param document  Input document.
   /// @param encoding_type  The encoding type used by the API to calculate
   /// sentence offsets.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L975}
   ///
@@ -104,13 +104,14 @@ class LanguageServiceClient {
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(google::cloud::language::v1::Document const& document,
                    google::cloud::language::v1::EncodingType encoding_type,
-                   Options options = {});
+                   Options opts = {});
 
   ///
   /// Analyzes the sentiment of the provided text.
   ///
   /// @param document  Input document.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L975}
   ///
@@ -121,14 +122,15 @@ class LanguageServiceClient {
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(google::cloud::language::v1::Document const& document,
-                   Options options = {});
+                   Options opts = {});
 
   ///
   /// Analyzes the sentiment of the provided text.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentRequest,google/cloud/language/v1/language_service.proto#L966}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L975}
   ///
@@ -140,7 +142,7 @@ class LanguageServiceClient {
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(
       google::cloud::language::v1::AnalyzeSentimentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Finds named entities (currently proper names and common nouns) in the text
@@ -150,7 +152,8 @@ class LanguageServiceClient {
   /// @param document  Input document.
   /// @param encoding_type  The encoding type used by the API to calculate
   /// offsets.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1018}
   ///
@@ -162,7 +165,7 @@ class LanguageServiceClient {
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(google::cloud::language::v1::Document const& document,
                   google::cloud::language::v1::EncodingType encoding_type,
-                  Options options = {});
+                  Options opts = {});
 
   ///
   /// Finds named entities (currently proper names and common nouns) in the text
@@ -170,7 +173,8 @@ class LanguageServiceClient {
   /// other properties.
   ///
   /// @param document  Input document.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1018}
   ///
@@ -181,7 +185,7 @@ class LanguageServiceClient {
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(google::cloud::language::v1::Document const& document,
-                  Options options = {});
+                  Options opts = {});
 
   ///
   /// Finds named entities (currently proper names and common nouns) in the text
@@ -190,7 +194,8 @@ class LanguageServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesRequest,google/cloud/language/v1/language_service.proto#L1009}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1018}
   ///
@@ -202,7 +207,7 @@ class LanguageServiceClient {
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(
       google::cloud::language::v1::AnalyzeEntitiesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Finds entities, similar to
@@ -213,7 +218,8 @@ class LanguageServiceClient {
   /// @param document  Input document.
   /// @param encoding_type  The encoding type used by the API to calculate
   /// offsets.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L998}
   ///
@@ -226,7 +232,7 @@ class LanguageServiceClient {
   AnalyzeEntitySentiment(
       google::cloud::language::v1::Document const& document,
       google::cloud::language::v1::EncodingType encoding_type,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Finds entities, similar to
@@ -235,7 +241,8 @@ class LanguageServiceClient {
   /// mentions.
   ///
   /// @param document  Input document.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L998}
   ///
@@ -246,7 +253,7 @@ class LanguageServiceClient {
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(google::cloud::language::v1::Document const& document,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Finds entities, similar to
@@ -256,7 +263,8 @@ class LanguageServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentRequest,google/cloud/language/v1/language_service.proto#L989}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L998}
   ///
@@ -268,7 +276,7 @@ class LanguageServiceClient {
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
       google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Analyzes the syntax of the text and provides sentence boundaries and
@@ -278,7 +286,8 @@ class LanguageServiceClient {
   /// @param document  Input document.
   /// @param encoding_type  The encoding type used by the API to calculate
   /// offsets.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1038}
   ///
@@ -290,7 +299,7 @@ class LanguageServiceClient {
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::Document const& document,
       google::cloud::language::v1::EncodingType encoding_type,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Analyzes the syntax of the text and provides sentence boundaries and
@@ -298,7 +307,8 @@ class LanguageServiceClient {
   /// properties.
   ///
   /// @param document  Input document.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1038}
   ///
@@ -308,8 +318,7 @@ class LanguageServiceClient {
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1038}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
-      google::cloud::language::v1::Document const& document,
-      Options options = {});
+      google::cloud::language::v1::Document const& document, Options opts = {});
 
   ///
   /// Analyzes the syntax of the text and provides sentence boundaries and
@@ -318,7 +327,8 @@ class LanguageServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxRequest,google/cloud/language/v1/language_service.proto#L1029}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1038}
   ///
@@ -329,13 +339,14 @@ class LanguageServiceClient {
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::AnalyzeSyntaxRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Classifies a document into categories.
   ///
   /// @param document  Input document.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1058}
   ///
@@ -345,15 +356,15 @@ class LanguageServiceClient {
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1058}
   ///
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
-      google::cloud::language::v1::Document const& document,
-      Options options = {});
+      google::cloud::language::v1::Document const& document, Options opts = {});
 
   ///
   /// Classifies a document into categories.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::language::v1::ClassifyTextRequest,google/cloud/language/v1/language_service.proto#L1052}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1058}
   ///
@@ -364,7 +375,7 @@ class LanguageServiceClient {
   ///
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
       google::cloud::language::v1::ClassifyTextRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// A convenience method that provides all the features that analyzeSentiment,
@@ -374,7 +385,8 @@ class LanguageServiceClient {
   /// @param features  The enabled features.
   /// @param encoding_type  The encoding type used by the API to calculate
   /// offsets.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1096}
   ///
@@ -388,7 +400,7 @@ class LanguageServiceClient {
       google::cloud::language::v1::AnnotateTextRequest::Features const&
           features,
       google::cloud::language::v1::EncodingType encoding_type,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// A convenience method that provides all the features that analyzeSentiment,
@@ -396,7 +408,8 @@ class LanguageServiceClient {
   ///
   /// @param document  Input document.
   /// @param features  The enabled features.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1096}
   ///
@@ -409,7 +422,7 @@ class LanguageServiceClient {
       google::cloud::language::v1::Document const& document,
       google::cloud::language::v1::AnnotateTextRequest::Features const&
           features,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// A convenience method that provides all the features that analyzeSentiment,
@@ -417,7 +430,8 @@ class LanguageServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::language::v1::AnnotateTextRequest,google/cloud/language/v1/language_service.proto#L1065}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1096}
   ///
@@ -428,7 +442,7 @@ class LanguageServiceClient {
   ///
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::AnnotateTextRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<LanguageServiceConnection> connection_;

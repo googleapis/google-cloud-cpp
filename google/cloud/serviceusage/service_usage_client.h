@@ -67,7 +67,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServiceUsageClient {
  public:
   explicit ServiceUsageClient(
-      std::shared_ptr<ServiceUsageConnection> connection, Options options = {});
+      std::shared_ptr<ServiceUsageConnection> connection, Options opts = {});
   ~ServiceUsageClient();
 
   //@{
@@ -95,7 +95,8 @@ class ServiceUsageClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::serviceusage::v1::EnableServiceRequest,google/api/serviceusage/v1/serviceusage.proto#L124}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::serviceusage::v1::EnableServiceResponse,google/api/serviceusage/v1/serviceusage.proto#L142}
   ///
@@ -107,7 +108,7 @@ class ServiceUsageClient {
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
   EnableService(
       google::api::serviceusage::v1::EnableServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Disable a service so that it can no longer be used with a project.
@@ -120,7 +121,8 @@ class ServiceUsageClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::serviceusage::v1::DisableServiceRequest,google/api/serviceusage/v1/serviceusage.proto#L148}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::serviceusage::v1::DisableServiceResponse,google/api/serviceusage/v1/serviceusage.proto#L187}
   ///
@@ -132,14 +134,15 @@ class ServiceUsageClient {
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
   DisableService(
       google::api::serviceusage::v1::DisableServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the service configuration and enabled state for a given service.
   ///
   /// @param request
   /// @googleapis_link{google::api::serviceusage::v1::GetServiceRequest,google/api/serviceusage/v1/serviceusage.proto#L193}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L38}
   ///
@@ -150,7 +153,7 @@ class ServiceUsageClient {
   ///
   StatusOr<google::api::serviceusage::v1::Service> GetService(
       google::api::serviceusage::v1::GetServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// List all services available to the specified project, and the current
@@ -169,7 +172,8 @@ class ServiceUsageClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::serviceusage::v1::ListServicesRequest,google/api/serviceusage/v1/serviceusage.proto#L203}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L38}
   ///
@@ -180,7 +184,7 @@ class ServiceUsageClient {
   ///
   StreamRange<google::api::serviceusage::v1::Service> ListServices(
       google::api::serviceusage::v1::ListServicesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Enable multiple services on a project. The operation is atomic: if
@@ -190,7 +194,8 @@ class ServiceUsageClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::serviceusage::v1::BatchEnableServicesRequest,google/api/serviceusage/v1/serviceusage.proto#L235}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::serviceusage::v1::BatchEnableServicesResponse,google/api/serviceusage/v1/serviceusage.proto#L261}
   ///
@@ -202,7 +207,7 @@ class ServiceUsageClient {
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
   BatchEnableServices(
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the service configurations and enabled states for a given list of
@@ -210,7 +215,8 @@ class ServiceUsageClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::serviceusage::v1::BatchGetServicesRequest,google/api/serviceusage/v1/serviceusage.proto#L280}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::serviceusage::v1::BatchGetServicesResponse,google/api/serviceusage/v1/serviceusage.proto#L298}
   ///
@@ -222,7 +228,7 @@ class ServiceUsageClient {
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
   BatchGetServices(
       google::api::serviceusage::v1::BatchGetServicesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ServiceUsageConnection> connection_;

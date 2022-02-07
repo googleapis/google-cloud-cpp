@@ -63,7 +63,7 @@ class AuthorizedCertificatesClient {
  public:
   explicit AuthorizedCertificatesClient(
       std::shared_ptr<AuthorizedCertificatesConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~AuthorizedCertificatesClient();
 
   //@{
@@ -93,7 +93,8 @@ class AuthorizedCertificatesClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::ListAuthorizedCertificatesRequest,google/appengine/v1/appengine.proto#L652}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
   ///
@@ -105,14 +106,15 @@ class AuthorizedCertificatesClient {
   StreamRange<google::appengine::v1::AuthorizedCertificate>
   ListAuthorizedCertificates(
       google::appengine::v1::ListAuthorizedCertificatesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the specified SSL certificate.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::GetAuthorizedCertificateRequest,google/appengine/v1/appengine.proto#L743}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
   ///
@@ -124,14 +126,15 @@ class AuthorizedCertificatesClient {
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   GetAuthorizedCertificate(
       google::appengine::v1::GetAuthorizedCertificateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Uploads the specified SSL certificate.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::CreateAuthorizedCertificateRequest,google/appengine/v1/appengine.proto#L753}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
   ///
@@ -143,7 +146,7 @@ class AuthorizedCertificatesClient {
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   CreateAuthorizedCertificate(
       google::appengine::v1::CreateAuthorizedCertificateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the specified SSL certificate. To renew a certificate and maintain
@@ -154,7 +157,8 @@ class AuthorizedCertificatesClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::UpdateAuthorizedCertificateRequest,google/appengine/v1/appengine.proto#L762}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
   ///
@@ -166,21 +170,22 @@ class AuthorizedCertificatesClient {
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   UpdateAuthorizedCertificate(
       google::appengine::v1::UpdateAuthorizedCertificateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the specified SSL certificate.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::DeleteAuthorizedCertificateRequest,google/appengine/v1/appengine.proto#L777}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.appengine.v1.DeleteAuthorizedCertificateRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L777}
   ///
   Status DeleteAuthorizedCertificate(
       google::appengine::v1::DeleteAuthorizedCertificateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AuthorizedCertificatesConnection> connection_;

@@ -71,7 +71,7 @@ class AlertPolicyServiceClient {
  public:
   explicit AlertPolicyServiceClient(
       std::shared_ptr<AlertPolicyServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~AlertPolicyServiceClient();
 
   //@{
@@ -107,7 +107,8 @@ class AlertPolicyServiceClient {
   ///  by name, use the
   ///  [GetAlertPolicy][google.monitoring.v3.AlertPolicyService.GetAlertPolicy]
   ///  operation, instead.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -117,14 +118,15 @@ class AlertPolicyServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
   ///
   StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Lists the existing alerting policies for the workspace.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListAlertPoliciesRequest,google/monitoring/v3/alert_service.proto#L138}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -135,14 +137,15 @@ class AlertPolicyServiceClient {
   ///
   StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
       google::monitoring::v3::ListAlertPoliciesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a single alerting policy.
   ///
   /// @param name  Required. The alerting policy to retrieve. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -152,14 +155,15 @@ class AlertPolicyServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a single alerting policy.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetAlertPolicyRequest,google/monitoring/v3/alert_service.proto#L125}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -170,7 +174,7 @@ class AlertPolicyServiceClient {
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
       google::monitoring::v3::GetAlertPolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new alerting policy.
@@ -190,7 +194,8 @@ class AlertPolicyServiceClient {
   /// omit the `name` field in this
   ///  policy. The name will be returned in the new policy, including
   ///  a new `[ALERT_POLICY_ID]` value.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -202,14 +207,15 @@ class AlertPolicyServiceClient {
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
       std::string const& name,
       google::monitoring::v3::AlertPolicy const& alert_policy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new alerting policy.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::CreateAlertPolicyRequest,google/monitoring/v3/alert_service.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -220,7 +226,7 @@ class AlertPolicyServiceClient {
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
       google::monitoring::v3::CreateAlertPolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an alerting policy.
@@ -229,26 +235,28 @@ class AlertPolicyServiceClient {
   ///      projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
   ///  For more information, see
   ///  [AlertPolicy][google.monitoring.v3.AlertPolicy].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteAlertPolicyRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L228}
   ///
-  Status DeleteAlertPolicy(std::string const& name, Options options = {});
+  Status DeleteAlertPolicy(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an alerting policy.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::DeleteAlertPolicyRequest,google/monitoring/v3/alert_service.proto#L228}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteAlertPolicyRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L228}
   ///
   Status DeleteAlertPolicy(
       google::monitoring::v3::DeleteAlertPolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an alerting policy. You can either replace the entire policy with
@@ -281,7 +289,8 @@ class AlertPolicyServiceClient {
   ///  fields listed in `update_mask`.
   ///  If `update_mask` is not empty, any fields in this policy that are
   ///  not in `update_mask` are ignored.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -293,7 +302,7 @@ class AlertPolicyServiceClient {
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
       google::protobuf::FieldMask const& update_mask,
       google::monitoring::v3::AlertPolicy const& alert_policy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an alerting policy. You can either replace the entire policy with
@@ -303,7 +312,8 @@ class AlertPolicyServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::UpdateAlertPolicyRequest,google/monitoring/v3/alert_service.proto#L196}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
@@ -314,7 +324,7 @@ class AlertPolicyServiceClient {
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
       google::monitoring::v3::UpdateAlertPolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AlertPolicyServiceConnection> connection_;
