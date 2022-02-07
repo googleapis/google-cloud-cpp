@@ -54,18 +54,11 @@ AutoscalingPolicyServiceConnection::GetAutoscalingPolicy(
 }
 
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>>(
-      std::move(request),
-      [](google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&) {
-        return StatusOr<
-            google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>{};
-      },
-      [](google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse const&) {
-        return std::vector<google::cloud::dataproc::v1::AutoscalingPolicy>();
-      });
+    AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
+        google::cloud::dataproc::v1::
+            ListAutoscalingPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>>();
 }
 
 Status AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy(

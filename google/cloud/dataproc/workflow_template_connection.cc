@@ -72,18 +72,11 @@ WorkflowTemplateServiceConnection::UpdateWorkflowTemplate(
 }
 
 StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-WorkflowTemplateServiceConnection::ListWorkflowTemplates(
-    google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>>(
-      std::move(request),
-      [](google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const&) {
-        return StatusOr<
-            google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>{};
-      },
-      [](google::cloud::dataproc::v1::ListWorkflowTemplatesResponse const&) {
-        return std::vector<google::cloud::dataproc::v1::WorkflowTemplate>();
-      });
+    WorkflowTemplateServiceConnection::ListWorkflowTemplates(
+        google::cloud::dataproc::v1::
+            ListWorkflowTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>>();
 }
 
 Status WorkflowTemplateServiceConnection::DeleteWorkflowTemplate(

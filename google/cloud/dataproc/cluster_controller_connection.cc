@@ -82,17 +82,11 @@ ClusterControllerConnection::GetCluster(
 }
 
 StreamRange<google::cloud::dataproc::v1::Cluster>
-ClusterControllerConnection::ListClusters(
-    google::cloud::dataproc::v1::ListClustersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataproc::v1::Cluster>>(
-      std::move(request),
-      [](google::cloud::dataproc::v1::ListClustersRequest const&) {
-        return StatusOr<google::cloud::dataproc::v1::ListClustersResponse>{};
-      },
-      [](google::cloud::dataproc::v1::ListClustersResponse const&) {
-        return std::vector<google::cloud::dataproc::v1::Cluster>();
-      });
+    ClusterControllerConnection::ListClusters(
+        google::cloud::dataproc::v1::
+            ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataproc::v1::Cluster>>();
 }
 
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>

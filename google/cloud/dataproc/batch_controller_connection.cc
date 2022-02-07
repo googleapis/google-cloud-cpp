@@ -50,17 +50,11 @@ BatchControllerConnection::GetBatch(
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
-BatchControllerConnection::ListBatches(
-    google::cloud::dataproc::v1::ListBatchesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataproc::v1::Batch>>(
-      std::move(request),
-      [](google::cloud::dataproc::v1::ListBatchesRequest const&) {
-        return StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>{};
-      },
-      [](google::cloud::dataproc::v1::ListBatchesResponse const&) {
-        return std::vector<google::cloud::dataproc::v1::Batch>();
-      });
+    BatchControllerConnection::ListBatches(
+        google::cloud::dataproc::v1::
+            ListBatchesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataproc::v1::Batch>>();
 }
 
 Status BatchControllerConnection::DeleteBatch(

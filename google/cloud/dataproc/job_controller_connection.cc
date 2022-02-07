@@ -54,16 +54,10 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnection::GetJob(
 }
 
 StreamRange<google::cloud::dataproc::v1::Job> JobControllerConnection::ListJobs(
-    google::cloud::dataproc::v1::ListJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataproc::v1::Job>>(
-      std::move(request),
-      [](google::cloud::dataproc::v1::ListJobsRequest const&) {
-        return StatusOr<google::cloud::dataproc::v1::ListJobsResponse>{};
-      },
-      [](google::cloud::dataproc::v1::ListJobsResponse const&) {
-        return std::vector<google::cloud::dataproc::v1::Job>();
-      });
+    google::cloud::dataproc::v1::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataproc::v1::Job>>();
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnection::UpdateJob(
