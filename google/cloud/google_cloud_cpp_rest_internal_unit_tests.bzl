@@ -25,6 +25,7 @@ google_cloud_cpp_rest_internal_unit_tests = [
     "internal/http_payload_test.cc",
     "internal/oauth2_access_token_credentials_test.cc",
     "internal/oauth2_anonymous_credentials_test.cc",
+    "internal/oauth2_refreshing_credentials_wrapper_test.cc",
     "internal/rest_client_test.cc",
     "internal/rest_request_test.cc",
     "internal/rest_response_test.cc",
