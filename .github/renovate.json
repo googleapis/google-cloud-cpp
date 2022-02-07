@@ -6,7 +6,7 @@
   ],
   "regexManagers": [
     {
-      "fileMatch":  [
+      "fileMatch": [
         ".*\\.Dockerfile$",
         ".*doc/packaging\\.md$"
       ],
@@ -14,8 +14,22 @@
         "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz",
         "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/bazelisk-linux-amd64"
       ],
-      "datasourceTemplate": "github-releases"
+      "datasource": "github-releases"
+    },
+    {
+      "fileMatch": [
+        "^ci/cloudbuild/builds/lib/bazel.sh$"
+      ],
+      "matchStrings": [
+        "{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}"
+      ],
+      "datasource": "github-releases",
+      "depName": "bazelbuild/bazel",
+      "versioning": "semver"
     }
   ],
-  "ignoreDeps": [ "boringssl", "com_google_googleapis" ]
+  "ignoreDeps": [
+    "boringssl",
+    "com_google_googleapis"
+  ]
 }
