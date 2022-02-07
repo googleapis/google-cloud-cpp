@@ -33,11 +33,12 @@ vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
 VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
+curl --retry 3 -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"
-  VCPKG_ROOT="${vcpkg_dir}" CC="ccache cc" CXX="ccache c++" ./bootstrap-vcpkg.sh
+  env VCPKG_ROOT="${vcpkg_dir}" CC="ccache cc" CXX="ccache c++" \
+    "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 ./bootstrap-vcpkg.sh
   ./vcpkg remove --outdated --recurse
   ./vcpkg install google-cloud-cpp
 )
