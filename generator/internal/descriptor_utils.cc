@@ -449,8 +449,10 @@ std::string FormatMethodComments(
       EscapePrinterDelimiter(method_source_location.leading_comments),
       {{"\n", "\n  ///"}});
 
-  std::string options_comment =
-      absl::StrFormat("  /// @param options  Optional. Operation options.\n");
+  auto const options_comment = std::string{
+      R"""(  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+)"""};
 
   std::string return_comment_string;
   if (IsLongrunningOperation(method)) {
