@@ -18,7 +18,7 @@
 #include <iomanip>
 #include <sstream>
 
-const char kDescription[] =
+char const kDescription[] =
     R"""(Measure the latency of `Table::Apply()` and `Table::ReadRow()` on a
 long running program.
 
