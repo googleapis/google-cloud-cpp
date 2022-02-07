@@ -98,7 +98,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/kokoro-run-key.json"
 io::log_h1 "Getting roots.pem for gRPC"
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${KOKORO_GFILE_DIR}/roots.pem"
 rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
-curl -sSL --retry 10 -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
+ci/retry-command.sh 3 120 curl -sSL -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
   https://pki.google.com/roots.pem
 
 io::log_h1 "Downloading cache"

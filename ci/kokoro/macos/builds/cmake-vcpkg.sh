@@ -40,7 +40,7 @@ vcpkg_dir="${HOME}/vcpkg-quickstart"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
 VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-curl --retry 3 -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
+ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 (
   cd "${vcpkg_dir}"
