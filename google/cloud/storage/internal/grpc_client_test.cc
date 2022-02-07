@@ -258,7 +258,7 @@ TEST(GrpcClient, DeleteObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, Update) {
+TEST(GrpcClient, UpdateObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
       .WillOnce([](grpc::ClientContext& context,
@@ -276,7 +276,7 @@ TEST(GrpcClient, Update) {
   auto response = client->UpdateObject(
       UpdateObjectRequest("test-bucket", "test-object",
                           // Typically, the metadata is first read from the
-                          // service as part of an OCC loop, for this test, just
+                          // service as part of an OCC loop. For this test, just
                           // use the default values for all fields
                           ObjectMetadata{})
           .set_multiple_options(Fields("field1,field2"),

@@ -407,10 +407,8 @@ GrpcObjectRequestParser::ToProto(UpdateObjectRequest const& request) {
   object.set_content_language(request.metadata().content_language());
   result.mutable_update_mask()->add_paths("content_type");
   object.set_content_type(request.metadata().content_type());
-
   result.mutable_update_mask()->add_paths("event_based_hold");
   object.set_event_based_hold(request.metadata().event_based_hold());
-
   result.mutable_update_mask()->add_paths("temporary_hold");
   object.set_temporary_hold(request.metadata().temporary_hold());
 
