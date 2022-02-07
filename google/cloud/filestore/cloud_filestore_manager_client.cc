@@ -26,20 +26,18 @@ namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFilestoreManagerClient::CloudFilestoreManagerClient(
-    std::shared_ptr<CloudFilestoreManagerConnection> connection,
-    Options options)
+    std::shared_ptr<CloudFilestoreManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           filestore_internal::CloudFilestoreManagerDefaultOptions(
               connection_->options()))) {}
 CloudFilestoreManagerClient::~CloudFilestoreManagerClient() = default;
 
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerClient::ListInstances(std::string const& parent,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::ListInstancesRequest request;
   request.set_parent(parent);
   return connection_->ListInstances(request);
@@ -47,18 +45,15 @@ CloudFilestoreManagerClient::ListInstances(std::string const& parent,
 
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerClient::ListInstances(
-    google::cloud::filestore::v1::ListInstancesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::filestore::v1::ListInstancesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
 StatusOr<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerClient::GetInstance(std::string const& name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
@@ -67,9 +62,8 @@ CloudFilestoreManagerClient::GetInstance(std::string const& name,
 StatusOr<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerClient::GetInstance(
     google::cloud::filestore::v1::GetInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
@@ -77,9 +71,8 @@ future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::CreateInstance(
     std::string const& parent,
     google::cloud::filestore::v1::Instance const& instance,
-    std::string const& instance_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& instance_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::CreateInstanceRequest request;
   request.set_parent(parent);
   *request.mutable_instance() = instance;
@@ -90,18 +83,16 @@ CloudFilestoreManagerClient::CreateInstance(
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::CreateInstance(
     google::cloud::filestore::v1::CreateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::UpdateInstance(
     google::cloud::filestore::v1::Instance const& instance,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_update_mask() = update_mask;
@@ -111,26 +102,23 @@ CloudFilestoreManagerClient::UpdateInstance(
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::UpdateInstance(
     google::cloud::filestore::v1::UpdateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::RestoreInstance(
     google::cloud::filestore::v1::RestoreInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreInstance(request);
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteInstance(std::string const& name,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::DeleteInstanceRequest request;
   request.set_name(name);
   return connection_->DeleteInstance(request);
@@ -139,17 +127,15 @@ CloudFilestoreManagerClient::DeleteInstance(std::string const& name,
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerClient::ListBackups(std::string const& parent,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::ListBackupsRequest request;
   request.set_parent(parent);
   return connection_->ListBackups(request);
@@ -157,17 +143,14 @@ CloudFilestoreManagerClient::ListBackups(std::string const& parent,
 
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerClient::ListBackups(
-    google::cloud::filestore::v1::ListBackupsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::filestore::v1::ListBackupsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackups(std::move(request));
 }
 
 StatusOr<google::cloud::filestore::v1::Backup>
-CloudFilestoreManagerClient::GetBackup(std::string const& name,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudFilestoreManagerClient::GetBackup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::GetBackupRequest request;
   request.set_name(name);
   return connection_->GetBackup(request);
@@ -176,9 +159,8 @@ CloudFilestoreManagerClient::GetBackup(std::string const& name,
 StatusOr<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerClient::GetBackup(
     google::cloud::filestore::v1::GetBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackup(request);
 }
 
@@ -186,9 +168,8 @@ future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerClient::CreateBackup(
     std::string const& parent,
     google::cloud::filestore::v1::Backup const& backup,
-    std::string const& backup_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& backup_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::CreateBackupRequest request;
   request.set_parent(parent);
   *request.mutable_backup() = backup;
@@ -199,17 +180,15 @@ CloudFilestoreManagerClient::CreateBackup(
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerClient::CreateBackup(
     google::cloud::filestore::v1::CreateBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(request);
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteBackup(std::string const& name,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::DeleteBackupRequest request;
   request.set_name(name);
   return connection_->DeleteBackup(request);
@@ -218,18 +197,16 @@ CloudFilestoreManagerClient::DeleteBackup(std::string const& name,
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteBackup(
     google::cloud::filestore::v1::DeleteBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(request);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerClient::UpdateBackup(
     google::cloud::filestore::v1::Backup const& backup,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::filestore::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
   *request.mutable_update_mask() = update_mask;
@@ -239,9 +216,8 @@ CloudFilestoreManagerClient::UpdateBackup(
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerClient::UpdateBackup(
     google::cloud::filestore::v1::UpdateBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackup(request);
 }
 

@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ApplicationsClient {
  public:
   explicit ApplicationsClient(
-      std::shared_ptr<ApplicationsConnection> connection, Options options = {});
+      std::shared_ptr<ApplicationsConnection> connection, Options opts = {});
   ~ApplicationsClient();
 
   //@{
@@ -90,7 +90,8 @@ class ApplicationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::GetApplicationRequest,google/appengine/v1/appengine.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
   ///
@@ -101,7 +102,7 @@ class ApplicationsClient {
   ///
   StatusOr<google::appengine::v1::Application> GetApplication(
       google::appengine::v1::GetApplicationRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates an App Engine application for a Google Cloud Platform project.
@@ -118,7 +119,8 @@ class ApplicationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::CreateApplicationRequest,google/appengine/v1/appengine.proto#L119}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
   ///
@@ -129,7 +131,7 @@ class ApplicationsClient {
   ///
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       google::appengine::v1::CreateApplicationRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the specified Application resource.
@@ -142,7 +144,8 @@ class ApplicationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::UpdateApplicationRequest,google/appengine/v1/appengine.proto#L125}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
   ///
@@ -153,7 +156,7 @@ class ApplicationsClient {
   ///
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Recreates the required App Engine features for the specified App Engine
@@ -170,7 +173,8 @@ class ApplicationsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::RepairApplicationRequest,google/appengine/v1/appengine.proto#L137}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
   ///
@@ -181,7 +185,7 @@ class ApplicationsClient {
   ///
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ApplicationsConnection> connection_;

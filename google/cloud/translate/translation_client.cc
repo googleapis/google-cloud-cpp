@@ -26,20 +26,18 @@ namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TranslationServiceClient::TranslationServiceClient(
-    std::shared_ptr<TranslationServiceConnection> connection, Options options)
+    std::shared_ptr<TranslationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
-          translate_internal::TranslationServiceDefaultOptions(
-              connection_->options()))) {}
+          std::move(opts), translate_internal::TranslationServiceDefaultOptions(
+                               connection_->options()))) {}
 TranslationServiceClient::~TranslationServiceClient() = default;
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceClient::TranslateText(
     std::string const& parent, std::string const& target_language_code,
-    std::vector<std::string> const& contents, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::vector<std::string> const& contents, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::TranslateTextRequest request;
   request.set_parent(parent);
   request.set_target_language_code(target_language_code);
@@ -52,9 +50,8 @@ TranslationServiceClient::TranslateText(
     std::string const& parent, std::string const& model,
     std::string const& mime_type, std::string const& source_language_code,
     std::string const& target_language_code,
-    std::vector<std::string> const& contents, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::vector<std::string> const& contents, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::TranslateTextRequest request;
   request.set_parent(parent);
   request.set_model(model);
@@ -68,9 +65,8 @@ TranslationServiceClient::TranslateText(
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceClient::TranslateText(
     google::cloud::translation::v3::TranslateTextRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TranslateText(request);
 }
 
@@ -79,9 +75,8 @@ TranslationServiceClient::DetectLanguage(std::string const& parent,
                                          std::string const& model,
                                          std::string const& mime_type,
                                          std::string const& content,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DetectLanguageRequest request;
   request.set_parent(parent);
   request.set_model(model);
@@ -93,18 +88,16 @@ TranslationServiceClient::DetectLanguage(std::string const& parent,
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceClient::DetectLanguage(
     google::cloud::translation::v3::DetectLanguageRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetectLanguage(request);
 }
 
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
 TranslationServiceClient::GetSupportedLanguages(
     std::string const& parent, std::string const& model,
-    std::string const& display_language_code, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& display_language_code, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::GetSupportedLanguagesRequest request;
   request.set_parent(parent);
   request.set_model(model);
@@ -115,27 +108,24 @@ TranslationServiceClient::GetSupportedLanguages(
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
 TranslationServiceClient::GetSupportedLanguages(
     google::cloud::translation::v3::GetSupportedLanguagesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSupportedLanguages(request);
 }
 
 StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
 TranslationServiceClient::TranslateDocument(
     google::cloud::translation::v3::TranslateDocumentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TranslateDocument(request);
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceClient::BatchTranslateText(
     google::cloud::translation::v3::BatchTranslateTextRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateText(request);
 }
 
@@ -147,9 +137,8 @@ TranslationServiceClient::BatchTranslateDocument(
         input_configs,
     google::cloud::translation::v3::BatchDocumentOutputConfig const&
         output_config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::BatchTranslateDocumentRequest request;
   request.set_parent(parent);
   request.set_source_language_code(source_language_code);
@@ -165,18 +154,16 @@ future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceClient::BatchTranslateDocument(
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateDocument(request);
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceClient::CreateGlossary(
     std::string const& parent,
-    google::cloud::translation::v3::Glossary const& glossary, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::translation::v3::Glossary const& glossary, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateGlossaryRequest request;
   request.set_parent(parent);
   *request.mutable_glossary() = glossary;
@@ -186,17 +173,15 @@ TranslationServiceClient::CreateGlossary(
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceClient::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGlossary(request);
 }
 
 StreamRange<google::cloud::translation::v3::Glossary>
 TranslationServiceClient::ListGlossaries(std::string const& parent,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListGlossariesRequest request;
   request.set_parent(parent);
   return connection_->ListGlossaries(request);
@@ -205,17 +190,14 @@ TranslationServiceClient::ListGlossaries(std::string const& parent,
 StreamRange<google::cloud::translation::v3::Glossary>
 TranslationServiceClient::ListGlossaries(
     google::cloud::translation::v3::ListGlossariesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGlossaries(std::move(request));
 }
 
 StatusOr<google::cloud::translation::v3::Glossary>
-TranslationServiceClient::GetGlossary(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+TranslationServiceClient::GetGlossary(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::GetGlossaryRequest request;
   request.set_name(name);
   return connection_->GetGlossary(request);
@@ -224,17 +206,15 @@ TranslationServiceClient::GetGlossary(std::string const& name,
 StatusOr<google::cloud::translation::v3::Glossary>
 TranslationServiceClient::GetGlossary(
     google::cloud::translation::v3::GetGlossaryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGlossary(request);
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceClient::DeleteGlossary(std::string const& name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteGlossaryRequest request;
   request.set_name(name);
   return connection_->DeleteGlossary(request);
@@ -243,9 +223,8 @@ TranslationServiceClient::DeleteGlossary(std::string const& name,
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceClient::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGlossary(request);
 }
 

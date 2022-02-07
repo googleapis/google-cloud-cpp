@@ -26,19 +26,18 @@ namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompanyServiceClient::CompanyServiceClient(
-    std::shared_ptr<CompanyServiceConnection> connection, Options options)
+    std::shared_ptr<CompanyServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), talent_internal::CompanyServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), talent_internal::CompanyServiceDefaultOptions(
+                               connection_->options()))) {}
 CompanyServiceClient::~CompanyServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceClient::CreateCompany(
     std::string const& parent,
-    google::cloud::talent::v4::Company const& company, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::talent::v4::Company const& company, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::CreateCompanyRequest request;
   request.set_parent(parent);
   *request.mutable_company() = company;
@@ -48,35 +47,30 @@ CompanyServiceClient::CreateCompany(
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceClient::CreateCompany(
     google::cloud::talent::v4::CreateCompanyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCompany(request);
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceClient::GetCompany(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::GetCompanyRequest request;
   request.set_name(name);
   return connection_->GetCompany(request);
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceClient::GetCompany(
-    google::cloud::talent::v4::GetCompanyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::talent::v4::GetCompanyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCompany(request);
 }
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceClient::UpdateCompany(
     google::cloud::talent::v4::Company const& company,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::UpdateCompanyRequest request;
   *request.mutable_company() = company;
   *request.mutable_update_mask() = update_mask;
@@ -86,16 +80,14 @@ CompanyServiceClient::UpdateCompany(
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceClient::UpdateCompany(
     google::cloud::talent::v4::UpdateCompanyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCompany(request);
 }
 
 Status CompanyServiceClient::DeleteCompany(std::string const& name,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::DeleteCompanyRequest request;
   request.set_name(name);
   return connection_->DeleteCompany(request);
@@ -103,17 +95,14 @@ Status CompanyServiceClient::DeleteCompany(std::string const& name,
 
 Status CompanyServiceClient::DeleteCompany(
     google::cloud::talent::v4::DeleteCompanyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCompany(request);
 }
 
 StreamRange<google::cloud::talent::v4::Company>
-CompanyServiceClient::ListCompanies(std::string const& parent,
-                                    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CompanyServiceClient::ListCompanies(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::ListCompaniesRequest request;
   request.set_parent(parent);
   return connection_->ListCompanies(request);
@@ -121,9 +110,8 @@ CompanyServiceClient::ListCompanies(std::string const& parent,
 
 StreamRange<google::cloud::talent::v4::Company>
 CompanyServiceClient::ListCompanies(
-    google::cloud::talent::v4::ListCompaniesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::talent::v4::ListCompaniesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCompanies(std::move(request));
 }
 

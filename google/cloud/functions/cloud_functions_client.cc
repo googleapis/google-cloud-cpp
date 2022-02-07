@@ -26,29 +26,25 @@ namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFunctionsServiceClient::CloudFunctionsServiceClient(
-    std::shared_ptr<CloudFunctionsServiceConnection> connection,
-    Options options)
+    std::shared_ptr<CloudFunctionsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           functions_internal::CloudFunctionsServiceDefaultOptions(
               connection_->options()))) {}
 CloudFunctionsServiceClient::~CloudFunctionsServiceClient() = default;
 
 StreamRange<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceClient::ListFunctions(
-    google::cloud::functions::v1::ListFunctionsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::functions::v1::ListFunctionsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFunctions(std::move(request));
 }
 
 StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceClient::GetFunction(std::string const& name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v1::GetFunctionRequest request;
   request.set_name(name);
   return connection_->GetFunction(request);
@@ -57,19 +53,16 @@ CloudFunctionsServiceClient::GetFunction(std::string const& name,
 StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceClient::GetFunction(
     google::cloud::functions::v1::GetFunctionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFunction(request);
 }
 
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceClient::CreateFunction(
     std::string const& location,
-    google::cloud::functions::v1::CloudFunction const& function,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::functions::v1::CloudFunction const& function, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v1::CreateFunctionRequest request;
   request.set_location(location);
   *request.mutable_function() = function;
@@ -79,18 +72,15 @@ CloudFunctionsServiceClient::CreateFunction(
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceClient::CreateFunction(
     google::cloud::functions::v1::CreateFunctionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFunction(request);
 }
 
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceClient::UpdateFunction(
-    google::cloud::functions::v1::CloudFunction const& function,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::functions::v1::CloudFunction const& function, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v1::UpdateFunctionRequest request;
   *request.mutable_function() = function;
   return connection_->UpdateFunction(request);
@@ -99,17 +89,15 @@ CloudFunctionsServiceClient::UpdateFunction(
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceClient::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFunction(request);
 }
 
 future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceClient::DeleteFunction(std::string const& name,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v1::DeleteFunctionRequest request;
   request.set_name(name);
   return connection_->DeleteFunction(request);
@@ -118,18 +106,16 @@ CloudFunctionsServiceClient::DeleteFunction(std::string const& name,
 future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceClient::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFunction(request);
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceClient::CallFunction(std::string const& name,
                                           std::string const& data,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v1::CallFunctionRequest request;
   request.set_name(name);
   request.set_data(data);
@@ -139,50 +125,43 @@ CloudFunctionsServiceClient::CallFunction(std::string const& name,
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceClient::CallFunction(
     google::cloud::functions::v1::CallFunctionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CallFunction(request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
 CloudFunctionsServiceClient::GenerateUploadUrl(
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateUploadUrl(request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
 CloudFunctionsServiceClient::GenerateDownloadUrl(
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateDownloadUrl(request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudFunctionsServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 

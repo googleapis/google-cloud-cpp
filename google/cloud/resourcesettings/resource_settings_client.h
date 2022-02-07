@@ -73,7 +73,7 @@ class ResourceSettingsServiceClient {
  public:
   explicit ResourceSettingsServiceClient(
       std::shared_ptr<ResourceSettingsServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ResourceSettingsServiceClient();
 
   //@{
@@ -108,7 +108,8 @@ class ResourceSettingsServiceClient {
   ///  * `projects/{project_id}`
   ///  * `folders/{folder_id}`
   ///  * `organizations/{organization_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcesettings::v1::Setting,google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
@@ -118,14 +119,15 @@ class ResourceSettingsServiceClient {
   /// @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
   StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all the settings that are available on the Cloud resource `parent`.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcesettings::v1::ListSettingsRequest,google/cloud/resourcesettings/v1/resource_settings.proto#L238}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcesettings::v1::Setting,google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
@@ -136,7 +138,7 @@ class ResourceSettingsServiceClient {
   ///
   StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
       google::cloud::resourcesettings::v1::ListSettingsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a setting.
@@ -147,7 +149,8 @@ class ResourceSettingsServiceClient {
   /// @param name  Required. The name of the setting to get. See
   /// [Setting][google.cloud.resourcesettings.v1.Setting] for naming
   ///  requirements.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcesettings::v1::Setting,google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
@@ -157,7 +160,7 @@ class ResourceSettingsServiceClient {
   /// @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a setting.
@@ -167,7 +170,8 @@ class ResourceSettingsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcesettings::v1::GetSettingRequest,google/cloud/resourcesettings/v1/resource_settings.proto#L273}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcesettings::v1::Setting,google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
@@ -178,7 +182,7 @@ class ResourceSettingsServiceClient {
   ///
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
       google::cloud::resourcesettings::v1::GetSettingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a setting.
@@ -199,7 +203,8 @@ class ResourceSettingsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcesettings::v1::UpdateSettingRequest,google/cloud/resourcesettings/v1/resource_settings.proto#L288}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcesettings::v1::Setting,google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
@@ -210,7 +215,7 @@ class ResourceSettingsServiceClient {
   ///
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
       google::cloud::resourcesettings::v1::UpdateSettingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ResourceSettingsServiceConnection> connection_;

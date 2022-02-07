@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServicesClient {
  public:
   explicit ServicesClient(std::shared_ptr<ServicesConnection> connection,
-                          Options options = {});
+                          Options opts = {});
   ~ServicesClient();
 
   //@{
@@ -88,7 +88,8 @@ class ServicesClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::ListServicesRequest,google/appengine/v1/appengine.proto#L189}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L37}
   ///
@@ -98,14 +99,15 @@ class ServicesClient {
   /// @googleapis_reference_link{google/appengine/v1/service.proto#L37}
   ///
   StreamRange<google::appengine::v1::Service> ListServices(
-      google::appengine::v1::ListServicesRequest request, Options options = {});
+      google::appengine::v1::ListServicesRequest request, Options opts = {});
 
   ///
   /// Gets the current configuration of the specified service.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::GetServiceRequest,google/appengine/v1/appengine.proto#L210}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L37}
   ///
@@ -116,14 +118,15 @@ class ServicesClient {
   ///
   StatusOr<google::appengine::v1::Service> GetService(
       google::appengine::v1::GetServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the configuration of the specified service.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::UpdateServiceRequest,google/appengine/v1/appengine.proto#L216}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L37}
   ///
@@ -134,14 +137,15 @@ class ServicesClient {
   ///
   future<StatusOr<google::appengine::v1::Service>> UpdateService(
       google::appengine::v1::UpdateServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the specified service and all enclosed versions.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::DeleteServiceRequest,google/appengine/v1/appengine.proto#L243}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
   ///
@@ -152,7 +156,7 @@ class ServicesClient {
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
       google::appengine::v1::DeleteServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ServicesConnection> connection_;

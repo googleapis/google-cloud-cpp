@@ -26,19 +26,18 @@ namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BatchControllerClient::BatchControllerClient(
-    std::shared_ptr<BatchControllerConnection> connection, Options options)
+    std::shared_ptr<BatchControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), dataproc_internal::BatchControllerDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), dataproc_internal::BatchControllerDefaultOptions(
+                               connection_->options()))) {}
 BatchControllerClient::~BatchControllerClient() = default;
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerClient::CreateBatch(
     std::string const& parent, google::cloud::dataproc::v1::Batch const& batch,
-    std::string const& batch_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& batch_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateBatchRequest request;
   request.set_parent(parent);
   *request.mutable_batch() = batch;
@@ -49,33 +48,28 @@ BatchControllerClient::CreateBatch(
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerClient::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBatch(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerClient::GetBatch(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::GetBatchRequest request;
   request.set_name(name);
   return connection_->GetBatch(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerClient::GetBatch(
-    google::cloud::dataproc::v1::GetBatchRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::GetBatchRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBatch(request);
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
-BatchControllerClient::ListBatches(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+BatchControllerClient::ListBatches(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListBatchesRequest request;
   request.set_parent(parent);
   return connection_->ListBatches(request);
@@ -83,16 +77,14 @@ BatchControllerClient::ListBatches(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::dataproc::v1::Batch>
 BatchControllerClient::ListBatches(
-    google::cloud::dataproc::v1::ListBatchesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::dataproc::v1::ListBatchesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBatches(std::move(request));
 }
 
 Status BatchControllerClient::DeleteBatch(std::string const& name,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteBatchRequest request;
   request.set_name(name);
   return connection_->DeleteBatch(request);
@@ -100,9 +92,8 @@ Status BatchControllerClient::DeleteBatch(std::string const& name,
 
 Status BatchControllerClient::DeleteBatch(
     google::cloud::dataproc::v1::DeleteBatchRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBatch(request);
 }
 

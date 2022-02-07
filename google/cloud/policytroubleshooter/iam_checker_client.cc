@@ -26,10 +26,10 @@ namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IamCheckerClient::IamCheckerClient(
-    std::shared_ptr<IamCheckerConnection> connection, Options options)
+    std::shared_ptr<IamCheckerConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           policytroubleshooter_internal::IamCheckerDefaultOptions(
               connection_->options()))) {}
 IamCheckerClient::~IamCheckerClient() = default;
@@ -38,9 +38,8 @@ StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerClient::TroubleshootIamPolicy(
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TroubleshootIamPolicy(request);
 }
 

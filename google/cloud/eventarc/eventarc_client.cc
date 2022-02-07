@@ -26,17 +26,16 @@ namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EventarcClient::EventarcClient(std::shared_ptr<EventarcConnection> connection,
-                               Options options)
+                               Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           eventarc_internal::EventarcDefaultOptions(connection_->options()))) {}
 EventarcClient::~EventarcClient() = default;
 
 StatusOr<google::cloud::eventarc::v1::Trigger> EventarcClient::GetTrigger(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::GetTriggerRequest request;
   request.set_name(name);
   return connection_->GetTrigger(request);
@@ -44,25 +43,22 @@ StatusOr<google::cloud::eventarc::v1::Trigger> EventarcClient::GetTrigger(
 
 StatusOr<google::cloud::eventarc::v1::Trigger> EventarcClient::GetTrigger(
     google::cloud::eventarc::v1::GetTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTrigger(request);
 }
 
 StreamRange<google::cloud::eventarc::v1::Trigger> EventarcClient::ListTriggers(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::ListTriggersRequest request;
   request.set_parent(parent);
   return connection_->ListTriggers(request);
 }
 
 StreamRange<google::cloud::eventarc::v1::Trigger> EventarcClient::ListTriggers(
-    google::cloud::eventarc::v1::ListTriggersRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::eventarc::v1::ListTriggersRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTriggers(std::move(request));
 }
 
@@ -70,9 +66,8 @@ future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcClient::CreateTrigger(
     std::string const& parent,
     google::cloud::eventarc::v1::Trigger const& trigger,
-    std::string const& trigger_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& trigger_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateTriggerRequest request;
   request.set_parent(parent);
   *request.mutable_trigger() = trigger;
@@ -83,9 +78,8 @@ EventarcClient::CreateTrigger(
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcClient::CreateTrigger(
     google::cloud::eventarc::v1::CreateTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrigger(request);
 }
 
@@ -93,9 +87,8 @@ future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcClient::UpdateTrigger(
     google::cloud::eventarc::v1::Trigger const& trigger,
     google::protobuf::FieldMask const& update_mask, bool allow_missing,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateTriggerRequest request;
   *request.mutable_trigger() = trigger;
   *request.mutable_update_mask() = update_mask;
@@ -106,17 +99,15 @@ EventarcClient::UpdateTrigger(
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcClient::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTrigger(request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcClient::DeleteTrigger(std::string const& name, bool allow_missing,
-                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteTriggerRequest request;
   request.set_name(name);
   request.set_allow_missing(allow_missing);
@@ -126,9 +117,8 @@ EventarcClient::DeleteTrigger(std::string const& name, bool allow_missing,
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcClient::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrigger(request);
 }
 

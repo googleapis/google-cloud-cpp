@@ -26,42 +26,36 @@ namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServicesClient::ServicesClient(std::shared_ptr<ServicesConnection> connection,
-                               Options options)
+                               Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           appengine_internal::ServicesDefaultOptions(connection_->options()))) {
 }
 ServicesClient::~ServicesClient() = default;
 
 StreamRange<google::appengine::v1::Service> ServicesClient::ListServices(
-    google::appengine::v1::ListServicesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::appengine::v1::ListServicesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServices(std::move(request));
 }
 
 StatusOr<google::appengine::v1::Service> ServicesClient::GetService(
-    google::appengine::v1::GetServiceRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::appengine::v1::GetServiceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetService(request);
 }
 
 future<StatusOr<google::appengine::v1::Service>> ServicesClient::UpdateService(
-    google::appengine::v1::UpdateServiceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::appengine::v1::UpdateServiceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesClient::DeleteService(
-    google::appengine::v1::DeleteServiceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
 }
 

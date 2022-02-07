@@ -79,7 +79,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudRedisClient {
  public:
   explicit CloudRedisClient(std::shared_ptr<CloudRedisConnection> connection,
-                            Options options = {});
+                            Options opts = {});
   ~CloudRedisClient();
 
   //@{
@@ -115,7 +115,8 @@ class CloudRedisClient {
   /// the form:
   ///      `projects/{project_id}/locations/{location_id}`
   ///  where `location_id` refers to a GCP region.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -125,7 +126,7 @@ class CloudRedisClient {
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
   StreamRange<google::cloud::redis::v1::Instance> ListInstances(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all Redis instances owned by a project in either the specified
@@ -140,7 +141,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::ListInstancesRequest,google/cloud/redis/v1/cloud_redis.proto#L426}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -151,7 +153,7 @@ class CloudRedisClient {
   ///
   StreamRange<google::cloud::redis::v1::Instance> ListInstances(
       google::cloud::redis::v1::ListInstancesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the details of a specific Redis instance.
@@ -159,7 +161,8 @@ class CloudRedisClient {
   /// @param name  Required. Redis instance resource name using the form:
   ///      `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
   ///  where `location_id` refers to a GCP region.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -169,14 +172,15 @@ class CloudRedisClient {
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
   StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the details of a specific Redis instance.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::GetInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L475}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -187,7 +191,7 @@ class CloudRedisClient {
   ///
   StatusOr<google::cloud::redis::v1::Instance> GetInstance(
       google::cloud::redis::v1::GetInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a Redis instance based on the specified tier and memory size.
@@ -216,7 +220,8 @@ class CloudRedisClient {
   ///  * Must end with a number or a letter.
   ///  * Must be unique within the customer project / location
   /// @param instance  Required. A Redis [Instance] resource
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -227,7 +232,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
       std::string const& parent, std::string const& instance_id,
-      google::cloud::redis::v1::Instance const& instance, Options options = {});
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
   ///
   /// Creates a Redis instance based on the specified tier and memory size.
@@ -245,7 +250,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::CreateInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L488}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -256,7 +262,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
       google::cloud::redis::v1::CreateInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the metadata and configuration of a specific Redis instance.
@@ -276,7 +282,8 @@ class CloudRedisClient {
   ///   *   `replica_count`
   /// @param instance  Required. Update description.
   ///  Only fields specified in update_mask are updated.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -287,7 +294,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
       google::protobuf::FieldMask const& update_mask,
-      google::cloud::redis::v1::Instance const& instance, Options options = {});
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
   ///
   /// Updates the metadata and configuration of a specific Redis instance.
@@ -298,7 +305,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::UpdateInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L514}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -309,7 +317,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
       google::cloud::redis::v1::UpdateInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Upgrades Redis instance to the newer Redis version specified in the
@@ -320,7 +328,8 @@ class CloudRedisClient {
   ///  where `location_id` refers to a GCP region.
   /// @param redis_version  Required. Specifies the target version of Redis
   /// software to upgrade to.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -331,7 +340,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       std::string const& name, std::string const& redis_version,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Upgrades Redis instance to the newer Redis version specified in the
@@ -339,7 +348,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::UpgradeInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L532}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -350,7 +360,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       google::cloud::redis::v1::UpgradeInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
@@ -366,7 +376,8 @@ class CloudRedisClient {
   ///      `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
   ///  where `location_id` refers to a GCP region.
   /// @param input_config  Required. Specify data to be imported.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -378,7 +389,7 @@ class CloudRedisClient {
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
       std::string const& name,
       google::cloud::redis::v1::InputConfig const& input_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
@@ -392,7 +403,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::ImportInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L576}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -403,7 +415,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
       google::cloud::redis::v1::ImportInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Export Redis instance data into a Redis RDB format file in Cloud Storage.
@@ -417,7 +429,8 @@ class CloudRedisClient {
   ///      `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
   ///  where `location_id` refers to a GCP region.
   /// @param output_config  Required. Specify data to be exported.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -429,7 +442,7 @@ class CloudRedisClient {
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
       std::string const& name,
       google::cloud::redis::v1::OutputConfig const& output_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Export Redis instance data into a Redis RDB format file in Cloud Storage.
@@ -441,7 +454,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::ExportInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L603}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -452,7 +466,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
       google::cloud::redis::v1::ExportInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Initiates a failover of the primary node to current replica node for a
@@ -464,7 +478,8 @@ class CloudRedisClient {
   /// @param data_protection_mode  Optional. Available data protection modes
   /// that the user can choose. If it's
   ///  unspecified, data protection mode will be LIMITED_DATA_LOSS by default.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -477,7 +492,7 @@ class CloudRedisClient {
       std::string const& name,
       google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode
           data_protection_mode,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Initiates a failover of the primary node to current replica node for a
@@ -485,7 +500,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::FailoverInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L614}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L206}
   ///
@@ -496,7 +512,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
       google::cloud::redis::v1::FailoverInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a specific Redis instance.  Instance stops serving and data is
@@ -505,7 +521,8 @@ class CloudRedisClient {
   /// @param name  Required. Redis instance resource name using the form:
   ///      `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
   ///  where `location_id` refers to a GCP region.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::OperationMetadata,google/cloud/redis/v1/cloud_redis.proto#L647}
   ///
@@ -515,7 +532,7 @@ class CloudRedisClient {
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L647}
   ///
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deletes a specific Redis instance.  Instance stops serving and data is
@@ -523,7 +540,8 @@ class CloudRedisClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::redis::v1::DeleteInstanceRequest,google/cloud/redis/v1/cloud_redis.proto#L548}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::OperationMetadata,google/cloud/redis/v1/cloud_redis.proto#L647}
   ///
@@ -534,7 +552,7 @@ class CloudRedisClient {
   ///
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudRedisConnection> connection_;

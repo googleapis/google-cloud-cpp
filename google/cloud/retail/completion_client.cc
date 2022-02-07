@@ -26,28 +26,26 @@ namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompletionServiceClient::CompletionServiceClient(
-    std::shared_ptr<CompletionServiceConnection> connection, Options options)
+    std::shared_ptr<CompletionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), retail_internal::CompletionServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), retail_internal::CompletionServiceDefaultOptions(
+                               connection_->options()))) {}
 CompletionServiceClient::~CompletionServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceClient::CompleteQuery(
     google::cloud::retail::v2::CompleteQueryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CompleteQuery(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceClient::ImportCompletionData(
     google::cloud::retail::v2::ImportCompletionDataRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCompletionData(request);
 }
 

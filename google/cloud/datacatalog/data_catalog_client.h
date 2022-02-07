@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataCatalogClient {
  public:
   explicit DataCatalogClient(std::shared_ptr<DataCatalogConnection> connection,
-                             Options options = {});
+                             Options opts = {});
   ~DataCatalogClient();
 
   //@{
@@ -119,7 +119,8 @@ class DataCatalogClient {
   ///  * `name:x`
   ///  * `column:y`
   ///  * `description:z`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::SearchCatalogResult,google/cloud/datacatalog/v1/search.proto#L34}
   ///
@@ -131,7 +132,7 @@ class DataCatalogClient {
   StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
   SearchCatalog(
       google::cloud::datacatalog::v1::SearchCatalogRequest::Scope const& scope,
-      std::string const& query, Options options = {});
+      std::string const& query, Options opts = {});
 
   ///
   /// Searches Data Catalog for multiple resources like entries and tags that
@@ -152,7 +153,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::SearchCatalogRequest,google/cloud/datacatalog/v1/datacatalog.proto#L517}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::SearchCatalogResult,google/cloud/datacatalog/v1/search.proto#L34}
   ///
@@ -163,7 +165,7 @@ class DataCatalogClient {
   ///
   StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
   SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request,
-                Options options = {});
+                Options opts = {});
 
   ///
   /// Creates an entry group.
@@ -203,7 +205,8 @@ class DataCatalogClient {
   ///  underscores (_), and must start with a letter or underscore.
   ///  The maximum size is 64 bytes when encoded in UTF-8.
   /// @param entry_group  The entry group to create. Defaults to empty.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -215,7 +218,7 @@ class DataCatalogClient {
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
       std::string const& parent, std::string const& entry_group_id,
       google::cloud::datacatalog::v1::EntryGroup const& entry_group,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates an entry group.
@@ -248,7 +251,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::CreateEntryGroupRequest,google/cloud/datacatalog/v1/datacatalog.proto#L634}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -259,13 +263,14 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
       google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets an entry group.
   ///
   /// @param name  Required. The name of the entry group to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -275,7 +280,7 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets an entry group.
@@ -283,7 +288,8 @@ class DataCatalogClient {
   /// @param name  Required. The name of the entry group to get.
   /// @param read_mask  The fields to return. If empty or omitted, all fields
   /// are returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -294,14 +300,15 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
       std::string const& name, google::protobuf::FieldMask const& read_mask,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets an entry group.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::GetEntryGroupRequest,google/cloud/datacatalog/v1/datacatalog.proto#L673}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -312,7 +319,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
       google::cloud::datacatalog::v1::GetEntryGroupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an entry group.
@@ -324,7 +331,8 @@ class DataCatalogClient {
   ///
   /// @param entry_group  Required. Updates for the entry group. The `name`
   /// field must be set.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -335,7 +343,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
       google::cloud::datacatalog::v1::EntryGroup const& entry_group,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an entry group.
@@ -352,7 +360,8 @@ class DataCatalogClient {
   ///  If this parameter is absent or empty, all modifiable fields
   ///  are overwritten. If such fields are non-required and omitted in the
   ///  request body, their values are emptied.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -363,7 +372,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
       google::cloud::datacatalog::v1::EntryGroup const& entry_group,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates an entry group.
@@ -375,7 +384,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::UpdateEntryGroupRequest,google/cloud/datacatalog/v1/datacatalog.proto#L659}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -386,7 +396,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
       google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an entry group.
@@ -397,12 +407,13 @@ class DataCatalogClient {
   /// project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param name  Required. The name of the entry group to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L688}
   ///
-  Status DeleteEntryGroup(std::string const& name, Options options = {});
+  Status DeleteEntryGroup(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an entry group.
@@ -414,14 +425,15 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::DeleteEntryGroupRequest,google/cloud/datacatalog/v1/datacatalog.proto#L688}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L688}
   ///
   Status DeleteEntryGroup(
       google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists entry groups.
@@ -429,7 +441,8 @@ class DataCatalogClient {
   /// @param parent  Required. The name of the location that contains the entry
   /// groups to list.
   ///  Can be provided as a URL.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -439,14 +452,15 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
   StreamRange<google::cloud::datacatalog::v1::EntryGroup> ListEntryGroups(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists entry groups.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ListEntryGroupsRequest,google/cloud/datacatalog/v1/datacatalog.proto#L703}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1166}
   ///
@@ -457,7 +471,7 @@ class DataCatalogClient {
   ///
   StreamRange<google::cloud::datacatalog::v1::EntryGroup> ListEntryGroups(
       google::cloud::datacatalog::v1::ListEntryGroupsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates an entry.
@@ -481,7 +495,8 @@ class DataCatalogClient {
   ///  and underscores (_).
   ///  The maximum size is 64 bytes when encoded in UTF-8.
   /// @param entry  Required. The entry to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -492,7 +507,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
       std::string const& parent, std::string const& entry_id,
-      google::cloud::datacatalog::v1::Entry const& entry, Options options = {});
+      google::cloud::datacatalog::v1::Entry const& entry, Options opts = {});
 
   ///
   /// Creates an entry.
@@ -509,7 +524,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::CreateEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L738}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -520,7 +536,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
       google::cloud::datacatalog::v1::CreateEntryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an existing entry.
@@ -532,7 +548,8 @@ class DataCatalogClient {
   ///
   /// @param entry  Required. Updates for the entry. The `name` field must be
   /// set.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -542,7 +559,7 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
-      google::cloud::datacatalog::v1::Entry const& entry, Options options = {});
+      google::cloud::datacatalog::v1::Entry const& entry, Options opts = {});
 
   ///
   /// Updates an existing entry.
@@ -575,7 +592,8 @@ class DataCatalogClient {
   ///  * `user_specified_system`
   ///  * `linked_resource`
   ///  * `source_system_timestamps`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -586,7 +604,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
       google::cloud::datacatalog::v1::Entry const& entry,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates an existing entry.
@@ -598,7 +616,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::UpdateEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L763}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -609,7 +628,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
       google::cloud::datacatalog::v1::UpdateEntryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an existing entry.
@@ -624,12 +643,13 @@ class DataCatalogClient {
   /// project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param name  Required. The name of the entry to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L801}
   ///
-  Status DeleteEntry(std::string const& name, Options options = {});
+  Status DeleteEntry(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an existing entry.
@@ -645,20 +665,22 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::DeleteEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L801}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L801}
   ///
   Status DeleteEntry(
       google::cloud::datacatalog::v1::DeleteEntryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets an entry.
   ///
   /// @param name  Required. The name of the entry to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -668,14 +690,15 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets an entry.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::GetEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L813}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -686,7 +709,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
       google::cloud::datacatalog::v1::GetEntryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets an entry by its target resource name.
@@ -695,7 +718,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::LookupEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L825}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -706,7 +730,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Entry> LookupEntry(
       google::cloud::datacatalog::v1::LookupEntryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists entries.
@@ -718,7 +742,8 @@ class DataCatalogClient {
   /// @param parent  Required. The name of the entry group that contains the
   /// entries to list.
   ///  Can be provided in URL format.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -728,7 +753,7 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
   StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists entries.
@@ -739,7 +764,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ListEntriesRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1453}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L883}
   ///
@@ -750,7 +776,7 @@ class DataCatalogClient {
   ///
   StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
       google::cloud::datacatalog::v1::ListEntriesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a tag template.
@@ -767,7 +793,8 @@ class DataCatalogClient {
   ///  or underscores (_), and must start with a letter or underscore.
   ///  The maximum size is 64 bytes when encoded in UTF-8.
   /// @param tag_template  Required. The tag template to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -779,7 +806,7 @@ class DataCatalogClient {
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
       std::string const& parent, std::string const& tag_template_id,
       google::cloud::datacatalog::v1::TagTemplate const& tag_template,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a tag template.
@@ -791,7 +818,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1193}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -802,13 +830,14 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a tag template.
   ///
   /// @param name  Required. The name of the tag template to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -818,14 +847,15 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a tag template.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::GetTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1216}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -836,7 +866,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
       google::cloud::datacatalog::v1::GetTagTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a tag template.
@@ -851,7 +881,8 @@ class DataCatalogClient {
   ///
   /// @param tag_template  Required. The template to update. The `name` field
   /// must be set.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -862,7 +893,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
       google::cloud::datacatalog::v1::TagTemplate const& tag_template,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a tag template.
@@ -887,7 +918,8 @@ class DataCatalogClient {
   ///  hours to take effect in search results. Additionally, it also requires
   ///  the `tagTemplates.getIamPolicy` and `tagTemplates.setIamPolicy`
   ///  permissions.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -898,7 +930,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
       google::cloud::datacatalog::v1::TagTemplate const& tag_template,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a tag template.
@@ -913,7 +945,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1228}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -924,7 +957,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
       google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a tag template and all tags that use it.
@@ -936,13 +969,14 @@ class DataCatalogClient {
   /// @param name  Required. The name of the tag template to delete.
   /// @param force  Required. If true, deletes all tags that use this template.
   ///  Currently, `true` is the only supported value.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1248}
   ///
   Status DeleteTagTemplate(std::string const& name, bool force,
-                           Options options = {});
+                           Options opts = {});
 
   ///
   /// Deletes a tag template and all tags that use it.
@@ -953,14 +987,15 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1248}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1248}
   ///
   Status DeleteTagTemplate(
       google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a field in a tag template.
@@ -979,7 +1014,8 @@ class DataCatalogClient {
   ///  character long and at most 128 characters long. Field IDs must also be
   ///  unique within their template.
   /// @param tag_template_field  Required. The tag template field to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -993,7 +1029,7 @@ class DataCatalogClient {
                          std::string const& tag_template_field_id,
                          google::cloud::datacatalog::v1::TagTemplateField const&
                              tag_template_field,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Creates a field in a tag template.
@@ -1004,7 +1040,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1313}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1017,7 +1054,7 @@ class DataCatalogClient {
   CreateTagTemplateField(
       google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a field in a tag template.
@@ -1031,7 +1068,8 @@ class DataCatalogClient {
   ///
   /// @param name  Required. The name of the tag template field.
   /// @param tag_template_field  Required. The template to update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1044,7 +1082,7 @@ class DataCatalogClient {
   UpdateTagTemplateField(std::string const& name,
                          google::cloud::datacatalog::v1::TagTemplateField const&
                              tag_template_field,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Updates a field in a tag template.
@@ -1071,7 +1109,8 @@ class DataCatalogClient {
   ///  Therefore, enum values can only be added, existing enum values cannot be
   ///  deleted or renamed. Additionally, updating a template field from optional
   ///  to required is *not* allowed.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1085,7 +1124,7 @@ class DataCatalogClient {
                          google::cloud::datacatalog::v1::TagTemplateField const&
                              tag_template_field,
                          google::protobuf::FieldMask const& update_mask,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Updates a field in a tag template.
@@ -1099,7 +1138,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1339}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1112,7 +1152,7 @@ class DataCatalogClient {
   UpdateTagTemplateField(
       google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Renames a field in a tag template.
@@ -1125,7 +1165,8 @@ class DataCatalogClient {
   /// @param name  Required. The name of the tag template field.
   /// @param new_tag_template_field_id  Required. The new ID of this tag
   /// template field. For example, `my_new_field`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1137,7 +1178,7 @@ class DataCatalogClient {
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
   RenameTagTemplateField(std::string const& name,
                          std::string const& new_tag_template_field_id,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Renames a field in a tag template.
@@ -1149,7 +1190,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1372}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1162,7 +1204,7 @@ class DataCatalogClient {
   RenameTagTemplateField(
       google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Renames an enum value in a tag template.
@@ -1172,7 +1214,8 @@ class DataCatalogClient {
   /// @param name  Required. The name of the enum field value.
   /// @param new_enum_value_display_name  Required. The new display name of the
   /// enum value. For example, `my_new_enum_value`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1184,7 +1227,7 @@ class DataCatalogClient {
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
   RenameTagTemplateFieldEnumValue(
       std::string const& name, std::string const& new_enum_value_display_name,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Renames an enum value in a tag template.
@@ -1193,7 +1236,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1387}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L206}
   ///
@@ -1206,7 +1250,7 @@ class DataCatalogClient {
   RenameTagTemplateFieldEnumValue(
       google::cloud::datacatalog::v1::
           RenameTagTemplateFieldEnumValueRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a field in a tag template and all uses of this field from the tags
@@ -1220,13 +1264,14 @@ class DataCatalogClient {
   /// @param force  Required. If true, deletes this field from any tags that use
   /// it.
   ///  Currently, `true` is the only supported value.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1402}
   ///
   Status DeleteTagTemplateField(std::string const& name, bool force,
-                                Options options = {});
+                                Options opts = {});
 
   ///
   /// Deletes a field in a tag template and all uses of this field from the tags
@@ -1238,7 +1283,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1402}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1402}
@@ -1246,7 +1292,7 @@ class DataCatalogClient {
   Status DeleteTagTemplateField(
       google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a tag and assigns it to:
@@ -1268,7 +1314,8 @@ class DataCatalogClient {
   ///  Note: The tag and its child resources might not be stored in
   ///  the location specified in its name.
   /// @param tag  Required. The tag to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1279,7 +1326,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
       std::string const& parent, google::cloud::datacatalog::v1::Tag const& tag,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a tag and assigns it to:
@@ -1297,7 +1344,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1265}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1308,13 +1356,14 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
       google::cloud::datacatalog::v1::CreateTagRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an existing tag.
   ///
   /// @param tag  Required. The updated tag. The "name" field must be set.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1324,7 +1373,7 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
-      google::cloud::datacatalog::v1::Tag const& tag, Options options = {});
+      google::cloud::datacatalog::v1::Tag const& tag, Options opts = {});
 
   ///
   /// Updates an existing tag.
@@ -1336,7 +1385,8 @@ class DataCatalogClient {
   ///  In general, if this parameter is absent or empty, all modifiable fields
   ///  are overwritten. If such fields are non-required and omitted in the
   ///  request body, their values are emptied.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1347,14 +1397,15 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
       google::cloud::datacatalog::v1::Tag const& tag,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates an existing tag.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1286}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1365,32 +1416,34 @@ class DataCatalogClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
       google::cloud::datacatalog::v1::UpdateTagRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a tag.
   ///
   /// @param name  Required. The name of the tag to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1301}
   ///
-  Status DeleteTag(std::string const& name, Options options = {});
+  Status DeleteTag(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a tag.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1301}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1301}
   ///
   Status DeleteTag(
       google::cloud::datacatalog::v1::DeleteTagRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists tags assigned to an [Entry][google.cloud.datacatalog.v1.Entry].
@@ -1400,7 +1453,8 @@ class DataCatalogClient {
   ///  The resource can be an [Entry][google.cloud.datacatalog.v1.Entry]
   ///  or an [EntryGroup][google.cloud.datacatalog.v1.EntryGroup]
   ///  (without `/entries/{entries}` at the end).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1410,14 +1464,15 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists tags assigned to an [Entry][google.cloud.datacatalog.v1.Entry].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ListTagsRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1419}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1428,7 +1483,7 @@ class DataCatalogClient {
   ///
   StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sets an access control policy for a resource. Replaces any existing
@@ -1457,7 +1512,8 @@ class DataCatalogClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -1468,7 +1524,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -1486,14 +1542,13 @@ class DataCatalogClient {
    * specified. See the operation documentation for the appropriate value for
    * this field.
    * @param updater  Required. Functor to map the current policy to a new one.
-   * @param options  Optional. Options to control the loop. Expected options
-   * are:
-   *       - `DataCatalogBackoffPolicyOption`
+   * @param opts  Optional. Override the default class-level options, such as
+   *     retry and backoff policies.
    * @return google::iam::v1::Policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
                                                  IamUpdater const& updater,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Sets an access control policy for a resource. Replaces any existing
@@ -1516,7 +1571,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -1526,8 +1582,7 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets the access control policy for a resource.
@@ -1555,7 +1610,8 @@ class DataCatalogClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -1565,7 +1621,7 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Gets the access control policy for a resource.
@@ -1592,7 +1648,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -1602,8 +1659,7 @@ class DataCatalogClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets your permissions on a resource.
@@ -1623,7 +1679,8 @@ class DataCatalogClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -1634,7 +1691,7 @@ class DataCatalogClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<DataCatalogConnection> connection_;

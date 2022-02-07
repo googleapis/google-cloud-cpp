@@ -26,20 +26,18 @@ namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BudgetServiceClient::BudgetServiceClient(
-    std::shared_ptr<BudgetServiceConnection> connection, Options options)
+    std::shared_ptr<BudgetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), billing_internal::BudgetServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), billing_internal::BudgetServiceDefaultOptions(
+                               connection_->options()))) {}
 BudgetServiceClient::~BudgetServiceClient() = default;
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceClient::CreateBudget(
     std::string const& parent,
-    google::cloud::billing::budgets::v1::Budget const& budget,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::billing::budgets::v1::Budget const& budget, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::budgets::v1::CreateBudgetRequest request;
   request.set_parent(parent);
   *request.mutable_budget() = budget;
@@ -49,18 +47,16 @@ BudgetServiceClient::CreateBudget(
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceClient::CreateBudget(
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBudget(request);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceClient::UpdateBudget(
     google::cloud::billing::budgets::v1::Budget const& budget,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::budgets::v1::UpdateBudgetRequest request;
   *request.mutable_budget() = budget;
   *request.mutable_update_mask() = update_mask;
@@ -70,16 +66,14 @@ BudgetServiceClient::UpdateBudget(
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceClient::UpdateBudget(
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBudget(request);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceClient::GetBudget(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+BudgetServiceClient::GetBudget(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::budgets::v1::GetBudgetRequest request;
   request.set_name(name);
   return connection_->GetBudget(request);
@@ -88,16 +82,14 @@ BudgetServiceClient::GetBudget(std::string const& name, Options options) {
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceClient::GetBudget(
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBudget(request);
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceClient::ListBudgets(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+BudgetServiceClient::ListBudgets(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::budgets::v1::ListBudgetsRequest request;
   request.set_parent(parent);
   return connection_->ListBudgets(request);
@@ -106,16 +98,14 @@ BudgetServiceClient::ListBudgets(std::string const& parent, Options options) {
 StreamRange<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceClient::ListBudgets(
     google::cloud::billing::budgets::v1::ListBudgetsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBudgets(std::move(request));
 }
 
 Status BudgetServiceClient::DeleteBudget(std::string const& name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::budgets::v1::DeleteBudgetRequest request;
   request.set_name(name);
   return connection_->DeleteBudget(request);
@@ -123,9 +113,8 @@ Status BudgetServiceClient::DeleteBudget(std::string const& name,
 
 Status BudgetServiceClient::DeleteBudget(
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBudget(request);
 }
 

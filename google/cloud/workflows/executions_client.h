@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ExecutionsClient {
  public:
   explicit ExecutionsClient(std::shared_ptr<ExecutionsConnection> connection,
-                            Options options = {});
+                            Options opts = {});
   ~ExecutionsClient();
 
   //@{
@@ -92,7 +92,8 @@ class ExecutionsClient {
   /// @param parent  Required. Name of the workflow for which the executions
   /// should be listed.
   ///  Format: projects/{project}/locations/{location}/workflows/{workflow}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -102,7 +103,7 @@ class ExecutionsClient {
   /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
   StreamRange<google::cloud::workflows::executions::v1::Execution>
-  ListExecutions(std::string const& parent, Options options = {});
+  ListExecutions(std::string const& parent, Options opts = {});
 
   ///
   /// Returns a list of executions which belong to the workflow with
@@ -112,7 +113,8 @@ class ExecutionsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::executions::v1::ListExecutionsRequest,google/cloud/workflows/executions/v1/executions.proto#L205}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -124,7 +126,7 @@ class ExecutionsClient {
   StreamRange<google::cloud::workflows::executions::v1::Execution>
   ListExecutions(
       google::cloud::workflows::executions::v1::ListExecutionsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new execution using the latest revision of the given workflow.
@@ -134,7 +136,8 @@ class ExecutionsClient {
   ///  Format: projects/{project}/locations/{location}/workflows/{workflow}
   ///  The latest revision of the workflow will be used.
   /// @param execution  Required. Execution to be created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -146,14 +149,15 @@ class ExecutionsClient {
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
       std::string const& parent,
       google::cloud::workflows::executions::v1::Execution const& execution,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new execution using the latest revision of the given workflow.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::executions::v1::CreateExecutionRequest,google/cloud/workflows/executions/v1/executions.proto#L249}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -165,7 +169,7 @@ class ExecutionsClient {
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
       google::cloud::workflows::executions::v1::CreateExecutionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns an execution of the given name.
@@ -173,7 +177,8 @@ class ExecutionsClient {
   /// @param name  Required. Name of the execution to be retrieved.
   ///  Format:
   ///  projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -183,14 +188,15 @@ class ExecutionsClient {
   /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns an execution of the given name.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::executions::v1::GetExecutionRequest,google/cloud/workflows/executions/v1/executions.proto#L267}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -202,7 +208,7 @@ class ExecutionsClient {
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
       google::cloud::workflows::executions::v1::GetExecutionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Cancels an execution of the given name.
@@ -210,7 +216,8 @@ class ExecutionsClient {
   /// @param name  Required. Name of the execution to be cancelled.
   ///  Format:
   ///  projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -220,14 +227,15 @@ class ExecutionsClient {
   /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Cancels an execution of the given name.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::executions::v1::CancelExecutionRequest,google/cloud/workflows/executions/v1/executions.proto#L286}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
@@ -239,7 +247,7 @@ class ExecutionsClient {
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
       google::cloud::workflows::executions::v1::CancelExecutionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ExecutionsConnection> connection_;

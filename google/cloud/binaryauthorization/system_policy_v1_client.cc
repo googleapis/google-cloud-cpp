@@ -26,19 +26,17 @@ namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SystemPolicyV1Client::SystemPolicyV1Client(
-    std::shared_ptr<SystemPolicyV1Connection> connection, Options options)
+    std::shared_ptr<SystemPolicyV1Connection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           binaryauthorization_internal::SystemPolicyV1DefaultOptions(
               connection_->options()))) {}
 SystemPolicyV1Client::~SystemPolicyV1Client() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-SystemPolicyV1Client::GetSystemPolicy(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+SystemPolicyV1Client::GetSystemPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::GetSystemPolicyRequest request;
   request.set_name(name);
   return connection_->GetSystemPolicy(request);
@@ -48,9 +46,8 @@ StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1Client::GetSystemPolicy(
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSystemPolicy(request);
 }
 

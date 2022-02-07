@@ -69,7 +69,7 @@ class SecretManagerServiceClient {
  public:
   explicit SecretManagerServiceClient(
       std::shared_ptr<SecretManagerServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~SecretManagerServiceClient();
 
   //@{
@@ -100,7 +100,8 @@ class SecretManagerServiceClient {
   /// the
   ///  [Secrets][google.cloud.secretmanager.v1.Secret], in the format
   ///  `projects/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -110,14 +111,15 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists [Secrets][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretsRequest,google/cloud/secretmanager/v1/service.proto#L206}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -128,7 +130,7 @@ class SecretManagerServiceClient {
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
       google::cloud::secretmanager::v1::ListSecretsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
@@ -144,7 +146,8 @@ class SecretManagerServiceClient {
   ///  and underscore (`_`) characters.
   /// @param secret  Required. A [Secret][google.cloud.secretmanager.v1.Secret]
   /// with initial field values.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -156,7 +159,7 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       std::string const& parent, std::string const& secret_id,
       google::cloud::secretmanager::v1::Secret const& secret,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new [Secret][google.cloud.secretmanager.v1.Secret] containing no
@@ -164,7 +167,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::CreateSecretRequest,google/cloud/secretmanager/v1/service.proto#L248}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -175,7 +179,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       google::cloud::secretmanager::v1::CreateSecretRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
@@ -188,7 +192,8 @@ class SecretManagerServiceClient {
   ///  format `projects/*/secrets/*`.
   /// @param payload  Required. The secret payload of the
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -200,7 +205,7 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       std::string const& parent,
       google::cloud::secretmanager::v1::SecretPayload const& payload,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new [SecretVersion][google.cloud.secretmanager.v1.SecretVersion]
@@ -209,7 +214,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::AddSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L270}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -220,7 +226,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       google::cloud::secretmanager::v1::AddSecretVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
@@ -228,7 +234,8 @@ class SecretManagerServiceClient {
   /// @param name  Required. The resource name of the
   /// [Secret][google.cloud.secretmanager.v1.Secret], in the format
   /// `projects/*/secrets/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -238,14 +245,15 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets metadata for a given [Secret][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretRequest,google/cloud/secretmanager/v1/service.proto#L285}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -256,7 +264,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
       google::cloud::secretmanager::v1::GetSecretRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates metadata of an existing
@@ -265,7 +273,8 @@ class SecretManagerServiceClient {
   /// @param secret  Required. [Secret][google.cloud.secretmanager.v1.Secret]
   /// with updated field values.
   /// @param update_mask  Required. Specifies the fields to be updated.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -276,7 +285,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::Secret const& secret,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates metadata of an existing
@@ -284,7 +293,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::UpdateSecretRequest,google/cloud/secretmanager/v1/service.proto#L354}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
@@ -295,7 +305,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
@@ -303,26 +313,28 @@ class SecretManagerServiceClient {
   /// @param name  Required. The resource name of the
   /// [Secret][google.cloud.secretmanager.v1.Secret] to delete in the format
   ///  `projects/*/secrets/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
   ///
-  Status DeleteSecret(std::string const& name, Options options = {});
+  Status DeleteSecret(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a [Secret][google.cloud.secretmanager.v1.Secret].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DeleteSecretRequest,google/cloud/secretmanager/v1/service.proto#L390}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
   ///
   Status DeleteSecret(
       google::cloud::secretmanager::v1::DeleteSecretRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
@@ -332,7 +344,8 @@ class SecretManagerServiceClient {
   /// [Secret][google.cloud.secretmanager.v1.Secret] associated with the
   ///  [SecretVersions][google.cloud.secretmanager.v1.SecretVersion] to list, in
   ///  the format `projects/*/secrets/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -342,7 +355,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-  ListSecretVersions(std::string const& parent, Options options = {});
+  ListSecretVersions(std::string const& parent, Options opts = {});
 
   ///
   /// Lists [SecretVersions][google.cloud.secretmanager.v1.SecretVersion]. This
@@ -350,7 +363,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::ListSecretVersionsRequest,google/cloud/secretmanager/v1/service.proto#L296}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -362,7 +376,7 @@ class SecretManagerServiceClient {
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
   ListSecretVersions(
       google::cloud::secretmanager::v1::ListSecretVersionsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets metadata for a
@@ -376,7 +390,8 @@ class SecretManagerServiceClient {
   ///  `projects/*/secrets/*/versions/*`.
   ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
   ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -386,7 +401,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets metadata for a
@@ -397,7 +412,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::GetSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L339}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -408,7 +424,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
       google::cloud::secretmanager::v1::GetSecretVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -422,7 +438,8 @@ class SecretManagerServiceClient {
   ///  `projects/*/secrets/*/versions/*`.
   ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
   ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
   ///
@@ -432,7 +449,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
   ///
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-  AccessSecretVersion(std::string const& name, Options options = {});
+  AccessSecretVersion(std::string const& name, Options opts = {});
 
   ///
   /// Accesses a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -443,7 +460,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L363}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::AccessSecretVersionResponse,google/cloud/secretmanager/v1/service.proto#L378}
   ///
@@ -456,7 +474,7 @@ class SecretManagerServiceClient {
   AccessSecretVersion(
       google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -469,7 +487,8 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to disable in
   /// the format
   ///  `projects/*/secrets/*/versions/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -479,7 +498,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DisableSecretVersion(std::string const& name, Options options = {});
+  DisableSecretVersion(std::string const& name, Options opts = {});
 
   ///
   /// Disables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -490,7 +509,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DisableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L407}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -503,7 +523,7 @@ class SecretManagerServiceClient {
   DisableSecretVersion(
       google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -516,7 +536,8 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to enable in
   /// the format
   ///  `projects/*/secrets/*/versions/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -526,7 +547,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Enables a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -537,7 +558,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::EnableSecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L424}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -549,7 +571,7 @@ class SecretManagerServiceClient {
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
       google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -563,7 +585,8 @@ class SecretManagerServiceClient {
   /// [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] to destroy in
   /// the format
   ///  `projects/*/secrets/*/versions/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -573,7 +596,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L103}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DestroySecretVersion(std::string const& name, Options options = {});
+  DestroySecretVersion(std::string const& name, Options opts = {});
 
   ///
   /// Destroys a [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
@@ -585,7 +608,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::secretmanager::v1::DestroySecretVersionRequest,google/cloud/secretmanager/v1/service.proto#L441}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L103}
   ///
@@ -598,7 +622,7 @@ class SecretManagerServiceClient {
   DestroySecretVersion(
       google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified secret. Replaces any
@@ -611,7 +635,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -621,8 +646,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets the access control policy for a secret.
@@ -630,7 +654,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -640,8 +665,7 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns permissions that a caller has for the specified secret.
@@ -654,7 +678,8 @@ class SecretManagerServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -665,7 +690,7 @@ class SecretManagerServiceClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<SecretManagerServiceConnection> connection_;

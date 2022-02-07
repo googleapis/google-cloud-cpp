@@ -26,38 +26,34 @@ namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TopicStatsServiceClient::TopicStatsServiceClient(
-    std::shared_ptr<TopicStatsServiceConnection> connection, Options options)
+    std::shared_ptr<TopicStatsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
-          pubsublite_internal::TopicStatsServiceDefaultOptions(
-              connection_->options()))) {}
+          std::move(opts), pubsublite_internal::TopicStatsServiceDefaultOptions(
+                               connection_->options()))) {}
 TopicStatsServiceClient::~TopicStatsServiceClient() = default;
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceClient::ComputeMessageStats(
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeMessageStats(request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceClient::ComputeHeadCursor(
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeHeadCursor(request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceClient::ComputeTimeCursor(
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeTimeCursor(request);
 }
 

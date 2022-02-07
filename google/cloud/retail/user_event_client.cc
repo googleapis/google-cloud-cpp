@@ -26,54 +26,49 @@ namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 UserEventServiceClient::UserEventServiceClient(
-    std::shared_ptr<UserEventServiceConnection> connection, Options options)
+    std::shared_ptr<UserEventServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), retail_internal::UserEventServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), retail_internal::UserEventServiceDefaultOptions(
+                               connection_->options()))) {}
 UserEventServiceClient::~UserEventServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceClient::WriteUserEvent(
     google::cloud::retail::v2::WriteUserEventRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WriteUserEvent(request);
 }
 
 StatusOr<google::api::HttpBody> UserEventServiceClient::CollectUserEvent(
     google::cloud::retail::v2::CollectUserEventRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CollectUserEvent(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceClient::PurgeUserEvents(
     google::cloud::retail::v2::PurgeUserEventsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeUserEvents(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceClient::ImportUserEvents(
     google::cloud::retail::v2::ImportUserEventsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportUserEvents(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceClient::RejoinUserEvents(
     google::cloud::retail::v2::RejoinUserEventsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RejoinUserEvents(request);
 }
 

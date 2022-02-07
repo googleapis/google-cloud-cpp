@@ -28,19 +28,18 @@ namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataCatalogClient::DataCatalogClient(
-    std::shared_ptr<DataCatalogConnection> connection, Options options)
+    std::shared_ptr<DataCatalogConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), datacatalog_internal::DataCatalogDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), datacatalog_internal::DataCatalogDefaultOptions(
+                               connection_->options()))) {}
 DataCatalogClient::~DataCatalogClient() = default;
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogClient::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest::Scope const& scope,
-    std::string const& query, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& query, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::SearchCatalogRequest request;
   *request.mutable_scope() = scope;
   request.set_query(query);
@@ -50,9 +49,8 @@ DataCatalogClient::SearchCatalog(
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogClient::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchCatalog(std::move(request));
 }
 
@@ -60,9 +58,8 @@ StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::CreateEntryGroup(
     std::string const& parent, std::string const& entry_group_id,
     google::cloud::datacatalog::v1::EntryGroup const& entry_group,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::CreateEntryGroupRequest request;
   request.set_parent(parent);
   request.set_entry_group_id(entry_group_id);
@@ -73,16 +70,14 @@ DataCatalogClient::CreateEntryGroup(
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::CreateEntryGroup(
     google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntryGroup(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogClient::GetEntryGroup(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DataCatalogClient::GetEntryGroup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::GetEntryGroupRequest request;
   request.set_name(name);
   return connection_->GetEntryGroup(request);
@@ -91,9 +86,8 @@ DataCatalogClient::GetEntryGroup(std::string const& name, Options options) {
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::GetEntryGroup(std::string const& name,
                                  google::protobuf::FieldMask const& read_mask,
-                                 Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::GetEntryGroupRequest request;
   request.set_name(name);
   *request.mutable_read_mask() = read_mask;
@@ -103,18 +97,16 @@ DataCatalogClient::GetEntryGroup(std::string const& name,
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::GetEntryGroup(
     google::cloud::datacatalog::v1::GetEntryGroupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEntryGroup(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::UpdateEntryGroup(
     google::cloud::datacatalog::v1::EntryGroup const& entry_group,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateEntryGroupRequest request;
   *request.mutable_entry_group() = entry_group;
   return connection_->UpdateEntryGroup(request);
@@ -123,9 +115,8 @@ DataCatalogClient::UpdateEntryGroup(
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::UpdateEntryGroup(
     google::cloud::datacatalog::v1::EntryGroup const& entry_group,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateEntryGroupRequest request;
   *request.mutable_entry_group() = entry_group;
   *request.mutable_update_mask() = update_mask;
@@ -135,16 +126,14 @@ DataCatalogClient::UpdateEntryGroup(
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::UpdateEntryGroup(
     google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEntryGroup(request);
 }
 
 Status DataCatalogClient::DeleteEntryGroup(std::string const& name,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::DeleteEntryGroupRequest request;
   request.set_name(name);
   return connection_->DeleteEntryGroup(request);
@@ -152,16 +141,14 @@ Status DataCatalogClient::DeleteEntryGroup(std::string const& name,
 
 Status DataCatalogClient::DeleteEntryGroup(
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEntryGroup(request);
 }
 
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogClient::ListEntryGroups(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DataCatalogClient::ListEntryGroups(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::ListEntryGroupsRequest request;
   request.set_parent(parent);
   return connection_->ListEntryGroups(request);
@@ -170,17 +157,15 @@ DataCatalogClient::ListEntryGroups(std::string const& parent, Options options) {
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogClient::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntryGroups(std::move(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::CreateEntry(
     std::string const& parent, std::string const& entry_id,
-    google::cloud::datacatalog::v1::Entry const& entry, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::Entry const& entry, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::CreateEntryRequest request;
   request.set_parent(parent);
   request.set_entry_id(entry_id);
@@ -190,16 +175,14 @@ StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::CreateEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::CreateEntry(
     google::cloud::datacatalog::v1::CreateEntryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntry(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::UpdateEntry(
-    google::cloud::datacatalog::v1::Entry const& entry, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::Entry const& entry, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateEntryRequest request;
   *request.mutable_entry() = entry;
   return connection_->UpdateEntry(request);
@@ -207,9 +190,8 @@ StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::UpdateEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::UpdateEntry(
     google::cloud::datacatalog::v1::Entry const& entry,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateEntryRequest request;
   *request.mutable_entry() = entry;
   *request.mutable_update_mask() = update_mask;
@@ -218,16 +200,13 @@ StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::UpdateEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::UpdateEntry(
     google::cloud::datacatalog::v1::UpdateEntryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEntry(request);
 }
 
-Status DataCatalogClient::DeleteEntry(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+Status DataCatalogClient::DeleteEntry(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::DeleteEntryRequest request;
   request.set_name(name);
   return connection_->DeleteEntry(request);
@@ -235,16 +214,14 @@ Status DataCatalogClient::DeleteEntry(std::string const& name,
 
 Status DataCatalogClient::DeleteEntry(
     google::cloud::datacatalog::v1::DeleteEntryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEntry(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::GetEntry(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::GetEntryRequest request;
   request.set_name(name);
   return connection_->GetEntry(request);
@@ -252,24 +229,21 @@ StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::GetEntry(
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::GetEntry(
     google::cloud::datacatalog::v1::GetEntryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEntry(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogClient::LookupEntry(
     google::cloud::datacatalog::v1::LookupEntryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupEntry(request);
 }
 
 StreamRange<google::cloud::datacatalog::v1::Entry>
-DataCatalogClient::ListEntries(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DataCatalogClient::ListEntries(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::ListEntriesRequest request;
   request.set_parent(parent);
   return connection_->ListEntries(request);
@@ -277,10 +251,8 @@ DataCatalogClient::ListEntries(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::datacatalog::v1::Entry>
 DataCatalogClient::ListEntries(
-    google::cloud::datacatalog::v1::ListEntriesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::ListEntriesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntries(std::move(request));
 }
 
@@ -288,9 +260,8 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogClient::CreateTagTemplate(
     std::string const& parent, std::string const& tag_template_id,
     google::cloud::datacatalog::v1::TagTemplate const& tag_template,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::CreateTagTemplateRequest request;
   request.set_parent(parent);
   request.set_tag_template_id(tag_template_id);
@@ -301,16 +272,14 @@ DataCatalogClient::CreateTagTemplate(
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogClient::CreateTagTemplate(
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTagTemplate(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-DataCatalogClient::GetTagTemplate(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DataCatalogClient::GetTagTemplate(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::GetTagTemplateRequest request;
   request.set_name(name);
   return connection_->GetTagTemplate(request);
@@ -319,18 +288,16 @@ DataCatalogClient::GetTagTemplate(std::string const& name, Options options) {
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogClient::GetTagTemplate(
     google::cloud::datacatalog::v1::GetTagTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTagTemplate(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogClient::UpdateTagTemplate(
     google::cloud::datacatalog::v1::TagTemplate const& tag_template,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateTagTemplateRequest request;
   *request.mutable_tag_template() = tag_template;
   return connection_->UpdateTagTemplate(request);
@@ -339,9 +306,8 @@ DataCatalogClient::UpdateTagTemplate(
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogClient::UpdateTagTemplate(
     google::cloud::datacatalog::v1::TagTemplate const& tag_template,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateTagTemplateRequest request;
   *request.mutable_tag_template() = tag_template;
   *request.mutable_update_mask() = update_mask;
@@ -351,16 +317,14 @@ DataCatalogClient::UpdateTagTemplate(
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogClient::UpdateTagTemplate(
     google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTagTemplate(request);
 }
 
 Status DataCatalogClient::DeleteTagTemplate(std::string const& name, bool force,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::DeleteTagTemplateRequest request;
   request.set_name(name);
   request.set_force(force);
@@ -369,9 +333,8 @@ Status DataCatalogClient::DeleteTagTemplate(std::string const& name, bool force,
 
 Status DataCatalogClient::DeleteTagTemplate(
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTagTemplate(request);
 }
 
@@ -379,9 +342,8 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::CreateTagTemplateField(
     std::string const& parent, std::string const& tag_template_field_id,
     google::cloud::datacatalog::v1::TagTemplateField const& tag_template_field,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest request;
   request.set_parent(parent);
   request.set_tag_template_field_id(tag_template_field_id);
@@ -393,9 +355,8 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::CreateTagTemplateField(
     google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTagTemplateField(request);
 }
 
@@ -403,9 +364,8 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::UpdateTagTemplateField(
     std::string const& name,
     google::cloud::datacatalog::v1::TagTemplateField const& tag_template_field,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest request;
   request.set_name(name);
   *request.mutable_tag_template_field() = tag_template_field;
@@ -416,9 +376,8 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::UpdateTagTemplateField(
     std::string const& name,
     google::cloud::datacatalog::v1::TagTemplateField const& tag_template_field,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest request;
   request.set_name(name);
   *request.mutable_tag_template_field() = tag_template_field;
@@ -430,18 +389,16 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::UpdateTagTemplateField(
     google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTagTemplateField(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::RenameTagTemplateField(
     std::string const& name, std::string const& new_tag_template_field_id,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest request;
   request.set_name(name);
   request.set_new_tag_template_field_id(new_tag_template_field_id);
@@ -452,18 +409,16 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::RenameTagTemplateField(
     google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameTagTemplateField(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::RenameTagTemplateFieldEnumValue(
     std::string const& name, std::string const& new_enum_value_display_name,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest
       request;
   request.set_name(name);
@@ -475,16 +430,14 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogClient::RenameTagTemplateFieldEnumValue(
     google::cloud::datacatalog::v1::
         RenameTagTemplateFieldEnumValueRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameTagTemplateFieldEnumValue(request);
 }
 
 Status DataCatalogClient::DeleteTagTemplateField(std::string const& name,
-                                                 bool force, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                 bool force, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest request;
   request.set_name(name);
   request.set_force(force);
@@ -494,17 +447,15 @@ Status DataCatalogClient::DeleteTagTemplateField(std::string const& name,
 Status DataCatalogClient::DeleteTagTemplateField(
     google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTagTemplateField(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::CreateTag(
     std::string const& parent, google::cloud::datacatalog::v1::Tag const& tag,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::CreateTagRequest request;
   request.set_parent(parent);
   *request.mutable_tag() = tag;
@@ -513,16 +464,14 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::CreateTag(
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::CreateTag(
     google::cloud::datacatalog::v1::CreateTagRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTag(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::UpdateTag(
-    google::cloud::datacatalog::v1::Tag const& tag, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::Tag const& tag, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateTagRequest request;
   *request.mutable_tag() = tag;
   return connection_->UpdateTag(request);
@@ -530,9 +479,8 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::UpdateTag(
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::UpdateTag(
     google::cloud::datacatalog::v1::Tag const& tag,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::UpdateTagRequest request;
   *request.mutable_tag() = tag;
   *request.mutable_update_mask() = update_mask;
@@ -541,15 +489,13 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::UpdateTag(
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogClient::UpdateTag(
     google::cloud::datacatalog::v1::UpdateTagRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTag(request);
 }
 
-Status DataCatalogClient::DeleteTag(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+Status DataCatalogClient::DeleteTag(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::DeleteTagRequest request;
   request.set_name(name);
   return connection_->DeleteTag(request);
@@ -557,33 +503,29 @@ Status DataCatalogClient::DeleteTag(std::string const& name, Options options) {
 
 Status DataCatalogClient::DeleteTag(
     google::cloud::datacatalog::v1::DeleteTagRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTag(request);
 }
 
 StreamRange<google::cloud::datacatalog::v1::Tag> DataCatalogClient::ListTags(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::datacatalog::v1::ListTagsRequest request;
   request.set_parent(parent);
   return connection_->ListTags(request);
 }
 
 StreamRange<google::cloud::datacatalog::v1::Tag> DataCatalogClient::ListTags(
-    google::cloud::datacatalog::v1::ListTagsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::datacatalog::v1::ListTagsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTags(std::move(request));
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
     std::string const& resource, google::iam::v1::Policy const& policy,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -591,11 +533,10 @@ StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
-    std::string const& resource, IamUpdater const& updater, Options options) {
-  internal::CheckExpectedOptions<DataCatalogBackoffPolicyOption>(options,
+    std::string const& resource, IamUpdater const& updater, Options opts) {
+  internal::CheckExpectedOptions<DataCatalogBackoffPolicyOption>(opts,
                                                                  __func__);
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
@@ -621,34 +562,29 @@ StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogClient::GetIamPolicy(
-    std::string const& resource, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataCatalogClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 

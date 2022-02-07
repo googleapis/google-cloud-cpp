@@ -65,7 +65,7 @@ class WorkflowTemplateServiceClient {
  public:
   explicit WorkflowTemplateServiceClient(
       std::shared_ptr<WorkflowTemplateServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~WorkflowTemplateServiceClient();
 
   //@{
@@ -104,7 +104,8 @@ class WorkflowTemplateServiceClient {
   ///    the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
   /// @param template_  Required. The Dataproc workflow template to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -117,14 +118,15 @@ class WorkflowTemplateServiceClient {
   CreateWorkflowTemplate(
       std::string const& parent,
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates new workflow template.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::CreateWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L611}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -136,7 +138,7 @@ class WorkflowTemplateServiceClient {
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(
       google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Retrieves the latest workflow template.
@@ -154,7 +156,8 @@ class WorkflowTemplateServiceClient {
   ///  the
   ///    template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -164,7 +167,7 @@ class WorkflowTemplateServiceClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Retrieves the latest workflow template.
@@ -174,7 +177,8 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::GetWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L634}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -185,7 +189,7 @@ class WorkflowTemplateServiceClient {
   ///
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
       google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Instantiates a template and begins execution.
@@ -219,7 +223,8 @@ class WorkflowTemplateServiceClient {
   ///  name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L480}
   ///
@@ -229,7 +234,7 @@ class WorkflowTemplateServiceClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L480}
   ///
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(std::string const& name, Options options = {});
+  InstantiateWorkflowTemplate(std::string const& name, Options opts = {});
 
   ///
   /// Instantiates a template and begins execution.
@@ -266,7 +271,8 @@ class WorkflowTemplateServiceClient {
   /// @param parameters  Optional. Map from parameter names to values that
   /// should be used for those
   ///  parameters. Values may not exceed 1000 characters.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L480}
   ///
@@ -278,8 +284,7 @@ class WorkflowTemplateServiceClient {
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(
       std::string const& name,
-      std::map<std::string, std::string> const& parameters,
-      Options options = {});
+      std::map<std::string, std::string> const& parameters, Options opts = {});
 
   ///
   /// Instantiates a template and begins execution.
@@ -305,7 +310,8 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L660}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L480}
   ///
@@ -318,7 +324,7 @@ class WorkflowTemplateServiceClient {
   InstantiateWorkflowTemplate(
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Instantiates a template and begins execution.
@@ -358,7 +364,8 @@ class WorkflowTemplateServiceClient {
   ///    resource name of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
   /// @param template_  Required. The workflow template to instantiate.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L480}
   ///
@@ -371,7 +378,7 @@ class WorkflowTemplateServiceClient {
   InstantiateInlineWorkflowTemplate(
       std::string const& parent,
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Instantiates a template and begins execution.
@@ -402,7 +409,8 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L703}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L480}
   ///
@@ -415,7 +423,7 @@ class WorkflowTemplateServiceClient {
   InstantiateInlineWorkflowTemplate(
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates (replaces) workflow template. The updated template
@@ -423,7 +431,8 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param template_  Required. The updated workflow template.
   ///  The `template.version` field must match the current version.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -435,7 +444,7 @@ class WorkflowTemplateServiceClient {
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates (replaces) workflow template. The updated template
@@ -443,7 +452,8 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L737}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -455,7 +465,7 @@ class WorkflowTemplateServiceClient {
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(
       google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists workflows that match the specified filter in the request.
@@ -469,7 +479,8 @@ class WorkflowTemplateServiceClient {
   ///  * For `projects.locations.workflowTemplates.list`, the
   ///    resource name of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -479,14 +490,15 @@ class WorkflowTemplateServiceClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
   StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-  ListWorkflowTemplates(std::string const& parent, Options options = {});
+  ListWorkflowTemplates(std::string const& parent, Options opts = {});
 
   ///
   /// Lists workflows that match the specified filter in the request.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::ListWorkflowTemplatesRequest,google/cloud/dataproc/v1/workflow_templates.proto#L745}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L183}
   ///
@@ -498,7 +510,7 @@ class WorkflowTemplateServiceClient {
   StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
   ListWorkflowTemplates(
       google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a workflow template. It does not cancel in-progress workflows.
@@ -513,26 +525,28 @@ class WorkflowTemplateServiceClient {
   ///  name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L785}
   ///
-  Status DeleteWorkflowTemplate(std::string const& name, Options options = {});
+  Status DeleteWorkflowTemplate(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a workflow template. It does not cancel in-progress workflows.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L785}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L785}
   ///
   Status DeleteWorkflowTemplate(
       google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<WorkflowTemplateServiceConnection> connection_;

@@ -72,7 +72,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GroupServiceClient {
  public:
   explicit GroupServiceClient(
-      std::shared_ptr<GroupServiceConnection> connection, Options options = {});
+      std::shared_ptr<GroupServiceConnection> connection, Options opts = {});
   ~GroupServiceClient();
 
   //@{
@@ -102,7 +102,8 @@ class GroupServiceClient {
   /// [project](https://cloud.google.com/monitoring/api/v3#project_name)
   ///  whose groups are to be listed. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -112,14 +113,15 @@ class GroupServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   StreamRange<google::monitoring::v3::Group> ListGroups(std::string const& name,
-                                                        Options options = {});
+                                                        Options opts = {});
 
   ///
   /// Lists the existing groups.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListGroupsRequest,google/monitoring/v3/group_service.proto#L108}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -129,14 +131,15 @@ class GroupServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   StreamRange<google::monitoring::v3::Group> ListGroups(
-      google::monitoring::v3::ListGroupsRequest request, Options options = {});
+      google::monitoring::v3::ListGroupsRequest request, Options opts = {});
 
   ///
   /// Gets a single group.
   ///
   /// @param name  Required. The group to retrieve. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -146,14 +149,15 @@ class GroupServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   StatusOr<google::monitoring::v3::Group> GetGroup(std::string const& name,
-                                                   Options options = {});
+                                                   Options opts = {});
 
   ///
   /// Gets a single group.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetGroupRequest,google/monitoring/v3/group_service.proto#L179}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -164,7 +168,7 @@ class GroupServiceClient {
   ///
   StatusOr<google::monitoring::v3::Group> GetGroup(
       google::monitoring::v3::GetGroupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new group.
@@ -176,7 +180,8 @@ class GroupServiceClient {
   /// @param group  Required. A group definition. It is an error to define the
   /// `name` field because
   ///  the system assigns the name.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -187,14 +192,15 @@ class GroupServiceClient {
   ///
   StatusOr<google::monitoring::v3::Group> CreateGroup(
       std::string const& name, google::monitoring::v3::Group const& group,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new group.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::CreateGroupRequest,google/monitoring/v3/group_service.proto#L192}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -205,7 +211,7 @@ class GroupServiceClient {
   ///
   StatusOr<google::monitoring::v3::Group> CreateGroup(
       google::monitoring::v3::CreateGroupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an existing group.
@@ -215,7 +221,8 @@ class GroupServiceClient {
   /// the existing group,
   ///  excepting `name`, are replaced with the corresponding fields of this
   ///  group.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -225,7 +232,7 @@ class GroupServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      google::monitoring::v3::Group const& group, Options options = {});
+      google::monitoring::v3::Group const& group, Options opts = {});
 
   ///
   /// Updates an existing group.
@@ -233,7 +240,8 @@ class GroupServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::UpdateGroupRequest,google/monitoring/v3/group_service.proto#L213}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
@@ -244,39 +252,42 @@ class GroupServiceClient {
   ///
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
       google::monitoring::v3::UpdateGroupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an existing group.
   ///
   /// @param name  Required. The group to delete. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteGroupRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L224}
   ///
-  Status DeleteGroup(std::string const& name, Options options = {});
+  Status DeleteGroup(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an existing group.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::DeleteGroupRequest,google/monitoring/v3/group_service.proto#L224}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteGroupRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L224}
   ///
   Status DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request,
-                     Options options = {});
+                     Options opts = {});
 
   ///
   /// Lists the monitored resources that are members of a group.
   ///
   /// @param name  Required. The group whose members are listed. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L85}
   ///
@@ -286,14 +297,15 @@ class GroupServiceClient {
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L85}
   ///
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Lists the monitored resources that are members of a group.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListGroupMembersRequest,google/monitoring/v3/group_service.proto#L242}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L85}
   ///
@@ -304,7 +316,7 @@ class GroupServiceClient {
   ///
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
       google::monitoring::v3::ListGroupMembersRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<GroupServiceConnection> connection_;

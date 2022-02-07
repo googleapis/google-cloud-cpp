@@ -27,10 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IdentityAwareProxyAdminServiceClient::IdentityAwareProxyAdminServiceClient(
     std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           iap_internal::IdentityAwareProxyAdminServiceDefaultOptions(
               connection_->options()))) {}
 IdentityAwareProxyAdminServiceClient::~IdentityAwareProxyAdminServiceClient() =
@@ -38,44 +38,38 @@ IdentityAwareProxyAdminServiceClient::~IdentityAwareProxyAdminServiceClient() =
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IdentityAwareProxyAdminServiceClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceClient::GetIapSettings(
     google::cloud::iap::v1::GetIapSettingsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIapSettings(request);
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceClient::UpdateIapSettings(
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIapSettings(request);
 }
 

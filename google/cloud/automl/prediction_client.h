@@ -67,7 +67,7 @@ class PredictionServiceClient {
  public:
   explicit PredictionServiceClient(
       std::shared_ptr<PredictionServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~PredictionServiceClient();
 
   //@{
@@ -157,7 +157,8 @@ class PredictionServiceClient {
   ///    is populated in the returned list of
   ///    [TablesAnnotation][google.cloud.automl.v1.TablesAnnotation]
   ///    objects. The default is false.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L164}
   ///
@@ -169,7 +170,7 @@ class PredictionServiceClient {
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       std::string const& name,
       google::cloud::automl::v1::ExamplePayload const& payload,
-      std::map<std::string, std::string> const& params, Options options = {});
+      std::map<std::string, std::string> const& params, Options opts = {});
 
   ///
   /// Perform an online prediction. The prediction result is directly
@@ -211,7 +212,8 @@ class PredictionServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::PredictRequest,google/cloud/automl/v1/prediction_service.proto#L117}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L164}
   ///
@@ -222,7 +224,7 @@ class PredictionServiceClient {
   ///
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       google::cloud::automl::v1::PredictRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Perform a batch prediction. Unlike the online
@@ -319,7 +321,8 @@ class PredictionServiceClient {
   ///    at least that long as a relative value of video frame size are
   ///    returned. Value in 0 to 1 range. Default is 0.
   ///
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L308}
   ///
@@ -332,7 +335,7 @@ class PredictionServiceClient {
       std::string const& name,
       google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
       google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
-      std::map<std::string, std::string> const& params, Options options = {});
+      std::map<std::string, std::string> const& params, Options opts = {});
 
   ///
   /// Perform a batch prediction. Unlike the online
@@ -356,7 +359,8 @@ class PredictionServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::BatchPredictRequest,google/cloud/automl/v1/prediction_service.proto#L202}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L308}
   ///
@@ -367,7 +371,7 @@ class PredictionServiceClient {
   ///
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<PredictionServiceConnection> connection_;

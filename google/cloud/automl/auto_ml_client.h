@@ -76,7 +76,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AutoMlClient {
  public:
   explicit AutoMlClient(std::shared_ptr<AutoMlConnection> connection,
-                        Options options = {});
+                        Options opts = {});
   ~AutoMlClient();
 
   //@{
@@ -103,7 +103,8 @@ class AutoMlClient {
   /// @param parent  Required. The resource name of the project to create the
   /// dataset for.
   /// @param dataset  Required. The dataset to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -114,14 +115,15 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       std::string const& parent,
-      google::cloud::automl::v1::Dataset const& dataset, Options options = {});
+      google::cloud::automl::v1::Dataset const& dataset, Options opts = {});
 
   ///
   /// Creates a dataset.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::CreateDatasetRequest,google/cloud/automl/v1/service.proto#L294}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -132,13 +134,14 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       google::cloud::automl::v1::CreateDatasetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a dataset.
   ///
   /// @param name  Required. The resource name of the dataset to retrieve.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -148,14 +151,15 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a dataset.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::GetDatasetRequest,google/cloud/automl/v1/service.proto#L308}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -166,14 +170,15 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
       google::cloud::automl::v1::GetDatasetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists datasets in a project.
   ///
   /// @param parent  Required. The resource name of the project from which to
   /// list datasets.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -183,14 +188,15 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L35}
   ///
   StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists datasets in a project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::ListDatasetsRequest,google/cloud/automl/v1/service.proto#L319}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -201,7 +207,7 @@ class AutoMlClient {
   ///
   StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
       google::cloud::automl::v1::ListDatasetsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a dataset.
@@ -209,7 +215,8 @@ class AutoMlClient {
   /// @param dataset  Required. The dataset which replaces the resource on the
   /// server.
   /// @param update_mask  Required. The update mask applies to the resource.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -220,14 +227,15 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
       google::cloud::automl::v1::Dataset const& dataset,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a dataset.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::UpdateDatasetRequest,google/cloud/automl/v1/service.proto#L359}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L35}
   ///
@@ -238,7 +246,7 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
       google::cloud::automl::v1::UpdateDatasetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a dataset and all of its contents.
@@ -248,7 +256,8 @@ class AutoMlClient {
   /// [metadata][google.longrunning.Operation.metadata] field.
   ///
   /// @param name  Required. The resource name of the dataset to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -258,7 +267,7 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deletes a dataset and all of its contents.
@@ -269,7 +278,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::DeleteDatasetRequest,google/cloud/automl/v1/service.proto#L368}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -280,7 +290,7 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       google::cloud::automl::v1::DeleteDatasetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Imports data into a dataset.
@@ -299,7 +309,8 @@ class AutoMlClient {
   /// @param input_config  Required. The desired input location and its domain
   /// specific semantics,
   ///  if any.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -311,7 +322,7 @@ class AutoMlClient {
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       std::string const& name,
       google::cloud::automl::v1::InputConfig const& input_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Imports data into a dataset.
@@ -326,7 +337,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::ImportDataRequest,google/cloud/automl/v1/service.proto#L379}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -337,7 +349,7 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       google::cloud::automl::v1::ImportDataRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Exports dataset's data to the provided output location.
@@ -346,7 +358,8 @@ class AutoMlClient {
   ///
   /// @param name  Required. The resource name of the dataset.
   /// @param output_config  Required. The desired output location.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -358,7 +371,7 @@ class AutoMlClient {
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       std::string const& name,
       google::cloud::automl::v1::OutputConfig const& output_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Exports dataset's data to the provided output location.
@@ -367,7 +380,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::ExportDataRequest,google/cloud/automl/v1/service.proto#L395}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -378,14 +392,15 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       google::cloud::automl::v1::ExportDataRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets an annotation spec.
   ///
   /// @param name  Required. The resource name of the annotation spec to
   /// retrieve.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::AnnotationSpec,google/cloud/automl/v1/annotation_spec.proto#L30}
   ///
@@ -395,14 +410,15 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/annotation_spec.proto#L30}
   ///
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets an annotation spec.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::GetAnnotationSpecRequest,google/cloud/automl/v1/service.proto#L409}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::AnnotationSpec,google/cloud/automl/v1/annotation_spec.proto#L30}
   ///
@@ -413,7 +429,7 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
       google::cloud::automl::v1::GetAnnotationSpecRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a model.
@@ -425,7 +441,8 @@ class AutoMlClient {
   /// @param parent  Required. Resource name of the parent project where the
   /// model is being created.
   /// @param model  Required. The model to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -436,7 +453,7 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       std::string const& parent, google::cloud::automl::v1::Model const& model,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a model.
@@ -447,7 +464,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::CreateModelRequest,google/cloud/automl/v1/service.proto#L420}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -458,13 +476,14 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       google::cloud::automl::v1::CreateModelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a model.
   ///
   /// @param name  Required. Resource name of the model.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -474,14 +493,15 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
   StatusOr<google::cloud::automl::v1::Model> GetModel(std::string const& name,
-                                                      Options options = {});
+                                                      Options opts = {});
 
   ///
   /// Gets a model.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::GetModelRequest,google/cloud/automl/v1/service.proto#L434}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -492,14 +512,15 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::Model> GetModel(
       google::cloud::automl::v1::GetModelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists models.
   ///
   /// @param parent  Required. Resource name of the project, from which to list
   /// the models.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -509,14 +530,15 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
   StreamRange<google::cloud::automl::v1::Model> ListModels(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists models.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::ListModelsRequest,google/cloud/automl/v1/service.proto#L445}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -526,8 +548,7 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L34}
   ///
   StreamRange<google::cloud::automl::v1::Model> ListModels(
-      google::cloud::automl::v1::ListModelsRequest request,
-      Options options = {});
+      google::cloud::automl::v1::ListModelsRequest request, Options opts = {});
 
   ///
   /// Deletes a model.
@@ -537,7 +558,8 @@ class AutoMlClient {
   /// [metadata][google.longrunning.Operation.metadata] field.
   ///
   /// @param name  Required. Resource name of the model being deleted.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -547,7 +569,7 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deletes a model.
@@ -558,7 +580,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::DeleteModelRequest,google/cloud/automl/v1/service.proto#L486}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -569,7 +592,7 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       google::cloud::automl::v1::DeleteModelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a model.
@@ -577,7 +600,8 @@ class AutoMlClient {
   /// @param model  Required. The model which replaces the resource on the
   /// server.
   /// @param update_mask  Required. The update mask applies to the resource.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -588,14 +612,15 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       google::cloud::automl::v1::Model const& model,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a model.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::UpdateModelRequest,google/cloud/automl/v1/service.proto#L497}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L34}
   ///
@@ -606,7 +631,7 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       google::cloud::automl::v1::UpdateModelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deploys a model. If a model is already deployed, deploying it with the
@@ -622,7 +647,8 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param name  Required. Resource name of the model to deploy.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -632,7 +658,7 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deploys a model. If a model is already deployed, deploying it with the
@@ -649,7 +675,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::DeployModelRequest,google/cloud/automl/v1/service.proto#L506}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -660,7 +687,7 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       google::cloud::automl::v1::DeployModelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Undeploys a model. If the model is not deployed this method has no effect.
@@ -672,7 +699,8 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param name  Required. Resource name of the model to undeploy.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -682,7 +710,7 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L38}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Undeploys a model. If the model is not deployed this method has no effect.
@@ -695,7 +723,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::UndeployModelRequest,google/cloud/automl/v1/service.proto#L526}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -706,7 +735,7 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       google::cloud::automl::v1::UndeployModelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Exports a trained, "export-able", model to a user specified Google Cloud
@@ -720,7 +749,8 @@ class AutoMlClient {
   /// @param name  Required. The resource name of the model to export.
   /// @param output_config  Required. The desired output location and
   /// configuration.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -732,7 +762,7 @@ class AutoMlClient {
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       std::string const& name,
       google::cloud::automl::v1::ModelExportOutputConfig const& output_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Exports a trained, "export-able", model to a user specified Google Cloud
@@ -745,7 +775,8 @@ class AutoMlClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::ExportModelRequest,google/cloud/automl/v1/service.proto#L539}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L38}
   ///
@@ -756,13 +787,14 @@ class AutoMlClient {
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       google::cloud::automl::v1::ExportModelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a model evaluation.
   ///
   /// @param name  Required. Resource name for the model evaluation.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
@@ -772,14 +804,15 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a model evaluation.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::GetModelEvaluationRequest,google/cloud/automl/v1/service.proto#L553}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
@@ -790,7 +823,7 @@ class AutoMlClient {
   ///
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
       google::cloud::automl::v1::GetModelEvaluationRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists model evaluations.
@@ -808,7 +841,8 @@ class AutoMlClient {
   ///                              annotation spec with ID different than 4.
   ///    * `NOT annotation_spec_id:*` --> The model evaluation was done for
   ///                                 aggregate of all annotation specs.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
@@ -818,15 +852,15 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
   StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
-      std::string const& parent, std::string const& filter,
-      Options options = {});
+      std::string const& parent, std::string const& filter, Options opts = {});
 
   ///
   /// Lists model evaluations.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::automl::v1::ListModelEvaluationsRequest,google/cloud/automl/v1/service.proto#L564}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L36}
   ///
@@ -837,7 +871,7 @@ class AutoMlClient {
   ///
   StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
       google::cloud::automl::v1::ListModelEvaluationsRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AutoMlConnection> connection_;

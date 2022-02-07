@@ -26,20 +26,19 @@ namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryReadClient::BigQueryReadClient(
-    std::shared_ptr<BigQueryReadConnection> connection, Options options)
+    std::shared_ptr<BigQueryReadConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), bigquery_internal::BigQueryReadDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), bigquery_internal::BigQueryReadDefaultOptions(
+                               connection_->options()))) {}
 BigQueryReadClient::~BigQueryReadClient() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadClient::CreateReadSession(
     std::string const& parent,
     google::cloud::bigquery::storage::v1::ReadSession const& read_session,
-    std::int32_t max_stream_count, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::int32_t max_stream_count, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
   request.set_parent(parent);
   *request.mutable_read_session() = read_session;
@@ -51,17 +50,15 @@ StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadClient::CreateReadSession(
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReadSession(request);
 }
 
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadClient::ReadRows(std::string const& read_stream,
-                             std::int64_t offset, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                             std::int64_t offset, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::storage::v1::ReadRowsRequest request;
   request.set_read_stream(read_stream);
   request.set_offset(offset);
@@ -71,18 +68,16 @@ BigQueryReadClient::ReadRows(std::string const& read_stream,
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadClient::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadRows(request);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadClient::SplitReadStream(
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SplitReadStream(request);
 }
 

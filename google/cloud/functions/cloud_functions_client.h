@@ -64,7 +64,7 @@ class CloudFunctionsServiceClient {
  public:
   explicit CloudFunctionsServiceClient(
       std::shared_ptr<CloudFunctionsServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~CloudFunctionsServiceClient();
 
   //@{
@@ -94,7 +94,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::ListFunctionsRequest,google/cloud/functions/v1/functions.proto#L703}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L195}
   ///
@@ -105,14 +106,15 @@ class CloudFunctionsServiceClient {
   ///
   StreamRange<google::cloud::functions::v1::CloudFunction> ListFunctions(
       google::cloud::functions::v1::ListFunctionsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns a function with the given name from the requested project.
   ///
   /// @param name  Required. The name of the function which details should be
   /// obtained.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L195}
   ///
@@ -122,14 +124,15 @@ class CloudFunctionsServiceClient {
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L195}
   ///
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns a function with the given name from the requested project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::GetFunctionRequest,google/cloud/functions/v1/functions.proto#L692}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L195}
   ///
@@ -140,7 +143,7 @@ class CloudFunctionsServiceClient {
   ///
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
       google::cloud::functions::v1::GetFunctionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new function. If a function with the given name already exists
@@ -151,7 +154,8 @@ class CloudFunctionsServiceClient {
   /// should be created, specified
   ///  in the format `projects/*/locations/*`
   /// @param function  Required. Function to be created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L195}
   ///
@@ -163,7 +167,7 @@ class CloudFunctionsServiceClient {
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
       std::string const& location,
       google::cloud::functions::v1::CloudFunction const& function,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new function. If a function with the given name already exists
@@ -172,7 +176,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::CreateFunctionRequest,google/cloud/functions/v1/functions.proto#L646}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L195}
   ///
@@ -183,13 +188,14 @@ class CloudFunctionsServiceClient {
   ///
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
       google::cloud::functions::v1::CreateFunctionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates existing function.
   ///
   /// @param function  Required. New version of the function.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L195}
   ///
@@ -200,14 +206,15 @@ class CloudFunctionsServiceClient {
   ///
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
       google::cloud::functions::v1::CloudFunction const& function,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates existing function.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::UpdateFunctionRequest,google/cloud/functions/v1/functions.proto#L661}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L195}
   ///
@@ -218,7 +225,7 @@ class CloudFunctionsServiceClient {
   ///
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
       google::cloud::functions::v1::UpdateFunctionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a function with the given name from the specified project. If the
@@ -226,7 +233,8 @@ class CloudFunctionsServiceClient {
   /// remove this function.
   ///
   /// @param name  Required. The name of the function which should be deleted.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::OperationMetadataV1,google/cloud/functions/v1/operations.proto#L44}
   ///
@@ -236,7 +244,7 @@ class CloudFunctionsServiceClient {
   /// @googleapis_reference_link{google/cloud/functions/v1/operations.proto#L44}
   ///
   future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
-  DeleteFunction(std::string const& name, Options options = {});
+  DeleteFunction(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a function with the given name from the specified project. If the
@@ -245,7 +253,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::DeleteFunctionRequest,google/cloud/functions/v1/functions.proto#L741}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::OperationMetadataV1,google/cloud/functions/v1/operations.proto#L44}
   ///
@@ -257,7 +266,7 @@ class CloudFunctionsServiceClient {
   future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
   DeleteFunction(
       google::cloud::functions::v1::DeleteFunctionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Synchronously invokes a deployed Cloud Function. To be used for testing
@@ -267,7 +276,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param name  Required. The name of the function to be called.
   /// @param data  Required. Input to be passed to the function.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CallFunctionResponse,google/cloud/functions/v1/functions.proto#L766}
   ///
@@ -277,7 +287,7 @@ class CloudFunctionsServiceClient {
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L766}
   ///
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
-      std::string const& name, std::string const& data, Options options = {});
+      std::string const& name, std::string const& data, Options opts = {});
 
   ///
   /// Synchronously invokes a deployed Cloud Function. To be used for testing
@@ -287,7 +297,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::CallFunctionRequest,google/cloud/functions/v1/functions.proto#L752}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CallFunctionResponse,google/cloud/functions/v1/functions.proto#L766}
   ///
@@ -298,7 +309,7 @@ class CloudFunctionsServiceClient {
   ///
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
       google::cloud::functions::v1::CallFunctionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns a signed URL for uploading a function source code.
@@ -330,7 +341,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::GenerateUploadUrlRequest,google/cloud/functions/v1/functions.proto#L780}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::GenerateUploadUrlResponse,google/cloud/functions/v1/functions.proto#L787}
   ///
@@ -342,7 +354,7 @@ class CloudFunctionsServiceClient {
   StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
   GenerateUploadUrl(
       google::cloud::functions::v1::GenerateUploadUrlRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns a signed URL for downloading deployed function source code.
@@ -353,7 +365,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::functions::v1::GenerateDownloadUrlRequest,google/cloud/functions/v1/functions.proto#L795}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::GenerateDownloadUrlResponse,google/cloud/functions/v1/functions.proto#L806}
   ///
@@ -365,7 +378,7 @@ class CloudFunctionsServiceClient {
   StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
       google::cloud::functions::v1::GenerateDownloadUrlRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sets the IAM access control policy on the specified function.
@@ -373,7 +386,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -383,8 +397,7 @@ class CloudFunctionsServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets the IAM access control policy for a function.
@@ -393,7 +406,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -403,8 +417,7 @@ class CloudFunctionsServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Tests the specified permissions against the IAM access control policy
@@ -414,7 +427,8 @@ class CloudFunctionsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -425,7 +439,7 @@ class CloudFunctionsServiceClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudFunctionsServiceConnection> connection_;

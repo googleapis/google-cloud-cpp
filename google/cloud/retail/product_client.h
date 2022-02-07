@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProductServiceClient {
  public:
   explicit ProductServiceClient(
-      std::shared_ptr<ProductServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<ProductServiceConnection> connection, Options opts = {});
   ~ProductServiceClient();
 
   //@{
@@ -107,7 +106,8 @@ class ProductServiceClient {
   ///  an ALREADY_EXISTS error is returned. This field must be a UTF-8 encoded
   ///  string with a length limit of 128 characters. Otherwise, an
   ///  INVALID_ARGUMENT error is returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -119,14 +119,15 @@ class ProductServiceClient {
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       std::string const& parent,
       google::cloud::retail::v2::Product const& product,
-      std::string const& product_id, Options options = {});
+      std::string const& product_id, Options opts = {});
 
   ///
   /// Creates a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::CreateProductRequest,google/cloud/retail/v2/product_service.proto#L219}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -137,7 +138,7 @@ class ProductServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       google::cloud::retail::v2::CreateProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a [Product][google.cloud.retail.v2.Product].
@@ -151,7 +152,8 @@ class ProductServiceClient {
   ///  it exists, a PERMISSION_DENIED error is returned. If the requested
   ///  [Product][google.cloud.retail.v2.Product] does not exist, a NOT_FOUND
   ///  error is returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -161,14 +163,15 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::GetProductRequest,google/cloud/retail/v2/product_service.proto#L249}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -179,7 +182,7 @@ class ProductServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
       google::cloud::retail::v2::GetProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a list of [Product][google.cloud.retail.v2.Product]s.
@@ -192,7 +195,8 @@ class ProductServiceClient {
   ///  [Product][google.cloud.retail.v2.Product]s under this branch, regardless
   ///  of whether or not this branch exists, a PERMISSION_DENIED error is
   ///  returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -202,14 +206,15 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   StreamRange<google::cloud::retail::v2::Product> ListProducts(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Gets a list of [Product][google.cloud.retail.v2.Product]s.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::ListProductsRequest,google/cloud/retail/v2/product_service.proto#L327}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -220,7 +225,7 @@ class ProductServiceClient {
   ///
   StreamRange<google::cloud::retail::v2::Product> ListProducts(
       google::cloud::retail::v2::ListProductsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a [Product][google.cloud.retail.v2.Product].
@@ -238,7 +243,8 @@ class ProductServiceClient {
   ///  (the fields that are neither immutable nor output only) are updated. If
   ///  an unsupported or unknown field is provided, an INVALID_ARGUMENT error is
   ///  returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -249,14 +255,15 @@ class ProductServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
       google::cloud::retail::v2::Product const& product,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::UpdateProductRequest,google/cloud/retail/v2/product_service.proto#L267}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
@@ -267,7 +274,7 @@ class ProductServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
       google::cloud::retail::v2::UpdateProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a [Product][google.cloud.retail.v2.Product].
@@ -290,26 +297,28 @@ class ProductServiceClient {
   ///  INVALID_ARGUMENT error is returned.
   ///  All inventory information for the named
   ///  [Product][google.cloud.retail.v2.Product] will be deleted.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.DeleteProductRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L296}
   ///
-  Status DeleteProduct(std::string const& name, Options options = {});
+  Status DeleteProduct(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::DeleteProductRequest,google/cloud/retail/v2/product_service.proto#L296}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.DeleteProductRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L296}
   ///
   Status DeleteProduct(
       google::cloud::retail::v2::DeleteProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Bulk import of multiple [Product][google.cloud.retail.v2.Product]s.
@@ -322,7 +331,8 @@ class ProductServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::ImportProductsRequest,google/cloud/retail/v2/import_config.proto#L147}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::ImportProductsResponse,google/cloud/retail/v2/import_config.proto#L346}
   ///
@@ -334,7 +344,7 @@ class ProductServiceClient {
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
   ImportProducts(
       google::cloud::retail::v2::ImportProductsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates inventory information for a
@@ -412,7 +422,8 @@ class ProductServiceClient {
   ///  with empty paths, all inventory fields will be updated. If an unsupported
   ///  or unknown field is provided, an INVALID_ARGUMENT error is returned and
   ///  the entire update will be ignored.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L493}
   ///
@@ -423,8 +434,7 @@ class ProductServiceClient {
   ///
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::Product const& inventory,
-               google::protobuf::FieldMask const& set_mask,
-               Options options = {});
+               google::protobuf::FieldMask const& set_mask, Options opts = {});
 
   ///
   /// Updates inventory information for a
@@ -470,7 +480,8 @@ class ProductServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::SetInventoryRequest,google/cloud/retail/v2/product_service.proto#L425}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L493}
   ///
@@ -481,7 +492,7 @@ class ProductServiceClient {
   ///
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request,
-               Options options = {});
+               Options opts = {});
 
   ///
   /// Incrementally adds place IDs to
@@ -507,7 +518,8 @@ class ProductServiceClient {
   ///  If the caller does not have permission to access the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
   ///  it exists, a PERMISSION_DENIED error is returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L569}
   ///
@@ -517,7 +529,7 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L569}
   ///
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(std::string const& product, Options options = {});
+  AddFulfillmentPlaces(std::string const& product, Options opts = {});
 
   ///
   /// Incrementally adds place IDs to
@@ -538,7 +550,8 @@ class ProductServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L496}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L569}
   ///
@@ -550,7 +563,7 @@ class ProductServiceClient {
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Incrementally removes place IDs from a
@@ -576,7 +589,8 @@ class ProductServiceClient {
   ///  If the caller does not have permission to access the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
   ///  it exists, a PERMISSION_DENIED error is returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L640}
   ///
@@ -586,7 +600,7 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L640}
   ///
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(std::string const& product, Options options = {});
+  RemoveFulfillmentPlaces(std::string const& product, Options opts = {});
 
   ///
   /// Incrementally removes place IDs from a
@@ -607,7 +621,8 @@ class ProductServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L572}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L640}
   ///
@@ -619,7 +634,7 @@ class ProductServiceClient {
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ProductServiceConnection> connection_;

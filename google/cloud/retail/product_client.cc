@@ -26,20 +26,19 @@ namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProductServiceClient::ProductServiceClient(
-    std::shared_ptr<ProductServiceConnection> connection, Options options)
+    std::shared_ptr<ProductServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), retail_internal::ProductServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), retail_internal::ProductServiceDefaultOptions(
+                               connection_->options()))) {}
 ProductServiceClient::~ProductServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceClient::CreateProduct(
     std::string const& parent,
     google::cloud::retail::v2::Product const& product,
-    std::string const& product_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& product_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::CreateProductRequest request;
   request.set_parent(parent);
   *request.mutable_product() = product;
@@ -50,33 +49,28 @@ ProductServiceClient::CreateProduct(
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceClient::CreateProduct(
     google::cloud::retail::v2::CreateProductRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProduct(request);
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceClient::GetProduct(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetProductRequest request;
   request.set_name(name);
   return connection_->GetProduct(request);
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceClient::GetProduct(
-    google::cloud::retail::v2::GetProductRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::retail::v2::GetProductRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProduct(request);
 }
 
 StreamRange<google::cloud::retail::v2::Product>
-ProductServiceClient::ListProducts(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+ProductServiceClient::ListProducts(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::ListProductsRequest request;
   request.set_parent(parent);
   return connection_->ListProducts(request);
@@ -84,18 +78,16 @@ ProductServiceClient::ListProducts(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::retail::v2::Product>
 ProductServiceClient::ListProducts(
-    google::cloud::retail::v2::ListProductsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::retail::v2::ListProductsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProducts(std::move(request));
 }
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceClient::UpdateProduct(
     google::cloud::retail::v2::Product const& product,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateProductRequest request;
   *request.mutable_product() = product;
   *request.mutable_update_mask() = update_mask;
@@ -105,16 +97,14 @@ ProductServiceClient::UpdateProduct(
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceClient::UpdateProduct(
     google::cloud::retail::v2::UpdateProductRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProduct(request);
 }
 
 Status ProductServiceClient::DeleteProduct(std::string const& name,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::DeleteProductRequest request;
   request.set_name(name);
   return connection_->DeleteProduct(request);
@@ -122,27 +112,24 @@ Status ProductServiceClient::DeleteProduct(std::string const& name,
 
 Status ProductServiceClient::DeleteProduct(
     google::cloud::retail::v2::DeleteProductRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProduct(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceClient::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProducts(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceClient::SetInventory(
     google::cloud::retail::v2::Product const& inventory,
-    google::protobuf::FieldMask const& set_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& set_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::SetInventoryRequest request;
   *request.mutable_inventory() = inventory;
   *request.mutable_set_mask() = set_mask;
@@ -152,17 +139,15 @@ ProductServiceClient::SetInventory(
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceClient::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetInventory(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceClient::AddFulfillmentPlaces(std::string const& product,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::AddFulfillmentPlacesRequest request;
   request.set_product(product);
   return connection_->AddFulfillmentPlaces(request);
@@ -171,17 +156,15 @@ ProductServiceClient::AddFulfillmentPlaces(std::string const& product,
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceClient::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddFulfillmentPlaces(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceClient::RemoveFulfillmentPlaces(std::string const& product,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::RemoveFulfillmentPlacesRequest request;
   request.set_product(product);
   return connection_->RemoveFulfillmentPlaces(request);
@@ -190,9 +173,8 @@ ProductServiceClient::RemoveFulfillmentPlaces(std::string const& product,
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceClient::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveFulfillmentPlaces(request);
 }
 

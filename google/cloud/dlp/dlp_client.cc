@@ -26,53 +26,47 @@ namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DlpServiceClient::DlpServiceClient(
-    std::shared_ptr<DlpServiceConnection> connection, Options options)
+    std::shared_ptr<DlpServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           dlp_internal::DlpServiceDefaultOptions(connection_->options()))) {}
 DlpServiceClient::~DlpServiceClient() = default;
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DlpServiceClient::InspectContent(
     google::privacy::dlp::v2::InspectContentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InspectContent(request);
 }
 
 StatusOr<google::privacy::dlp::v2::RedactImageResponse>
 DlpServiceClient::RedactImage(
-    google::privacy::dlp::v2::RedactImageRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::privacy::dlp::v2::RedactImageRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RedactImage(request);
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
 DlpServiceClient::DeidentifyContent(
     google::privacy::dlp::v2::DeidentifyContentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeidentifyContent(request);
 }
 
 StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
 DlpServiceClient::ReidentifyContent(
     google::privacy::dlp::v2::ReidentifyContentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReidentifyContent(request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
-DlpServiceClient::ListInfoTypes(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DlpServiceClient::ListInfoTypes(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::ListInfoTypesRequest request;
   request.set_parent(parent);
   return connection_->ListInfoTypes(request);
@@ -81,9 +75,8 @@ DlpServiceClient::ListInfoTypes(std::string const& parent, Options options) {
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
 DlpServiceClient::ListInfoTypes(
     google::privacy::dlp::v2::ListInfoTypesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInfoTypes(request);
 }
 
@@ -91,9 +84,8 @@ StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceClient::CreateInspectTemplate(
     std::string const& parent,
     google::privacy::dlp::v2::InspectTemplate const& inspect_template,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::CreateInspectTemplateRequest request;
   request.set_parent(parent);
   *request.mutable_inspect_template() = inspect_template;
@@ -103,9 +95,8 @@ DlpServiceClient::CreateInspectTemplate(
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceClient::CreateInspectTemplate(
     google::privacy::dlp::v2::CreateInspectTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInspectTemplate(request);
 }
 
@@ -113,9 +104,8 @@ StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceClient::UpdateInspectTemplate(
     std::string const& name,
     google::privacy::dlp::v2::InspectTemplate const& inspect_template,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::UpdateInspectTemplateRequest request;
   request.set_name(name);
   *request.mutable_inspect_template() = inspect_template;
@@ -126,16 +116,14 @@ DlpServiceClient::UpdateInspectTemplate(
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceClient::UpdateInspectTemplate(
     google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInspectTemplate(request);
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceClient::GetInspectTemplate(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DlpServiceClient::GetInspectTemplate(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::GetInspectTemplateRequest request;
   request.set_name(name);
   return connection_->GetInspectTemplate(request);
@@ -144,17 +132,15 @@ DlpServiceClient::GetInspectTemplate(std::string const& name, Options options) {
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceClient::GetInspectTemplate(
     google::privacy::dlp::v2::GetInspectTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInspectTemplate(request);
 }
 
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceClient::ListInspectTemplates(std::string const& parent,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::ListInspectTemplatesRequest request;
   request.set_parent(parent);
   return connection_->ListInspectTemplates(request);
@@ -163,16 +149,14 @@ DlpServiceClient::ListInspectTemplates(std::string const& parent,
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceClient::ListInspectTemplates(
     google::privacy::dlp::v2::ListInspectTemplatesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInspectTemplates(std::move(request));
 }
 
 Status DlpServiceClient::DeleteInspectTemplate(std::string const& name,
-                                               Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::DeleteInspectTemplateRequest request;
   request.set_name(name);
   return connection_->DeleteInspectTemplate(request);
@@ -180,9 +164,8 @@ Status DlpServiceClient::DeleteInspectTemplate(std::string const& name,
 
 Status DlpServiceClient::DeleteInspectTemplate(
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInspectTemplate(request);
 }
 
@@ -190,9 +173,8 @@ StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceClient::CreateDeidentifyTemplate(
     std::string const& parent,
     google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::CreateDeidentifyTemplateRequest request;
   request.set_parent(parent);
   *request.mutable_deidentify_template() = deidentify_template;
@@ -202,9 +184,8 @@ DlpServiceClient::CreateDeidentifyTemplate(
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceClient::CreateDeidentifyTemplate(
     google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeidentifyTemplate(request);
 }
 
@@ -212,9 +193,8 @@ StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceClient::UpdateDeidentifyTemplate(
     std::string const& name,
     google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest request;
   request.set_name(name);
   *request.mutable_deidentify_template() = deidentify_template;
@@ -225,17 +205,14 @@ DlpServiceClient::UpdateDeidentifyTemplate(
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceClient::UpdateDeidentifyTemplate(
     google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeidentifyTemplate(request);
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceClient::GetDeidentifyTemplate(std::string const& name,
-                                        Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DlpServiceClient::GetDeidentifyTemplate(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::GetDeidentifyTemplateRequest request;
   request.set_name(name);
   return connection_->GetDeidentifyTemplate(request);
@@ -244,17 +221,15 @@ DlpServiceClient::GetDeidentifyTemplate(std::string const& name,
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceClient::GetDeidentifyTemplate(
     google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDeidentifyTemplate(request);
 }
 
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceClient::ListDeidentifyTemplates(std::string const& parent,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request;
   request.set_parent(parent);
   return connection_->ListDeidentifyTemplates(request);
@@ -263,16 +238,14 @@ DlpServiceClient::ListDeidentifyTemplates(std::string const& parent,
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceClient::ListDeidentifyTemplates(
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeidentifyTemplates(std::move(request));
 }
 
 Status DlpServiceClient::DeleteDeidentifyTemplate(std::string const& name,
-                                                  Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest request;
   request.set_name(name);
   return connection_->DeleteDeidentifyTemplate(request);
@@ -280,18 +253,16 @@ Status DlpServiceClient::DeleteDeidentifyTemplate(std::string const& name,
 
 Status DlpServiceClient::DeleteDeidentifyTemplate(
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDeidentifyTemplate(request);
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceClient::CreateJobTrigger(
     std::string const& parent,
-    google::privacy::dlp::v2::JobTrigger const& job_trigger, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::privacy::dlp::v2::JobTrigger const& job_trigger, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::CreateJobTriggerRequest request;
   request.set_parent(parent);
   *request.mutable_job_trigger() = job_trigger;
@@ -301,9 +272,8 @@ DlpServiceClient::CreateJobTrigger(
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceClient::CreateJobTrigger(
     google::privacy::dlp::v2::CreateJobTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJobTrigger(request);
 }
 
@@ -311,9 +281,8 @@ StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceClient::UpdateJobTrigger(
     std::string const& name,
     google::privacy::dlp::v2::JobTrigger const& job_trigger,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::UpdateJobTriggerRequest request;
   request.set_name(name);
   *request.mutable_job_trigger() = job_trigger;
@@ -324,17 +293,15 @@ DlpServiceClient::UpdateJobTrigger(
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceClient::UpdateJobTrigger(
     google::privacy::dlp::v2::UpdateJobTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateJobTrigger(request);
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceClient::HybridInspectJobTrigger(std::string const& name,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::HybridInspectJobTriggerRequest request;
   request.set_name(name);
   return connection_->HybridInspectJobTrigger(request);
@@ -343,16 +310,14 @@ DlpServiceClient::HybridInspectJobTrigger(std::string const& name,
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceClient::HybridInspectJobTrigger(
     google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->HybridInspectJobTrigger(request);
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceClient::GetJobTrigger(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::GetJobTriggerRequest request;
   request.set_name(name);
   return connection_->GetJobTrigger(request);
@@ -360,16 +325,14 @@ StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceClient::GetJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceClient::GetJobTrigger(
     google::privacy::dlp::v2::GetJobTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJobTrigger(request);
 }
 
 StreamRange<google::privacy::dlp::v2::JobTrigger>
-DlpServiceClient::ListJobTriggers(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DlpServiceClient::ListJobTriggers(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::ListJobTriggersRequest request;
   request.set_parent(parent);
   return connection_->ListJobTriggers(request);
@@ -377,16 +340,14 @@ DlpServiceClient::ListJobTriggers(std::string const& parent, Options options) {
 
 StreamRange<google::privacy::dlp::v2::JobTrigger>
 DlpServiceClient::ListJobTriggers(
-    google::privacy::dlp::v2::ListJobTriggersRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::privacy::dlp::v2::ListJobTriggersRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobTriggers(std::move(request));
 }
 
 Status DlpServiceClient::DeleteJobTrigger(std::string const& name,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::DeleteJobTriggerRequest request;
   request.set_name(name);
   return connection_->DeleteJobTrigger(request);
@@ -394,26 +355,23 @@ Status DlpServiceClient::DeleteJobTrigger(std::string const& name,
 
 Status DlpServiceClient::DeleteJobTrigger(
     google::privacy::dlp::v2::DeleteJobTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJobTrigger(request);
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::ActivateJobTrigger(
     google::privacy::dlp::v2::ActivateJobTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ActivateJobTrigger(request);
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::CreateDlpJob(
     std::string const& parent,
     google::privacy::dlp::v2::InspectJobConfig const& inspect_job,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::CreateDlpJobRequest request;
   request.set_parent(parent);
   *request.mutable_inspect_job() = inspect_job;
@@ -423,9 +381,8 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::CreateDlpJob(
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::CreateDlpJob(
     std::string const& parent,
     google::privacy::dlp::v2::RiskAnalysisJobConfig const& risk_job,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::CreateDlpJobRequest request;
   request.set_parent(parent);
   *request.mutable_risk_job() = risk_job;
@@ -434,49 +391,41 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::CreateDlpJob(
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::CreateDlpJob(
     google::privacy::dlp::v2::CreateDlpJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDlpJob(request);
 }
 
 StreamRange<google::privacy::dlp::v2::DlpJob> DlpServiceClient::ListDlpJobs(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::ListDlpJobsRequest request;
   request.set_parent(parent);
   return connection_->ListDlpJobs(request);
 }
 
 StreamRange<google::privacy::dlp::v2::DlpJob> DlpServiceClient::ListDlpJobs(
-    google::privacy::dlp::v2::ListDlpJobsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::privacy::dlp::v2::ListDlpJobsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDlpJobs(std::move(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::GetDlpJob(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::GetDlpJobRequest request;
   request.set_name(name);
   return connection_->GetDlpJob(request);
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceClient::GetDlpJob(
-    google::privacy::dlp::v2::GetDlpJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::privacy::dlp::v2::GetDlpJobRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDlpJob(request);
 }
 
-Status DlpServiceClient::DeleteDlpJob(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+Status DlpServiceClient::DeleteDlpJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::DeleteDlpJobRequest request;
   request.set_name(name);
   return connection_->DeleteDlpJob(request);
@@ -484,17 +433,15 @@ Status DlpServiceClient::DeleteDlpJob(std::string const& name,
 
 Status DlpServiceClient::DeleteDlpJob(
     google::privacy::dlp::v2::DeleteDlpJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDlpJob(request);
 }
 
 Status DlpServiceClient::CancelDlpJob(
     google::privacy::dlp::v2::CancelDlpJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelDlpJob(request);
 }
 
@@ -502,9 +449,8 @@ StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceClient::CreateStoredInfoType(
     std::string const& parent,
     google::privacy::dlp::v2::StoredInfoTypeConfig const& config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::CreateStoredInfoTypeRequest request;
   request.set_parent(parent);
   *request.mutable_config() = config;
@@ -514,9 +460,8 @@ DlpServiceClient::CreateStoredInfoType(
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceClient::CreateStoredInfoType(
     google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateStoredInfoType(request);
 }
 
@@ -524,9 +469,8 @@ StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceClient::UpdateStoredInfoType(
     std::string const& name,
     google::privacy::dlp::v2::StoredInfoTypeConfig const& config,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::UpdateStoredInfoTypeRequest request;
   request.set_name(name);
   *request.mutable_config() = config;
@@ -537,16 +481,14 @@ DlpServiceClient::UpdateStoredInfoType(
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceClient::UpdateStoredInfoType(
     google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStoredInfoType(request);
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceClient::GetStoredInfoType(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DlpServiceClient::GetStoredInfoType(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::GetStoredInfoTypeRequest request;
   request.set_name(name);
   return connection_->GetStoredInfoType(request);
@@ -555,17 +497,14 @@ DlpServiceClient::GetStoredInfoType(std::string const& name, Options options) {
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceClient::GetStoredInfoType(
     google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetStoredInfoType(request);
 }
 
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceClient::ListStoredInfoTypes(std::string const& parent,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DlpServiceClient::ListStoredInfoTypes(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::ListStoredInfoTypesRequest request;
   request.set_parent(parent);
   return connection_->ListStoredInfoTypes(request);
@@ -574,16 +513,14 @@ DlpServiceClient::ListStoredInfoTypes(std::string const& parent,
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceClient::ListStoredInfoTypes(
     google::privacy::dlp::v2::ListStoredInfoTypesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListStoredInfoTypes(std::move(request));
 }
 
 Status DlpServiceClient::DeleteStoredInfoType(std::string const& name,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::DeleteStoredInfoTypeRequest request;
   request.set_name(name);
   return connection_->DeleteStoredInfoType(request);
@@ -591,17 +528,14 @@ Status DlpServiceClient::DeleteStoredInfoType(std::string const& name,
 
 Status DlpServiceClient::DeleteStoredInfoType(
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStoredInfoType(request);
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-DlpServiceClient::HybridInspectDlpJob(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DlpServiceClient::HybridInspectDlpJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::privacy::dlp::v2::HybridInspectDlpJobRequest request;
   request.set_name(name);
   return connection_->HybridInspectDlpJob(request);
@@ -610,17 +544,15 @@ DlpServiceClient::HybridInspectDlpJob(std::string const& name,
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceClient::HybridInspectDlpJob(
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->HybridInspectDlpJob(request);
 }
 
 Status DlpServiceClient::FinishDlpJob(
     google::privacy::dlp::v2::FinishDlpJobRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FinishDlpJob(request);
 }
 

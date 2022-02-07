@@ -64,7 +64,7 @@ class ApiGatewayServiceClient {
  public:
   explicit ApiGatewayServiceClient(
       std::shared_ptr<ApiGatewayServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ApiGatewayServiceClient();
 
   //@{
@@ -92,7 +92,8 @@ class ApiGatewayServiceClient {
   ///
   /// @param parent  Required. Parent resource of the Gateway, of the form:
   ///  `projects/*/locations/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -102,14 +103,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Gateways in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::ListGatewaysRequest,google/cloud/apigateway/v1/apigateway.proto#L306}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -120,14 +122,15 @@ class ApiGatewayServiceClient {
   ///
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
       google::cloud::apigateway::v1::ListGatewaysRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single Gateway.
   ///
   /// @param name  Required. Resource name of the form:
   ///  `projects/*/locations/*/gateways/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -137,14 +140,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single Gateway.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::GetGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L342}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -155,7 +159,7 @@ class ApiGatewayServiceClient {
   ///
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
       google::cloud::apigateway::v1::GetGatewayRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Gateway in a given project and location.
@@ -166,7 +170,8 @@ class ApiGatewayServiceClient {
   /// @param gateway_id  Required. Identifier to assign to the Gateway. Must be
   /// unique within scope of
   ///  the parent resource.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -178,14 +183,15 @@ class ApiGatewayServiceClient {
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
       std::string const& parent,
       google::cloud::apigateway::v1::Gateway const& gateway,
-      std::string const& gateway_id, Options options = {});
+      std::string const& gateway_id, Options opts = {});
 
   ///
   /// Creates a new Gateway in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::CreateGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L354}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -196,7 +202,7 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
       google::cloud::apigateway::v1::CreateGatewayRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the parameters of a single Gateway.
@@ -208,7 +214,8 @@ class ApiGatewayServiceClient {
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask. If
   ///  the user does not provide a mask then all fields will be overwritten.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -219,14 +226,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
       google::cloud::apigateway::v1::Gateway const& gateway,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the parameters of a single Gateway.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::UpdateGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L373}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L243}
   ///
@@ -237,14 +245,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single Gateway.
   ///
   /// @param name  Required. Resource name of the form:
   ///  `projects/*/locations/*/gateways/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
@@ -254,14 +263,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteGateway(std::string const& name, Options options = {});
+  DeleteGateway(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single Gateway.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::DeleteGatewayRequest,google/cloud/apigateway/v1/apigateway.proto#L386}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
@@ -273,14 +283,15 @@ class ApiGatewayServiceClient {
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteGateway(
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists Apis in a given project and location.
   ///
   /// @param parent  Required. Parent resource of the API, of the form:
   ///  `projects/*/locations/global`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -290,14 +301,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Apis in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::ListApisRequest,google/cloud/apigateway/v1/apigateway.proto#L398}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -308,14 +320,15 @@ class ApiGatewayServiceClient {
   ///
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
       google::cloud::apigateway::v1::ListApisRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single Api.
   ///
   /// @param name  Required. Resource name of the form:
   ///  `projects/*/locations/global/apis/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -325,14 +338,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(std::string const& name,
-                                                      Options options = {});
+                                                      Options opts = {});
 
   ///
   /// Gets details of a single Api.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::GetApiRequest,google/cloud/apigateway/v1/apigateway.proto#L434}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -343,7 +357,7 @@ class ApiGatewayServiceClient {
   ///
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(
       google::cloud::apigateway::v1::GetApiRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Api in a given project and location.
@@ -354,7 +368,8 @@ class ApiGatewayServiceClient {
   /// @param api_id  Required. Identifier to assign to the API. Must be unique
   /// within scope of
   ///  the parent resource.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -365,14 +380,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       std::string const& parent, google::cloud::apigateway::v1::Api const& api,
-      std::string const& api_id, Options options = {});
+      std::string const& api_id, Options opts = {});
 
   ///
   /// Creates a new Api in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::CreateApiRequest,google/cloud/apigateway/v1/apigateway.proto#L446}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -383,7 +399,7 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       google::cloud::apigateway::v1::CreateApiRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the parameters of a single Api.
@@ -395,7 +411,8 @@ class ApiGatewayServiceClient {
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask. If
   ///  the user does not provide a mask then all fields will be overwritten.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -406,14 +423,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       google::cloud::apigateway::v1::Api const& api,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the parameters of a single Api.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::UpdateApiRequest,google/cloud/apigateway/v1/apigateway.proto#L465}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L45}
   ///
@@ -424,14 +442,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       google::cloud::apigateway::v1::UpdateApiRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single Api.
   ///
   /// @param name  Required. Resource name of the form:
   ///  `projects/*/locations/global/apis/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
@@ -441,14 +460,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single Api.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::DeleteApiRequest,google/cloud/apigateway/v1/apigateway.proto#L478}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
@@ -459,14 +479,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
       google::cloud::apigateway::v1::DeleteApiRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists ApiConfigs in a given project and location.
   ///
   /// @param parent  Required. Parent resource of the API Config, of the form:
   ///  `projects/*/locations/global/apis/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -476,14 +497,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists ApiConfigs in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::ListApiConfigsRequest,google/cloud/apigateway/v1/apigateway.proto#L490}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -494,14 +516,15 @@ class ApiGatewayServiceClient {
   ///
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
       google::cloud::apigateway::v1::ListApiConfigsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single ApiConfig.
   ///
   /// @param name  Required. Resource name of the form:
   ///  `projects/*/locations/global/apis/*/configs/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -511,14 +534,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single ApiConfig.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::GetApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L526}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -529,7 +553,7 @@ class ApiGatewayServiceClient {
   ///
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
       google::cloud::apigateway::v1::GetApiConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new ApiConfig in a given project and location.
@@ -540,7 +564,8 @@ class ApiGatewayServiceClient {
   /// @param api_config_id  Required. Identifier to assign to the API Config.
   /// Must be unique within scope of
   ///  the parent resource.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -552,14 +577,15 @@ class ApiGatewayServiceClient {
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
       std::string const& parent,
       google::cloud::apigateway::v1::ApiConfig const& api_config,
-      std::string const& api_config_id, Options options = {});
+      std::string const& api_config_id, Options opts = {});
 
   ///
   /// Creates a new ApiConfig in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::CreateApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L553}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -570,7 +596,7 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the parameters of a single ApiConfig.
@@ -582,7 +608,8 @@ class ApiGatewayServiceClient {
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask. If
   ///  the user does not provide a mask then all fields will be overwritten.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -593,14 +620,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
       google::cloud::apigateway::v1::ApiConfig const& api_config,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the parameters of a single ApiConfig.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::UpdateApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L572}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L108}
   ///
@@ -611,14 +639,15 @@ class ApiGatewayServiceClient {
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single ApiConfig.
   ///
   /// @param name  Required. Resource name of the form:
   ///  `projects/*/locations/global/apis/*/configs/*`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
@@ -628,14 +657,15 @@ class ApiGatewayServiceClient {
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApiConfig(std::string const& name, Options options = {});
+  DeleteApiConfig(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single ApiConfig.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::apigateway::v1::DeleteApiConfigRequest,google/cloud/apigateway/v1/apigateway.proto#L585}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::OperationMetadata,google/cloud/apigateway/v1/apigateway.proto#L597}
   ///
@@ -647,7 +677,7 @@ class ApiGatewayServiceClient {
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApiConfig(
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ApiGatewayServiceConnection> connection_;

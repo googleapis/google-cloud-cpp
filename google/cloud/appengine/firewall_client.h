@@ -70,7 +70,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FirewallClient {
  public:
   explicit FirewallClient(std::shared_ptr<FirewallConnection> connection,
-                          Options options = {});
+                          Options opts = {});
   ~FirewallClient();
 
   //@{
@@ -96,7 +96,8 @@ class FirewallClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::ListIngressRulesRequest,google/appengine/v1/appengine.proto#L475}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
   ///
@@ -107,7 +108,7 @@ class FirewallClient {
   ///
   StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
       google::appengine::v1::ListIngressRulesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Replaces the entire firewall ruleset in one bulk operation. This overrides
@@ -118,7 +119,8 @@ class FirewallClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::BatchUpdateIngressRulesRequest,google/appengine/v1/appengine.proto#L569}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::BatchUpdateIngressRulesResponse,google/appengine/v1/appengine.proto#L579}
   ///
@@ -130,14 +132,15 @@ class FirewallClient {
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
   BatchUpdateIngressRules(
       google::appengine::v1::BatchUpdateIngressRulesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a firewall rule for the application.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::CreateIngressRuleRequest,google/appengine/v1/appengine.proto#L585}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
   ///
@@ -148,14 +151,15 @@ class FirewallClient {
   ///
   StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
       google::appengine::v1::CreateIngressRuleRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the specified firewall rule.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::GetIngressRuleRequest,google/appengine/v1/appengine.proto#L604}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
   ///
@@ -166,14 +170,15 @@ class FirewallClient {
   ///
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
       google::appengine::v1::GetIngressRuleRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the specified firewall rule.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::UpdateIngressRuleRequest,google/appengine/v1/appengine.proto#L611}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
   ///
@@ -184,21 +189,22 @@ class FirewallClient {
   ///
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
       google::appengine::v1::UpdateIngressRuleRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the specified firewall rule.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::DeleteIngressRuleRequest,google/appengine/v1/appengine.proto#L624}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.appengine.v1.DeleteIngressRuleRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L624}
   ///
   Status DeleteIngressRule(
       google::appengine::v1::DeleteIngressRuleRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<FirewallConnection> connection_;

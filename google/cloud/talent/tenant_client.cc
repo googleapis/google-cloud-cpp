@@ -26,18 +26,17 @@ namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TenantServiceClient::TenantServiceClient(
-    std::shared_ptr<TenantServiceConnection> connection, Options options)
+    std::shared_ptr<TenantServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), talent_internal::TenantServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), talent_internal::TenantServiceDefaultOptions(
+                               connection_->options()))) {}
 TenantServiceClient::~TenantServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::CreateTenant(
     std::string const& parent, google::cloud::talent::v4::Tenant const& tenant,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::CreateTenantRequest request;
   request.set_parent(parent);
   *request.mutable_tenant() = tenant;
@@ -46,34 +45,29 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::CreateTenant(
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::CreateTenant(
     google::cloud::talent::v4::CreateTenantRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTenant(request);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::GetTenant(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::GetTenantRequest request;
   request.set_name(name);
   return connection_->GetTenant(request);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::GetTenant(
-    google::cloud::talent::v4::GetTenantRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::talent::v4::GetTenantRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTenant(request);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::UpdateTenant(
     google::cloud::talent::v4::Tenant const& tenant,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::UpdateTenantRequest request;
   *request.mutable_tenant() = tenant;
   *request.mutable_update_mask() = update_mask;
@@ -82,16 +76,14 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::UpdateTenant(
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::UpdateTenant(
     google::cloud::talent::v4::UpdateTenantRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTenant(request);
 }
 
 Status TenantServiceClient::DeleteTenant(std::string const& name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::DeleteTenantRequest request;
   request.set_name(name);
   return connection_->DeleteTenant(request);
@@ -99,25 +91,22 @@ Status TenantServiceClient::DeleteTenant(std::string const& name,
 
 Status TenantServiceClient::DeleteTenant(
     google::cloud::talent::v4::DeleteTenantRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTenant(request);
 }
 
 StreamRange<google::cloud::talent::v4::Tenant> TenantServiceClient::ListTenants(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::ListTenantsRequest request;
   request.set_parent(parent);
   return connection_->ListTenants(request);
 }
 
 StreamRange<google::cloud::talent::v4::Tenant> TenantServiceClient::ListTenants(
-    google::cloud::talent::v4::ListTenantsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::talent::v4::ListTenantsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTenants(std::move(request));
 }
 

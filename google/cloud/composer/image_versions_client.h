@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImageVersionsClient {
  public:
   explicit ImageVersionsClient(
-      std::shared_ptr<ImageVersionsConnection> connection,
-      Options options = {});
+      std::shared_ptr<ImageVersionsConnection> connection, Options opts = {});
   ~ImageVersionsClient();
 
   //@{
@@ -91,7 +90,8 @@ class ImageVersionsClient {
   /// @param parent  List ImageVersions in the given project and location, in
   /// the form:
   ///  "projects/{projectId}/locations/{locationId}"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L67}
   ///
@@ -101,14 +101,15 @@ class ImageVersionsClient {
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L67}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-  ListImageVersions(std::string const& parent, Options options = {});
+  ListImageVersions(std::string const& parent, Options opts = {});
 
   ///
   /// List ImageVersions for provided location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L42}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L67}
   ///
@@ -120,7 +121,7 @@ class ImageVersionsClient {
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
   ListImageVersions(google::cloud::orchestration::airflow::service::v1::
                         ListImageVersionsRequest request,
-                    Options options = {});
+                    Options opts = {});
 
  private:
   std::shared_ptr<ImageVersionsConnection> connection_;

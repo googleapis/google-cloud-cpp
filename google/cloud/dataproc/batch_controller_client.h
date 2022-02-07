@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BatchControllerClient {
  public:
   explicit BatchControllerClient(
-      std::shared_ptr<BatchControllerConnection> connection,
-      Options options = {});
+      std::shared_ptr<BatchControllerConnection> connection, Options opts = {});
   ~BatchControllerClient();
 
   //@{
@@ -97,7 +96,8 @@ class BatchControllerClient {
   /// the final component of
   ///  the batch's resource name.
   ///  This value must be 4-63 characters. Valid characters are `/[a-z][0-9]-/`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
@@ -109,14 +109,15 @@ class BatchControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       std::string const& parent,
       google::cloud::dataproc::v1::Batch const& batch,
-      std::string const& batch_id, Options options = {});
+      std::string const& batch_id, Options opts = {});
 
   ///
   /// Creates a batch workload that executes asynchronously.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::CreateBatchRequest,google/cloud/dataproc/v1/batches.proto#L78}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
@@ -127,13 +128,14 @@ class BatchControllerClient {
   ///
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       google::cloud::dataproc::v1::CreateBatchRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the batch workload resource representation.
   ///
   /// @param name  Required. The name of the batch to retrieve.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
@@ -143,14 +145,15 @@ class BatchControllerClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
   ///
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(std::string const& name,
-                                                        Options options = {});
+                                                        Options opts = {});
 
   ///
   /// Gets the batch workload resource representation.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::GetBatchRequest,google/cloud/dataproc/v1/batches.proto#L112}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
@@ -161,14 +164,15 @@ class BatchControllerClient {
   ///
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
       google::cloud::dataproc::v1::GetBatchRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists batch workloads.
   ///
   /// @param parent  Required. The parent, which owns this collection of
   /// batches.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
@@ -178,14 +182,15 @@ class BatchControllerClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
   ///
   StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists batch workloads.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::ListBatchesRequest,google/cloud/dataproc/v1/batches.proto#L123}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
@@ -196,19 +201,20 @@ class BatchControllerClient {
   ///
   StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
       google::cloud::dataproc::v1::ListBatchesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the batch workload resource. If the batch is not in terminal
   /// state, the delete fails and the response returns `FAILED_PRECONDITION`.
   ///
   /// @param name  Required. The name of the batch resource to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteBatchRequest]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L153}
   ///
-  Status DeleteBatch(std::string const& name, Options options = {});
+  Status DeleteBatch(std::string const& name, Options opts = {});
 
   ///
   /// Deletes the batch workload resource. If the batch is not in terminal
@@ -216,14 +222,15 @@ class BatchControllerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::DeleteBatchRequest,google/cloud/dataproc/v1/batches.proto#L153}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteBatchRequest]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L153}
   ///
   Status DeleteBatch(
       google::cloud::dataproc::v1::DeleteBatchRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<BatchControllerConnection> connection_;

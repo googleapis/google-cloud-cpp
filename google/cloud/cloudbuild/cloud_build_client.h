@@ -70,7 +70,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudBuildClient {
  public:
   explicit CloudBuildClient(std::shared_ptr<CloudBuildConnection> connection,
-                            Options options = {});
+                            Options opts = {});
   ~CloudBuildClient();
 
   //@{
@@ -100,7 +100,8 @@ class CloudBuildClient {
   ///
   /// @param project_id  Required. ID of the project.
   /// @param build  Required. Build resource to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -111,8 +112,7 @@ class CloudBuildClient {
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       std::string const& project_id,
-      google::devtools::cloudbuild::v1::Build const& build,
-      Options options = {});
+      google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
 
   ///
   /// Starts a build with the specified configuration.
@@ -123,7 +123,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1100}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -134,7 +135,7 @@ class CloudBuildClient {
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns information about a previously requested build.
@@ -144,7 +145,8 @@ class CloudBuildClient {
   ///
   /// @param project_id  Required. ID of the project.
   /// @param id  Required. ID of the build.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -154,8 +156,7 @@ class CloudBuildClient {
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
-      std::string const& project_id, std::string const& id,
-      Options options = {});
+      std::string const& project_id, std::string const& id, Options opts = {});
 
   ///
   /// Returns information about a previously requested build.
@@ -165,7 +166,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1115}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -176,7 +178,7 @@ class CloudBuildClient {
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       google::devtools::cloudbuild::v1::GetBuildRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists previously requested builds.
@@ -186,7 +188,8 @@ class CloudBuildClient {
   ///
   /// @param project_id  Required. ID of the project.
   /// @param filter  The raw filter text to constrain the results.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -197,7 +200,7 @@ class CloudBuildClient {
   ///
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       std::string const& project_id, std::string const& filter,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists previously requested builds.
@@ -207,7 +210,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1130}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -218,14 +222,15 @@ class CloudBuildClient {
   ///
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       google::devtools::cloudbuild::v1::ListBuildsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Cancels a build in progress.
   ///
   /// @param project_id  Required. ID of the project.
   /// @param id  Required. ID of the build.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -235,15 +240,15 @@ class CloudBuildClient {
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
-      std::string const& project_id, std::string const& id,
-      Options options = {});
+      std::string const& project_id, std::string const& id, Options opts = {});
 
   ///
   /// Cancels a build in progress.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::CancelBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1169}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -254,7 +259,7 @@ class CloudBuildClient {
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
       google::devtools::cloudbuild::v1::CancelBuildRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new build based on the specified build.
@@ -287,7 +292,8 @@ class CloudBuildClient {
   ///
   /// @param project_id  Required. ID of the project.
   /// @param id  Required. Build ID of the original build.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -297,8 +303,7 @@ class CloudBuildClient {
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
-      std::string const& project_id, std::string const& id,
-      Options options = {});
+      std::string const& project_id, std::string const& id, Options opts = {});
 
   ///
   /// Creates a new build based on the specified build.
@@ -331,7 +336,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::RetryBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L364}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -342,7 +348,7 @@ class CloudBuildClient {
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Approves or rejects a pending build.
@@ -355,7 +361,8 @@ class CloudBuildClient {
   /// @param name  Required. Name of the target build.
   ///  For example: "projects/{$project_id}/builds/{$build_id}"
   /// @param approval_result  Approval decision and metadata.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -367,7 +374,7 @@ class CloudBuildClient {
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
       std::string const& name,
       google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Approves or rejects a pending build.
@@ -379,7 +386,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::ApproveBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1184}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -390,7 +398,7 @@ class CloudBuildClient {
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new `BuildTrigger`.
@@ -400,7 +408,8 @@ class CloudBuildClient {
   /// @param project_id  Required. ID of the project for which to configure
   /// automatic builds.
   /// @param trigger  Required. `BuildTrigger` to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -412,7 +421,7 @@ class CloudBuildClient {
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       std::string const& project_id,
       google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new `BuildTrigger`.
@@ -421,7 +430,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1557}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -433,7 +443,7 @@ class CloudBuildClient {
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns information about a `BuildTrigger`.
@@ -443,7 +453,8 @@ class CloudBuildClient {
   /// @param project_id  Required. ID of the project that owns the trigger.
   /// @param trigger_id  Required. Identifier (`id` or `name`) of the
   /// `BuildTrigger` to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -454,7 +465,7 @@ class CloudBuildClient {
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns information about a `BuildTrigger`.
@@ -463,7 +474,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1572}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -474,7 +486,7 @@ class CloudBuildClient {
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists existing `BuildTrigger`s.
@@ -483,7 +495,8 @@ class CloudBuildClient {
   ///
   /// @param project_id  Required. ID of the project for which to list
   /// BuildTriggers.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -493,7 +506,7 @@ class CloudBuildClient {
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
-      std::string const& project_id, Options options = {});
+      std::string const& project_id, Options opts = {});
 
   ///
   /// Lists existing `BuildTrigger`s.
@@ -502,7 +515,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildTriggersRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1587}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -513,7 +527,7 @@ class CloudBuildClient {
   ///
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
       google::devtools::cloudbuild::v1::ListBuildTriggersRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a `BuildTrigger` by its project ID and trigger ID.
@@ -522,14 +536,14 @@ class CloudBuildClient {
   ///
   /// @param project_id  Required. ID of the project that owns the trigger.
   /// @param trigger_id  Required. ID of the `BuildTrigger` to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1614}
   ///
   Status DeleteBuildTrigger(std::string const& project_id,
-                            std::string const& trigger_id,
-                            Options options = {});
+                            std::string const& trigger_id, Options opts = {});
 
   ///
   /// Deletes a `BuildTrigger` by its project ID and trigger ID.
@@ -538,7 +552,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1614}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1614}
@@ -546,7 +561,7 @@ class CloudBuildClient {
   Status DeleteBuildTrigger(
       google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a `BuildTrigger` by its project ID and trigger ID.
@@ -556,7 +571,8 @@ class CloudBuildClient {
   /// @param project_id  Required. ID of the project that owns the trigger.
   /// @param trigger_id  Required. ID of the `BuildTrigger` to update.
   /// @param trigger  Required. `BuildTrigger` to update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -568,7 +584,7 @@ class CloudBuildClient {
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
       google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a `BuildTrigger` by its project ID and trigger ID.
@@ -577,7 +593,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1629}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
   ///
@@ -589,7 +606,7 @@ class CloudBuildClient {
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Runs a `BuildTrigger` at a particular source revision.
@@ -597,7 +614,8 @@ class CloudBuildClient {
   /// @param project_id  Required. ID of the project.
   /// @param trigger_id  Required. ID of the trigger.
   /// @param source  Source to build against this trigger.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -609,14 +627,15 @@ class CloudBuildClient {
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
       google::devtools::cloudbuild::v1::RepoSource const& source,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Runs a `BuildTrigger` at a particular source revision.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::RunBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L379}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
   ///
@@ -627,7 +646,7 @@ class CloudBuildClient {
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// ReceiveTriggerWebhook [Experimental] is called when the API receives a
@@ -635,7 +654,8 @@ class CloudBuildClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1811}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse,google/devtools/cloudbuild/v1/cloudbuild.proto#L1831}
   ///
@@ -648,7 +668,7 @@ class CloudBuildClient {
   ReceiveTriggerWebhook(
       google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a `WorkerPool`.
@@ -662,7 +682,8 @@ class CloudBuildClient {
   ///  the final component of the resource name.
   ///  This value should be 1-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -675,14 +696,15 @@ class CloudBuildClient {
   CreateWorkerPool(
       std::string const& parent,
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-      std::string const& worker_pool_id, Options options = {});
+      std::string const& worker_pool_id, Options opts = {});
 
   ///
   /// Creates a `WorkerPool`.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::CreateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1984}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -694,7 +716,7 @@ class CloudBuildClient {
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   CreateWorkerPool(
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns details of a `WorkerPool`.
@@ -702,7 +724,8 @@ class CloudBuildClient {
   /// @param name  Required. The name of the `WorkerPool` to retrieve.
   ///  Format:
   ///  `projects/{project}/locations/{location}/workerPools/{workerPool}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -712,14 +735,15 @@ class CloudBuildClient {
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns details of a `WorkerPool`.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::GetWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2013}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -730,7 +754,7 @@ class CloudBuildClient {
   ///
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
       google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a `WorkerPool`.
@@ -738,7 +762,8 @@ class CloudBuildClient {
   /// @param name  Required. The name of the `WorkerPool` to delete.
   ///  Format:
   ///  `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2129}
   ///
@@ -749,14 +774,15 @@ class CloudBuildClient {
   ///
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-  DeleteWorkerPool(std::string const& name, Options options = {});
+  DeleteWorkerPool(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a `WorkerPool`.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2025}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2129}
   ///
@@ -769,7 +795,7 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
   DeleteWorkerPool(
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a `WorkerPool`.
@@ -780,7 +806,8 @@ class CloudBuildClient {
   ///  `projects/{project}/locations/{location}/workerPools/{workerPool}`.
   /// @param update_mask  A mask specifying which fields in `worker_pool` to
   /// update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -792,14 +819,15 @@ class CloudBuildClient {
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a `WorkerPool`.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -811,14 +839,15 @@ class CloudBuildClient {
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists `WorkerPool`s.
   ///
   /// @param parent  Required. The parent of the collection of `WorkerPools`.
   ///  Format: `projects/{project}/locations/{location}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -828,14 +857,15 @@ class CloudBuildClient {
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
   StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists `WorkerPool`s.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudbuild::v1::ListWorkerPoolsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2066}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
   ///
@@ -846,7 +876,7 @@ class CloudBuildClient {
   ///
   StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudBuildConnection> connection_;

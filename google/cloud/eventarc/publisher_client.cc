@@ -26,10 +26,10 @@ namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PublisherClient::PublisherClient(
-    std::shared_ptr<PublisherConnection> connection, Options options)
+    std::shared_ptr<PublisherConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           eventarc_internal::PublisherDefaultOptions(connection_->options()))) {
 }
 PublisherClient::~PublisherClient() = default;
@@ -39,9 +39,8 @@ StatusOr<google::cloud::eventarc::publishing::v1::
 PublisherClient::PublishChannelConnectionEvents(
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PublishChannelConnectionEvents(request);
 }
 

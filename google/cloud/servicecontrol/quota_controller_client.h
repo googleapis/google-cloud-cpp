@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class QuotaControllerClient {
  public:
   explicit QuotaControllerClient(
-      std::shared_ptr<QuotaControllerConnection> connection,
-      Options options = {});
+      std::shared_ptr<QuotaControllerConnection> connection, Options opts = {});
   ~QuotaControllerClient();
 
   //@{
@@ -103,7 +102,8 @@ class QuotaControllerClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::servicecontrol::v1::AllocateQuotaRequest,google/api/servicecontrol/v1/quota_controller.proto#L63}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::servicecontrol::v1::AllocateQuotaResponse,google/api/servicecontrol/v1/quota_controller.proto#L178}
   ///
@@ -115,7 +115,7 @@ class QuotaControllerClient {
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(
       google::api::servicecontrol::v1::AllocateQuotaRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<QuotaControllerConnection> connection_;

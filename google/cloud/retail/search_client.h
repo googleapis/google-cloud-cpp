@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SearchServiceClient {
  public:
   explicit SearchServiceClient(
-      std::shared_ptr<SearchServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<SearchServiceConnection> connection, Options opts = {});
   ~SearchServiceClient();
 
   //@{
@@ -98,7 +97,8 @@ class SearchServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::SearchRequest,google/cloud/retail/v2/search_service.proto#L64}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L588}
   ///
@@ -108,7 +108,7 @@ class SearchServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L588}
   ///
   StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
-      google::cloud::retail::v2::SearchRequest request, Options options = {});
+      google::cloud::retail::v2::SearchRequest request, Options opts = {});
 
  private:
   std::shared_ptr<SearchServiceConnection> connection_;

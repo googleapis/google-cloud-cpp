@@ -65,7 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RecommenderClient {
  public:
   explicit RecommenderClient(std::shared_ptr<RecommenderConnection> connection,
-                             Options options = {});
+                             Options opts = {});
   ~RecommenderClient();
 
   //@{
@@ -104,7 +104,8 @@ class RecommenderClient {
   ///  https://cloud.google.com/about/locations/
   ///  INSIGHT_TYPE_ID refers to supported insight types:
   ///  https://cloud.google.com/recommender/docs/insights/insight-types.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -114,7 +115,7 @@ class RecommenderClient {
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
   StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists insights for the specified Cloud Resource. Requires the
@@ -122,7 +123,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::ListInsightsRequest,google/cloud/recommender/v1/recommender_service.proto#L234}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -133,14 +135,15 @@ class RecommenderClient {
   ///
   StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
       google::cloud::recommender::v1::ListInsightsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the requested insight. Requires the recommender.*.get IAM permission
   /// for the specified insight type.
   ///
   /// @param name  Required. Name of the insight.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -150,7 +153,7 @@ class RecommenderClient {
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
   StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the requested insight. Requires the recommender.*.get IAM permission
@@ -158,7 +161,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::GetInsightRequest,google/cloud/recommender/v1/recommender_service.proto#L305}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -169,7 +173,7 @@ class RecommenderClient {
   ///
   StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
       google::cloud::recommender::v1::GetInsightRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Marks the Insight State as Accepted. Users can use this method to
@@ -185,7 +189,8 @@ class RecommenderClient {
   ///  current state_metadata.
   /// @param etag  Required. Fingerprint of the Insight. Provides optimistic
   /// locking.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -197,7 +202,7 @@ class RecommenderClient {
   StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
       std::string const& name,
       std::map<std::string, std::string> const& state_metadata,
-      std::string const& etag, Options options = {});
+      std::string const& etag, Options opts = {});
 
   ///
   /// Marks the Insight State as Accepted. Users can use this method to
@@ -209,7 +214,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::MarkInsightAcceptedRequest,google/cloud/recommender/v1/recommender_service.proto#L316}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
@@ -220,7 +226,7 @@ class RecommenderClient {
   ///
   StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
       google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists recommendations for the specified Cloud Resource. Requires the
@@ -238,7 +244,8 @@ class RecommenderClient {
   ///  https://cloud.google.com/about/locations/
   ///  RECOMMENDER_ID refers to supported recommenders:
   ///  https://cloud.google.com/recommender/docs/recommenders.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -248,7 +255,7 @@ class RecommenderClient {
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   StreamRange<google::cloud::recommender::v1::Recommendation>
-  ListRecommendations(std::string const& parent, Options options = {});
+  ListRecommendations(std::string const& parent, Options opts = {});
 
   ///
   /// Lists recommendations for the specified Cloud Resource. Requires the
@@ -279,7 +286,8 @@ class RecommenderClient {
   ///  * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)`
   ///  (These expressions are based on the filter language described at
   ///  https://google.aip.dev/160)
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -290,7 +298,7 @@ class RecommenderClient {
   ///
   StreamRange<google::cloud::recommender::v1::Recommendation>
   ListRecommendations(std::string const& parent, std::string const& filter,
-                      Options options = {});
+                      Options opts = {});
 
   ///
   /// Lists recommendations for the specified Cloud Resource. Requires the
@@ -298,7 +306,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::ListRecommendationsRequest,google/cloud/recommender/v1/recommender_service.proto#L334}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -310,14 +319,15 @@ class RecommenderClient {
   StreamRange<google::cloud::recommender::v1::Recommendation>
   ListRecommendations(
       google::cloud::recommender::v1::ListRecommendationsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the requested recommendation. Requires the recommender.*.get
   /// IAM permission for the specified recommender.
   ///
   /// @param name  Required. Name of the recommendation.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -327,7 +337,7 @@ class RecommenderClient {
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   StatusOr<google::cloud::recommender::v1::Recommendation> GetRecommendation(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the requested recommendation. Requires the recommender.*.get
@@ -335,7 +345,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::GetRecommendationRequest,google/cloud/recommender/v1/recommender_service.proto#L405}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -346,7 +357,7 @@ class RecommenderClient {
   ///
   StatusOr<google::cloud::recommender::v1::Recommendation> GetRecommendation(
       google::cloud::recommender::v1::GetRecommendationRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Marks the Recommendation State as Claimed. Users can use this method to
@@ -369,7 +380,8 @@ class RecommenderClient {
   ///  Values must match the regex `/^[a-zA-Z0-9_./-]{0,255}$/`.
   /// @param etag  Required. Fingerprint of the Recommendation. Provides
   /// optimistic locking.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -382,7 +394,7 @@ class RecommenderClient {
   MarkRecommendationClaimed(
       std::string const& name,
       std::map<std::string, std::string> const& state_metadata,
-      std::string const& etag, Options options = {});
+      std::string const& etag, Options opts = {});
 
   ///
   /// Marks the Recommendation State as Claimed. Users can use this method to
@@ -399,7 +411,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationClaimedRequest,google/cloud/recommender/v1/recommender_service.proto#L416}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -412,7 +425,7 @@ class RecommenderClient {
   MarkRecommendationClaimed(
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Marks the Recommendation State as Succeeded. Users can use this method to
@@ -435,7 +448,8 @@ class RecommenderClient {
   ///  Values must match the regex `/^[a-zA-Z0-9_./-]{0,255}$/`.
   /// @param etag  Required. Fingerprint of the Recommendation. Provides
   /// optimistic locking.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -448,7 +462,7 @@ class RecommenderClient {
   MarkRecommendationSucceeded(
       std::string const& name,
       std::map<std::string, std::string> const& state_metadata,
-      std::string const& etag, Options options = {});
+      std::string const& etag, Options opts = {});
 
   ///
   /// Marks the Recommendation State as Succeeded. Users can use this method to
@@ -465,7 +479,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationSucceededRequest,google/cloud/recommender/v1/recommender_service.proto#L436}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -478,7 +493,7 @@ class RecommenderClient {
   MarkRecommendationSucceeded(
       google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Marks the Recommendation State as Failed. Users can use this method to
@@ -501,7 +516,8 @@ class RecommenderClient {
   ///  Values must match the regex `/^[a-zA-Z0-9_./-]{0,255}$/`.
   /// @param etag  Required. Fingerprint of the Recommendation. Provides
   /// optimistic locking.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -514,7 +530,7 @@ class RecommenderClient {
   MarkRecommendationFailed(
       std::string const& name,
       std::map<std::string, std::string> const& state_metadata,
-      std::string const& etag, Options options = {});
+      std::string const& etag, Options opts = {});
 
   ///
   /// Marks the Recommendation State as Failed. Users can use this method to
@@ -531,7 +547,8 @@ class RecommenderClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::recommender::v1::MarkRecommendationFailedRequest,google/cloud/recommender/v1/recommender_service.proto#L456}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Recommendation,google/cloud/recommender/v1/recommendation.proto#L40}
   ///
@@ -544,7 +561,7 @@ class RecommenderClient {
   MarkRecommendationFailed(
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<RecommenderConnection> connection_;

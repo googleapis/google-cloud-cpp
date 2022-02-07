@@ -61,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EventServiceClient {
  public:
   explicit EventServiceClient(
-      std::shared_ptr<EventServiceConnection> connection, Options options = {});
+      std::shared_ptr<EventServiceConnection> connection, Options opts = {});
   ~EventServiceClient();
 
   //@{
@@ -100,7 +100,8 @@ class EventServiceClient {
   /// @param client_event  Required. Events issued when end user interacts with
   /// customer's application that
   ///  uses Cloud Talent Solution.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L34}
   ///
@@ -112,7 +113,7 @@ class EventServiceClient {
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       std::string const& parent,
       google::cloud::talent::v4::ClientEvent const& client_event,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Report events issued when end user interacts with customer's application
@@ -125,7 +126,8 @@ class EventServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::CreateClientEventRequest,google/cloud/talent/v4/event_service.proto#L55}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L34}
   ///
@@ -136,7 +138,7 @@ class EventServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<EventServiceConnection> connection_;

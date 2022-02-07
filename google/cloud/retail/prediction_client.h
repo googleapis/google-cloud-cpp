@@ -63,7 +63,7 @@ class PredictionServiceClient {
  public:
   explicit PredictionServiceClient(
       std::shared_ptr<PredictionServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~PredictionServiceClient();
 
   //@{
@@ -91,7 +91,8 @@ class PredictionServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::PredictRequest,google/cloud/retail/v2/prediction_service.proto#L50}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::PredictResponse,google/cloud/retail/v2/prediction_service.proto#L159}
   ///
@@ -102,7 +103,7 @@ class PredictionServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<PredictionServiceConnection> connection_;

@@ -26,10 +26,10 @@ namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LookupServiceClient::LookupServiceClient(
-    std::shared_ptr<LookupServiceConnection> connection, Options options)
+    std::shared_ptr<LookupServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           servicedirectory_internal::LookupServiceDefaultOptions(
               connection_->options()))) {}
 LookupServiceClient::~LookupServiceClient() = default;
@@ -37,9 +37,8 @@ LookupServiceClient::~LookupServiceClient() = default;
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceClient::ResolveService(
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResolveService(request);
 }
 

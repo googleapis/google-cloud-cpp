@@ -69,7 +69,7 @@ class CloudShellServiceClient {
  public:
   explicit CloudShellServiceClient(
       std::shared_ptr<CloudShellServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~CloudShellServiceClient();
 
   //@{
@@ -98,7 +98,8 @@ class CloudShellServiceClient {
   /// @param name  Required. Name of the requested resource, for example
   /// `users/me/environments/default`
   ///  or `users/someone@example.com/environments/default`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L117}
   ///
@@ -108,14 +109,15 @@ class CloudShellServiceClient {
   /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L117}
   ///
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets an environment. Returns NOT_FOUND if the environment does not exist.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::shell::v1::GetEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L192}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L117}
   ///
@@ -126,7 +128,7 @@ class CloudShellServiceClient {
   ///
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Starts an existing environment, allowing clients to connect to it. The
@@ -138,7 +140,8 @@ class CloudShellServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L217}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L304}
   ///
@@ -150,7 +153,7 @@ class CloudShellServiceClient {
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
   StartEnvironment(
       google::cloud::shell::v1::StartEnvironmentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sends OAuth credentials to a running environment on behalf of a user. When
@@ -160,7 +163,8 @@ class CloudShellServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L235}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L254}
   ///
@@ -172,7 +176,7 @@ class CloudShellServiceClient {
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Adds a public SSH key to an environment, allowing clients with the
@@ -181,7 +185,8 @@ class CloudShellServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L311}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L327}
   ///
@@ -192,7 +197,7 @@ class CloudShellServiceClient {
   ///
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Removes a public SSH key from an environment. Clients will no longer be
@@ -202,7 +207,8 @@ class CloudShellServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L340}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L351}
   ///
@@ -214,7 +220,7 @@ class CloudShellServiceClient {
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(
       google::cloud::shell::v1::RemovePublicKeyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudShellServiceConnection> connection_;

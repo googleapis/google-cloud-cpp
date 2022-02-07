@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CatalogServiceClient {
  public:
   explicit CatalogServiceClient(
-      std::shared_ptr<CatalogServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
   ~CatalogServiceClient();
 
   //@{
@@ -95,7 +94,8 @@ class CatalogServiceClient {
   ///  [Catalog][google.cloud.retail.v2.Catalog]s under this location,
   ///  regardless of whether or not this location exists, a PERMISSION_DENIED
   ///  error is returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
   ///
@@ -105,7 +105,7 @@ class CatalogServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
   ///
   StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all the [Catalog][google.cloud.retail.v2.Catalog]s associated with
@@ -113,7 +113,8 @@ class CatalogServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::ListCatalogsRequest,google/cloud/retail/v2/catalog_service.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
   ///
@@ -124,7 +125,7 @@ class CatalogServiceClient {
   ///
   StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
       google::cloud::retail::v2::ListCatalogsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the [Catalog][google.cloud.retail.v2.Catalog]s.
@@ -140,7 +141,8 @@ class CatalogServiceClient {
   ///  [Catalog][google.cloud.retail.v2.Catalog] to update.
   ///  If an unsupported or unknown field is provided, an INVALID_ARGUMENT error
   ///  is returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
   ///
@@ -151,14 +153,15 @@ class CatalogServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
       google::cloud::retail::v2::Catalog const& catalog,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the [Catalog][google.cloud.retail.v2.Catalog]s.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::UpdateCatalogRequest,google/cloud/retail/v2/catalog_service.proto#L177}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
   ///
@@ -169,7 +172,7 @@ class CatalogServiceClient {
   ///
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
       google::cloud::retail::v2::UpdateCatalogRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Set a specified branch id as default branch. API methods such as
@@ -213,12 +216,13 @@ class CatalogServiceClient {
   ///
   /// @param catalog  Full resource name of the catalog, such as
   ///  `projects/*/locations/global/catalogs/default_catalog`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L197}
   ///
-  Status SetDefaultBranch(std::string const& catalog, Options options = {});
+  Status SetDefaultBranch(std::string const& catalog, Options opts = {});
 
   ///
   /// Set a specified branch id as default branch. API methods such as
@@ -262,14 +266,15 @@ class CatalogServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::SetDefaultBranchRequest,google/cloud/retail/v2/catalog_service.proto#L197}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L197}
   ///
   Status SetDefaultBranch(
       google::cloud::retail::v2::SetDefaultBranchRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get which branch is currently default branch set by
@@ -282,7 +287,8 @@ class CatalogServiceClient {
   ///
   /// @param catalog  The parent catalog resource name, such as
   ///  `projects/*/locations/global/catalogs/default_catalog`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L232}
   ///
@@ -292,7 +298,7 @@ class CatalogServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L232}
   ///
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-  GetDefaultBranch(std::string const& catalog, Options options = {});
+  GetDefaultBranch(std::string const& catalog, Options opts = {});
 
   ///
   /// Get which branch is currently default branch set by
@@ -305,7 +311,8 @@ class CatalogServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchRequest,google/cloud/retail/v2/catalog_service.proto#L222}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L232}
   ///
@@ -317,7 +324,7 @@ class CatalogServiceClient {
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
   GetDefaultBranch(
       google::cloud::retail::v2::GetDefaultBranchRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CatalogServiceConnection> connection_;

@@ -65,7 +65,7 @@ class VpcAccessServiceClient {
  public:
   explicit VpcAccessServiceClient(
       std::shared_ptr<VpcAccessServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~VpcAccessServiceClient();
 
   //@{
@@ -96,7 +96,8 @@ class VpcAccessServiceClient {
   ///  specified in the format `projects/*/locations/*`.
   /// @param connector_id  Required. The ID to use for this connector.
   /// @param connector  Required. Resource to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -108,14 +109,15 @@ class VpcAccessServiceClient {
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       std::string const& parent, std::string const& connector_id,
       google::cloud::vpcaccess::v1::Connector const& connector,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a Serverless VPC Access connector, returns an operation.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vpcaccess::v1::CreateConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L154}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -126,14 +128,15 @@ class VpcAccessServiceClient {
   ///
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a Serverless VPC Access connector. Returns NOT_FOUND if the resource
   /// does not exist.
   ///
   /// @param name  Required. Name of a Serverless VPC Access connector to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -143,7 +146,7 @@ class VpcAccessServiceClient {
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a Serverless VPC Access connector. Returns NOT_FOUND if the resource
@@ -151,7 +154,8 @@ class VpcAccessServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vpcaccess::v1::GetConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L172}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -162,14 +166,15 @@ class VpcAccessServiceClient {
   ///
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists Serverless VPC Access connectors.
   ///
   /// @param parent  Required. The project and location from which the routes
   /// should be listed.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -179,14 +184,15 @@ class VpcAccessServiceClient {
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
   StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Serverless VPC Access connectors.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vpcaccess::v1::ListConnectorsRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L183}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
@@ -197,7 +203,7 @@ class VpcAccessServiceClient {
   ///
   StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
       google::cloud::vpcaccess::v1::ListConnectorsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a Serverless VPC Access connector. Returns NOT_FOUND if the
@@ -205,7 +211,8 @@ class VpcAccessServiceClient {
   ///
   /// @param name  Required. Name of a Serverless VPC Access connector to
   /// delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::OperationMetadata,google/cloud/vpcaccess/v1/vpc_access.proto#L220}
   ///
@@ -215,7 +222,7 @@ class VpcAccessServiceClient {
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L220}
   ///
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(std::string const& name, Options options = {});
+  DeleteConnector(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a Serverless VPC Access connector. Returns NOT_FOUND if the
@@ -223,7 +230,8 @@ class VpcAccessServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vpcaccess::v1::DeleteConnectorRequest,google/cloud/vpcaccess/v1/vpc_access.proto#L209}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::OperationMetadata,google/cloud/vpcaccess/v1/vpc_access.proto#L220}
   ///
@@ -235,7 +243,7 @@ class VpcAccessServiceClient {
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<VpcAccessServiceConnection> connection_;

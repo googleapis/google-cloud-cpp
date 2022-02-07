@@ -61,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TextToSpeechClient {
  public:
   explicit TextToSpeechClient(
-      std::shared_ptr<TextToSpeechConnection> connection, Options options = {});
+      std::shared_ptr<TextToSpeechConnection> connection, Options opts = {});
   ~TextToSpeechClient();
 
   //@{
@@ -96,7 +96,8 @@ class TextToSpeechClient {
   ///  `"no-\*"` (Norwegian) and `"nb-\*"` (Norwegian Bokmal) voices; specifying
   ///  `"zh"` will also get supported `"cmn-\*"` voices; specifying `"zh-hk"`
   ///  will also get supported `"yue-\*"` voices.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L123}
   ///
@@ -106,14 +107,15 @@ class TextToSpeechClient {
   /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L123}
   ///
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      std::string const& language_code, Options options = {});
+      std::string const& language_code, Options opts = {});
 
   ///
   /// Returns a list of Voice supported for synthesis.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L62}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L123}
   ///
@@ -124,7 +126,7 @@ class TextToSpeechClient {
   ///
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       google::cloud::texttospeech::v1::ListVoicesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Synthesizes speech synchronously: receive results after all text input
@@ -134,7 +136,8 @@ class TextToSpeechClient {
   /// as input.
   /// @param voice  Required. The desired voice of the synthesized audio.
   /// @param audio_config  Required. The configuration of the synthesized audio.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L259}
   ///
@@ -148,7 +151,7 @@ class TextToSpeechClient {
       google::cloud::texttospeech::v1::SynthesisInput const& input,
       google::cloud::texttospeech::v1::VoiceSelectionParams const& voice,
       google::cloud::texttospeech::v1::AudioConfig const& audio_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Synthesizes speech synchronously: receive results after all text input
@@ -156,7 +159,8 @@ class TextToSpeechClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L146}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L259}
   ///
@@ -168,7 +172,7 @@ class TextToSpeechClient {
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<TextToSpeechConnection> connection_;

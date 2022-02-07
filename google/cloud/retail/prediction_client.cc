@@ -26,18 +26,17 @@ namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PredictionServiceClient::PredictionServiceClient(
-    std::shared_ptr<PredictionServiceConnection> connection, Options options)
+    std::shared_ptr<PredictionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), retail_internal::PredictionServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), retail_internal::PredictionServiceDefaultOptions(
+                               connection_->options()))) {}
 PredictionServiceClient::~PredictionServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceClient::Predict(
-    google::cloud::retail::v2::PredictRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::retail::v2::PredictRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Predict(request);
 }
 

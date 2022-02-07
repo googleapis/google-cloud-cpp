@@ -62,7 +62,7 @@ class ValidationHelperV1Client {
  public:
   explicit ValidationHelperV1Client(
       std::shared_ptr<ValidationHelperV1Connection> connection,
-      Options options = {});
+      Options opts = {});
   ~ValidationHelperV1Client();
 
   //@{
@@ -92,7 +92,8 @@ class ValidationHelperV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest,google/cloud/binaryauthorization/v1/service.proto#L271}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse,google/cloud/binaryauthorization/v1/service.proto#L294}
   ///
@@ -106,7 +107,7 @@ class ValidationHelperV1Client {
   ValidateAttestationOccurrence(
       google::cloud::binaryauthorization::v1::
           ValidateAttestationOccurrenceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ValidationHelperV1Connection> connection_;

@@ -26,42 +26,38 @@ namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudCatalogClient::CloudCatalogClient(
-    std::shared_ptr<CloudCatalogConnection> connection, Options options)
+    std::shared_ptr<CloudCatalogConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), billing_internal::CloudCatalogDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), billing_internal::CloudCatalogDefaultOptions(
+                               connection_->options()))) {}
 CloudCatalogClient::~CloudCatalogClient() = default;
 
 StreamRange<google::cloud::billing::v1::Service>
-CloudCatalogClient::ListServices(Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudCatalogClient::ListServices(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::ListServicesRequest request;
   return connection_->ListServices(request);
 }
 
 StreamRange<google::cloud::billing::v1::Service>
 CloudCatalogClient::ListServices(
-    google::cloud::billing::v1::ListServicesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::billing::v1::ListServicesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServices(std::move(request));
 }
 
 StreamRange<google::cloud::billing::v1::Sku> CloudCatalogClient::ListSkus(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::ListSkusRequest request;
   request.set_parent(parent);
   return connection_->ListSkus(request);
 }
 
 StreamRange<google::cloud::billing::v1::Sku> CloudCatalogClient::ListSkus(
-    google::cloud::billing::v1::ListSkusRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::billing::v1::ListSkusRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSkus(std::move(request));
 }
 

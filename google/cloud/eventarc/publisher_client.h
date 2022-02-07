@@ -84,7 +84,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PublisherClient {
  public:
   explicit PublisherClient(std::shared_ptr<PublisherConnection> connection,
-                           Options options = {});
+                           Options opts = {});
   ~PublisherClient();
 
   //@{
@@ -110,7 +110,8 @@ class PublisherClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest,google/cloud/eventarc/publishing/v1/publisher.proto#L69}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse,google/cloud/eventarc/publishing/v1/publisher.proto#L79}
   ///
@@ -124,7 +125,7 @@ class PublisherClient {
   PublishChannelConnectionEvents(
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<PublisherConnection> connection_;

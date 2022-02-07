@@ -26,11 +26,11 @@ namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EnvironmentsClient::EnvironmentsClient(
-    std::shared_ptr<EnvironmentsConnection> connection, Options options)
+    std::shared_ptr<EnvironmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), composer_internal::EnvironmentsDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), composer_internal::EnvironmentsDefaultOptions(
+                               connection_->options()))) {}
 EnvironmentsClient::~EnvironmentsClient() = default;
 
 future<
@@ -39,9 +39,8 @@ EnvironmentsClient::CreateEnvironment(
     std::string const& parent,
     google::cloud::orchestration::airflow::service::v1::Environment const&
         environment,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest
       request;
   request.set_parent(parent);
@@ -54,16 +53,14 @@ future<
 EnvironmentsClient::CreateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsClient::GetEnvironment(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+EnvironmentsClient::GetEnvironment(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest
       request;
   request.set_name(name);
@@ -74,17 +71,14 @@ StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsClient::GetEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEnvironment(request);
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsClient::ListEnvironments(std::string const& parent,
-                                     Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+EnvironmentsClient::ListEnvironments(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
       request;
   request.set_parent(parent);
@@ -95,9 +89,8 @@ StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsClient::ListEnvironments(
     google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEnvironments(std::move(request));
 }
 
@@ -107,9 +100,8 @@ EnvironmentsClient::UpdateEnvironment(
     std::string const& name,
     google::cloud::orchestration::airflow::service::v1::Environment const&
         environment,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest
       request;
   request.set_name(name);
@@ -123,18 +115,15 @@ future<
 EnvironmentsClient::UpdateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(request);
 }
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-EnvironmentsClient::DeleteEnvironment(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+EnvironmentsClient::DeleteEnvironment(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest
       request;
   request.set_name(name);
@@ -146,9 +135,8 @@ future<StatusOr<
 EnvironmentsClient::DeleteEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(request);
 }
 

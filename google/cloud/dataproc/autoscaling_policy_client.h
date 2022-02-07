@@ -64,7 +64,7 @@ class AutoscalingPolicyServiceClient {
  public:
   explicit AutoscalingPolicyServiceClient(
       std::shared_ptr<AutoscalingPolicyServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~AutoscalingPolicyServiceClient();
 
   //@{
@@ -103,7 +103,8 @@ class AutoscalingPolicyServiceClient {
   ///    of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
   /// @param policy  Required. The autoscaling policy to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -116,14 +117,15 @@ class AutoscalingPolicyServiceClient {
   CreateAutoscalingPolicy(
       std::string const& parent,
       google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates new autoscaling policy.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L258}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -136,7 +138,7 @@ class AutoscalingPolicyServiceClient {
   CreateAutoscalingPolicy(
       google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates (replaces) autoscaling policy.
@@ -145,7 +147,8 @@ class AutoscalingPolicyServiceClient {
   /// replacements.
   ///
   /// @param policy  Required. The updated autoscaling policy.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -157,7 +160,7 @@ class AutoscalingPolicyServiceClient {
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
       google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates (replaces) autoscaling policy.
@@ -167,7 +170,8 @@ class AutoscalingPolicyServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L301}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -180,7 +184,7 @@ class AutoscalingPolicyServiceClient {
   UpdateAutoscalingPolicy(
       google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Retrieves autoscaling policy.
@@ -194,7 +198,8 @@ class AutoscalingPolicyServiceClient {
   ///  * For `projects.locations.autoscalingPolicies.get`, the resource name
   ///    of the policy has the following format:
   ///    `projects/{project_id}/locations/{location}/autoscalingPolicies/{policy_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -204,14 +209,15 @@ class AutoscalingPolicyServiceClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Retrieves autoscaling policy.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::GetAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L281}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -222,7 +228,7 @@ class AutoscalingPolicyServiceClient {
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
       google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists autoscaling policies in the project.
@@ -236,7 +242,8 @@ class AutoscalingPolicyServiceClient {
   ///  * For `projects.locations.autoscalingPolicies.list`, the resource name
   ///    of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -246,14 +253,15 @@ class AutoscalingPolicyServiceClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-  ListAutoscalingPolicies(std::string const& parent, Options options = {});
+  ListAutoscalingPolicies(std::string const& parent, Options opts = {});
 
   ///
   /// Lists autoscaling policies in the project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L329}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
@@ -265,7 +273,7 @@ class AutoscalingPolicyServiceClient {
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
   ListAutoscalingPolicies(
       google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an autoscaling policy. It is an error to delete an autoscaling
@@ -280,12 +288,13 @@ class AutoscalingPolicyServiceClient {
   ///  * For `projects.locations.autoscalingPolicies.delete`, the resource name
   ///    of the policy has the following format:
   ///    `projects/{project_id}/locations/{location}/autoscalingPolicies/{policy_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L309}
   ///
-  Status DeleteAutoscalingPolicy(std::string const& name, Options options = {});
+  Status DeleteAutoscalingPolicy(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an autoscaling policy. It is an error to delete an autoscaling
@@ -293,7 +302,8 @@ class AutoscalingPolicyServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L309}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L309}
@@ -301,7 +311,7 @@ class AutoscalingPolicyServiceClient {
   Status DeleteAutoscalingPolicy(
       google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AutoscalingPolicyServiceConnection> connection_;

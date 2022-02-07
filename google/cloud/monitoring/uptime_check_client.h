@@ -69,7 +69,7 @@ class UptimeCheckServiceClient {
  public:
   explicit UptimeCheckServiceClient(
       std::shared_ptr<UptimeCheckServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~UptimeCheckServiceClient();
 
   //@{
@@ -101,7 +101,8 @@ class UptimeCheckServiceClient {
   /// [project](https://cloud.google.com/monitoring/api/v3#project_name)
   ///  whose Uptime check configurations are listed. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -111,7 +112,7 @@ class UptimeCheckServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/uptime.proto#L110}
   ///
   StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists the existing valid Uptime check configurations for the project
@@ -119,7 +120,8 @@ class UptimeCheckServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListUptimeCheckConfigsRequest,google/monitoring/v3/uptime_service.proto#L109}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -130,7 +132,7 @@ class UptimeCheckServiceClient {
   ///
   StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
       google::monitoring::v3::ListUptimeCheckConfigsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a single Uptime check configuration.
@@ -138,7 +140,8 @@ class UptimeCheckServiceClient {
   /// @param name  Required. The Uptime check configuration to retrieve. The
   /// format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -148,14 +151,15 @@ class UptimeCheckServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/uptime.proto#L110}
   ///
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a single Uptime check configuration.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetUptimeCheckConfigRequest,google/monitoring/v3/uptime_service.proto#L151}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -166,7 +170,7 @@ class UptimeCheckServiceClient {
   ///
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
       google::monitoring::v3::GetUptimeCheckConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Uptime check configuration.
@@ -176,7 +180,8 @@ class UptimeCheckServiceClient {
   ///  which to create the Uptime check. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param uptime_check_config  Required. The new Uptime check configuration.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -188,14 +193,15 @@ class UptimeCheckServiceClient {
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
       std::string const& parent,
       google::monitoring::v3::UptimeCheckConfig const& uptime_check_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Uptime check configuration.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::CreateUptimeCheckConfigRequest,google/monitoring/v3/uptime_service.proto#L164}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -206,7 +212,7 @@ class UptimeCheckServiceClient {
   ///
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
       google::monitoring::v3::CreateUptimeCheckConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an Uptime check configuration. You can either replace the entire
@@ -225,7 +231,8 @@ class UptimeCheckServiceClient {
   ///  The following fields can be updated: `display_name`,
   ///  `http_check`, `tcp_check`, `timeout`, `content_matchers`, and
   ///  `selected_regions`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -236,7 +243,7 @@ class UptimeCheckServiceClient {
   ///
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
       google::monitoring::v3::UptimeCheckConfig const& uptime_check_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an Uptime check configuration. You can either replace the entire
@@ -246,7 +253,8 @@ class UptimeCheckServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::UpdateUptimeCheckConfigRequest,google/monitoring/v3/uptime_service.proto#L181}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckConfig,google/monitoring/v3/uptime.proto#L110}
   ///
@@ -257,7 +265,7 @@ class UptimeCheckServiceClient {
   ///
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
       google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an Uptime check configuration. Note that this method will fail
@@ -267,12 +275,13 @@ class UptimeCheckServiceClient {
   /// @param name  Required. The Uptime check configuration to delete. The
   /// format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteUptimeCheckConfigRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L203}
   ///
-  Status DeleteUptimeCheckConfig(std::string const& name, Options options = {});
+  Status DeleteUptimeCheckConfig(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an Uptime check configuration. Note that this method will fail
@@ -281,21 +290,23 @@ class UptimeCheckServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::DeleteUptimeCheckConfigRequest,google/monitoring/v3/uptime_service.proto#L203}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteUptimeCheckConfigRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/uptime_service.proto#L203}
   ///
   Status DeleteUptimeCheckConfig(
       google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the list of IP addresses that checkers run from
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListUptimeCheckIpsRequest,google/monitoring/v3/uptime_service.proto#L216}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::UptimeCheckIp,google/monitoring/v3/uptime.proto#L371}
   ///
@@ -306,7 +317,7 @@ class UptimeCheckServiceClient {
   ///
   StreamRange<google::monitoring::v3::UptimeCheckIp> ListUptimeCheckIps(
       google::monitoring::v3::ListUptimeCheckIpsRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<UptimeCheckServiceConnection> connection_;

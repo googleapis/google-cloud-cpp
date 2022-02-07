@@ -96,7 +96,7 @@ class ManagedIdentitiesServiceClient {
  public:
   explicit ManagedIdentitiesServiceClient(
       std::shared_ptr<ManagedIdentitiesServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ManagedIdentitiesServiceClient();
 
   //@{
@@ -140,7 +140,8 @@ class ManagedIdentitiesServiceClient {
   ///   * The last segment cannot be fully numeric.
   ///   * Must be unique within the customer project.
   /// @param domain  Required. A Managed Identity domain resource.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -153,14 +154,15 @@ class ManagedIdentitiesServiceClient {
   CreateMicrosoftAdDomain(
       std::string const& parent, std::string const& domain_name,
       google::cloud::managedidentities::v1::Domain const& domain,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a Microsoft AD domain.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L217}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -172,14 +174,15 @@ class ManagedIdentitiesServiceClient {
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::
                               CreateMicrosoftAdDomainRequest const& request,
-                          Options options = {});
+                          Options opts = {});
 
   ///
   /// Resets a domain's administrator password.
   ///
   /// @param name  Required. The domain resource name using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::ResetAdminPasswordResponse,google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
   ///
@@ -189,14 +192,15 @@ class ManagedIdentitiesServiceClient {
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
   ///
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-  ResetAdminPassword(std::string const& name, Options options = {});
+  ResetAdminPassword(std::string const& name, Options opts = {});
 
   ///
   /// Resets a domain's administrator password.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::ResetAdminPasswordRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L247}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::ResetAdminPasswordResponse,google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
   ///
@@ -209,7 +213,7 @@ class ManagedIdentitiesServiceClient {
   ResetAdminPassword(
       google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists domains in a project.
@@ -217,7 +221,8 @@ class ManagedIdentitiesServiceClient {
   /// @param parent  Required. The resource name of the domain location using
   /// the form:
   ///  `projects/{project_id}/locations/global`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -227,14 +232,15 @@ class ManagedIdentitiesServiceClient {
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L34}
   ///
   StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists domains in a project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::ListDomainsRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -245,14 +251,15 @@ class ManagedIdentitiesServiceClient {
   ///
   StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
       google::cloud::managedidentities::v1::ListDomainsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets information about a domain.
   ///
   /// @param name  Required. The domain resource name using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -262,14 +269,15 @@ class ManagedIdentitiesServiceClient {
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L34}
   ///
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets information about a domain.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::GetDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -280,7 +288,7 @@ class ManagedIdentitiesServiceClient {
   ///
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
       google::cloud::managedidentities::v1::GetDomainRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the metadata and configuration of a domain.
@@ -295,7 +303,8 @@ class ManagedIdentitiesServiceClient {
   ///   * `labels`
   ///   * `locations`
   ///   * `authorized_networks`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -306,14 +315,15 @@ class ManagedIdentitiesServiceClient {
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
       google::cloud::managedidentities::v1::Domain const& domain,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the metadata and configuration of a domain.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::UpdateDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -324,14 +334,15 @@ class ManagedIdentitiesServiceClient {
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a domain.
   ///
   /// @param name  Required. The domain resource name using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::OpMetadata,google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
   ///
@@ -341,14 +352,15 @@ class ManagedIdentitiesServiceClient {
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
   ///
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(std::string const& name, Options options = {});
+  DeleteDomain(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a domain.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::DeleteDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L344}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::OpMetadata,google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
   ///
@@ -360,7 +372,7 @@ class ManagedIdentitiesServiceClient {
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
   DeleteDomain(
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Adds an AD trust to a domain.
@@ -369,7 +381,8 @@ class ManagedIdentitiesServiceClient {
   /// using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param trust  Required. The domain trust resource.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -381,14 +394,15 @@ class ManagedIdentitiesServiceClient {
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
       std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Adds an AD trust to a domain.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::AttachTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L357}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -399,7 +413,7 @@ class ManagedIdentitiesServiceClient {
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
       google::cloud::managedidentities::v1::AttachTrustRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the DNS conditional forwarder.
@@ -413,7 +427,8 @@ class ManagedIdentitiesServiceClient {
   /// @param target_dns_ip_addresses  Required. The target DNS server IP
   /// addresses to resolve the remote domain involved
   ///  in the trust.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -426,14 +441,15 @@ class ManagedIdentitiesServiceClient {
   ReconfigureTrust(std::string const& name,
                    std::string const& target_domain_name,
                    std::vector<std::string> const& target_dns_ip_addresses,
-                   Options options = {});
+                   Options opts = {});
 
   ///
   /// Updates the DNS conditional forwarder.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::ReconfigureTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -446,7 +462,7 @@ class ManagedIdentitiesServiceClient {
   ReconfigureTrust(
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Removes an AD trust.
@@ -455,7 +471,8 @@ class ManagedIdentitiesServiceClient {
   /// location using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param trust  Required. The domain trust resource to removed.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -467,14 +484,15 @@ class ManagedIdentitiesServiceClient {
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
       std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Removes an AD trust.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::DetachTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L394}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -485,7 +503,7 @@ class ManagedIdentitiesServiceClient {
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
       google::cloud::managedidentities::v1::DetachTrustRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Validates a trust state, that the target domain is reachable, and that the
@@ -495,7 +513,8 @@ class ManagedIdentitiesServiceClient {
   /// location using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param trust  Required. The domain trust to validate trust state for.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -507,7 +526,7 @@ class ManagedIdentitiesServiceClient {
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Validates a trust state, that the target domain is reachable, and that the
@@ -515,7 +534,8 @@ class ManagedIdentitiesServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::managedidentities::v1::ValidateTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L34}
   ///
@@ -526,7 +546,7 @@ class ManagedIdentitiesServiceClient {
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ManagedIdentitiesServiceConnection> connection_;

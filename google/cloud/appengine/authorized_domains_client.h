@@ -64,7 +64,7 @@ class AuthorizedDomainsClient {
  public:
   explicit AuthorizedDomainsClient(
       std::shared_ptr<AuthorizedDomainsConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~AuthorizedDomainsClient();
 
   //@{
@@ -92,7 +92,8 @@ class AuthorizedDomainsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::ListAuthorizedDomainsRequest,google/appengine/v1/appengine.proto#L631}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedDomain,google/appengine/v1/domain.proto#L32}
   ///
@@ -103,7 +104,7 @@ class AuthorizedDomainsClient {
   ///
   StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
       google::appengine::v1::ListAuthorizedDomainsRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AuthorizedDomainsConnection> connection_;

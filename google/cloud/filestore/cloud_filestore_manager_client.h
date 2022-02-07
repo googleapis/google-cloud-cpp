@@ -84,7 +84,7 @@ class CloudFilestoreManagerClient {
  public:
   explicit CloudFilestoreManagerClient(
       std::shared_ptr<CloudFilestoreManagerConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~CloudFilestoreManagerClient();
 
   //@{
@@ -120,7 +120,8 @@ class CloudFilestoreManagerClient {
   ///  **us-west1-b**. To retrieve instance information for all locations, use
   ///  "-" for the
   ///  `{location}` value.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -130,7 +131,7 @@ class CloudFilestoreManagerClient {
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
   StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all instances in a project for either a specified location
@@ -138,7 +139,8 @@ class CloudFilestoreManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::ListInstancesRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L494}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -149,14 +151,15 @@ class CloudFilestoreManagerClient {
   ///
   StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
       google::cloud::filestore::v1::ListInstancesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the details of a specific instance.
   ///
   /// @param name  Required. The instance resource name, in the format
   ///  `projects/{project_id}/locations/{location}/instances/{instance_id}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -166,14 +169,15 @@ class CloudFilestoreManagerClient {
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
   StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the details of a specific instance.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::GetInstanceRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L436}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -184,7 +188,7 @@ class CloudFilestoreManagerClient {
   ///
   StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
       google::cloud::filestore::v1::GetInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates an instance.
@@ -200,7 +204,8 @@ class CloudFilestoreManagerClient {
   /// resource][google.cloud.filestore.v1.Instance]
   /// @param instance_id  Required. The name of the instance to create.
   ///  The name must be unique for the specified project and location.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -212,7 +217,7 @@ class CloudFilestoreManagerClient {
   future<StatusOr<google::cloud::filestore::v1::Instance>> CreateInstance(
       std::string const& parent,
       google::cloud::filestore::v1::Instance const& instance,
-      std::string const& instance_id, Options options = {});
+      std::string const& instance_id, Options opts = {});
 
   ///
   /// Creates an instance.
@@ -222,7 +227,8 @@ class CloudFilestoreManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::CreateInstanceRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L416}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -233,7 +239,7 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::filestore::v1::Instance>> CreateInstance(
       google::cloud::filestore::v1::CreateInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the settings of a specific instance.
@@ -246,7 +252,8 @@ class CloudFilestoreManagerClient {
   ///  * "description"
   ///  * "file_shares"
   ///  * "labels"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -257,14 +264,15 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
       google::cloud::filestore::v1::Instance const& instance,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the settings of a specific instance.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::UpdateInstanceRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L446}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -275,7 +283,7 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
       google::cloud::filestore::v1::UpdateInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Restores an existing instance's file share from a backup.
@@ -286,7 +294,8 @@ class CloudFilestoreManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::RestoreInstanceRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L462}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
@@ -297,14 +306,15 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::filestore::v1::Instance>> RestoreInstance(
       google::cloud::filestore::v1::RestoreInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an instance.
   ///
   /// @param name  Required. The instance resource name, in the format
   ///  `projects/{project_id}/locations/{location}/instances/{instance_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
@@ -314,14 +324,15 @@ class CloudFilestoreManagerClient {
   /// @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deletes an instance.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::DeleteInstanceRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L484}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
@@ -332,7 +343,7 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
       google::cloud::filestore::v1::DeleteInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all backups in a project for either a specified location or for all
@@ -345,7 +356,8 @@ class CloudFilestoreManagerClient {
   ///  backup locations map to GCP regions, for example **us-west1**. To
   ///  retrieve backup information for all locations, use "-" for the
   ///  `{location}` value.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -355,7 +367,7 @@ class CloudFilestoreManagerClient {
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
   StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all backups in a project for either a specified location or for all
@@ -363,7 +375,8 @@ class CloudFilestoreManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::ListBackupsRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L673}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -374,14 +387,15 @@ class CloudFilestoreManagerClient {
   ///
   StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
       google::cloud::filestore::v1::ListBackupsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the details of a specific backup.
   ///
   /// @param name  Required. The backup resource name, in the format
   ///  `projects/{project_number}/locations/{location}/backups/{backup_id}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -391,14 +405,15 @@ class CloudFilestoreManagerClient {
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the details of a specific backup.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::GetBackupRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L663}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -409,7 +424,7 @@ class CloudFilestoreManagerClient {
   ///
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
       google::cloud::filestore::v1::GetBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a backup.
@@ -425,7 +440,8 @@ class CloudFilestoreManagerClient {
   ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
   ///  Values that do not match this pattern will trigger an INVALID_ARGUMENT
   ///  error.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -437,14 +453,15 @@ class CloudFilestoreManagerClient {
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
       std::string const& parent,
       google::cloud::filestore::v1::Backup const& backup,
-      std::string const& backup_id, Options options = {});
+      std::string const& backup_id, Options opts = {});
 
   ///
   /// Creates a backup.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::CreateBackupRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L617}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -455,14 +472,15 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
       google::cloud::filestore::v1::CreateBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a backup.
   ///
   /// @param name  Required. The backup resource name, in the format
   ///  `projects/{project_number}/locations/{location}/backups/{backup_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
@@ -472,14 +490,15 @@ class CloudFilestoreManagerClient {
   /// @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Deletes a backup.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::DeleteBackupRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L642}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
@@ -490,7 +509,7 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
       google::cloud::filestore::v1::DeleteBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the settings of a specific backup.
@@ -500,7 +519,8 @@ class CloudFilestoreManagerClient {
   /// @param update_mask  Required. Mask of fields to update.  At least one path
   /// must be supplied in
   ///  this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -511,14 +531,15 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
       google::cloud::filestore::v1::Backup const& backup,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the settings of a specific backup.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::filestore::v1::UpdateBackupRequest,google/cloud/filestore/v1/cloud_filestore_service.proto#L652}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
@@ -529,7 +550,7 @@ class CloudFilestoreManagerClient {
   ///
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
       google::cloud::filestore::v1::UpdateBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudFilestoreManagerConnection> connection_;

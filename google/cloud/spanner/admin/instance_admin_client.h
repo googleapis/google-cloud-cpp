@@ -84,8 +84,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstanceAdminClient {
  public:
   explicit InstanceAdminClient(
-      std::shared_ptr<InstanceAdminConnection> connection,
-      Options options = {});
+      std::shared_ptr<InstanceAdminConnection> connection, Options opts = {});
   ~InstanceAdminClient();
 
   //@{
@@ -115,7 +114,8 @@ class InstanceAdminClient {
   /// supported instance
   ///  configurations is requested. Values are of the form
   ///  `projects/<project>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -125,14 +125,15 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-  ListInstanceConfigs(std::string const& parent, Options options = {});
+  ListInstanceConfigs(std::string const& parent, Options opts = {});
 
   ///
   /// Lists the supported instance configurations for a given project.
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -144,7 +145,7 @@ class InstanceAdminClient {
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
       google::spanner::admin::instance::v1::ListInstanceConfigsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets information about a particular instance configuration.
@@ -152,7 +153,8 @@ class InstanceAdminClient {
   /// @param name  Required. The name of the requested instance configuration.
   /// Values are of
   ///  the form `projects/<project>/instanceConfigs/<config>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -162,14 +164,15 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(std::string const& name, Options options = {});
+  GetInstanceConfig(std::string const& name, Options opts = {});
 
   ///
   /// Gets information about a particular instance configuration.
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L449}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -182,7 +185,7 @@ class InstanceAdminClient {
   GetInstanceConfig(
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all instances in the given project.
@@ -190,7 +193,8 @@ class InstanceAdminClient {
   /// @param parent  Required. The name of the project for which a list of
   /// instances is
   ///  requested. Values are of the form `projects/<project>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -200,14 +204,15 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all instances in the given project.
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -218,7 +223,7 @@ class InstanceAdminClient {
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets information about a particular instance.
@@ -226,7 +231,8 @@ class InstanceAdminClient {
   /// @param name  Required. The name of the requested instance. Values are of
   /// the form
   ///  `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -236,14 +242,15 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets information about a particular instance.
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L461}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -254,7 +261,7 @@ class InstanceAdminClient {
   ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       google::spanner::admin::instance::v1::GetInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates an instance and begins preparing it to begin serving. The
@@ -302,7 +309,8 @@ class InstanceAdminClient {
   /// @param instance  Required. The instance to create.  The name may be
   /// omitted, but if
   ///  specified must be `<parent>/instances/<instance_id>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -314,7 +322,7 @@ class InstanceAdminClient {
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(std::string const& parent, std::string const& instance_id,
                  google::spanner::admin::instance::v1::Instance const& instance,
-                 Options options = {});
+                 Options opts = {});
 
   ///
   /// Creates an instance and begins preparing it to begin serving. The
@@ -354,7 +362,8 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::CreateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L478}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -367,7 +376,7 @@ class InstanceAdminClient {
   CreateInstance(
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an instance, and begins allocating or releasing resources
@@ -421,7 +430,8 @@ class InstanceAdminClient {
   ///  The field mask must always be specified; this prevents any future fields
   ///  in [Instance][google.spanner.admin.instance.v1.Instance] from being
   ///  erased accidentally by clients that do not know about them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -433,7 +443,7 @@ class InstanceAdminClient {
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance,
                  google::protobuf::FieldMask const& field_mask,
-                 Options options = {});
+                 Options opts = {});
 
   ///
   /// Updates an instance, and begins allocating or releasing resources
@@ -479,7 +489,8 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::UpdateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L552}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -492,7 +503,7 @@ class InstanceAdminClient {
   UpdateInstance(
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an instance.
@@ -510,12 +521,13 @@ class InstanceAdminClient {
   /// @param name  Required. The name of the instance to be deleted. Values are
   /// of the form
   ///  `projects/<project>/instances/<instance>`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
   ///
-  Status DeleteInstance(std::string const& name, Options options = {});
+  Status DeleteInstance(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an instance.
@@ -532,7 +544,8 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::instance::v1::DeleteInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
@@ -540,7 +553,7 @@ class InstanceAdminClient {
   Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sets the access control policy on an instance resource. Replaces any
@@ -557,7 +570,8 @@ class InstanceAdminClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -568,7 +582,7 @@ class InstanceAdminClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -586,14 +600,13 @@ class InstanceAdminClient {
    * specified. See the operation documentation for the appropriate value for
    * this field.
    * @param updater  Required. Functor to map the current policy to a new one.
-   * @param options  Optional. Options to control the loop. Expected options
-   * are:
-   *       - `InstanceAdminBackoffPolicyOption`
+   * @param opts  Optional. Override the default class-level options, such as
+   *     retry and backoff policies.
    * @return google::iam::v1::Policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
                                                  IamUpdater const& updater,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Sets the access control policy on an instance resource. Replaces any
@@ -604,7 +617,8 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -614,8 +628,7 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets the access control policy for an instance resource. Returns an empty
@@ -627,7 +640,8 @@ class InstanceAdminClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -637,7 +651,7 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Gets the access control policy for an instance resource. Returns an empty
@@ -648,7 +662,8 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -658,8 +673,7 @@ class InstanceAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns permissions that the caller has on the specified instance
@@ -678,7 +692,8 @@ class InstanceAdminClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -689,7 +704,7 @@ class InstanceAdminClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns permissions that the caller has on the specified instance
@@ -702,7 +717,8 @@ class InstanceAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -713,7 +729,7 @@ class InstanceAdminClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<InstanceAdminConnection> connection_;

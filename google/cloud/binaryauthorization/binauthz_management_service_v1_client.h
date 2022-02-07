@@ -69,7 +69,7 @@ class BinauthzManagementServiceV1Client {
  public:
   explicit BinauthzManagementServiceV1Client(
       std::shared_ptr<BinauthzManagementServiceV1Connection> connection,
-      Options options = {});
+      Options opts = {});
   ~BinauthzManagementServiceV1Client();
 
   //@{
@@ -111,7 +111,8 @@ class BinauthzManagementServiceV1Client {
   /// @param name  Required. The resource name of the
   /// [policy][google.cloud.binaryauthorization.v1.Policy] to retrieve,
   ///  in the format `projects/*/policy`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
@@ -121,7 +122,7 @@ class BinauthzManagementServiceV1Client {
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the
@@ -137,7 +138,8 @@ class BinauthzManagementServiceV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::GetPolicyRequest,google/cloud/binaryauthorization/v1/service.proto#L155}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
@@ -148,7 +150,7 @@ class BinauthzManagementServiceV1Client {
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       google::cloud::binaryauthorization::v1::GetPolicyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates or updates a project's
@@ -164,7 +166,8 @@ class BinauthzManagementServiceV1Client {
   ///  overwrite the [policy
   ///  name][google.cloud.binaryauthorization.v1.Policy.name] field with the
   ///  resource name in the request URL, in the format `projects/*/policy`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
@@ -175,7 +178,7 @@ class BinauthzManagementServiceV1Client {
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
       google::cloud::binaryauthorization::v1::Policy const& policy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates or updates a project's
@@ -187,7 +190,8 @@ class BinauthzManagementServiceV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::UpdatePolicyRequest,google/cloud/binaryauthorization/v1/service.proto#L167}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
   ///
@@ -199,7 +203,7 @@ class BinauthzManagementServiceV1Client {
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
       google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and
@@ -219,7 +223,8 @@ class BinauthzManagementServiceV1Client {
   ///  overwrite the [attestor
   ///  name][google.cloud.binaryauthorization.v1.Attestor.name] field with the
   ///  resource name, in the format `projects/*/attestors/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -231,7 +236,7 @@ class BinauthzManagementServiceV1Client {
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
       std::string const& parent, std::string const& attestor_id,
       google::cloud::binaryauthorization::v1::Attestor const& attestor,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and
@@ -243,7 +248,8 @@ class BinauthzManagementServiceV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::CreateAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L175}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -255,7 +261,7 @@ class BinauthzManagementServiceV1Client {
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
       google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets an [attestor][google.cloud.binaryauthorization.v1.Attestor].
@@ -266,7 +272,8 @@ class BinauthzManagementServiceV1Client {
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] to retrieve, in
   /// the format
   ///  `projects/*/attestors/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -276,7 +283,7 @@ class BinauthzManagementServiceV1Client {
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets an [attestor][google.cloud.binaryauthorization.v1.Attestor].
@@ -285,7 +292,8 @@ class BinauthzManagementServiceV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::GetAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L194}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -296,7 +304,7 @@ class BinauthzManagementServiceV1Client {
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
       google::cloud::binaryauthorization::v1::GetAttestorRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an [attestor][google.cloud.binaryauthorization.v1.Attestor].
@@ -309,7 +317,8 @@ class BinauthzManagementServiceV1Client {
   ///  overwrite the [attestor
   ///  name][google.cloud.binaryauthorization.v1.Attestor.name] field with the
   ///  resource name in the request URL, in the format `projects/*/attestors/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -320,7 +329,7 @@ class BinauthzManagementServiceV1Client {
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
       google::cloud::binaryauthorization::v1::Attestor const& attestor,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an [attestor][google.cloud.binaryauthorization.v1.Attestor].
@@ -329,7 +338,8 @@ class BinauthzManagementServiceV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::UpdateAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L206}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -341,7 +351,7 @@ class BinauthzManagementServiceV1Client {
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
       google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists [attestors][google.cloud.binaryauthorization.v1.Attestor].
@@ -351,7 +361,8 @@ class BinauthzManagementServiceV1Client {
   /// the
   ///  [attestors][google.cloud.binaryauthorization.v1.Attestor], in the format
   ///  `projects/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -361,7 +372,7 @@ class BinauthzManagementServiceV1Client {
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists [attestors][google.cloud.binaryauthorization.v1.Attestor].
@@ -369,7 +380,8 @@ class BinauthzManagementServiceV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::ListAttestorsRequest,google/cloud/binaryauthorization/v1/service.proto#L214}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L169}
   ///
@@ -380,7 +392,7 @@ class BinauthzManagementServiceV1Client {
   ///
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
       google::cloud::binaryauthorization::v1::ListAttestorsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor].
@@ -391,12 +403,13 @@ class BinauthzManagementServiceV1Client {
   /// [attestors][google.cloud.binaryauthorization.v1.Attestor] to delete, in
   /// the format
   ///  `projects/*/attestors/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
   ///
-  Status DeleteAttestor(std::string const& name, Options options = {});
+  Status DeleteAttestor(std::string const& name, Options opts = {});
 
   ///
   /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor].
@@ -405,7 +418,8 @@ class BinauthzManagementServiceV1Client {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::binaryauthorization::v1::DeleteAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L246}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
@@ -413,7 +427,7 @@ class BinauthzManagementServiceV1Client {
   Status DeleteAttestor(
       google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<BinauthzManagementServiceV1Connection> connection_;

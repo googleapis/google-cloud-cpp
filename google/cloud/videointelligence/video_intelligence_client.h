@@ -63,7 +63,7 @@ class VideoIntelligenceServiceClient {
  public:
   explicit VideoIntelligenceServiceClient(
       std::shared_ptr<VideoIntelligenceServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~VideoIntelligenceServiceClient();
 
   //@{
@@ -107,7 +107,8 @@ class VideoIntelligenceServiceClient {
   ///  '?' to match 1 character. If unset, the input video should be embedded
   ///  in the request as `input_content`. If set, `input_content` must be unset.
   /// @param features  Required. Requested video annotation features.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoResponse,google/cloud/videointelligence/v1/video_intelligence.proto#L602}
   ///
@@ -121,7 +122,7 @@ class VideoIntelligenceServiceClient {
       std::string const& input_uri,
       std::vector<google::cloud::videointelligence::v1::Feature> const&
           features,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Performs asynchronous video annotation. Progress and results can be
@@ -131,7 +132,8 @@ class VideoIntelligenceServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoRequest,google/cloud/videointelligence/v1/video_intelligence.proto#L60}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoResponse,google/cloud/videointelligence/v1/video_intelligence.proto#L602}
   ///
@@ -143,7 +145,7 @@ class VideoIntelligenceServiceClient {
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
   AnnotateVideo(
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<VideoIntelligenceServiceConnection> connection_;

@@ -26,18 +26,17 @@ namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QueryServiceClient::QueryServiceClient(
-    std::shared_ptr<QueryServiceConnection> connection, Options options)
+    std::shared_ptr<QueryServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::QueryServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), monitoring_internal::QueryServiceDefaultOptions(
+                               connection_->options()))) {}
 QueryServiceClient::~QueryServiceClient() = default;
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
 QueryServiceClient::QueryTimeSeries(
-    google::monitoring::v3::QueryTimeSeriesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::QueryTimeSeriesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryTimeSeries(std::move(request));
 }
 

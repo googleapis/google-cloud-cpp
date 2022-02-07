@@ -26,17 +26,16 @@ namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudMemcacheClient::CloudMemcacheClient(
-    std::shared_ptr<CloudMemcacheConnection> connection, Options options)
+    std::shared_ptr<CloudMemcacheConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), memcache_internal::CloudMemcacheDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), memcache_internal::CloudMemcacheDefaultOptions(
+                               connection_->options()))) {}
 CloudMemcacheClient::~CloudMemcacheClient() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>
-CloudMemcacheClient::ListInstances(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudMemcacheClient::ListInstances(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::ListInstancesRequest request;
   request.set_parent(parent);
   return connection_->ListInstances(request);
@@ -44,17 +43,14 @@ CloudMemcacheClient::ListInstances(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::memcache::v1::Instance>
 CloudMemcacheClient::ListInstances(
-    google::cloud::memcache::v1::ListInstancesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::memcache::v1::ListInstancesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
 StatusOr<google::cloud::memcache::v1::Instance>
-CloudMemcacheClient::GetInstance(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudMemcacheClient::GetInstance(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
@@ -63,9 +59,8 @@ CloudMemcacheClient::GetInstance(std::string const& name, Options options) {
 StatusOr<google::cloud::memcache::v1::Instance>
 CloudMemcacheClient::GetInstance(
     google::cloud::memcache::v1::GetInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
@@ -73,9 +68,8 @@ future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::CreateInstance(
     std::string const& parent,
     google::cloud::memcache::v1::Instance const& instance,
-    std::string const& instance_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& instance_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::CreateInstanceRequest request;
   request.set_parent(parent);
   *request.mutable_instance() = instance;
@@ -86,18 +80,16 @@ CloudMemcacheClient::CreateInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::CreateInstance(
     google::cloud::memcache::v1::CreateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::UpdateInstance(
     google::cloud::memcache::v1::Instance const& instance,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_update_mask() = update_mask;
@@ -107,9 +99,8 @@ CloudMemcacheClient::UpdateInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
@@ -117,9 +108,8 @@ future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::UpdateParameters(
     std::string const& name, google::protobuf::FieldMask const& update_mask,
     google::cloud::memcache::v1::MemcacheParameters const& parameters,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::UpdateParametersRequest request;
   request.set_name(name);
   *request.mutable_update_mask() = update_mask;
@@ -130,16 +120,14 @@ CloudMemcacheClient::UpdateParameters(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::UpdateParameters(
     google::cloud::memcache::v1::UpdateParametersRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateParameters(request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
-CloudMemcacheClient::DeleteInstance(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudMemcacheClient::DeleteInstance(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::DeleteInstanceRequest request;
   request.set_name(name);
   return connection_->DeleteInstance(request);
@@ -148,18 +136,16 @@ CloudMemcacheClient::DeleteInstance(std::string const& name, Options options) {
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheClient::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::ApplyParameters(std::string const& name,
                                      std::vector<std::string> const& node_ids,
-                                     bool apply_all, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                     bool apply_all, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::ApplyParametersRequest request;
   request.set_name(name);
   *request.mutable_node_ids() = {node_ids.begin(), node_ids.end()};
@@ -170,9 +156,8 @@ CloudMemcacheClient::ApplyParameters(std::string const& name,
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::ApplyParameters(
     google::cloud::memcache::v1::ApplyParametersRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyParameters(request);
 }
 

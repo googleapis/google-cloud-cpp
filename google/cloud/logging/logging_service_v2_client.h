@@ -63,7 +63,7 @@ class LoggingServiceV2Client {
  public:
   explicit LoggingServiceV2Client(
       std::shared_ptr<LoggingServiceV2Connection> connection,
-      Options options = {});
+      Options opts = {});
   ~LoggingServiceV2Client();
 
   //@{
@@ -102,12 +102,13 @@ class LoggingServiceV2Client {
   ///  `"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"`.
   ///  For more information about log names, see
   ///  [LogEntry][google.logging.v2.LogEntry].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
   ///
-  Status DeleteLog(std::string const& log_name, Options options = {});
+  Status DeleteLog(std::string const& log_name, Options opts = {});
 
   ///
   /// Deletes all the log entries in a log. The log reappears if it receives new
@@ -117,13 +118,14 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
   ///
   Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
-                   Options options = {});
+                   Options opts = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -182,7 +184,8 @@ class LoggingServiceV2Client {
   ///  [quota limit](https://cloud.google.com/logging/quota-policy) for calls to
   ///  `entries.write`, you should try to include several log entries in this
   ///  list, rather than calling this method for each individual log entry.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
   ///
@@ -196,7 +199,7 @@ class LoggingServiceV2Client {
       google::api::MonitoredResource const& resource,
       std::map<std::string, std::string> const& labels,
       std::vector<google::logging::v2::LogEntry> const& entries,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -209,7 +212,8 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L162}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
   ///
@@ -220,7 +224,7 @@ class LoggingServiceV2Client {
   ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists log entries.  Use this method to retrieve log entries that
@@ -257,7 +261,8 @@ class LoggingServiceV2Client {
   ///  `LogEntry.timestamp` (oldest first), and the second option returns
   ///  entries in order of decreasing timestamps (newest first).  Entries with
   ///  equal timestamps are returned in order of their `insert_id` values.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
   ///
@@ -268,7 +273,7 @@ class LoggingServiceV2Client {
   ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       std::vector<std::string> const& resource_names, std::string const& filter,
-      std::string const& order_by, Options options = {});
+      std::string const& order_by, Options opts = {});
 
   ///
   /// Lists log entries.  Use this method to retrieve log entries that
@@ -278,7 +283,8 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::ListLogEntriesRequest,google/logging/v2/logging.proto#L257}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
   ///
@@ -288,14 +294,15 @@ class LoggingServiceV2Client {
   /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L42}
   ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request, Options options = {});
+      google::logging::v2::ListLogEntriesRequest request, Options opts = {});
 
   ///
   /// Lists the descriptors for monitored resource types used by Logging.
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L331}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
@@ -307,7 +314,7 @@ class LoggingServiceV2Client {
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
       google::logging::v2::ListMonitoredResourceDescriptorsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
@@ -318,14 +325,15 @@ class LoggingServiceV2Client {
   ///      "organizations/[ORGANIZATION_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
   ///      "folders/[FOLDER_ID]"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
   ///
   StreamRange<std::string> ListLogs(std::string const& parent,
-                                    Options options = {});
+                                    Options opts = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
@@ -333,19 +341,20 @@ class LoggingServiceV2Client {
   ///
   /// @param request
   /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L356}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
   ///
   StreamRange<std::string> ListLogs(
-      google::logging::v2::ListLogsRequest request, Options options = {});
+      google::logging::v2::ListLogsRequest request, Options opts = {});
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries(Options options = {});
+  AsyncTailLogEntries(Options opts = {});
 
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;

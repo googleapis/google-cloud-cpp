@@ -93,8 +93,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AccessApprovalClient {
  public:
   explicit AccessApprovalClient(
-      std::shared_ptr<AccessApprovalConnection> connection,
-      Options options = {});
+      std::shared_ptr<AccessApprovalConnection> connection, Options opts = {});
   ~AccessApprovalClient();
 
   //@{
@@ -124,7 +123,8 @@ class AccessApprovalClient {
   ///
   /// @param parent  The parent resource. This may be "projects/{project_id}",
   ///  "folders/{folder_id}", or "organizations/{organization_id}".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
@@ -134,7 +134,7 @@ class AccessApprovalClient {
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
   StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-  ListApprovalRequests(std::string const& parent, Options options = {});
+  ListApprovalRequests(std::string const& parent, Options opts = {});
 
   ///
   /// Lists approval requests associated with a project, folder, or
@@ -143,7 +143,8 @@ class AccessApprovalClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::accessapproval::v1::ListApprovalRequestsMessage,google/cloud/accessapproval/v1/accessapproval.proto#L402}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
@@ -155,13 +156,14 @@ class AccessApprovalClient {
   StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
   ListApprovalRequests(
       google::cloud::accessapproval::v1::ListApprovalRequestsMessage request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets an approval request. Returns NOT_FOUND if the request does not exist.
   ///
   /// @param name  Name of the approval request to retrieve.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
@@ -171,14 +173,15 @@ class AccessApprovalClient {
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  GetApprovalRequest(std::string const& name, Options options = {});
+  GetApprovalRequest(std::string const& name, Options opts = {});
 
   ///
   /// Gets an approval request. Returns NOT_FOUND if the request does not exist.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::accessapproval::v1::GetApprovalRequestMessage,google/cloud/accessapproval/v1/accessapproval.proto#L435}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
@@ -191,7 +194,7 @@ class AccessApprovalClient {
   GetApprovalRequest(
       google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Approves a request and returns the updated ApprovalRequest.
@@ -201,7 +204,8 @@ class AccessApprovalClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::accessapproval::v1::ApproveApprovalRequestMessage,google/cloud/accessapproval/v1/accessapproval.proto#L441}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
@@ -214,7 +218,7 @@ class AccessApprovalClient {
   ApproveApprovalRequest(
       google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Dismisses a request. Returns the updated ApprovalRequest.
@@ -230,7 +234,8 @@ class AccessApprovalClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::accessapproval::v1::DismissApprovalRequestMessage,google/cloud/accessapproval/v1/accessapproval.proto#L450}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L293}
   ///
@@ -243,13 +248,14 @@ class AccessApprovalClient {
   DismissApprovalRequest(
       google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the settings associated with a project, folder, or organization.
   ///
   /// @param name  Name of the AccessApprovalSettings to retrieve.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L365}
   ///
@@ -259,14 +265,15 @@ class AccessApprovalClient {
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L365}
   ///
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  GetAccessApprovalSettings(std::string const& name, Options options = {});
+  GetAccessApprovalSettings(std::string const& name, Options opts = {});
 
   ///
   /// Gets the settings associated with a project, folder, or organization.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage,google/cloud/accessapproval/v1/accessapproval.proto#L456}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L365}
   ///
@@ -279,7 +286,7 @@ class AccessApprovalClient {
   GetAccessApprovalSettings(
       google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the settings associated with a project, folder, or organization.
@@ -296,7 +303,8 @@ class AccessApprovalClient {
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   ///  If this field is left unset, only the notification_emails field will be
   ///  updated.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L365}
   ///
@@ -308,7 +316,7 @@ class AccessApprovalClient {
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   UpdateAccessApprovalSettings(
       google::cloud::accessapproval::v1::AccessApprovalSettings const& settings,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the settings associated with a project, folder, or organization.
@@ -316,7 +324,8 @@ class AccessApprovalClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage,google/cloud/accessapproval/v1/accessapproval.proto#L462}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L365}
   ///
@@ -329,7 +338,7 @@ class AccessApprovalClient {
   UpdateAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           UpdateAccessApprovalSettingsMessage const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the settings associated with a project, folder, or organization.
@@ -340,13 +349,14 @@ class AccessApprovalClient {
   /// the settings are inherited.
   ///
   /// @param name  Name of the AccessApprovalSettings to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.accessapproval.v1.DeleteAccessApprovalSettingsMessage]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L480}
   ///
   Status DeleteAccessApprovalSettings(std::string const& name,
-                                      Options options = {});
+                                      Options opts = {});
 
   ///
   /// Deletes the settings associated with a project, folder, or organization.
@@ -358,7 +368,8 @@ class AccessApprovalClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage,google/cloud/accessapproval/v1/accessapproval.proto#L480}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.accessapproval.v1.DeleteAccessApprovalSettingsMessage]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L480}
@@ -366,7 +377,7 @@ class AccessApprovalClient {
   Status DeleteAccessApprovalSettings(
       google::cloud::accessapproval::v1::
           DeleteAccessApprovalSettingsMessage const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AccessApprovalConnection> connection_;
