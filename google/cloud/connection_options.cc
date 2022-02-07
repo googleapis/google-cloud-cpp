@@ -14,29 +14,13 @@
 
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/log.h"
 #include "absl/memory/memory.h"
-#include "absl/strings/str_split.h"
-#include <sstream>
 #include <vector>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-std::set<std::string> DefaultTracingComponents() {
-  auto tracing =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-  if (!tracing.has_value()) return {};
-  return absl::StrSplit(*tracing, ',');
-}
-
-TracingOptions DefaultTracingOptions() {
-  auto tracing_options =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
-  if (!tracing_options) return {};
-  return TracingOptions{}.SetOptions(*tracing_options);
-}
 
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads(
     std::size_t thread_pool_size) {

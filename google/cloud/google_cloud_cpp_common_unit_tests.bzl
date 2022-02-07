@@ -38,6 +38,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/log_impl_test.cc",
     "internal/pagination_range_test.cc",
     "internal/parse_rfc3339_test.cc",
+    "internal/populate_common_options_test.cc",
     "internal/random_test.cc",
     "internal/retry_policy_test.cc",
     "internal/status_payload_keys_test.cc",
