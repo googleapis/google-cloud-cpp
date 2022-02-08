@@ -22,12 +22,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-std::set<std::string> DefaultTracingComponents() {
-  auto tracing =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-  if (!tracing.has_value()) return {};
-  return absl::StrSplit(*tracing, ',');
-}
 
 Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
@@ -55,6 +49,13 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
   products.insert(products.begin(), UserAgentPrefix());
 
   return opts;
+}
+
+std::set<std::string> DefaultTracingComponents() {
+  auto tracing =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
+  if (!tracing.has_value()) return {};
+  return absl::StrSplit(*tracing, ',');
 }
 
 }  // namespace internal
