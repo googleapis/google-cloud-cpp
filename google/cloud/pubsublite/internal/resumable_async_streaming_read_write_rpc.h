@@ -214,10 +214,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   void OnFailure(Status status) {
     {
       std::lock_guard<std::mutex> g{mu_};
-      this->stream_ = nullptr;
+      stream_ = nullptr;
     }
-    AttemptRetry(status, this->retry_policy_prototype_->clone(),
-                 this->backoff_policy_prototype_->clone());
+    AttemptRetry(status, retry_policy_prototype_->clone(),
+                 backoff_policy_prototype_->clone());
   }
 
   void AttemptRetry(Status status, std::shared_ptr<RetryPolicy> retry_policy,
@@ -246,7 +246,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         potential_stream;
     future<bool> start_future;
 
-    potential_stream = this->stream_factory_();
+    potential_stream = stream_factory_();
     start_future = potential_stream->Start();
 
     start_future.then([this, potential_stream = std::move(potential_stream)](future<bool> start_future) {
