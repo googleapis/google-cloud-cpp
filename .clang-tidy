@@ -18,13 +18,6 @@
 #      avoiding C arrays often makes the code less readable, and std::array is
 #      not a drop-in replacement because it doesn't deduce the size.
 #
-#  -performance-move-const-arg: This warning requires the developer to
-#      know/care more about the implementation details of types/functions than
-#      should be necessary. For example, `A a; F(std::move(a));` will trigger a
-#      warning IFF `A` is a trivial type (and therefore the move is
-#      meaningless). It would also warn if `F` accepts by `const&`, which is
-#      another detail that the caller need not care about.
-#
 #  -readability-redundant-declaration: A friend declaration inside a class
 #      counts as a declaration, so if we also declare that friend outside the
 #      class in order to document it as part of the public API, that will
@@ -53,7 +46,6 @@ Checks: >
   -modernize-return-braced-init-list,
   -modernize-use-trailing-return-type,
   -modernize-avoid-c-arrays,
-  -performance-move-const-arg,
   -readability-braces-around-statements,
   -readability-identifier-length,
   -readability-magic-numbers,
