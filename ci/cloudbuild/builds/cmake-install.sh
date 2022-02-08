@@ -60,8 +60,6 @@ expected_dirs+=(
   ./include/google/appengine/logging
   ./include/google/appengine/logging/v1
   ./include/google/bigtable/v2
-  ./include/google/cloud/bigquery/connection
-  ./include/google/cloud/bigquery/connection/v1
   ./include/google/cloud/bigquery/datatransfer
   ./include/google/cloud/bigquery/datatransfer/v1
   ./include/google/cloud/bigquery/logging

@@ -38,6 +38,13 @@ add_library(
     bigquery_read_connection_idempotency_policy.cc
     bigquery_read_connection_idempotency_policy.h
     bigquery_read_options.h
+    connection_client.cc
+    connection_client.h
+    connection_connection.cc
+    connection_connection.h
+    connection_connection_idempotency_policy.cc
+    connection_connection_idempotency_policy.h
+    connection_options.h
     internal/bigquery_read_auth_decorator.cc
     internal/bigquery_read_auth_decorator.h
     internal/bigquery_read_connection_impl.cc
@@ -53,6 +60,21 @@ add_library(
     internal/bigquery_read_stub.h
     internal/bigquery_read_stub_factory.cc
     internal/bigquery_read_stub_factory.h
+    internal/connection_auth_decorator.cc
+    internal/connection_auth_decorator.h
+    internal/connection_connection_impl.cc
+    internal/connection_connection_impl.h
+    internal/connection_logging_decorator.cc
+    internal/connection_logging_decorator.h
+    internal/connection_metadata_decorator.cc
+    internal/connection_metadata_decorator.h
+    internal/connection_option_defaults.cc
+    internal/connection_option_defaults.h
+    internal/connection_retry_traits.h
+    internal/connection_stub.cc
+    internal/connection_stub.h
+    internal/connection_stub_factory.cc
+    internal/connection_stub_factory.h
     internal/streaming.cc
     retry_traits.h)
 target_include_directories(
@@ -88,7 +110,9 @@ create_bazel_config(google_cloud_cpp_bigquery YEAR "2021")
 add_library(google_cloud_cpp_bigquery_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_mocks
-    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h)
+    INTERFACE # cmake-format: sort
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
     INTERFACE google-cloud-cpp::bigquery GTest::gmock_main GTest::gmock
