@@ -352,6 +352,58 @@ TEST_F(RestClientIntegrationTest, ResponseBodyLargerThanSpillBuffer) {
                             std::move(response_status));
 }
 
+TEST_F(RestClientIntegrationTest, PostFormData) {
+  options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  auto client = GetDefaultRestClient(url_, options_);
+  RestRequest request;
+  request.SetPath("anything");
+
+  std::pair<std::string, std::string> form_pair_1 =
+      std::make_pair("key1", "value%1");
+  std::pair<std::string, std::string> form_pair_2 =
+      std::make_pair("key2", "value=2");
+  std::pair<std::string, std::string> form_pair_3 =
+      std::make_pair("key3", "value$3");
+  std::vector<std::pair<std::string, std::string>> form_data;
+  form_data.push_back(form_pair_1);
+  form_data.push_back(form_pair_2);
+  form_data.push_back(form_pair_3);
+
+  auto response_status =
+      RetryRestRequest([&] { return client->Post(request, form_data); });
+  ASSERT_STATUS_OK(response_status);
+  auto response = std::move(response_status.value());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  auto headers = response->Headers();
+  EXPECT_GT(headers.size(), 0);
+
+  auto content_length = headers.find("content-length");
+  ASSERT_TRUE(content_length != headers.end());
+  EXPECT_GT(std::stoi(content_length->second), 0);
+
+  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
+  auto body = ReadAll(std::move(payload));
+  EXPECT_STATUS_OK(body);
+  auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
+  EXPECT_FALSE(parsed_response.is_discarded());
+  ASSERT_FALSE(parsed_response.is_null());
+  auto http_method = parsed_response.find("method");
+  ASSERT_FALSE(http_method == parsed_response.end());
+  EXPECT_THAT(http_method.value(), Eq("POST"));
+
+  auto sent_headers = parsed_response.find("headers");
+  ASSERT_FALSE(sent_headers == parsed_response.end());
+  auto content_type = sent_headers->find("Content-Type");
+  ASSERT_FALSE(content_type == sent_headers->end());
+  EXPECT_THAT(content_type.value(), Eq("application/x-www-form-urlencoded"));
+
+  auto form = parsed_response.find("form");
+  ASSERT_FALSE(form == parsed_response.end());
+  EXPECT_THAT((*form)[form_pair_1.first], Eq(form_pair_1.second));
+  EXPECT_THAT((*form)[form_pair_2.first], Eq(form_pair_2.second));
+  EXPECT_THAT((*form)[form_pair_3.first], Eq(form_pair_3.second));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
