@@ -32,7 +32,7 @@ SubscriberServiceLogging::SubscriberServiceLogging(
     std::shared_ptr<SubscriberServiceStub> child,
     TracingOptions tracing_options, std::set<std::string> components)
     : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+      tracing_options_(tracing_options),
       components_(std::move(components)) {}
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

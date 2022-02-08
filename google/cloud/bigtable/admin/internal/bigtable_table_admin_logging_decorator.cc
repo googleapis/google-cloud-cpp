@@ -31,7 +31,7 @@ BigtableTableAdminLogging::BigtableTableAdminLogging(
     std::shared_ptr<BigtableTableAdminStub> child,
     TracingOptions tracing_options, std::set<std::string> components)
     : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+      tracing_options_(tracing_options),
       components_(std::move(components)) {}
 
 StatusOr<google::bigtable::admin::v2::Table>
