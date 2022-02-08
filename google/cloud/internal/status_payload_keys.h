@@ -26,7 +26,7 @@ namespace internal {
 // The key to use when setting/getting a `google::cloud::Status` payload
 // associated with a serialized `google::rpc::Status` protobuf. The value
 // should be serialized with `.SerializeAsString()`.
-extern const char kStatusPayloadGrpcProto[];
+extern char const kStatusPayloadGrpcProto[];
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
