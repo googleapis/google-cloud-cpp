@@ -29,8 +29,7 @@ class PublisherLogging : public PublisherStub {
  public:
   PublisherLogging(std::shared_ptr<PublisherStub> child,
                    TracingOptions tracing_options)
-      : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)) {}
+      : child_(std::move(child)), tracing_options_(tracing_options) {}
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,

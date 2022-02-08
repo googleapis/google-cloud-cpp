@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
     *families[options->column_family].mutable_gc_rule() = std::move(gc);
 
     std::cout << "# Creating Table\n";
-    auto table = admin.CreateTable(std::move(r));
+    auto table = admin.CreateTable(r);
     if (!table) {
       std::cout << table.status() << std::endl;
       return 1;
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
     r.set_name(
         cbt::TableName(options->project_id, options->instance_id, table_id));
     r.set_view(google::bigtable::admin::v2::Table_View_NAME_ONLY);
-    auto table = admin.GetTable(std::move(r));
+    auto table = admin.GetTable(r);
     if (!table) {
       std::cout << "Error trying to get Table " << table_id << ":\n"
                 << table.status() << std::endl;

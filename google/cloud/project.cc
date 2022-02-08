@@ -41,7 +41,7 @@ StatusOr<Project> MakeProject(std::string const& full_name) {
     return Status(StatusCode::kInvalidArgument,
                   "Improperly formatted Project: " + full_name);
   }
-  return Project(std::move(matches[1]));
+  return Project(matches[1]);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

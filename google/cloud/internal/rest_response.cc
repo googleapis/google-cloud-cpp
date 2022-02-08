@@ -197,7 +197,7 @@ Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
   //   }
   // See  https://cloud.google.com/apis/design/errors#http_mapping
   auto error = json.value("error", nlohmann::json::object());
-  auto message = error.value("message", std::move(payload));
+  auto message = error.value("message", payload);
   auto details = error.value("details", nlohmann::json::object());
 
   if (!details.empty()) {

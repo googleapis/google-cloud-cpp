@@ -127,7 +127,7 @@ Options DefaultOptions(Options opts) {
     // If the range is invalid, use the greater value as both the min and max
     auto const p = opts.get<MinConnectionRefreshOption>();
     if (p > opts.get<MaxConnectionRefreshOption>()) {
-      opts.set<MaxConnectionRefreshOption>(std::move(p));
+      opts.set<MaxConnectionRefreshOption>(p);
     }
   }
 

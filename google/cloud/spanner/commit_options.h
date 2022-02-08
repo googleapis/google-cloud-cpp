@@ -61,7 +61,7 @@ class CommitOptions {
   /// Set the priority of the `spanner::Client::Commit()` call.
   CommitOptions& set_request_priority(
       absl::optional<RequestPriority> request_priority) {
-    request_priority_ = std::move(request_priority);
+    request_priority_ = request_priority;
     return *this;
   }
 

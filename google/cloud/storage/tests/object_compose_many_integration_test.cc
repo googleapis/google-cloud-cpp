@@ -46,7 +46,7 @@ TEST_F(ObjectComposeManyIntegrationTest, ComposeMany) {
   std::vector<ComposeSourceObject> source_objs;
   std::string expected;
   for (int i = 0; i != 33; ++i) {
-    std::string const object_name = prefix + ".src-" + std::to_string(i);
+    std::string object_name = prefix + ".src-" + std::to_string(i);
     std::string content = std::to_string(i);
     expected += content;
     StatusOr<ObjectMetadata> insert_meta = client->InsertObject(

@@ -288,7 +288,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
   namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
-  [](cbt::Table table, std::string const& row_key) {
+  [](cbt::Table table, std::string row_key) {
     future<StatusOr<cbt::Row>> row_future = table.AsyncReadModifyWriteRow(
         std::move(row_key),
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
@@ -348,7 +348,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto& families = *t.mutable_column_families();
   *families["fam"].mutable_gc_rule() = std::move(gc);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                  table_id, std::move(t));
+                                  table_id, t);
   if (!schema) throw std::runtime_error(schema.status().message());
 
   cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,

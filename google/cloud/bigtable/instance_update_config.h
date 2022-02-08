@@ -66,13 +66,13 @@ class InstanceUpdateConfig {
   //@}
 
   InstanceUpdateConfig& set_type(InstanceType type) {
-    proto_.mutable_instance()->set_type(std::move(type));
+    proto_.mutable_instance()->set_type(type);
     AddPathIfNotPresent("type");
     return *this;
   }
 
   InstanceUpdateConfig& set_state(StateType state) {
-    proto_.mutable_instance()->set_state(std::move(state));
+    proto_.mutable_instance()->set_state(state);
     AddPathIfNotPresent("state");
     return *this;
   }

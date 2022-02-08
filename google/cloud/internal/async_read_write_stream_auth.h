@@ -62,7 +62,7 @@ class AsyncStreamingReadWriteRpcAuth
   future<bool> Write(Request const& request,
                      grpc::WriteOptions options) override {
     std::lock_guard<std::mutex> g{state_->mu};
-    return state_->stream->Write(request, std::move(options));
+    return state_->stream->Write(request, options);
   }
 
   future<bool> WritesDone() override {

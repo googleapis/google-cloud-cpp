@@ -298,7 +298,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   if (config->show_help) return 0;
-  spanner::config = std::move(*config);
+  spanner::config = *config;
 
   return RUN_ALL_TESTS();
 }

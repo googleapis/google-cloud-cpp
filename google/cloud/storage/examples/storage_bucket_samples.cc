@@ -278,8 +278,8 @@ void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
     configuration.uniform_bucket_level_access =
         gcs::UniformBucketLevelAccess{true, {}};
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
-                         std::move(configuration)));
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetIamConfiguration(configuration));
 
     if (!updated_metadata) {
       throw std::runtime_error(updated_metadata.status().message());
@@ -304,8 +304,8 @@ void DisableUniformBucketLevelAccess(google::cloud::storage::Client client,
     configuration.uniform_bucket_level_access =
         gcs::UniformBucketLevelAccess{false, {}};
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
-                         std::move(configuration)));
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetIamConfiguration(configuration));
 
     if (!updated_metadata) {
       throw std::runtime_error(updated_metadata.status().message());
@@ -363,8 +363,8 @@ void SetPublicAccessPreventionEnforced(google::cloud::storage::Client client,
     configuration.public_access_prevention =
         gcs::PublicAccessPreventionEnforced();
     StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
-                         std::move(configuration)));
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetIamConfiguration(configuration));
 
     if (!updated_metadata) {
       throw std::runtime_error(updated_metadata.status().message());
@@ -388,8 +388,8 @@ void SetPublicAccessPreventionInherited(google::cloud::storage::Client client,
     configuration.public_access_prevention =
         gcs::PublicAccessPreventionInherited();
     auto updated = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
-                         std::move(configuration)));
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetIamConfiguration(configuration));
     if (!updated) throw std::runtime_error(updated.status().message());
 
     std::cout << "Public Access Prevention is set to 'inherited' for "
@@ -709,7 +709,7 @@ int main(int argc, char* argv[]) {
                        std::vector<std::string> arg_names,
                        examples::ClientCommand const& cmd) {
     arg_names.insert(arg_names.begin(), "<bucket-name>");
-    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
+    return examples::CreateCommandEntry(name, arg_names, cmd);
   };
 
   examples::Example example({

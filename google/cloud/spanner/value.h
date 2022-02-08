@@ -195,13 +195,11 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(Numeric v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
-  explicit Value(Timestamp v) : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(Timestamp v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(bool)
-  explicit Value(CommitTimestamp v)
-      : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(CommitTimestamp v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(bool)
-  explicit Value(absl::CivilDay v)
-      : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(absl::CivilDay v) : Value(PrivateConstructor{}, v) {}
 
   /**
    * Constructs an instance from common C++ literal types that closely, though

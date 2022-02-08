@@ -63,8 +63,8 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
           cfg.access_token(), std::move(options));
     }
     void visit(ImpersonateServiceAccountConfig& cfg) override {
-      result = GrpcImpersonateServiceAccount::Create(std::move(cq), cfg,
-                                                     std::move(options));
+      result =
+          GrpcImpersonateServiceAccount::Create(std::move(cq), cfg, options);
     }
     void visit(ServiceAccountConfig& cfg) override {
       result = absl::make_unique<GrpcServiceAccountAuthentication>(

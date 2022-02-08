@@ -134,7 +134,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto& families = *t.mutable_column_families();
   *families["fam"].mutable_gc_rule() = std::move(gc);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                  table_id, std::move(t));
+                                  table_id, t);
   if (!schema) throw std::runtime_error(schema.status().message());
 
   auto profile_id = "hw-app-profile-" +
@@ -146,7 +146,7 @@ void RunAll(std::vector<std::string> const& argv) {
   google::bigtable::admin::v2::AppProfile ap;
   ap.mutable_multi_cluster_routing_use_any()->Clear();
   auto profile = instance_admin.CreateAppProfile(
-      cbt::InstanceName(project_id, instance_id), profile_id, std::move(ap));
+      cbt::InstanceName(project_id, instance_id), profile_id, ap);
   if (!profile) throw std::runtime_error(profile.status().message());
 
   std::cout << "\nRunning the AppProfile hello world example" << std::endl;
@@ -155,7 +155,7 @@ void RunAll(std::vector<std::string> const& argv) {
   google::bigtable::admin::v2::DeleteAppProfileRequest req;
   req.set_name(cbt::AppProfileName(project_id, instance_id, profile_id));
   req.set_ignore_warnings(true);
-  instance_admin.DeleteAppProfile(std::move(req));
+  instance_admin.DeleteAppProfile(req);
   admin.DeleteTable(schema->name());
 }
 

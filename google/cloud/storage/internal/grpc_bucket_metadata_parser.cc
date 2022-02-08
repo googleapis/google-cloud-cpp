@@ -245,7 +245,7 @@ BucketIamConfiguration GrpcBucketMetadataParser::FromProto(
     ubla.enabled = rhs.uniform_bucket_level_access().enabled();
     ubla.locked_time = google::cloud::internal::ToChronoTimePoint(
         rhs.uniform_bucket_level_access().lock_time());
-    result.uniform_bucket_level_access = std::move(ubla);
+    result.uniform_bucket_level_access = ubla;
   }
   return result;
 }

@@ -103,7 +103,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
     future<void> creation_done =
         instance_admin
-            .CreateInstance(project_name, instance_id, std::move(in),
+            .CreateInstance(project_name, instance_id, in,
                             {{cluster_id, std::move(c)}})
             .then(
                 [instance_id](

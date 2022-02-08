@@ -104,8 +104,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   btadmin::Backup b;
   b.set_source_table(table_name);
   *b.mutable_expire_time() = expire_time;
-  auto backup =
-      client_.CreateBackup(cluster_name, backup_id, std::move(b)).get();
+  auto backup = client_.CreateBackup(cluster_name, backup_id, b).get();
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
 
@@ -144,7 +143,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   r.set_parent(instance_name);
   r.set_table_id(table_id);
   r.set_backup(backup_name);
-  auto table = client_.RestoreTable(std::move(r)).get();
+  auto table = client_.RestoreTable(r).get();
   EXPECT_STATUS_OK(table);
 
   // Verify the restore

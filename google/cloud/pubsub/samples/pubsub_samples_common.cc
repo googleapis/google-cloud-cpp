@@ -39,7 +39,7 @@ google::cloud::testing_util::Commands::value_type CreatePublisherCommand(
     argv.erase(argv.begin(), argv.begin() + 2);
     google::cloud::pubsub::Publisher client(
         google::cloud::pubsub::MakePublisherConnection(topic));
-    command(std::move(client), std::move(argv));
+    command(std::move(client), argv);
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};
@@ -63,7 +63,7 @@ google::cloud::testing_util::Commands::value_type CreateSubscriberCommand(
         google::cloud::pubsub::MakeSubscriberConnection(
             pubsub::Subscription(argv.at(0), argv.at(1))));
     argv.erase(argv.begin(), argv.begin() + 2);
-    command(std::move(client), std::move(argv));
+    command(std::move(client), argv);
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};
@@ -84,7 +84,7 @@ google::cloud::testing_util::Commands::value_type CreateTopicAdminCommand(
     }
     google::cloud::pubsub::TopicAdminClient client(
         google::cloud::pubsub::MakeTopicAdminConnection());
-    command(std::move(client), std::move(argv));
+    command(std::move(client), argv);
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};
@@ -106,7 +106,7 @@ CreateSubscriptionAdminCommand(std::string const& name,
     }
     google::cloud::pubsub::SubscriptionAdminClient client(
         google::cloud::pubsub::MakeSubscriptionAdminConnection());
-    command(std::move(client), std::move(argv));
+    command(std::move(client), argv);
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};
@@ -127,7 +127,7 @@ google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(
     }
     google::cloud::pubsub::SchemaAdminClient client(
         google::cloud::pubsub::MakeSchemaAdminConnection());
-    command(std::move(client), std::move(argv));
+    command(std::move(client), argv);
   };
   return google::cloud::testing_util::Commands::value_type{name,
                                                            std::move(adapter)};

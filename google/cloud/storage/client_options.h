@@ -425,7 +425,7 @@ class ClientOptions {
    *     instead.
    */
   ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
-    opts_.set<TransferStallTimeoutOption>(std::move(v));
+    opts_.set<TransferStallTimeoutOption>(v);
     return *this;
   }
   //@}

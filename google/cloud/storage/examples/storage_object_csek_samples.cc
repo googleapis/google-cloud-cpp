@@ -145,7 +145,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   }
   //! [compose object csek]
   (std::move(client), bucket_name, destination_object_name, base64_aes256_key,
-   std::move(compose_objects));
+   compose_objects);
 }
 
 void CopyEncryptedObject(google::cloud::storage::Client client,
@@ -275,7 +275,7 @@ int main(int argc, char* argv[]) {
                        std::vector<std::string> arg_names,
                        examples::ClientCommand const& cmd) {
     arg_names.insert(arg_names.begin(), {"<bucket-name>", "<object-name>"});
-    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
+    return examples::CreateCommandEntry(name, arg_names, cmd);
   };
 
   examples::Example example({

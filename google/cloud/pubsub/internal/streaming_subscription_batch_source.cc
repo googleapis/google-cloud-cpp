@@ -134,8 +134,8 @@ void StreamingSubscriptionBatchSource::OnStart(
   shutdown_manager_->StartOperation(__func__, "InitialWrite", [&] {
     auto weak = WeakFromThis();
     stream_->Write(request, grpc::WriteOptions{}.set_write_through())
-        .then([weak, rs](future<bool> f) mutable {
-          if (auto s = weak.lock()) s->OnInitialWrite(std::move(rs), f.get());
+        .then([weak, rs](future<bool> f) {
+          if (auto s = weak.lock()) s->OnInitialWrite(rs, f.get());
         });
   });
 }
@@ -144,7 +144,7 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
                                                       bool ok) {
   shutdown_manager_->FinishedOperation("InitialWrite");
   if (!ok) {
-    OnInitialError(std::move(rs));
+    OnInitialError(rs);
     return;
   }
   auto scheduled =
@@ -155,13 +155,12 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
              rs](future<
                  absl::optional<google::pubsub::v1::StreamingPullResponse>>
                      f) {
-              if (auto s = weak.lock())
-                s->OnInitialRead(std::move(rs), f.get());
+              if (auto s = weak.lock()) s->OnInitialRead(rs, f.get());
             });
       });
   // This is very rare, but it can happen if the session enters shutdown while
   // the initial setup is in progress.
-  if (!scheduled) OnInitialError(std::move(rs));
+  if (!scheduled) OnInitialError(rs);
 }
 
 void StreamingSubscriptionBatchSource::OnInitialRead(
@@ -193,7 +192,7 @@ void StreamingSubscriptionBatchSource::OnInitialError(RetryLoopState rs) {
   auto weak = WeakFromThis();
   auto const scheduled =
       shutdown_manager_->StartOperation(__func__, "finish", [&] {
-        stream_->Finish().then([weak, rs](future<Status> f) {
+        stream_->Finish().then([weak, rs](future<Status> f) mutable {
           if (auto s = weak.lock()) s->OnInitialFinish(std::move(rs), f.get());
         });
         shutdown_manager_->FinishedOperation("finish");

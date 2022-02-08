@@ -473,7 +473,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   std::vector<std::pair<pubsub::Message, pubsub::AckHandler>> messages;
   auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
     std::lock_guard<std::mutex> lk(handler_mu);
-    messages.emplace_back(std::move(m), std::move(h));
+    messages.emplace_back(m, std::move(h));
     handler_cv.notify_one();
   };
   auto wait_message_count = [&](std::size_t n) {

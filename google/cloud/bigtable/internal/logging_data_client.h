@@ -37,7 +37,7 @@ class LoggingDataClient : public DataClient {
  public:
   LoggingDataClient(std::shared_ptr<google::cloud::bigtable::DataClient> child,
                     google::cloud::TracingOptions options)
-      : child_(std::move(child)), tracing_options_(std::move(options)) {}
+      : child_(std::move(child)), tracing_options_(options) {}
 
   std::string const& project_id() const override {
     return child_->project_id();

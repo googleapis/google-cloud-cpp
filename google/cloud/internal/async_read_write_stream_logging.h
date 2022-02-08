@@ -33,7 +33,7 @@ class AsyncStreamingReadWriteRpcLogging
       std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> child,
       TracingOptions tracing_options, std::string request_id)
       : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)),
+        tracing_options_(tracing_options),
         request_id_(std::move(request_id)) {}
 
   void Cancel() override {
@@ -72,12 +72,11 @@ class AsyncStreamingReadWriteRpcLogging
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
     GCP_LOG(DEBUG) << prefix << " << "
                    << DebugString(request, tracing_options_);
-    return child_->Write(request, std::move(options))
-        .then([prefix](future<bool> f) {
-          auto r = f.get();
-          GCP_LOG(DEBUG) << prefix << " >> " << (r ? "true" : "false");
-          return r;
-        });
+    return child_->Write(request, options).then([prefix](future<bool> f) {
+      auto r = f.get();
+      GCP_LOG(DEBUG) << prefix << " >> " << (r ? "true" : "false");
+      return r;
+    });
   }
 
   future<bool> WritesDone() override {

@@ -50,8 +50,7 @@ StatusOr<Database> MakeDatabase(std::string const& full_name) {
     return Status(StatusCode::kInvalidArgument,
                   "Improperly formatted Database: " + full_name);
   }
-  return Database(Instance(std::move(matches[1]), std::move(matches[2])),
-                  std::move(matches[3]));
+  return Database(Instance(matches[1], matches[2]), matches[3]);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

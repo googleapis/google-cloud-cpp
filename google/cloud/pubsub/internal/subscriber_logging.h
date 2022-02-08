@@ -31,7 +31,7 @@ class SubscriberLogging : public SubscriberStub {
   SubscriberLogging(std::shared_ptr<SubscriberStub> child,
                     TracingOptions tracing_options, bool trace_streams)
       : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)),
+        tracing_options_(tracing_options),
         trace_streams_(trace_streams) {}
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(

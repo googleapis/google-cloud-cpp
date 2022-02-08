@@ -39,7 +39,7 @@ class StreamingWriteRpcLogging
       std::unique_ptr<StreamingWriteRpc<RequestType, ResponseType>> stream,
       TracingOptions tracing_options, std::string request_id)
       : stream_(std::move(stream)),
-        tracing_options_(std::move(tracing_options)),
+        tracing_options_(tracing_options),
         request_id_(std::move(request_id)) {}
   ~StreamingWriteRpcLogging() override = default;
 
@@ -54,7 +54,7 @@ class StreamingWriteRpcLogging
     auto const prefix = std::string(__func__) + "(" + request_id_ + ")";
     GCP_LOG(DEBUG) << prefix << "() << "
                    << DebugString(request, tracing_options_);
-    auto success = stream_->Write(request, std::move(options));
+    auto success = stream_->Write(request, options);
     GCP_LOG(DEBUG) << prefix << "() >> " << (success ? "true" : "false");
     return success;
   }

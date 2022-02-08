@@ -163,7 +163,7 @@ void CurlImpl::ApplyOptions(Options const& options) {
   auto agents = options.get<UserAgentProductsOption>();
   agents.push_back(user_agent_);
   user_agent_ = absl::StrCat(absl::StrJoin(agents, " "), UserAgentSuffix());
-  http_version_ = std::move(options.get<HttpVersionOption>());
+  http_version_ = options.get<HttpVersionOption>();
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
 }
@@ -289,9 +289,8 @@ std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
 
   // Copy the full contents of `ptr` into the application buffer.
   if (size * nmemb < free) {
-    buffer_ =
-        WriteToBuffer(std::move(buffer_),
-                      absl::Span<char>(static_cast<char*>(ptr), size * nmemb));
+    buffer_ = WriteToBuffer(
+        buffer_, absl::Span<char>(static_cast<char*>(ptr), size * nmemb));
 
     TRACE_STATE() << ", copy full"
                   << ", n=" << size * nmemb << "\n";
@@ -299,8 +298,8 @@ std::size_t CurlImpl::WriteToUserBuffer(void* ptr, std::size_t size,
   }
 
   // Copy as much as possible from `ptr` into the application buffer.
-  buffer_ = WriteToBuffer(std::move(buffer_),
-                          absl::Span<char>(static_cast<char*>(ptr), free));
+  buffer_ =
+      WriteToBuffer(buffer_, absl::Span<char>(static_cast<char*>(ptr), free));
   // The rest goes into the spill buffer.
   spill_offset_ = size * nmemb - free;
   std::memcpy(spill_.data(), static_cast<char*>(ptr) + free, spill_offset_);
@@ -558,7 +557,7 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
   if (output.empty())
     return Status(StatusCode::kInvalidArgument,
                   "Read output size must be non-zero", {});
-  return ReadImpl(std::move(output));
+  return ReadImpl(output);
 }
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {

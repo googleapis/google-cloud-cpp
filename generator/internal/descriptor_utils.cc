@@ -360,7 +360,7 @@ std::string FormatApiMethodSignatureParameters(
          {"<tbody>", "<!--<tbody>-->"},
          {"</tbody>", "<!--</tbody>-->"}});
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
-                          FieldName(parameter_descriptor), std::move(comment));
+                          FieldName(parameter_descriptor), comment);
   }
   return parameter_comments;
 }
@@ -503,7 +503,7 @@ std::string FormatMethodCommentsMethodSignature(
   }
   auto parameter_comments =
       FormatApiMethodSignatureParameters(method, signature);
-  return FormatMethodComments(method, std::move(parameter_comments),
+  return FormatMethodComments(method, parameter_comments,
                               method_source_location);
 }
 
@@ -518,7 +518,7 @@ std::string FormatMethodCommentsProtobufRequest(
   google::protobuf::Descriptor const* input_type = method.input_type();
   auto parameter_comment = absl::StrFormat("  /// @param %s %s\n", "request",
                                            FormatDoxygenLink(*input_type));
-  return FormatMethodComments(method, std::move(parameter_comment),
+  return FormatMethodComments(method, parameter_comment,
                               method_source_location);
 }
 

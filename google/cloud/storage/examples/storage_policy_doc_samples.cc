@@ -36,8 +36,8 @@ void CreateSignedPolicyDocumentV2(google::cloud::storage::Client client,
                     gcs::PolicyDocumentCondition::StartsWith("key", ""),
                     gcs::PolicyDocumentCondition::ExactMatchObject(
                         "acl", "bucket-owner-read"),
-                    gcs::PolicyDocumentCondition::ExactMatchObject(
-                        "bucket", std::move(bucket_name)),
+                    gcs::PolicyDocumentCondition::ExactMatchObject("bucket",
+                                                                   bucket_name),
                     gcs::PolicyDocumentCondition::ExactMatch("Content-Type",
                                                              "image/jpeg"),
                     gcs::PolicyDocumentCondition::ContentLengthRange(0,
@@ -63,7 +63,7 @@ void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
     StatusOr<gcs::PolicyDocumentV4Result> document =
         client.GenerateSignedPostPolicyV4(
             gcs::PolicyDocumentV4{
-                std::move(bucket_name),
+                bucket_name,
                 "scan_0001.jpg",
                 std::chrono::minutes(15),
                 std::chrono::system_clock::now(),

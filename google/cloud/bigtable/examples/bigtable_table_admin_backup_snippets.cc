@@ -52,7 +52,7 @@ void CreateBackup(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     b.mutable_expire_time()->set_seconds(absl::ToUnixSeconds(t));
 
     future<StatusOr<google::bigtable::admin::v2::Backup>> backup_future =
-        admin.CreateBackup(cluster_name, backup_id, std::move(b));
+        admin.CreateBackup(cluster_name, backup_id, b);
     auto backup = backup_future.get();
     if (!backup) throw std::runtime_error(backup.status().message());
     std::cout << "Backup successfully created: " << backup->DebugString()
@@ -157,7 +157,7 @@ void UpdateBackup(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     mask.add_paths("expire_time");
 
     StatusOr<google::bigtable::admin::v2::Backup> backup =
-        admin.UpdateBackup(std::move(b), std::move(mask));
+        admin.UpdateBackup(b, mask);
     if (!backup) throw std::runtime_error(backup.status().message());
     std::cout << backup->name() << " details=\n"
               << backup->DebugString() << "\n";
@@ -187,7 +187,7 @@ void RestoreTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     r.set_backup(backup_name);
 
     future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
-        admin.RestoreTable(std::move(r));
+        admin.RestoreTable(r);
     auto table = table_future.get();
     if (!table) throw std::runtime_error(table.status().message());
     std::cout << "Table successfully restored: " << table->DebugString()
@@ -220,7 +220,7 @@ void RestoreTableFromInstance(
     r.set_backup(backup_name);
 
     future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
-        admin.RestoreTable(std::move(r));
+        admin.RestoreTable(r);
     auto table = table_future.get();
     if (!table) throw std::runtime_error(table.status().message());
     std::cout << "Table successfully restored: " << table->DebugString()
@@ -337,7 +337,7 @@ void RunAll(std::vector<std::string> const& argv) {
   *families["foo"].mutable_gc_rule() = std::move(gc2);
 
   auto table = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                 table_id, std::move(t));
+                                 table_id, t);
   if (!table) throw std::runtime_error(table.status().message());
 
   std::cout << "\nRunning CreateBackup() example" << std::endl;

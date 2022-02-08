@@ -42,8 +42,7 @@ StatusOr<KmsKeyName> MakeKmsKeyName(std::string const& full_name) {
     return Status(StatusCode::kInvalidArgument,
                   "Improperly formatted KmsKeyName: " + full_name);
   }
-  return KmsKeyName(std::move(matches[1]), std::move(matches[2]),
-                    std::move(matches[3]), std::move(matches[4]));
+  return KmsKeyName(matches[1], matches[2], matches[3], matches[4]);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

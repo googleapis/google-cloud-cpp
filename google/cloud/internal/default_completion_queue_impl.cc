@@ -239,8 +239,7 @@ void DefaultCompletionQueueImpl::RunAsync(
 void DefaultCompletionQueueImpl::StartOperation(
     std::shared_ptr<AsyncGrpcOperation> op,
     absl::FunctionRef<void(void*)> start) {
-  StartOperation(std::unique_lock<std::mutex>(mu_), std::move(op),
-                 std::move(start));
+  StartOperation(std::unique_lock<std::mutex>(mu_), std::move(op), start);
 }
 
 grpc::CompletionQueue& DefaultCompletionQueueImpl::cq() { return cq_; }

@@ -35,7 +35,7 @@ Status CleanupStaleDatabases(
   auto const expired = RandomDatabasePrefix(tp);
   std::regex re(RandomDatabasePrefixRegex());
   for (auto const& db : admin_client.ListDatabases(instance.FullName())) {
-    if (!db) return std::move(db).status();
+    if (!db) return db.status();
     auto id = spanner::MakeDatabase(db->name())->database_id();
     // Skip databases that do not look like a randomly created DB.
     if (!std::regex_match(id, re)) continue;

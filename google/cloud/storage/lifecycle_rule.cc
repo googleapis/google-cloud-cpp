@@ -123,7 +123,7 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
       result.created_before =
           std::max(*result.created_before, *rhs.created_before);
     } else {
-      result.created_before.emplace(std::move(*rhs.created_before));
+      result.created_before.emplace(*rhs.created_before);
     }
   }
   if (rhs.is_live.has_value()) {

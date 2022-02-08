@@ -220,7 +220,7 @@ TEST(Options, OverrideTracingOptions) {
       ",single_line_mode=F"
       ",use_short_repeated_primitives=n"
       ",truncate_string_field_longer_than=256");
-  auto opts = Options{}.set<GrpcTracingOptionsOption>(std::move(options));
+  auto opts = Options{}.set<GrpcTracingOptionsOption>(options);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   options = opts.get<GrpcTracingOptionsOption>();
   EXPECT_NE(options, TracingOptions{});

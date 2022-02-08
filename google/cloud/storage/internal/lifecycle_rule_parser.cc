@@ -45,7 +45,7 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
             StatusCode::kInvalidArgument,
             "Cannot parse createdBefore value (" + date + ") as a date");
       }
-      result.condition_.created_before.emplace(std::move(day));
+      result.condition_.created_before.emplace(day);
     }
     if (condition.count("isLive") != 0) {
       auto is_live = internal::ParseBoolField(condition, "isLive");
@@ -77,7 +77,7 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
             StatusCode::kInvalidArgument,
             "Cannot parse noncurrentTimeBefore value (" + date + ") as a date");
       }
-      result.condition_.noncurrent_time_before.emplace(std::move(day));
+      result.condition_.noncurrent_time_before.emplace(day);
     }
     if (condition.count("daysSinceCustomTime") != 0) {
       auto v = internal::ParseIntField(condition, "daysSinceCustomTime");
@@ -92,7 +92,7 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
             StatusCode::kInvalidArgument,
             "Cannot parse customTimeBefore value (" + date + ") as a date");
       }
-      result.condition_.custom_time_before.emplace(std::move(day));
+      result.condition_.custom_time_before.emplace(day);
     }
   }
   return result;

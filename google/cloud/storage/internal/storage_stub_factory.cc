@@ -49,7 +49,7 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   if (config.empty() || config == "default" || config == "none") {
     // Just configure for the regular path.
     args.SetInt("grpc.channel_id", channel_id);
-    return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
+    return auth.CreateChannel(options.get<EndpointOption>(), args);
   }
   std::set<absl::string_view> settings = absl::StrSplit(config, ',');
   auto const dp = settings.count("dp") != 0 || settings.count("alts") != 0;
@@ -72,9 +72,9 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
         grpc::CompositeChannelCredentials(
             grpc::experimental::AltsCredentials(alts_opts),
             grpc::GoogleComputeEngineCredentials()),
-        std::move(args));
+        args);
   }
-  return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
+  return auth.CreateChannel(options.get<EndpointOption>(), args);
 }
 
 }  // namespace

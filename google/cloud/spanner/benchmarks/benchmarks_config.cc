@@ -78,7 +78,7 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
       {"--instance=",
        [](Config& c, std::string v) { c.instance_id = std::move(v); }},
       {"--database=",
-       [](Config& c, std::string const& v) { c.database_id = std::move(v); }},
+       [](Config& c, std::string v) { c.database_id = std::move(v); }},
       {"--samples=",
        [](Config& c, std::string const& v) { c.samples = std::stoi(v); }},
       {"--iteration-duration=",

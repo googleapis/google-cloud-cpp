@@ -46,7 +46,7 @@ void CreateTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     *families["fam"].mutable_gc_rule() = std::move(gc);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.CreateTable(instance_name, table_id, std::move(t));
+        admin.CreateTable(instance_name, table_id, t);
     if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Table successfully created: " << schema->DebugString()
               << "\n";
@@ -94,8 +94,7 @@ void GetTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     r.set_name(table_name);
     r.set_view(google::bigtable::admin::v2::Table::FULL);
 
-    StatusOr<google::bigtable::admin::v2::Table> table =
-        admin.GetTable(std::move(r));
+    StatusOr<google::bigtable::admin::v2::Table> table = admin.GetTable(r);
     if (!table) throw std::runtime_error(table.status().message());
     std::cout << table->name() << " details=\n" << table->DebugString() << "\n";
   }
@@ -118,8 +117,7 @@ void CheckTableExists(
     r.set_name(table_name);
     r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
 
-    StatusOr<google::bigtable::admin::v2::Table> table =
-        admin.GetTable(std::move(r));
+    StatusOr<google::bigtable::admin::v2::Table> table = admin.GetTable(r);
     if (!table) {
       if (table.status().code() == google::cloud::StatusCode::kNotFound) {
         std::cout << "Table " << table_id << " does not exist\n";
@@ -158,7 +156,7 @@ void GetOrCreateTable(
       if (!table) throw std::runtime_error(table.status().message());
       // The schema returned by a `CreateTable()` request does not include all
       // the metadata for a table, we need to explicitly request the rest:
-      table = admin.GetTable(std::move(r));
+      table = admin.GetTable(r);
     }
     if (!table) throw std::runtime_error(table.status().message());
     std::cout << "Table metadata: " << table->DebugString() << "\n";
@@ -427,8 +425,7 @@ void GetFamilyMetadata(
     r.set_name(table_name);
     r.set_view(google::bigtable::admin::v2::Table::FULL);
 
-    StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(std::move(r));
+    StatusOr<google::bigtable::admin::v2::Table> schema = admin.GetTable(r);
 
     if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
@@ -461,8 +458,7 @@ void GetOrCreateFamily(
     r.set_name(table_name);
     r.set_view(google::bigtable::admin::v2::Table::FULL);
 
-    StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(std::move(r));
+    StatusOr<google::bigtable::admin::v2::Table> schema = admin.GetTable(r);
 
     if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
@@ -535,8 +531,7 @@ void CheckFamilyExists(
     r.set_name(table_name);
     r.set_view(google::bigtable::admin::v2::Table::FULL);
 
-    StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(std::move(r));
+    StatusOr<google::bigtable::admin::v2::Table> schema = admin.GetTable(r);
 
     if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
@@ -565,8 +560,7 @@ void ListColumnFamilies(
     r.set_name(table_name);
     r.set_view(google::bigtable::admin::v2::Table::FULL);
 
-    StatusOr<google::bigtable::admin::v2::Table> schema =
-        admin.GetTable(std::move(r));
+    StatusOr<google::bigtable::admin::v2::Table> schema = admin.GetTable(r);
 
     if (!schema) throw std::runtime_error(schema.status().message());
     for (auto const& kv : schema->column_families()) {
@@ -624,7 +618,7 @@ void DropAllRows(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     r.set_name(table_name);
     r.set_delete_all_data_from_table(true);
 
-    Status status = admin.DropRowRange(std::move(r));
+    Status status = admin.DropRowRange(r);
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows successfully deleted\n";
   }
@@ -650,7 +644,7 @@ void DropRowsByPrefix(
     r.set_name(table_name);
     r.set_row_key_prefix(prefix);
 
-    Status status = admin.DropRowRange(std::move(r));
+    Status status = admin.DropRowRange(r);
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows starting with " << prefix
               << " successfully deleted\n";
@@ -793,7 +787,7 @@ void RunAll(std::vector<std::string> const& argv) {
   *families["foo"].mutable_gc_rule() = std::move(gc2);
 
   auto table_1 = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                   table_id_1, std::move(t));
+                                   table_id_1, t);
   if (!table_1) throw std::runtime_error(table_1.status().message());
 
   std::cout << "\nRunning ListTables() example" << std::endl;

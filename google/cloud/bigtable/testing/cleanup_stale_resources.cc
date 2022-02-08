@@ -38,7 +38,7 @@ Status CleanupStaleTables(
   auto admin = bigtable_admin::BigtableTableAdminClient(std::move(c));
   auto tables = admin.ListTables(std::move(r));
   for (auto const& t : tables) {
-    if (!t) return std::move(t).status();
+    if (!t) return t.status();
     std::vector<std::string> const components = absl::StrSplit(t->name(), '/');
     if (components.empty()) continue;
     auto const id = components.back();
@@ -62,7 +62,7 @@ Status CleanupStaleBackups(
   auto admin = bigtable_admin::BigtableTableAdminClient(std::move(c));
   auto backups = admin.ListBackups(ClusterName(project_id, instance_id, "-"));
   for (auto const& b : backups) {
-    if (!b) return std::move(b).status();
+    if (!b) return b.status();
     std::vector<std::string> const components = absl::StrSplit(b->name(), '/');
     if (components.empty()) continue;
     auto const id = components.back();

@@ -38,7 +38,7 @@ TEST(SpannerStub, CreateDefaultStub) {
   auto auth =
       internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
   auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       std::move(auth), std::move(opts),
+                                       std::move(auth), opts,
                                        /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 }
@@ -53,7 +53,7 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
   auto auth =
       internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
   auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       std::move(auth), std::move(opts),
+                                       std::move(auth), opts,
                                        /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 

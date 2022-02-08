@@ -138,7 +138,7 @@ class promise<void> final : private internal::promise_base<void> {
       : promise_base(std::move(cancellation_callback)) {}
 
   /// Creates a promise *without* a shared state.
-  explicit promise(null_promise_t x) : promise_base(std::move(x)) {}
+  explicit promise(null_promise_t x) : promise_base(x) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
   promise(promise&&) = default;

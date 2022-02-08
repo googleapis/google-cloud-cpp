@@ -56,7 +56,7 @@ struct ReadSourceResult {
 
   ReadSourceResult() = default;
   ReadSourceResult(std::size_t b, HttpResponse r)
-      : bytes_received(std::move(b)), response(std::move(r)) {}
+      : bytes_received(b), response(std::move(r)) {}
 };
 
 /**

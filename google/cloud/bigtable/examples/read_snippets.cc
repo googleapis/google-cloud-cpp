@@ -368,7 +368,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto& families = *t.mutable_column_families();
   *families["stats_summary"].mutable_gc_rule() = std::move(gc);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                  table_id, std::move(t));
+                                  table_id, t);
   if (!schema) throw std::runtime_error(schema.status().message());
 
   cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);

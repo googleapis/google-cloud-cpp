@@ -71,7 +71,7 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   std::cout << "Creating a table:\n";
   std::string instance_name = cbt::InstanceName(project_id, instance_id);
   StatusOr<google::bigtable::admin::v2::Table> schema =
-      admin.CreateTable(instance_name, table_id, std::move(t));
+      admin.CreateTable(instance_name, table_id, t);
   std::cout << "DONE\n";
   //! [create table]
 
@@ -93,8 +93,7 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   google::bigtable::admin::v2::GetTableRequest get_req;
   get_req.set_name(schema->name());
   get_req.set_view(google::bigtable::admin::v2::Table::FULL);
-  StatusOr<google::bigtable::admin::v2::Table> table =
-      admin.GetTable(std::move(get_req));
+  StatusOr<google::bigtable::admin::v2::Table> table = admin.GetTable(get_req);
   if (!table) throw std::runtime_error(table.status().message());
   std::cout << "Table name : " << table->name() << "\n";
 
@@ -131,7 +130,7 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   google::bigtable::admin::v2::DropRowRangeRequest drop_req;
   drop_req.set_name(table->name());
   drop_req.set_delete_all_data_from_table(true);
-  google::cloud::Status status = admin.DropRowRange(std::move(drop_req));
+  google::cloud::Status status = admin.DropRowRange(drop_req);
   if (!status.ok()) throw std::runtime_error(status.message());
   std::cout << "DONE\n";
   //! [drop all rows]

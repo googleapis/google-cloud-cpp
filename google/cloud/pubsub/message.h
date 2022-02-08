@@ -229,8 +229,8 @@ class MessageBuilder {
     using value_type =
         google::protobuf::Map<std::string, std::string>::value_type;
     google::protobuf::Map<std::string, std::string> tmp;
-    for (auto& kv : v) {
-      tmp.insert(value_type(std::move(kv.first), std::move(kv.second)));
+    for (auto const& kv : v) {
+      tmp.insert(value_type(kv.first, kv.second));
     }
     proto_.mutable_attributes()->swap(tmp);
     return *this;

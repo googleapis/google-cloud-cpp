@@ -59,7 +59,6 @@ class RowReaderIterator {
 
   value_type const& operator*() const& { return row_; }
   value_type& operator*() & { return row_; }
-  value_type const&& operator*() const&& { return std::move(row_); }
   value_type&& operator*() && { return std::move(row_); }
 
  private:

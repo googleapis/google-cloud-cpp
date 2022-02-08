@@ -798,8 +798,7 @@ ConnectionImpl::PartitionQueryImpl(
   *request.mutable_params() = std::move(*sql_statement.mutable_params());
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
-  *request.mutable_partition_options() =
-      ToProto(std::move(params.partition_options));
+  *request.mutable_partition_options() = ToProto(params.partition_options);
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {

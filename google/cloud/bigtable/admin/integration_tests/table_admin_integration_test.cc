@@ -78,7 +78,7 @@ TEST_F(TableAdminIntegrationTest, TableListWithMultipleTables) {
     std::string table_id = RandomTableId();
     EXPECT_STATUS_OK(client_.CreateTable(instance_name, table_id, {}));
     expected_tables.emplace_back(
-        bigtable::TableName(project_id(), instance_id(), std::move(table_id)));
+        bigtable::TableName(project_id(), instance_id(), table_id));
   }
   auto tables = ListTables();
   ASSERT_STATUS_OK(tables);
@@ -124,8 +124,8 @@ TEST_F(TableAdminIntegrationTest, DropRowsByPrefix) {
   // Delete all the records for a row
   btadmin::DropRowRangeRequest r;
   r.set_name(table.table_name());
-  r.set_row_key_prefix(std::move(row_key1_prefix));
-  EXPECT_STATUS_OK(client_.DropRowRange(std::move(r)));
+  r.set_row_key_prefix(row_key1_prefix);
+  EXPECT_STATUS_OK(client_.DropRowRange(r));
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
   CheckEqualUnordered(expected_cells, actual_cells);
@@ -151,7 +151,7 @@ TEST_F(TableAdminIntegrationTest, DropAllRows) {
   btadmin::DropRowRangeRequest r;
   r.set_name(table.table_name());
   r.set_delete_all_data_from_table(true);
-  EXPECT_STATUS_OK(client_.DropRowRange(std::move(r)));
+  EXPECT_STATUS_OK(client_.DropRowRange(r));
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
   ASSERT_TRUE(actual_cells.empty());
@@ -180,12 +180,12 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTable) {
   auto& families = *t.mutable_column_families();
   *families["fam"].mutable_gc_rule() = std::move(gc_fam);
   *families["foo"].mutable_gc_rule() = std::move(gc_foo);
-  for (auto&& split : {"a1000", "a2000", "b3000", "m5000"}) {
-    r.add_initial_splits()->set_key(std::move(split));
+  for (auto const& split : {"a1000", "a2000", "b3000", "m5000"}) {
+    r.add_initial_splits()->set_key(split);
   }
 
   // Create table
-  ASSERT_STATUS_OK(client_.CreateTable(std::move(r)));
+  ASSERT_STATUS_OK(client_.CreateTable(r));
   bigtable::Table table(data_client_, table_id);
 
   // List tables
@@ -274,7 +274,7 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   // be production clusters (and therefore have at least 3 nodes each), and
   // they must be in different zones. Also, the display name cannot be longer
   // than 30 characters.
-  auto const display_name = ("IT " + id).substr(0, 30);
+  auto display_name = ("IT " + id).substr(0, 30);
 
   btadmin::Instance in;
   in.set_display_name(std::move(display_name));
@@ -293,7 +293,7 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
 
   // Create the new instance.
   auto instance = instance_admin_client
-                      .CreateInstance(project_name, id, std::move(in),
+                      .CreateInstance(project_name, id, in,
                                       {{id + "-c1", std::move(c1)},
                                        {id + "-c2", std::move(c2)}})
                       .get();
@@ -309,8 +309,7 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   *families[family].mutable_gc_rule() = std::move(gc);
 
   // Create the new table.
-  auto table_created =
-      client_.CreateTable(instance_name, random_table_id, std::move(t));
+  auto table_created = client_.CreateTable(instance_name, random_table_id, t);
   ASSERT_STATUS_OK(table_created);
 
   // We need to mutate the data in the table and then wait for those mutations
@@ -410,12 +409,12 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   auto& families = *t.mutable_column_families();
   *families["fam"].mutable_gc_rule() = std::move(gc_fam);
   *families["foo"].mutable_gc_rule() = std::move(gc_foo);
-  for (auto&& split : {"a1000", "a2000", "b3000", "m5000"}) {
-    r.add_initial_splits()->set_key(std::move(split));
+  for (auto const& split : {"a1000", "a2000", "b3000", "m5000"}) {
+    r.add_initial_splits()->set_key(split);
   }
 
   // Create table
-  ASSERT_STATUS_OK(client.CreateTable(std::move(r)));
+  ASSERT_STATUS_OK(client.CreateTable(r));
   bigtable::Table table(data_client_, table_id);
 
   // List tables

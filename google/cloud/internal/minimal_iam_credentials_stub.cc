@@ -91,8 +91,7 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
   AsyncAccessTokenGeneratorLogging(
       std::shared_ptr<MinimalIamCredentialsStub> child,
       TracingOptions tracing_options)
-      : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)) {}
+      : child_(std::move(child)), tracing_options_(tracing_options) {}
   ~AsyncAccessTokenGeneratorLogging() override = default;
 
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(

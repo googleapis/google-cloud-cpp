@@ -52,7 +52,7 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
   using BufferUpdater = absl::FunctionRef<absl::string_view(absl::string_view)>;
   struct Visitor {
     Visitor(GrpcObjectReadSource& source, BufferUpdater update)
-        : self(source), update_buf(std::move(update)) {
+        : self(source), update_buf(update) {
       result.response.status_code = HttpStatusCode::kContinue;
     }
 

@@ -44,7 +44,7 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
       std::unique_ptr<StreamingReadRpc<ResponseType>> reader,
       TracingOptions tracing_options, std::string request_id)
       : reader_(std::move(reader)),
-        tracing_options_(std::move(tracing_options)),
+        tracing_options_(tracing_options),
         request_id_(std::move(request_id)) {}
   ~StreamingReadRpcLogging() override = default;
 
@@ -73,7 +73,7 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
   class ResultVisitor {
    public:
     explicit ResultVisitor(TracingOptions tracing_options)
-        : tracing_options_(std::move(tracing_options)) {}
+        : tracing_options_(tracing_options) {}
 
     std::string operator()(Status const& status) {
       std::stringstream output;

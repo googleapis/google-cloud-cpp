@@ -98,7 +98,7 @@ void AsyncRowSampler::OnFinish(Status const& status) {
     return;
   }
   if (!rpc_retry_policy_->OnFailure(status)) {
-    promise_.set_value(std::move(status));
+    promise_.set_value(status);
     return;
   }
 
@@ -106,7 +106,7 @@ void AsyncRowSampler::OnFinish(Status const& status) {
 
   samples_.clear();
   auto self = this->shared_from_this();
-  auto delay = rpc_backoff_policy_->OnCompletion(std::move(status));
+  auto delay = rpc_backoff_policy_->OnCompletion(status);
   cq_.MakeRelativeTimer(delay).then([self](TimerFuture result) {
     if (result.get()) {
       self->StartIteration();

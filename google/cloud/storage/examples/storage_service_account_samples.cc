@@ -180,7 +180,7 @@ void UpdateHmacKey(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& access_id,
      std::string const& state) {
     StatusOr<gcs::HmacKeyMetadata> updated = client.UpdateHmacKey(
-        access_id, gcs::HmacKeyMetadata().set_state(std::move(state)));
+        access_id, gcs::HmacKeyMetadata().set_state(state));
     if (!updated) throw std::runtime_error(updated.status().message());
 
     std::cout << "The updated HMAC key metadata is: " << *updated << "\n";

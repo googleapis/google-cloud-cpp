@@ -238,8 +238,8 @@ class ParallelUploadStateImpl
 struct ComposeManyApplyHelper {
   template <typename... Options>
   StatusOr<ObjectMetadata> operator()(Options&&... options) const {
-    return ComposeMany(client, bucket_name, std::move(source_objects), prefix,
-                       std::move(destination_object_name), true,
+    return ComposeMany(client, bucket_name, source_objects, prefix,
+                       destination_object_name, true,
                        std::forward<Options>(options)...);
   }
 
@@ -664,8 +664,7 @@ NonResumableParallelUploadState::Create(Client client,
       [client, bucket_name, delete_options](std::string const& object_name,
                                             std::int64_t generation) mutable {
         return google::cloud::internal::apply(
-            DeleteApplyHelper{client, std::move(bucket_name), object_name,
-                              generation},
+            DeleteApplyHelper{client, bucket_name, object_name, generation},
             std::move(delete_options));
       });
 
@@ -676,9 +675,8 @@ NonResumableParallelUploadState::Create(Client client,
   auto composer = [client, bucket_name, object_name, compose_options,
                    prefix](std::vector<ComposeSourceObject> sources) mutable {
     return google::cloud::internal::apply(
-        ComposeManyApplyHelper{client, std::move(bucket_name),
-                               std::move(sources), prefix + ".compose_many",
-                               std::move(object_name)},
+        ComposeManyApplyHelper{client, bucket_name, std::move(sources),
+                               prefix + ".compose_many", object_name},
         std::move(compose_options));
   };
 
@@ -725,8 +723,7 @@ std::shared_ptr<ScopedDeleter> ResumableParallelUploadState::CreateDeleter(
       [client, bucket_name, delete_options](std::string const& object_name,
                                             std::int64_t generation) mutable {
         return google::cloud::internal::apply(
-            DeleteApplyHelper{client, std::move(bucket_name), object_name,
-                              generation},
+            DeleteApplyHelper{client, bucket_name, object_name, generation},
             std::move(delete_options));
       });
 }
@@ -763,8 +760,7 @@ Composer ResumableParallelUploadState::CreateComposer(
     // existed upon start of parallel upload. For simplicity, we assume that
     // it's a result of a previously interrupted ComposeMany invocation.
     return google::cloud::internal::apply(
-        GetObjectMetadataApplyHelper{client, std::move(bucket_name),
-                                     std::move(object_name)},
+        GetObjectMetadataApplyHelper{client, bucket_name, object_name},
         std::move(get_metadata_options));
   };
   return Composer(std::move(composer));

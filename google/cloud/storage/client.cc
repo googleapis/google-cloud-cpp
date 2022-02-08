@@ -485,7 +485,7 @@ ScopedDeleter::~ScopedDeleter() {
 
 void ScopedDeleter::Add(ObjectMetadata const& object) {
   auto generation = object.generation();
-  Add(std::move(object).name(), generation);
+  Add(object.name(), generation);
 }
 
 void ScopedDeleter::Add(std::string object_name, std::int64_t generation) {

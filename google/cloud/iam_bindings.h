@@ -46,10 +46,9 @@ class IamBindings {
   IamBindings() = default;
 
   GOOGLE_CLOUD_CPP_IAM_DEPRECATED explicit IamBindings(
-      // NOLINTNEXTLINE(performance-unnecessary-value-param)
-      std::vector<IamBinding> bindings) {
-    for (auto& it : bindings) {
-      bindings_.insert({std::move(it.role()), std::move(it.members())});
+      std::vector<IamBinding> const& bindings) {
+    for (auto const& it : bindings) {
+      bindings_.insert({it.role(), it.members()});
     }
   }
 

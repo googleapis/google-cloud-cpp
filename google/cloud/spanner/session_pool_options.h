@@ -119,7 +119,7 @@ class SessionPoolOptions {
 
   /// Set whether to block or fail on pool exhaustion.
   SessionPoolOptions& set_action_on_exhaustion(ActionOnExhaustion action) {
-    opts_.set<SessionPoolActionOnExhaustionOption>(std::move(action));
+    opts_.set<SessionPoolActionOnExhaustionOption>(action);
     return *this;
   }
 
@@ -138,7 +138,7 @@ class SessionPoolOptions {
    * to be made to refresh the sessions) should suffice.
    */
   SessionPoolOptions& set_keep_alive_interval(std::chrono::seconds interval) {
-    opts_.set<SessionPoolKeepAliveIntervalOption>(std::move(interval));
+    opts_.set<SessionPoolKeepAliveIntervalOption>(interval);
     return *this;
   }
 

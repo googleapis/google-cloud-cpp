@@ -59,7 +59,7 @@ struct RowKeySampleVectors {
     offset_bytes.reserve(samples.size());
     for (auto& sample : samples) {
       row_keys.emplace_back(std::move(sample.row_key));
-      offset_bytes.emplace_back(std::move(sample.offset_bytes));
+      offset_bytes.emplace_back(sample.offset_bytes);
     }
   }
 

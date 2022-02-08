@@ -50,7 +50,7 @@ future<StatusOr<std::string>> FlowControlledPublisherConnection::Publish(
 }
 
 void FlowControlledPublisherConnection::Flush(FlushParams p) {
-  return child_->Flush(std::move(p));
+  return child_->Flush(p);
 }
 
 void FlowControlledPublisherConnection::ResumePublish(ResumePublishParams p) {

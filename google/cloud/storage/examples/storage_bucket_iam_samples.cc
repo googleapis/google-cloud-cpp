@@ -221,7 +221,7 @@ void TestBucketIamPermissions(google::cloud::storage::Client client,
     std::cout << "\n";
   }
   //! [test bucket iam permissions]
-  (std::move(client), std::move(bucket_name), std::move(permissions));
+  (std::move(client), bucket_name, permissions);
 }
 
 void NativeSetBucketPublicIam(google::cloud::storage::Client client,
@@ -276,7 +276,7 @@ void RunAll(std::vector<std::string> const& argv) {
     gcs::UniformBucketLevelAccess ubla;
     ubla.enabled = true;
     gcs::BucketIamConfiguration result;
-    result.uniform_bucket_level_access = std::move(ubla);
+    result.uniform_bucket_level_access = ubla;
     return result;
   };
   auto bucket_metadata =
@@ -343,7 +343,7 @@ int main(int argc, char* argv[]) {
                        std::vector<std::string> arg_names,
                        examples::ClientCommand const& cmd) {
     arg_names.insert(arg_names.begin(), "<bucket-name>");
-    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
+    return examples::CreateCommandEntry(name, arg_names, cmd);
   };
   examples::Example example({
       make_entry("native-get-bucket-iam-policy", {}, NativeGetBucketIamPolicy),

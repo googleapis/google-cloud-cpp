@@ -144,7 +144,7 @@ RetryResumableUploadSession::UploadGenericChunk(char const* caller,
       // switch to calling ResetSession().
       last_status = std::move(result).status();
       if (!retry_policy->OnFailure(last_status)) {
-        return ReturnError(std::move(last_status), *retry_policy, __func__);
+        return ReturnError(last_status, *retry_policy, __func__);
       }
 
       auto delay = backoff_policy->OnCompletion();
@@ -217,7 +217,7 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
     }
     last_status = std::move(result).status();
     if (!retry_policy->OnFailure(last_status)) {
-      return ReturnError(std::move(last_status), *retry_policy, __func__);
+      return ReturnError(last_status, *retry_policy, __func__);
     }
     auto delay = backoff_policy->OnCompletion();
     std::this_thread::sleep_for(delay);

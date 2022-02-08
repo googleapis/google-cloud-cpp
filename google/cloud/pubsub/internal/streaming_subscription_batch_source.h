@@ -81,7 +81,7 @@ class StreamingSubscriptionBatchSource
         max_deadline_time_(opts.get<pubsub::MaxDeadlineTimeOption>()),
         retry_policy_(opts.get<pubsub::RetryPolicyOption>()->clone()),
         backoff_policy_(opts.get<pubsub::BackoffPolicyOption>()->clone()),
-        ack_batching_config_(std::move(ack_batching_config)) {}
+        ack_batching_config_(ack_batching_config) {}
 
   ~StreamingSubscriptionBatchSource() override = default;
 

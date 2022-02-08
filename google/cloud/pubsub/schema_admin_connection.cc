@@ -92,7 +92,7 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
               request, function_name);
         };
     return internal::MakePaginationRange<pubsub::ListSchemasRange>(
-        std::move(request), list_functor,
+        request, list_functor,
         [](google::pubsub::v1::ListSchemasResponse response) {
           std::vector<google::pubsub::v1::Schema> items;
           items.reserve(response.schemas_size());

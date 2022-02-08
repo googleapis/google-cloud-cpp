@@ -30,7 +30,7 @@ class LoggingResultSetReader : public PartialResultSetReader {
  public:
   LoggingResultSetReader(std::unique_ptr<PartialResultSetReader> impl,
                          TracingOptions tracing_options)
-      : impl_(std::move(impl)), tracing_options_(std::move(tracing_options)) {}
+      : impl_(std::move(impl)), tracing_options_(tracing_options) {}
   ~LoggingResultSetReader() override = default;
 
   void TryCancel() override;

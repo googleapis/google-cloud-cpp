@@ -32,8 +32,7 @@ class SchemaLogging : public SchemaStub {
  public:
   SchemaLogging(std::shared_ptr<SchemaStub> child,
                 TracingOptions tracing_options)
-      : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)) {}
+      : child_(std::move(child)), tracing_options_(tracing_options) {}
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,

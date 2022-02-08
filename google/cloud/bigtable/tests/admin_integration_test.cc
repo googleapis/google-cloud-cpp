@@ -65,7 +65,7 @@ TEST_F(AdminIntegrationTest, TableListWithMultipleTables) {
     EXPECT_STATUS_OK(table_admin_->CreateTable(table_id, {}));
     ids.emplace_back(table_id);
     expected_tables.emplace_back(
-        bigtable::TableName(project_id(), instance_id(), std::move(table_id)));
+        bigtable::TableName(project_id(), instance_id(), table_id));
   }
   auto tables = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
   ASSERT_STATUS_OK(tables);

@@ -242,7 +242,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
     // assert(!whole_op_finished_);
     // assert(!continue_reading_);
     // assert(status_.ok());
-    status_ = ConsumeResponse(std::move(response));
+    status_ = ConsumeResponse(response);
     // We've processed the response.
     //
     // If there were errors (e.g. malformed response from the server), we should

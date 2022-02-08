@@ -3366,7 +3366,7 @@ struct DeleteApplyHelper {
 struct InsertObjectApplyHelper {
   template <typename... Options>
   StatusOr<ObjectMetadata> operator()(Options... options) const {
-    return client.InsertObject(bucket_name, object_name, std::move(contents),
+    return client.InsertObject(bucket_name, object_name, contents,
                                std::move(options)...);
   }
 
@@ -3453,9 +3453,8 @@ namespace internal {
 struct ComposeApplyHelper {
   template <typename... Options>
   StatusOr<ObjectMetadata> operator()(Options... options) const {
-    return client.ComposeObject(
-        std::move(bucket_name), std::move(source_objects),
-        std::move(destination_object_name), std::move(options)...);
+    return client.ComposeObject(bucket_name, source_objects,
+                                destination_object_name, std::move(options)...);
   }
 
   Client& client;

@@ -259,7 +259,7 @@ int main(int argc, char* argv[]) {
         arg_names.begin(),
         {"<source-bucket-name>", "<source-object-name>",
          "<destination-bucket-name>", "<destination-object-name>"});
-    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
+    return examples::CreateCommandEntry(name, arg_names, cmd);
   };
   examples::Example example({
       make_entry("rewrite-object", {}, RewriteObject),

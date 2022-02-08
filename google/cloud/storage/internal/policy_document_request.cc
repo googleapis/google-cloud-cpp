@@ -166,7 +166,7 @@ void PolicyDocumentV4Request::SetOption(AddExtensionFieldOption const& o) {
     return;
   }
   extension_fields_.emplace_back(
-      std::make_pair(std::move(o.value().first), std::move(o.value().second)));
+      std::make_pair(o.value().first, o.value().second));
 }
 
 void PolicyDocumentV4Request::SetOption(PredefinedAcl const& o) {

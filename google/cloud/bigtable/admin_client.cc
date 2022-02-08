@@ -411,8 +411,8 @@ std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
       std::move(project), std::move(options));
   if (tracing_enabled) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    client = std::make_shared<internal::LoggingAdminClient>(
-        std::move(client), std::move(tracing_options));
+    client = std::make_shared<internal::LoggingAdminClient>(std::move(client),
+                                                            tracing_options);
   }
   return client;
 }

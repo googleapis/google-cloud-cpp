@@ -77,7 +77,7 @@ TEST(FutureTestBool, SetValueRefRef) {
   promise<bool> p;
   auto f = p.get_future();
   auto v = true;
-  p.set_value(std::move(v));
+  p.set_value(v);
   EXPECT_TRUE(f.get());
 }
 

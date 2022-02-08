@@ -305,7 +305,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           argv.size() != arg_names.size()) {
         std::string usage = name;
         for (auto const& a : arg_names) usage += " <" + a + ">";
-        throw google::cloud::testing_util::Usage{std::move(usage)};
+        throw google::cloud::testing_util::Usage{usage};
       }
       auto client = google::cloud::iam::IAMCredentialsClient(
           google::cloud::iam::MakeIAMCredentialsConnection(

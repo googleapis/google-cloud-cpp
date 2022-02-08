@@ -121,8 +121,8 @@ btadmin::CreateInstanceRequest IntegrationTestConfig(
     btadmin::Instance::Type type = btadmin::Instance::DEVELOPMENT,
     int32_t serve_nodes = 0) {
   // The description cannot exceed 30 characters
-  auto const display_name = ("IT " + instance_id).substr(0, 30);
-  auto const project_name = Project(project).FullName();
+  auto display_name = ("IT " + instance_id).substr(0, 30);
+  auto project_name = Project(project).FullName();
 
   btadmin::Cluster c;
   c.set_location(project_name + "/locations/" + location);
@@ -261,7 +261,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   req_1.set_ignore_warnings(true);
   req_1.set_name(name_1);
 
-  ASSERT_STATUS_OK(client_.DeleteAppProfile(std::move(req_1)));
+  ASSERT_STATUS_OK(client_.DeleteAppProfile(req_1));
   profiles = profile_names(client_.ListAppProfiles(instance_name));
   ASSERT_STATUS_OK(profiles);
   EXPECT_THAT(*profiles, Not(Contains(name_1)));
@@ -271,13 +271,13 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   req_2.set_ignore_warnings(true);
   req_2.set_name(name_2);
 
-  ASSERT_STATUS_OK(client_.DeleteAppProfile(std::move(req_2)));
+  ASSERT_STATUS_OK(client_.DeleteAppProfile(req_2));
   profiles = profile_names(client_.ListAppProfiles(instance_name));
   ASSERT_STATUS_OK(profiles);
   EXPECT_THAT(*profiles, Not(Contains(name_1)));
   EXPECT_THAT(*profiles, Not(Contains(name_2)));
 
-  ASSERT_STATUS_OK(client_.DeleteInstance(std::move(instance_name)));
+  ASSERT_STATUS_OK(client_.DeleteInstance(instance_name));
 }
 
 /// @test Verify that Instance CRUD operations work as expected.

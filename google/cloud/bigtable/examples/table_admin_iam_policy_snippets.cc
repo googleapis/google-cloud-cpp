@@ -113,8 +113,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
     std::cout << "]\n";
   }
   //! [test iam permissions]
-  (std::move(admin), std::move(project_id), std::move(instance_id),
-   std::move(table_id), std::move(permissions));
+  (std::move(admin), project_id, instance_id, table_id, permissions);
 }
 
 void RunAll(std::vector<std::string> const& argv) {
@@ -163,7 +162,7 @@ void RunAll(std::vector<std::string> const& argv) {
   *families["foo"].mutable_gc_rule() = std::move(gc2);
 
   auto table = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                 table_id, std::move(t));
+                                 table_id, t);
   if (!table) throw std::runtime_error(table.status().message());
 
   std::cout << "\nRunning GetIamPolicy() example" << std::endl;

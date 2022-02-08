@@ -33,8 +33,7 @@ class InstanceAdminLogging : public InstanceAdminStub {
  public:
   InstanceAdminLogging(std::shared_ptr<InstanceAdminStub> child,
                        TracingOptions tracing_options)
-      : child_(std::move(child)),
-        tracing_options_(std::move(tracing_options)) {}
+      : child_(std::move(child)), tracing_options_(tracing_options) {}
 
   ~InstanceAdminLogging() override = default;
 

@@ -142,8 +142,7 @@ class promise final : private internal::promise_base<T> {
       : internal::promise_base<T>(std::move(cancellation_callback)) {}
 
   /// Creates a promise *without* a shared state.
-  explicit promise(null_promise_t x)
-      : internal::promise_base<T>(std::move(x)) {}
+  explicit promise(null_promise_t x) : internal::promise_base<T>(x) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)

@@ -196,10 +196,10 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   for (auto const& kv : read->response.headers) {
     headers_.emplace(kv.first, kv.second);
   }
-  if (!generation_) generation_ = std::move(read->generation);
-  if (!metageneration_) metageneration_ = std::move(read->metageneration);
+  if (!generation_) generation_ = read->generation;
+  if (!metageneration_) metageneration_ = read->metageneration;
   if (!storage_class_) storage_class_ = std::move(read->storage_class);
-  if (!size_) size_ = std::move(read->size);
+  if (!size_) size_ = read->size;
   return run_validator_if_closed(Status());
 }
 

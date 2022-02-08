@@ -90,8 +90,7 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
   auto agents = options.get<UserAgentProductsOption>();
   agents.push_back(user_agent_prefix_);
   user_agent_prefix_ = absl::StrJoin(agents, " ");
-  http_version_ =
-      std::move(options.get<storage_experimental::HttpVersionOption>());
+  http_version_ = options.get<storage_experimental::HttpVersionOption>();
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
   return *this;

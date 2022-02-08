@@ -260,7 +260,7 @@ TEST(GrpcClientContext, Configure) {
 
   grpc::ClientContext context;
   EXPECT_EQ(GRPC_COMPRESS_NONE, context.compression_algorithm());
-  internal::ConfigureContext(context, std::move(opts));
+  internal::ConfigureContext(context, opts);
   EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
 }
 
@@ -276,7 +276,7 @@ TEST(GrpcClientContext, ConfigurePoll) {
   EXPECT_EQ(GRPC_COMPRESS_NONE, context.compression_algorithm());
   internal::ConfigureContext(context, opts);
   EXPECT_EQ(GRPC_COMPRESS_NONE, context.compression_algorithm());
-  internal::ConfigurePollContext(context, std::move(opts));
+  internal::ConfigurePollContext(context, opts);
   EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
 }
 

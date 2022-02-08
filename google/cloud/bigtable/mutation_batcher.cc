@@ -182,7 +182,7 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
           // copying the `failed` vector.
           struct Functor {
             void operator()(CompletionQueue& cq) {
-              self->OnBulkApplyDone(cq, std::move(*batch), std::move(failed));
+              self->OnBulkApplyDone(cq, std::move(*batch), failed);
             }
 
             MutationBatcher* self;

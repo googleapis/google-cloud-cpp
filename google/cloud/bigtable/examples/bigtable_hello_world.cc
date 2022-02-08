@@ -62,7 +62,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
   // Create a table.
   std::string instance_name = cbt::InstanceName(project_id, instance_id);
   StatusOr<google::bigtable::admin::v2::Table> schema =
-      table_admin.CreateTable(instance_name, table_id, std::move(t));
+      table_admin.CreateTable(instance_name, table_id, t);
   //! [create table]
 
   // Create an object to access the Cloud Bigtable Data API.

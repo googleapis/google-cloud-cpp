@@ -212,8 +212,7 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id,
      std::string const& topic_id) {
-    auto status = client.DeleteTopic(
-        pubsub::Topic(std::move(project_id), std::move(topic_id)));
+    auto status = client.DeleteTopic(pubsub::Topic(project_id, topic_id));
     // Note that kNotFound is a possible result when the library retries.
     if (status.code() == google::cloud::StatusCode::kNotFound) {
       std::cout << "The topic was not found\n";
@@ -287,8 +286,8 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
     auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, std::move(topic_id)),
-        pubsub::Subscription(project_id, std::move(subscription_id)));
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
       return;
@@ -336,8 +335,8 @@ void CreatePushSubscription(
      std::string const& topic_id, std::string const& subscription_id,
      std::string const& endpoint) {
     auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, std::move(topic_id)),
-        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::SubscriptionBuilder{}.set_push_config(
             pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint)));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
@@ -361,8 +360,8 @@ void CreateOrderingSubscription(
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& topic_id, std::string const& subscription_id) {
     auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, std::move(topic_id)),
-        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::SubscriptionBuilder{}.enable_message_ordering(true));
     if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The subscription already exists\n";
@@ -388,8 +387,8 @@ void CreateDeadLetterSubscription(
      std::string const& dead_letter_topic_id,
      int dead_letter_delivery_attempts) {
     auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, std::move(topic_id)),
-        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::SubscriptionBuilder{}.set_dead_letter_policy(
             pubsub::SubscriptionBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, dead_letter_topic_id),
@@ -426,7 +425,7 @@ void UpdateDeadLetterSubscription(
      std::string const& dead_letter_topic_id,
      int dead_letter_delivery_attempts) {
     auto sub = client.UpdateSubscription(
-        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::SubscriptionBuilder{}.set_dead_letter_policy(
             pubsub::SubscriptionBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, dead_letter_topic_id),
@@ -479,7 +478,7 @@ void RemoveDeadLetterPolicy(
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto sub = client.UpdateSubscription(
-        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::SubscriptionBuilder{}.clear_dead_letter_policy());
     if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
 
@@ -497,7 +496,7 @@ void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto sub = client.GetSubscription(
-        pubsub::Subscription(project_id, std::move(subscription_id)));
+        pubsub::Subscription(project_id, subscription_id));
     if (!sub) throw std::runtime_error(sub.status().message());
 
     std::cout << "The subscription exists and its metadata is: "
@@ -514,7 +513,7 @@ void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
     auto s = client.UpdateSubscription(
-        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::SubscriptionBuilder{}.set_ack_deadline(
             std::chrono::seconds(60)));
     if (!s) throw std::runtime_error(s.status().message());
@@ -552,8 +551,8 @@ void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id) {
-    auto status = client.DeleteSubscription(pubsub::Subscription(
-        std::move(project_id), std::move(subscription_id)));
+    auto status = client.DeleteSubscription(
+        pubsub::Subscription(project_id, subscription_id));
     // Note that kNotFound is a possible result when the library retries.
     if (status.code() == google::cloud::StatusCode::kNotFound) {
       std::cout << "The subscription was not found\n";
@@ -574,7 +573,7 @@ void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id, std::string const& endpoint) {
     auto status = client.ModifyPushSubscription(
-        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::Subscription(project_id, subscription_id),
         pubsub::PushConfigBuilder{}.set_push_endpoint(endpoint));
     if (!status.ok()) throw std::runtime_error(status.message());
 
@@ -591,9 +590,9 @@ void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& subscription_id, std::string const& snapshot_id) {
-    auto snapshot = client.CreateSnapshot(
-        pubsub::Subscription(project_id, subscription_id),
-        pubsub::Snapshot(project_id, std::move(snapshot_id)));
+    auto snapshot =
+        client.CreateSnapshot(pubsub::Subscription(project_id, subscription_id),
+                              pubsub::Snapshot(project_id, snapshot_id));
     if (snapshot.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The snapshot already exists\n";
       return;
@@ -613,8 +612,8 @@ void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& snapshot_id) {
-    auto response = client.GetSnapshot(
-        pubsub::Snapshot(std::move(project_id), std::move(snapshot_id)));
+    auto response =
+        client.GetSnapshot(pubsub::Snapshot(project_id, snapshot_id));
     if (!response.ok()) throw std::runtime_error(response.status().message());
 
     std::cout << "The snapshot details are: " << response->DebugString()
@@ -663,8 +662,8 @@ void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string const& snapshot_id) {
-    auto status = client.DeleteSnapshot(
-        pubsub::Snapshot(std::move(project_id), std::move(snapshot_id)));
+    auto status =
+        client.DeleteSnapshot(pubsub::Snapshot(project_id, snapshot_id));
     // Note that kNotFound is a possible result when the library retries.
     if (status.code() == google::cloud::StatusCode::kNotFound) {
       std::cout << "The snapshot was not found\n";
@@ -2039,7 +2038,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteSubscription() sample [1]" << std::endl;
   // Move push_subscription_id to prevent accidentally using it below.
   DeleteSubscription(subscription_admin_client,
-                     {project_id, std::move(push_subscription_id)});
+                     {project_id, push_subscription_id});
 
   std::cout << "\nRunning CreateTopic() sample [4]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, dead_letter_topic_id});
@@ -2211,7 +2210,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client,
-                     {project_id, std::move(dead_letter_subscription_id)});
+                     {project_id, dead_letter_subscription_id});
 
   std::cout << "\nRunning DeleteSubscription() sample [3] " << std::endl;
   DeleteSubscription(subscription_admin_client,

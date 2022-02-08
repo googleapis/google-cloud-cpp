@@ -204,7 +204,7 @@ LoggingAsyncPullStream::LoggingAsyncPullStream(
     std::shared_ptr<SubscriberStub::AsyncPullStream> child,
     TracingOptions tracing_options, std::string request_id)
     : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)),
+      tracing_options_(tracing_options),
       request_id_(std::move(request_id)) {}
 
 void LoggingAsyncPullStream::Cancel() {
@@ -254,12 +254,11 @@ future<bool> LoggingAsyncPullStream::Write(
                  << ", is_corked=" << options.is_corked()
                  << ", buffer_hint=" << options.get_buffer_hint()
                  << ", no_compression=" << options.get_no_compression() << "}";
-  return child_->Write(request, std::move(options))
-      .then([prefix](future<bool> f) {
-        auto r = f.get();
-        GCP_LOG(DEBUG) << prefix << " >> response=" << r;
-        return r;
-      });
+  return child_->Write(request, options).then([prefix](future<bool> f) {
+    auto r = f.get();
+    GCP_LOG(DEBUG) << prefix << " >> response=" << r;
+    return r;
+  });
 }
 
 future<bool> LoggingAsyncPullStream::WritesDone() {

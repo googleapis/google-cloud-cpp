@@ -801,7 +801,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     return retention_policy_;
   }
   BucketMetadata& set_retention_policy(BucketRetentionPolicy v) {
-    retention_policy_ = std::move(v);
+    retention_policy_ = v;
     return *this;
   }
 
@@ -862,7 +862,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     return *this;
   }
   BucketMetadata& set_versioning(absl::optional<BucketVersioning> v) {
-    versioning_ = std::move(v);
+    versioning_ = v;
     return *this;
   }
   //@}

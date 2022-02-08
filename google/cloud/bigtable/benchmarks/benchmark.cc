@@ -115,7 +115,7 @@ std::string Benchmark::CreateTable() {
   auto& families = *r.mutable_table()->mutable_column_families();
   *families[kColumnFamily].mutable_gc_rule() = std::move(gc);
 
-  (void)admin.CreateTable(std::move(r));
+  (void)admin.CreateTable(r);
   return options_.table_id;
 }
 

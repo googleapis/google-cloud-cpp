@@ -48,7 +48,7 @@ StatusOr<Instance> MakeInstance(std::string const& full_name) {
     return Status(StatusCode::kInvalidArgument,
                   "Improperly formatted Instance: " + full_name);
   }
-  return Instance(Project(std::move(matches[1])), std::move(matches[2]));
+  return Instance(Project(matches[1]), matches[2]);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

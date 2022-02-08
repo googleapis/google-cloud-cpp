@@ -132,7 +132,7 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
   auto loc = std::string{location};
   return AsyncPollingLoop(std::move(cq), std::move(operation), std::move(poll),
                           std::move(cancel), std::move(polling_policy),
-                          std::move(location))
+                          location)
       .then([value_extractor, loc](future<StatusOr<Operation>> g) {
         return value_extractor(g.get(), loc);
       });

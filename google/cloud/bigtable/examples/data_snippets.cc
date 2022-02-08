@@ -358,7 +358,7 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
     std::cout << "Columns successfully deleted from row\n";
   }
   // [END bigtable_mutate_delete_columns]
-  (std::move(table), row_key, std::move(columns));
+  (std::move(table), row_key, columns);
 }
 
 void MutateDeleteRows(google::cloud::bigtable::Table table,
@@ -383,7 +383,7 @@ void MutateDeleteRows(google::cloud::bigtable::Table table,
     }
   }
   // [END bigtable_mutate_delete_rows]
-  (std::move(table), std::move(argv));
+  (std::move(table), argv);
 }
 
 void MutateDeleteRowsCommand(std::vector<std::string> const& argv) {
@@ -402,7 +402,7 @@ void MutateDeleteRowsCommand(std::vector<std::string> const& argv) {
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::MakeDataClient(project_id, instance_id),
       table_id);
-  MutateDeleteRows(table, std::move(rows));
+  MutateDeleteRows(table, rows);
 }
 
 void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
@@ -449,7 +449,7 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
     std::cout << "Row successfully updated\n";
   }
   // [END bigtable_insert_update_rows]
-  (std::move(table), row_key, std::move(mutations));
+  (std::move(table), row_key, mutations);
 }
 
 void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
@@ -470,7 +470,7 @@ void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::MakeDataClient(project_id, instance_id),
       table_id);
-  MutateInsertUpdateRows(table, std::move(rows));
+  MutateInsertUpdateRows(table, rows);
 }
 
 void RenameColumn(google::cloud::bigtable::Table table,
@@ -493,9 +493,8 @@ void RenameColumn(google::cloud::bigtable::Table table,
       auto timestamp_in_milliseconds =
           std::chrono::duration_cast<std::chrono::milliseconds>(
               cell.timestamp());
-      mutation.emplace_back(cbt::SetCell(family, new_name,
-                                         timestamp_in_milliseconds,
-                                         std::move(cell).value()));
+      mutation.emplace_back(cbt::SetCell(
+          family, new_name, timestamp_in_milliseconds, cell.value()));
     }
     mutation.emplace_back(cbt::DeleteFromColumn("fam", old_name));
 
@@ -720,7 +719,7 @@ void RunMutateExamples(
   auto& families = *t.mutable_column_families();
   *families["fam"].mutable_gc_rule() = std::move(gc);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                  table_id, std::move(t));
+                                  table_id, t);
   if (!schema) throw std::runtime_error(schema.status().message());
 
   cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
@@ -750,7 +749,7 @@ void RunWriteExamples(
   auto& families = *t.mutable_column_families();
   *families["stats_summary"].mutable_gc_rule() = std::move(gc);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                  table_id, std::move(t));
+                                  table_id, t);
   if (!schema) throw std::runtime_error(schema.status().message());
 
   cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
@@ -783,7 +782,7 @@ void RunDataExamples(
   auto& families = *t.mutable_column_families();
   *families["fam"].mutable_gc_rule() = std::move(gc);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
-                                  table_id, std::move(t));
+                                  table_id, t);
   if (!schema) throw std::runtime_error(schema.status().message());
 
   cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,

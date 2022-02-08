@@ -100,7 +100,7 @@ TEST(StatusOrTest, ValueConstructor) {
 }
 
 TEST(StatusOrTest, ValueConstAccessors) {
-  StatusOr<int> const actual(42);
+  StatusOr<int> actual(42);
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(42, actual.value());
   EXPECT_EQ(42, std::move(actual).value());
@@ -147,7 +147,7 @@ TEST(StatusOrTest, ValueAccessorConstThrows) {
 }
 
 TEST(StatusOrTest, StatusConstAccessors) {
-  StatusOr<int> const actual(Status(StatusCode::kInternal, "BAD"));
+  StatusOr<int> actual(Status(StatusCode::kInternal, "BAD"));
   EXPECT_EQ(StatusCode::kInternal, actual.status().code());
   EXPECT_EQ(StatusCode::kInternal, std::move(actual).status().code());
 }
@@ -163,7 +163,7 @@ TEST(StatusOrTest, ValueConstDeference) {
   StatusOr<std::string> const actual("42");
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ("42", *actual);
-  EXPECT_EQ("42", std::move(actual).value());
+  EXPECT_EQ("42", actual.value());
 }
 
 TEST(StatusOrTest, ValueArrow) {

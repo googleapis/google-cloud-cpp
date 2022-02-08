@@ -174,19 +174,19 @@ class LifecycleRule {
    */
   static LifecycleRuleCondition MaxAge(std::int32_t days) {
     LifecycleRuleCondition result;
-    result.age.emplace(std::move(days));
+    result.age.emplace(days);
     return result;
   }
 
   static LifecycleRuleCondition CreatedBefore(absl::CivilDay date) {
     LifecycleRuleCondition result;
-    result.created_before.emplace(std::move(date));
+    result.created_before.emplace(date);
     return result;
   }
 
   static LifecycleRuleCondition IsLive(bool value) {
     LifecycleRuleCondition result;
-    result.is_live.emplace(std::move(value));
+    result.is_live.emplace(value);
     return result;
   }
 
@@ -200,7 +200,7 @@ class LifecycleRule {
 
   static LifecycleRuleCondition MatchesStorageClasses(
       std::initializer_list<std::string> list) {
-    std::vector<std::string> classes(std::move(list));
+    std::vector<std::string> classes(list);
     LifecycleRuleCondition result;
     result.matches_storage_class.emplace(std::move(classes));
     return result;
@@ -246,7 +246,7 @@ class LifecycleRule {
 
   static LifecycleRuleCondition NumNewerVersions(std::int32_t days) {
     LifecycleRuleCondition result;
-    result.num_newer_versions.emplace(std::move(days));
+    result.num_newer_versions.emplace(days);
     return result;
   }
 

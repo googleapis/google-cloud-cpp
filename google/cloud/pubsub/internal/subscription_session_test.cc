@@ -44,7 +44,7 @@ future<Status> CreateTestSubscriptionSession(
     pubsub::SubscriberConnection::SubscribeParams p) {
   opts = DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
+  return CreateSubscriptionSession(subscription, opts, mock, cq,
                                    "test-client-id", std::move(p));
 }
 

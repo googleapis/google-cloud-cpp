@@ -48,7 +48,7 @@ class ContainingPublisherConnection : public PublisherConnection {
   future<StatusOr<std::string>> Publish(PublishParams p) override {
     return child_->Publish(std::move(p));
   }
-  void Flush(FlushParams p) override { child_->Flush(std::move(p)); }
+  void Flush(FlushParams p) override { child_->Flush(p); }
   void ResumePublish(ResumePublishParams p) override {
     child_->ResumePublish(std::move(p));
   }

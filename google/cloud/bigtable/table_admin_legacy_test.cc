@@ -670,7 +670,7 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
   TableAdmin::UpdateBackupParams params(
       "the-cluster", "the-backup",
       google::cloud::internal::ToChronoTimePoint(expire_time));
-  tested.UpdateBackup(std::move(params));
+  tested.UpdateBackup(params);
 }
 
 /**
@@ -690,7 +690,7 @@ TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
   TableAdmin::UpdateBackupParams params(
       "the-cluster", "the-backup",
       google::cloud::internal::ToChronoTimePoint(expire_time));
-  EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
+  EXPECT_FALSE(tested.UpdateBackup(params));
 }
 
 /**
@@ -711,7 +711,7 @@ TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
   TableAdmin::UpdateBackupParams params(
       "the-cluster", "the-backup",
       google::cloud::internal::ToChronoTimePoint(expire_time));
-  EXPECT_FALSE(tested.UpdateBackup(std::move(params)));
+  EXPECT_FALSE(tested.UpdateBackup(params));
 }
 
 /// @test Verify that bigtable::TableAdmin::DeleteBackup works as expected.
@@ -1418,7 +1418,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
           "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable"));
   bigtable::TableAdmin::RestoreTableParams params("restored-table",
                                                   "the-cluster", "the-backup");
-  FinishTest(table_admin_.AsyncRestoreTableImpl(cq_, std::move(params)));
+  FinishTest(table_admin_.AsyncRestoreTableImpl(cq_, params));
 }
 
 }  // namespace

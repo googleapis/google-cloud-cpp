@@ -188,8 +188,8 @@ std::shared_ptr<DataClient> MakeDataClient(std::string project_id,
       std::move(project_id), std::move(instance_id), std::move(options));
   if (tracing_enabled) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    client = std::make_shared<internal::LoggingDataClient>(
-        std::move(client), std::move(tracing_options));
+    client = std::make_shared<internal::LoggingDataClient>(std::move(client),
+                                                           tracing_options);
   }
   return client;
 }

@@ -358,7 +358,7 @@ class TableAdmin {
         : cluster_id(std::move(cluster_id)),
           backup_id(std::move(backup_id)),
           table_name(std::move(table_id)),
-          expire_time(std::move(expire_time)) {}
+          expire_time(expire_time) {}
 
     google::bigtable::admin::v2::CreateBackupRequest AsProto(
         std::string instance_name) const;
@@ -439,7 +439,7 @@ class TableAdmin {
                        std::chrono::system_clock::time_point expire_time)
         : cluster_id(std::move(cluster_id)),
           backup_name(std::move(backup_id)),
-          expire_time(std::move(expire_time)) {}
+          expire_time(expire_time) {}
 
     google::bigtable::admin::v2::UpdateBackupRequest AsProto(
         std::string const& instance_name) const;

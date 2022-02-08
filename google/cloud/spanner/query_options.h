@@ -85,7 +85,7 @@ class QueryOptions {
 
   /// Sets the request priority.
   QueryOptions& set_request_priority(absl::optional<RequestPriority> priority) {
-    request_priority_ = std::move(priority);
+    request_priority_ = priority;
     return *this;
   }
 

@@ -556,8 +556,7 @@ void UpdateDatabaseWithDefaultLeader(
   statements.push_back("ALTER DATABASE `" + database_id + "` " +
                        "SET OPTIONS (default_leader='" + default_leader + "')");
   auto metadata =
-      client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
-          .get();
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`default_leader` altered, new DDL metadata:\n"
             << metadata->DebugString();
@@ -2290,7 +2289,7 @@ void QueryWithQueryOptions(google::cloud::spanner::Client client) {
   auto opts = spanner::QueryOptions()
                   .set_optimizer_version("1")
                   .set_optimizer_statistics_package("latest");
-  auto rows = client.ExecuteQuery(std::move(sql), std::move(opts));
+  auto rows = client.ExecuteQuery(std::move(sql), opts);
 
   using RowType = std::tuple<std::int64_t, std::string>;
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
@@ -2541,7 +2540,7 @@ void DmlWriteThenRead(google::cloud::spanner::Client client) {
             "SELECT FirstName, LastName FROM Singers where SingerId = 11");
         using RowType = std::tuple<std::string, std::string>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(select));
-        for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+        for (auto& row : spanner::StreamOf<RowType>(rows)) {
           if (!row) return std::move(row).status();
           std::cout << "FirstName: " << std::get<0>(*row) << "\t";
           std::cout << "LastName: " << std::get<1>(*row) << "\n";
@@ -3579,7 +3578,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   }
 
   // Run the command.
-  command->second(std::move(argv));
+  command->second(argv);
   return 0;
 }
 

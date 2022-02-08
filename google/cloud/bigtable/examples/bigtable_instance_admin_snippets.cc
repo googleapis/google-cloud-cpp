@@ -55,8 +55,8 @@ void CreateInstance(
         {cluster_id, std::move(cluster)}};
 
     future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
-        instance_admin.CreateInstance(project_name, instance_id, std::move(in),
-                                      std::move(cluster_map));
+        instance_admin.CreateInstance(project_name, instance_id, in,
+                                      cluster_map);
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for instance creation to complete " << std::flush;
@@ -98,8 +98,8 @@ void CreateDevInstance(
         {cluster_id, std::move(cluster)}};
 
     future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
-        instance_admin.CreateInstance(project_name, instance_id, std::move(in),
-                                      std::move(cluster_map));
+        instance_admin.CreateInstance(project_name, instance_id, in,
+                                      cluster_map);
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for instance creation to complete " << std::flush;
@@ -147,8 +147,8 @@ void CreateReplicatedInstance(
         {c1, std::move(cluster1)}, {c2, std::move(cluster2)}};
 
     future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
-        instance_admin.CreateInstance(project_name, instance_id, std::move(in),
-                                      std::move(cluster_map));
+        instance_admin.CreateInstance(project_name, instance_id, in,
+                                      cluster_map);
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for instance creation to complete " << std::flush;
@@ -182,8 +182,7 @@ void UpdateInstance(
     mask.add_paths("display_name");
 
     future<StatusOr<google::bigtable::admin::v2::Instance>> instance_future =
-        instance_admin.PartialUpdateInstance(std::move(*instance),
-                                             std::move(mask));
+        instance_admin.PartialUpdateInstance(*instance, mask);
     instance_future
         .then([](future<StatusOr<google::bigtable::admin::v2::Instance>> f) {
           auto updated_instance = f.get();
@@ -310,7 +309,7 @@ void CreateCluster(
     c.set_default_storage_type(google::bigtable::admin::v2::HDD);
 
     future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
-        instance_admin.CreateCluster(instance_name, cluster_id, std::move(c));
+        instance_admin.CreateCluster(instance_name, cluster_id, c);
 
     // Applications can wait asynchronously, in this example we just block.
     auto cluster = cluster_future.get();
@@ -403,8 +402,7 @@ void UpdateCluster(
     // Set the desired cluster configuration.
     cluster->set_serve_nodes(4);
 
-    auto modified_cluster =
-        instance_admin.UpdateCluster(std::move(*cluster)).get();
+    auto modified_cluster = instance_admin.UpdateCluster(*cluster).get();
     if (!modified_cluster) {
       throw std::runtime_error(modified_cluster.status().message());
     }
@@ -470,8 +468,7 @@ void CreateAppProfile(
     ap.mutable_multi_cluster_routing_use_any()->Clear();
 
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
-        instance_admin.CreateAppProfile(instance_name, profile_id,
-                                        std::move(ap));
+        instance_admin.CreateAppProfile(instance_name, profile_id, ap);
     if (!profile) throw std::runtime_error(profile.status().message());
     std::cout << "New profile created with name=" << profile->name() << "\n";
   }
@@ -495,8 +492,7 @@ void CreateAppProfileCluster(
     ap.mutable_single_cluster_routing()->set_cluster_id(cluster_id);
 
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
-        instance_admin.CreateAppProfile(instance_name, profile_id,
-                                        std::move(ap));
+        instance_admin.CreateAppProfile(instance_name, profile_id, ap);
     if (!profile) throw std::runtime_error(profile.status().message());
     std::cout << "New profile created with name=" << profile->name() << "\n";
   }
@@ -548,7 +544,7 @@ void UpdateAppProfileDescription(
     mask.add_paths("description");
 
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
-        instance_admin.UpdateAppProfile(std::move(profile), std::move(mask));
+        instance_admin.UpdateAppProfile(profile, mask);
     auto modified_profile = profile_future.get();
     if (!modified_profile)
       throw std::runtime_error(modified_profile.status().message());
@@ -580,7 +576,7 @@ void UpdateAppProfileRoutingAny(
     req.set_ignore_warnings(true);
 
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
-        instance_admin.UpdateAppProfile(std::move(req));
+        instance_admin.UpdateAppProfile(req);
     auto modified_profile = profile_future.get();
     if (!modified_profile)
       throw std::runtime_error(modified_profile.status().message());
@@ -613,7 +609,7 @@ void UpdateAppProfileRoutingSingleCluster(
     req.set_ignore_warnings(true);
 
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
-        instance_admin.UpdateAppProfile(std::move(req));
+        instance_admin.UpdateAppProfile(req);
     auto modified_profile = profile_future.get();
     if (!modified_profile)
       throw std::runtime_error(modified_profile.status().message());
@@ -690,7 +686,7 @@ void DeleteAppProfile(std::vector<std::string> const& argv) {
     req.set_name(profile_name);
     req.set_ignore_warnings(ignore_warnings);
 
-    Status status = instance_admin.DeleteAppProfile(std::move(req));
+    Status status = instance_admin.DeleteAppProfile(req);
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Application Profile deleted\n";
   }
@@ -788,7 +784,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
     std::cout << "]\n";
   }
   //! [test iam permissions]
-  (std::move(instance_admin), std::move(resource_name), std::move(permissions));
+  (std::move(instance_admin), resource_name, permissions);
 }
 
 void RunAll(std::vector<std::string> const& argv) {

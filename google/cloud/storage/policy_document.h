@@ -153,8 +153,8 @@ struct PolicyDocumentV4 {
                    std::vector<PolicyDocumentCondition> conditions = {})
       : bucket(std::move(bucket)),
         object(std::move(object)),
-        expiration(std::move(expiration)),
-        timestamp(std::move(timestamp)),
+        expiration(expiration),
+        timestamp(timestamp),
         conditions(std::move(conditions)) {}
 
   std::string bucket;

@@ -206,7 +206,7 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     "    std::shared_ptr<$stub_class_name$> child,\n"
     "    TracingOptions tracing_options,\n"
     "    std::set<std::string> components)\n"
-    "    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),\n"
+    "    : child_(std::move(child)), tracing_options_(tracing_options),\n"
     "      components_(std::move(components)) {}\n");
   // clang-format on
 

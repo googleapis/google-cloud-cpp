@@ -104,9 +104,8 @@ class AsyncStreamingReadWriteRpcImpl
       void Cancel() override {}
     };
     auto op = std::make_shared<OnWrite>();
-    cq_->StartOperation(op, [&](void* tag) {
-      stream_->Write(request, std::move(options), tag);
-    });
+    cq_->StartOperation(
+        op, [&](void* tag) { stream_->Write(request, options, tag); });
     return op->p.get_future();
   }
 
@@ -133,7 +132,7 @@ class AsyncStreamingReadWriteRpcImpl
       grpc::Status status;
       bool Notify(bool /*ok*/) override {
         OptionsSpan span(options_);
-        p.set_value(MakeStatusFromRpcError(std::move(status)));
+        p.set_value(MakeStatusFromRpcError(status));
         return true;
       }
       void Cancel() override {}

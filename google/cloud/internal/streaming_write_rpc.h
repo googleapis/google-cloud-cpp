@@ -95,7 +95,7 @@ class StreamingWriteRpcImpl
 
   bool Write(RequestType const& r, grpc::WriteOptions o) override {
     if (o.is_last_message()) has_last_message_ = true;
-    return stream_->Write(r, std::move(o));
+    return stream_->Write(r, o);
   }
 
   StatusOr<ResponseType> Close() override {

@@ -113,7 +113,7 @@ void InsertObject(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& contents) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.InsertObject(bucket_name, object_name, std::move(contents));
+        client.InsertObject(bucket_name, object_name, contents);
 
     if (!object_metadata) {
       throw std::runtime_error(object_metadata.status().message());
@@ -140,9 +140,8 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client,
     auto client =
         gcs::Client(google::cloud::Options{}.set<gcs::IdempotencyPolicyOption>(
             gcs::StrictIdempotencyPolicy().clone()));
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.InsertObject(bucket_name, object_name, std::move(contents),
-                            gcs::IfGenerationMatch(0));
+    StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
+        bucket_name, object_name, contents, gcs::IfGenerationMatch(0));
 
     if (!object_metadata) {
       throw std::runtime_error(object_metadata.status().message());
@@ -170,9 +169,8 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client,
         gcs::Client(google::cloud::Options{}.set<gcs::RetryPolicyOption>(
             gcs::LimitedErrorCountRetryPolicy(3).clone()));
 
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.InsertObject(bucket_name, object_name, std::move(contents),
-                            gcs::IfGenerationMatch(0));
+    StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
+        bucket_name, object_name, contents, gcs::IfGenerationMatch(0));
 
     if (!object_metadata) {
       throw std::runtime_error(object_metadata.status().message());
@@ -198,7 +196,7 @@ void InsertObjectMultipart(google::cloud::storage::Client client,
     // requires a multipart upload, the library prefers simple uploads unless
     // required as in this case.
     StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
-        bucket_name, object_name, std::move(contents),
+        bucket_name, object_name, contents,
         gcs::WithObjectMetadata(
             gcs::ObjectMetadata().set_content_type(content_type)));
 
@@ -500,8 +498,7 @@ void ComposeObject(google::cloud::storage::Client client,
               << "\nFull metadata: " << *composed_object << "\n";
   }
   //! [compose object] [END storage_compose_file]
-  (std::move(client), bucket_name, destination_object_name,
-   std::move(compose_objects));
+  (std::move(client), bucket_name, destination_object_name, compose_objects);
 }
 
 void ComposeObjectFromMany(google::cloud::storage::Client client,
@@ -537,8 +534,7 @@ void ComposeObjectFromMany(google::cloud::storage::Client client,
               << "\nFull metadata: " << *composed_object << "\n";
   }
   //! [compose object from many] [END storage_compose_file_from_many]
-  (std::move(client), bucket_name, destination_object_name,
-   std::move(compose_objects));
+  (std::move(client), bucket_name, destination_object_name, compose_objects);
 }
 
 void ChangeObjectStorageClass(google::cloud::storage::Client client,
@@ -762,7 +758,7 @@ int main(int argc, char* argv[]) {
                        std::vector<std::string> arg_names,
                        examples::ClientCommand const& cmd) {
     arg_names.insert(arg_names.begin(), "<bucket-name>");
-    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
+    return examples::CreateCommandEntry(name, arg_names, cmd);
   };
 
   examples::Example example({
