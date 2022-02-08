@@ -51,7 +51,6 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/log_wrapper.h",
     "internal/minimal_iam_credentials_stub.h",
     "internal/resumable_streaming_read_rpc.h",
-    "internal/resumable_async_streaming_read_write_rpc.h",
     "internal/retry_loop.h",
     "internal/retry_loop_helpers.h",
     "internal/setup_context.h",

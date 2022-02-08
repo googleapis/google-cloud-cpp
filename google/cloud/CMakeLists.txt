@@ -377,7 +377,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/minimal_iam_credentials_stub.cc
         internal/minimal_iam_credentials_stub.h
         internal/resumable_streaming_read_rpc.h
-        internal/resumable_async_streaming_read_write_rpc.h
         internal/retry_loop.h
         internal/retry_loop_helpers.cc
         internal/retry_loop_helpers.h
