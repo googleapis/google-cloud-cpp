@@ -16,8 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_RESUMABLE_ASYNC_STREAMING_READ_WRITE_RPC_H
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/async_sleeper.h"
+#include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
