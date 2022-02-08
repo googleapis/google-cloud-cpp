@@ -64,8 +64,6 @@ expected_dirs+=(
   ./include/google/cloud/bigquery/datatransfer/v1
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
-  ./include/google/cloud/bigquery/reservation
-  ./include/google/cloud/bigquery/reservation/v1
   ./include/google/cloud/bigquery/v2
   ./include/google/cloud/bigtable/admin/mocks
   ./include/google/cloud/bigtable/internal
