@@ -56,13 +56,23 @@ TEST(PopulateCommonOptions, Endpoint) {
     std::string expected;
   } test_cases[] = {
       {"empty-0", empty, absl::nullopt, absl::nullopt, "default"},
-      {"empty-1", empty, absl::nullopt, "emulator", "emulator"},
-      {"empty-2", empty, "default", absl::nullopt, "default"},
-      {"empty-3", empty, "default", "emulator", "emulator"},
+      {"empty-1", empty, absl::nullopt, "", "default"},
+      {"empty-2", empty, absl::nullopt, "emulator", "emulator"},
+      {"empty-3", empty, "", absl::nullopt, "default"},
+      {"empty-4", empty, "", "", "default"},
+      {"empty-5", empty, "", "emulator", "emulator"},
+      {"empty-6", empty, "env", absl::nullopt, "env"},
+      {"empty-7", empty, "env", "", "env"},
+      {"empty-8", empty, "env", "emulator", "emulator"},
       {"with-ep-0", with_ep, absl::nullopt, absl::nullopt, "with-ep"},
-      {"with-ep-1", with_ep, absl::nullopt, "emulator", "emulator"},
-      {"with-ep-2", with_ep, "default", absl::nullopt, "with-ep"},
-      {"with-ep-3", with_ep, "default", "emulator", "emulator"},
+      {"with-ep-1", with_ep, absl::nullopt, "", "with-ep"},
+      {"with-ep-2", with_ep, absl::nullopt, "emulator", "emulator"},
+      {"with-ep-3", with_ep, "", absl::nullopt, "with-ep"},
+      {"with-ep-4", with_ep, "", "", "with-ep"},
+      {"with-ep-5", with_ep, "", "emulator", "emulator"},
+      {"with-ep-6", with_ep, "env", absl::nullopt, "with-ep"},
+      {"with-ep-7", with_ep, "env", "", "with-ep"},
+      {"with-ep-8", with_ep, "env", "emulator", "emulator"},
   };
 
   for (auto const& test : test_cases) {

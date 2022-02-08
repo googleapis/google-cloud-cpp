@@ -32,17 +32,14 @@ std::set<std::string> DefaultTracingComponents() {
 Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
                               std::string default_endpoint) {
-  if (!opts.has<EndpointOption>()) {
-    if (endpoint_env_var.empty()) {
-      opts.set<EndpointOption>(std::move(default_endpoint));
-    } else {
-      auto e = GetEnv(endpoint_env_var.c_str());
-      if (e && !e->empty()) {
-        opts.set<EndpointOption>(*std::move(e));
-      } else {
-        opts.set<EndpointOption>(default_endpoint);
-      }
+  if (!opts.has<EndpointOption>() && !endpoint_env_var.empty()) {
+    auto e = GetEnv(endpoint_env_var.c_str());
+    if (e && !e->empty()) {
+      opts.set<EndpointOption>(*std::move(e));
     }
+  }
+  if (!opts.has<EndpointOption>() || opts.get<EndpointOption>().empty()) {
+    opts.set<EndpointOption>(std::move(default_endpoint));
   }
   if (!emulator_env_var.empty()) {
     auto e = GetEnv(emulator_env_var.c_str());
@@ -51,7 +48,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     }
   }
   auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-  if (e.has_value() && !e->empty()) opts.set<UserProjectOption>(*std::move(e));
+  if (e && !e->empty()) opts.set<UserProjectOption>(*std::move(e));
   if (!opts.has<TracingComponentsOption>()) {
     opts.set<TracingComponentsOption>(internal::DefaultTracingComponents());
   }
