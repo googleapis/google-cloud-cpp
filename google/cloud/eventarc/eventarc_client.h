@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EventarcClient {
  public:
   explicit EventarcClient(std::shared_ptr<EventarcConnection> connection,
-                          Options options = {});
+                          Options opts = {});
   ~EventarcClient();
 
   //@{
@@ -89,7 +89,8 @@ class EventarcClient {
   /// Get a single trigger.
   ///
   /// @param name  Required. The name of the trigger to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -99,14 +100,15 @@ class EventarcClient {
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Get a single trigger.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::eventarc::v1::GetTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -117,13 +119,14 @@ class EventarcClient {
   ///
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
       google::cloud::eventarc::v1::GetTriggerRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// List triggers.
   ///
   /// @param parent  Required. The parent collection to list triggers on.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -133,14 +136,15 @@ class EventarcClient {
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// List triggers.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::eventarc::v1::ListTriggersRequest,google/cloud/eventarc/v1/eventarc.proto#L109}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -151,7 +155,7 @@ class EventarcClient {
   ///
   StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
       google::cloud::eventarc::v1::ListTriggersRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new trigger in a particular project and location.
@@ -161,7 +165,8 @@ class EventarcClient {
   /// @param trigger  Required. The trigger to create.
   /// @param trigger_id  Required. The user-provided ID to be assigned to the
   /// trigger.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -173,14 +178,15 @@ class EventarcClient {
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
       std::string const& parent,
       google::cloud::eventarc::v1::Trigger const& trigger,
-      std::string const& trigger_id, Options options = {});
+      std::string const& trigger_id, Options opts = {});
 
   ///
   /// Create a new trigger in a particular project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::eventarc::v1::CreateTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L150}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -191,7 +197,7 @@ class EventarcClient {
   ///
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
       google::cloud::eventarc::v1::CreateTriggerRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update a single trigger.
@@ -204,7 +210,8 @@ class EventarcClient {
   /// @param allow_missing  If set to true, and the trigger is not found, a new
   /// trigger will be
   ///  created. In this situation, `update_mask` is ignored.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -216,14 +223,15 @@ class EventarcClient {
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
       google::cloud::eventarc::v1::Trigger const& trigger,
       google::protobuf::FieldMask const& update_mask, bool allow_missing,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update a single trigger.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::eventarc::v1::UpdateTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L171}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -234,7 +242,7 @@ class EventarcClient {
   ///
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Delete a single trigger.
@@ -243,7 +251,8 @@ class EventarcClient {
   /// @param allow_missing  If set to true, and the trigger is not found, the
   /// request will succeed
   ///  but no action will be taken on the server.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -253,14 +262,15 @@ class EventarcClient {
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
-      std::string const& name, bool allow_missing, Options options = {});
+      std::string const& name, bool allow_missing, Options opts = {});
 
   ///
   /// Delete a single trigger.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::eventarc::v1::DeleteTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L190}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -271,7 +281,7 @@ class EventarcClient {
   ///
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<EventarcConnection> connection_;

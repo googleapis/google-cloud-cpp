@@ -26,54 +26,49 @@ namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DomainMappingsClient::DomainMappingsClient(
-    std::shared_ptr<DomainMappingsConnection> connection, Options options)
+    std::shared_ptr<DomainMappingsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), appengine_internal::DomainMappingsDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), appengine_internal::DomainMappingsDefaultOptions(
+                               connection_->options()))) {}
 DomainMappingsClient::~DomainMappingsClient() = default;
 
 StreamRange<google::appengine::v1::DomainMapping>
 DomainMappingsClient::ListDomainMappings(
-    google::appengine::v1::ListDomainMappingsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::appengine::v1::ListDomainMappingsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDomainMappings(std::move(request));
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsClient::GetDomainMapping(
     google::appengine::v1::GetDomainMappingRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDomainMapping(request);
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsClient::CreateDomainMapping(
     google::appengine::v1::CreateDomainMappingRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDomainMapping(request);
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsClient::UpdateDomainMapping(
     google::appengine::v1::UpdateDomainMappingRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDomainMapping(request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsClient::DeleteDomainMapping(
     google::appengine::v1::DeleteDomainMappingRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDomainMapping(request);
 }
 

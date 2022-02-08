@@ -27,10 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VideoIntelligenceServiceClient::VideoIntelligenceServiceClient(
     std::shared_ptr<VideoIntelligenceServiceConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
               connection_->options()))) {}
 VideoIntelligenceServiceClient::~VideoIntelligenceServiceClient() = default;
@@ -39,9 +39,8 @@ future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceClient::AnnotateVideo(
     std::string const& input_uri,
     std::vector<google::cloud::videointelligence::v1::Feature> const& features,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::videointelligence::v1::AnnotateVideoRequest request;
   request.set_input_uri(input_uri);
   *request.mutable_features() = {features.begin(), features.end()};
@@ -51,9 +50,8 @@ VideoIntelligenceServiceClient::AnnotateVideo(
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceClient::AnnotateVideo(
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnnotateVideo(request);
 }
 

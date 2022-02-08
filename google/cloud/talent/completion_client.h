@@ -61,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompletionClient {
  public:
   explicit CompletionClient(std::shared_ptr<CompletionConnection> connection,
-                            Options options = {});
+                            Options opts = {});
   ~CompletionClient();
 
   //@{
@@ -88,7 +88,8 @@ class CompletionClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::CompleteQueryRequest,google/cloud/talent/v4/completion_service.proto#L48}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::CompleteQueryResponse,google/cloud/talent/v4/completion_service.proto#L134}
   ///
@@ -99,7 +100,7 @@ class CompletionClient {
   ///
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
       google::cloud::talent::v4::CompleteQueryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CompletionConnection> connection_;

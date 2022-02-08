@@ -36,30 +36,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GkeHubConnection::~GkeHubConnection() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>
-GkeHubConnection::ListMemberships(
-    google::cloud::gkehub::v1::ListMembershipsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gkehub::v1::Membership>>(
-      std::move(request),
-      [](google::cloud::gkehub::v1::ListMembershipsRequest const&) {
-        return StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>{};
-      },
-      [](google::cloud::gkehub::v1::ListMembershipsResponse const&) {
-        return std::vector<google::cloud::gkehub::v1::Membership>();
-      });
+    GkeHubConnection::ListMemberships(
+        google::cloud::gkehub::v1::
+            ListMembershipsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Membership>>();
 }
 
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubConnection::ListFeatures(
-    google::cloud::gkehub::v1::ListFeaturesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gkehub::v1::Feature>>(
-      std::move(request),
-      [](google::cloud::gkehub::v1::ListFeaturesRequest const&) {
-        return StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>{};
-      },
-      [](google::cloud::gkehub::v1::ListFeaturesResponse const&) {
-        return std::vector<google::cloud::gkehub::v1::Feature>();
-      });
+    google::cloud::gkehub::v1::
+        ListFeaturesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Feature>>();
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubConnection::GetMembership(

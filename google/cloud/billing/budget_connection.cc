@@ -53,18 +53,11 @@ BudgetServiceConnection::GetBudget(
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
-BudgetServiceConnection::ListBudgets(
-    google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::billing::budgets::v1::Budget>>(
-      std::move(request),
-      [](google::cloud::billing::budgets::v1::ListBudgetsRequest const&) {
-        return StatusOr<
-            google::cloud::billing::budgets::v1::ListBudgetsResponse>{};
-      },
-      [](google::cloud::billing::budgets::v1::ListBudgetsResponse const&) {
-        return std::vector<google::cloud::billing::budgets::v1::Budget>();
-      });
+    BudgetServiceConnection::ListBudgets(
+        google::cloud::billing::budgets::v1::
+            ListBudgetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::billing::budgets::v1::Budget>>();
 }
 
 Status BudgetServiceConnection::DeleteBudget(

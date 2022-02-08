@@ -34,8 +34,6 @@ endif ()
 
 include(GoogleCloudCppCommon)
 
-find_package(absl CONFIG REQUIRED)
-
 add_library(
     google_cloud_cpp_pubsub # cmake-format: sort
     ack_handler.cc

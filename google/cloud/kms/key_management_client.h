@@ -74,7 +74,7 @@ class KeyManagementServiceClient {
  public:
   explicit KeyManagementServiceClient(
       std::shared_ptr<KeyManagementServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~KeyManagementServiceClient();
 
   //@{
@@ -105,7 +105,8 @@ class KeyManagementServiceClient {
   /// the
   ///  [KeyRings][google.cloud.kms.v1.KeyRing], in the format
   ///  `projects/*/locations/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::KeyRing,google/cloud/kms/v1/resources.proto#L35}
   ///
@@ -115,14 +116,15 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L35}
   ///
   StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists [KeyRings][google.cloud.kms.v1.KeyRing].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::ListKeyRingsRequest,google/cloud/kms/v1/service.proto#L337}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::KeyRing,google/cloud/kms/v1/resources.proto#L35}
   ///
@@ -132,8 +134,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L35}
   ///
   StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
-      google::cloud::kms::v1::ListKeyRingsRequest request,
-      Options options = {});
+      google::cloud::kms::v1::ListKeyRingsRequest request, Options opts = {});
 
   ///
   /// Lists [CryptoKeys][google.cloud.kms.v1.CryptoKey].
@@ -141,7 +142,8 @@ class KeyManagementServiceClient {
   /// @param parent  Required. The resource name of the
   /// [KeyRing][google.cloud.kms.v1.KeyRing] to list, in the format
   ///  `projects/*/locations/*/keyRings/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -151,14 +153,15 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L54}
   ///
   StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists [CryptoKeys][google.cloud.kms.v1.CryptoKey].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::ListCryptoKeysRequest,google/cloud/kms/v1/service.proto#L371}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -168,8 +171,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L54}
   ///
   StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
-      google::cloud::kms::v1::ListCryptoKeysRequest request,
-      Options options = {});
+      google::cloud::kms::v1::ListCryptoKeysRequest request, Options opts = {});
 
   ///
   /// Lists [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].
@@ -177,7 +179,8 @@ class KeyManagementServiceClient {
   /// @param parent  Required. The resource name of the
   /// [CryptoKey][google.cloud.kms.v1.CryptoKey] to list, in the format
   ///  `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -187,14 +190,15 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L214}
   ///
   StreamRange<google::cloud::kms::v1::CryptoKeyVersion> ListCryptoKeyVersions(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::ListCryptoKeyVersionsRequest,google/cloud/kms/v1/service.proto#L408}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -205,7 +209,7 @@ class KeyManagementServiceClient {
   ///
   StreamRange<google::cloud::kms::v1::CryptoKeyVersion> ListCryptoKeyVersions(
       google::cloud::kms::v1::ListCryptoKeyVersionsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists [ImportJobs][google.cloud.kms.v1.ImportJob].
@@ -213,7 +217,8 @@ class KeyManagementServiceClient {
   /// @param parent  Required. The resource name of the
   /// [KeyRing][google.cloud.kms.v1.KeyRing] to list, in the format
   ///  `projects/*/locations/*/keyRings/*`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::ImportJob,google/cloud/kms/v1/resources.proto#L528}
   ///
@@ -223,14 +228,15 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L528}
   ///
   StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists [ImportJobs][google.cloud.kms.v1.ImportJob].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::ListImportJobsRequest,google/cloud/kms/v1/service.proto#L446}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::ImportJob,google/cloud/kms/v1/resources.proto#L528}
   ///
@@ -240,15 +246,15 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L528}
   ///
   StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
-      google::cloud::kms::v1::ListImportJobsRequest request,
-      Options options = {});
+      google::cloud::kms::v1::ListImportJobsRequest request, Options opts = {});
 
   ///
   /// Returns metadata for a given [KeyRing][google.cloud.kms.v1.KeyRing].
   ///
   /// @param name  Required. The [name][google.cloud.kms.v1.KeyRing.name] of the
   /// [KeyRing][google.cloud.kms.v1.KeyRing] to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::KeyRing,google/cloud/kms/v1/resources.proto#L35}
   ///
@@ -258,14 +264,15 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L35}
   ///
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(std::string const& name,
-                                                       Options options = {});
+                                                       Options opts = {});
 
   ///
   /// Returns metadata for a given [KeyRing][google.cloud.kms.v1.KeyRing].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::GetKeyRingRequest,google/cloud/kms/v1/service.proto#L534}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::KeyRing,google/cloud/kms/v1/resources.proto#L35}
   ///
@@ -276,7 +283,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       google::cloud::kms::v1::GetKeyRingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns metadata for a given [CryptoKey][google.cloud.kms.v1.CryptoKey],
@@ -285,7 +292,8 @@ class KeyManagementServiceClient {
   ///
   /// @param name  Required. The [name][google.cloud.kms.v1.CryptoKey.name] of
   /// the [CryptoKey][google.cloud.kms.v1.CryptoKey] to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -295,7 +303,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L54}
   ///
   StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns metadata for a given [CryptoKey][google.cloud.kms.v1.CryptoKey],
@@ -304,7 +312,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::GetCryptoKeyRequest,google/cloud/kms/v1/service.proto#L545}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -315,7 +324,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
       google::cloud::kms::v1::GetCryptoKeyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns metadata for a given
@@ -324,7 +333,8 @@ class KeyManagementServiceClient {
   /// @param name  Required. The
   /// [name][google.cloud.kms.v1.CryptoKeyVersion.name] of the
   /// [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -334,7 +344,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L214}
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns metadata for a given
@@ -342,7 +352,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::GetCryptoKeyVersionRequest,google/cloud/kms/v1/service.proto#L556}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -353,7 +364,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
       google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the public key for the given
@@ -367,7 +378,8 @@ class KeyManagementServiceClient {
   /// [name][google.cloud.kms.v1.CryptoKeyVersion.name] of the
   /// [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] public key to
   ///  get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::PublicKey,google/cloud/kms/v1/resources.proto#L459}
   ///
@@ -377,7 +389,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L459}
   ///
   StatusOr<google::cloud::kms::v1::PublicKey> GetPublicKey(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns the public key for the given
@@ -389,7 +401,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::GetPublicKeyRequest,google/cloud/kms/v1/service.proto#L567}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::PublicKey,google/cloud/kms/v1/resources.proto#L459}
   ///
@@ -400,14 +413,15 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::PublicKey> GetPublicKey(
       google::cloud::kms::v1::GetPublicKeyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns metadata for a given [ImportJob][google.cloud.kms.v1.ImportJob].
   ///
   /// @param name  Required. The [name][google.cloud.kms.v1.ImportJob.name] of
   /// the [ImportJob][google.cloud.kms.v1.ImportJob] to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::ImportJob,google/cloud/kms/v1/resources.proto#L528}
   ///
@@ -417,14 +431,15 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L528}
   ///
   StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns metadata for a given [ImportJob][google.cloud.kms.v1.ImportJob].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::GetImportJobRequest,google/cloud/kms/v1/service.proto#L579}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::ImportJob,google/cloud/kms/v1/resources.proto#L528}
   ///
@@ -435,7 +450,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
       google::cloud::kms::v1::GetImportJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new [KeyRing][google.cloud.kms.v1.KeyRing] in a given Project and
@@ -450,7 +465,8 @@ class KeyManagementServiceClient {
   ///  expression `[a-zA-Z0-9_-]{1,63}`
   /// @param key_ring  Required. A [KeyRing][google.cloud.kms.v1.KeyRing] with
   /// initial field values.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::KeyRing,google/cloud/kms/v1/resources.proto#L35}
   ///
@@ -461,7 +477,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       std::string const& parent, std::string const& key_ring_id,
-      google::cloud::kms::v1::KeyRing const& key_ring, Options options = {});
+      google::cloud::kms::v1::KeyRing const& key_ring, Options opts = {});
 
   ///
   /// Create a new [KeyRing][google.cloud.kms.v1.KeyRing] in a given Project and
@@ -469,7 +485,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::CreateKeyRingRequest,google/cloud/kms/v1/service.proto#L590}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::KeyRing,google/cloud/kms/v1/resources.proto#L35}
   ///
@@ -480,7 +497,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       google::cloud::kms::v1::CreateKeyRingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new [CryptoKey][google.cloud.kms.v1.CryptoKey] within a
@@ -498,7 +515,8 @@ class KeyManagementServiceClient {
   ///  expression `[a-zA-Z0-9_-]{1,63}`
   /// @param crypto_key  Required. A [CryptoKey][google.cloud.kms.v1.CryptoKey]
   /// with initial field values.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -509,8 +527,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKey> CreateCryptoKey(
       std::string const& parent, std::string const& crypto_key_id,
-      google::cloud::kms::v1::CryptoKey const& crypto_key,
-      Options options = {});
+      google::cloud::kms::v1::CryptoKey const& crypto_key, Options opts = {});
 
   ///
   /// Create a new [CryptoKey][google.cloud.kms.v1.CryptoKey] within a
@@ -522,7 +539,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::CreateCryptoKeyRequest,google/cloud/kms/v1/service.proto#L609}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -533,7 +551,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKey> CreateCryptoKey(
       google::cloud::kms::v1::CreateCryptoKeyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in a
@@ -549,7 +567,8 @@ class KeyManagementServiceClient {
   /// @param crypto_key_version  Required. A
   /// [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] with initial
   /// field values.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -561,7 +580,7 @@ class KeyManagementServiceClient {
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
       std::string const& parent,
       google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in a
@@ -573,7 +592,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::CreateCryptoKeyVersionRequest,google/cloud/kms/v1/service.proto#L635}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -584,7 +604,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Import wrapped key material into a
@@ -599,7 +619,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::ImportCryptoKeyVersionRequest,google/cloud/kms/v1/service.proto#L650}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -610,7 +631,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
       google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new [ImportJob][google.cloud.kms.v1.ImportJob] within a
@@ -627,7 +648,8 @@ class KeyManagementServiceClient {
   ///  expression `[a-zA-Z0-9_-]{1,63}`
   /// @param import_job  Required. An [ImportJob][google.cloud.kms.v1.ImportJob]
   /// with initial field values.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::ImportJob,google/cloud/kms/v1/resources.proto#L528}
   ///
@@ -638,8 +660,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
       std::string const& parent, std::string const& import_job_id,
-      google::cloud::kms::v1::ImportJob const& import_job,
-      Options options = {});
+      google::cloud::kms::v1::ImportJob const& import_job, Options opts = {});
 
   ///
   /// Create a new [ImportJob][google.cloud.kms.v1.ImportJob] within a
@@ -650,7 +671,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::CreateImportJobRequest,google/cloud/kms/v1/service.proto#L724}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::ImportJob,google/cloud/kms/v1/resources.proto#L528}
   ///
@@ -661,7 +683,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
       google::cloud::kms::v1::CreateImportJobRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update a [CryptoKey][google.cloud.kms.v1.CryptoKey].
@@ -670,7 +692,8 @@ class KeyManagementServiceClient {
   /// with updated values.
   /// @param update_mask  Required. List of fields to be updated in this
   /// request.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -681,14 +704,15 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
       google::cloud::kms::v1::CryptoKey const& crypto_key,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Update a [CryptoKey][google.cloud.kms.v1.CryptoKey].
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::UpdateCryptoKeyRequest,google/cloud/kms/v1/service.proto#L743}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -699,7 +723,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
       google::cloud::kms::v1::UpdateCryptoKeyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s
@@ -720,7 +744,8 @@ class KeyManagementServiceClient {
   /// values.
   /// @param update_mask  Required. List of fields to be updated in this
   /// request.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -731,7 +756,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
       google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Update a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s
@@ -749,7 +774,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::UpdateCryptoKeyVersionRequest,google/cloud/kms/v1/service.proto#L752}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -760,7 +786,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
       google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update the version of a [CryptoKey][google.cloud.kms.v1.CryptoKey] that
@@ -775,7 +801,8 @@ class KeyManagementServiceClient {
   /// @param crypto_key_version_id  Required. The id of the child
   /// [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use as
   /// primary.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -786,7 +813,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
       std::string const& name, std::string const& crypto_key_version_id,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update the version of a [CryptoKey][google.cloud.kms.v1.CryptoKey] that
@@ -798,7 +825,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest,google/cloud/kms/v1/service.proto#L761}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKey,google/cloud/kms/v1/resources.proto#L54}
   ///
@@ -810,7 +838,7 @@ class KeyManagementServiceClient {
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
       google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Schedule a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] for
@@ -837,7 +865,8 @@ class KeyManagementServiceClient {
   ///
   /// @param name  Required. The resource name of the
   /// [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to destroy.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -847,7 +876,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L214}
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Schedule a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] for
@@ -874,7 +903,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::DestroyCryptoKeyVersionRequest,google/cloud/kms/v1/service.proto#L775}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -885,7 +915,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
       google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Restore a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in the
@@ -900,7 +930,8 @@ class KeyManagementServiceClient {
   ///
   /// @param name  Required. The resource name of the
   /// [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to restore.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -910,7 +941,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L214}
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Restore a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in the
@@ -925,7 +956,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::RestoreCryptoKeyVersionRequest,google/cloud/kms/v1/service.proto#L786}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::CryptoKeyVersion,google/cloud/kms/v1/resources.proto#L214}
   ///
@@ -936,7 +968,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
       google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Encrypts data, so that it can only be recovered by a call to
@@ -959,7 +991,8 @@ class KeyManagementServiceClient {
   ///  [HSM][google.cloud.kms.v1.ProtectionLevel.HSM] keys, the combined length
   ///  of the plaintext and additional_authenticated_data fields must be no
   ///  larger than 8KiB.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EncryptResponse,google/cloud/kms/v1/service.proto#L1090}
   ///
@@ -969,8 +1002,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1090}
   ///
   StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
-      std::string const& name, std::string const& plaintext,
-      Options options = {});
+      std::string const& name, std::string const& plaintext, Options opts = {});
 
   ///
   /// Encrypts data, so that it can only be recovered by a call to
@@ -980,7 +1012,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::EncryptRequest,google/cloud/kms/v1/service.proto#L797}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EncryptResponse,google/cloud/kms/v1/service.proto#L1090}
   ///
@@ -990,8 +1023,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1090}
   ///
   StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
-      google::cloud::kms::v1::EncryptRequest const& request,
-      Options options = {});
+      google::cloud::kms::v1::EncryptRequest const& request, Options opts = {});
 
   ///
   /// Decrypts data that was protected by
@@ -1004,7 +1036,8 @@ class KeyManagementServiceClient {
   ///  The server will choose the appropriate version.
   /// @param ciphertext  Required. The encrypted data originally returned in
   ///  [EncryptResponse.ciphertext][google.cloud.kms.v1.EncryptResponse.ciphertext].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::DecryptResponse,google/cloud/kms/v1/service.proto#L1137}
   ///
@@ -1015,7 +1048,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
       std::string const& name, std::string const& ciphertext,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Decrypts data that was protected by
@@ -1025,7 +1058,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::DecryptRequest,google/cloud/kms/v1/service.proto#L864}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::DecryptResponse,google/cloud/kms/v1/service.proto#L1137}
   ///
@@ -1035,8 +1069,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1137}
   ///
   StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
-      google::cloud::kms::v1::DecryptRequest const& request,
-      Options options = {});
+      google::cloud::kms::v1::DecryptRequest const& request, Options opts = {});
 
   ///
   /// Signs data using a
@@ -1053,7 +1086,8 @@ class KeyManagementServiceClient {
   /// be produced with
   ///  the same digest algorithm as specified by the key version's
   ///  [algorithm][google.cloud.kms.v1.CryptoKeyVersion.algorithm].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::AsymmetricSignResponse,google/cloud/kms/v1/service.proto#L1164}
   ///
@@ -1064,7 +1098,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
       std::string const& name, google::cloud::kms::v1::Digest const& digest,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Signs data using a
@@ -1076,7 +1110,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::AsymmetricSignRequest,google/cloud/kms/v1/service.proto#L915}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::AsymmetricSignResponse,google/cloud/kms/v1/service.proto#L1164}
   ///
@@ -1087,7 +1122,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
       google::cloud::kms::v1::AsymmetricSignRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Decrypts data that was encrypted with a public key retrieved from
@@ -1103,7 +1138,8 @@ class KeyManagementServiceClient {
   /// @param ciphertext  Required. The data encrypted with the named
   /// [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s public
   ///  key using OAEP.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::AsymmetricDecryptResponse,google/cloud/kms/v1/service.proto#L1210}
   ///
@@ -1114,7 +1150,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
       std::string const& name, std::string const& ciphertext,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Decrypts data that was encrypted with a public key retrieved from
@@ -1126,7 +1162,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::AsymmetricDecryptRequest,google/cloud/kms/v1/service.proto#L966}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::AsymmetricDecryptResponse,google/cloud/kms/v1/service.proto#L1210}
   ///
@@ -1137,7 +1174,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
       google::cloud::kms::v1::AsymmetricDecryptRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Signs data using a
@@ -1151,7 +1188,8 @@ class KeyManagementServiceClient {
   /// @param data  Required. The data to sign. The MAC tag is computed over this
   /// data field based on
   ///  the specific algorithm.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::MacSignResponse,google/cloud/kms/v1/service.proto#L1242}
   ///
@@ -1161,7 +1199,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1242}
   ///
   StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
-      std::string const& name, std::string const& data, Options options = {});
+      std::string const& name, std::string const& data, Options opts = {});
 
   ///
   /// Signs data using a
@@ -1171,7 +1209,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::MacSignRequest,google/cloud/kms/v1/service.proto#L997}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::MacSignResponse,google/cloud/kms/v1/service.proto#L1242}
   ///
@@ -1181,8 +1220,7 @@ class KeyManagementServiceClient {
   /// @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1242}
   ///
   StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
-      google::cloud::kms::v1::MacSignRequest const& request,
-      Options options = {});
+      google::cloud::kms::v1::MacSignRequest const& request, Options opts = {});
 
   ///
   /// Verifies MAC tag using a
@@ -1199,7 +1237,8 @@ class KeyManagementServiceClient {
   /// the MAC
   ///  tag.
   /// @param mac  Required. The signature to verify.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::MacVerifyResponse,google/cloud/kms/v1/service.proto#L1278}
   ///
@@ -1210,7 +1249,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
       std::string const& name, std::string const& data, std::string const& mac,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Verifies MAC tag using a
@@ -1221,7 +1260,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::MacVerifyRequest,google/cloud/kms/v1/service.proto#L1027}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::MacVerifyResponse,google/cloud/kms/v1/service.proto#L1278}
   ///
@@ -1232,7 +1272,7 @@ class KeyManagementServiceClient {
   ///
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
       google::cloud::kms::v1::MacVerifyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Generate random bytes using the Cloud KMS randomness source in the
@@ -1248,7 +1288,8 @@ class KeyManagementServiceClient {
   /// [ProtectionLevel][google.cloud.kms.v1.ProtectionLevel] to use when
   /// generating the random data. Defaults to
   ///  [SOFTWARE][google.cloud.kms.v1.ProtectionLevel.SOFTWARE].
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::GenerateRandomBytesResponse,google/cloud/kms/v1/service.proto#L1319}
   ///
@@ -1260,7 +1301,7 @@ class KeyManagementServiceClient {
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(std::string const& location, std::int32_t length_bytes,
                       google::cloud::kms::v1::ProtectionLevel protection_level,
-                      Options options = {});
+                      Options opts = {});
 
   ///
   /// Generate random bytes using the Cloud KMS randomness source in the
@@ -1268,7 +1309,8 @@ class KeyManagementServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::kms::v1::GenerateRandomBytesRequest,google/cloud/kms/v1/service.proto#L1075}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::GenerateRandomBytesResponse,google/cloud/kms/v1/service.proto#L1319}
   ///
@@ -1280,7 +1322,7 @@ class KeyManagementServiceClient {
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(
       google::cloud::kms::v1::GenerateRandomBytesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<KeyManagementServiceConnection> connection_;

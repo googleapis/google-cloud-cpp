@@ -78,8 +78,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProductSearchClient {
  public:
   explicit ProductSearchClient(
-      std::shared_ptr<ProductSearchConnection> connection,
-      Options options = {});
+      std::shared_ptr<ProductSearchConnection> connection, Options opts = {});
   ~ProductSearchClient();
 
   //@{
@@ -119,7 +118,8 @@ class ProductSearchClient {
   ///  attempt to use this value as the resource id. If it is already in use, an
   ///  error is returned with code ALREADY_EXISTS. Must be at most 128
   ///  characters long. It cannot contain the character `/`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -131,7 +131,7 @@ class ProductSearchClient {
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
       std::string const& parent,
       google::cloud::vision::v1::ProductSet const& product_set,
-      std::string const& product_set_id, Options options = {});
+      std::string const& product_set_id, Options opts = {});
 
   ///
   /// Creates and returns a new ProductSet resource.
@@ -143,7 +143,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::CreateProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L584}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -154,7 +155,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
       google::cloud::vision::v1::CreateProductSetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists ProductSets in an unspecified order.
@@ -167,7 +168,8 @@ class ProductSearchClient {
   /// @param parent  Required. The project from which ProductSets should be
   /// listed.
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -177,7 +179,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
   StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists ProductSets in an unspecified order.
@@ -189,7 +191,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::ListProductSetsRequest,google/cloud/vision/v1/product_search_service.proto#L606}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -200,7 +203,7 @@ class ProductSearchClient {
   ///
   StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
       google::cloud::vision::v1::ListProductSetsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets information associated with a ProductSet.
@@ -212,7 +215,8 @@ class ProductSearchClient {
   /// @param name  Required. Resource name of the ProductSet to get.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -222,7 +226,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets information associated with a ProductSet.
@@ -233,7 +237,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::GetProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L635}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -244,7 +249,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
       google::cloud::vision::v1::GetProductSetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Makes changes to a ProductSet resource.
@@ -263,7 +268,8 @@ class ProductSearchClient {
   ///  update.
   ///  If update_mask isn't specified, all mutable fields are to be updated.
   ///  Valid mask path is `display_name`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -274,7 +280,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::ProductSet const& product_set,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Makes changes to a ProductSet resource.
@@ -288,7 +294,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::UpdateProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L649}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
@@ -299,7 +306,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::UpdateProductSetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Permanently deletes a ProductSet. Products and ReferenceImages in the
@@ -310,12 +317,13 @@ class ProductSearchClient {
   /// @param name  Required. Resource name of the ProductSet to delete.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.DeleteProductSetRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
   ///
-  Status DeleteProductSet(std::string const& name, Options options = {});
+  Status DeleteProductSet(std::string const& name, Options opts = {});
 
   ///
   /// Permanently deletes a ProductSet. Products and ReferenceImages in the
@@ -325,14 +333,15 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::DeleteProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L661}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.DeleteProductSetRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
   ///
   Status DeleteProductSet(
       google::cloud::vision::v1::DeleteProductSetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates and returns a new product resource.
@@ -354,7 +363,8 @@ class ProductSearchClient {
   ///  attempt to use this value as the resource id. If it is already in use, an
   ///  error is returned with code ALREADY_EXISTS. Must be at most 128
   ///  characters long. It cannot contain the character `/`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -366,7 +376,7 @@ class ProductSearchClient {
   StatusOr<google::cloud::vision::v1::Product> CreateProduct(
       std::string const& parent,
       google::cloud::vision::v1::Product const& product,
-      std::string const& product_id, Options options = {});
+      std::string const& product_id, Options opts = {});
 
   ///
   /// Creates and returns a new product resource.
@@ -380,7 +390,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::CreateProductRequest,google/cloud/vision/v1/product_search_service.proto#L489}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -391,7 +402,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::Product> CreateProduct(
       google::cloud::vision::v1::CreateProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists products in an unspecified order.
@@ -405,7 +416,8 @@ class ProductSearchClient {
   /// should be listed.
   ///  Format:
   ///  `projects/PROJECT_ID/locations/LOC_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -415,7 +427,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
   StreamRange<google::cloud::vision::v1::Product> ListProducts(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists products in an unspecified order.
@@ -427,7 +439,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::ListProductsRequest,google/cloud/vision/v1/product_search_service.proto#L512}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -438,7 +451,7 @@ class ProductSearchClient {
   ///
   StreamRange<google::cloud::vision::v1::Product> ListProducts(
       google::cloud::vision::v1::ListProductsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets information associated with a Product.
@@ -450,7 +463,8 @@ class ProductSearchClient {
   /// @param name  Required. Resource name of the Product to get.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -460,7 +474,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
   StatusOr<google::cloud::vision::v1::Product> GetProduct(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets information associated with a Product.
@@ -471,7 +485,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::GetProductRequest,google/cloud/vision/v1/product_search_service.proto#L542}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -482,7 +497,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::Product> GetProduct(
       google::cloud::vision::v1::GetProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Makes changes to a Product resource.
@@ -511,7 +526,8 @@ class ProductSearchClient {
   ///  If update_mask isn't specified, all mutable fields are to be updated.
   ///  Valid mask paths include `product_labels`, `display_name`, and
   ///  `description`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -522,7 +538,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::Product const& product,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Makes changes to a Product resource.
@@ -544,7 +560,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::UpdateProductRequest,google/cloud/vision/v1/product_search_service.proto#L556}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -555,7 +572,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::UpdateProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Permanently deletes a product and its reference images.
@@ -567,12 +584,13 @@ class ProductSearchClient {
   /// @param name  Required. Resource name of product to delete.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.DeleteProductRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
   ///
-  Status DeleteProduct(std::string const& name, Options options = {});
+  Status DeleteProduct(std::string const& name, Options opts = {});
 
   ///
   /// Permanently deletes a product and its reference images.
@@ -583,14 +601,15 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::DeleteProductRequest,google/cloud/vision/v1/product_search_service.proto#L570}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.DeleteProductRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
   ///
   Status DeleteProduct(
       google::cloud::vision::v1::DeleteProductRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates and returns a new ReferenceImage resource.
@@ -625,7 +644,8 @@ class ProductSearchClient {
   ///  the server will attempt to use this value as the resource id. If it is
   ///  already in use, an error is returned with code ALREADY_EXISTS. Must be at
   ///  most 128 characters long. It cannot contain the character `/`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
   ///
@@ -637,7 +657,7 @@ class ProductSearchClient {
   StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
       std::string const& parent,
       google::cloud::vision::v1::ReferenceImage const& reference_image,
-      std::string const& reference_image_id, Options options = {});
+      std::string const& reference_image_id, Options opts = {});
 
   ///
   /// Creates and returns a new ReferenceImage resource.
@@ -663,7 +683,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::CreateReferenceImageRequest,google/cloud/vision/v1/product_search_service.proto#L675}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
   ///
@@ -674,7 +695,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
       google::cloud::vision::v1::CreateReferenceImageRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Permanently deletes a reference image.
@@ -688,12 +709,13 @@ class ProductSearchClient {
   /// @param name  Required. The resource name of the reference image to delete.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.DeleteReferenceImageRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L748}
   ///
-  Status DeleteReferenceImage(std::string const& name, Options options = {});
+  Status DeleteReferenceImage(std::string const& name, Options opts = {});
 
   ///
   /// Permanently deletes a reference image.
@@ -706,14 +728,15 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::DeleteReferenceImageRequest,google/cloud/vision/v1/product_search_service.proto#L748}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.DeleteReferenceImageRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L748}
   ///
   Status DeleteReferenceImage(
       google::cloud::vision::v1::DeleteReferenceImageRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists reference images.
@@ -728,7 +751,8 @@ class ProductSearchClient {
   /// reference images.
   ///  Format is
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
   ///
@@ -738,7 +762,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
   StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists reference images.
@@ -751,7 +775,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::ListReferenceImagesRequest,google/cloud/vision/v1/product_search_service.proto#L699}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
   ///
@@ -762,7 +787,7 @@ class ProductSearchClient {
   ///
   StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
       google::cloud::vision::v1::ListReferenceImagesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets information associated with a ReferenceImage.
@@ -774,7 +799,8 @@ class ProductSearchClient {
   /// @param name  Required. The resource name of the ReferenceImage to get.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
   ///
@@ -784,7 +810,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
   StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets information associated with a ReferenceImage.
@@ -795,7 +821,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::GetReferenceImageRequest,google/cloud/vision/v1/product_search_service.proto#L734}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
   ///
@@ -806,7 +833,7 @@ class ProductSearchClient {
   ///
   StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
       google::cloud::vision::v1::GetReferenceImageRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Adds a Product to the specified ProductSet. If the Product is already
@@ -825,14 +852,14 @@ class ProductSearchClient {
   /// this ProductSet.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.AddProductToProductSetRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L762}
   ///
   Status AddProductToProductSet(std::string const& name,
-                                std::string const& product,
-                                Options options = {});
+                                std::string const& product, Options opts = {});
 
   ///
   /// Adds a Product to the specified ProductSet. If the Product is already
@@ -846,14 +873,15 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::AddProductToProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L762}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.AddProductToProductSetRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L762}
   ///
   Status AddProductToProductSet(
       google::cloud::vision::v1::AddProductToProductSetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Removes a Product from the specified ProductSet.
@@ -865,21 +893,23 @@ class ProductSearchClient {
   /// from this ProductSet.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L787}
   ///
   Status RemoveProductFromProductSet(std::string const& name,
                                      std::string const& product,
-                                     Options options = {});
+                                     Options opts = {});
 
   ///
   /// Removes a Product from the specified ProductSet.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::RemoveProductFromProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L787}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L787}
@@ -887,7 +917,7 @@ class ProductSearchClient {
   Status RemoveProductFromProductSet(
       google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists the Products in a ProductSet, in an unspecified order. If the
@@ -903,7 +933,8 @@ class ProductSearchClient {
   /// Products.
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -913,7 +944,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
   StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Lists the Products in a ProductSet, in an unspecified order. If the
@@ -927,7 +958,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::ListProductsInProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L812}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
@@ -938,7 +970,7 @@ class ProductSearchClient {
   ///
   StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
       google::cloud::vision::v1::ListProductsInProductSetRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Asynchronous API that imports a list of reference images to specified
@@ -957,7 +989,8 @@ class ProductSearchClient {
   /// imported.
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param input_config  Required. The input content for the list of requests.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsResponse,google/cloud/vision/v1/product_search_service.proto#L939}
   ///
@@ -971,7 +1004,7 @@ class ProductSearchClient {
       std::string const& parent,
       google::cloud::vision::v1::ImportProductSetsInputConfig const&
           input_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Asynchronous API that imports a list of reference images to specified
@@ -988,7 +1021,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsRequest,google/cloud/vision/v1/product_search_service.proto#L919}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsResponse,google/cloud/vision/v1/product_search_service.proto#L939}
   ///
@@ -1000,7 +1034,7 @@ class ProductSearchClient {
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
   ImportProductSets(
       google::cloud::vision::v1::ImportProductSetsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Asynchronous API to delete all Products in a ProductSet or all Products
@@ -1031,7 +1065,8 @@ class ProductSearchClient {
   /// @param parent  Required. The project and location in which the Products
   /// should be deleted.
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
   ///
@@ -1041,7 +1076,7 @@ class ProductSearchClient {
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
   ///
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts(std::string const& parent, Options options = {});
+  PurgeProducts(std::string const& parent, Options opts = {});
 
   ///
   /// Asynchronous API to delete all Products in a ProductSet or all Products
@@ -1071,7 +1106,8 @@ class ProductSearchClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::PurgeProductsRequest,google/cloud/vision/v1/product_search_service.proto#L998}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
   ///
@@ -1082,7 +1118,7 @@ class ProductSearchClient {
   ///
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request,
-                Options options = {});
+                Options opts = {});
 
  private:
   std::shared_ptr<ProductSearchConnection> connection_;

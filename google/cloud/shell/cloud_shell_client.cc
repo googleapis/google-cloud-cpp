@@ -26,18 +26,16 @@ namespace shell {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudShellServiceClient::CloudShellServiceClient(
-    std::shared_ptr<CloudShellServiceConnection> connection, Options options)
+    std::shared_ptr<CloudShellServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), shell_internal::CloudShellServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), shell_internal::CloudShellServiceDefaultOptions(
+                               connection_->options()))) {}
 CloudShellServiceClient::~CloudShellServiceClient() = default;
 
 StatusOr<google::cloud::shell::v1::Environment>
-CloudShellServiceClient::GetEnvironment(std::string const& name,
-                                        Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudShellServiceClient::GetEnvironment(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::shell::v1::GetEnvironmentRequest request;
   request.set_name(name);
   return connection_->GetEnvironment(request);
@@ -46,45 +44,40 @@ CloudShellServiceClient::GetEnvironment(std::string const& name,
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceClient::GetEnvironment(
     google::cloud::shell::v1::GetEnvironmentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEnvironment(request);
 }
 
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceClient::StartEnvironment(
     google::cloud::shell::v1::StartEnvironmentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartEnvironment(request);
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceClient::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AuthorizeEnvironment(request);
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceClient::AddPublicKey(
     google::cloud::shell::v1::AddPublicKeyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddPublicKey(request);
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceClient::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemovePublicKey(request);
 }
 

@@ -65,7 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TraceServiceClient {
  public:
   explicit TraceServiceClient(
-      std::shared_ptr<TraceServiceConnection> connection, Options options = {});
+      std::shared_ptr<TraceServiceConnection> connection, Options opts = {});
   ~TraceServiceClient();
 
   //@{
@@ -98,7 +98,8 @@ class TraceServiceClient {
   /// @param spans  Required. A list of new spans. The span names must not match
   /// existing
   ///  spans, or the results are undefined.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
   /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L66}
@@ -106,7 +107,7 @@ class TraceServiceClient {
   Status BatchWriteSpans(
       std::string const& name,
       std::vector<google::devtools::cloudtrace::v2::Span> const& spans,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sends new spans to new or existing traces. You cannot update
@@ -114,21 +115,23 @@ class TraceServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudtrace::v2::BatchWriteSpansRequest,google/devtools/cloudtrace/v2/tracing.proto#L66}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
   /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L66}
   ///
   Status BatchWriteSpans(
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new span.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L40}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L40}
   ///
@@ -138,8 +141,7 @@ class TraceServiceClient {
   /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L40}
   ///
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      google::devtools::cloudtrace::v2::Span const& request,
-      Options options = {});
+      google::devtools::cloudtrace::v2::Span const& request, Options opts = {});
 
  private:
   std::shared_ptr<TraceServiceConnection> connection_;

@@ -14,9 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(ProtobufWithTargets REQUIRED)
-find_package(gRPC REQUIRED)
-
 # Sometimes (this happens often with vcpkg) protobuf is installed in a non-
 # standard directory. We need to find out where, and then add that directory to
 # the search path for protos.

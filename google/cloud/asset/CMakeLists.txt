@@ -38,10 +38,6 @@ set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/google/cloud/accesscontextmanager"
     "${PROJECT_BINARY_DIR}/google/cloud/osconfig")
 
-find_package(gRPC REQUIRED)
-find_package(ProtobufWithTargets REQUIRED)
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleCloudCppCommon)
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE

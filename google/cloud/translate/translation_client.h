@@ -64,7 +64,7 @@ class TranslationServiceClient {
  public:
   explicit TranslationServiceClient(
       std::shared_ptr<TranslationServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~TranslationServiceClient();
 
   //@{
@@ -107,7 +107,8 @@ class TranslationServiceClient {
   /// @param contents  Required. The content of the input in string format.
   ///  We recommend the total content be less than 30k codepoints. The max
   ///  length of this field is 1024. Use BatchTranslateText for larger text.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::TranslateTextResponse,google/cloud/translate/v3/translation_service.proto#L279}
   ///
@@ -118,7 +119,7 @@ class TranslationServiceClient {
   ///
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
       std::string const& parent, std::string const& target_language_code,
-      std::vector<std::string> const& contents, Options options = {});
+      std::vector<std::string> const& contents, Options opts = {});
 
   ///
   /// Translates input text and returns translated text.
@@ -159,7 +160,8 @@ class TranslationServiceClient {
   /// @param contents  Required. The content of the input in string format.
   ///  We recommend the total content be less than 30k codepoints. The max
   ///  length of this field is 1024. Use BatchTranslateText for larger text.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::TranslateTextResponse,google/cloud/translate/v3/translation_service.proto#L279}
   ///
@@ -172,14 +174,15 @@ class TranslationServiceClient {
       std::string const& parent, std::string const& model,
       std::string const& mime_type, std::string const& source_language_code,
       std::string const& target_language_code,
-      std::vector<std::string> const& contents, Options options = {});
+      std::vector<std::string> const& contents, Options opts = {});
 
   ///
   /// Translates input text and returns translated text.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::TranslateTextRequest,google/cloud/translate/v3/translation_service.proto#L200}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::TranslateTextResponse,google/cloud/translate/v3/translation_service.proto#L279}
   ///
@@ -190,7 +193,7 @@ class TranslationServiceClient {
   ///
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
       google::cloud::translation::v3::TranslateTextRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Detects the language of text within a request.
@@ -214,7 +217,8 @@ class TranslationServiceClient {
   /// "text/html",
   ///  "text/plain". If left blank, the MIME type defaults to "text/html".
   /// @param content  The content of the input stored as a string.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::DetectLanguageResponse,google/cloud/translate/v3/translation_service.proto#L384}
   ///
@@ -226,14 +230,15 @@ class TranslationServiceClient {
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
   DetectLanguage(std::string const& parent, std::string const& model,
                  std::string const& mime_type, std::string const& content,
-                 Options options = {});
+                 Options opts = {});
 
   ///
   /// Detects the language of text within a request.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::DetectLanguageRequest,google/cloud/translate/v3/translation_service.proto#L321}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::DetectLanguageResponse,google/cloud/translate/v3/translation_service.proto#L384}
   ///
@@ -245,7 +250,7 @@ class TranslationServiceClient {
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
   DetectLanguage(
       google::cloud::translation::v3::DetectLanguageRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns a list of supported languages for translation.
@@ -272,7 +277,8 @@ class TranslationServiceClient {
   /// localized, human readable names
   ///  of supported languages. If missing, then display names are not returned
   ///  in a response.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::SupportedLanguages,google/cloud/translate/v3/translation_service.proto#L434}
   ///
@@ -284,14 +290,15 @@ class TranslationServiceClient {
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
   GetSupportedLanguages(std::string const& parent, std::string const& model,
                         std::string const& display_language_code,
-                        Options options = {});
+                        Options opts = {});
 
   ///
   /// Returns a list of supported languages for translation.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::GetSupportedLanguagesRequest,google/cloud/translate/v3/translation_service.proto#L391}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::SupportedLanguages,google/cloud/translate/v3/translation_service.proto#L434}
   ///
@@ -304,14 +311,15 @@ class TranslationServiceClient {
   GetSupportedLanguages(
       google::cloud::translation::v3::GetSupportedLanguagesRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Translates documents in synchronous mode.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::TranslateDocumentRequest,google/cloud/translate/v3/translation_service.proto#L686}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::TranslateDocumentResponse,google/cloud/translate/v3/translation_service.proto#L777}
   ///
@@ -323,7 +331,7 @@ class TranslationServiceClient {
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
   TranslateDocument(
       google::cloud::translation::v3::TranslateDocumentRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Translates a large volume of text in asynchronous batch mode.
@@ -336,7 +344,8 @@ class TranslationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::BatchTranslateTextRequest,google/cloud/translate/v3/translation_service.proto#L801}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::BatchTranslateResponse,google/cloud/translate/v3/translation_service.proto#L921}
   ///
@@ -348,7 +357,7 @@ class TranslationServiceClient {
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
   BatchTranslateText(
       google::cloud::translation::v3::BatchTranslateTextRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Translates a large volume of document in asynchronous batch mode.
@@ -379,7 +388,8 @@ class TranslationServiceClient {
   /// @param output_config  Required. Output configuration.
   ///  If 2 input configs match to the same file (that is, same input path),
   ///  we don't generate output for duplicate inputs.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::BatchTranslateDocumentResponse,google/cloud/translate/v3/translation_service.proto#L1359}
   ///
@@ -398,7 +408,7 @@ class TranslationServiceClient {
           input_configs,
       google::cloud::translation::v3::BatchDocumentOutputConfig const&
           output_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Translates a large volume of document in asynchronous batch mode.
@@ -411,7 +421,8 @@ class TranslationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::BatchTranslateDocumentRequest,google/cloud/translate/v3/translation_service.proto#L1199}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::BatchTranslateDocumentResponse,google/cloud/translate/v3/translation_service.proto#L1359}
   ///
@@ -425,7 +436,7 @@ class TranslationServiceClient {
   BatchTranslateDocument(
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a glossary and returns the long-running operation. Returns
@@ -433,7 +444,8 @@ class TranslationServiceClient {
   ///
   /// @param parent  Required. The project name.
   /// @param glossary  Required. The glossary to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L970}
   ///
@@ -445,7 +457,7 @@ class TranslationServiceClient {
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
       std::string const& parent,
       google::cloud::translation::v3::Glossary const& glossary,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a glossary and returns the long-running operation. Returns
@@ -453,7 +465,8 @@ class TranslationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::CreateGlossaryRequest,google/cloud/translate/v3/translation_service.proto#L1025}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L970}
   ///
@@ -464,7 +477,7 @@ class TranslationServiceClient {
   ///
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
       google::cloud::translation::v3::CreateGlossaryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists glossaries in a project. Returns NOT_FOUND, if the project doesn't
@@ -472,7 +485,8 @@ class TranslationServiceClient {
   ///
   /// @param parent  Required. The name of the project from which to list all of
   /// the glossaries.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L970}
   ///
@@ -482,7 +496,7 @@ class TranslationServiceClient {
   /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L970}
   ///
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists glossaries in a project. Returns NOT_FOUND, if the project doesn't
@@ -490,7 +504,8 @@ class TranslationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::ListGlossariesRequest,google/cloud/translate/v3/translation_service.proto#L1061}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L970}
   ///
@@ -501,14 +516,15 @@ class TranslationServiceClient {
   ///
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
       google::cloud::translation::v3::ListGlossariesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a glossary. Returns NOT_FOUND, if the glossary doesn't
   /// exist.
   ///
   /// @param name  Required. The name of the glossary to retrieve.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L970}
   ///
@@ -518,7 +534,7 @@ class TranslationServiceClient {
   /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L970}
   ///
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a glossary. Returns NOT_FOUND, if the glossary doesn't
@@ -526,7 +542,8 @@ class TranslationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::GetGlossaryRequest,google/cloud/translate/v3/translation_service.proto#L1039}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L970}
   ///
@@ -537,7 +554,7 @@ class TranslationServiceClient {
   ///
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
       google::cloud::translation::v3::GetGlossaryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a glossary, or cancels glossary construction
@@ -545,7 +562,8 @@ class TranslationServiceClient {
   /// Returns NOT_FOUND, if the glossary doesn't exist.
   ///
   /// @param name  Required. The name of the glossary to delete.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::DeleteGlossaryResponse,google/cloud/translate/v3/translation_service.proto#L1185}
   ///
@@ -555,7 +573,7 @@ class TranslationServiceClient {
   /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1185}
   ///
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(std::string const& name, Options options = {});
+  DeleteGlossary(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a glossary, or cancels glossary construction
@@ -564,7 +582,8 @@ class TranslationServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::translation::v3::DeleteGlossaryRequest,google/cloud/translate/v3/translation_service.proto#L1050}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::DeleteGlossaryResponse,google/cloud/translate/v3/translation_service.proto#L1185}
   ///
@@ -576,7 +595,7 @@ class TranslationServiceClient {
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<TranslationServiceConnection> connection_;

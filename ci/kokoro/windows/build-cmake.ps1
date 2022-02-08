@@ -32,18 +32,18 @@ if ($missing.count -ge 1) {
 
 $binary_dir="cmake-out\msvc-${env:VCPKG_TRIPLET}"
 # By default assume "module", use the configuration parameters and build in the `cmake-out` directory.
-$cmake_flags=@("-G$env:GENERATOR", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-B${binary_dir}")
+$cmake_args=@("-G$env:GENERATOR", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-B${binary_dir}")
 
 # Setup the environment for vcpkg:
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
-$cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"${project_root}\cmake-out\vcpkg\scripts\buildsystems\vcpkg.cmake`""
-$cmake_flags += "-DVCPKG_TARGET_TRIPLET=$env:VCPKG_TRIPLET"
-$cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
-$cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
+$cmake_args += "-DCMAKE_TOOLCHAIN_FILE=`"${project_root}\cmake-out\vcpkg\scripts\buildsystems\vcpkg.cmake`""
+$cmake_args += "-DVCPKG_TARGET_TRIPLET=$env:VCPKG_TRIPLET"
+$cmake_args += "-DCMAKE_C_COMPILER=cl.exe"
+$cmake_args += "-DCMAKE_CXX_COMPILER=cl.exe"
 
 # Configure CMake and create the build directory.
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_flags"
-cmake $cmake_flags
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake with $cmake_args"
+cmake $cmake_args
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "cmake config failed with exit code $LastExitCode"
     Get-Content -Path "${binary_dir}/vcpkg-manifest-install.log"
@@ -88,8 +88,13 @@ if (Test-Path env:RUNNING_CI) {
 # Get the number of processors to parallelize the tests
 $NCPU=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
 
-$ctest_flags = @("--output-on-failure", "-j", $NCPU, "-C", $env:CONFIG)
-ctest $ctest_flags -LE integration-test
+$ctest_args = @(
+    "--output-on-failure",
+    "-j", $NCPU,
+    "-C", $env:CONFIG,
+    "--progress"
+)
+ctest $ctest_args -LE integration-test
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"
     Exit ${LastExitCode}
@@ -97,7 +102,7 @@ if ($LastExitCode) {
 
 if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
-    ctest $ctest_flags -L integration-test
+    ctest $ctest_args -L integration-test
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "Integration tests failed with exit code $LastExitCode"
         Exit ${LastExitCode}
@@ -142,7 +147,7 @@ if (Integration-Tests-Enabled) {
     Set-Location "${project_root}"
     Set-Location "${binary_dir}"
     # TODO(6062) - restore the GCS+gRPC tests (i.e. remove storage_grpc_ from the -E option)
-    ctest $ctest_flags `
+    ctest $ctest_args `
         -L 'integration-test-production' `
         -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test|storage_grpc_)'
     if ($LastExitCode) {

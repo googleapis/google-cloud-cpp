@@ -58,17 +58,11 @@ ServiceUsageConnection::GetService(
 }
 
 StreamRange<google::api::serviceusage::v1::Service>
-ServiceUsageConnection::ListServices(
-    google::api::serviceusage::v1::ListServicesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::serviceusage::v1::Service>>(
-      std::move(request),
-      [](google::api::serviceusage::v1::ListServicesRequest const&) {
-        return StatusOr<google::api::serviceusage::v1::ListServicesResponse>{};
-      },
-      [](google::api::serviceusage::v1::ListServicesResponse const&) {
-        return std::vector<google::api::serviceusage::v1::Service>();
-      });
+    ServiceUsageConnection::ListServices(
+        google::api::serviceusage::v1::
+            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::serviceusage::v1::Service>>();
 }
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>

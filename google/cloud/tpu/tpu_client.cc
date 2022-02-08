@@ -25,50 +25,45 @@ namespace cloud {
 namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TpuClient::TpuClient(std::shared_ptr<TpuConnection> connection, Options options)
+TpuClient::TpuClient(std::shared_ptr<TpuConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           tpu_internal::TpuDefaultOptions(connection_->options()))) {}
 TpuClient::~TpuClient() = default;
 
 StreamRange<google::cloud::tpu::v1::Node> TpuClient::ListNodes(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::ListNodesRequest request;
   request.set_parent(parent);
   return connection_->ListNodes(request);
 }
 
 StreamRange<google::cloud::tpu::v1::Node> TpuClient::ListNodes(
-    google::cloud::tpu::v1::ListNodesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::ListNodesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNodes(std::move(request));
 }
 
 StatusOr<google::cloud::tpu::v1::Node> TpuClient::GetNode(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::GetNodeRequest request;
   request.set_name(name);
   return connection_->GetNode(request);
 }
 
 StatusOr<google::cloud::tpu::v1::Node> TpuClient::GetNode(
-    google::cloud::tpu::v1::GetNodeRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::GetNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNode(request);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
     std::string const& parent, google::cloud::tpu::v1::Node const& node,
-    std::string const& node_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& node_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::CreateNodeRequest request;
   request.set_parent(parent);
   *request.mutable_node() = node;
@@ -77,54 +72,46 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
-    google::cloud::tpu::v1::CreateNodeRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::CreateNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNode(request);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::DeleteNodeRequest request;
   request.set_name(name);
   return connection_->DeleteNode(request);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
-    google::cloud::tpu::v1::DeleteNodeRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::DeleteNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNode(request);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::ReimageNode(
-    google::cloud::tpu::v1::ReimageNodeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::ReimageNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReimageNode(request);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StopNode(
-    google::cloud::tpu::v1::StopNodeRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::StopNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopNode(request);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StartNode(
-    google::cloud::tpu::v1::StartNodeRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::StartNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartNode(request);
 }
 
 StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
-TpuClient::ListTensorFlowVersions(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+TpuClient::ListTensorFlowVersions(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::ListTensorFlowVersionsRequest request;
   request.set_parent(parent);
   return connection_->ListTensorFlowVersions(request);
@@ -133,16 +120,14 @@ TpuClient::ListTensorFlowVersions(std::string const& parent, Options options) {
 StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
 TpuClient::ListTensorFlowVersions(
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTensorFlowVersions(std::move(request));
 }
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
-TpuClient::GetTensorFlowVersion(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+TpuClient::GetTensorFlowVersion(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::GetTensorFlowVersionRequest request;
   request.set_name(name);
   return connection_->GetTensorFlowVersion(request);
@@ -151,16 +136,14 @@ TpuClient::GetTensorFlowVersion(std::string const& name, Options options) {
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
 TpuClient::GetTensorFlowVersion(
     google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTensorFlowVersion(request);
 }
 
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
-TpuClient::ListAcceleratorTypes(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+TpuClient::ListAcceleratorTypes(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::ListAcceleratorTypesRequest request;
   request.set_parent(parent);
   return connection_->ListAcceleratorTypes(request);
@@ -168,17 +151,14 @@ TpuClient::ListAcceleratorTypes(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
 TpuClient::ListAcceleratorTypes(
-    google::cloud::tpu::v1::ListAcceleratorTypesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::tpu::v1::ListAcceleratorTypesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAcceleratorTypes(std::move(request));
 }
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType> TpuClient::GetAcceleratorType(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v1::GetAcceleratorTypeRequest request;
   request.set_name(name);
   return connection_->GetAcceleratorType(request);
@@ -186,9 +166,8 @@ StatusOr<google::cloud::tpu::v1::AcceleratorType> TpuClient::GetAcceleratorType(
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType> TpuClient::GetAcceleratorType(
     google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAcceleratorType(request);
 }
 

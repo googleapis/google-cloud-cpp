@@ -26,18 +26,16 @@ namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TextToSpeechClient::TextToSpeechClient(
-    std::shared_ptr<TextToSpeechConnection> connection, Options options)
+    std::shared_ptr<TextToSpeechConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), texttospeech_internal::TextToSpeechDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), texttospeech_internal::TextToSpeechDefaultOptions(
+                               connection_->options()))) {}
 TextToSpeechClient::~TextToSpeechClient() = default;
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
-TextToSpeechClient::ListVoices(std::string const& language_code,
-                               Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+TextToSpeechClient::ListVoices(std::string const& language_code, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::texttospeech::v1::ListVoicesRequest request;
   request.set_language_code(language_code);
   return connection_->ListVoices(request);
@@ -46,9 +44,8 @@ TextToSpeechClient::ListVoices(std::string const& language_code,
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechClient::ListVoices(
     google::cloud::texttospeech::v1::ListVoicesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVoices(request);
 }
 
@@ -57,9 +54,8 @@ TextToSpeechClient::SynthesizeSpeech(
     google::cloud::texttospeech::v1::SynthesisInput const& input,
     google::cloud::texttospeech::v1::VoiceSelectionParams const& voice,
     google::cloud::texttospeech::v1::AudioConfig const& audio_config,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::texttospeech::v1::SynthesizeSpeechRequest request;
   *request.mutable_input() = input;
   *request.mutable_voice() = voice;
@@ -70,9 +66,8 @@ TextToSpeechClient::SynthesizeSpeech(
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechClient::SynthesizeSpeech(
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SynthesizeSpeech(request);
 }
 

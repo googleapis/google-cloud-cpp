@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigQueryReadClient {
  public:
   explicit BigQueryReadClient(
-      std::shared_ptr<BigQueryReadConnection> connection, Options options = {});
+      std::shared_ptr<BigQueryReadConnection> connection, Options opts = {});
   ~BigQueryReadClient();
 
   //@{
@@ -119,7 +119,8 @@ class BigQueryReadClient {
   ///  table. Error will be returned if the max count is greater than the
   ///  current system max limit of 1,000. Streams must be read starting from
   ///  offset 0.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
@@ -131,7 +132,7 @@ class BigQueryReadClient {
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       std::string const& parent,
       google::cloud::bigquery::storage::v1::ReadSession const& read_session,
-      std::int32_t max_stream_count, Options options = {});
+      std::int32_t max_stream_count, Options opts = {});
 
   ///
   /// Creates a new read session. A read session divides the contents of a
@@ -156,7 +157,8 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::CreateReadSessionRequest,google/cloud/bigquery/storage/v1/storage.proto#L229}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L47}
   ///
@@ -168,7 +170,7 @@ class BigQueryReadClient {
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Reads rows from the stream in the format prescribed by the ReadSession.
@@ -184,7 +186,8 @@ class BigQueryReadClient {
   /// from Read.
   ///  Requesting a larger offset is undefined. If not specified, start reading
   ///  from offset zero.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
@@ -194,8 +197,7 @@ class BigQueryReadClient {
   /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
-      std::string const& read_stream, std::int64_t offset,
-      Options options = {});
+      std::string const& read_stream, std::int64_t offset, Options opts = {});
 
   ///
   /// Reads rows from the stream in the format prescribed by the ReadSession.
@@ -208,7 +210,8 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L254}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L304}
   ///
@@ -219,7 +222,7 @@ class BigQueryReadClient {
   ///
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       google::cloud::bigquery::storage::v1::ReadRowsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Splits a given `ReadStream` into two `ReadStream` objects. These
@@ -237,7 +240,8 @@ class BigQueryReadClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L339}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L359}
   ///
@@ -250,7 +254,7 @@ class BigQueryReadClient {
   SplitReadStream(
       google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<BigQueryReadConnection> connection_;

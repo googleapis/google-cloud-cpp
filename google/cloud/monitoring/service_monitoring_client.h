@@ -66,7 +66,7 @@ class ServiceMonitoringServiceClient {
  public:
   explicit ServiceMonitoringServiceClient(
       std::shared_ptr<ServiceMonitoringServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ServiceMonitoringServiceClient();
 
   //@{
@@ -100,7 +100,8 @@ class ServiceMonitoringServiceClient {
   ///  the parent workspace. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param service  Required. The `Service` to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -111,14 +112,15 @@ class ServiceMonitoringServiceClient {
   ///
   StatusOr<google::monitoring::v3::Service> CreateService(
       std::string const& parent, google::monitoring::v3::Service const& service,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a `Service`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::CreateServiceRequest,google/monitoring/v3/service_service.proto#L132}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -129,14 +131,15 @@ class ServiceMonitoringServiceClient {
   ///
   StatusOr<google::monitoring::v3::Service> CreateService(
       google::monitoring::v3::CreateServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get the named `Service`.
   ///
   /// @param name  Required. Resource name of the `Service`. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -146,14 +149,15 @@ class ServiceMonitoringServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
   ///
   StatusOr<google::monitoring::v3::Service> GetService(std::string const& name,
-                                                       Options options = {});
+                                                       Options opts = {});
 
   ///
   /// Get the named `Service`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetServiceRequest,google/monitoring/v3/service_service.proto#L153}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -164,7 +168,7 @@ class ServiceMonitoringServiceClient {
   ///
   StatusOr<google::monitoring::v3::Service> GetService(
       google::monitoring::v3::GetServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// List `Service`s for this workspace.
@@ -175,7 +179,8 @@ class ServiceMonitoringServiceClient {
   ///  Monitoring Workspace. The formats are:
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -185,14 +190,15 @@ class ServiceMonitoringServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
   ///
   StreamRange<google::monitoring::v3::Service> ListServices(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// List `Service`s for this workspace.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListServicesRequest,google/monitoring/v3/service_service.proto#L166}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -202,15 +208,15 @@ class ServiceMonitoringServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
   ///
   StreamRange<google::monitoring::v3::Service> ListServices(
-      google::monitoring::v3::ListServicesRequest request,
-      Options options = {});
+      google::monitoring::v3::ListServicesRequest request, Options opts = {});
 
   ///
   /// Update this `Service`.
   ///
   /// @param service  Required. The `Service` to draw updates from.
   ///  The given `name` specifies the resource to update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -220,14 +226,15 @@ class ServiceMonitoringServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
   ///
   StatusOr<google::monitoring::v3::Service> UpdateService(
-      google::monitoring::v3::Service const& service, Options options = {});
+      google::monitoring::v3::Service const& service, Options opts = {});
 
   ///
   /// Update this `Service`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::UpdateServiceRequest,google/monitoring/v3/service_service.proto#L223}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
   ///
@@ -238,7 +245,7 @@ class ServiceMonitoringServiceClient {
   ///
   StatusOr<google::monitoring::v3::Service> UpdateService(
       google::monitoring::v3::UpdateServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Soft delete this `Service`.
@@ -246,26 +253,28 @@ class ServiceMonitoringServiceClient {
   /// @param name  Required. Resource name of the `Service` to delete. The
   /// format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
   ///
-  Status DeleteService(std::string const& name, Options options = {});
+  Status DeleteService(std::string const& name, Options opts = {});
 
   ///
   /// Soft delete this `Service`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::DeleteServiceRequest,google/monitoring/v3/service_service.proto#L233}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
   ///
   Status DeleteService(
       google::monitoring::v3::DeleteServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a `ServiceLevelObjective` for the given `Service`.
@@ -277,7 +286,8 @@ class ServiceMonitoringServiceClient {
   /// create.
   ///  The provided `name` will be respected if no `ServiceLevelObjective`
   ///  exists with this name.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -291,14 +301,15 @@ class ServiceMonitoringServiceClient {
       std::string const& parent,
       google::monitoring::v3::ServiceLevelObjective const&
           service_level_objective,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a `ServiceLevelObjective` for the given `Service`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::CreateServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L246}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -310,7 +321,7 @@ class ServiceMonitoringServiceClient {
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
       google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get a `ServiceLevelObjective` by name.
@@ -318,7 +329,8 @@ class ServiceMonitoringServiceClient {
   /// @param name  Required. Resource name of the `ServiceLevelObjective` to
   /// get. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -328,14 +340,15 @@ class ServiceMonitoringServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  GetServiceLevelObjective(std::string const& name, Options options = {});
+  GetServiceLevelObjective(std::string const& name, Options opts = {});
 
   ///
   /// Get a `ServiceLevelObjective` by name.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L269}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -347,7 +360,7 @@ class ServiceMonitoringServiceClient {
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(
       google::monitoring::v3::GetServiceLevelObjectiveRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// List the `ServiceLevelObjective`s for the given `Service`.
@@ -357,7 +370,8 @@ class ServiceMonitoringServiceClient {
   ///  project or a Monitoring Workspace. The formats are:
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -367,14 +381,15 @@ class ServiceMonitoringServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
   ///
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
-  ListServiceLevelObjectives(std::string const& parent, Options options = {});
+  ListServiceLevelObjectives(std::string const& parent, Options opts = {});
 
   ///
   /// List the `ServiceLevelObjective`s for the given `Service`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListServiceLevelObjectivesRequest,google/monitoring/v3/service_service.proto#L288}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -386,7 +401,7 @@ class ServiceMonitoringServiceClient {
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
   ListServiceLevelObjectives(
       google::monitoring::v3::ListServiceLevelObjectivesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update the given `ServiceLevelObjective`.
@@ -394,7 +409,8 @@ class ServiceMonitoringServiceClient {
   /// @param service_level_objective  Required. The `ServiceLevelObjective` to
   /// draw updates from.
   ///  The given `name` specifies the resource to update.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -407,14 +423,15 @@ class ServiceMonitoringServiceClient {
   UpdateServiceLevelObjective(
       google::monitoring::v3::ServiceLevelObjective const&
           service_level_objective,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update the given `ServiceLevelObjective`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::UpdateServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L332}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
   ///
@@ -426,7 +443,7 @@ class ServiceMonitoringServiceClient {
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
       google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Delete the given `ServiceLevelObjective`.
@@ -434,27 +451,29 @@ class ServiceMonitoringServiceClient {
   /// @param name  Required. Resource name of the `ServiceLevelObjective` to
   /// delete. The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
   ///
   Status DeleteServiceLevelObjective(std::string const& name,
-                                     Options options = {});
+                                     Options opts = {});
 
   ///
   /// Delete the given `ServiceLevelObjective`.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::DeleteServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L342}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
   ///
   Status DeleteServiceLevelObjective(
       google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ServiceMonitoringServiceConnection> connection_;

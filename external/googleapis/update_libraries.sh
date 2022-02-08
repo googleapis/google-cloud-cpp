@@ -23,6 +23,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_cc_grpc"
   )"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
+  ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
   ["appengine"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc" \
@@ -57,6 +58,7 @@ declare -A -r LIBRARIES=(
   ["cloudbuild"]="@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc"
   ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
+  ["contactcenterinsights"]="@com_google_googleapis//google/cloud/contactcenterinsights/v1:contactcenterinsights_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
   ["datacatalog"]="@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc"
@@ -65,6 +67,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_cc_grpc" \
       "@com_google_googleapis//google/cloud/clouddms/logging/v1:logging_cc_grpc"
   )"
+  ["dataproc"]="@com_google_googleapis//google/cloud/dataproc/v1:dataproc_cc_grpc"
   ["debugger"]="@com_google_googleapis//google/devtools/clouddebugger/v2:clouddebugger_cc_grpc"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
   ["dlp"]="@com_google_googleapis//google/privacy/dlp/v2:dlp_cc_grpc"
@@ -127,6 +130,7 @@ declare -A -r LIBRARIES=(
   )"
   ["redis"]="@com_google_googleapis//google/cloud/redis/v1:redis_cc_grpc"
   ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
+  ["resourcesettings"]="@com_google_googleapis//google/cloud/resourcesettings/v1:resourcesettings_cc_grpc"
   ["retail"]="@com_google_googleapis//google/cloud/retail/v2:retail_cc_grpc"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_cc_grpc"
   ["secretmanager"]="$(

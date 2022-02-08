@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EnvironmentsClient {
  public:
   explicit EnvironmentsClient(
-      std::shared_ptr<EnvironmentsConnection> connection, Options options = {});
+      std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
   ~EnvironmentsClient();
 
   //@{
@@ -92,7 +92,8 @@ class EnvironmentsClient {
   /// @param parent  The parent must be of the form
   ///  "projects/{projectId}/locations/{locationId}".
   /// @param environment  The environment to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -107,14 +108,15 @@ class EnvironmentsClient {
       std::string const& parent,
       google::cloud::orchestration::airflow::service::v1::Environment const&
           environment,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new environment.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L92}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -127,14 +129,15 @@ class EnvironmentsClient {
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
                         CreateEnvironmentRequest const& request,
-                    Options options = {});
+                    Options opts = {});
 
   ///
   /// Get an existing environment.
   ///
   /// @param name  The resource name of the environment to get, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -144,14 +147,15 @@ class EnvironmentsClient {
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(std::string const& name, Options options = {});
+  GetEnvironment(std::string const& name, Options opts = {});
 
   ///
   /// Get an existing environment.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L102}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -163,7 +167,7 @@ class EnvironmentsClient {
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(google::cloud::orchestration::airflow::service::v1::
                      GetEnvironmentRequest const& request,
-                 Options options = {});
+                 Options opts = {});
 
   ///
   /// List environments.
@@ -171,7 +175,8 @@ class EnvironmentsClient {
   /// @param parent  List environments in the given project and location, in the
   /// form:
   ///  "projects/{projectId}/locations/{locationId}"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -181,14 +186,15 @@ class EnvironmentsClient {
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-  ListEnvironments(std::string const& parent, Options options = {});
+  ListEnvironments(std::string const& parent, Options opts = {});
 
   ///
   /// List environments.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L109}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -200,7 +206,7 @@ class EnvironmentsClient {
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
   ListEnvironments(google::cloud::orchestration::airflow::service::v1::
                        ListEnvironmentsRequest request,
-                   Options options = {});
+                   Options opts = {});
 
   ///
   /// Update an environment.
@@ -317,7 +323,8 @@ class EnvironmentsClient {
   ///        environment variables  are cleared. It is an error to provide both
   ///        this mask and a mask specifying one or more individual environment
   ///        variables.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -332,14 +339,15 @@ class EnvironmentsClient {
       std::string const& name,
       google::cloud::orchestration::airflow::service::v1::Environment const&
           environment,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Update an environment.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L138}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
   ///
@@ -352,14 +360,15 @@ class EnvironmentsClient {
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
                         UpdateEnvironmentRequest const& request,
-                    Options options = {});
+                    Options opts = {});
 
   ///
   /// Delete an environment.
   ///
   /// @param name  The environment to delete, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L28}
   ///
@@ -370,14 +379,15 @@ class EnvironmentsClient {
   ///
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(std::string const& name, Options options = {});
+  DeleteEnvironment(std::string const& name, Options opts = {});
 
   ///
   /// Delete an environment.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L131}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L28}
   ///
@@ -390,7 +400,7 @@ class EnvironmentsClient {
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
                         DeleteEnvironmentRequest const& request,
-                    Options options = {});
+                    Options opts = {});
 
  private:
   std::shared_ptr<EnvironmentsConnection> connection_;

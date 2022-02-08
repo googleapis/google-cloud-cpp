@@ -106,48 +106,48 @@ DOCKER_FLAG="false"
 SHELL_FLAG="false"
 while true; do
   case "$1" in
-  --build)
-    BUILD_FLAG="$2"
-    shift 2
-    ;;
-  --distro)
-    DISTRO_FLAG="$2"
-    shift 2
-    ;;
-  -t | --trigger)
-    TRIGGER_FLAG="$2"
-    shift 2
-    ;;
-  -c | --cloud)
-    CLOUD_FLAG="$2"
-    shift 2
-    ;;
-  -l | --local)
-    LOCAL_FLAG="true"
-    shift
-    ;;
-  -d | --docker)
-    DOCKER_FLAG="true"
-    shift
-    ;;
-  -s | --docker-shell)
-    DOCKER_FLAG="true"
-    SHELL_FLAG="true"
-    shift
-    ;;
-  --docker-clean)
-    DOCKER_FLAG="true"
-    CLEAN_FLAG="true"
-    shift
-    ;;
-  -h | --help)
-    print_usage
-    exit 0
-    ;;
-  --)
-    shift
-    break
-    ;;
+    --build)
+      BUILD_FLAG="$2"
+      shift 2
+      ;;
+    --distro)
+      DISTRO_FLAG="$2"
+      shift 2
+      ;;
+    -t | --trigger)
+      TRIGGER_FLAG="$2"
+      shift 2
+      ;;
+    -c | --cloud)
+      CLOUD_FLAG="$2"
+      shift 2
+      ;;
+    -l | --local)
+      LOCAL_FLAG="true"
+      shift
+      ;;
+    -d | --docker)
+      DOCKER_FLAG="true"
+      shift
+      ;;
+    -s | --docker-shell)
+      DOCKER_FLAG="true"
+      SHELL_FLAG="true"
+      shift
+      ;;
+    --docker-clean)
+      DOCKER_FLAG="true"
+      CLEAN_FLAG="true"
+      shift
+      ;;
+    -h | --help)
+      print_usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
   esac
 done
 
@@ -287,9 +287,15 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   mkdir -p "${out_cmake}" "${out_home}/.config/gcloud"
   image="gcb-${DISTRO_FLAG}:latest"
   io::log_h2 "Building docker image: ${image}"
-  io::run \
-    docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
-    -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile" ci
+  build_flags=(
+    -t "${image}"
+    "--build-arg=NCPU=$(nproc)"
+    -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile"
+  )
+  if [[ "${TRIGGER_TYPE}" == "manual" ]]; then
+    build_flags+=("--quiet")
+  fi
+  io::run docker build "${build_flags[@]}" ci
   io::log_h2 "Starting docker container: ${image}"
   run_flags=(
     "--interactive"

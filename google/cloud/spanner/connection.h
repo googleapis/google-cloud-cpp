@@ -132,43 +132,43 @@ class Connection {
   virtual Options options() { return Options{}; }
 
   /// Defines the interface for `Client::Read()`
-  virtual RowStream Read(ReadParams) = 0;
+  virtual RowStream Read(ReadParams);
 
   /// Defines the interface for `Client::PartitionRead()`
   virtual StatusOr<std::vector<ReadPartition>> PartitionRead(
-      PartitionReadParams) = 0;
+      PartitionReadParams);
 
   /// Defines the interface for `Client::ExecuteQuery()`
-  virtual RowStream ExecuteQuery(SqlParams) = 0;
+  virtual RowStream ExecuteQuery(SqlParams);
 
   /// Defines the interface for `Client::ExecuteDml()`
-  virtual StatusOr<DmlResult> ExecuteDml(SqlParams) = 0;
+  virtual StatusOr<DmlResult> ExecuteDml(SqlParams);
 
   /// Defines the interface for `Client::ProfileQuery()`
-  virtual ProfileQueryResult ProfileQuery(SqlParams) = 0;
+  virtual ProfileQueryResult ProfileQuery(SqlParams);
 
   /// Defines the interface for `Client::ProfileDml()`
-  virtual StatusOr<ProfileDmlResult> ProfileDml(SqlParams) = 0;
+  virtual StatusOr<ProfileDmlResult> ProfileDml(SqlParams);
 
   /// Defines the interface for `Client::AnalyzeSql()`
-  virtual StatusOr<ExecutionPlan> AnalyzeSql(SqlParams) = 0;
+  virtual StatusOr<ExecutionPlan> AnalyzeSql(SqlParams);
 
   /// Defines the interface for `Client::ExecutePartitionedDml()`
   virtual StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
-      ExecutePartitionedDmlParams) = 0;
+      ExecutePartitionedDmlParams);
 
   /// Defines the interface for `Client::PartitionQuery()`
   virtual StatusOr<std::vector<QueryPartition>> PartitionQuery(
-      PartitionQueryParams) = 0;
+      PartitionQueryParams);
 
   /// Defines the interface for `Client::ExecuteBatchDml()`
-  virtual StatusOr<BatchDmlResult> ExecuteBatchDml(ExecuteBatchDmlParams) = 0;
+  virtual StatusOr<BatchDmlResult> ExecuteBatchDml(ExecuteBatchDmlParams);
 
   /// Defines the interface for `Client::Commit()`
-  virtual StatusOr<CommitResult> Commit(CommitParams) = 0;
+  virtual StatusOr<CommitResult> Commit(CommitParams);
 
   /// Defines the interface for `Client::Rollback()`
-  virtual Status Rollback(RollbackParams) = 0;
+  virtual Status Rollback(RollbackParams);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

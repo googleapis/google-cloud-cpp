@@ -62,7 +62,7 @@ class IdentityAwareProxyAdminServiceClient {
  public:
   explicit IdentityAwareProxyAdminServiceClient(
       std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~IdentityAwareProxyAdminServiceClient();
 
   //@{
@@ -97,7 +97,8 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -107,8 +108,7 @@ class IdentityAwareProxyAdminServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets the access control policy for an Identity-Aware Proxy protected
@@ -118,7 +118,8 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -128,8 +129,7 @@ class IdentityAwareProxyAdminServiceClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the Identity-Aware Proxy
@@ -139,7 +139,8 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -150,14 +151,15 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the IAP settings on a particular IAP protected resource.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::iap::v1::GetIapSettingsRequest,google/cloud/iap/v1/service.proto#L91}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L112}
   ///
@@ -168,7 +170,7 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
       google::cloud::iap::v1::GetIapSettingsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the IAP settings on a particular IAP protected resource. It
@@ -176,7 +178,8 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::iap::v1::UpdateIapSettingsRequest,google/cloud/iap/v1/service.proto#L99}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L112}
   ///
@@ -187,7 +190,7 @@ class IdentityAwareProxyAdminServiceClient {
   ///
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection_;

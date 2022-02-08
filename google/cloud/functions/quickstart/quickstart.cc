@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) try {
 
   auto project_id = std::string(argv[1]);
   auto request = google::cloud::functions::v1::ListFunctionsRequest{};
-  request.set_parent("projects/" + project_id + "locations/-");
+  request.set_parent("projects/" + project_id + "/locations/-");
 
   for (auto r : client.ListFunctions(std::move(request))) {
     if (!r) throw std::runtime_error(r.status().message());

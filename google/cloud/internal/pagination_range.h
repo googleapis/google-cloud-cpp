@@ -184,7 +184,7 @@ Range MakeUnimplementedPaginationRange() {
   using ValueType = typename Range::value_type::value_type;
   return MakeStreamRange<ValueType>(
       []() -> typename StreamReader<ValueType>::result_type {
-        return Status{StatusCode::kUnimplemented, "needs-override"};
+        return Status{StatusCode::kUnimplemented, "not implemented"};
       });
 }
 

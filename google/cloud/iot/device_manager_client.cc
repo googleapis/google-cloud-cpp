@@ -28,10 +28,10 @@ namespace iot {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeviceManagerClient::DeviceManagerClient(
-    std::shared_ptr<DeviceManagerConnection> connection, Options options)
+    std::shared_ptr<DeviceManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           iot_internal::DeviceManagerDefaultOptions(connection_->options()))) {}
 DeviceManagerClient::~DeviceManagerClient() = default;
 
@@ -39,9 +39,8 @@ StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerClient::CreateDeviceRegistry(
     std::string const& parent,
     google::cloud::iot::v1::DeviceRegistry const& device_registry,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::CreateDeviceRegistryRequest request;
   request.set_parent(parent);
   *request.mutable_device_registry() = device_registry;
@@ -51,17 +50,14 @@ DeviceManagerClient::CreateDeviceRegistry(
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerClient::CreateDeviceRegistry(
     google::cloud::iot::v1::CreateDeviceRegistryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeviceRegistry(request);
 }
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
-DeviceManagerClient::GetDeviceRegistry(std::string const& name,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DeviceManagerClient::GetDeviceRegistry(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::GetDeviceRegistryRequest request;
   request.set_name(name);
   return connection_->GetDeviceRegistry(request);
@@ -70,18 +66,16 @@ DeviceManagerClient::GetDeviceRegistry(std::string const& name,
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerClient::GetDeviceRegistry(
     google::cloud::iot::v1::GetDeviceRegistryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDeviceRegistry(request);
 }
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerClient::UpdateDeviceRegistry(
     google::cloud::iot::v1::DeviceRegistry const& device_registry,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::UpdateDeviceRegistryRequest request;
   *request.mutable_device_registry() = device_registry;
   *request.mutable_update_mask() = update_mask;
@@ -91,16 +85,14 @@ DeviceManagerClient::UpdateDeviceRegistry(
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerClient::UpdateDeviceRegistry(
     google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeviceRegistry(request);
 }
 
 Status DeviceManagerClient::DeleteDeviceRegistry(std::string const& name,
-                                                 Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::DeleteDeviceRegistryRequest request;
   request.set_name(name);
   return connection_->DeleteDeviceRegistry(request);
@@ -108,17 +100,15 @@ Status DeviceManagerClient::DeleteDeviceRegistry(std::string const& name,
 
 Status DeviceManagerClient::DeleteDeviceRegistry(
     google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDeviceRegistry(request);
 }
 
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerClient::ListDeviceRegistries(std::string const& parent,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::ListDeviceRegistriesRequest request;
   request.set_parent(parent);
   return connection_->ListDeviceRegistries(request);
@@ -126,18 +116,15 @@ DeviceManagerClient::ListDeviceRegistries(std::string const& parent,
 
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerClient::ListDeviceRegistries(
-    google::cloud::iot::v1::ListDeviceRegistriesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::iot::v1::ListDeviceRegistriesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeviceRegistries(std::move(request));
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::CreateDevice(
     std::string const& parent, google::cloud::iot::v1::Device const& device,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::CreateDeviceRequest request;
   request.set_parent(parent);
   *request.mutable_device() = device;
@@ -145,34 +132,29 @@ StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::CreateDevice(
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::CreateDevice(
-    google::cloud::iot::v1::CreateDeviceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::iot::v1::CreateDeviceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDevice(request);
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::GetDevice(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::GetDeviceRequest request;
   request.set_name(name);
   return connection_->GetDevice(request);
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::GetDevice(
-    google::cloud::iot::v1::GetDeviceRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::iot::v1::GetDeviceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDevice(request);
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::UpdateDevice(
     google::cloud::iot::v1::Device const& device,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::UpdateDeviceRequest request;
   *request.mutable_device() = device;
   *request.mutable_update_mask() = update_mask;
@@ -180,52 +162,44 @@ StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::UpdateDevice(
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerClient::UpdateDevice(
-    google::cloud::iot::v1::UpdateDeviceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::iot::v1::UpdateDeviceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDevice(request);
 }
 
 Status DeviceManagerClient::DeleteDevice(std::string const& name,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::DeleteDeviceRequest request;
   request.set_name(name);
   return connection_->DeleteDevice(request);
 }
 
 Status DeviceManagerClient::DeleteDevice(
-    google::cloud::iot::v1::DeleteDeviceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::iot::v1::DeleteDeviceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDevice(request);
 }
 
 StreamRange<google::cloud::iot::v1::Device> DeviceManagerClient::ListDevices(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::ListDevicesRequest request;
   request.set_parent(parent);
   return connection_->ListDevices(request);
 }
 
 StreamRange<google::cloud::iot::v1::Device> DeviceManagerClient::ListDevices(
-    google::cloud::iot::v1::ListDevicesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::iot::v1::ListDevicesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDevices(std::move(request));
 }
 
 StatusOr<google::cloud::iot::v1::DeviceConfig>
 DeviceManagerClient::ModifyCloudToDeviceConfig(std::string const& name,
                                                std::string const& binary_data,
-                                               Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest request;
   request.set_name(name);
   request.set_binary_data(binary_data);
@@ -235,17 +209,15 @@ DeviceManagerClient::ModifyCloudToDeviceConfig(std::string const& name,
 StatusOr<google::cloud::iot::v1::DeviceConfig>
 DeviceManagerClient::ModifyCloudToDeviceConfig(
     google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ModifyCloudToDeviceConfig(request);
 }
 
 StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
 DeviceManagerClient::ListDeviceConfigVersions(std::string const& name,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::ListDeviceConfigVersionsRequest request;
   request.set_name(name);
   return connection_->ListDeviceConfigVersions(request);
@@ -254,17 +226,14 @@ DeviceManagerClient::ListDeviceConfigVersions(std::string const& name,
 StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
 DeviceManagerClient::ListDeviceConfigVersions(
     google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeviceConfigVersions(request);
 }
 
 StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse>
-DeviceManagerClient::ListDeviceStates(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+DeviceManagerClient::ListDeviceStates(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::ListDeviceStatesRequest request;
   request.set_name(name);
   return connection_->ListDeviceStates(request);
@@ -273,17 +242,15 @@ DeviceManagerClient::ListDeviceStates(std::string const& name,
 StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse>
 DeviceManagerClient::ListDeviceStates(
     google::cloud::iot::v1::ListDeviceStatesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeviceStates(request);
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerClient::SetIamPolicy(
     std::string const& resource, google::iam::v1::Policy const& policy,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -291,11 +258,10 @@ StatusOr<google::iam::v1::Policy> DeviceManagerClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerClient::SetIamPolicy(
-    std::string const& resource, IamUpdater const& updater, Options options) {
-  internal::CheckExpectedOptions<DeviceManagerBackoffPolicyOption>(options,
+    std::string const& resource, IamUpdater const& updater, Options opts) {
+  internal::CheckExpectedOptions<DeviceManagerBackoffPolicyOption>(opts,
                                                                    __func__);
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
@@ -322,34 +288,30 @@ StatusOr<google::iam::v1::Policy> DeviceManagerClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerClient::GetIamPolicy(
-    std::string const& resource, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DeviceManagerClient::TestIamPermissions(
     std::string const& resource, std::vector<std::string> const& permissions,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -358,19 +320,16 @@ DeviceManagerClient::TestIamPermissions(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DeviceManagerClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
 DeviceManagerClient::SendCommandToDevice(std::string const& name,
                                          std::string const& binary_data,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::SendCommandToDeviceRequest request;
   request.set_name(name);
   request.set_binary_data(binary_data);
@@ -381,9 +340,8 @@ StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
 DeviceManagerClient::SendCommandToDevice(std::string const& name,
                                          std::string const& binary_data,
                                          std::string const& subfolder,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::SendCommandToDeviceRequest request;
   request.set_name(name);
   request.set_binary_data(binary_data);
@@ -394,9 +352,8 @@ DeviceManagerClient::SendCommandToDevice(std::string const& name,
 StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
 DeviceManagerClient::SendCommandToDevice(
     google::cloud::iot::v1::SendCommandToDeviceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SendCommandToDevice(request);
 }
 
@@ -404,9 +361,8 @@ StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
 DeviceManagerClient::BindDeviceToGateway(std::string const& parent,
                                          std::string const& gateway_id,
                                          std::string const& device_id,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::BindDeviceToGatewayRequest request;
   request.set_parent(parent);
   request.set_gateway_id(gateway_id);
@@ -417,9 +373,8 @@ DeviceManagerClient::BindDeviceToGateway(std::string const& parent,
 StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
 DeviceManagerClient::BindDeviceToGateway(
     google::cloud::iot::v1::BindDeviceToGatewayRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BindDeviceToGateway(request);
 }
 
@@ -427,9 +382,8 @@ StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
 DeviceManagerClient::UnbindDeviceFromGateway(std::string const& parent,
                                              std::string const& gateway_id,
                                              std::string const& device_id,
-                                             Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::iot::v1::UnbindDeviceFromGatewayRequest request;
   request.set_parent(parent);
   request.set_gateway_id(gateway_id);
@@ -440,9 +394,8 @@ DeviceManagerClient::UnbindDeviceFromGateway(std::string const& parent,
 StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
 DeviceManagerClient::UnbindDeviceFromGateway(
     google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UnbindDeviceFromGateway(request);
 }
 

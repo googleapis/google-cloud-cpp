@@ -58,17 +58,11 @@ Status DeviceManagerConnection::DeleteDeviceRegistry(
 }
 
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
-DeviceManagerConnection::ListDeviceRegistries(
-    google::cloud::iot::v1::ListDeviceRegistriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::iot::v1::DeviceRegistry>>(
-      std::move(request),
-      [](google::cloud::iot::v1::ListDeviceRegistriesRequest const&) {
-        return StatusOr<google::cloud::iot::v1::ListDeviceRegistriesResponse>{};
-      },
-      [](google::cloud::iot::v1::ListDeviceRegistriesResponse const&) {
-        return std::vector<google::cloud::iot::v1::DeviceRegistry>();
-      });
+    DeviceManagerConnection::ListDeviceRegistries(
+        google::cloud::iot::v1::
+            ListDeviceRegistriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::iot::v1::DeviceRegistry>>();
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerConnection::CreateDevice(
@@ -91,18 +85,11 @@ Status DeviceManagerConnection::DeleteDevice(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::iot::v1::Device>
-DeviceManagerConnection::ListDevices(
-    google::cloud::iot::v1::ListDevicesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::iot::v1::Device>>(
-      std::move(request),
-      [](google::cloud::iot::v1::ListDevicesRequest const&) {
-        return StatusOr<google::cloud::iot::v1::ListDevicesResponse>{};
-      },
-      [](google::cloud::iot::v1::ListDevicesResponse const&) {
-        return std::vector<google::cloud::iot::v1::Device>();
-      });
+StreamRange<google::cloud::iot::v1::Device> DeviceManagerConnection::ListDevices(
+    google::cloud::iot::v1::
+        ListDevicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::iot::v1::Device>>();
 }
 
 StatusOr<google::cloud::iot::v1::DeviceConfig>

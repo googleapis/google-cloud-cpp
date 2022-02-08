@@ -37,6 +37,10 @@ namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void BigQueryReadReadRowsStreamingUpdater(
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request);
+
 class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
  public:
   ~BigQueryReadConnectionImpl() override = default;

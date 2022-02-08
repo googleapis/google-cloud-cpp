@@ -65,7 +65,7 @@ class PolicyTagManagerSerializationClient {
  public:
   explicit PolicyTagManagerSerializationClient(
       std::shared_ptr<PolicyTagManagerSerializationConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~PolicyTagManagerSerializationClient();
 
   //@{
@@ -109,7 +109,8 @@ class PolicyTagManagerSerializationClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ReplaceTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L132}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -120,7 +121,7 @@ class PolicyTagManagerSerializationClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
       google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates new taxonomies (including their policy tags) in a given project
@@ -134,7 +135,8 @@ class PolicyTagManagerSerializationClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L147}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L186}
   ///
@@ -146,7 +148,7 @@ class PolicyTagManagerSerializationClient {
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
       google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Exports taxonomies in the requested type and returns them,
@@ -158,7 +160,8 @@ class PolicyTagManagerSerializationClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L193}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L220}
   ///
@@ -170,7 +173,7 @@ class PolicyTagManagerSerializationClient {
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<PolicyTagManagerSerializationConnection> connection_;

@@ -71,7 +71,7 @@ class ReachabilityServiceClient {
  public:
   explicit ReachabilityServiceClient(
       std::shared_ptr<ReachabilityServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ReachabilityServiceClient();
 
   //@{
@@ -100,7 +100,8 @@ class ReachabilityServiceClient {
   ///
   /// @param parent  Required. The parent resource of the Connectivity Tests:
   ///      `projects/{project_id}/locations/global`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -110,14 +111,15 @@ class ReachabilityServiceClient {
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
   StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-  ListConnectivityTests(std::string const& parent, Options options = {});
+  ListConnectivityTests(std::string const& parent, Options opts = {});
 
   ///
   /// Lists all Connectivity Tests owned by a project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::networkmanagement::v1::ListConnectivityTestsRequest,google/cloud/networkmanagement/v1/reachability.proto#L154}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -130,14 +132,15 @@ class ReachabilityServiceClient {
   ListConnectivityTests(
       google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the details of a specific Connectivity Test.
   ///
   /// @param name  Required. `ConnectivityTest` resource name using the form:
   ///      `projects/{project_id}/locations/global/connectivityTests/{test_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -147,14 +150,15 @@ class ReachabilityServiceClient {
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
-  GetConnectivityTest(std::string const& name, Options options = {});
+  GetConnectivityTest(std::string const& name, Options opts = {});
 
   ///
   /// Gets the details of a specific Connectivity Test.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::networkmanagement::v1::GetConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L202}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -167,7 +171,7 @@ class ReachabilityServiceClient {
   GetConnectivityTest(
       google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Connectivity Test.
@@ -197,7 +201,8 @@ class ReachabilityServiceClient {
   ///  * Must end with a number or a letter.
   ///  * Must be unique within the customer project
   /// @param resource  Required. A `ConnectivityTest` resource
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -210,7 +215,7 @@ class ReachabilityServiceClient {
   CreateConnectivityTest(
       std::string const& parent, std::string const& test_id,
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Connectivity Test.
@@ -230,7 +235,8 @@ class ReachabilityServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::networkmanagement::v1::CreateConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L209}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -243,7 +249,7 @@ class ReachabilityServiceClient {
   CreateConnectivityTest(
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the configuration of an existing `ConnectivityTest`.
@@ -267,7 +273,8 @@ class ReachabilityServiceClient {
   ///  this field.
   /// @param resource  Required. Only fields specified in update_mask are
   /// updated.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -280,7 +287,7 @@ class ReachabilityServiceClient {
   UpdateConnectivityTest(
       google::protobuf::FieldMask const& update_mask,
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the configuration of an existing `ConnectivityTest`.
@@ -301,7 +308,8 @@ class ReachabilityServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L229}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -314,7 +322,7 @@ class ReachabilityServiceClient {
   UpdateConnectivityTest(
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Rerun an existing `ConnectivityTest`.
@@ -332,7 +340,8 @@ class ReachabilityServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::networkmanagement::v1::RerunConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L246}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L35}
   ///
@@ -345,14 +354,15 @@ class ReachabilityServiceClient {
   RerunConnectivityTest(
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a specific `ConnectivityTest`.
   ///
   /// @param name  Required. Connectivity Test resource name using the form:
   ///      `projects/{project_id}/locations/global/connectivityTests/{test_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::OperationMetadata,google/cloud/networkmanagement/v1/reachability.proto#L253}
   ///
@@ -362,14 +372,15 @@ class ReachabilityServiceClient {
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L253}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(std::string const& name, Options options = {});
+  DeleteConnectivityTest(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a specific `ConnectivityTest`.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest,google/cloud/networkmanagement/v1/reachability.proto#L239}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::OperationMetadata,google/cloud/networkmanagement/v1/reachability.proto#L253}
   ///
@@ -382,7 +393,7 @@ class ReachabilityServiceClient {
   DeleteConnectivityTest(
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ReachabilityServiceConnection> connection_;

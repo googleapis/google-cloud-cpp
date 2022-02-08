@@ -44,16 +44,10 @@ AssetServiceConnection::ExportAssets(
 }
 
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceConnection::ListAssets(
-    google::cloud::asset::v1::ListAssetsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::asset::v1::Asset>>(
-      std::move(request),
-      [](google::cloud::asset::v1::ListAssetsRequest const&) {
-        return StatusOr<google::cloud::asset::v1::ListAssetsResponse>{};
-      },
-      [](google::cloud::asset::v1::ListAssetsResponse const&) {
-        return std::vector<google::cloud::asset::v1::Asset>();
-      });
+    google::cloud::asset::v1::
+        ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::Asset>>();
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
@@ -89,32 +83,19 @@ Status AssetServiceConnection::DeleteFeed(
 }
 
 StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-AssetServiceConnection::SearchAllResources(
-    google::cloud::asset::v1::SearchAllResourcesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::asset::v1::ResourceSearchResult>>(
-      std::move(request),
-      [](google::cloud::asset::v1::SearchAllResourcesRequest const&) {
-        return StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>{};
-      },
-      [](google::cloud::asset::v1::SearchAllResourcesResponse const&) {
-        return std::vector<google::cloud::asset::v1::ResourceSearchResult>();
-      });
+    AssetServiceConnection::SearchAllResources(
+        google::cloud::asset::v1::
+            SearchAllResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::ResourceSearchResult>>();
 }
 
 StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-AssetServiceConnection::SearchAllIamPolicies(
-    google::cloud::asset::v1::SearchAllIamPoliciesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>(
-      std::move(request),
-      [](google::cloud::asset::v1::SearchAllIamPoliciesRequest const&) {
-        return StatusOr<
-            google::cloud::asset::v1::SearchAllIamPoliciesResponse>{};
-      },
-      [](google::cloud::asset::v1::SearchAllIamPoliciesResponse const&) {
-        return std::vector<google::cloud::asset::v1::IamPolicySearchResult>();
-      });
+    AssetServiceConnection::SearchAllIamPolicies(
+        google::cloud::asset::v1::
+            SearchAllIamPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>();
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>

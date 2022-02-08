@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImageAnnotatorClient {
  public:
   explicit ImageAnnotatorClient(
-      std::shared_ptr<ImageAnnotatorConnection> connection,
-      Options options = {});
+      std::shared_ptr<ImageAnnotatorConnection> connection, Options opts = {});
   ~ImageAnnotatorClient();
 
   //@{
@@ -93,7 +92,8 @@ class ImageAnnotatorClient {
   ///
   /// @param requests  Required. Individual image annotation requests for this
   /// batch.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L814}
   ///
@@ -106,14 +106,15 @@ class ImageAnnotatorClient {
   BatchAnnotateImages(
       std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
           requests,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Run image detection and annotation for a batch of images.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L793}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L814}
   ///
@@ -125,7 +126,7 @@ class ImageAnnotatorClient {
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Service that performs image detection and annotation for a batch of files.
@@ -139,7 +140,8 @@ class ImageAnnotatorClient {
   /// @param requests  Required. The list of file annotation requests. Right now
   /// we support only
   ///  one AnnotateFileRequest in BatchAnnotateFilesRequest.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L888}
   ///
@@ -152,7 +154,7 @@ class ImageAnnotatorClient {
   BatchAnnotateFiles(
       std::vector<google::cloud::vision::v1::AnnotateFileRequest> const&
           requests,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Service that performs image detection and annotation for a batch of files.
@@ -165,7 +167,8 @@ class ImageAnnotatorClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L866}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L888}
   ///
@@ -177,7 +180,7 @@ class ImageAnnotatorClient {
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
   BatchAnnotateFiles(
       google::cloud::vision::v1::BatchAnnotateFilesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Run asynchronous image detection and annotation for a list of images.
@@ -195,7 +198,8 @@ class ImageAnnotatorClient {
   /// batch.
   /// @param output_config  Required. The desired output location and metadata
   /// (e.g. format).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L940}
   ///
@@ -209,7 +213,7 @@ class ImageAnnotatorClient {
       std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
           requests,
       google::cloud::vision::v1::OutputConfig const& output_config,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Run asynchronous image detection and annotation for a list of images.
@@ -225,7 +229,8 @@ class ImageAnnotatorClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L916}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L940}
   ///
@@ -237,7 +242,7 @@ class ImageAnnotatorClient {
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Run asynchronous image detection and annotation for a list of generic
@@ -249,7 +254,8 @@ class ImageAnnotatorClient {
   ///
   /// @param requests  Required. Individual async file annotation requests for
   /// this batch.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L968}
   ///
@@ -262,7 +268,7 @@ class ImageAnnotatorClient {
   AsyncBatchAnnotateFiles(
       std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
           requests,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Run asynchronous image detection and annotation for a list of generic
@@ -274,7 +280,8 @@ class ImageAnnotatorClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L947}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L968}
   ///
@@ -286,7 +293,7 @@ class ImageAnnotatorClient {
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ImageAnnotatorConnection> connection_;

@@ -33,9 +33,10 @@ mapfile -t cmake_args < <(cmake::common_args)
 
 # Compiles and installs all libraries and headers.
 cmake "${cmake_args[@]}" \
+  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development
@@ -172,14 +173,15 @@ while IFS= read -r -d '' f; do
   fi
 done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
+mapfile -t ctest_args < <(ctest::common_args)
 for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
   out_dir="cmake-out/$(basename "${repo_root}")-out"
   rm -f "${out_dir}/CMakeCache.txt"
   io::log_h2 "Verifying CMake targets in repo root: ${repo_root}"
-  cmake -GNinja -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
+  cmake --log-level WARNING -GNinja -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
     -S "${repo_root}" -B "${out_dir}" -Wno-dev
   cmake --build "${out_dir}"
-  cmake --build "${out_dir}" --target test
+  env -C "${out_dir}" ctest "${ctest_args[@]}"
 done
 
 # Tests the installed artifacts by building and running the quickstarts.

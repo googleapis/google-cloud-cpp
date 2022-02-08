@@ -65,7 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WorkflowsClient {
  public:
   explicit WorkflowsClient(std::shared_ptr<WorkflowsConnection> connection,
-                           Options options = {});
+                           Options opts = {});
   ~WorkflowsClient();
 
   //@{
@@ -93,7 +93,8 @@ class WorkflowsClient {
   /// @param parent  Required. Project and location from which the workflows
   /// should be listed.
   ///  Format: projects/{project}/locations/{location}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -103,7 +104,7 @@ class WorkflowsClient {
   /// @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
   ///
   StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Workflows in a given project and location.
@@ -111,7 +112,8 @@ class WorkflowsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::v1::ListWorkflowsRequest,google/cloud/workflows/v1/workflows.proto#L186}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -122,7 +124,7 @@ class WorkflowsClient {
   ///
   StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
       google::cloud::workflows::v1::ListWorkflowsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single Workflow.
@@ -130,7 +132,8 @@ class WorkflowsClient {
   /// @param name  Required. Name of the workflow which information should be
   /// retrieved.
   ///  Format: projects/{project}/locations/{location}/workflows/{workflow}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -140,14 +143,15 @@ class WorkflowsClient {
   /// @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
   ///
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single Workflow.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::v1::GetWorkflowRequest,google/cloud/workflows/v1/workflows.proto#L236}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -158,7 +162,7 @@ class WorkflowsClient {
   ///
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
       google::cloud::workflows::v1::GetWorkflowRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new workflow. If a workflow with the specified name already
@@ -177,7 +181,8 @@ class WorkflowsClient {
   ///  * Must be between 1-64 characters.
   ///  * Must end with a number or a letter.
   ///  * Must be unique within the customer project and location.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -189,7 +194,7 @@ class WorkflowsClient {
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
       std::string const& parent,
       google::cloud::workflows::v1::Workflow const& workflow,
-      std::string const& workflow_id, Options options = {});
+      std::string const& workflow_id, Options opts = {});
 
   ///
   /// Creates a new workflow. If a workflow with the specified name already
@@ -198,7 +203,8 @@ class WorkflowsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::v1::CreateWorkflowRequest,google/cloud/workflows/v1/workflows.proto#L250}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -209,7 +215,7 @@ class WorkflowsClient {
   ///
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
       google::cloud::workflows::v1::CreateWorkflowRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a workflow with the specified name.
@@ -218,7 +224,8 @@ class WorkflowsClient {
   ///
   /// @param name  Required. Name of the workflow to be deleted.
   ///  Format: projects/{project}/locations/{location}/workflows/{workflow}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::OperationMetadata,google/cloud/workflows/v1/workflows.proto#L301}
   ///
@@ -228,7 +235,7 @@ class WorkflowsClient {
   /// @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L301}
   ///
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(std::string const& name, Options options = {});
+  DeleteWorkflow(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a workflow with the specified name.
@@ -237,7 +244,8 @@ class WorkflowsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::v1::DeleteWorkflowRequest,google/cloud/workflows/v1/workflows.proto#L277}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::OperationMetadata,google/cloud/workflows/v1/workflows.proto#L301}
   ///
@@ -249,7 +257,7 @@ class WorkflowsClient {
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
   DeleteWorkflow(
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates an existing workflow.
@@ -262,7 +270,8 @@ class WorkflowsClient {
   /// @param update_mask  List of fields to be updated. If not present, the
   /// entire workflow
   ///  will be updated.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -273,7 +282,7 @@ class WorkflowsClient {
   ///
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
       google::cloud::workflows::v1::Workflow const& workflow,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates an existing workflow.
@@ -284,7 +293,8 @@ class WorkflowsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::workflows::v1::UpdateWorkflowRequest,google/cloud/workflows/v1/workflows.proto#L291}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workflows::v1::Workflow,google/cloud/workflows/v1/workflows.proto#L104}
   ///
@@ -295,7 +305,7 @@ class WorkflowsClient {
   ///
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<WorkflowsConnection> connection_;

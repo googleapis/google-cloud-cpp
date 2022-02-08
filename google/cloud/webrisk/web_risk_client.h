@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WebRiskServiceClient {
  public:
   explicit WebRiskServiceClient(
-      std::shared_ptr<WebRiskServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<WebRiskServiceConnection> connection, Options opts = {});
   ~WebRiskServiceClient();
 
   //@{
@@ -104,7 +103,8 @@ class WebRiskServiceClient {
   ///  database snapshot will be returned.
   /// @param constraints  Required. The constraints associated with this
   /// request.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L124}
   ///
@@ -119,7 +119,7 @@ class WebRiskServiceClient {
       std::string const& version_token,
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest::
           Constraints const& constraints,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the most recent threat list diffs. These diffs should be applied to
@@ -131,7 +131,8 @@ class WebRiskServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffRequest,google/cloud/webrisk/v1/webrisk.proto#L93}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L124}
   ///
@@ -143,7 +144,7 @@ class WebRiskServiceClient {
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// This method is used to check whether a URI is on a given threatList.
@@ -155,7 +156,8 @@ class WebRiskServiceClient {
   /// @param uri  Required. The URI to be checked for matches.
   /// @param threat_types  Required. The ThreatLists to search in. Multiple
   /// ThreatLists may be specified.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L184}
   ///
@@ -167,7 +169,7 @@ class WebRiskServiceClient {
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
       std::string const& uri,
       std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// This method is used to check whether a URI is on a given threatList.
@@ -178,7 +180,8 @@ class WebRiskServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisRequest,google/cloud/webrisk/v1/webrisk.proto#L176}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L184}
   ///
@@ -189,7 +192,7 @@ class WebRiskServiceClient {
   ///
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
       google::cloud::webrisk::v1::SearchUrisRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the full hashes that match the requested hash prefix.
@@ -203,7 +206,8 @@ class WebRiskServiceClient {
   ///  hash. For JSON requests, this field is base64-encoded.
   /// @param threat_types  Required. The ThreatLists to search in. Multiple
   /// ThreatLists may be specified.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L209}
   ///
@@ -215,7 +219,7 @@ class WebRiskServiceClient {
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
       std::string const& hash_prefix,
       std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the full hashes that match the requested hash prefix.
@@ -226,7 +230,8 @@ class WebRiskServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesRequest,google/cloud/webrisk/v1/webrisk.proto#L200}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L209}
   ///
@@ -237,7 +242,7 @@ class WebRiskServiceClient {
   ///
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
       google::cloud::webrisk::v1::SearchHashesRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a Submission of a URI suspected of containing phishing content to
@@ -252,7 +257,8 @@ class WebRiskServiceClient {
   ///  the format "projects/{project_number}".
   /// @param submission  Required. The submission that contains the content of
   /// the phishing report.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L335}
   ///
@@ -264,7 +270,7 @@ class WebRiskServiceClient {
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       std::string const& parent,
       google::cloud::webrisk::v1::Submission const& submission,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a Submission of a URI suspected of containing phishing content to
@@ -276,7 +282,8 @@ class WebRiskServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::webrisk::v1::CreateSubmissionRequest,google/cloud/webrisk/v1/webrisk.proto#L341}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L335}
   ///
@@ -287,7 +294,7 @@ class WebRiskServiceClient {
   ///
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<WebRiskServiceConnection> connection_;

@@ -27,8 +27,6 @@ set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::logging_protos)
 
 include(GoogleCloudCppCommon)
 
-find_package(absl CONFIG REQUIRED)
-
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     google_cloud_cpp_logging # cmake-format: sort
@@ -107,6 +105,20 @@ target_compile_options(google_cloud_cpp_logging_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_subdirectory(integration_tests)
+
+include(CTest)
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_executable(logging_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(logging_quickstart
+                          PRIVATE google-cloud-cpp::experimental-logging)
+    google_cloud_cpp_add_common_options(logging_quickstart)
+    add_test(
+        NAME logging_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:logging_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(logging_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

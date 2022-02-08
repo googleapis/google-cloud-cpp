@@ -28,10 +28,10 @@ namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigtableTableAdminClient::BigtableTableAdminClient(
-    std::shared_ptr<BigtableTableAdminConnection> connection, Options options)
+    std::shared_ptr<BigtableTableAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           bigtable_admin_internal::BigtableTableAdminDefaultOptions(
               connection_->options()))) {}
 BigtableTableAdminClient::~BigtableTableAdminClient() = default;
@@ -39,9 +39,8 @@ BigtableTableAdminClient::~BigtableTableAdminClient() = default;
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::CreateTable(
     std::string const& parent, std::string const& table_id,
-    google::bigtable::admin::v2::Table const& table, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::bigtable::admin::v2::Table const& table, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateTableRequest request;
   request.set_parent(parent);
   request.set_table_id(table_id);
@@ -52,17 +51,14 @@ BigtableTableAdminClient::CreateTable(
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::CreateTable(
     google::bigtable::admin::v2::CreateTableRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTable(request);
 }
 
 StreamRange<google::bigtable::admin::v2::Table>
-BigtableTableAdminClient::ListTables(std::string const& parent,
-                                     Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+BigtableTableAdminClient::ListTables(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListTablesRequest request;
   request.set_parent(parent);
   return connection_->ListTables(request);
@@ -70,33 +66,28 @@ BigtableTableAdminClient::ListTables(std::string const& parent,
 
 StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::ListTables(
-    google::bigtable::admin::v2::ListTablesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::bigtable::admin::v2::ListTablesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTables(std::move(request));
 }
 
 StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminClient::GetTable(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GetTableRequest request;
   request.set_name(name);
   return connection_->GetTable(request);
 }
 
 StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminClient::GetTable(
-    google::bigtable::admin::v2::GetTableRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::bigtable::admin::v2::GetTableRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTable(request);
 }
 
 Status BigtableTableAdminClient::DeleteTable(std::string const& name,
-                                             Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::DeleteTableRequest request;
   request.set_name(name);
   return connection_->DeleteTable(request);
@@ -104,9 +95,8 @@ Status BigtableTableAdminClient::DeleteTable(std::string const& name,
 
 Status BigtableTableAdminClient::DeleteTable(
     google::bigtable::admin::v2::DeleteTableRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTable(request);
 }
 
@@ -115,9 +105,8 @@ BigtableTableAdminClient::ModifyColumnFamilies(
     std::string const& name,
     std::vector<google::bigtable::admin::v2::ModifyColumnFamiliesRequest::
                     Modification> const& modifications,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ModifyColumnFamiliesRequest request;
   request.set_name(name);
   *request.mutable_modifications() = {modifications.begin(),
@@ -128,25 +117,22 @@ BigtableTableAdminClient::ModifyColumnFamilies(
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::ModifyColumnFamilies(
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ModifyColumnFamilies(request);
 }
 
 Status BigtableTableAdminClient::DropRowRange(
     google::bigtable::admin::v2::DropRowRangeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DropRowRange(request);
 }
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 BigtableTableAdminClient::GenerateConsistencyToken(std::string const& name,
-                                                   Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GenerateConsistencyTokenRequest request;
   request.set_name(name);
   return connection_->GenerateConsistencyToken(request);
@@ -155,18 +141,16 @@ BigtableTableAdminClient::GenerateConsistencyToken(std::string const& name,
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 BigtableTableAdminClient::GenerateConsistencyToken(
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateConsistencyToken(request);
 }
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminClient::CheckConsistency(std::string const& name,
                                            std::string const& consistency_token,
-                                           Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CheckConsistencyRequest request;
   request.set_name(name);
   request.set_consistency_token(consistency_token);
@@ -176,18 +160,16 @@ BigtableTableAdminClient::CheckConsistency(std::string const& name,
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminClient::CheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckConsistency(request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminClient::CreateBackup(
     std::string const& parent, std::string const& backup_id,
-    google::bigtable::admin::v2::Backup const& backup, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::bigtable::admin::v2::Backup const& backup, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateBackupRequest request;
   request.set_parent(parent);
   request.set_backup_id(backup_id);
@@ -198,16 +180,14 @@ BigtableTableAdminClient::CreateBackup(
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminClient::CreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(request);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
-BigtableTableAdminClient::GetBackup(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+BigtableTableAdminClient::GetBackup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GetBackupRequest request;
   request.set_name(name);
   return connection_->GetBackup(request);
@@ -216,18 +196,16 @@ BigtableTableAdminClient::GetBackup(std::string const& name, Options options) {
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminClient::GetBackup(
     google::bigtable::admin::v2::GetBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackup(request);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminClient::UpdateBackup(
     google::bigtable::admin::v2::Backup const& backup,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
   *request.mutable_update_mask() = update_mask;
@@ -237,16 +215,14 @@ BigtableTableAdminClient::UpdateBackup(
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminClient::UpdateBackup(
     google::bigtable::admin::v2::UpdateBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackup(request);
 }
 
 Status BigtableTableAdminClient::DeleteBackup(std::string const& name,
-                                              Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::DeleteBackupRequest request;
   request.set_name(name);
   return connection_->DeleteBackup(request);
@@ -254,17 +230,14 @@ Status BigtableTableAdminClient::DeleteBackup(std::string const& name,
 
 Status BigtableTableAdminClient::DeleteBackup(
     google::bigtable::admin::v2::DeleteBackupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(request);
 }
 
 StreamRange<google::bigtable::admin::v2::Backup>
-BigtableTableAdminClient::ListBackups(std::string const& parent,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+BigtableTableAdminClient::ListBackups(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListBackupsRequest request;
   request.set_parent(parent);
   return connection_->ListBackups(request);
@@ -272,42 +245,37 @@ BigtableTableAdminClient::ListBackups(std::string const& parent,
 
 StreamRange<google::bigtable::admin::v2::Backup>
 BigtableTableAdminClient::ListBackups(
-    google::bigtable::admin::v2::ListBackupsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::bigtable::admin::v2::ListBackupsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackups(std::move(request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminClient::RestoreTable(
     google::bigtable::admin::v2::RestoreTableRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreTable(request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::GetIamPolicy(
-    std::string const& resource, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::SetIamPolicy(
     std::string const& resource, google::iam::v1::Policy const& policy,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -315,11 +283,10 @@ StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::SetIamPolicy(
-    std::string const& resource, IamUpdater const& updater, Options options) {
+    std::string const& resource, IamUpdater const& updater, Options opts) {
   internal::CheckExpectedOptions<BigtableTableAdminBackoffPolicyOption>(
-      options, __func__);
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+      opts, __func__);
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
@@ -346,18 +313,16 @@ StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminClient::TestIamPermissions(
     std::string const& resource, std::vector<std::string> const& permissions,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -366,19 +331,16 @@ BigtableTableAdminClient::TestIamPermissions(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminClient::AsyncCheckConsistency(
     std::string const& name, std::string const& consistency_token,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CheckConsistencyRequest request;
   request.set_name(name);
   request.set_consistency_token(consistency_token);
@@ -388,9 +350,8 @@ BigtableTableAdminClient::AsyncCheckConsistency(
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminClient::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncCheckConsistency(request);
 }
 

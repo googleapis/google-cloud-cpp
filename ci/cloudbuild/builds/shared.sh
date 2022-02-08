@@ -19,19 +19,31 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/quickstart.sh
+source module ci/cloudbuild/builds/lib/features.sh
 
 export CC=gcc
 export CXX=g++
+
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
 mapfile -t cmake_args < <(cmake::common_args)
 
 INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
 cmake "${cmake_args[@]}" \
+  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
-  -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
-cmake --build cmake-out --target install
+mapfile -t ctest_args < <(ctest::common_args)
+env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
+cmake --install cmake-out
 
 # Tests the installed artifacts by building and running the quickstarts.
 quickstart::build_cmake_and_make "${INSTALL_PREFIX}"
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
+
+# Verify the quickstart programs for generated libraries run. Note
+# that most of these run against production, and are therefore
+# integration tests with the usual flakiness issues.
+io::log_h2 "Running all other quickstart programs"
+env -C cmake-out ctest "${ctest_args[@]}" -L "quickstart"

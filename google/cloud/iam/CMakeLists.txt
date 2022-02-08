@@ -27,8 +27,6 @@ set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::iam_protos)
 
 include(GoogleCloudCppCommon)
 
-find_package(absl CONFIG REQUIRED)
-
 add_library(
     google_cloud_cpp_iam # cmake-format: sort
     iam_client.cc

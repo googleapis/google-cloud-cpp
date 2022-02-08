@@ -96,7 +96,6 @@ if (BUILD_TESTING)
         return()
     endif ()
 
-    find_package(ProtobufWithTargets REQUIRED)
     add_library(
         google_cloud_cpp_testing_grpc # cmake-format: sort
         fake_completion_queue_impl.cc

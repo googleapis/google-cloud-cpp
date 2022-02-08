@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudCatalogClient {
  public:
   explicit CloudCatalogClient(
-      std::shared_ptr<CloudCatalogConnection> connection, Options options = {});
+      std::shared_ptr<CloudCatalogConnection> connection, Options opts = {});
   ~CloudCatalogClient();
 
   //@{
@@ -89,7 +89,8 @@ class CloudCatalogClient {
   ///
   /// Lists all public cloud services.
   ///
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::Service,google/cloud/billing/v1/cloud_catalog.proto#L59}
   ///
@@ -99,14 +100,15 @@ class CloudCatalogClient {
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L59}
   ///
   StreamRange<google::cloud::billing::v1::Service> ListServices(
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all public cloud services.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::billing::v1::ListServicesRequest,google/cloud/billing/v1/cloud_catalog.proto#L260}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::Service,google/cloud/billing/v1/cloud_catalog.proto#L59}
   ///
@@ -117,14 +119,15 @@ class CloudCatalogClient {
   ///
   StreamRange<google::cloud::billing::v1::Service> ListServices(
       google::cloud::billing::v1::ListServicesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all publicly available SKUs for a given cloud service.
   ///
   /// @param parent  Required. The name of the service.
   ///  Example: "services/DA34-426B-A397"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::Sku,google/cloud/billing/v1/cloud_catalog.proto#L82}
   ///
@@ -134,14 +137,15 @@ class CloudCatalogClient {
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L82}
   ///
   StreamRange<google::cloud::billing::v1::Sku> ListSkus(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all publicly available SKUs for a given cloud service.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::billing::v1::ListSkusRequest,google/cloud/billing/v1/cloud_catalog.proto#L282}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::Sku,google/cloud/billing/v1/cloud_catalog.proto#L82}
   ///
@@ -151,8 +155,7 @@ class CloudCatalogClient {
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L82}
   ///
   StreamRange<google::cloud::billing::v1::Sku> ListSkus(
-      google::cloud::billing::v1::ListSkusRequest request,
-      Options options = {});
+      google::cloud::billing::v1::ListSkusRequest request, Options opts = {});
 
  private:
   std::shared_ptr<CloudCatalogConnection> connection_;

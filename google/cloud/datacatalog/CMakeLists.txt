@@ -26,10 +26,6 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::datacatalog_protos)
 
-find_package(gRPC REQUIRED)
-find_package(ProtobufWithTargets REQUIRED)
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleCloudCppCommon)
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
@@ -129,6 +125,22 @@ target_include_directories(
               $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_datacatalog_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(datacatalog_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(datacatalog_quickstart
+                          PRIVATE google-cloud-cpp::experimental-datacatalog)
+    google_cloud_cpp_add_common_options(datacatalog_quickstart)
+    add_test(
+        NAME datacatalog_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:datacatalog_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_REGION)
+    set_tests_properties(datacatalog_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

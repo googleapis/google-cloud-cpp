@@ -36,6 +36,8 @@ io::log_h2 "Building"
 cmake --build cmake-out/build
 
 io::log_h2 "Testing"
-env -C cmake-out/build ctest -LE "integration-test" --parallel "$(nproc)"
+
+mapfile -t ctest_args < <(ctest::common_args)
+env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
 
 integration::ctest_with_emulators "cmake-out/build"

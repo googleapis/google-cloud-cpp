@@ -25,10 +25,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+/// Convert JSON requests to gRPC requests and gRPC responses to JSON responses
 struct GrpcBucketRequestParser {
-  static google::storage::v2::PredefinedBucketAcl ToProtoBucket(
-      PredefinedAcl const& acl);
-
   static google::storage::v2::GetBucketRequest ToProto(
       GetBucketMetadataRequest const& request);
 };

@@ -107,116 +107,63 @@ SecurityCenterConnection::GetSource(
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
-SecurityCenterConnection::GroupAssets(
-    google::cloud::securitycenter::v1::GroupAssetsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::GroupResult>>(
-      std::move(request),
-      [](google::cloud::securitycenter::v1::GroupAssetsRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::GroupAssetsResponse>{};
-      },
-      [](google::cloud::securitycenter::v1::GroupAssetsResponse const&) {
-        return std::vector<google::cloud::securitycenter::v1::GroupResult>();
-      });
+    SecurityCenterConnection::GroupAssets(
+        google::cloud::securitycenter::v1::
+            GroupAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
-SecurityCenterConnection::GroupFindings(
-    google::cloud::securitycenter::v1::GroupFindingsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::GroupResult>>(
-      std::move(request),
-      [](google::cloud::securitycenter::v1::GroupFindingsRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::GroupFindingsResponse>{};
-      },
-      [](google::cloud::securitycenter::v1::GroupFindingsResponse const&) {
-        return std::vector<google::cloud::securitycenter::v1::GroupResult>();
-      });
+    SecurityCenterConnection::GroupFindings(
+        google::cloud::securitycenter::v1::
+            GroupFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
 
 StreamRange<
     google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
-SecurityCenterConnection::ListAssets(
-    google::cloud::securitycenter::v1::ListAssetsRequest request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>>(
-      std::move(request),
-      [](google::cloud::securitycenter::v1::ListAssetsRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::ListAssetsResponse>{};
-      },
-      [](google::cloud::securitycenter::v1::ListAssetsResponse const&) {
-        return std::vector<google::cloud::securitycenter::v1::
-                               ListAssetsResponse::ListAssetsResult>();
-      });
+    SecurityCenterConnection::ListAssets(
+        google::cloud::securitycenter::v1::
+            ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::
+                      ListAssetsResult>>();
 }
 
 StreamRange<
     google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
-SecurityCenterConnection::ListFindings(
-    google::cloud::securitycenter::v1::ListFindingsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
+    SecurityCenterConnection::ListFindings(
+        google::cloud::securitycenter::v1::
+            ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
-                      ListFindingsResult>>(
-      std::move(request),
-      [](google::cloud::securitycenter::v1::ListFindingsRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::ListFindingsResponse>{};
-      },
-      [](google::cloud::securitycenter::v1::ListFindingsResponse const&) {
-        return std::vector<google::cloud::securitycenter::v1::
-                               ListFindingsResponse::ListFindingsResult>();
-      });
+                      ListFindingsResult>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::MuteConfig>
-SecurityCenterConnection::ListMuteConfigs(
-    google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::MuteConfig>>(
-      std::move(request),
-      [](google::cloud::securitycenter::v1::ListMuteConfigsRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::ListMuteConfigsResponse>{};
-      },
-      [](google::cloud::securitycenter::v1::ListMuteConfigsResponse const&) {
-        return std::vector<google::cloud::securitycenter::v1::MuteConfig>();
-      });
+    SecurityCenterConnection::ListMuteConfigs(
+        google::cloud::securitycenter::v1::
+            ListMuteConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::MuteConfig>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
-SecurityCenterConnection::ListNotificationConfigs(
-    google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>(
-      std::move(request),
-      [](google::cloud::securitycenter::v1::
-             ListNotificationConfigsRequest const&) {
-        return StatusOr<google::cloud::securitycenter::v1::
-                            ListNotificationConfigsResponse>{};
-      },
-      [](google::cloud::securitycenter::v1::
-             ListNotificationConfigsResponse const&) {
-        return std::vector<
-            google::cloud::securitycenter::v1::NotificationConfig>();
-      });
+    SecurityCenterConnection::ListNotificationConfigs(
+        google::cloud::securitycenter::v1::
+            ListNotificationConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::Source>
-SecurityCenterConnection::ListSources(
-    google::cloud::securitycenter::v1::ListSourcesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::securitycenter::v1::Source>>(
-      std::move(request),
-      [](google::cloud::securitycenter::v1::ListSourcesRequest const&) {
-        return StatusOr<
-            google::cloud::securitycenter::v1::ListSourcesResponse>{};
-      },
-      [](google::cloud::securitycenter::v1::ListSourcesResponse const&) {
-        return std::vector<google::cloud::securitycenter::v1::Source>();
-      });
+    SecurityCenterConnection::ListSources(
+        google::cloud::securitycenter::v1::
+            ListSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::Source>>();
 }
 
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>

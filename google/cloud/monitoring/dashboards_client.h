@@ -63,7 +63,7 @@ class DashboardsServiceClient {
  public:
   explicit DashboardsServiceClient(
       std::shared_ptr<DashboardsServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~DashboardsServiceClient();
 
   //@{
@@ -96,7 +96,8 @@ class DashboardsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::dashboard::v1::CreateDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L101}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
@@ -107,7 +108,7 @@ class DashboardsServiceClient {
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
       google::monitoring::dashboard::v1::CreateDashboardRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists the existing dashboards.
@@ -118,7 +119,8 @@ class DashboardsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::dashboard::v1::ListDashboardsRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L118}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
@@ -129,7 +131,7 @@ class DashboardsServiceClient {
   ///
   StreamRange<google::monitoring::dashboard::v1::Dashboard> ListDashboards(
       google::monitoring::dashboard::v1::ListDashboardsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Fetches a specific dashboard.
@@ -140,7 +142,8 @@ class DashboardsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::dashboard::v1::GetDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L151}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
@@ -151,7 +154,7 @@ class DashboardsServiceClient {
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
       google::monitoring::dashboard::v1::GetDashboardRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an existing custom dashboard.
@@ -162,14 +165,15 @@ class DashboardsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::dashboard::v1::DeleteDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L166}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.dashboard.v1.DeleteDashboardRequest]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L166}
   ///
   Status DeleteDashboard(
       google::monitoring::dashboard::v1::DeleteDashboardRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Replaces an existing custom dashboard with a new definition.
@@ -180,7 +184,8 @@ class DashboardsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::dashboard::v1::UpdateDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L179}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
@@ -191,7 +196,7 @@ class DashboardsServiceClient {
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
       google::monitoring::dashboard::v1::UpdateDashboardRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<DashboardsServiceConnection> connection_;

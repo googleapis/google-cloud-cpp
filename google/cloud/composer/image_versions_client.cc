@@ -26,18 +26,17 @@ namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageVersionsClient::ImageVersionsClient(
-    std::shared_ptr<ImageVersionsConnection> connection, Options options)
+    std::shared_ptr<ImageVersionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), composer_internal::ImageVersionsDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), composer_internal::ImageVersionsDefaultOptions(
+                               connection_->options()))) {}
 ImageVersionsClient::~ImageVersionsClient() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 ImageVersionsClient::ListImageVersions(std::string const& parent,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
       request;
   request.set_parent(parent);
@@ -48,9 +47,8 @@ StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 ImageVersionsClient::ListImageVersions(
     google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListImageVersions(std::move(request));
 }
 

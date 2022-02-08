@@ -63,7 +63,7 @@ class ManagedNotebookServiceClient {
  public:
   explicit ManagedNotebookServiceClient(
       std::shared_ptr<ManagedNotebookServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ManagedNotebookServiceClient();
 
   //@{
@@ -93,7 +93,8 @@ class ManagedNotebookServiceClient {
   ///
   /// @param parent  Required. Format:
   ///  `parent=projects/{project_id}/locations/{location}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -103,14 +104,15 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   StreamRange<google::cloud::notebooks::v1::Runtime> ListRuntimes(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Runtimes in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::ListRuntimesRequest,google/cloud/notebooks/v1/managed_service.proto#L157}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -121,7 +123,7 @@ class ManagedNotebookServiceClient {
   ///
   StreamRange<google::cloud::notebooks::v1::Runtime> ListRuntimes(
       google::cloud::notebooks::v1::ListRuntimesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets details of a single Runtime. The location must be a regional endpoint
@@ -129,7 +131,8 @@ class ManagedNotebookServiceClient {
   ///
   /// @param name  Required. Format:
   ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -139,7 +142,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   StatusOr<google::cloud::notebooks::v1::Runtime> GetRuntime(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets details of a single Runtime. The location must be a regional endpoint
@@ -147,7 +150,8 @@ class ManagedNotebookServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::GetRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L191}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -158,7 +162,7 @@ class ManagedNotebookServiceClient {
   ///
   StatusOr<google::cloud::notebooks::v1::Runtime> GetRuntime(
       google::cloud::notebooks::v1::GetRuntimeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Runtime in a given project and location.
@@ -167,7 +171,8 @@ class ManagedNotebookServiceClient {
   ///  `parent=projects/{project_id}/locations/{location}`
   /// @param runtime_id  Required. User-defined unique ID of this Runtime.
   /// @param runtime  Required. The Runtime to be created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -178,15 +183,15 @@ class ManagedNotebookServiceClient {
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> CreateRuntime(
       std::string const& parent, std::string const& runtime_id,
-      google::cloud::notebooks::v1::Runtime const& runtime,
-      Options options = {});
+      google::cloud::notebooks::v1::Runtime const& runtime, Options opts = {});
 
   ///
   /// Creates a new Runtime in a given project and location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::CreateRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L203}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -197,14 +202,15 @@ class ManagedNotebookServiceClient {
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> CreateRuntime(
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a single Runtime.
   ///
   /// @param name  Required. Format:
   ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::OperationMetadata,google/cloud/notebooks/v1/service.proto#L400}
   ///
@@ -214,14 +220,15 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L400}
   ///
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteRuntime(std::string const& name, Options options = {});
+  DeleteRuntime(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a single Runtime.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::DeleteRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L221}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::OperationMetadata,google/cloud/notebooks/v1/service.proto#L400}
   ///
@@ -233,7 +240,7 @@ class ManagedNotebookServiceClient {
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Starts a Managed Notebook Runtime.
@@ -244,7 +251,8 @@ class ManagedNotebookServiceClient {
   ///
   /// @param name  Required. Format:
   ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -254,7 +262,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Starts a Managed Notebook Runtime.
@@ -265,7 +273,8 @@ class ManagedNotebookServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::StartRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L233}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -276,7 +285,7 @@ class ManagedNotebookServiceClient {
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
       google::cloud::notebooks::v1::StartRuntimeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Stops a Managed Notebook Runtime.
@@ -287,7 +296,8 @@ class ManagedNotebookServiceClient {
   ///
   /// @param name  Required. Format:
   ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -297,7 +307,7 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Stops a Managed Notebook Runtime.
@@ -308,7 +318,8 @@ class ManagedNotebookServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::StopRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L240}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -319,14 +330,15 @@ class ManagedNotebookServiceClient {
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
       google::cloud::notebooks::v1::StopRuntimeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Switch a Managed Notebook Runtime.
   ///
   /// @param name  Required. Format:
   ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -336,14 +348,15 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Switch a Managed Notebook Runtime.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::SwitchRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L247}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -354,14 +367,15 @@ class ManagedNotebookServiceClient {
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Resets a Managed Notebook Runtime.
   ///
   /// @param name  Required. Format:
   ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -371,14 +385,15 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ResetRuntime(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Resets a Managed Notebook Runtime.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::ResetRuntimeRequest,google/cloud/notebooks/v1/managed_service.proto#L260}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -389,14 +404,15 @@ class ManagedNotebookServiceClient {
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ResetRuntime(
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Report and process a runtime event.
   ///
   /// @param name  Required. Format:
   ///  `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -406,14 +422,15 @@ class ManagedNotebookServiceClient {
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ReportRuntimeEvent(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Report and process a runtime event.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::notebooks::v1::ReportRuntimeEventRequest,google/cloud/notebooks/v1/managed_service.proto#L267}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
@@ -424,7 +441,7 @@ class ManagedNotebookServiceClient {
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ManagedNotebookServiceConnection> connection_;

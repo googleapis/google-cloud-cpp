@@ -88,6 +88,19 @@
   https://github.com/googleapis/google-cloud-cpp/issues/5976.
 </details>
 
+<details>
+<summary>2023-02-01: remove `BigQueryReadReadRowsStreamingUpdater` from
+`google::cloud::bigquery` namespace</summary>
+<br>
+
+* On 2023-02-01 (or shortly after) we will remove
+`BigQueryReadReadRowsStreamingUpdater` from its declaration in
+`google/cloud/bigquery/read_connection.h` and from the `google::cloud::bigquery`
+namespace. The function continues to exist but in an internal file and
+namesapce. For status on this see
+https://github.com/googleapis/google-cloud-cpp/issues/8234.
+</details>
+
 ## v1.37.0 - TBD
 
 ### New Libraries
@@ -102,7 +115,9 @@ releasing them early in case they elicit some feedback that requires changes.
 <summary> Expand to see the full list of new libraries...</summary>
 <br>
 
+* [Contact Center AI Insights](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/contactcenterinsights/README.md)
 * [Data Catalog](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datacatalog/README.md)
+* [Dataproc](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dataproc/README.md)
 * [Managed Service for Microsoft Active Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/managedidentities/README.md)
 * [Natural Language AI](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/language/README.md)
 

@@ -31,7 +31,9 @@ cmake "${cmake_args[@]}" \
   -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON \
   -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
+
+mapfile -t ctest_args < <(ctest::common_args)
+env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test
 
 integration::ctest_with_emulators "cmake-out"
 

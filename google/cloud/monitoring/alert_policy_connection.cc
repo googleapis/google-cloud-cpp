@@ -35,17 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AlertPolicyServiceConnection::~AlertPolicyServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceConnection::ListAlertPolicies(
-    google::monitoring::v3::ListAlertPoliciesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::AlertPolicy>>(
-      std::move(request),
-      [](google::monitoring::v3::ListAlertPoliciesRequest const&) {
-        return StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>{};
-      },
-      [](google::monitoring::v3::ListAlertPoliciesResponse const&) {
-        return std::vector<google::monitoring::v3::AlertPolicy>();
-      });
+    AlertPolicyServiceConnection::ListAlertPolicies(
+        google::monitoring::v3::
+            ListAlertPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::AlertPolicy>>();
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>

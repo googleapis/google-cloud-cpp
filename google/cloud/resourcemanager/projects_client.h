@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProjectsClient {
  public:
   explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
-                          Options options = {});
+                          Options opts = {});
   ~ProjectsClient();
 
   //@{
@@ -93,7 +93,8 @@ class ProjectsClient {
   ///
   /// @param name  Required. The name of the project (for example,
   /// `projects/415104041262`).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -103,7 +104,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Retrieves the project identified by the specified `name` (for example,
@@ -114,7 +115,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::GetProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L373}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -125,7 +127,7 @@ class ProjectsClient {
   ///
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       google::cloud::resourcemanager::v3::GetProjectRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists projects that are direct children of the specified folder or
@@ -139,7 +141,8 @@ class ProjectsClient {
   /// under.
   ///  For example, setting this field to 'folders/1234' would list all projects
   ///  directly under that folder.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -149,7 +152,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists projects that are direct children of the specified folder or
@@ -161,7 +164,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::ListProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L386}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -172,7 +176,7 @@ class ProjectsClient {
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
       google::cloud::resourcemanager::v3::ListProjectsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Search for projects that the caller has both
@@ -221,7 +225,8 @@ class ProjectsClient {
   ///  ```
   ///  If no query is specified, the call will return projects for which the
   ///  user has the `resourcemanager.projects.get` permission.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -231,7 +236,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
-      std::string const& query, Options options = {});
+      std::string const& query, Options opts = {});
 
   ///
   /// Search for projects that the caller has both
@@ -248,7 +253,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::SearchProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L444}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -259,7 +265,7 @@ class ProjectsClient {
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
       google::cloud::resourcemanager::v3::SearchProjectsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Request that a new project be created. The result is an `Operation` which
@@ -275,7 +281,8 @@ class ProjectsClient {
   ///  permission is checked on the parent resource. If no parent is set and
   ///  the authorization credentials belong to an Organziation, the parent
   ///  will be set to that Organization.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -286,7 +293,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
       google::cloud::resourcemanager::v3::Project const& project,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Request that a new project be created. The result is an `Operation` which
@@ -297,7 +304,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L526}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -308,7 +316,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the `display_name` and labels of the project identified by the
@@ -320,7 +328,8 @@ class ProjectsClient {
   ///
   /// @param project  Required. The new definition of the project.
   /// @param update_mask  Optional. An update mask to selectively update fields.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -331,7 +340,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::Project const& project,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates the `display_name` and labels of the project identified by the
@@ -343,7 +352,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L562}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -354,7 +364,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Move a project to another place in your resource hierarchy, under a new
@@ -374,7 +384,8 @@ class ProjectsClient {
   /// @param name  Required. The name of the project to move.
   /// @param destination_parent  Required. The new parent to move the Project
   /// under.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -385,7 +396,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
       std::string const& name, std::string const& destination_parent,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Move a project to another place in your resource hierarchy, under a new
@@ -404,7 +415,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L579}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -415,7 +427,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Marks the project identified by the specified
@@ -454,7 +466,8 @@ class ProjectsClient {
   ///
   /// @param name  Required. The name of the Project (for example,
   /// `projects/415104041262`).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -464,7 +477,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Marks the project identified by the specified
@@ -503,7 +516,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L605}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -514,7 +528,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Restores the project identified by the specified
@@ -530,7 +544,8 @@ class ProjectsClient {
   /// @param name  Required. The name of the project (for example,
   /// `projects/415104041262`).
   ///  Required.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -540,7 +555,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Restores the project identified by the specified
@@ -555,7 +570,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L624}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
@@ -566,7 +582,7 @@ class ProjectsClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the IAM access control policy for the specified project.
@@ -575,7 +591,8 @@ class ProjectsClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -585,7 +602,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Returns the IAM access control policy for the specified project.
@@ -593,7 +610,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -603,8 +621,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Sets the IAM access control policy for the specified project.
@@ -660,7 +677,8 @@ class ProjectsClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -671,7 +689,7 @@ class ProjectsClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sets the IAM access control policy for the specified project.
@@ -721,7 +739,8 @@ class ProjectsClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -731,8 +750,7 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified project.
@@ -745,7 +763,8 @@ class ProjectsClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -756,14 +775,15 @@ class ProjectsClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified project.
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -774,7 +794,7 @@ class ProjectsClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;

@@ -36,17 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RealmsServiceConnection::~RealmsServiceConnection() = default;
 
 StreamRange<google::cloud::gaming::v1::Realm>
-RealmsServiceConnection::ListRealms(
-    google::cloud::gaming::v1::ListRealmsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::gaming::v1::Realm>>(
-      std::move(request),
-      [](google::cloud::gaming::v1::ListRealmsRequest const&) {
-        return StatusOr<google::cloud::gaming::v1::ListRealmsResponse>{};
-      },
-      [](google::cloud::gaming::v1::ListRealmsResponse const&) {
-        return std::vector<google::cloud::gaming::v1::Realm>();
-      });
+    RealmsServiceConnection::ListRealms(
+        google::cloud::gaming::v1::
+            ListRealmsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gaming::v1::Realm>>();
 }
 
 StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceConnection::GetRealm(

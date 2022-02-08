@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TenantServiceClient {
  public:
   explicit TenantServiceClient(
-      std::shared_ptr<TenantServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<TenantServiceConnection> connection, Options opts = {});
   ~TenantServiceClient();
 
   //@{
@@ -93,7 +92,8 @@ class TenantServiceClient {
   ///  The format is "projects/{project_id}", for example,
   ///  "projects/foo".
   /// @param tenant  Required. The tenant to be created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -104,14 +104,15 @@ class TenantServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       std::string const& parent,
-      google::cloud::talent::v4::Tenant const& tenant, Options options = {});
+      google::cloud::talent::v4::Tenant const& tenant, Options opts = {});
 
   ///
   /// Creates a new tenant entity.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::CreateTenantRequest,google/cloud/talent/v4/tenant_service.proto#L85}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -122,7 +123,7 @@ class TenantServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       google::cloud::talent::v4::CreateTenantRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Retrieves specified tenant.
@@ -130,7 +131,8 @@ class TenantServiceClient {
   /// @param name  Required. The resource name of the tenant to be retrieved.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -140,14 +142,15 @@ class TenantServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(std::string const& name,
-                                                        Options options = {});
+                                                        Options opts = {});
 
   ///
   /// Retrieves specified tenant.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::GetTenantRequest,google/cloud/talent/v4/tenant_service.proto#L102}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -158,7 +161,7 @@ class TenantServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
       google::cloud::talent::v4::GetTenantRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates specified tenant.
@@ -172,7 +175,8 @@ class TenantServiceClient {
   ///  Otherwise all the fields are updated. A field mask to specify the tenant
   ///  fields to be updated. Only top level fields of
   ///  [Tenant][google.cloud.talent.v4.Tenant] are supported.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -183,14 +187,15 @@ class TenantServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::Tenant const& tenant,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates specified tenant.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::UpdateTenantRequest,google/cloud/talent/v4/tenant_service.proto#L116}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -201,7 +206,7 @@ class TenantServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::UpdateTenantRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes specified tenant.
@@ -209,26 +214,28 @@ class TenantServiceClient {
   /// @param name  Required. The resource name of the tenant to be deleted.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.talent.v4.DeleteTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L131}
   ///
-  Status DeleteTenant(std::string const& name, Options options = {});
+  Status DeleteTenant(std::string const& name, Options opts = {});
 
   ///
   /// Deletes specified tenant.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::DeleteTenantRequest,google/cloud/talent/v4/tenant_service.proto#L131}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.talent.v4.DeleteTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L131}
   ///
   Status DeleteTenant(
       google::cloud::talent::v4::DeleteTenantRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all tenants associated with the project.
@@ -237,7 +244,8 @@ class TenantServiceClient {
   /// tenant is created.
   ///  The format is "projects/{project_id}", for example,
   ///  "projects/foo".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -247,14 +255,15 @@ class TenantServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
   ///
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all tenants associated with the project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::ListTenantsRequest,google/cloud/talent/v4/tenant_service.proto#L145}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
   ///
@@ -264,8 +273,7 @@ class TenantServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
   ///
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest request,
-      Options options = {});
+      google::cloud::talent::v4::ListTenantsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<TenantServiceConnection> connection_;

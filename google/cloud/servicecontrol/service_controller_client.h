@@ -65,7 +65,7 @@ class ServiceControllerClient {
  public:
   explicit ServiceControllerClient(
       std::shared_ptr<ServiceControllerConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ServiceControllerClient();
 
   //@{
@@ -109,7 +109,8 @@ class ServiceControllerClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::servicecontrol::v1::CheckRequest,google/api/servicecontrol/v1/service_controller.proto#L94}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::servicecontrol::v1::CheckResponse,google/api/servicecontrol/v1/service_controller.proto#L115}
   ///
@@ -120,7 +121,7 @@ class ServiceControllerClient {
   ///
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       google::api::servicecontrol::v1::CheckRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Reports operation results to Google Service Control, such as logs and
@@ -141,7 +142,8 @@ class ServiceControllerClient {
   ///
   /// @param request
   /// @googleapis_link{google::api::servicecontrol::v1::ReportRequest,google/api/servicecontrol/v1/service_controller.proto#L190}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::servicecontrol::v1::ReportResponse,google/api/servicecontrol/v1/service_controller.proto#L221}
   ///
@@ -152,7 +154,7 @@ class ServiceControllerClient {
   ///
   StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
       google::api::servicecontrol::v1::ReportRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ServiceControllerConnection> connection_;

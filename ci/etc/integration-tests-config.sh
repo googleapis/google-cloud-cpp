@@ -20,11 +20,20 @@ if ((CI_ETC_INTEGRATION_TESTS_CONFIG_SH__++ != 0)); then
   return 0
 fi # include guard
 
-#
-# Common configuration parameters.
-#
+# The name of the project used to run the integration tests and examples.
 export GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Many tests and quickstarts need a location, this is typically a region.
+export GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
+# Some quickstart programs require a zone.
+export GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
+
+# Enable the self-test for the sample programs. Normally the example drivers
+# require the name of the example to run as a command-line argument, with this
+# environment variable the sample drivers run all the examples.
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
+
+# A number of options to improve logging during the CI builds. They are useful
+# when troubleshooting problems.
 export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
 export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
 export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"

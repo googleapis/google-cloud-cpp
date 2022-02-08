@@ -36,17 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudRedisConnection::~CloudRedisConnection() = default;
 
 StreamRange<google::cloud::redis::v1::Instance>
-CloudRedisConnection::ListInstances(
-    google::cloud::redis::v1::ListInstancesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::redis::v1::Instance>>(
-      std::move(request),
-      [](google::cloud::redis::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::redis::v1::ListInstancesResponse>{};
-      },
-      [](google::cloud::redis::v1::ListInstancesResponse const&) {
-        return std::vector<google::cloud::redis::v1::Instance>();
-      });
+    CloudRedisConnection::ListInstances(
+        google::cloud::redis::v1::
+            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::redis::v1::Instance>>();
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisConnection::GetInstance(

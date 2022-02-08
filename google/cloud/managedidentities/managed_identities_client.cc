@@ -27,10 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ManagedIdentitiesServiceClient::ManagedIdentitiesServiceClient(
     std::shared_ptr<ManagedIdentitiesServiceConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           managedidentities_internal::ManagedIdentitiesServiceDefaultOptions(
               connection_->options()))) {}
 ManagedIdentitiesServiceClient::~ManagedIdentitiesServiceClient() = default;
@@ -38,10 +38,8 @@ ManagedIdentitiesServiceClient::~ManagedIdentitiesServiceClient() = default;
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
     std::string const& parent, std::string const& domain_name,
-    google::cloud::managedidentities::v1::Domain const& domain,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::managedidentities::v1::Domain const& domain, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest request;
   request.set_parent(parent);
   request.set_domain_name(domain_name);
@@ -53,17 +51,15 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMicrosoftAdDomain(request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceClient::ResetAdminPassword(std::string const& name,
-                                                   Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ResetAdminPasswordRequest request;
   request.set_name(name);
   return connection_->ResetAdminPassword(request);
@@ -73,17 +69,15 @@ StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceClient::ResetAdminPassword(
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetAdminPassword(request);
 }
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceClient::ListDomains(std::string const& parent,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ListDomainsRequest request;
   request.set_parent(parent);
   return connection_->ListDomains(request);
@@ -92,17 +86,15 @@ ManagedIdentitiesServiceClient::ListDomains(std::string const& parent,
 StreamRange<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceClient::ListDomains(
     google::cloud::managedidentities::v1::ListDomainsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDomains(std::move(request));
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceClient::GetDomain(std::string const& name,
-                                          Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::GetDomainRequest request;
   request.set_name(name);
   return connection_->GetDomain(request);
@@ -111,18 +103,16 @@ ManagedIdentitiesServiceClient::GetDomain(std::string const& name,
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceClient::GetDomain(
     google::cloud::managedidentities::v1::GetDomainRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDomain(request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::UpdateDomain(
     google::cloud::managedidentities::v1::Domain const& domain,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::UpdateDomainRequest request;
   *request.mutable_domain() = domain;
   *request.mutable_update_mask() = update_mask;
@@ -132,17 +122,15 @@ ManagedIdentitiesServiceClient::UpdateDomain(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::UpdateDomain(
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDomain(request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceClient::DeleteDomain(std::string const& name,
-                                             Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::DeleteDomainRequest request;
   request.set_name(name);
   return connection_->DeleteDomain(request);
@@ -151,18 +139,16 @@ ManagedIdentitiesServiceClient::DeleteDomain(std::string const& name,
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceClient::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDomain(request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::AttachTrust(
     std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::AttachTrustRequest request;
   request.set_name(name);
   *request.mutable_trust() = trust;
@@ -172,18 +158,16 @@ ManagedIdentitiesServiceClient::AttachTrust(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AttachTrust(request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::ReconfigureTrust(
     std::string const& name, std::string const& target_domain_name,
-    std::vector<std::string> const& target_dns_ip_addresses, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::vector<std::string> const& target_dns_ip_addresses, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ReconfigureTrustRequest request;
   request.set_name(name);
   request.set_target_domain_name(target_domain_name);
@@ -196,18 +180,16 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::ReconfigureTrust(
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReconfigureTrust(request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::DetachTrust(
     std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::DetachTrustRequest request;
   request.set_name(name);
   *request.mutable_trust() = trust;
@@ -217,18 +199,16 @@ ManagedIdentitiesServiceClient::DetachTrust(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachTrust(request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::ValidateTrust(
     std::string const& name,
-    google::cloud::managedidentities::v1::Trust const& trust, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::managedidentities::v1::Trust const& trust, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::ValidateTrustRequest request;
   request.set_name(name);
   *request.mutable_trust() = trust;
@@ -238,9 +218,8 @@ ManagedIdentitiesServiceClient::ValidateTrust(
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::ValidateTrust(
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateTrust(request);
 }
 

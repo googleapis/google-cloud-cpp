@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LookupServiceClient {
  public:
   explicit LookupServiceClient(
-      std::shared_ptr<LookupServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<LookupServiceConnection> connection, Options opts = {});
   ~LookupServiceClient();
 
   //@{
@@ -92,7 +91,8 @@ class LookupServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::servicedirectory::v1::ResolveServiceRequest,google/cloud/servicedirectory/v1/lookup_service.proto#L54}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::ResolveServiceResponse,google/cloud/servicedirectory/v1/lookup_service.proto#L91}
   ///
@@ -104,7 +104,7 @@ class LookupServiceClient {
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
       google::cloud::servicedirectory::v1::ResolveServiceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<LookupServiceConnection> connection_;

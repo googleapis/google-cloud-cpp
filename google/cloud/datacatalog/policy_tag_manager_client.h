@@ -67,7 +67,7 @@ class PolicyTagManagerClient {
  public:
   explicit PolicyTagManagerClient(
       std::shared_ptr<PolicyTagManagerConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~PolicyTagManagerClient();
 
   //@{
@@ -98,7 +98,8 @@ class PolicyTagManagerClient {
   /// @param parent  Required. Resource name of the project that the taxonomy
   /// will belong to.
   /// @param taxonomy  The taxonomy to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -110,7 +111,7 @@ class PolicyTagManagerClient {
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       std::string const& parent,
       google::cloud::datacatalog::v1::Taxonomy const& taxonomy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a taxonomy in a specified project.
@@ -119,7 +120,8 @@ class PolicyTagManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::CreateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L303}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -130,7 +132,7 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a taxonomy, including all policy tags in this
@@ -139,12 +141,13 @@ class PolicyTagManagerClient {
   ///
   /// @param name  Required. Resource name of the taxonomy to delete.
   ///  Note: All policy tags in this taxonomy are also deleted.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L318}
   ///
-  Status DeleteTaxonomy(std::string const& name, Options options = {});
+  Status DeleteTaxonomy(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a taxonomy, including all policy tags in this
@@ -153,14 +156,15 @@ class PolicyTagManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L318}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L318}
   ///
   Status DeleteTaxonomy(
       google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a taxonomy, including its display name,
@@ -169,7 +173,8 @@ class PolicyTagManagerClient {
   /// @param taxonomy  The taxonomy to update. You can update only its
   /// description, display name,
   ///  and activated policy types.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -180,7 +185,7 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
       google::cloud::datacatalog::v1::Taxonomy const& taxonomy,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a taxonomy, including its display name,
@@ -188,7 +193,8 @@ class PolicyTagManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L332}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -199,7 +205,7 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
       google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all taxonomies in a project in a particular location that you
@@ -207,7 +213,8 @@ class PolicyTagManagerClient {
   ///
   /// @param parent  Required. Resource name of the project to list the
   /// taxonomies of.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -217,7 +224,7 @@ class PolicyTagManagerClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   StreamRange<google::cloud::datacatalog::v1::Taxonomy> ListTaxonomies(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all taxonomies in a project in a particular location that you
@@ -225,7 +232,8 @@ class PolicyTagManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ListTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L347}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -236,13 +244,14 @@ class PolicyTagManagerClient {
   ///
   StreamRange<google::cloud::datacatalog::v1::Taxonomy> ListTaxonomies(
       google::cloud::datacatalog::v1::ListTaxonomiesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a taxonomy.
   ///
   /// @param name  Required. Resource name of the taxonomy to get.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -252,14 +261,15 @@ class PolicyTagManagerClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a taxonomy.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::GetTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L380}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
@@ -270,7 +280,7 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
       google::cloud::datacatalog::v1::GetTaxonomyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a policy tag in a taxonomy.
@@ -278,7 +288,8 @@ class PolicyTagManagerClient {
   /// @param parent  Required. Resource name of the taxonomy that the policy tag
   /// will belong to.
   /// @param policy_tag  The policy tag to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -290,14 +301,15 @@ class PolicyTagManagerClient {
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
       std::string const& parent,
       google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a policy tag in a taxonomy.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::CreatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L392}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -308,7 +320,7 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
       google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a policy tag together with the following:
@@ -320,12 +332,13 @@ class PolicyTagManagerClient {
   ///
   /// @param name  Required. Resource name of the policy tag to delete.
   ///  Note: All of its descendant policy tags are also deleted.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L407}
   ///
-  Status DeletePolicyTag(std::string const& name, Options options = {});
+  Status DeletePolicyTag(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a policy tag together with the following:
@@ -337,14 +350,15 @@ class PolicyTagManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::DeletePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L407}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L407}
   ///
   Status DeletePolicyTag(
       google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a policy tag, including its display
@@ -353,7 +367,8 @@ class PolicyTagManagerClient {
   /// @param policy_tag  The policy tag to update. You can update only its
   /// description, display
   ///  name, and parent policy tag fields.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -364,7 +379,7 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a policy tag, including its display
@@ -372,7 +387,8 @@ class PolicyTagManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::UpdatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L421}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -383,14 +399,15 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all policy tags in a taxonomy.
   ///
   /// @param parent  Required. Resource name of the taxonomy to list the policy
   /// tags of.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -400,14 +417,15 @@ class PolicyTagManagerClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
   StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all policy tags in a taxonomy.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::ListPolicyTagsRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L437}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -418,13 +436,14 @@ class PolicyTagManagerClient {
   ///
   StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
       google::cloud::datacatalog::v1::ListPolicyTagsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a policy tag.
   ///
   /// @param name  Required. Resource name of the policy tag.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -434,14 +453,15 @@ class PolicyTagManagerClient {
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a policy tag.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::datacatalog::v1::GetPolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L471}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L264}
   ///
@@ -452,14 +472,15 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
       google::cloud::datacatalog::v1::GetPolicyTagRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the IAM policy for a policy tag or a taxonomy.
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -469,15 +490,15 @@ class PolicyTagManagerClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Sets the IAM policy for a policy tag or a taxonomy.
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -487,8 +508,7 @@ class PolicyTagManagerClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns your permissions on a specified policy tag or
@@ -496,7 +516,8 @@ class PolicyTagManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -507,7 +528,7 @@ class PolicyTagManagerClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<PolicyTagManagerConnection> connection_;

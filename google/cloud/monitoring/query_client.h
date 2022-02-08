@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class QueryServiceClient {
  public:
   explicit QueryServiceClient(
-      std::shared_ptr<QueryServiceConnection> connection, Options options = {});
+      std::shared_ptr<QueryServiceConnection> connection, Options opts = {});
   ~QueryServiceClient();
 
   //@{
@@ -92,7 +92,8 @@ class QueryServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::QueryTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L476}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::TimeSeriesData,google/monitoring/v3/metric.proto#L135}
   ///
@@ -103,7 +104,7 @@ class QueryServiceClient {
   ///
   StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
       google::monitoring::v3::QueryTimeSeriesRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<QueryServiceConnection> connection_;

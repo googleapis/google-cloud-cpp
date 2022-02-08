@@ -36,13 +36,8 @@ ctest_args=("$@")
 cd "${BINARY_DIR}"
 start_emulator
 
-# Create the test buckets in the emulator:
-printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}" |
-  curl -X POST -H "Content-Type: application/json" --data-binary @- \
-    "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
-printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" |
-  curl -s -X POST -H "Content-Type: application/json" --data-binary @- \
-    "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
+# Create any GCS resources needed to run the tests
+create_testbench_resources
 
 ctest -R "^storage_" "${ctest_args[@]}"
 exit_status=$?

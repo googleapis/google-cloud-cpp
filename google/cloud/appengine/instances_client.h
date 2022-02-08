@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstancesClient {
  public:
   explicit InstancesClient(std::shared_ptr<InstancesConnection> connection,
-                           Options options = {});
+                           Options opts = {});
   ~InstancesClient();
 
   //@{
@@ -92,7 +92,8 @@ class InstancesClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::ListInstancesRequest,google/appengine/v1/appengine.proto#L423}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L34}
   ///
@@ -102,15 +103,15 @@ class InstancesClient {
   /// @googleapis_reference_link{google/appengine/v1/instance.proto#L34}
   ///
   StreamRange<google::appengine::v1::Instance> ListInstances(
-      google::appengine::v1::ListInstancesRequest request,
-      Options options = {});
+      google::appengine::v1::ListInstancesRequest request, Options opts = {});
 
   ///
   /// Gets instance information.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::GetInstanceRequest,google/appengine/v1/appengine.proto#L445}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L34}
   ///
@@ -121,7 +122,7 @@ class InstancesClient {
   ///
   StatusOr<google::appengine::v1::Instance> GetInstance(
       google::appengine::v1::GetInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Stops a running instance.
@@ -142,7 +143,8 @@ class InstancesClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::DeleteInstanceRequest,google/appengine/v1/appengine.proto#L452}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
   ///
@@ -153,7 +155,7 @@ class InstancesClient {
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
       google::appengine::v1::DeleteInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Enables debugging on a VM instance. This allows you to use the SSH
@@ -167,7 +169,8 @@ class InstancesClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::DebugInstanceRequest,google/appengine/v1/appengine.proto#L459}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L34}
   ///
@@ -178,7 +181,7 @@ class InstancesClient {
   ///
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
       google::appengine::v1::DebugInstanceRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<InstancesConnection> connection_;

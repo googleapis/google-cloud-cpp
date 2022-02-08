@@ -43,6 +43,10 @@ Options BigtableInstanceAdminDefaultOptions(Options options) {
     options.set<EndpointOption>(
         env && !env->empty() ? *env : "bigtableadmin.googleapis.com");
   }
+  if (!options.has<UserProjectOption>()) {
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
+  }
   if (auto emulator =
           internal::GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST")) {
     options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(

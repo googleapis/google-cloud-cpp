@@ -17,6 +17,7 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/internal/vpc_access_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
@@ -92,6 +93,11 @@ void VpcAccessServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void VpcAccessServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

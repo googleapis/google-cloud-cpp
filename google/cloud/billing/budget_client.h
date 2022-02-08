@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BudgetServiceClient {
  public:
   explicit BudgetServiceClient(
-      std::shared_ptr<BudgetServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<BudgetServiceConnection> connection, Options opts = {});
   ~BudgetServiceClient();
 
   //@{
@@ -96,7 +95,8 @@ class BudgetServiceClient {
   /// budget in. Values
   ///  are of the form `billingAccounts/{billingAccountId}`.
   /// @param budget  Required. Budget to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -108,7 +108,7 @@ class BudgetServiceClient {
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       std::string const& parent,
       google::cloud::billing::budgets::v1::Budget const& budget,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new budget. See
@@ -118,7 +118,8 @@ class BudgetServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::billing::budgets::v1::CreateBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L100}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -129,7 +130,7 @@ class BudgetServiceClient {
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       google::cloud::billing::budgets::v1::CreateBudgetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a budget and returns the updated budget.
@@ -147,7 +148,8 @@ class BudgetServiceClient {
   ///  updated. See
   ///  https://developers.google.com/protocol-buffers/docs/proto3#default for
   ///  more details about default values.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -158,7 +160,7 @@ class BudgetServiceClient {
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
       google::cloud::billing::budgets::v1::Budget const& budget,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a budget and returns the updated budget.
@@ -169,7 +171,8 @@ class BudgetServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::billing::budgets::v1::UpdateBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L115}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -180,7 +183,7 @@ class BudgetServiceClient {
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
       google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns a budget.
@@ -192,7 +195,8 @@ class BudgetServiceClient {
   ///
   /// @param name  Required. Name of budget to get. Values are of the form
   ///  `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -202,7 +206,7 @@ class BudgetServiceClient {
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Returns a budget.
@@ -214,7 +218,8 @@ class BudgetServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::billing::budgets::v1::GetBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L131}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -225,7 +230,7 @@ class BudgetServiceClient {
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
       google::cloud::billing::budgets::v1::GetBudgetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns a list of budgets for a billing account.
@@ -238,7 +243,8 @@ class BudgetServiceClient {
   /// @param parent  Required. Name of billing account to list budgets under.
   /// Values
   ///  are of the form `billingAccounts/{billingAccountId}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -248,7 +254,7 @@ class BudgetServiceClient {
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
   StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Returns a list of budgets for a billing account.
@@ -260,7 +266,8 @@ class BudgetServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::billing::budgets::v1::ListBudgetsRequest,google/cloud/billing/budgets/v1/budget_service.proto#L143}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
@@ -271,7 +278,7 @@ class BudgetServiceClient {
   ///
   StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
       google::cloud::billing::budgets::v1::ListBudgetsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a budget. Returns successfully if already deleted.
@@ -279,26 +286,28 @@ class BudgetServiceClient {
   /// @param name  Required. Name of the budget to delete. Values are of the
   /// form
   ///  `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
   ///
-  Status DeleteBudget(std::string const& name, Options options = {});
+  Status DeleteBudget(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a budget. Returns successfully if already deleted.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::billing::budgets::v1::DeleteBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L174}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
   ///
   Status DeleteBudget(
       google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<BudgetServiceConnection> connection_;

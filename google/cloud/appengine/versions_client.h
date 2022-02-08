@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VersionsClient {
  public:
   explicit VersionsClient(std::shared_ptr<VersionsConnection> connection,
-                          Options options = {});
+                          Options opts = {});
   ~VersionsClient();
 
   //@{
@@ -89,7 +89,8 @@ class VersionsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::ListVersionsRequest,google/appengine/v1/appengine.proto#L344}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
   ///
@@ -99,7 +100,7 @@ class VersionsClient {
   /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
   ///
   StreamRange<google::appengine::v1::Version> ListVersions(
-      google::appengine::v1::ListVersionsRequest request, Options options = {});
+      google::appengine::v1::ListVersionsRequest request, Options opts = {});
 
   ///
   /// Gets the specified Version resource.
@@ -108,7 +109,8 @@ class VersionsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::GetVersionRequest,google/appengine/v1/appengine.proto#L369}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
   ///
@@ -119,14 +121,15 @@ class VersionsClient {
   ///
   StatusOr<google::appengine::v1::Version> GetVersion(
       google::appengine::v1::GetVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deploys code and resource files to a new version.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::CreateVersionRequest,google/appengine/v1/appengine.proto#L379}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
   ///
@@ -137,7 +140,7 @@ class VersionsClient {
   ///
   future<StatusOr<google::appengine::v1::Version>> CreateVersion(
       google::appengine::v1::CreateVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the specified Version resource.
@@ -179,7 +182,8 @@ class VersionsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::UpdateVersionRequest,google/appengine/v1/appengine.proto#L389}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
   ///
@@ -190,14 +194,15 @@ class VersionsClient {
   ///
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes an existing Version resource.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::DeleteVersionRequest,google/appengine/v1/appengine.proto#L416}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
   ///
@@ -208,7 +213,7 @@ class VersionsClient {
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
       google::appengine::v1::DeleteVersionRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<VersionsConnection> connection_;

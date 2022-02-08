@@ -18,8 +18,8 @@
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
@@ -27,8 +27,9 @@ int main(int argc, char* argv[]) try {
   auto client =
       workflows::WorkflowsClient(workflows::MakeWorkflowsConnection());
 
-  auto const project = google::cloud::Project(argv[1]).FullName();
-  for (auto w : client.ListWorkflows(project)) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto w : client.ListWorkflows(parent)) {
     if (!w) throw std::runtime_error(w.status().message());
     std::cout << w->DebugString() << "\n";
   }

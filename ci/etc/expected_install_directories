@@ -25,6 +25,10 @@
 ./include/google/cloud/apigateway/internal
 ./include/google/cloud/apigateway/mocks
 ./include/google/cloud/apigateway/v1
+./include/google/cloud/apigeeconnect
+./include/google/cloud/apigeeconnect/internal
+./include/google/cloud/apigeeconnect/mocks
+./include/google/cloud/apigeeconnect/v1
 ./include/google/cloud/appengine
 ./include/google/cloud/appengine/internal
 ./include/google/cloud/appengine/mocks
@@ -73,6 +77,10 @@
 ./include/google/cloud/composer
 ./include/google/cloud/composer/internal
 ./include/google/cloud/composer/mocks
+./include/google/cloud/contactcenterinsights
+./include/google/cloud/contactcenterinsights/internal
+./include/google/cloud/contactcenterinsights/mocks
+./include/google/cloud/contactcenterinsights/v1
 ./include/google/cloud/container
 ./include/google/cloud/container/internal
 ./include/google/cloud/container/mocks
@@ -86,6 +94,10 @@
 ./include/google/cloud/datamigration
 ./include/google/cloud/datamigration/internal
 ./include/google/cloud/datamigration/mocks
+./include/google/cloud/dataproc
+./include/google/cloud/dataproc/internal
+./include/google/cloud/dataproc/mocks
+./include/google/cloud/dataproc/v1
 ./include/google/cloud/debugger
 ./include/google/cloud/debugger/internal
 ./include/google/cloud/debugger/mocks
@@ -201,6 +213,10 @@
 ./include/google/cloud/resourcemanager/internal
 ./include/google/cloud/resourcemanager/mocks
 ./include/google/cloud/resourcemanager/v3
+./include/google/cloud/resourcesettings
+./include/google/cloud/resourcesettings/internal
+./include/google/cloud/resourcesettings/mocks
+./include/google/cloud/resourcesettings/v1
 ./include/google/cloud/retail
 ./include/google/cloud/retail/internal
 ./include/google/cloud/retail/mocks
@@ -345,6 +361,7 @@
 ./lib64/cmake/google_cloud_cpp_accessapproval
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager
 ./lib64/cmake/google_cloud_cpp_apigateway
+./lib64/cmake/google_cloud_cpp_apigeeconnect
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_artifactregistry
 ./lib64/cmake/google_cloud_cpp_asset
@@ -356,10 +373,12 @@
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_composer
+./lib64/cmake/google_cloud_cpp_contactcenterinsights
 ./lib64/cmake/google_cloud_cpp_container
 ./lib64/cmake/google_cloud_cpp_containeranalysis
 ./lib64/cmake/google_cloud_cpp_datacatalog
 ./lib64/cmake/google_cloud_cpp_datamigration
+./lib64/cmake/google_cloud_cpp_dataproc
 ./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_dlp
 ./lib64/cmake/google_cloud_cpp_eventarc
@@ -388,6 +407,7 @@
 ./lib64/cmake/google_cloud_cpp_recommender
 ./lib64/cmake/google_cloud_cpp_redis
 ./lib64/cmake/google_cloud_cpp_resourcemanager
+./lib64/cmake/google_cloud_cpp_resourcesettings
 ./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_scheduler
 ./lib64/cmake/google_cloud_cpp_secretmanager

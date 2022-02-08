@@ -34,39 +34,39 @@ function quickstart::libraries() {
 function quickstart::arguments() {
   local -r library="$1"
   case "${library}" in
-  "bigquery")
-    echo "${GOOGLE_CLOUD_PROJECT}"
-    echo "${GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE}"
-    return 0
-    ;;
-  "bigtable")
-    echo "${GOOGLE_CLOUD_PROJECT}"
-    echo "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
-    echo "quickstart"
-    return 0
-    ;;
-  "iam")
-    echo "${GOOGLE_CLOUD_PROJECT}"
-    return 0
-    ;;
-  "spanner")
-    echo "${GOOGLE_CLOUD_PROJECT}"
-    echo "${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
-    echo "quickstart-db"
-    return 0
-    ;;
-  "storage")
-    echo "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-    return 0
-    ;;
-  "pubsub")
-    echo "${GOOGLE_CLOUD_PROJECT}"
-    echo "${GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
-    return 0
-    ;;
-  *)
-    echo "Unknown argument list for ${library}'s quickstart"
-    ;;
+    "bigquery")
+      echo "${GOOGLE_CLOUD_PROJECT}"
+      echo "${GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE}"
+      return 0
+      ;;
+    "bigtable")
+      echo "${GOOGLE_CLOUD_PROJECT}"
+      echo "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
+      echo "quickstart"
+      return 0
+      ;;
+    "iam")
+      echo "${GOOGLE_CLOUD_PROJECT}"
+      return 0
+      ;;
+    "spanner")
+      echo "${GOOGLE_CLOUD_PROJECT}"
+      echo "${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
+      echo "quickstart-db"
+      return 0
+      ;;
+    "storage")
+      echo "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+      return 0
+      ;;
+    "pubsub")
+      echo "${GOOGLE_CLOUD_PROJECT}"
+      echo "${GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
+      return 0
+      ;;
+    *)
+      echo "Unknown argument list for ${library}'s quickstart"
+      ;;
   esac
   return 1
 }

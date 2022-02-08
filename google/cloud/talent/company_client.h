@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompanyServiceClient {
  public:
   explicit CompanyServiceClient(
-      std::shared_ptr<CompanyServiceConnection> connection,
-      Options options = {});
+      std::shared_ptr<CompanyServiceConnection> connection, Options opts = {});
   ~CompanyServiceClient();
 
   //@{
@@ -93,7 +92,8 @@ class CompanyServiceClient {
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param company  Required. The company to be created.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -104,14 +104,15 @@ class CompanyServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       std::string const& parent,
-      google::cloud::talent::v4::Company const& company, Options options = {});
+      google::cloud::talent::v4::Company const& company, Options opts = {});
 
   ///
   /// Creates a new company entity.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::CreateCompanyRequest,google/cloud/talent/v4/company_service.proto#L86}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -122,7 +123,7 @@ class CompanyServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       google::cloud::talent::v4::CreateCompanyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Retrieves specified company.
@@ -131,7 +132,8 @@ class CompanyServiceClient {
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}", for
   ///  example, "projects/api-test-project/tenants/foo/companies/bar".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -141,14 +143,15 @@ class CompanyServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L33}
   ///
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Retrieves specified company.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::GetCompanyRequest,google/cloud/talent/v4/company_service.proto#L103}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -159,7 +162,7 @@ class CompanyServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
       google::cloud::talent::v4::GetCompanyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates specified company.
@@ -173,7 +176,8 @@ class CompanyServiceClient {
   ///  updated. Otherwise all the fields are updated. A field mask to specify
   ///  the company fields to be updated. Only top level fields of
   ///  [Company][google.cloud.talent.v4.Company] are supported.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -184,14 +188,15 @@ class CompanyServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
       google::cloud::talent::v4::Company const& company,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates specified company.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::UpdateCompanyRequest,google/cloud/talent/v4/company_service.proto#L118}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -202,7 +207,7 @@ class CompanyServiceClient {
   ///
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
       google::cloud::talent::v4::UpdateCompanyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes specified company.
@@ -212,12 +217,13 @@ class CompanyServiceClient {
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}", for
   ///  example, "projects/foo/tenants/bar/companies/baz".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.talent.v4.DeleteCompanyRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
   ///
-  Status DeleteCompany(std::string const& name, Options options = {});
+  Status DeleteCompany(std::string const& name, Options opts = {});
 
   ///
   /// Deletes specified company.
@@ -225,14 +231,15 @@ class CompanyServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::DeleteCompanyRequest,google/cloud/talent/v4/company_service.proto#L133}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.cloud.talent.v4.DeleteCompanyRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
   ///
   Status DeleteCompany(
       google::cloud::talent::v4::DeleteCompanyRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists all companies associated with the project.
@@ -241,7 +248,8 @@ class CompanyServiceClient {
   /// company is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -251,14 +259,15 @@ class CompanyServiceClient {
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L33}
   ///
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists all companies associated with the project.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::talent::v4::ListCompaniesRequest,google/cloud/talent/v4/company_service.proto#L148}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L33}
   ///
@@ -269,7 +278,7 @@ class CompanyServiceClient {
   ///
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<CompanyServiceConnection> connection_;

@@ -26,20 +26,19 @@ namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PredictionServiceClient::PredictionServiceClient(
-    std::shared_ptr<PredictionServiceConnection> connection, Options options)
+    std::shared_ptr<PredictionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), automl_internal::PredictionServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), automl_internal::PredictionServiceDefaultOptions(
+                               connection_->options()))) {}
 PredictionServiceClient::~PredictionServiceClient() = default;
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceClient::Predict(
     std::string const& name,
     google::cloud::automl::v1::ExamplePayload const& payload,
-    std::map<std::string, std::string> const& params, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::map<std::string, std::string> const& params, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::PredictRequest request;
   request.set_name(name);
   *request.mutable_payload() = payload;
@@ -49,9 +48,8 @@ PredictionServiceClient::Predict(
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceClient::Predict(
-    google::cloud::automl::v1::PredictRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::automl::v1::PredictRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Predict(request);
 }
 
@@ -60,9 +58,8 @@ PredictionServiceClient::BatchPredict(
     std::string const& name,
     google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
     google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
-    std::map<std::string, std::string> const& params, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::map<std::string, std::string> const& params, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::BatchPredictRequest request;
   request.set_name(name);
   *request.mutable_input_config() = input_config;
@@ -74,9 +71,8 @@ PredictionServiceClient::BatchPredict(
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceClient::BatchPredict(
     google::cloud::automl::v1::BatchPredictRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchPredict(request);
 }
 

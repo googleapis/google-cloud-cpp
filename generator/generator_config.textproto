@@ -38,6 +38,14 @@ service {
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
+# Apigee Connect
+service {
+  service_proto_path: "google/cloud/apigeeconnect/v1/connection.proto"
+  product_path: "google/cloud/apigeeconnect"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable", "kUnknown"]
+}
+
 # App Engine Admin
 service {
   service_proto_path: "google/appengine/v1/appengine.proto"
@@ -202,6 +210,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Contact Center AI Insights
+service {
+  service_proto_path: "google/cloud/contactcenterinsights/v1/contact_center_insights.proto"
+  product_path: "google/cloud/contactcenterinsights"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Container
 service {
   service_proto_path: "google/container/v1/cluster_service.proto"
@@ -245,6 +261,44 @@ service {
 service {
   service_proto_path: "google/cloud/clouddms/v1/clouddms.proto"
   product_path: "google/cloud/datamigration"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Dataproc
+service {
+  service_proto_path: "google/cloud/dataproc/v1/autoscaling_policies.proto"
+  product_path: "google/cloud/dataproc"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataproc/v1/batches.proto"
+  additional_proto_files: ["google/cloud/dataproc/v1/operations.proto"]
+  product_path: "google/cloud/dataproc"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataproc/v1/clusters.proto"
+  additional_proto_files: ["google/cloud/dataproc/v1/operations.proto"]
+  product_path: "google/cloud/dataproc"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataproc/v1/jobs.proto"
+  product_path: "google/cloud/dataproc"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataproc/v1/workflow_templates.proto"
+  product_path: "google/cloud/dataproc"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -602,6 +656,14 @@ service {
 service {
   service_proto_path: "google/cloud/resourcemanager/v3/projects.proto"
   product_path: "google/cloud/resourcemanager"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Resource Settings
+service {
+  service_proto_path: "google/cloud/resourcesettings/v1/resource_settings.proto"
+  product_path: "google/cloud/resourcesettings"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

@@ -26,10 +26,10 @@ namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ValidationHelperV1Client::ValidationHelperV1Client(
-    std::shared_ptr<ValidationHelperV1Connection> connection, Options options)
+    std::shared_ptr<ValidationHelperV1Connection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           binaryauthorization_internal::ValidationHelperV1DefaultOptions(
               connection_->options()))) {}
 ValidationHelperV1Client::~ValidationHelperV1Client() = default;
@@ -39,9 +39,8 @@ StatusOr<google::cloud::binaryauthorization::v1::
 ValidationHelperV1Client::ValidateAttestationOccurrence(
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateAttestationOccurrence(request);
 }
 

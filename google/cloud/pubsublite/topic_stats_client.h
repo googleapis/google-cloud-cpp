@@ -62,7 +62,7 @@ class TopicStatsServiceClient {
  public:
   explicit TopicStatsServiceClient(
       std::shared_ptr<TopicStatsServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~TopicStatsServiceClient();
 
   //@{
@@ -91,7 +91,8 @@ class TopicStatsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsRequest,google/cloud/pubsublite/v1/topic_stats.proto#L72}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsResponse,google/cloud/pubsublite/v1/topic_stats.proto#L94}
   ///
@@ -103,7 +104,7 @@ class TopicStatsServiceClient {
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
       google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Compute the head cursor for the partition.
@@ -115,7 +116,8 @@ class TopicStatsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L127}
   ///
@@ -127,7 +129,7 @@ class TopicStatsServiceClient {
   StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
   ComputeHeadCursor(
       google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Compute the corresponding cursor for a publish or event time in a topic
@@ -135,7 +137,8 @@ class TopicStatsServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L134}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L153}
   ///
@@ -147,7 +150,7 @@ class TopicStatsServiceClient {
   StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
   ComputeTimeCursor(
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<TopicStatsServiceConnection> connection_;

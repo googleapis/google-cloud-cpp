@@ -26,18 +26,17 @@ namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OrganizationsClient::OrganizationsClient(
-    std::shared_ptr<OrganizationsConnection> connection, Options options)
+    std::shared_ptr<OrganizationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           resourcemanager_internal::OrganizationsDefaultOptions(
               connection_->options()))) {}
 OrganizationsClient::~OrganizationsClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>
-OrganizationsClient::GetOrganization(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+OrganizationsClient::GetOrganization(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::GetOrganizationRequest request;
   request.set_name(name);
   return connection_->GetOrganization(request);
@@ -46,17 +45,15 @@ OrganizationsClient::GetOrganization(std::string const& name, Options options) {
 StatusOr<google::cloud::resourcemanager::v3::Organization>
 OrganizationsClient::GetOrganization(
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOrganization(request);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Organization>
 OrganizationsClient::SearchOrganizations(std::string const& query,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::SearchOrganizationsRequest request;
   request.set_query(query);
   return connection_->SearchOrganizations(request);
@@ -65,50 +62,44 @@ OrganizationsClient::SearchOrganizations(std::string const& query,
 StreamRange<google::cloud::resourcemanager::v3::Organization>
 OrganizationsClient::SearchOrganizations(
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchOrganizations(std::move(request));
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsClient::GetIamPolicy(
-    std::string const& resource, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsClient::SetIamPolicy(
-    std::string const& resource, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 OrganizationsClient::TestIamPermissions(
     std::string const& resource, std::vector<std::string> const& permissions,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -117,10 +108,8 @@ OrganizationsClient::TestIamPermissions(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 OrganizationsClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 

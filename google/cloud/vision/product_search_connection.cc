@@ -42,17 +42,11 @@ ProductSearchConnection::CreateProductSet(
 }
 
 StreamRange<google::cloud::vision::v1::ProductSet>
-ProductSearchConnection::ListProductSets(
-    google::cloud::vision::v1::ListProductSetsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vision::v1::ProductSet>>(
-      std::move(request),
-      [](google::cloud::vision::v1::ListProductSetsRequest const&) {
-        return StatusOr<google::cloud::vision::v1::ListProductSetsResponse>{};
-      },
-      [](google::cloud::vision::v1::ListProductSetsResponse const&) {
-        return std::vector<google::cloud::vision::v1::ProductSet>();
-      });
+    ProductSearchConnection::ListProductSets(
+        google::cloud::vision::v1::
+            ListProductSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vision::v1::ProductSet>>();
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
@@ -79,17 +73,11 @@ ProductSearchConnection::CreateProduct(
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchConnection::ListProducts(
-    google::cloud::vision::v1::ListProductsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vision::v1::Product>>(
-      std::move(request),
-      [](google::cloud::vision::v1::ListProductsRequest const&) {
-        return StatusOr<google::cloud::vision::v1::ListProductsResponse>{};
-      },
-      [](google::cloud::vision::v1::ListProductsResponse const&) {
-        return std::vector<google::cloud::vision::v1::Product>();
-      });
+    ProductSearchConnection::ListProducts(
+        google::cloud::vision::v1::
+            ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vision::v1::Product>>();
 }
 
 StatusOr<google::cloud::vision::v1::Product>
@@ -121,18 +109,11 @@ Status ProductSearchConnection::DeleteReferenceImage(
 }
 
 StreamRange<google::cloud::vision::v1::ReferenceImage>
-ProductSearchConnection::ListReferenceImages(
-    google::cloud::vision::v1::ListReferenceImagesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vision::v1::ReferenceImage>>(
-      std::move(request),
-      [](google::cloud::vision::v1::ListReferenceImagesRequest const&) {
-        return StatusOr<
-            google::cloud::vision::v1::ListReferenceImagesResponse>{};
-      },
-      [](google::cloud::vision::v1::ListReferenceImagesResponse const&) {
-        return std::vector<google::cloud::vision::v1::ReferenceImage>();
-      });
+    ProductSearchConnection::ListReferenceImages(
+        google::cloud::vision::v1::
+            ListReferenceImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vision::v1::ReferenceImage>>();
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
@@ -152,18 +133,11 @@ Status ProductSearchConnection::RemoveProductFromProductSet(
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchConnection::ListProductsInProductSet(
-    google::cloud::vision::v1::ListProductsInProductSetRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::vision::v1::Product>>(
-      std::move(request),
-      [](google::cloud::vision::v1::ListProductsInProductSetRequest const&) {
-        return StatusOr<
-            google::cloud::vision::v1::ListProductsInProductSetResponse>{};
-      },
-      [](google::cloud::vision::v1::ListProductsInProductSetResponse const&) {
-        return std::vector<google::cloud::vision::v1::Product>();
-      });
+    ProductSearchConnection::ListProductsInProductSet(
+        google::cloud::vision::v1::
+            ListProductsInProductSetRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vision::v1::Product>>();
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>

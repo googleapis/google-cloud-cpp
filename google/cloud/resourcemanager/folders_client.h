@@ -65,7 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FoldersClient {
  public:
   explicit FoldersClient(std::shared_ptr<FoldersConnection> connection,
-                         Options options = {});
+                         Options opts = {});
   ~FoldersClient();
 
   //@{
@@ -95,7 +95,8 @@ class FoldersClient {
   ///
   /// @param name  Required. The resource name of the folder to retrieve.
   ///  Must be of the form `folders/{folder_id}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -105,7 +106,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Retrieves a folder identified by the supplied resource name.
@@ -116,7 +117,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::GetFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L322}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -127,7 +129,7 @@ class FoldersClient {
   ///
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       google::cloud::resourcemanager::v3::GetFolderRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists the folders that are direct descendants of supplied parent resource.
@@ -143,7 +145,8 @@ class FoldersClient {
   ///  Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.
   ///  Access to this method is controlled by checking the
   ///  `resourcemanager.folders.list` permission on the `parent`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -153,7 +156,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists the folders that are direct descendants of supplied parent resource.
@@ -165,7 +168,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::ListFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L334}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -176,7 +180,7 @@ class FoldersClient {
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
       google::cloud::resourcemanager::v3::ListFoldersRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Search for folders that match specific filter criteria.
@@ -213,7 +217,8 @@ class FoldersClient {
   ///  Folder resources that have `folders/123` as a parent resource.
   ///  * Query `displayName=\\"Test String\\"` returns Folder resources with
   ///  display names that include both "Test" and "String".
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -223,7 +228,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
-      std::string const& query, Options options = {});
+      std::string const& query, Options opts = {});
 
   ///
   /// Search for folders that match specific filter criteria.
@@ -235,7 +240,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::SearchFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L373}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -246,7 +252,7 @@ class FoldersClient {
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
       google::cloud::resourcemanager::v3::SearchFoldersRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a folder in the resource hierarchy.
@@ -280,7 +286,8 @@ class FoldersClient {
   /// @param folder  Required. The folder being created, only the display name
   /// and parent will be
   ///  consulted. All other fields will be ignored.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -291,7 +298,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
       google::cloud::resourcemanager::v3::Folder const& folder,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a folder in the resource hierarchy.
@@ -324,7 +331,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::CreateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L428}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -335,7 +343,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a folder, changing its `display_name`.
@@ -361,7 +369,8 @@ class FoldersClient {
   ///  cannot be changed.
   /// @param update_mask  Required. Fields to be updated.
   ///  Only the `display_name` can be updated.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -372,7 +381,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::Folder const& folder,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a folder, changing its `display_name`.
@@ -395,7 +404,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L452}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -406,7 +416,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Moves a folder under a new resource parent.
@@ -433,7 +443,8 @@ class FoldersClient {
   /// organization which should be the
   ///  folder's new parent.
   ///  Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -444,7 +455,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       std::string const& name, std::string const& destination_parent,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Moves a folder under a new resource parent.
@@ -467,7 +478,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::MoveFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L469}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -478,7 +490,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Requests deletion of a folder. The folder is moved into the
@@ -495,7 +507,8 @@ class FoldersClient {
   ///
   /// @param name  Required. The resource name of the folder to be deleted.
   ///  Must be of the form `folders/{folder_id}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -505,7 +518,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Requests deletion of a folder. The folder is moved into the
@@ -522,7 +535,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L503}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -533,7 +547,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Cancels the deletion request for a folder. This method may be called on a
@@ -550,7 +564,8 @@ class FoldersClient {
   ///
   /// @param name  Required. The resource name of the folder to undelete.
   ///  Must be of the form `folders/{folder_id}`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -560,7 +575,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Cancels the deletion request for a folder. This method may be called on a
@@ -577,7 +592,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L521}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
@@ -588,7 +604,7 @@ class FoldersClient {
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a folder. The returned policy may be
@@ -600,7 +616,8 @@ class FoldersClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -610,7 +627,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Gets the access control policy for a folder. The returned policy may be
@@ -621,7 +638,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -631,8 +649,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Sets the access control policy on a folder, replacing any existing policy.
@@ -649,7 +666,8 @@ class FoldersClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -660,7 +678,7 @@ class FoldersClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -678,14 +696,13 @@ class FoldersClient {
    * specified. See the operation documentation for the appropriate value for
    * this field.
    * @param updater  Required. Functor to map the current policy to a new one.
-   * @param options  Optional. Options to control the loop. Expected options
-   * are:
-   *       - `FoldersBackoffPolicyOption`
+   * @param opts  Optional. Override the class-level options, such as retry and
+   *    backoff policies.
    * @return google::iam::v1::Policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
                                                  IamUpdater const& updater,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Sets the access control policy on a folder, replacing any existing policy.
@@ -696,7 +713,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -706,8 +724,7 @@ class FoldersClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified folder.
@@ -724,7 +741,8 @@ class FoldersClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -735,7 +753,7 @@ class FoldersClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified folder.
@@ -746,7 +764,8 @@ class FoldersClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -757,7 +776,7 @@ class FoldersClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<FoldersConnection> connection_;

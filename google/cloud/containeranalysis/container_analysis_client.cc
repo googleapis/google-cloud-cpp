@@ -28,19 +28,18 @@ namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContainerAnalysisClient::ContainerAnalysisClient(
-    std::shared_ptr<ContainerAnalysisConnection> connection, Options options)
+    std::shared_ptr<ContainerAnalysisConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           containeranalysis_internal::ContainerAnalysisDefaultOptions(
               connection_->options()))) {}
 ContainerAnalysisClient::~ContainerAnalysisClient() = default;
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
     std::string const& resource, google::iam::v1::Policy const& policy,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -48,11 +47,10 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
-    std::string const& resource, IamUpdater const& updater, Options options) {
+    std::string const& resource, IamUpdater const& updater, Options opts) {
   internal::CheckExpectedOptions<ContainerAnalysisBackoffPolicyOption>(
-      options, __func__);
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+      opts, __func__);
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
@@ -79,34 +77,30 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::GetIamPolicy(
-    std::string const& resource, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisClient::TestIamPermissions(
     std::string const& resource, std::vector<std::string> const& permissions,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -115,19 +109,16 @@ ContainerAnalysisClient::TestIamPermissions(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<
     google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
 ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(
-    std::string const& parent, std::string const& filter, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::containeranalysis::v1::
       GetVulnerabilityOccurrencesSummaryRequest request;
   request.set_parent(parent);
@@ -140,9 +131,8 @@ StatusOr<
 ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(
     google::devtools::containeranalysis::v1::
         GetVulnerabilityOccurrencesSummaryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVulnerabilityOccurrencesSummary(request);
 }
 

@@ -45,10 +45,6 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
-void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
-    google::test::admin::database::v1::TailLogEntriesResponse const& response,
-    google::test::admin::database::v1::TailLogEntriesRequest& request);
-
 class GoldenKitchenSinkConnection {
  public:
   virtual ~GoldenKitchenSinkConnection() = 0;

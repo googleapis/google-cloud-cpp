@@ -13,19 +13,27 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/admin_client.h"
+#include "google/cloud/pubsublite/endpoint.h"
+#include "google/cloud/common_options.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id zone-id\n";
     return 1;
   }
 
+  namespace gc = ::google::cloud;
   namespace pubsublite = ::google::cloud::pubsublite;
+  auto const zone_id = std::string{argv[2]};
+  auto endpoint = pubsublite::EndpointFromZone(zone_id);
+  if (!endpoint) throw std::runtime_error(endpoint.status().message());
   auto client =
-      pubsublite::AdminServiceClient(pubsublite::MakeAdminServiceConnection());
-  auto const parent = std::string("projects/") + argv[1];
+      pubsublite::AdminServiceClient(pubsublite::MakeAdminServiceConnection(
+          gc::Options{}.set<gc::EndpointOption>(*endpoint)));
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + zone_id;
   for (auto const& topic : client.ListTopics(parent)) {
     std::cout << topic.value().DebugString() << "\n";
   }

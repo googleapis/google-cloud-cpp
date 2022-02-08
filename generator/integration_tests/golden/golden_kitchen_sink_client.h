@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GoldenKitchenSinkClient {
  public:
-  explicit GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection, Options options = {});
+  explicit GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection, Options opts = {});
   ~GoldenKitchenSinkClient();
 
   //@{
@@ -107,27 +107,29 @@ class GoldenKitchenSinkClient {
   ///  Must be set to a value less than or equal to 3600 (1 hour). If a value is
   ///  not specified, the token's lifetime will be set to a default value of one
   ///  hour.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L905}
   ///
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L865}
   /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L905}
   ///
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options options = {});
+  GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options opts = {});
 
   ///
   /// Generates an OAuth 2.0 access token for a service account.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenRequest,generator/integration_tests/test.proto#L865}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L905}
   ///
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L865}
   /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L905}
   ///
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options options = {});
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options opts = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
@@ -149,27 +151,29 @@ class GoldenKitchenSinkClient {
   ///  grants access to.
   /// @param include_email  Include the service account email in the token. If set to `true`, the
   ///  token will contain `email` and `email_verified` claims.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L947}
   ///
   /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
   /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L947}
   ///
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options options = {});
+  GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options opts = {});
 
   ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::GenerateIdTokenRequest,generator/integration_tests/test.proto#L914}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L947}
   ///
   /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L914}
   /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L947}
   ///
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options options = {});
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options opts = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -197,14 +201,15 @@ class GoldenKitchenSinkClient {
   ///  entries in `entries`. If a log entry already has a label with the same key
   ///  as a label in this parameter, then the log entry's label is not changed.
   ///  See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L986}
   ///
   /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
   /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L986}
   ///
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels, Options options = {});
+  WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels, Options opts = {});
 
   ///
   /// Writes log entries to Logging. This API method is the
@@ -216,14 +221,15 @@ class GoldenKitchenSinkClient {
   /// folders)
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::WriteLogEntriesRequest,generator/integration_tests/test.proto#L953}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L986}
   ///
   /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L953}
   /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L986}
   ///
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options options = {});
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options opts = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
@@ -234,26 +240,28 @@ class GoldenKitchenSinkClient {
   ///      "organizations/[ORGANIZATION_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
   ///      "folders/[FOLDER_ID]"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return std::string
   ///
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L989}
   ///
   StreamRange<std::string>
-  ListLogs(std::string const& parent, Options options = {});
+  ListLogs(std::string const& parent, Options opts = {});
 
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
   /// Only logs that have entries are listed.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListLogsRequest,generator/integration_tests/test.proto#L989}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return std::string
   ///
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L989}
   ///
   StreamRange<std::string>
-  ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options options = {});
+  ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options opts = {});
 
   ///
   /// Streaming read of log entries as they are ingested. Until the stream is
@@ -269,28 +277,30 @@ class GoldenKitchenSinkClient {
   ///      "organization/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
   ///      "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1247}
   ///
   /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1215}
   /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1247}
   ///
   StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(std::vector<std::string> const& resource_names, Options options = {});
+  TailLogEntries(std::vector<std::string> const& resource_names, Options opts = {});
 
   ///
   /// Streaming read of log entries as they are ingested. Until the stream is
   /// terminated, it will continue reading logs.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::TailLogEntriesRequest,generator/integration_tests/test.proto#L1215}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::TailLogEntriesResponse,generator/integration_tests/test.proto#L1247}
   ///
   /// [google.test.admin.database.v1.TailLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1215}
   /// [google.test.admin.database.v1.TailLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1247}
   ///
   StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options options = {});
+  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options opts = {});
 
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
@@ -303,53 +313,57 @@ class GoldenKitchenSinkClient {
   /// @param key_types  Filters the types of keys the user wants to include in the list
   ///  response. Duplicate key types are not allowed. If no key type
   ///  is provided, all keys are returned.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1319}
   ///
   /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1287}
   /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1319}
   ///
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options options = {});
+  ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options opts = {});
 
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
   ///
   /// @param request @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysRequest,generator/integration_tests/test.proto#L1287}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1319}
   ///
   /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1287}
   /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1319}
   ///
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request, Options options = {});
+  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request, Options opts = {});
 
   ///
   /// Does Nothing.
   ///
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L52}
   ///
   Status
-  DoNothing(Options options = {});
+  DoNothing(Options opts = {});
 
   ///
   /// Does Nothing.
   ///
   /// @param request @googleapis_link{google::protobuf::Empty,google/protobuf/empty.proto#L52}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L52}
   ///
   Status
-  DoNothing(google::protobuf::Empty const& request, Options options = {});
+  DoNothing(google::protobuf::Empty const& request, Options opts = {});
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(Options options = {});
+  AsyncAppendRows(Options opts = {});
 
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;

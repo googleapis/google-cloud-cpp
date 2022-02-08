@@ -15,8 +15,6 @@
 # ~~~
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-    find_package(absl CONFIG REQUIRED)
-
     add_library(
         storage_benchmarks # cmake-format: sort
         aggregate_download_throughput_options.cc

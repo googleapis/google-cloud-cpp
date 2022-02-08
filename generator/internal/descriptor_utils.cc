@@ -354,7 +354,11 @@ std::string FormatApiMethodSignatureParameters(
     parameter_descriptor->GetSourceLocation(&loc);
     auto comment = absl::StrReplaceAll(
         EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
-        {{"\n\n", "\n  /// "}, {"\n", "\n  /// "}});
+        {{"\n\n", "\n  /// "},
+         {"\n", "\n  /// "},
+         // Doxygen cannot process this tag. One proto uses it in a comment.
+         {"<tbody>", "<!--<tbody>-->"},
+         {"</tbody>", "<!--</tbody>-->"}});
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
   }
@@ -445,8 +449,10 @@ std::string FormatMethodComments(
       EscapePrinterDelimiter(method_source_location.leading_comments),
       {{"\n", "\n  ///"}});
 
-  std::string options_comment =
-      absl::StrFormat("  /// @param options  Optional. Operation options.\n");
+  auto const options_comment = std::string{
+      R"""(  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+)"""};
 
   std::string return_comment_string;
   if (IsLongrunningOperation(method)) {

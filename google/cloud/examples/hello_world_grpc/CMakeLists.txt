@@ -19,8 +19,6 @@ project(hello-world-grpc LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(gRPC REQUIRED)
-
 add_executable(
     hello_world_grpc
     "${CMAKE_CURRENT_BINARY_DIR}/hello_world.grpc.pb.cc"

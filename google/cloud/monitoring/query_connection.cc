@@ -35,17 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 QueryServiceConnection::~QueryServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
-QueryServiceConnection::QueryTimeSeries(
-    google::monitoring::v3::QueryTimeSeriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::monitoring::v3::TimeSeriesData>>(
-      std::move(request),
-      [](google::monitoring::v3::QueryTimeSeriesRequest const&) {
-        return StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>{};
-      },
-      [](google::monitoring::v3::QueryTimeSeriesResponse const&) {
-        return std::vector<google::monitoring::v3::TimeSeriesData>();
-      });
+    QueryServiceConnection::QueryTimeSeries(
+        google::monitoring::v3::
+            QueryTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::monitoring::v3::TimeSeriesData>>();
 }
 
 std::shared_ptr<QueryServiceConnection> MakeQueryServiceConnection(

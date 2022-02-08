@@ -128,17 +128,11 @@ BigtableInstanceAdminConnection::GetAppProfile(
 }
 
 StreamRange<google::bigtable::admin::v2::AppProfile>
-BigtableInstanceAdminConnection::ListAppProfiles(
-    google::bigtable::admin::v2::ListAppProfilesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::bigtable::admin::v2::AppProfile>>(
-      std::move(request),
-      [](google::bigtable::admin::v2::ListAppProfilesRequest const&) {
-        return StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>{};
-      },
-      [](google::bigtable::admin::v2::ListAppProfilesResponse const&) {
-        return std::vector<google::bigtable::admin::v2::AppProfile>();
-      });
+    BigtableInstanceAdminConnection::ListAppProfiles(
+        google::bigtable::admin::v2::
+            ListAppProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::AppProfile>>();
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>

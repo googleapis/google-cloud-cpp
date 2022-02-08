@@ -35,16 +35,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudTasksConnection::~CloudTasksConnection() = default;
 
 StreamRange<google::cloud::tasks::v2::Queue> CloudTasksConnection::ListQueues(
-    google::cloud::tasks::v2::ListQueuesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::tasks::v2::Queue>>(
-      std::move(request),
-      [](google::cloud::tasks::v2::ListQueuesRequest const&) {
-        return StatusOr<google::cloud::tasks::v2::ListQueuesResponse>{};
-      },
-      [](google::cloud::tasks::v2::ListQueuesResponse const&) {
-        return std::vector<google::cloud::tasks::v2::Queue>();
-      });
+    google::cloud::tasks::v2::
+        ListQueuesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::tasks::v2::Queue>>();
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksConnection::GetQueue(
@@ -99,16 +93,10 @@ CloudTasksConnection::TestIamPermissions(
 }
 
 StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnection::ListTasks(
-    google::cloud::tasks::v2::ListTasksRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::tasks::v2::Task>>(
-      std::move(request),
-      [](google::cloud::tasks::v2::ListTasksRequest const&) {
-        return StatusOr<google::cloud::tasks::v2::ListTasksResponse>{};
-      },
-      [](google::cloud::tasks::v2::ListTasksResponse const&) {
-        return std::vector<google::cloud::tasks::v2::Task>();
-      });
+    google::cloud::tasks::v2::
+        ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::tasks::v2::Task>>();
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::GetTask(

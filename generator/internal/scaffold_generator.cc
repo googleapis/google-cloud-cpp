@@ -421,10 +421,6 @@ set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::$library$_protos)
 
-find_package(gRPC REQUIRED)
-find_package(ProtobufWithTargets REQUIRED)
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleCloudCppCommon)
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
@@ -497,6 +493,22 @@ target_include_directories(
               $$<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_$library$_mocks
                        INTERFACE $${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+include(CTest)
+if (BUILD_TESTING)
+    add_executable($library$_quickstart "quickstart/quickstart.cc")
+    target_link_libraries($library$_quickstart
+                          PRIVATE google-cloud-cpp::experimental-$library$)
+    google_cloud_cpp_add_common_options($library$_quickstart)
+    add_test(
+        NAME $library$_quickstart
+        COMMAND cmake -P "$${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $$<TARGET_FILE:$library$_quickstart> GOOGLE_CLOUD_PROJECT
+                # EDIT HERE
+                )
+    set_tests_properties($library$_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
@@ -1050,8 +1062,6 @@ grpc_extra_deps()
 
 void GenerateQuickstartBuild(
     std::ostream& os, std::map<std::string, std::string> const& variables) {
-  // The version and SHA are hardcoded in this template, but it does not matter
-  // too much, renovate bot would update it as soon as it is merged.
   auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");

@@ -80,16 +80,10 @@ JobServiceConnection::BatchDeleteJobs(
 }
 
 StreamRange<google::cloud::talent::v4::Job> JobServiceConnection::ListJobs(
-    google::cloud::talent::v4::ListJobsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::talent::v4::Job>>(
-      std::move(request),
-      [](google::cloud::talent::v4::ListJobsRequest const&) {
-        return StatusOr<google::cloud::talent::v4::ListJobsResponse>{};
-      },
-      [](google::cloud::talent::v4::ListJobsResponse const&) {
-        return std::vector<google::cloud::talent::v4::Job>();
-      });
+    google::cloud::talent::v4::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::talent::v4::Job>>();
 }
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>

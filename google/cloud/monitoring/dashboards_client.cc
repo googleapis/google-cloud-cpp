@@ -26,55 +26,49 @@ namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DashboardsServiceClient::DashboardsServiceClient(
-    std::shared_ptr<DashboardsServiceConnection> connection, Options options)
+    std::shared_ptr<DashboardsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
-          monitoring_internal::DashboardsServiceDefaultOptions(
-              connection_->options()))) {}
+          std::move(opts), monitoring_internal::DashboardsServiceDefaultOptions(
+                               connection_->options()))) {}
 DashboardsServiceClient::~DashboardsServiceClient() = default;
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceClient::CreateDashboard(
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDashboard(request);
 }
 
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceClient::ListDashboards(
     google::monitoring::dashboard::v1::ListDashboardsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDashboards(std::move(request));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceClient::GetDashboard(
     google::monitoring::dashboard::v1::GetDashboardRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDashboard(request);
 }
 
 Status DashboardsServiceClient::DeleteDashboard(
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDashboard(request);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceClient::UpdateDashboard(
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDashboard(request);
 }
 

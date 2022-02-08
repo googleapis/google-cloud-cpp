@@ -62,18 +62,11 @@ AssuredWorkloadsServiceConnection::GetWorkload(
 }
 
 StreamRange<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceConnection::ListWorkloads(
-    google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::assuredworkloads::v1::Workload>>(
-      std::move(request),
-      [](google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&) {
-        return StatusOr<
-            google::cloud::assuredworkloads::v1::ListWorkloadsResponse>{};
-      },
-      [](google::cloud::assuredworkloads::v1::ListWorkloadsResponse const&) {
-        return std::vector<google::cloud::assuredworkloads::v1::Workload>();
-      });
+    AssuredWorkloadsServiceConnection::ListWorkloads(
+        google::cloud::assuredworkloads::v1::
+            ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::assuredworkloads::v1::Workload>>();
 }
 
 std::shared_ptr<AssuredWorkloadsServiceConnection>

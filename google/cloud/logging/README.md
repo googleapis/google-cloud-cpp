@@ -43,11 +43,12 @@ this library.
 <!-- inject-quickstart-start -->
 ```cc
 #include "google/cloud/logging/logging_service_v2_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
+  if (argc != 2) {
     std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
@@ -55,9 +56,10 @@ int main(int argc, char* argv[]) try {
   namespace logging = ::google::cloud::logging;
   auto client = logging::LoggingServiceV2Client(
       logging::MakeLoggingServiceV2Connection());
-  auto const parent = std::string("projects/") + argv[1];
-  for (auto const& logs : client.ListLogs(parent)) {
-    std::cout << logs.value() << "\n";
+  auto const project = google::cloud::Project(argv[1]);
+  for (auto l : client.ListLogs(project.FullName())) {
+    if (!l) throw std::runtime_error(l.status().message());
+    std::cout << *l << "\n";
   }
 
   return 0;

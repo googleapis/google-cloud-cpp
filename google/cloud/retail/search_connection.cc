@@ -35,18 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SearchServiceConnection::~SearchServiceConnection() = default;
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-SearchServiceConnection::Search(
-    google::cloud::retail::v2::SearchRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
-      std::move(request),
-      [](google::cloud::retail::v2::SearchRequest const&) {
-        return StatusOr<google::cloud::retail::v2::SearchResponse>{};
-      },
-      [](google::cloud::retail::v2::SearchResponse const&) {
-        return std::vector<
-            google::cloud::retail::v2::SearchResponse::SearchResult>();
-      });
+    SearchServiceConnection::Search(
+        google::cloud::retail::v2::
+            SearchRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>();
 }
 
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(

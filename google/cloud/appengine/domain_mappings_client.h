@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DomainMappingsClient {
  public:
   explicit DomainMappingsClient(
-      std::shared_ptr<DomainMappingsConnection> connection,
-      Options options = {});
+      std::shared_ptr<DomainMappingsConnection> connection, Options opts = {});
   ~DomainMappingsClient();
 
   //@{
@@ -91,7 +90,8 @@ class DomainMappingsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::ListDomainMappingsRequest,google/appengine/v1/appengine.proto#L784}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
   ///
@@ -102,14 +102,15 @@ class DomainMappingsClient {
   ///
   StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
       google::appengine::v1::ListDomainMappingsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the specified domain mapping.
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::GetDomainMappingRequest,google/appengine/v1/appengine.proto#L805}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
   ///
@@ -120,7 +121,7 @@ class DomainMappingsClient {
   ///
   StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
       google::appengine::v1::GetDomainMappingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Maps a domain to an application. A user must be authorized to administer a
@@ -129,7 +130,8 @@ class DomainMappingsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::CreateDomainMappingRequest,google/appengine/v1/appengine.proto#L812}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
   ///
@@ -140,7 +142,7 @@ class DomainMappingsClient {
   ///
   future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
       google::appengine::v1::CreateDomainMappingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the specified domain mapping. To map an SSL certificate to a
@@ -150,7 +152,8 @@ class DomainMappingsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::UpdateDomainMappingRequest,google/appengine/v1/appengine.proto#L843}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
   ///
@@ -161,7 +164,7 @@ class DomainMappingsClient {
   ///
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes the specified domain mapping. A user must be authorized to
@@ -170,7 +173,8 @@ class DomainMappingsClient {
   ///
   /// @param request
   /// @googleapis_link{google::appengine::v1::DeleteDomainMappingRequest,google/appengine/v1/appengine.proto#L857}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
   ///
@@ -182,7 +186,7 @@ class DomainMappingsClient {
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteDomainMapping(
       google::appengine::v1::DeleteDomainMappingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<DomainMappingsConnection> connection_;

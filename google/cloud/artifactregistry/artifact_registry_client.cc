@@ -26,19 +26,18 @@ namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ArtifactRegistryClient::ArtifactRegistryClient(
-    std::shared_ptr<ArtifactRegistryConnection> connection, Options options)
+    std::shared_ptr<ArtifactRegistryConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           artifactregistry_internal::ArtifactRegistryDefaultOptions(
               connection_->options()))) {}
 ArtifactRegistryClient::~ArtifactRegistryClient() = default;
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryClient::ListDockerImages(std::string const& parent,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListDockerImagesRequest request;
   request.set_parent(parent);
   return connection_->ListDockerImages(request);
@@ -47,17 +46,15 @@ ArtifactRegistryClient::ListDockerImages(std::string const& parent,
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryClient::ListDockerImages(
     google::devtools::artifactregistry::v1::ListDockerImagesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDockerImages(std::move(request));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryClient::ListRepositories(std::string const& parent,
-                                         Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::ListRepositoriesRequest request;
   request.set_parent(parent);
   return connection_->ListRepositories(request);
@@ -66,17 +63,14 @@ ArtifactRegistryClient::ListRepositories(std::string const& parent,
 StreamRange<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryClient::ListRepositories(
     google::devtools::artifactregistry::v1::ListRepositoriesRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRepositories(std::move(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryClient::GetRepository(std::string const& name,
-                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+ArtifactRegistryClient::GetRepository(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::artifactregistry::v1::GetRepositoryRequest request;
   request.set_name(name);
   return connection_->GetRepository(request);
@@ -85,9 +79,8 @@ ArtifactRegistryClient::GetRepository(std::string const& name,
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryClient::GetRepository(
     google::devtools::artifactregistry::v1::GetRepositoryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRepository(request);
 }
 

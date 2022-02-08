@@ -25,10 +25,6 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "grafeas_internal" "grafeas_testing"
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::grafeas_protos)
 
-find_package(gRPC REQUIRED)
-find_package(ProtobufWithTargets REQUIRED)
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleCloudCppCommon)
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE

@@ -64,7 +64,7 @@ class NotificationChannelServiceClient {
  public:
   explicit NotificationChannelServiceClient(
       std::shared_ptr<NotificationChannelServiceConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~NotificationChannelServiceClient();
 
   //@{
@@ -105,7 +105,8 @@ class NotificationChannelServiceClient {
   ///  single descriptor by name, use the
   ///  [GetNotificationChannelDescriptor][google.monitoring.v3.NotificationChannelService.GetNotificationChannelDescriptor]
   ///  operation, instead.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
@@ -116,7 +117,7 @@ class NotificationChannelServiceClient {
   ///
   StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
   ListNotificationChannelDescriptors(std::string const& name,
-                                     Options options = {});
+                                     Options opts = {});
 
   ///
   /// Lists the descriptors for supported channel types. The use of descriptors
@@ -124,7 +125,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListNotificationChannelDescriptorsRequest,google/monitoring/v3/notification_service.proto#L164}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
@@ -136,7 +138,7 @@ class NotificationChannelServiceClient {
   StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
   ListNotificationChannelDescriptors(
       google::monitoring::v3::ListNotificationChannelDescriptorsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a single channel descriptor. The descriptor indicates which fields
@@ -145,7 +147,8 @@ class NotificationChannelServiceClient {
   /// @param name  Required. The channel type for which to execute the request.
   /// The format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHANNEL_TYPE]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
@@ -155,8 +158,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
   ///
   StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
-  GetNotificationChannelDescriptor(std::string const& name,
-                                   Options options = {});
+  GetNotificationChannelDescriptor(std::string const& name, Options opts = {});
 
   ///
   /// Gets a single channel descriptor. The descriptor indicates which fields
@@ -164,7 +166,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetNotificationChannelDescriptorRequest,google/monitoring/v3/notification_service.proto#L208}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
@@ -177,7 +180,7 @@ class NotificationChannelServiceClient {
   GetNotificationChannelDescriptor(
       google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists the notification channels that have been created for the project.
@@ -192,7 +195,8 @@ class NotificationChannelServiceClient {
   ///  the
   ///  [`GetNotificationChannel`][google.monitoring.v3.NotificationChannelService.GetNotificationChannel]
   ///  operation.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -202,14 +206,15 @@ class NotificationChannelServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
   StreamRange<google::monitoring::v3::NotificationChannel>
-  ListNotificationChannels(std::string const& name, Options options = {});
+  ListNotificationChannels(std::string const& name, Options opts = {});
 
   ///
   /// Lists the notification channels that have been created for the project.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::ListNotificationChannelsRequest,google/monitoring/v3/notification_service.proto#L243}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -221,7 +226,7 @@ class NotificationChannelServiceClient {
   StreamRange<google::monitoring::v3::NotificationChannel>
   ListNotificationChannels(
       google::monitoring::v3::ListNotificationChannelsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a single notification channel. The channel includes the relevant
@@ -233,7 +238,8 @@ class NotificationChannelServiceClient {
   /// @param name  Required. The channel for which to execute the request. The
   /// format is:
   ///      projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -243,7 +249,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
   StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets a single notification channel. The channel includes the relevant
@@ -254,7 +260,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L305}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -265,7 +272,7 @@ class NotificationChannelServiceClient {
   ///
   StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
       google::monitoring::v3::GetNotificationChannelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new notification channel, representing a single notification
@@ -282,7 +289,8 @@ class NotificationChannelServiceClient {
   ///  channel.
   /// @param notification_channel  Required. The definition of the
   /// `NotificationChannel` to create.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -295,7 +303,7 @@ class NotificationChannelServiceClient {
   CreateNotificationChannel(
       std::string const& name,
       google::monitoring::v3::NotificationChannel const& notification_channel,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new notification channel, representing a single notification
@@ -303,7 +311,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::CreateNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L221}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -315,7 +324,7 @@ class NotificationChannelServiceClient {
   StatusOr<google::monitoring::v3::NotificationChannel>
   CreateNotificationChannel(
       google::monitoring::v3::CreateNotificationChannelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a notification channel. Fields not specified in the field mask
@@ -327,7 +336,8 @@ class NotificationChannelServiceClient {
   ///  notification channel. The description must provide a definition for
   ///  fields to be updated; the names of these fields should also be
   ///  included in the `update_mask`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -340,7 +350,7 @@ class NotificationChannelServiceClient {
   UpdateNotificationChannel(
       google::protobuf::FieldMask const& update_mask,
       google::monitoring::v3::NotificationChannel const& notification_channel,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a notification channel. Fields not specified in the field mask
@@ -348,7 +358,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::UpdateNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L318}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -360,7 +371,7 @@ class NotificationChannelServiceClient {
   StatusOr<google::monitoring::v3::NotificationChannel>
   UpdateNotificationChannel(
       google::monitoring::v3::UpdateNotificationChannelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a notification channel.
@@ -373,27 +384,29 @@ class NotificationChannelServiceClient {
   ///  use in alert policies (the policies will be updated to remove the
   ///  channel). If false, channels that are still referenced by an existing
   ///  alerting policy will fail to be deleted in a delete operation.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteNotificationChannelRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L330}
   ///
   Status DeleteNotificationChannel(std::string const& name, bool force,
-                                   Options options = {});
+                                   Options opts = {});
 
   ///
   /// Deletes a notification channel.
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::DeleteNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L330}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteNotificationChannelRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L330}
   ///
   Status DeleteNotificationChannel(
       google::monitoring::v3::DeleteNotificationChannelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Causes a verification code to be delivered to the channel. The code
@@ -401,13 +414,14 @@ class NotificationChannelServiceClient {
   ///
   /// @param name  Required. The notification channel to which to send a
   /// verification code.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L349}
   ///
   Status SendNotificationChannelVerificationCode(std::string const& name,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Causes a verification code to be delivered to the channel. The code
@@ -415,7 +429,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::SendNotificationChannelVerificationCodeRequest,google/monitoring/v3/notification_service.proto#L349}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L349}
@@ -423,7 +438,7 @@ class NotificationChannelServiceClient {
   Status SendNotificationChannelVerificationCode(
       google::monitoring::v3::
           SendNotificationChannelVerificationCodeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Requests a verification code for an already verified channel that can then
@@ -452,7 +467,8 @@ class NotificationChannelServiceClient {
   /// code is to be generated
   ///  and retrieved. This must name a channel that is already verified; if
   ///  the specified channel is not verified, the request will fail.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeResponse,google/monitoring/v3/notification_service.proto#L384}
   ///
@@ -464,7 +480,7 @@ class NotificationChannelServiceClient {
   StatusOr<
       google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
   GetNotificationChannelVerificationCode(std::string const& name,
-                                         Options options = {});
+                                         Options opts = {});
 
   ///
   /// Requests a verification code for an already verified channel that can then
@@ -491,7 +507,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeRequest,google/monitoring/v3/notification_service.proto#L360}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeResponse,google/monitoring/v3/notification_service.proto#L384}
   ///
@@ -505,7 +522,7 @@ class NotificationChannelServiceClient {
   GetNotificationChannelVerificationCode(
       google::monitoring::v3::
           GetNotificationChannelVerificationCodeRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Verifies a `NotificationChannel` by proving receipt of the code
@@ -521,7 +538,8 @@ class NotificationChannelServiceClient {
   ///  "G-123456" or "TKNZGhhd2EyN3I1MnRnMjRv" (in general, one is only
   ///  guaranteed that the code is valid UTF-8; one should not
   ///  make any assumptions regarding the structure or format of the code).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -532,7 +550,7 @@ class NotificationChannelServiceClient {
   ///
   StatusOr<google::monitoring::v3::NotificationChannel>
   VerifyNotificationChannel(std::string const& name, std::string const& code,
-                            Options options = {});
+                            Options opts = {});
 
   ///
   /// Verifies a `NotificationChannel` by proving receipt of the code
@@ -541,7 +559,8 @@ class NotificationChannelServiceClient {
   ///
   /// @param request
   /// @googleapis_link{google::monitoring::v3::VerifyNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L398}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
@@ -553,7 +572,7 @@ class NotificationChannelServiceClient {
   StatusOr<google::monitoring::v3::NotificationChannel>
   VerifyNotificationChannel(
       google::monitoring::v3::VerifyNotificationChannelRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<NotificationChannelServiceConnection> connection_;

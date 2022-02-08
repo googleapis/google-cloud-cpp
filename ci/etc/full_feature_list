@@ -1,6 +1,7 @@
 accessapproval
 accesscontextmanager
 apigateway
+apigeeconnect
 appengine
 artifactregistry
 asset
@@ -12,10 +13,12 @@ binaryauthorization
 channel
 cloudbuild
 composer
+contactcenterinsights
 container
 containeranalysis
 datacatalog
 datamigration
+dataproc
 debugger
 dlp
 eventarc
@@ -44,6 +47,7 @@ pubsublite
 recommender
 redis
 resourcemanager
+resourcesettings
 retail
 scheduler
 secretmanager

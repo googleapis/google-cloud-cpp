@@ -35,21 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsConnection::~ExecutionsConnection() = default;
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
-ExecutionsConnection::ListExecutions(
-    google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::workflows::executions::v1::Execution>>(
-      std::move(request),
-      [](google::cloud::workflows::executions::v1::
-             ListExecutionsRequest const&) {
-        return StatusOr<
-            google::cloud::workflows::executions::v1::ListExecutionsResponse>{};
-      },
-      [](google::cloud::workflows::executions::v1::
-             ListExecutionsResponse const&) {
-        return std::vector<
-            google::cloud::workflows::executions::v1::Execution>();
-      });
+    ExecutionsConnection::ListExecutions(
+        google::cloud::workflows::executions::v1::
+            ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::workflows::executions::v1::Execution>>();
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>

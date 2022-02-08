@@ -82,19 +82,27 @@ Status ConnectionGenerator::GenerateHeader() {
                 // clang-format on
   );
 
-  // streaming updater functions
-  for (auto const& method : methods()) {
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-            {// clang-format off
-   {"\n"
-    "void $service_name$$method_name$StreamingUpdater(\n"
-    "    $response_type$ const& response,\n"
-    "    $request_type$& request);\n"}
-     }, IsStreamingRead)},
-             // clang-format on
-        __FILE__, __LINE__);
+  // TODO(#8234): This is a special case for backwards compatibility of the
+  // streaming updated function.
+  if (vars().at("service_name") == "BigQueryRead") {
+    // streaming updater functions
+    for (auto const& method : methods()) {
+      HeaderPrintMethod(
+          method,
+          {MethodPattern(
+              {// clang-format off
+     {"\n"
+      "GOOGLE_CLOUD_CPP_DEPRECATED(\n"
+      "    \"applications should not need this.\"\n"
+      "    \" Please file a bug at https://github.com/googleapis/google-cloud-cpp\"\n"
+      "    \" if you do.\")"
+      "void $service_name$$method_name$StreamingUpdater(\n"
+      "    $response_type$ const& response,\n"
+      "    $request_type$& request);\n"}
+       }, IsStreamingRead)},
+               // clang-format on
+          __FILE__, __LINE__);
+    }
   }
 
   // Abstract interface Connection base class
@@ -233,6 +241,17 @@ Status ConnectionGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
+  if (vars().at("service_name") == "BigQueryRead") {
+    CcPrint(R"""(
+void BigQueryReadReadRowsStreamingUpdater(
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
+  return bigquery_internal::BigQueryReadReadRowsStreamingUpdater(response,
+                                                                 request);
+}
+)""");
+  }
+
   CcPrint(R"""(
 $connection_class_name$::~$connection_class_name$() = default;
 )""");
@@ -291,16 +310,9 @@ $connection_class_name$::Async$method_name$() {
              {
                  // clang-format off
    {"\nStreamRange<$range_output_type$> $connection_class_name$::$method_name$(\n"
-    "    $request_type$ request) {\n"
-    "  return google::cloud::internal::MakePaginationRange<StreamRange<\n"
-    "    $range_output_type$>>(\n"
-    "    std::move(request),\n"
-    "    []($request_type$ const&) {\n"
-    "      return StatusOr<$response_type$>{};\n"
-    "    },\n"
-    "    []($response_type$ const&) {\n"
-    "      return std::vector<$range_output_type$>();\n"
-    "    });\n"
+    "    $request_type$) {  // NOLINT(performance-unnecessary-value-param)\n"
+    "  return google::cloud::internal::MakeUnimplementedPaginationRange<\n"
+    "      StreamRange<$range_output_type$>>();\n"
     "}\n"
                      // clang-format on
                  },

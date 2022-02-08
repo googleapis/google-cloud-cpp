@@ -73,7 +73,7 @@ class AccessContextManagerClient {
  public:
   explicit AccessContextManagerClient(
       std::shared_ptr<AccessContextManagerConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~AccessContextManagerClient();
 
   //@{
@@ -104,7 +104,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L431}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
   ///
@@ -117,7 +118,7 @@ class AccessContextManagerClient {
   ListAccessPolicies(
       google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get an [AccessPolicy]
@@ -125,7 +126,8 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Resource name for the access policy to get.
   ///  Format `accessPolicies/{policy_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
   ///
@@ -135,7 +137,7 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-  GetAccessPolicy(std::string const& name, Options options = {});
+  GetAccessPolicy(std::string const& name, Options opts = {});
 
   ///
   /// Get an [AccessPolicy]
@@ -143,7 +145,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GetAccessPolicyRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L463}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
   ///
@@ -156,7 +159,7 @@ class AccessContextManagerClient {
   GetAccessPolicy(
       google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create an `AccessPolicy`. Fails if this organization already has a
@@ -167,7 +170,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
   ///
@@ -179,7 +183,7 @@ class AccessContextManagerClient {
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   CreateAccessPolicy(
       google::identity::accesscontextmanager::v1::AccessPolicy const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Update an [AccessPolicy]
@@ -193,7 +197,8 @@ class AccessContextManagerClient {
   /// @param policy  Required. The updated AccessPolicy.
   /// @param update_mask  Required. Mask to control which fields get updated.
   /// Must be non-empty.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
   ///
@@ -205,7 +210,7 @@ class AccessContextManagerClient {
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(
       google::identity::accesscontextmanager::v1::AccessPolicy const& policy,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Update an [AccessPolicy]
@@ -218,7 +223,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L476}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
   ///
@@ -230,7 +236,7 @@ class AccessContextManagerClient {
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
                          UpdateAccessPolicyRequest const& request,
-                     Options options = {});
+                     Options opts = {});
 
   ///
   /// Delete an [AccessPolicy]
@@ -241,7 +247,8 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Resource name for the access policy to delete.
   ///  Format `accessPolicies/{policy_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L940}
   ///
@@ -252,7 +259,7 @@ class AccessContextManagerClient {
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(std::string const& name, Options options = {});
+  DeleteAccessPolicy(std::string const& name, Options opts = {});
 
   ///
   /// Delete an [AccessPolicy]
@@ -263,7 +270,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L485}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L940}
   ///
@@ -276,7 +284,7 @@ class AccessContextManagerClient {
                       AccessContextManagerOperationMetadata>>
   DeleteAccessPolicy(google::identity::accesscontextmanager::v1::
                          DeleteAccessPolicyRequest const& request,
-                     Options options = {});
+                     Options opts = {});
 
   ///
   /// List all [Access Levels]
@@ -288,7 +296,8 @@ class AccessContextManagerClient {
   ///  [google.identity.accesscontextmanager.v1.AccessLevel] from.
   ///  Format:
   ///  `accessPolicies/{policy_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -298,7 +307,7 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-  ListAccessLevels(std::string const& parent, Options options = {});
+  ListAccessLevels(std::string const& parent, Options opts = {});
 
   ///
   /// List all [Access Levels]
@@ -307,7 +316,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ListAccessLevelsRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L498}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -320,7 +330,7 @@ class AccessContextManagerClient {
   ListAccessLevels(
       google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get an [Access Level]
@@ -331,7 +341,8 @@ class AccessContextManagerClient {
   ///  [google.identity.accesscontextmanager.v1.AccessLevel].
   ///  Format:
   ///  `accessPolicies/{policy_id}/accessLevels/{access_level_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -341,7 +352,7 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-  GetAccessLevel(std::string const& name, Options options = {});
+  GetAccessLevel(std::string const& name, Options opts = {});
 
   ///
   /// Get an [Access Level]
@@ -350,7 +361,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GetAccessLevelRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L539}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -363,7 +375,7 @@ class AccessContextManagerClient {
   GetAccessLevel(
       google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create an [Access Level]
@@ -383,7 +395,8 @@ class AccessContextManagerClient {
   ///  Syntactic correctness of the [Access Level]
   ///  [google.identity.accesscontextmanager.v1.AccessLevel] is a
   ///  precondition for creation.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -397,7 +410,7 @@ class AccessContextManagerClient {
       std::string const& parent,
       google::identity::accesscontextmanager::v1::AccessLevel const&
           access_level,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create an [Access Level]
@@ -410,7 +423,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::CreateAccessLevelRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L564}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -422,7 +436,7 @@ class AccessContextManagerClient {
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   CreateAccessLevel(google::identity::accesscontextmanager::v1::
                         CreateAccessLevelRequest const& request,
-                    Options options = {});
+                    Options opts = {});
 
   ///
   /// Update an [Access Level]
@@ -441,7 +455,8 @@ class AccessContextManagerClient {
   ///  precondition for creation.
   /// @param update_mask  Required. Mask to control which fields get updated.
   /// Must be non-empty.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -454,7 +469,7 @@ class AccessContextManagerClient {
   UpdateAccessLevel(
       google::identity::accesscontextmanager::v1::AccessLevel const&
           access_level,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Update an [Access Level]
@@ -468,7 +483,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L585}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
   ///
@@ -480,7 +496,7 @@ class AccessContextManagerClient {
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   UpdateAccessLevel(google::identity::accesscontextmanager::v1::
                         UpdateAccessLevelRequest const& request,
-                    Options options = {});
+                    Options opts = {});
 
   ///
   /// Delete an [Access Level]
@@ -494,7 +510,8 @@ class AccessContextManagerClient {
   ///  [google.identity.accesscontextmanager.v1.AccessLevel].
   ///  Format:
   ///  `accessPolicies/{policy_id}/accessLevels/{access_level_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L940}
   ///
@@ -505,7 +522,7 @@ class AccessContextManagerClient {
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(std::string const& name, Options options = {});
+  DeleteAccessLevel(std::string const& name, Options opts = {});
 
   ///
   /// Delete an [Access Level]
@@ -517,7 +534,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L598}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L940}
   ///
@@ -530,7 +548,7 @@ class AccessContextManagerClient {
                       AccessContextManagerOperationMetadata>>
   DeleteAccessLevel(google::identity::accesscontextmanager::v1::
                         DeleteAccessLevelRequest const& request,
-                    Options options = {});
+                    Options opts = {});
 
   ///
   /// Replace all existing [Access Levels]
@@ -553,7 +571,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L614}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse,google/identity/accesscontextmanager/v1/access_context_manager.proto#L647}
   ///
@@ -566,7 +585,7 @@ class AccessContextManagerClient {
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
   ReplaceAccessLevels(google::identity::accesscontextmanager::v1::
                           ReplaceAccessLevelsRequest const& request,
-                      Options options = {});
+                      Options opts = {});
 
   ///
   /// List all [Service Perimeters]
@@ -578,7 +597,8 @@ class AccessContextManagerClient {
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter] from.
   ///  Format:
   ///  `accessPolicies/{policy_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -588,7 +608,7 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  ListServicePerimeters(std::string const& parent, Options options = {});
+  ListServicePerimeters(std::string const& parent, Options opts = {});
 
   ///
   /// List all [Service Perimeters]
@@ -597,7 +617,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ListServicePerimetersRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L654}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -610,7 +631,7 @@ class AccessContextManagerClient {
   ListServicePerimeters(
       google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Get a [Service Perimeter]
@@ -621,7 +642,8 @@ class AccessContextManagerClient {
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter].
   ///  Format:
   ///  `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -631,7 +653,7 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(std::string const& name, Options options = {});
+  GetServicePerimeter(std::string const& name, Options opts = {});
 
   ///
   /// Get a [Service Perimeter]
@@ -640,7 +662,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GetServicePerimeterRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L690}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -652,7 +675,7 @@ class AccessContextManagerClient {
   StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
   GetServicePerimeter(google::identity::accesscontextmanager::v1::
                           GetServicePerimeterRequest const& request,
-                      Options options = {});
+                      Options opts = {});
 
   ///
   /// Create a [Service Perimeter]
@@ -673,7 +696,8 @@ class AccessContextManagerClient {
   ///  Syntactic correctness of the [Service Perimeter]
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter] is a
   ///  precondition for creation.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -687,7 +711,7 @@ class AccessContextManagerClient {
       std::string const& parent,
       google::identity::accesscontextmanager::v1::ServicePerimeter const&
           service_perimeter,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a [Service Perimeter]
@@ -701,7 +725,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L705}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -713,7 +738,7 @@ class AccessContextManagerClient {
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   CreateServicePerimeter(google::identity::accesscontextmanager::v1::
                              CreateServicePerimeterRequest const& request,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Update a [Service Perimeter]
@@ -730,7 +755,8 @@ class AccessContextManagerClient {
   ///  `ServicePerimeter` is a precondition for creation.
   /// @param update_mask  Required. Mask to control which fields get updated.
   /// Must be non-empty.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -743,7 +769,7 @@ class AccessContextManagerClient {
   UpdateServicePerimeter(
       google::identity::accesscontextmanager::v1::ServicePerimeter const&
           service_perimeter,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Update a [Service Perimeter]
@@ -757,7 +783,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L726}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
   ///
@@ -769,7 +796,7 @@ class AccessContextManagerClient {
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   UpdateServicePerimeter(google::identity::accesscontextmanager::v1::
                              UpdateServicePerimeterRequest const& request,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Delete a [Service Perimeter]
@@ -783,7 +810,8 @@ class AccessContextManagerClient {
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter].
   ///  Format:
   ///  `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L940}
   ///
@@ -794,7 +822,7 @@ class AccessContextManagerClient {
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter(std::string const& name, Options options = {});
+  DeleteServicePerimeter(std::string const& name, Options opts = {});
 
   ///
   /// Delete a [Service Perimeter]
@@ -806,7 +834,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L736}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L940}
   ///
@@ -819,7 +848,7 @@ class AccessContextManagerClient {
                       AccessContextManagerOperationMetadata>>
   DeleteServicePerimeter(google::identity::accesscontextmanager::v1::
                              DeleteServicePerimeterRequest const& request,
-                         Options options = {});
+                         Options opts = {});
 
   ///
   /// Replace all existing [Service Perimeters]
@@ -838,7 +867,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L752}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse,google/identity/accesscontextmanager/v1/access_context_manager.proto#L785}
   ///
@@ -851,7 +881,7 @@ class AccessContextManagerClient {
                       ReplaceServicePerimetersResponse>>
   ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::
                                ReplaceServicePerimetersRequest const& request,
-                           Options options = {});
+                           Options opts = {});
 
   ///
   /// Commit the dry-run spec for all the [Service Perimeters]
@@ -872,7 +902,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L794}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse,google/identity/accesscontextmanager/v1/access_context_manager.proto#L821}
   ///
@@ -885,7 +916,7 @@ class AccessContextManagerClient {
                       CommitServicePerimetersResponse>>
   CommitServicePerimeters(google::identity::accesscontextmanager::v1::
                               CommitServicePerimetersRequest const& request,
-                          Options options = {});
+                          Options opts = {});
 
   ///
   /// Lists all [GcpUserAccessBindings]
@@ -893,7 +924,8 @@ class AccessContextManagerClient {
   /// Google Cloud organization.
   ///
   /// @param parent  Required. Example: "organizations/256"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -903,7 +935,7 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  ListGcpUserAccessBindings(std::string const& parent, Options options = {});
+  ListGcpUserAccessBindings(std::string const& parent, Options opts = {});
 
   ///
   /// Lists all [GcpUserAccessBindings]
@@ -912,7 +944,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L831}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -924,7 +957,7 @@ class AccessContextManagerClient {
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::
                                 ListGcpUserAccessBindingsRequest request,
-                            Options options = {});
+                            Options opts = {});
 
   ///
   /// Gets the [GcpUserAccessBinding]
@@ -933,7 +966,8 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Example:
   /// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -943,7 +977,7 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  GetGcpUserAccessBinding(std::string const& name, Options options = {});
+  GetGcpUserAccessBinding(std::string const& name, Options opts = {});
 
   ///
   /// Gets the [GcpUserAccessBinding]
@@ -952,7 +986,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L878}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -964,7 +999,7 @@ class AccessContextManagerClient {
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::
                               GetGcpUserAccessBindingRequest const& request,
-                          Options options = {});
+                          Options opts = {});
 
   ///
   /// Creates a [GcpUserAccessBinding]
@@ -981,7 +1016,8 @@ class AccessContextManagerClient {
   /// @param parent  Required. Example: "organizations/256"
   /// @param gcp_user_access_binding  Required. [GcpUserAccessBinding]
   ///  [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -996,7 +1032,7 @@ class AccessContextManagerClient {
       std::string const& parent,
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
           gcp_user_access_binding,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a [GcpUserAccessBinding]
@@ -1012,7 +1048,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L890}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -1026,7 +1063,7 @@ class AccessContextManagerClient {
   CreateGcpUserAccessBinding(
       google::identity::accesscontextmanager::v1::
           CreateGcpUserAccessBindingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a [GcpUserAccessBinding]
@@ -1043,7 +1080,8 @@ class AccessContextManagerClient {
   ///  update_mask {
   ///  paths: "access_levels"
   ///  }
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -1057,7 +1095,7 @@ class AccessContextManagerClient {
   UpdateGcpUserAccessBinding(
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
           gcp_user_access_binding,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a [GcpUserAccessBinding]
@@ -1068,7 +1106,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L906}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
   ///
@@ -1082,7 +1121,7 @@ class AccessContextManagerClient {
   UpdateGcpUserAccessBinding(
       google::identity::accesscontextmanager::v1::
           UpdateGcpUserAccessBindingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a [GcpUserAccessBinding]
@@ -1093,7 +1132,8 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Example:
   /// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L935}
   ///
@@ -1104,7 +1144,7 @@ class AccessContextManagerClient {
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding(std::string const& name, Options options = {});
+  DeleteGcpUserAccessBinding(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a [GcpUserAccessBinding]
@@ -1115,7 +1155,8 @@ class AccessContextManagerClient {
   ///
   /// @param request
   /// @googleapis_link{google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest,google/identity/accesscontextmanager/v1/access_context_manager.proto#L922}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L935}
   ///
@@ -1129,7 +1170,7 @@ class AccessContextManagerClient {
   DeleteGcpUserAccessBinding(
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<AccessContextManagerConnection> connection_;

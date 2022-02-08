@@ -27,10 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GameServerDeploymentsServiceClient::GameServerDeploymentsServiceClient(
     std::shared_ptr<GameServerDeploymentsServiceConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           gameservices_internal::GameServerDeploymentsServiceDefaultOptions(
               connection_->options()))) {}
 GameServerDeploymentsServiceClient::~GameServerDeploymentsServiceClient() =
@@ -38,9 +38,8 @@ GameServerDeploymentsServiceClient::~GameServerDeploymentsServiceClient() =
 
 StreamRange<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceClient::ListGameServerDeployments(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::ListGameServerDeploymentsRequest request;
   request.set_parent(parent);
   return connection_->ListGameServerDeployments(request);
@@ -49,17 +48,15 @@ GameServerDeploymentsServiceClient::ListGameServerDeployments(
 StreamRange<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceClient::ListGameServerDeployments(
     google::cloud::gaming::v1::ListGameServerDeploymentsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGameServerDeployments(std::move(request));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceClient::GetGameServerDeployment(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::GetGameServerDeploymentRequest request;
   request.set_name(name);
   return connection_->GetGameServerDeployment(request);
@@ -68,9 +65,8 @@ GameServerDeploymentsServiceClient::GetGameServerDeployment(
 StatusOr<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceClient::GetGameServerDeployment(
     google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGameServerDeployment(request);
 }
 
@@ -79,9 +75,8 @@ GameServerDeploymentsServiceClient::CreateGameServerDeployment(
     std::string const& parent,
     google::cloud::gaming::v1::GameServerDeployment const&
         game_server_deployment,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::CreateGameServerDeploymentRequest request;
   request.set_parent(parent);
   *request.mutable_game_server_deployment() = game_server_deployment;
@@ -91,17 +86,15 @@ GameServerDeploymentsServiceClient::CreateGameServerDeployment(
 future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceClient::CreateGameServerDeployment(
     google::cloud::gaming::v1::CreateGameServerDeploymentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGameServerDeployment(request);
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerDeploymentsServiceClient::DeleteGameServerDeployment(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::DeleteGameServerDeploymentRequest request;
   request.set_name(name);
   return connection_->DeleteGameServerDeployment(request);
@@ -110,9 +103,8 @@ GameServerDeploymentsServiceClient::DeleteGameServerDeployment(
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerDeploymentsServiceClient::DeleteGameServerDeployment(
     google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGameServerDeployment(request);
 }
 
@@ -120,9 +112,8 @@ future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceClient::UpdateGameServerDeployment(
     google::cloud::gaming::v1::GameServerDeployment const&
         game_server_deployment,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::UpdateGameServerDeploymentRequest request;
   *request.mutable_game_server_deployment() = game_server_deployment;
   *request.mutable_update_mask() = update_mask;
@@ -132,17 +123,15 @@ GameServerDeploymentsServiceClient::UpdateGameServerDeployment(
 future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceClient::UpdateGameServerDeployment(
     google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGameServerDeployment(request);
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
 GameServerDeploymentsServiceClient::GetGameServerDeploymentRollout(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest request;
   request.set_name(name);
   return connection_->GetGameServerDeploymentRollout(request);
@@ -152,18 +141,16 @@ StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
 GameServerDeploymentsServiceClient::GetGameServerDeploymentRollout(
     google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGameServerDeploymentRollout(request);
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceClient::UpdateGameServerDeploymentRollout(
     google::cloud::gaming::v1::GameServerDeploymentRollout const& rollout,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest request;
   *request.mutable_rollout() = rollout;
   *request.mutable_update_mask() = update_mask;
@@ -174,9 +161,8 @@ future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceClient::UpdateGameServerDeploymentRollout(
     google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGameServerDeploymentRollout(request);
 }
 
@@ -184,18 +170,16 @@ StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
 GameServerDeploymentsServiceClient::PreviewGameServerDeploymentRollout(
     google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PreviewGameServerDeploymentRollout(request);
 }
 
 StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
 GameServerDeploymentsServiceClient::FetchDeploymentState(
     google::cloud::gaming::v1::FetchDeploymentStateRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchDeploymentState(request);
 }
 

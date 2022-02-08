@@ -26,17 +26,16 @@ namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GkeHubClient::GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
-                           Options options)
+                           Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           gkehub_internal::GkeHubDefaultOptions(connection_->options()))) {}
 GkeHubClient::~GkeHubClient() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>
-GkeHubClient::ListMemberships(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+GkeHubClient::ListMemberships(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::ListMembershipsRequest request;
   request.set_parent(parent);
   return connection_->ListMemberships(request);
@@ -44,33 +43,28 @@ GkeHubClient::ListMemberships(std::string const& parent, Options options) {
 
 StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubClient::ListMemberships(
-    google::cloud::gkehub::v1::ListMembershipsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::gkehub::v1::ListMembershipsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMemberships(std::move(request));
 }
 
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubClient::ListFeatures(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::ListFeaturesRequest request;
   request.set_parent(parent);
   return connection_->ListFeatures(request);
 }
 
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubClient::ListFeatures(
-    google::cloud::gkehub::v1::ListFeaturesRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::gkehub::v1::ListFeaturesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatures(std::move(request));
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubClient::GetMembership(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::GetMembershipRequest request;
   request.set_name(name);
   return connection_->GetMembership(request);
@@ -78,26 +72,22 @@ StatusOr<google::cloud::gkehub::v1::Membership> GkeHubClient::GetMembership(
 
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubClient::GetMembership(
     google::cloud::gkehub::v1::GetMembershipRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMembership(request);
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> GkeHubClient::GetFeature(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::GetFeatureRequest request;
   request.set_name(name);
   return connection_->GetFeature(request);
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> GkeHubClient::GetFeature(
-    google::cloud::gkehub::v1::GetFeatureRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::gkehub::v1::GetFeatureRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeature(request);
 }
 
@@ -105,9 +95,8 @@ future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubClient::CreateMembership(
     std::string const& parent,
     google::cloud::gkehub::v1::Membership const& resource,
-    std::string const& membership_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& membership_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::CreateMembershipRequest request;
   request.set_parent(parent);
   *request.mutable_resource() = resource;
@@ -118,18 +107,16 @@ GkeHubClient::CreateMembership(
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubClient::CreateMembership(
     google::cloud::gkehub::v1::CreateMembershipRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMembership(request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubClient::CreateFeature(std::string const& parent,
                             google::cloud::gkehub::v1::Feature const& resource,
-                            std::string const& feature_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                            std::string const& feature_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::CreateFeatureRequest request;
   request.set_parent(parent);
   *request.mutable_resource() = resource;
@@ -140,16 +127,14 @@ GkeHubClient::CreateFeature(std::string const& parent,
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubClient::CreateFeature(
     google::cloud::gkehub::v1::CreateFeatureRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeature(request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubClient::DeleteMembership(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+GkeHubClient::DeleteMembership(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::DeleteMembershipRequest request;
   request.set_name(name);
   return connection_->DeleteMembership(request);
@@ -158,16 +143,14 @@ GkeHubClient::DeleteMembership(std::string const& name, Options options) {
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubClient::DeleteMembership(
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMembership(request);
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubClient::DeleteFeature(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+GkeHubClient::DeleteFeature(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::DeleteFeatureRequest request;
   request.set_name(name);
   return connection_->DeleteFeature(request);
@@ -176,9 +159,8 @@ GkeHubClient::DeleteFeature(std::string const& name, Options options) {
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubClient::DeleteFeature(
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeature(request);
 }
 
@@ -186,9 +168,8 @@ future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubClient::UpdateMembership(
     std::string const& name,
     google::cloud::gkehub::v1::Membership const& resource,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::UpdateMembershipRequest request;
   request.set_name(name);
   *request.mutable_resource() = resource;
@@ -199,9 +180,8 @@ GkeHubClient::UpdateMembership(
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubClient::UpdateMembership(
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMembership(request);
 }
 
@@ -209,9 +189,8 @@ future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubClient::UpdateFeature(std::string const& name,
                             google::cloud::gkehub::v1::Feature const& resource,
                             google::protobuf::FieldMask const& update_mask,
-                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkehub::v1::UpdateFeatureRequest request;
   request.set_name(name);
   *request.mutable_resource() = resource;
@@ -222,18 +201,16 @@ GkeHubClient::UpdateFeature(std::string const& name,
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubClient::UpdateFeature(
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeature(request);
 }
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubClient::GenerateConnectManifest(
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateConnectManifest(request);
 }
 

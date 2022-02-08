@@ -75,7 +75,14 @@ $BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 if ((Test-Path env:KOKORO_GFILE_DIR) -and
     (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
     Write-Host -ForegroundColor Yellow "Using bazel remote cache: ${BAZEL_CACHE}/windows/${BuildName}"
-    $build_flags += @("--remote_cache=${BAZEL_CACHE}/windows/${BuildName}")
+    $build_flags += @(
+        "--remote_cache=${BAZEL_CACHE}/windows/${BuildName}",
+        # Reduce the timeout for the remote cache from the 60s default:
+        #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
+        # If the build machine has network problems we would rather build locally
+        # over blocking the build for 60s
+        "--remote_timeout=3"
+      )
     $build_flags += @("--google_credentials=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")
     # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
     # and https://github.com/bazelbuild/bazel/issues/3360
@@ -161,6 +168,8 @@ if (Integration-Tests-Enabled) {
         "--test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}",
         "--test_env=GOOGLE_APPLICATION_CREDENTIALS=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
         "--test_env=GOOGLE_CLOUD_PROJECT=${env:GOOGLE_CLOUD_PROJECT}",
+        "--test_env=GOOGLE_CLOUD_CPP_TEST_REGION=${env:GOOGLE_CLOUD_CPP_TEST_REGION}",
+        "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${env:GOOGLE_CLOUD_CPP_TEST_ZONE}",
         "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes",
         "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING",
         "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams",

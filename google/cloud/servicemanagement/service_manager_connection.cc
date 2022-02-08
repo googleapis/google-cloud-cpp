@@ -36,19 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceManagerConnection::~ServiceManagerConnection() = default;
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>
-ServiceManagerConnection::ListServices(
-    google::api::servicemanagement::v1::ListServicesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::servicemanagement::v1::ManagedService>>(
-      std::move(request),
-      [](google::api::servicemanagement::v1::ListServicesRequest const&) {
-        return StatusOr<
-            google::api::servicemanagement::v1::ListServicesResponse>{};
-      },
-      [](google::api::servicemanagement::v1::ListServicesResponse const&) {
-        return std::vector<
-            google::api::servicemanagement::v1::ManagedService>();
-      });
+    ServiceManagerConnection::ListServices(
+        google::api::servicemanagement::v1::
+            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::servicemanagement::v1::ManagedService>>();
 }
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
@@ -82,18 +74,10 @@ ServiceManagerConnection::UndeleteService(
 }
 
 StreamRange<google::api::Service> ServiceManagerConnection::ListServiceConfigs(
-    google::api::servicemanagement::v1::ListServiceConfigsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::Service>>(
-      std::move(request),
-      [](google::api::servicemanagement::v1::ListServiceConfigsRequest const&) {
-        return StatusOr<
-            google::api::servicemanagement::v1::ListServiceConfigsResponse>{};
-      },
-      [](google::api::servicemanagement::v1::
-             ListServiceConfigsResponse const&) {
-        return std::vector<google::api::Service>();
-      });
+    google::api::servicemanagement::v1::
+        ListServiceConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::Service>>();
 }
 
 StatusOr<google::api::Service> ServiceManagerConnection::GetServiceConfig(
@@ -115,20 +99,11 @@ ServiceManagerConnection::SubmitConfigSource(
 }
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
-ServiceManagerConnection::ListServiceRollouts(
-    google::api::servicemanagement::v1::ListServiceRolloutsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::servicemanagement::v1::Rollout>>(
-      std::move(request),
-      [](google::api::servicemanagement::v1::
-             ListServiceRolloutsRequest const&) {
-        return StatusOr<
-            google::api::servicemanagement::v1::ListServiceRolloutsResponse>{};
-      },
-      [](google::api::servicemanagement::v1::
-             ListServiceRolloutsResponse const&) {
-        return std::vector<google::api::servicemanagement::v1::Rollout>();
-      });
+    ServiceManagerConnection::ListServiceRollouts(
+        google::api::servicemanagement::v1::
+            ListServiceRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::api::servicemanagement::v1::Rollout>>();
 }
 
 StatusOr<google::api::servicemanagement::v1::Rollout>

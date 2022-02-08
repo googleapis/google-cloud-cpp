@@ -26,19 +26,18 @@ namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompletionClient::CompletionClient(
-    std::shared_ptr<CompletionConnection> connection, Options options)
+    std::shared_ptr<CompletionConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           talent_internal::CompletionDefaultOptions(connection_->options()))) {}
 CompletionClient::~CompletionClient() = default;
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionClient::CompleteQuery(
     google::cloud::talent::v4::CompleteQueryRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CompleteQuery(request);
 }
 

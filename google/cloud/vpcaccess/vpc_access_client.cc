@@ -26,20 +26,18 @@ namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VpcAccessServiceClient::VpcAccessServiceClient(
-    std::shared_ptr<VpcAccessServiceConnection> connection, Options options)
+    std::shared_ptr<VpcAccessServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
-          vpcaccess_internal::VpcAccessServiceDefaultOptions(
-              connection_->options()))) {}
+          std::move(opts), vpcaccess_internal::VpcAccessServiceDefaultOptions(
+                               connection_->options()))) {}
 VpcAccessServiceClient::~VpcAccessServiceClient() = default;
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceClient::CreateConnector(
     std::string const& parent, std::string const& connector_id,
-    google::cloud::vpcaccess::v1::Connector const& connector, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::vpcaccess::v1::Connector const& connector, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vpcaccess::v1::CreateConnectorRequest request;
   request.set_parent(parent);
   request.set_connector_id(connector_id);
@@ -50,16 +48,14 @@ VpcAccessServiceClient::CreateConnector(
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceClient::CreateConnector(
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnector(request);
 }
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
-VpcAccessServiceClient::GetConnector(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+VpcAccessServiceClient::GetConnector(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vpcaccess::v1::GetConnectorRequest request;
   request.set_name(name);
   return connection_->GetConnector(request);
@@ -68,17 +64,15 @@ VpcAccessServiceClient::GetConnector(std::string const& name, Options options) {
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceClient::GetConnector(
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnector(request);
 }
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceClient::ListConnectors(std::string const& parent,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vpcaccess::v1::ListConnectorsRequest request;
   request.set_parent(parent);
   return connection_->ListConnectors(request);
@@ -86,18 +80,14 @@ VpcAccessServiceClient::ListConnectors(std::string const& parent,
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceClient::ListConnectors(
-    google::cloud::vpcaccess::v1::ListConnectorsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::cloud::vpcaccess::v1::ListConnectorsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnectors(std::move(request));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-VpcAccessServiceClient::DeleteConnector(std::string const& name,
-                                        Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+VpcAccessServiceClient::DeleteConnector(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vpcaccess::v1::DeleteConnectorRequest request;
   request.set_name(name);
   return connection_->DeleteConnector(request);
@@ -106,9 +96,8 @@ VpcAccessServiceClient::DeleteConnector(std::string const& name,
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceClient::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnector(request);
 }
 

@@ -22,18 +22,18 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_INTEGRATION_SH__++ != 0)); then
   return 0
 fi # include guard
 
-source module ci/lib/io.sh
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip uninstall -y --quiet googleapis-storage-testbench
-python3 -m pip install --upgrade --user --quiet "git+https://github.com/googleapis/storage-testbench@v0.14.0"
+python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
+  "git+https://github.com/googleapis/storage-testbench@v0.14.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
-curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
+ci/retry-command.sh 3 120 curl -sSL -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 
 # Outputs a list of Bazel arguments that should be used when running
 # integration tests. These do not include the common `bazel::common_args`.
@@ -50,6 +50,8 @@ function integration::bazel_args() {
   args+=(
     # Common settings
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_REGION=${GOOGLE_CLOUD_CPP_TEST_REGION}"
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${GOOGLE_CLOUD_CPP_TEST_ZONE}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=${GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES}"
     "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG}"
     "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=${GOOGLE_CLOUD_CPP_ENABLE_TRACING}"
@@ -248,10 +250,7 @@ function integration::ctest_with_emulators() {
   fi
 
   local cmake_out="$1"
-  ctest_args=(
-    "--output-on-failure"
-    "--parallel" "$(nproc)"
-  )
+  mapfile -t ctest_args < <(ctest::common_args)
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \

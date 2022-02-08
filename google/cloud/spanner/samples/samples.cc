@@ -2074,7 +2074,7 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
             client.ExecuteDml(txn, update_statement,
                               spanner::QueryOptions().set_request_tag(
                                   "app=concert,env=dev,action=update"));
-        if (!update) throw std::runtime_error(update.status().message());
+        if (!update) return std::move(update).status();
 
         spanner::SqlStatement insert_statement(
             "INSERT INTO Venues (VenueId, VenueName, Capacity, OutdoorVenue, "
@@ -2093,7 +2093,7 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
             client.ExecuteDml(txn, insert_statement,
                               spanner::QueryOptions().set_request_tag(
                                   "app=concert,env=dev,action=select"));
-        if (!insert) throw std::runtime_error(insert.status().message());
+        if (!insert) return std::move(insert).status();
         return spanner::Mutations{};
       },
       commit_options);
@@ -2407,7 +2407,7 @@ void DmlStandardInsert(google::cloud::spanner::Client client) {
             spanner::SqlStatement(
                 "INSERT INTO Singers (SingerId, FirstName, LastName)"
                 "  VALUES (10, 'Virginia', 'Watson')"));
-        if (!insert) return insert.status();
+        if (!insert) return std::move(insert).status();
         rows_inserted = insert->RowsModified();
         return spanner::Mutations{};
       });
@@ -2432,7 +2432,7 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
                 " WHERE SingerId = 1 AND AlbumId = 1"));
-        if (!update) return update.status();
+        if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
   if (!commit_result) {
@@ -2454,7 +2454,7 @@ void CommitWithPolicies(google::cloud::spanner::Client client) {
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
                 " WHERE SingerId = 1 AND AlbumId = 1"));
-        if (!update) return update.status();
+        if (!update) return std::move(update).status();
         return spanner::Mutations{};
       },
       // Retry for up to 42 minutes.
@@ -2483,7 +2483,7 @@ void ProfileDmlStandardUpdate(google::cloud::spanner::Client client) {
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
                 " WHERE SingerId = 1 AND AlbumId = 1"));
-        if (!update) return update.status();
+        if (!update) return std::move(update).status();
         dml_result = *std::move(update);
         return spanner::Mutations{};
       });
@@ -2513,7 +2513,7 @@ void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
             spanner::SqlStatement(
                 "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP() "
                 "WHERE SingerId = 1"));
-        if (!update) return update.status();
+        if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
   if (!commit_result) {
@@ -2535,14 +2535,14 @@ void DmlWriteThenRead(google::cloud::spanner::Client client) {
             txn, spanner::SqlStatement(
                      "INSERT INTO Singers (SingerId, FirstName, LastName)"
                      "  VALUES (11, 'Timothy', 'Campbell')"));
-        if (!insert) return insert.status();
+        if (!insert) return std::move(insert).status();
         // Read newly inserted record.
         spanner::SqlStatement select(
             "SELECT FirstName, LastName FROM Singers where SingerId = 11");
         using RowType = std::tuple<std::string, std::string>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(select));
         for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-          if (!row) return row.status();
+          if (!row) return std::move(row).status();
           std::cout << "FirstName: " << std::get<0>(*row) << "\t";
           std::cout << "LastName: " << std::get<1>(*row) << "\n";
         }
@@ -2564,7 +2564,7 @@ void DmlStandardDelete(google::cloud::spanner::Client client) {
     auto dele = client.ExecuteDml(
         std::move(txn),
         spanner::SqlStatement("DELETE FROM Singers WHERE FirstName = 'Alice'"));
-    if (!dele) return dele.status();
+    if (!dele) return std::move(dele).status();
     return spanner::Mutations{};
   });
   if (!commit_result) {
@@ -2611,7 +2611,7 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
                                   " SET MarketingBudget = MarketingBudget * 2"
                                   " WHERE SingerId = 1 and AlbumId = 3")};
         auto result = client.ExecuteBatchDml(txn, statements);
-        if (!result) return result.status();
+        if (!result) return std::move(result).status();
         for (std::size_t i = 0; i < result->stats.size(); ++i) {
           std::cout << result->stats[i].row_count << " rows affected"
                     << " for the statement " << (i + 1) << ".\n";
@@ -2643,7 +2643,7 @@ void DmlStructs(google::cloud::spanner::Client client) {
             "= @name",
             {{"name", spanner::Value(std::move(singer_info))}});
         auto dml_result = client.ExecuteDml(txn, std::move(sql));
-        if (!dml_result) return dml_result.status();
+        if (!dml_result) return std::move(dml_result).status();
         rows_modified = dml_result->RowsModified();
         return spanner::Mutations{};
       });
@@ -2706,7 +2706,7 @@ void DmlGettingStartedInsert(google::cloud::spanner::Client client) {
                 " (13, 'Russell', 'Morales'),"
                 " (14, 'Jacqueline', 'Long'),"
                 " (15, 'Dylan', 'Shaw')"));
-        if (!insert) return insert.status();
+        if (!insert) return std::move(insert).status();
         return spanner::Mutations{};
       });
   if (!commit_result) {
@@ -2728,7 +2728,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
     auto rows = client.Read(std::move(txn), "Albums", key, {"MarketingBudget"});
     using RowType = std::tuple<absl::optional<std::int64_t>>;
     auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
-    if (!row) return row.status();
+    if (!row) return std::move(row).status();
     auto const budget = std::get<0>(*row);
     return budget ? *budget : 0;
   };
@@ -2749,7 +2749,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
   auto commit_result = client.Commit(
       [&](spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
         auto budget1 = get_budget(txn, 1, 1);
-        if (!budget1) return budget1.status();
+        if (!budget1) return std::move(budget1).status();
         if (*budget1 < transfer_amount) {
           return google::cloud::Status(
               google::cloud::StatusCode::kUnknown,
@@ -2757,11 +2757,11 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
                   " from budget of " + std::to_string(*budget1));
         }
         auto budget2 = get_budget(txn, 2, 2);
-        if (!budget2) return budget2.status();
+        if (!budget2) return std::move(budget2).status();
         auto update = update_budget(txn, 1, 1, *budget1 - transfer_amount);
-        if (!update) return update.status();
+        if (!update) return std::move(update).status();
         update = update_budget(txn, 2, 2, *budget2 + transfer_amount);
-        if (!update) return update.status();
+        if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
   if (!commit_result) {

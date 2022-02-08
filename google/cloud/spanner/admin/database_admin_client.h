@@ -69,8 +69,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatabaseAdminClient {
  public:
   explicit DatabaseAdminClient(
-      std::shared_ptr<DatabaseAdminConnection> connection,
-      Options options = {});
+      std::shared_ptr<DatabaseAdminConnection> connection, Options opts = {});
   ~DatabaseAdminClient();
 
   //@{
@@ -98,7 +97,8 @@ class DatabaseAdminClient {
   ///
   /// @param parent  Required. The instance whose databases should be listed.
   ///  Values are of the form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -108,14 +108,15 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists Cloud Spanner databases.
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::ListDatabasesRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L420}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -126,7 +127,7 @@ class DatabaseAdminClient {
   ///
   StreamRange<google::spanner::admin::database::v1::Database> ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Creates a new Cloud Spanner database and starts to prepare it for serving.
@@ -147,7 +148,8 @@ class DatabaseAdminClient {
   ///  `[a-z][a-z0-9_\-]*[a-z0-9]` and be between 2 and 30 characters in length.
   ///  If the database ID is a reserved word or if it contains a hyphen, the
   ///  database ID must be enclosed in backticks (`` ` ``).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -158,7 +160,7 @@ class DatabaseAdminClient {
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement,
-                 Options options = {});
+                 Options opts = {});
 
   ///
   /// Creates a new Cloud Spanner database and starts to prepare it for serving.
@@ -172,7 +174,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::CreateDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L452}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -185,7 +188,7 @@ class DatabaseAdminClient {
   CreateDatabase(
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets the state of a Cloud Spanner database.
@@ -193,7 +196,8 @@ class DatabaseAdminClient {
   /// @param name  Required. The name of the requested database. Values are of
   /// the form
   ///  `projects/<project>/instances/<instance>/databases/<database>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -203,14 +207,15 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets the state of a Cloud Spanner database.
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L494}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -221,7 +226,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates the schema of a Cloud Spanner database by
@@ -235,7 +240,8 @@ class DatabaseAdminClient {
   ///
   /// @param database  Required. The database to update.
   /// @param statements  Required. DDL statements to be applied to the database.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L557}
   ///
@@ -248,7 +254,7 @@ class DatabaseAdminClient {
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database,
                     std::vector<std::string> const& statements,
-                    Options options = {});
+                    Options opts = {});
 
   ///
   /// Updates the schema of a Cloud Spanner database by
@@ -262,7 +268,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L521}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L557}
   ///
@@ -276,7 +283,7 @@ class DatabaseAdminClient {
   UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Drops (aka deletes) a Cloud Spanner database.
@@ -286,12 +293,13 @@ class DatabaseAdminClient {
   /// after the database has been deleted.
   ///
   /// @param database  Required. The database to be dropped.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.spanner.admin.database.v1.DropDatabaseRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L589}
   ///
-  Status DropDatabase(std::string const& database, Options options = {});
+  Status DropDatabase(std::string const& database, Options opts = {});
 
   ///
   /// Drops (aka deletes) a Cloud Spanner database.
@@ -302,14 +310,15 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::DropDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L589}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.spanner.admin.database.v1.DropDatabaseRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L589}
   ///
   Status DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the schema of a Cloud Spanner database as a list of formatted
@@ -319,7 +328,8 @@ class DatabaseAdminClient {
   /// @param database  Required. The database whose schema we wish to get.
   ///  Values are of the form
   ///  `projects/<project>/instances/<instance>/databases/<database>`
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L613}
   ///
@@ -329,7 +339,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L613}
   ///
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(std::string const& database, Options options = {});
+  GetDatabaseDdl(std::string const& database, Options opts = {});
 
   ///
   /// Returns the schema of a Cloud Spanner database as a list of formatted
@@ -338,7 +348,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L600}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L613}
   ///
@@ -351,7 +362,7 @@ class DatabaseAdminClient {
   GetDatabaseDdl(
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Sets the access control policy on a database or backup resource.
@@ -370,7 +381,8 @@ class DatabaseAdminClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -381,7 +393,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -399,14 +411,13 @@ class DatabaseAdminClient {
    * specified. See the operation documentation for the appropriate value for
    * this field.
    * @param updater  Required. Functor to map the current policy to a new one.
-   * @param options  Optional. Options to control the loop. Expected options
-   * are:
-   *       - `DatabaseAdminBackoffPolicyOption`
+   * @param opts  Optional. Override the class-level options, such as retry and
+   *    backoff policies.
    * @return google::iam::v1::Policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
                                                  IamUpdater const& updater,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Sets the access control policy on a database or backup resource.
@@ -419,7 +430,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -429,8 +441,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets the access control policy for a database or backup resource.
@@ -445,7 +456,8 @@ class DatabaseAdminClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -455,7 +467,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Gets the access control policy for a database or backup resource.
@@ -469,7 +481,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -479,8 +492,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns permissions that the caller has on the specified database or
@@ -502,7 +514,8 @@ class DatabaseAdminClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -513,7 +526,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns permissions that the caller has on the specified database or
@@ -529,7 +542,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -540,7 +554,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Starts creating a new Cloud Spanner Backup.
@@ -568,7 +582,8 @@ class DatabaseAdminClient {
   /// `backup_id` appended to
   ///  `parent` forms the full backup name of the form
   ///  `projects/<project>/instances/<instance>/backups/<backup_id>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -580,7 +595,7 @@ class DatabaseAdminClient {
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       std::string const& parent,
       google::spanner::admin::database::v1::Backup const& backup,
-      std::string const& backup_id, Options options = {});
+      std::string const& backup_id, Options opts = {});
 
   ///
   /// Starts creating a new Cloud Spanner Backup.
@@ -598,7 +613,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::CreateBackupRequest,google/spanner/admin/database/v1/backup.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -609,7 +625,7 @@ class DatabaseAdminClient {
   ///
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       google::spanner::admin::database::v1::CreateBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets metadata on a pending or completed
@@ -618,7 +634,8 @@ class DatabaseAdminClient {
   /// @param name  Required. Name of the backup.
   ///  Values are of the form
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -628,7 +645,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
-      std::string const& name, Options options = {});
+      std::string const& name, Options opts = {});
 
   ///
   /// Gets metadata on a pending or completed
@@ -636,7 +653,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::GetBackupRequest,google/spanner/admin/database/v1/backup.proto#L205}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -647,7 +665,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Updates a pending or completed
@@ -664,7 +682,8 @@ class DatabaseAdminClient {
   ///  resource, not to the request message. The field mask must always be
   ///  specified; this prevents any future fields from being erased accidentally
   ///  by clients that do not know about them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -675,7 +694,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::spanner::admin::database::v1::Backup const& backup,
-      google::protobuf::FieldMask const& update_mask, Options options = {});
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
   /// Updates a pending or completed
@@ -683,7 +702,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::UpdateBackupRequest,google/spanner/admin/database/v1/backup.proto#L189}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -694,7 +714,7 @@ class DatabaseAdminClient {
   ///
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::spanner::admin::database::v1::UpdateBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Deletes a pending or completed
@@ -703,12 +723,13 @@ class DatabaseAdminClient {
   /// @param name  Required. Name of the backup to delete.
   ///  Values are of the form
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.spanner.admin.database.v1.DeleteBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L218}
   ///
-  Status DeleteBackup(std::string const& name, Options options = {});
+  Status DeleteBackup(std::string const& name, Options opts = {});
 
   ///
   /// Deletes a pending or completed
@@ -716,14 +737,15 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::DeleteBackupRequest,google/spanner/admin/database/v1/backup.proto#L218}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   ///
   /// [google.spanner.admin.database.v1.DeleteBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L218}
   ///
   Status DeleteBackup(
       google::spanner::admin::database::v1::DeleteBackupRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists completed and pending backups.
@@ -733,7 +755,8 @@ class DatabaseAdminClient {
   /// @param parent  Required. The instance to list backups from.  Values are of
   /// the
   ///  form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -743,7 +766,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L36}
   ///
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists completed and pending backups.
@@ -752,7 +775,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::ListBackupsRequest,google/spanner/admin/database/v1/backup.proto#L231}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L36}
   ///
@@ -763,7 +787,7 @@ class DatabaseAdminClient {
   ///
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
       google::spanner::admin::database::v1::ListBackupsRequest request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -797,7 +821,8 @@ class DatabaseAdminClient {
   /// @param backup  Name of the backup from which to restore.  Values are of
   /// the form
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -808,7 +833,7 @@ class DatabaseAdminClient {
   ///
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id,
-                  std::string const& backup, Options options = {});
+                  std::string const& backup, Options opts = {});
 
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -831,7 +856,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::RestoreDatabaseRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L702}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L330}
   ///
@@ -844,7 +870,7 @@ class DatabaseAdminClient {
   RestoreDatabase(
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists database [longrunning-operations][google.longrunning.Operation].
@@ -858,7 +884,8 @@ class DatabaseAdminClient {
   ///
   /// @param parent  Required. The instance of the database operations.
   ///  Values are of the form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
@@ -868,7 +895,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists database [longrunning-operations][google.longrunning.Operation].
@@ -882,7 +909,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::ListDatabaseOperationsRequest,google/spanner/admin/database/v1/spanner_database_admin.proto#L621}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
@@ -894,7 +922,7 @@ class DatabaseAdminClient {
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest
           request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Lists the backup [long-running operations][google.longrunning.Operation]
@@ -911,7 +939,8 @@ class DatabaseAdminClient {
   /// @param parent  Required. The instance of the backup operations. Values are
   /// of
   ///  the form `projects/<project>/instances/<instance>`.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
@@ -921,7 +950,7 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation> ListBackupOperations(
-      std::string const& parent, Options options = {});
+      std::string const& parent, Options opts = {});
 
   ///
   /// Lists the backup [long-running operations][google.longrunning.Operation]
@@ -937,7 +966,8 @@ class DatabaseAdminClient {
   ///
   /// @param request
   /// @googleapis_link{google::spanner::admin::database::v1::ListBackupOperationsRequest,google/spanner/admin/database/v1/backup.proto#L303}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
@@ -948,7 +978,7 @@ class DatabaseAdminClient {
   ///
   StreamRange<google::longrunning::Operation> ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<DatabaseAdminConnection> connection_;

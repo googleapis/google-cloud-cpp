@@ -17,6 +17,7 @@
 // source: grafeas/v1/grafeas.proto
 
 #include "google/cloud/containeranalysis/internal/grafeas_metadata_decorator.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <grafeas/v1/grafeas.grpc.pb.h>
@@ -140,6 +141,11 @@ void GrafeasMetadata::SetMetadata(grpc::ClientContext& context,
 
 void GrafeasMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

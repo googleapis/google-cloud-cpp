@@ -14,8 +14,6 @@
 # limitations under the License.
 # ~~~
 
-find_package(absl CONFIG REQUIRED)
-
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in
                ${CMAKE_CURRENT_SOURCE_DIR}/internal/version_info.h)
@@ -322,8 +320,6 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-    find_package(gRPC)
-
     # the library
     add_library(
         google_cloud_cpp_grpc_utils # cmake-format: sort
@@ -634,6 +630,14 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_wrappers.h
         internal/http_payload.cc
         internal/http_payload.h
+        internal/oauth2_access_token_credentials.cc
+        internal/oauth2_access_token_credentials.h
+        internal/oauth2_anonymous_credentials.cc
+        internal/oauth2_anonymous_credentials.h
+        internal/oauth2_credentials.cc
+        internal/oauth2_credentials.h
+        internal/oauth2_error_credentials.cc
+        internal/oauth2_error_credentials.h
         internal/rest_client.cc
         internal/rest_client.h
         internal/rest_options.h
@@ -696,6 +700,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/curl_impl_test.cc
             internal/curl_wrappers_test.cc
             internal/http_payload_test.cc
+            internal/oauth2_access_token_credentials_test.cc
+            internal/oauth2_anonymous_credentials_test.cc
             internal/rest_client_test.cc
             internal/rest_request_test.cc
             internal/rest_response_test.cc)

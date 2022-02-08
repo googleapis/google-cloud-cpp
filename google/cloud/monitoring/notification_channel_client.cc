@@ -27,19 +27,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NotificationChannelServiceClient::NotificationChannelServiceClient(
     std::shared_ptr<NotificationChannelServiceConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           monitoring_internal::NotificationChannelServiceDefaultOptions(
               connection_->options()))) {}
 NotificationChannelServiceClient::~NotificationChannelServiceClient() = default;
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceClient::ListNotificationChannelDescriptors(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListNotificationChannelDescriptorsRequest request;
   request.set_name(name);
   return connection_->ListNotificationChannelDescriptors(request);
@@ -48,17 +47,15 @@ NotificationChannelServiceClient::ListNotificationChannelDescriptors(
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceClient::ListNotificationChannelDescriptors(
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNotificationChannelDescriptors(std::move(request));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceClient::GetNotificationChannelDescriptor(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetNotificationChannelDescriptorRequest request;
   request.set_name(name);
   return connection_->GetNotificationChannelDescriptor(request);
@@ -68,17 +65,15 @@ StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceClient::GetNotificationChannelDescriptor(
     google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNotificationChannelDescriptor(request);
 }
 
 StreamRange<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::ListNotificationChannels(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListNotificationChannelsRequest request;
   request.set_name(name);
   return connection_->ListNotificationChannels(request);
@@ -87,17 +82,15 @@ NotificationChannelServiceClient::ListNotificationChannels(
 StreamRange<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::ListNotificationChannels(
     google::monitoring::v3::ListNotificationChannelsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNotificationChannels(std::move(request));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::GetNotificationChannel(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetNotificationChannelRequest request;
   request.set_name(name);
   return connection_->GetNotificationChannel(request);
@@ -106,9 +99,8 @@ NotificationChannelServiceClient::GetNotificationChannel(
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::GetNotificationChannel(
     google::monitoring::v3::GetNotificationChannelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNotificationChannel(request);
 }
 
@@ -116,9 +108,8 @@ StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::CreateNotificationChannel(
     std::string const& name,
     google::monitoring::v3::NotificationChannel const& notification_channel,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateNotificationChannelRequest request;
   request.set_name(name);
   *request.mutable_notification_channel() = notification_channel;
@@ -128,9 +119,8 @@ NotificationChannelServiceClient::CreateNotificationChannel(
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::CreateNotificationChannel(
     google::monitoring::v3::CreateNotificationChannelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNotificationChannel(request);
 }
 
@@ -138,9 +128,8 @@ StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::UpdateNotificationChannel(
     google::protobuf::FieldMask const& update_mask,
     google::monitoring::v3::NotificationChannel const& notification_channel,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::UpdateNotificationChannelRequest request;
   *request.mutable_update_mask() = update_mask;
   *request.mutable_notification_channel() = notification_channel;
@@ -150,16 +139,14 @@ NotificationChannelServiceClient::UpdateNotificationChannel(
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::UpdateNotificationChannel(
     google::monitoring::v3::UpdateNotificationChannelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNotificationChannel(request);
 }
 
 Status NotificationChannelServiceClient::DeleteNotificationChannel(
-    std::string const& name, bool force, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, bool force, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::DeleteNotificationChannelRequest request;
   request.set_name(name);
   request.set_force(force);
@@ -168,17 +155,15 @@ Status NotificationChannelServiceClient::DeleteNotificationChannel(
 
 Status NotificationChannelServiceClient::DeleteNotificationChannel(
     google::monitoring::v3::DeleteNotificationChannelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNotificationChannel(request);
 }
 
 Status
 NotificationChannelServiceClient::SendNotificationChannelVerificationCode(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::SendNotificationChannelVerificationCodeRequest
       request;
   request.set_name(name);
@@ -189,17 +174,15 @@ Status
 NotificationChannelServiceClient::SendNotificationChannelVerificationCode(
     google::monitoring::v3::
         SendNotificationChannelVerificationCodeRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SendNotificationChannelVerificationCode(request);
 }
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
 NotificationChannelServiceClient::GetNotificationChannelVerificationCode(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetNotificationChannelVerificationCodeRequest request;
   request.set_name(name);
   return connection_->GetNotificationChannelVerificationCode(request);
@@ -209,17 +192,15 @@ StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
 NotificationChannelServiceClient::GetNotificationChannelVerificationCode(
     google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNotificationChannelVerificationCode(request);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::VerifyNotificationChannel(
-    std::string const& name, std::string const& code, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, std::string const& code, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::VerifyNotificationChannelRequest request;
   request.set_name(name);
   request.set_code(code);
@@ -229,9 +210,8 @@ NotificationChannelServiceClient::VerifyNotificationChannel(
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceClient::VerifyNotificationChannel(
     google::monitoring::v3::VerifyNotificationChannelRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->VerifyNotificationChannel(request);
 }
 

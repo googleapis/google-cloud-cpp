@@ -75,7 +75,7 @@ class ContainerAnalysisClient {
  public:
   explicit ContainerAnalysisClient(
       std::shared_ptr<ContainerAnalysisConnection> connection,
-      Options options = {});
+      Options opts = {});
   ~ContainerAnalysisClient();
 
   //@{
@@ -116,7 +116,8 @@ class ContainerAnalysisClient {
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -127,7 +128,7 @@ class ContainerAnalysisClient {
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
-      Options options = {});
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -145,14 +146,13 @@ class ContainerAnalysisClient {
    * specified. See the operation documentation for the appropriate value for
    * this field.
    * @param updater  Required. Functor to map the current policy to a new one.
-   * @param options  Optional. Options to control the loop. Expected options
-   * are:
-   *       - `ContainerAnalysisBackoffPolicyOption`
+   * @param opts  Optional. Override the class-level options, such as retry and
+   *    backoff policies.
    * @return google::iam::v1::Policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
                                                  IamUpdater const& updater,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Sets the access control policy on the specified note or occurrence.
@@ -166,7 +166,8 @@ class ContainerAnalysisClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -176,8 +177,7 @@ class ContainerAnalysisClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Gets the access control policy for a note or an occurrence resource.
@@ -192,7 +192,8 @@ class ContainerAnalysisClient {
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -202,7 +203,7 @@ class ContainerAnalysisClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options options = {});
+                                                 Options opts = {});
 
   ///
   /// Gets the access control policy for a note or an occurrence resource.
@@ -216,7 +217,8 @@ class ContainerAnalysisClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
   ///
@@ -226,8 +228,7 @@ class ContainerAnalysisClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request,
-      Options options = {});
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
   /// Returns the permissions that a caller has on the specified note or
@@ -246,7 +247,8 @@ class ContainerAnalysisClient {
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -257,7 +259,7 @@ class ContainerAnalysisClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Returns the permissions that a caller has on the specified note or
@@ -270,7 +272,8 @@ class ContainerAnalysisClient {
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
   ///
@@ -281,7 +284,7 @@ class ContainerAnalysisClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
-      Options options = {});
+      Options opts = {});
 
   ///
   /// Gets a summary of the number and severity of occurrences.
@@ -290,7 +293,8 @@ class ContainerAnalysisClient {
   /// summary for in the form of
   ///  `projects/[PROJECT_ID]`.
   /// @param filter  The filter expression.
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary,google/devtools/containeranalysis/v1/containeranalysis.proto#L140}
   ///
@@ -303,14 +307,15 @@ class ContainerAnalysisClient {
       google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
   GetVulnerabilityOccurrencesSummary(std::string const& parent,
                                      std::string const& filter,
-                                     Options options = {});
+                                     Options opts = {});
 
   ///
   /// Gets a summary of the number and severity of occurrences.
   ///
   /// @param request
   /// @googleapis_link{google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest,google/devtools/containeranalysis/v1/containeranalysis.proto#L124}
-  /// @param options  Optional. Operation options.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
   /// @return
   /// @googleapis_link{google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary,google/devtools/containeranalysis/v1/containeranalysis.proto#L140}
   ///
@@ -324,7 +329,7 @@ class ContainerAnalysisClient {
   GetVulnerabilityOccurrencesSummary(
       google::devtools::containeranalysis::v1::
           GetVulnerabilityOccurrencesSummaryRequest const& request,
-      Options options = {});
+      Options opts = {});
 
  private:
   std::shared_ptr<ContainerAnalysisConnection> connection_;

@@ -27,19 +27,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GameServerClustersServiceClient::GameServerClustersServiceClient(
     std::shared_ptr<GameServerClustersServiceConnection> connection,
-    Options options)
+    Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options),
+          std::move(opts),
           gameservices_internal::GameServerClustersServiceDefaultOptions(
               connection_->options()))) {}
 GameServerClustersServiceClient::~GameServerClustersServiceClient() = default;
 
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceClient::ListGameServerClusters(
-    std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::ListGameServerClustersRequest request;
   request.set_parent(parent);
   return connection_->ListGameServerClusters(request);
@@ -48,17 +47,15 @@ GameServerClustersServiceClient::ListGameServerClusters(
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceClient::ListGameServerClusters(
     google::cloud::gaming::v1::ListGameServerClustersRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGameServerClusters(std::move(request));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceClient::GetGameServerCluster(std::string const& name,
-                                                      Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::GetGameServerClusterRequest request;
   request.set_name(name);
   return connection_->GetGameServerCluster(request);
@@ -67,9 +64,8 @@ GameServerClustersServiceClient::GetGameServerCluster(std::string const& name,
 StatusOr<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceClient::GetGameServerCluster(
     google::cloud::gaming::v1::GetGameServerClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGameServerCluster(request);
 }
 
@@ -77,9 +73,8 @@ future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceClient::CreateGameServerCluster(
     std::string const& parent,
     google::cloud::gaming::v1::GameServerCluster const& game_server_cluster,
-    std::string const& game_server_cluster_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& game_server_cluster_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::CreateGameServerClusterRequest request;
   request.set_parent(parent);
   *request.mutable_game_server_cluster() = game_server_cluster;
@@ -90,9 +85,8 @@ GameServerClustersServiceClient::CreateGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceClient::CreateGameServerCluster(
     google::cloud::gaming::v1::CreateGameServerClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGameServerCluster(request);
 }
 
@@ -100,17 +94,15 @@ StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
 GameServerClustersServiceClient::PreviewCreateGameServerCluster(
     google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PreviewCreateGameServerCluster(request);
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerClustersServiceClient::DeleteGameServerCluster(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::DeleteGameServerClusterRequest request;
   request.set_name(name);
   return connection_->DeleteGameServerCluster(request);
@@ -119,9 +111,8 @@ GameServerClustersServiceClient::DeleteGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerClustersServiceClient::DeleteGameServerCluster(
     google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGameServerCluster(request);
 }
 
@@ -129,18 +120,16 @@ StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
 GameServerClustersServiceClient::PreviewDeleteGameServerCluster(
     google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PreviewDeleteGameServerCluster(request);
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceClient::UpdateGameServerCluster(
     google::cloud::gaming::v1::GameServerCluster const& game_server_cluster,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gaming::v1::UpdateGameServerClusterRequest request;
   *request.mutable_game_server_cluster() = game_server_cluster;
   *request.mutable_update_mask() = update_mask;
@@ -150,9 +139,8 @@ GameServerClustersServiceClient::UpdateGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceClient::UpdateGameServerCluster(
     google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGameServerCluster(request);
 }
 
@@ -160,9 +148,8 @@ StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
 GameServerClustersServiceClient::PreviewUpdateGameServerCluster(
     google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PreviewUpdateGameServerCluster(request);
 }
 

@@ -52,18 +52,11 @@ PolicyTagManagerConnection::UpdateTaxonomy(
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerConnection::ListTaxonomies(
-    google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datacatalog::v1::Taxonomy>>(
-      std::move(request),
-      [](google::cloud::datacatalog::v1::ListTaxonomiesRequest const&) {
-        return StatusOr<
-            google::cloud::datacatalog::v1::ListTaxonomiesResponse>{};
-      },
-      [](google::cloud::datacatalog::v1::ListTaxonomiesResponse const&) {
-        return std::vector<google::cloud::datacatalog::v1::Taxonomy>();
-      });
+    PolicyTagManagerConnection::ListTaxonomies(
+        google::cloud::datacatalog::v1::
+            ListTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::Taxonomy>>();
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
@@ -90,18 +83,11 @@ PolicyTagManagerConnection::UpdatePolicyTag(
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerConnection::ListPolicyTags(
-    google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::datacatalog::v1::PolicyTag>>(
-      std::move(request),
-      [](google::cloud::datacatalog::v1::ListPolicyTagsRequest const&) {
-        return StatusOr<
-            google::cloud::datacatalog::v1::ListPolicyTagsResponse>{};
-      },
-      [](google::cloud::datacatalog::v1::ListPolicyTagsResponse const&) {
-        return std::vector<google::cloud::datacatalog::v1::PolicyTag>();
-      });
+    PolicyTagManagerConnection::ListPolicyTags(
+        google::cloud::datacatalog::v1::
+            ListPolicyTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::PolicyTag>>();
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>

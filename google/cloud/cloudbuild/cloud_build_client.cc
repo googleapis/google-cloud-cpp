@@ -26,19 +26,18 @@ namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudBuildClient::CloudBuildClient(
-    std::shared_ptr<CloudBuildConnection> connection, Options options)
+    std::shared_ptr<CloudBuildConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), cloudbuild_internal::CloudBuildDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), cloudbuild_internal::CloudBuildDefaultOptions(
+                               connection_->options()))) {}
 CloudBuildClient::~CloudBuildClient() = default;
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::CreateBuild(
     std::string const& project_id,
-    google::devtools::cloudbuild::v1::Build const& build, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::devtools::cloudbuild::v1::Build const& build, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::CreateBuildRequest request;
   request.set_project_id(project_id);
   *request.mutable_build() = build;
@@ -48,16 +47,14 @@ CloudBuildClient::CreateBuild(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::CreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBuild(request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::GetBuild(
-    std::string const& project_id, std::string const& id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& project_id, std::string const& id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::GetBuildRequest request;
   request.set_project_id(project_id);
   request.set_id(id);
@@ -66,17 +63,15 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::GetBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::GetBuild(
     google::devtools::cloudbuild::v1::GetBuildRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBuild(request);
 }
 
 StreamRange<google::devtools::cloudbuild::v1::Build>
 CloudBuildClient::ListBuilds(std::string const& project_id,
-                             std::string const& filter, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                             std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::ListBuildsRequest request;
   request.set_project_id(project_id);
   request.set_filter(filter);
@@ -85,17 +80,14 @@ CloudBuildClient::ListBuilds(std::string const& project_id,
 
 StreamRange<google::devtools::cloudbuild::v1::Build>
 CloudBuildClient::ListBuilds(
-    google::devtools::cloudbuild::v1::ListBuildsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::devtools::cloudbuild::v1::ListBuildsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBuilds(std::move(request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::CancelBuild(
-    std::string const& project_id, std::string const& id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& project_id, std::string const& id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::CancelBuildRequest request;
   request.set_project_id(project_id);
   request.set_id(id);
@@ -104,17 +96,15 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::CancelBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::CancelBuild(
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelBuild(request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::RetryBuild(std::string const& project_id,
-                             std::string const& id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                             std::string const& id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::RetryBuildRequest request;
   request.set_project_id(project_id);
   request.set_id(id);
@@ -124,9 +114,8 @@ CloudBuildClient::RetryBuild(std::string const& project_id,
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::RetryBuild(
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RetryBuild(request);
 }
 
@@ -134,9 +123,8 @@ future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::ApproveBuild(
     std::string const& name,
     google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::ApproveBuildRequest request;
   request.set_name(name);
   *request.mutable_approval_result() = approval_result;
@@ -146,9 +134,8 @@ CloudBuildClient::ApproveBuild(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApproveBuild(request);
 }
 
@@ -156,9 +143,8 @@ StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::CreateBuildTrigger(
     std::string const& project_id,
     google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::CreateBuildTriggerRequest request;
   request.set_project_id(project_id);
   *request.mutable_trigger() = trigger;
@@ -168,18 +154,15 @@ CloudBuildClient::CreateBuildTrigger(
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::CreateBuildTrigger(
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBuildTrigger(request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::GetBuildTrigger(std::string const& project_id,
-                                  std::string const& trigger_id,
-                                  Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                  std::string const& trigger_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::GetBuildTriggerRequest request;
   request.set_project_id(project_id);
   request.set_trigger_id(trigger_id);
@@ -189,17 +172,15 @@ CloudBuildClient::GetBuildTrigger(std::string const& project_id,
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::GetBuildTrigger(
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBuildTrigger(request);
 }
 
 StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::ListBuildTriggers(std::string const& project_id,
-                                    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::ListBuildTriggersRequest request;
   request.set_project_id(project_id);
   return connection_->ListBuildTriggers(request);
@@ -208,17 +189,15 @@ CloudBuildClient::ListBuildTriggers(std::string const& project_id,
 StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::ListBuildTriggers(
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBuildTriggers(std::move(request));
 }
 
 Status CloudBuildClient::DeleteBuildTrigger(std::string const& project_id,
                                             std::string const& trigger_id,
-                                            Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest request;
   request.set_project_id(project_id);
   request.set_trigger_id(trigger_id);
@@ -227,9 +206,8 @@ Status CloudBuildClient::DeleteBuildTrigger(std::string const& project_id,
 
 Status CloudBuildClient::DeleteBuildTrigger(
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBuildTrigger(request);
 }
 
@@ -237,9 +215,8 @@ StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::UpdateBuildTrigger(
     std::string const& project_id, std::string const& trigger_id,
     google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest request;
   request.set_project_id(project_id);
   request.set_trigger_id(trigger_id);
@@ -250,19 +227,16 @@ CloudBuildClient::UpdateBuildTrigger(
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildClient::UpdateBuildTrigger(
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBuildTrigger(request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::RunBuildTrigger(
     std::string const& project_id, std::string const& trigger_id,
-    google::devtools::cloudbuild::v1::RepoSource const& source,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::devtools::cloudbuild::v1::RepoSource const& source, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::RunBuildTriggerRequest request;
   request.set_project_id(project_id);
   request.set_trigger_id(trigger_id);
@@ -273,9 +247,8 @@ CloudBuildClient::RunBuildTrigger(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::RunBuildTrigger(
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunBuildTrigger(request);
 }
 
@@ -283,9 +256,8 @@ StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildClient::ReceiveTriggerWebhook(
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReceiveTriggerWebhook(request);
 }
 
@@ -293,9 +265,8 @@ future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildClient::CreateWorkerPool(
     std::string const& parent,
     google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-    std::string const& worker_pool_id, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& worker_pool_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::CreateWorkerPoolRequest request;
   request.set_parent(parent);
   *request.mutable_worker_pool() = worker_pool;
@@ -306,16 +277,14 @@ CloudBuildClient::CreateWorkerPool(
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildClient::CreateWorkerPool(
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkerPool(request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
-CloudBuildClient::GetWorkerPool(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudBuildClient::GetWorkerPool(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::GetWorkerPoolRequest request;
   request.set_name(name);
   return connection_->GetWorkerPool(request);
@@ -324,17 +293,15 @@ CloudBuildClient::GetWorkerPool(std::string const& name, Options options) {
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildClient::GetWorkerPool(
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkerPool(request);
 }
 
 future<StatusOr<
     google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-CloudBuildClient::DeleteWorkerPool(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudBuildClient::DeleteWorkerPool(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest request;
   request.set_name(name);
   return connection_->DeleteWorkerPool(request);
@@ -344,18 +311,16 @@ future<StatusOr<
     google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
 CloudBuildClient::DeleteWorkerPool(
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkerPool(request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildClient::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
-    google::protobuf::FieldMask const& update_mask, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest request;
   *request.mutable_worker_pool() = worker_pool;
   *request.mutable_update_mask() = update_mask;
@@ -365,16 +330,14 @@ CloudBuildClient::UpdateWorkerPool(
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildClient::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkerPool(request);
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
-CloudBuildClient::ListWorkerPools(std::string const& parent, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+CloudBuildClient::ListWorkerPools(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request;
   request.set_parent(parent);
   return connection_->ListWorkerPools(request);
@@ -383,9 +346,8 @@ CloudBuildClient::ListWorkerPools(std::string const& parent, Options options) {
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildClient::ListWorkerPools(
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkerPools(std::move(request));
 }
 

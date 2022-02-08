@@ -35,18 +35,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecretManagerServiceConnection::~SecretManagerServiceConnection() = default;
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceConnection::ListSecrets(
-    google::cloud::secretmanager::v1::ListSecretsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::secretmanager::v1::Secret>>(
-      std::move(request),
-      [](google::cloud::secretmanager::v1::ListSecretsRequest const&) {
-        return StatusOr<
-            google::cloud::secretmanager::v1::ListSecretsResponse>{};
-      },
-      [](google::cloud::secretmanager::v1::ListSecretsResponse const&) {
-        return std::vector<google::cloud::secretmanager::v1::Secret>();
-      });
+    SecretManagerServiceConnection::ListSecrets(
+        google::cloud::secretmanager::v1::
+            ListSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::secretmanager::v1::Secret>>();
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
@@ -79,18 +72,11 @@ Status SecretManagerServiceConnection::DeleteSecret(
 }
 
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceConnection::ListSecretVersions(
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::secretmanager::v1::SecretVersion>>(
-      std::move(request),
-      [](google::cloud::secretmanager::v1::ListSecretVersionsRequest const&) {
-        return StatusOr<
-            google::cloud::secretmanager::v1::ListSecretVersionsResponse>{};
-      },
-      [](google::cloud::secretmanager::v1::ListSecretVersionsResponse const&) {
-        return std::vector<google::cloud::secretmanager::v1::SecretVersion>();
-      });
+    SecretManagerServiceConnection::ListSecretVersions(
+        google::cloud::secretmanager::v1::
+            ListSecretVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::secretmanager::v1::SecretVersion>>();
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>

@@ -42,33 +42,19 @@ FoldersConnection::GetFolder(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersConnection::ListFolders(
-    google::cloud::resourcemanager::v3::ListFoldersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcemanager::v3::Folder>>(
-      std::move(request),
-      [](google::cloud::resourcemanager::v3::ListFoldersRequest const&) {
-        return StatusOr<
-            google::cloud::resourcemanager::v3::ListFoldersResponse>{};
-      },
-      [](google::cloud::resourcemanager::v3::ListFoldersResponse const&) {
-        return std::vector<google::cloud::resourcemanager::v3::Folder>();
-      });
+    FoldersConnection::ListFolders(
+        google::cloud::resourcemanager::v3::
+            ListFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::resourcemanager::v3::Folder>>();
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersConnection::SearchFolders(
-    google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::resourcemanager::v3::Folder>>(
-      std::move(request),
-      [](google::cloud::resourcemanager::v3::SearchFoldersRequest const&) {
-        return StatusOr<
-            google::cloud::resourcemanager::v3::SearchFoldersResponse>{};
-      },
-      [](google::cloud::resourcemanager::v3::SearchFoldersResponse const&) {
-        return std::vector<google::cloud::resourcemanager::v3::Folder>();
-      });
+    FoldersConnection::SearchFolders(
+        google::cloud::resourcemanager::v3::
+            SearchFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::resourcemanager::v3::Folder>>();
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>

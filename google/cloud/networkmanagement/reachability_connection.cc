@@ -36,22 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReachabilityServiceConnection::~ReachabilityServiceConnection() = default;
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-ReachabilityServiceConnection::ListConnectivityTests(
-    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      std::move(request),
-      [](google::cloud::networkmanagement::v1::
-             ListConnectivityTestsRequest const&) {
-        return StatusOr<google::cloud::networkmanagement::v1::
-                            ListConnectivityTestsResponse>{};
-      },
-      [](google::cloud::networkmanagement::v1::
-             ListConnectivityTestsResponse const&) {
-        return std::vector<
-            google::cloud::networkmanagement::v1::ConnectivityTest>();
-      });
+    ReachabilityServiceConnection::ListConnectivityTests(
+        google::cloud::networkmanagement::v1::
+            ListConnectivityTestsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>();
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>

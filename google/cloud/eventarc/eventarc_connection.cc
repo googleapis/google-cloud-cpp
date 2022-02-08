@@ -41,17 +41,11 @@ StatusOr<google::cloud::eventarc::v1::Trigger> EventarcConnection::GetTrigger(
 }
 
 StreamRange<google::cloud::eventarc::v1::Trigger>
-EventarcConnection::ListTriggers(
-    google::cloud::eventarc::v1::ListTriggersRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::eventarc::v1::Trigger>>(
-      std::move(request),
-      [](google::cloud::eventarc::v1::ListTriggersRequest const&) {
-        return StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>{};
-      },
-      [](google::cloud::eventarc::v1::ListTriggersResponse const&) {
-        return std::vector<google::cloud::eventarc::v1::Trigger>();
-      });
+    EventarcConnection::ListTriggers(
+        google::cloud::eventarc::v1::
+            ListTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::eventarc::v1::Trigger>>();
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>

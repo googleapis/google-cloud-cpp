@@ -66,10 +66,24 @@ struct TracingComponentsOption {
 };
 
 /**
+ * Specifies a project for quota and billing purposes.
+ *
+ * The caller must have `serviceusage.services.use` permission on the project.
+ *
+ * @see https://cloud.google.com/iam/docs/permissions-reference for more
+ *     information about the `seviceusage.services.use` permission, including
+ *     default roles that grant it.
+ * @see https://cloud.google.com/apis/docs/system-parameters
+ */
+struct UserProjectOption {
+  using Type = std::string;
+};
+
+/**
  * A list of all the common options.
  */
 using CommonOptionList = OptionList<EndpointOption, UserAgentProductsOption,
-                                    TracingComponentsOption>;
+                                    TracingComponentsOption, UserProjectOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

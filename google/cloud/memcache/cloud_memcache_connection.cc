@@ -36,17 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudMemcacheConnection::~CloudMemcacheConnection() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>
-CloudMemcacheConnection::ListInstances(
-    google::cloud::memcache::v1::ListInstancesRequest request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::memcache::v1::Instance>>(
-      std::move(request),
-      [](google::cloud::memcache::v1::ListInstancesRequest const&) {
-        return StatusOr<google::cloud::memcache::v1::ListInstancesResponse>{};
-      },
-      [](google::cloud::memcache::v1::ListInstancesResponse const&) {
-        return std::vector<google::cloud::memcache::v1::Instance>();
-      });
+    CloudMemcacheConnection::ListInstances(
+        google::cloud::memcache::v1::
+            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::memcache::v1::Instance>>();
 }
 
 StatusOr<google::cloud::memcache::v1::Instance>

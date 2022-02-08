@@ -28,13 +28,18 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/lib/io.sh
 
+# We cannot use `cmake --install` below. That flag was introduced
+# in CMake == 3.15, and we use (and tell folks to use this code)
+# with versions as old as 3.5.
+
 ## [BEGIN packaging.md]
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
+  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ## [DONE packaging.md]

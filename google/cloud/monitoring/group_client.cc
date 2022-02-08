@@ -26,50 +26,45 @@ namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GroupServiceClient::GroupServiceClient(
-    std::shared_ptr<GroupServiceConnection> connection, Options options)
+    std::shared_ptr<GroupServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::GroupServiceDefaultOptions(
-                                  connection_->options()))) {}
+          std::move(opts), monitoring_internal::GroupServiceDefaultOptions(
+                               connection_->options()))) {}
 GroupServiceClient::~GroupServiceClient() = default;
 
 StreamRange<google::monitoring::v3::Group> GroupServiceClient::ListGroups(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListGroupsRequest request;
   request.set_name(name);
   return connection_->ListGroups(request);
 }
 
 StreamRange<google::monitoring::v3::Group> GroupServiceClient::ListGroups(
-    google::monitoring::v3::ListGroupsRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::ListGroupsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGroups(std::move(request));
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceClient::GetGroup(
-    std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetGroupRequest request;
   request.set_name(name);
   return connection_->GetGroup(request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceClient::GetGroup(
-    google::monitoring::v3::GetGroupRequest const& request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::GetGroupRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGroup(request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceClient::CreateGroup(
     std::string const& name, google::monitoring::v3::Group const& group,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateGroupRequest request;
   request.set_name(name);
   *request.mutable_group() = group;
@@ -77,51 +72,41 @@ StatusOr<google::monitoring::v3::Group> GroupServiceClient::CreateGroup(
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceClient::CreateGroup(
-    google::monitoring::v3::CreateGroupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::CreateGroupRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGroup(request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceClient::UpdateGroup(
-    google::monitoring::v3::Group const& group, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::Group const& group, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::UpdateGroupRequest request;
   *request.mutable_group() = group;
   return connection_->UpdateGroup(request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceClient::UpdateGroup(
-    google::monitoring::v3::UpdateGroupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::UpdateGroupRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGroup(request);
 }
 
-Status GroupServiceClient::DeleteGroup(std::string const& name,
-                                       Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+Status GroupServiceClient::DeleteGroup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::DeleteGroupRequest request;
   request.set_name(name);
   return connection_->DeleteGroup(request);
 }
 
 Status GroupServiceClient::DeleteGroup(
-    google::monitoring::v3::DeleteGroupRequest const& request,
-    Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::DeleteGroupRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGroup(request);
 }
 
 StreamRange<google::api::MonitoredResource>
-GroupServiceClient::ListGroupMembers(std::string const& name, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+GroupServiceClient::ListGroupMembers(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListGroupMembersRequest request;
   request.set_name(name);
   return connection_->ListGroupMembers(request);
@@ -129,9 +114,8 @@ GroupServiceClient::ListGroupMembers(std::string const& name, Options options) {
 
 StreamRange<google::api::MonitoredResource>
 GroupServiceClient::ListGroupMembers(
-    google::monitoring::v3::ListGroupMembersRequest request, Options options) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(options), options_));
+    google::monitoring::v3::ListGroupMembersRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGroupMembers(std::move(request));
 }
 

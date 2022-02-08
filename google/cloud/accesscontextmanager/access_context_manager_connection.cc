@@ -36,22 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessContextManagerConnection::~AccessContextManagerConnection() = default;
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-AccessContextManagerConnection::ListAccessPolicies(
-    google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessPoliciesRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListAccessPoliciesResponse>{};
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessPoliciesResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::AccessPolicy>();
-      });
+    AccessContextManagerConnection::ListAccessPolicies(
+        google::identity::accesscontextmanager::v1::
+            ListAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
@@ -89,22 +78,11 @@ AccessContextManagerConnection::DeleteAccessPolicy(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-AccessContextManagerConnection::ListAccessLevels(
-    google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessLevelsRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListAccessLevelsResponse>{};
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListAccessLevelsResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::AccessLevel>();
-      });
+    AccessContextManagerConnection::ListAccessLevels(
+        google::identity::accesscontextmanager::v1::
+            ListAccessLevelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
@@ -153,22 +131,11 @@ AccessContextManagerConnection::ReplaceAccessLevels(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-AccessContextManagerConnection::ListServicePerimeters(
-    google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListServicePerimetersRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListServicePerimetersResponse>{};
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListServicePerimetersResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::ServicePerimeter>();
-      });
+    AccessContextManagerConnection::ListServicePerimeters(
+        google::identity::accesscontextmanager::v1::
+            ListServicePerimetersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::identity::accesscontextmanager::v1::ServicePerimeter>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
@@ -230,22 +197,11 @@ AccessContextManagerConnection::CommitServicePerimeters(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-AccessContextManagerConnection::ListGcpUserAccessBindings(
-    google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
-        request) {
-  return google::cloud::internal::MakePaginationRange<StreamRange<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-      std::move(request),
-      [](google::identity::accesscontextmanager::v1::
-             ListGcpUserAccessBindingsRequest const&) {
-        return StatusOr<google::identity::accesscontextmanager::v1::
-                            ListGcpUserAccessBindingsResponse>{};
-      },
-      [](google::identity::accesscontextmanager::v1::
-             ListGcpUserAccessBindingsResponse const&) {
-        return std::vector<
-            google::identity::accesscontextmanager::v1::GcpUserAccessBinding>();
-      });
+    AccessContextManagerConnection::ListGcpUserAccessBindings(
+        google::identity::accesscontextmanager::v1::
+            ListGcpUserAccessBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
