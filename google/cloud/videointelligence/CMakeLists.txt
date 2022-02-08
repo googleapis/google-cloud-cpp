@@ -112,6 +112,20 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_videointelligence_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_executable(videointelligence_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(
+        videointelligence_quickstart
+        PRIVATE google-cloud-cpp::experimental-videointelligence)
+    google_cloud_cpp_add_common_options(videointelligence_quickstart)
+    add_test(
+        NAME videointelligence_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:videointelligence_quickstart>)
+    set_tests_properties(videointelligence_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart" ENVIRONMENT GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

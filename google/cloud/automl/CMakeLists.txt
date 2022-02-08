@@ -128,6 +128,21 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_automl_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_executable(automl_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(automl_quickstart
+                          PRIVATE google-cloud-cpp::experimental-automl)
+    google_cloud_cpp_add_common_options(automl_quickstart)
+    add_test(
+        NAME automl_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:automl_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_REGION)
+    set_tests_properties(automl_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart" ENVIRONMENT GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

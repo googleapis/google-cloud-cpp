@@ -14,6 +14,10 @@
 
 # The name of the project used to run the integration tests and examples.
 $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Some quickstarts require a x-goog-user-project header, either when using
+# our own user account in local builds, or when using the GCB service
+# account
+$env:GOOGLE_CLOUD_CPP_USER_PROJECT="${env:GOOGLE_CLOUD_PROJECT}"
 # Many tests and quickstarts need a location, this is typically a region.
 $env:GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
