@@ -32,19 +32,18 @@ std::set<std::string> DefaultTracingComponents() {
 Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
                               std::string default_endpoint) {
-  if (!opts.has<EndpointOption>() && !endpoint_env_var.empty()) {
-    auto e = GetEnv(endpoint_env_var.c_str());
+  if (!emulator_env_var.empty()) {
+    auto e = internal::GetEnv(emulator_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
     }
   }
-  if (!opts.has<EndpointOption>() || opts.get<EndpointOption>().empty()) {
-    opts.set<EndpointOption>(std::move(default_endpoint));
-  }
-  if (!emulator_env_var.empty()) {
-    auto e = GetEnv(emulator_env_var.c_str());
+  if (!opts.has<EndpointOption>()) {
+    auto e = internal::GetEnv(endpoint_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
+    } else {
+      opts.set<EndpointOption>(std::move(default_endpoint));
     }
   }
   auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
