@@ -19,12 +19,8 @@
 #include "google/cloud/language/internal/language_option_defaults.h"
 #include "google/cloud/language/language_connection.h"
 #include "google/cloud/language/language_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/user_agent_prefix.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
@@ -37,27 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options LanguageServiceDefaultOptions(Options options) {
-  if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_ENDPOINT");
-    options.set<EndpointOption>(
-        env && !env->empty() ? *env : "language.googleapis.com");
-  }
-  if (!options.has<UserProjectOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
-  }
-  if (!options.has<GrpcCredentialOption>()) {
-    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
-  if (!options.has<TracingComponentsOption>()) {
-    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
-  }
-  if (!options.has<GrpcTracingOptionsOption>()) {
-    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
-  }
-  auto& products = options.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
-
+  options = google::cloud::internal::PopulateCommonOptions(
+      std::move(options), "GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_ENDPOINT", "",
+      "language.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<language::LanguageServiceRetryPolicyOption>()) {
     options.set<language::LanguageServiceRetryPolicyOption>(
         language::LanguageServiceLimitedTimeRetryPolicy(
