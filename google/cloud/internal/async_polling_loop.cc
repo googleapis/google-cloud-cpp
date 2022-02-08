@@ -45,8 +45,12 @@ class AsyncPollingLoopImpl
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
     auto w = WeakFromThis();
-    promise_ = promise<StatusOr<Operation>>([w] {
-      if (auto self = w.lock()) self->DoCancel();
+    auto const& options = CurrentOptions();
+    promise_ = promise<StatusOr<Operation>>([w, options]() mutable {
+      if (auto self = w.lock()) {
+        OptionsSpan span(std::move(options));
+        self->DoCancel();
+      }
     });
     op.then([self](future<StatusOr<Operation>> f) { self->OnStart(f.get()); });
     return promise_.get_future();

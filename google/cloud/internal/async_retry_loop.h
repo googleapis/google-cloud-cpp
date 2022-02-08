@@ -189,8 +189,12 @@ class AsyncRetryLoopImpl
 
   future<T> Start() {
     auto weak = std::weak_ptr<AsyncRetryLoopImpl>(this->shared_from_this());
-    result_ = promise<T>([weak] {
-      if (auto self = weak.lock()) self->Cancel();
+    auto const& options = CurrentOptions();
+    result_ = promise<T>([weak, options]() mutable {
+      if (auto self = weak.lock()) {
+        OptionsSpan span(std::move(options));
+        self->Cancel();
+      }
     });
 
     StartAttempt();

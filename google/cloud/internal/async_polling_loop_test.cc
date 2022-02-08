@@ -41,6 +41,10 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
 
+struct StringOption {
+  using Type = std::string;
+};
+
 class MockStub {
  public:
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
@@ -117,12 +121,14 @@ TEST(AsyncPollingLoopTest, ImmediateCancel) {
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "ImmediateCancel");
         return make_ready_future(StatusOr<Operation>(Status{
             StatusCode::kCancelled, "test-function: operation cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::CancelOperationRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "ImmediateCancel");
         EXPECT_EQ(request.name(), "test-op-name");
         return make_ready_future(Status{});
       });
@@ -135,12 +141,17 @@ TEST(AsyncPollingLoopTest, ImmediateCancel) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillOnce(Return(std::chrono::milliseconds(1)));
 
+  OptionsSpan span(Options{}.set<StringOption>("ImmediateCancel"));
   promise<StatusOr<google::longrunning::Operation>> p;
   auto pending =
       AsyncPollingLoop(cq, p.get_future(), MakePoll(mock), MakeCancel(mock),
                        std::move(policy), "test-function");
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   p.set_value(starting_op);
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
@@ -168,6 +179,7 @@ TEST(AsyncPollingLoopTest, PollThenSuccess) {
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "PollThenSuccess");
         return make_ready_future(make_status_or(expected));
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -175,11 +187,12 @@ TEST(AsyncPollingLoopTest, PollThenSuccess) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  OptionsSpan span(Options{}.set<StringOption>("PollThenSuccess"));
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -234,19 +247,27 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenEventualSuccess");
         return make_ready_future(make_status_or(starting_op));
       })
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenEventualSuccess");
         return make_ready_future(
             StatusOr<Operation>(Status(StatusCode::kUnavailable, "try-again")));
       })
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenEventualSuccess");
         return make_ready_future(make_status_or(starting_op));
       })
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenEventualSuccess");
         return make_ready_future(make_status_or(expected));
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -254,11 +275,12 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
   EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  OptionsSpan span(Options{}.set<StringOption>("PollThenEventualSuccess"));
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -286,6 +308,8 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
       .WillRepeatedly([&](CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenExhaustedPollingPolicy");
         return make_ready_future(make_status_or(starting_op));
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -296,11 +320,13 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
       .WillOnce(Return(false));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  OptionsSpan span(
+      Options{}.set<StringOption>("PollThenExhaustedPollingPolicy"));
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   EXPECT_THAT(actual,
               StatusIs(Not(Eq(StatusCode::kOk)),
                        AllOf(HasSubstr("test-function"),
@@ -330,6 +356,8 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
       .WillRepeatedly([&](CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenExhaustedPollingPolicyWithFailure");
         return make_ready_future(
             StatusOr<Operation>(Status{StatusCode::kUnavailable, "try-again"}));
       });
@@ -341,11 +369,13 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  auto actual =
-      AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                       MakePoll(mock), MakeCancel(mock), std::move(policy),
-                       "test-function")
-          .get();
+  OptionsSpan span(
+      Options{}.set<StringOption>("PollThenExhaustedPollingPolicyWithFailure"));
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto actual = pending.get();
   ASSERT_THAT(actual,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
@@ -375,6 +405,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
       .WillRepeatedly([&](CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "PollLifetime");
         return get_sequencer.PushBack();
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -383,6 +414,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
+  OptionsSpan span(Options{}.set<StringOption>("PollLifetime"));
   auto pending = AsyncPollingLoop(
       cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
       MakeCancel(mock), std::move(policy), "test-function");
@@ -393,6 +425,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
   }
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(expected);
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -418,11 +451,15 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
       .WillRepeatedly([&](CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenCancelDuringTimer");
         return get_sequencer.PushBack();
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::CancelOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenCancelDuringTimer");
         return make_ready_future(Status{});
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -435,6 +472,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
+  OptionsSpan span(Options{}.set<StringOption>("PollThenCancelDuringTimer"));
   auto pending = AsyncPollingLoop(
       cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
       MakeCancel(mock), std::move(policy), "test-function");
@@ -442,11 +480,15 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(starting_op);
   auto t = timer_sequencer.PopFront();
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   t.set_value(std::chrono::system_clock::now());
   get_sequencer.PopFront().set_value(
       Status{StatusCode::kCancelled, "test-function: operation cancelled"});
 
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
@@ -473,11 +515,15 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
       .WillRepeatedly([&](CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenCancelDuringPoll");
         return get_sequencer.PushBack();
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::CancelOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenCancelDuringPoll");
         return make_ready_future(Status{});
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -490,6 +536,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
+  OptionsSpan span(Options{}.set<StringOption>("PollThenCancelDuringPoll"));
   auto pending = AsyncPollingLoop(
       cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
       MakeCancel(mock), std::move(policy), "test-function");
@@ -498,10 +545,14 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
   get_sequencer.PopFront().set_value(starting_op);
   timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
   auto g = get_sequencer.PopFront();
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   g.set_value(
       Status{StatusCode::kCancelled, "test-function: operation cancelled"});
 
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
@@ -527,6 +578,7 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
       .WillOnce([](CompletionQueue&,
                    std::unique_ptr<grpc::ClientContext> context,
                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "ConfigurePollContext");
         // Ensure that our options have taken affect on the ClientContext before
         // we start using it.
         EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context->compression_algorithm());
@@ -537,6 +589,7 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
       .WillOnce([](CompletionQueue&,
                    std::unique_ptr<grpc::ClientContext> context,
                    google::longrunning::CancelOperationRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "ConfigurePollContext");
         // Ensure that our options have taken affect on the ClientContext before
         // we start using it.
         EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context->compression_algorithm());
@@ -555,14 +608,19 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
   auto setup_poll = [](grpc::ClientContext& context) {
     context.set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
   };
-  OptionsSpan span(Options{}.set<internal::GrpcSetupPollOption>(setup_poll));
-
+  OptionsSpan span(Options{}
+                       .set<GrpcSetupPollOption>(setup_poll)
+                       .set<StringOption>("ConfigurePollContext"));
   promise<StatusOr<google::longrunning::Operation>> p;
   auto pending =
       AsyncPollingLoop(cq, p.get_future(), MakePoll(mock), MakeCancel(mock),
                        std::move(policy), "test-function");
-  pending.cancel();
+  {
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   p.set_value(starting_op);
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),

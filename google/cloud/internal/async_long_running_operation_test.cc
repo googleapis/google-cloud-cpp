@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_long_running_operation.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -35,6 +36,10 @@ using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
 using ::testing::Return;
+
+struct StringOption {
+  using Type = std::string;
+};
 
 class MockStub {
  public:
@@ -122,11 +127,15 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   EXPECT_CALL(*mock, AsyncCreateInstance)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     CreateInstanceRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenSuccessMetadata");
         return make_ready_future(make_status_or(starting_op));
       });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenSuccessMetadata");
         return make_ready_future(make_status_or(done_op));
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -137,6 +146,8 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   CreateInstanceRequest request;
   request.set_parent("test-parent");
   request.set_instance_id("test-instance-id");
+  OptionsSpan span(
+      Options{}.set<StringOption>("RequestPollThenSuccessMetadata"));
   auto actual =
       AsyncLongRunningOperation<Instance>(
           cq, std::move(request), MakeStart(mock), MakePoll(mock),
@@ -144,6 +155,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -169,11 +181,15 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   EXPECT_CALL(*mock, AsyncCreateInstance)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     CreateInstanceRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenSuccessResponse");
         return make_ready_future(make_status_or(starting_op));
       });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenSuccessResponse");
         return make_ready_future(make_status_or(done_op));
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -184,6 +200,8 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   CreateInstanceRequest request;
   request.set_parent("test-parent");
   request.set_instance_id("test-instance-id");
+  OptionsSpan span(
+      Options{}.set<StringOption>("RequestPollThenSuccessResponse"));
   auto actual =
       AsyncLongRunningOperation<Instance>(
           cq, std::move(request), MakeStart(mock), MakePoll(mock),
@@ -191,6 +209,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -213,21 +232,29 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   EXPECT_CALL(*mock, AsyncCreateInstance)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     CreateInstanceRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenCancel");
         return make_ready_future(make_status_or(starting_op));
       });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenCancel");
         return make_ready_future(make_status_or(starting_op));
       })
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenCancel");
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status{StatusCode::kCancelled, "cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                     google::longrunning::CancelOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "RequestPollThenCancel");
         return make_ready_future(Status{});
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
@@ -240,6 +267,7 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   CreateInstanceRequest request;
   request.set_parent("test-parent");
   request.set_instance_id("test-instance-id");
+  OptionsSpan span(Options{}.set<StringOption>("RequestPollThenCancel"));
   auto pending = AsyncLongRunningOperation<Instance>(
       cq, std::move(request), MakeStart(mock), MakePoll(mock), MakeCancel(mock),
       &ExtractLongRunningResultMetadata<Instance>, TestRetryPolicy(),
@@ -249,10 +277,14 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   // Wait until the polling loop is backing off for a second time.
   timer.PopFront().set_value();
   auto t = timer.PopFront();
-  // cancel the long running operation
-  pending.cancel();
+  {
+    // cancel the long running operation
+    OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+    pending.cancel();
+  }
   // release timer
   t.set_value();
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
 }
