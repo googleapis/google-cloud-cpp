@@ -167,7 +167,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           read_promise_ =
               absl::make_optional(promise<absl::optional<ResponseType>>());
           if (!this->in_retry_loop_) {
-            this->OnFailure(Status(StatusCode.kUnavailable, "Read"));
+            this->OnFailure(kReadErrorStatus);
             this->in_retry_loop_ = true;
           }
           return read_promise_.value().get_future();
@@ -193,7 +193,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       std::lock_guard<std::mutex> g{this->mu_};
       write_promise_ = absl::make_optional(promise<bool>());
       if (!this->in_retry_loop_) {
-        this->OnFailure(Status(StatusCode.kUnavailable, "Write"));
+        this->OnFailure(kWriteErrorStatus);
         this->in_retry_loop_ = true;
       }
       return write_promise_.value().get_future();
@@ -236,7 +236,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       return;
     }
     std::lock_guard<std::mutex> g{mu_};
-    status_promise_.set_value(Status(StatusCode.kAborted, "Permanent error"));
+    status_promise_.set_value(kPermanentErrorStatus);
     in_retry_loop_ = false;
   }
 
@@ -249,37 +249,67 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     potential_stream = stream_factory_();
     start_future = potential_stream->Start();
 
-    start_future.then([this, potential_stream = std::move(potential_stream)](future<bool> start_future) {
-      if (!start_future.get()) {
-        this->AttemptRetry(Status(StatusCode.kUnavailable, "Start"),
-                           retry_policy, backoff_policy);
-        return;
-      }
-      this->initializer_(std::move(potential_stream))
-          .then([this, retry_policy, backoff_policy](
-                    future<StatusOr<std::unique_ptr<
-                        AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>
-                        initialize_future) {
-            auto initialize_response = initialize_future.get();
-            if (!initialize_response.ok()) {
-              this->AttemptRetry(Status(StatusCode.kUnavailable, "Initialize"),
-                                 retry_policy, backoff_policy);
+    auto start_future_result = start_future.then(
+        [this, potential_stream =
+                   std::move(potential_stream)](future<bool> start_future) {
+          if (!start_future.get()) {
+            {
+              std::lock_guard<std::mutex> g{this->mu_};
+              this->in_retry_loop_ = true;
+            }
+
+            this->AttemptRetry(kStartErrorStatus, retry_policy, backoff_policy);
+            return make_ready_future(
+                StatusOr<std::unique_ptr<
+                    AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>(
+                    kStartErrorStatus));
+          }
+          return this->initializer_(std::move(potential_stream));
+        });
+
+    start_future_result.then(
+        [this, retry_policy, backoff_policy](
+            future<StatusOr<std::unique_ptr<
+                AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>
+                start_initialize_future) {
+          auto start_initialize_response = start_initialize_future.get();
+
+          if (!start_initialize_response.ok()) {
+            // Start failure which already invoked retry loop, so return
+            // immediately
+            if (start_initialize_response.status() == kStartErrorStatus) {
               return;
             }
-            std::lock_guard<std::mutex> g{this->mu_};
-            this->stream_ = std::move(*initialize_response);
-            if (this->read_promise_.has_value()) {
-              this->read_promise_.value().set_value(absl::optional());
-              this->read_promise_ = absl::optional();
+            {
+              std::lock_guard<std::mutex> g{this->mu_};
+              this->in_retry_loop_ = true;
             }
-            if (this->write_promise_.has_value()) {
-              this->write_promise_.value().set_value(false);
-              this->write_promise_ = absl::optional();
-            }
-            this->in_retry_loop_ = false;
-          });
-    });
+            this->AttemptRetry(kInitializerErrorStatus, retry_policy,
+                               backoff_policy);
+            return;
+          }
+
+          std::lock_guard<std::mutex> g{this->mu_};
+          this->stream_ = std::move(*start_initialize_response);
+          if (this->read_promise_.has_value()) {
+            this->read_promise_.value().set_value(absl::optional());
+            this->read_promise_ = absl::optional();
+          }
+          if (this->write_promise_.has_value()) {
+            this->write_promise_.value().set_value(false);
+            this->write_promise_ = absl::optional();
+          }
+          this->in_retry_loop_ = false;
+        });
   }
+
+  static constexpr kStartErrorStatus = Status(StatusCode.kUnavailable, "Start");
+  static constexpr kReadErrorStatus = Status(StatusCode.kUnavailable, "Read");
+  static constexpr kWriteErrorStatus = Status(StatusCode.kUnavailable, "Write");
+  static constexpr kInitializerErrorStatus =
+      Status(StatusCode.kUnavailable, "Initializer");
+  static constexpr kPermanentErrorStatus =
+      Status(StatusCode.kAborted, "Permanent error");
 
   std::unique_ptr<RetryPolicy const> const retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> const backoff_policy_prototype_;
