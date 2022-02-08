@@ -334,8 +334,15 @@ StatusOr<EmptyResponse> GrpcClient::DeleteObject(
   return EmptyResponse{};
 }
 
-StatusOr<ObjectMetadata> GrpcClient::UpdateObject(UpdateObjectRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<ObjectMetadata> GrpcClient::UpdateObject(
+    UpdateObjectRequest const& request) {
+  auto proto = GrpcObjectRequestParser::ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->UpdateObject(context, *proto);
+  if (!response) return std::move(response).status();
+  return GrpcObjectMetadataParser::FromProto(*response, options_);
 }
 
 StatusOr<ObjectMetadata> GrpcClient::PatchObject(
