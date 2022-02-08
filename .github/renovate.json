@@ -14,7 +14,7 @@
         "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz",
         "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/bazelisk-linux-amd64"
       ],
-      "datasource": "github-releases"
+      "datasourceTemplate": "github-releases"
     },
     {
       "fileMatch": [
@@ -23,9 +23,9 @@
       "matchStrings": [
         "{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}"
       ],
-      "datasource": "github-releases",
-      "depName": "bazelbuild/bazel",
-      "versioning": "semver"
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "bazelbuild/bazel",
+      "versioningTemplate": "semver"
     }
   ],
   "ignoreDeps": [
