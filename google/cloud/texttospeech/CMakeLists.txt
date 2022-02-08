@@ -105,6 +105,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_texttospeech_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_executable(texttospeech_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(texttospeech_quickstart
+                          PRIVATE google-cloud-cpp::experimental-texttospeech)
+    google_cloud_cpp_add_common_options(texttospeech_quickstart)
+    add_test(
+        NAME texttospeech_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:texttospeech_quickstart>)
+    set_tests_properties(
+        texttospeech_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

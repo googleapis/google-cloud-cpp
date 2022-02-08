@@ -45,8 +45,8 @@ this library.
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
@@ -54,8 +54,9 @@ int main(int argc, char* argv[]) try {
   auto client =
       retail::CatalogServiceClient(retail::MakeCatalogServiceConnection());
 
+  // The service only accepts "global" as the location for ListCatalogs()
   auto const location =
-      "projects/" + std::string(argv[1]) + "/locations/" + std::string(argv[2]);
+      "projects/" + std::string(argv[1]) + "/locations/global";
   for (auto r : client.ListCatalogs(location)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
