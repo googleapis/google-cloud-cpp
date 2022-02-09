@@ -18,10 +18,13 @@
     },
     {
       "fileMatch": [
-        "^ci/cloudbuild/builds/lib/bazel.sh$"
+        "^ci/cloudbuild/builds/lib/bazel.sh$",
+        "^ci/kokoro/.*\\.sh$",
+        "^ci/kokoro/.*\\.ps1$"
       ],
       "matchStrings": [
-        "{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}"
+        "{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}",
+        "{\\$Env:USE_BAZEL_VERSION=\"(?<currentValue>.*?)\"}"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "bazelbuild/bazel",
