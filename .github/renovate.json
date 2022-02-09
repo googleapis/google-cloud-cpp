@@ -24,7 +24,7 @@
       ],
       "matchStrings": [
         "{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}",
-        "{\\$Env:USE_BAZEL_VERSION=\"(?<currentValue>.*?)\"}"
+        "\\$Env:USE_BAZEL_VERSION=\"(?<currentValue>.*?)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "bazelbuild/bazel",
