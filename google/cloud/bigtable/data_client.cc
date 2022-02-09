@@ -113,6 +113,7 @@ class DefaultDataClient : public DataClient {
   std::unique_ptr<grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
   ReadRows(grpc::ClientContext* context,
            btproto::ReadRowsRequest const& request) override {
+    ApplyOptions(context);
     return impl_.Stub()->ReadRows(context, request);
   }
 
