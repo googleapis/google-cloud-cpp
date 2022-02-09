@@ -291,6 +291,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       return make_ready_future(kPermanentErrorStatus);
     }
 
+    // Since `Finish` is being called, there must be no outstanding `Read` and
+    // `Write`. Along with the status not being `State::kShutdown`, this means
+    // that the internal stream is still valid, so we can call `Finish()` on it.
     return stream_->Finish().then([this](future<Status> finish_future) {
       auto finish_response = finish_future.get();
       {
