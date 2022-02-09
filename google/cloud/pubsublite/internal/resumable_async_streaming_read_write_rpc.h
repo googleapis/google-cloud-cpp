@@ -296,10 +296,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     // that the internal stream is still valid, so we can call `Finish()` on it.
     return stream_->Finish().then([this](future<Status> finish_future) {
       auto finish_response = finish_future.get();
-      {
-        std::lock_guard<std::mutex> g{mu_};
         status_promise_.set_value(finish_response);
-      }
       return make_ready_future(finish_response);
     });
   }
@@ -349,9 +346,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     {
       std::lock_guard<std::mutex> g{mu_};
-      status_promise_.set_value(kPermanentErrorStatus);
       stream_state_ = State::kShutdown;
     }
+    status_promise_.set_value(kPermanentErrorStatus);
     SetReadWriteFutures();
   }
 
