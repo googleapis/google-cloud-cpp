@@ -19,12 +19,8 @@
 #include "google/cloud/iap/internal/identity_aware_proxy_o_auth_option_defaults.h"
 #include "google/cloud/iap/identity_aware_proxy_o_auth_connection.h"
 #include "google/cloud/iap/identity_aware_proxy_o_auth_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/user_agent_prefix.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
@@ -37,28 +33,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options IdentityAwareProxyOAuthServiceDefaultOptions(Options options) {
-  if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT");
-    options.set<EndpointOption>(env && !env->empty() ? *env
-                                                     : "iap.googleapis.com");
-  }
-  if (!options.has<UserProjectOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
-  }
-  if (!options.has<GrpcCredentialOption>()) {
-    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
-  if (!options.has<TracingComponentsOption>()) {
-    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
-  }
-  if (!options.has<GrpcTracingOptionsOption>()) {
-    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
-  }
-  auto& products = options.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
-
+  options = google::cloud::internal::PopulateCommonOptions(
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT", "",
+      "iap.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<iap::IdentityAwareProxyOAuthServiceRetryPolicyOption>()) {
     options.set<iap::IdentityAwareProxyOAuthServiceRetryPolicyOption>(
         iap::IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy(

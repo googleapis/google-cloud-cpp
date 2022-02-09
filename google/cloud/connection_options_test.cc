@@ -231,41 +231,6 @@ TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
   t.join();
 }
 
-TEST(ConnectionOptionsTest, DefaultTracingComponentsNoEnvironment) {
-  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
-  auto const actual = internal::DefaultTracingComponents();
-  EXPECT_THAT(actual, ElementsAre());
-}
-
-TEST(ConnectionOptionsTest, DefaultTracingComponentsWithValue) {
-  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                                      "a,b,c");
-  auto const actual = internal::DefaultTracingComponents();
-  EXPECT_THAT(actual, ElementsAre("a", "b", "c"));
-}
-
-TEST(ConnectionOptionsTest, DefaultTracingOptionsNoEnvironment) {
-  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", {});
-  auto const actual = internal::DefaultTracingOptions();
-  auto const expected = TracingOptions{};
-  EXPECT_EQ(expected.single_line_mode(), actual.single_line_mode());
-  EXPECT_EQ(expected.use_short_repeated_primitives(),
-            actual.use_short_repeated_primitives());
-  EXPECT_EQ(expected.truncate_string_field_longer_than(),
-            actual.truncate_string_field_longer_than());
-}
-
-TEST(ConnectionOptionsTest, DefaultTracingOptionsWithValue) {
-  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
-                                      "single_line_mode=on"
-                                      ",use_short_repeated_primitives=ON"
-                                      ",truncate_string_field_longer_than=42");
-  auto const actual = internal::DefaultTracingOptions();
-  EXPECT_TRUE(actual.single_line_mode());
-  EXPECT_TRUE(actual.use_short_repeated_primitives());
-  EXPECT_EQ(42, actual.truncate_string_field_longer_than());
-}
-
 TEST(ConnectionOptionsTest, DefaultBackgroundThreads) {
   auto constexpr kThreadCount = 4;
   auto conn_opts = TestConnectionOptions(grpc::InsecureChannelCredentials())

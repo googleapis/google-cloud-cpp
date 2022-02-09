@@ -19,12 +19,8 @@
 #include "google/cloud/securitycenter/internal/security_center_option_defaults.h"
 #include "google/cloud/securitycenter/security_center_connection.h"
 #include "google/cloud/securitycenter/security_center_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/user_agent_prefix.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
@@ -37,27 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options SecurityCenterDefaultOptions(Options options) {
-  if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_SECURITY_CENTER_ENDPOINT");
-    options.set<EndpointOption>(
-        env && !env->empty() ? *env : "securitycenter.googleapis.com");
-  }
-  if (!options.has<UserProjectOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
-  }
-  if (!options.has<GrpcCredentialOption>()) {
-    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
-  if (!options.has<TracingComponentsOption>()) {
-    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
-  }
-  if (!options.has<GrpcTracingOptionsOption>()) {
-    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
-  }
-  auto& products = options.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
-
+  options = google::cloud::internal::PopulateCommonOptions(
+      std::move(options), "GOOGLE_CLOUD_CPP_SECURITY_CENTER_ENDPOINT", "",
+      "securitycenter.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<securitycenter::SecurityCenterRetryPolicyOption>()) {
     options.set<securitycenter::SecurityCenterRetryPolicyOption>(
         securitycenter::SecurityCenterLimitedTimeRetryPolicy(
