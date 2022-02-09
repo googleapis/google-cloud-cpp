@@ -75,7 +75,29 @@ add_library(
     internal/connection_stub.h
     internal/connection_stub_factory.cc
     internal/connection_stub_factory.h
+    internal/reservation_auth_decorator.cc
+    internal/reservation_auth_decorator.h
+    internal/reservation_connection_impl.cc
+    internal/reservation_connection_impl.h
+    internal/reservation_logging_decorator.cc
+    internal/reservation_logging_decorator.h
+    internal/reservation_metadata_decorator.cc
+    internal/reservation_metadata_decorator.h
+    internal/reservation_option_defaults.cc
+    internal/reservation_option_defaults.h
+    internal/reservation_retry_traits.h
+    internal/reservation_stub.cc
+    internal/reservation_stub.h
+    internal/reservation_stub_factory.cc
+    internal/reservation_stub_factory.h
     internal/streaming.cc
+    reservation_client.cc
+    reservation_client.h
+    reservation_connection.cc
+    reservation_connection.h
+    reservation_connection_idempotency_policy.cc
+    reservation_connection_idempotency_policy.h
+    reservation_options.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_bigquery
@@ -112,7 +134,8 @@ target_sources(
     google_cloud_cpp_bigquery_mocks
     INTERFACE # cmake-format: sort
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h)
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_reservation_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
     INTERFACE google-cloud-cpp::bigquery GTest::gmock_main GTest::gmock

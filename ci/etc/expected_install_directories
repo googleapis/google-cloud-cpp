@@ -52,6 +52,8 @@
 ./include/google/cloud/bigquery/connection/v1
 ./include/google/cloud/bigquery/internal
 ./include/google/cloud/bigquery/mocks
+./include/google/cloud/bigquery/reservation
+./include/google/cloud/bigquery/reservation/v1
 ./include/google/cloud/bigquery/storage
 ./include/google/cloud/bigquery/storage/v1
 ./include/google/cloud/bigtable
