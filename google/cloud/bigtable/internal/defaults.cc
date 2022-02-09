@@ -74,7 +74,9 @@ int DefaultConnectionPoolSize() {
 }
 
 Options DefaultOptions(Options opts) {
-  auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  using ::google::cloud::internal::GetEnv;
+
+  auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator) {
     opts.set<DataEndpointOption>(*emulator);
     opts.set<AdminEndpointOption>(*emulator);
@@ -82,9 +84,14 @@ Options DefaultOptions(Options opts) {
   }
 
   auto instance_admin_emulator =
-      google::cloud::internal::GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
+      GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   if (instance_admin_emulator) {
     opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
+  }
+
+  auto user_project = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+  if (user_project && !user_project->empty()) {
+    opts.set<UserProjectOption>(*std::move(user_project));
   }
 
   if (!opts.has<DataEndpointOption>()) {
