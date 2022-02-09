@@ -80,6 +80,36 @@ TEST_F(ComputeEngineCredentialsTest,
       "token_type": "tokentype"
   })""";
 
+  auto mock_response1 = absl::make_unique<MockRestResponse>();
+  EXPECT_CALL(*mock_response1, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
+          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
+                    buffer.begin());
+          return svc_acct_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
+
+  auto mock_response2 = absl::make_unique<MockRestResponse>();
+  EXPECT_CALL(*mock_response2, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([token_info_resp](absl::Span<char> buffer) {
+          std::copy(token_info_resp.begin(), token_info_resp.end(),
+                    buffer.begin());
+          return token_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
+
   EXPECT_CALL(
       *mock_rest_client_,
       Post(A<RestRequest>(),
@@ -92,21 +122,7 @@ TEST_F(ComputeEngineCredentialsTest,
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
-        auto mock_response = absl::make_unique<MockRestResponse>();
-        EXPECT_CALL(*mock_response, StatusCode)
-            .WillRepeatedly(Return(HttpStatusCode::kOk));
-        EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-          auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-          EXPECT_CALL(*mock_http_payload, Read)
-              .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-                std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                          buffer.begin());
-                return svc_acct_info_resp.size();
-              })
-              .WillOnce([](absl::Span<char>) { return 0; });
-          return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-        });
-        return std::unique_ptr<RestResponse>(std::move(mock_response));
+        return std::unique_ptr<RestResponse>(std::move(mock_response1));
       })
       .WillOnce([&](RestRequest const& request,
                     std::vector<std::pair<std::string, std::string>> const&) {
@@ -115,21 +131,7 @@ TEST_F(ComputeEngineCredentialsTest,
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                email + "/token"));
-        auto mock_response = absl::make_unique<MockRestResponse>();
-        EXPECT_CALL(*mock_response, StatusCode)
-            .WillRepeatedly(Return(HttpStatusCode::kOk));
-        EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-          auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-          EXPECT_CALL(*mock_http_payload, Read)
-              .WillOnce([token_info_resp](absl::Span<char> buffer) {
-                std::copy(token_info_resp.begin(), token_info_resp.end(),
-                          buffer.begin());
-                return token_info_resp.size();
-              })
-              .WillOnce([](absl::Span<char>) { return 0; });
-          return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-        });
-        return std::unique_ptr<RestResponse>(std::move(mock_response));
+        return std::unique_ptr<RestResponse>(std::move(mock_response2));
       });
 
   testing::MockFunction<ComputeEngineCredentials::RestClientFn> mock_client_fn;
