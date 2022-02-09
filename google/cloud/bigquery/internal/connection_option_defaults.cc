@@ -34,7 +34,8 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ConnectionServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CONNECTION_SERVICE_ENDPOINT", "",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT", "",
       "bigqueryconnection.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
