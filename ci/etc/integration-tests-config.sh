@@ -89,3 +89,7 @@ export GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT="invalid-test-account@c
 export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT="hello-world-caller@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 # The URL for the HTTP Hello World service, typically set by the CI scripts
 export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=""
+
+# To run google/cloud/gameservices' quickstart
+export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
+export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"
