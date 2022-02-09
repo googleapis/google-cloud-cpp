@@ -84,16 +84,12 @@ ComputeEngineCredentials::ComputeEngineCredentials()
 
 ComputeEngineCredentials::ComputeEngineCredentials(
     std::string service_account_email, Options options,
-    RestClientFn rest_client_fn, CurrentTimeFn current_time_fn)
-    : rest_client_fn_(std::move(rest_client_fn)),
-      current_time_fn_(std::move(current_time_fn)),
+    RestClientFn const& rest_client_fn, CurrentTimeFn current_time_fn)
+    : current_time_fn_(std::move(current_time_fn)),
+      rest_client_(rest_client_fn(
+          "http://" + google::cloud::internal::GceMetadataHostname(), options)),
       service_account_email_(std::move(service_account_email)),
-      options_(std::move(options)) {
-  // Allows mocking the metadata server hostname for testing.
-  std::string metadata_service_endpoint =
-      "http://" + google::cloud::internal::GceMetadataHostname();
-  rest_client_ = rest_client_fn_(metadata_service_endpoint, options_);
-}
+      options_(std::move(options)) {}
 
 StatusOr<std::pair<std::string, std::string>>
 ComputeEngineCredentials::AuthorizationHeader() {

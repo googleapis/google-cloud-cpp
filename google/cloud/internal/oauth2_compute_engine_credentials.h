@@ -55,17 +55,11 @@ ParseComputeEngineRefreshResponse(rest_internal::RestResponse& response,
  *
  * An HTTP Authorization header, with an access token as its value, can be
  * obtained by calling the AuthorizationHeader() method; if the current access
- * token is invalid or nearing expiration, this will class will first obtain a
- * new access token before returning the Authorization header string.
+ * token is invalid or nearing expiration, this class will first obtain a new
+ * access token before returning the Authorization header string.
  *
  * @see https://cloud.google.com/compute/docs/authentication#using for details
  * on how to get started with Compute Engine service account credentials.
- *
- * @param rest_client_fn a dependency injection point. It makes it possible to
- *     mock internal libcurl wrappers. This should generally not be overridden
- *     except for testing.
- * @param current_time_fn a dependency injection point to fetch the current
- *     time. This should generally not be overridden except for testing.
  */
 class ComputeEngineCredentials : public Credentials {
  public:
@@ -76,9 +70,18 @@ class ComputeEngineCredentials : public Credentials {
 
   explicit ComputeEngineCredentials();
 
+  /**
+   * Creates an instance of ComputeEngineCredentials.
+   *
+   * @param rest_client_fn a dependency injection point. It makes it possible to
+   *     mock internal libcurl wrappers. This should generally not be overridden
+   *     except for testing.
+   * @param current_time_fn a dependency injection point to fetch the current
+   *     time. This should generally not be overridden except for testing.
+   */
   explicit ComputeEngineCredentials(
       std::string service_account_email, Options options = {},
-      RestClientFn rest_client_fn = rest_internal::GetDefaultRestClient,
+      RestClientFn const& rest_client_fn = rest_internal::GetDefaultRestClient,
       CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
 
   /**
@@ -136,7 +139,6 @@ class ComputeEngineCredentials : public Credentials {
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() const;
 
   mutable std::mutex mu_;
-  RestClientFn rest_client_fn_;
   CurrentTimeFn current_time_fn_;
   std::unique_ptr<rest_internal::RestClient> rest_client_;
   RefreshingCredentialsWrapper refreshing_creds_;

@@ -22,17 +22,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-class ComputeEngineUtilTest : public ::testing::Test {
- public:
-  ComputeEngineUtilTest()
-      : gce_metadata_hostname_env_var_(GceMetadataHostnameEnvVar(), {}) {}
-
- protected:
-  google::cloud::testing_util::ScopedEnvironment gce_metadata_hostname_env_var_;
-};
-
 /// @test Ensure we can override the value for the GCE metadata hostname.
-TEST_F(ComputeEngineUtilTest, CanOverrideGceMetadataHostname) {
+TEST(ComputeEngineUtilTest, CanOverrideGceMetadataHostname) {
+  google::cloud::testing_util::ScopedEnvironment gce_metadata_hostname_env_var(
+      GceMetadataHostnameEnvVar(), {});
   google::cloud::testing_util::ScopedEnvironment gce_metadata_hostname_set(
       GceMetadataHostnameEnvVar(), "foo.bar");
   EXPECT_EQ(std::string("foo.bar"), GceMetadataHostname());
