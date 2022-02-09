@@ -75,6 +75,8 @@ add_library(
     internal/build_info.h
     internal/compiler_info.cc
     internal/compiler_info.h
+    internal/compute_engine_util.cc
+    internal/compute_engine_util.h
     internal/credentials_impl.cc
     internal/credentials_impl.h
     internal/diagnostics_pop.inc
@@ -210,6 +212,7 @@ if (BUILD_TESTING)
         internal/base64_transforms_test.cc
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
+        internal/compute_engine_util_test.cc
         internal/credentials_impl_test.cc
         internal/env_test.cc
         internal/filesystem_test.cc
@@ -634,6 +637,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/oauth2_access_token_credentials.h
         internal/oauth2_anonymous_credentials.cc
         internal/oauth2_anonymous_credentials.h
+        internal/oauth2_compute_engine_credentials.cc
+        internal/oauth2_compute_engine_credentials.h
         internal/oauth2_credential_constants.h
         internal/oauth2_credentials.cc
         internal/oauth2_credentials.h
@@ -705,6 +710,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/http_payload_test.cc
             internal/oauth2_access_token_credentials_test.cc
             internal/oauth2_anonymous_credentials_test.cc
+            internal/oauth2_compute_engine_credentials_test.cc
             internal/oauth2_refreshing_credentials_wrapper_test.cc
             internal/rest_client_test.cc
             internal/rest_request_test.cc
