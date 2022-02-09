@@ -119,6 +119,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/bigquery/datatransfer/v1/datatransfer.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Bigtable
 service {
   service_proto_path: "google/bigtable/admin/v2/bigtable_instance_admin.proto"

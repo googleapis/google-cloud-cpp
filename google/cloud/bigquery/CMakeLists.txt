@@ -45,6 +45,13 @@ add_library(
     connection_connection_idempotency_policy.cc
     connection_connection_idempotency_policy.h
     connection_options.h
+    data_transfer_client.cc
+    data_transfer_client.h
+    data_transfer_connection.cc
+    data_transfer_connection.h
+    data_transfer_connection_idempotency_policy.cc
+    data_transfer_connection_idempotency_policy.h
+    data_transfer_options.h
     internal/bigquery_read_auth_decorator.cc
     internal/bigquery_read_auth_decorator.h
     internal/bigquery_read_connection_impl.cc
@@ -75,6 +82,21 @@ add_library(
     internal/connection_stub.h
     internal/connection_stub_factory.cc
     internal/connection_stub_factory.h
+    internal/data_transfer_auth_decorator.cc
+    internal/data_transfer_auth_decorator.h
+    internal/data_transfer_connection_impl.cc
+    internal/data_transfer_connection_impl.h
+    internal/data_transfer_logging_decorator.cc
+    internal/data_transfer_logging_decorator.h
+    internal/data_transfer_metadata_decorator.cc
+    internal/data_transfer_metadata_decorator.h
+    internal/data_transfer_option_defaults.cc
+    internal/data_transfer_option_defaults.h
+    internal/data_transfer_retry_traits.h
+    internal/data_transfer_stub.cc
+    internal/data_transfer_stub.h
+    internal/data_transfer_stub_factory.cc
+    internal/data_transfer_stub_factory.h
     internal/reservation_auth_decorator.cc
     internal/reservation_auth_decorator.h
     internal/reservation_connection_impl.cc
@@ -135,6 +157,7 @@ target_sources(
     INTERFACE # cmake-format: sort
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_transfer_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_reservation_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
