@@ -50,6 +50,8 @@
 ./include/google/cloud/bigquery
 ./include/google/cloud/bigquery/connection
 ./include/google/cloud/bigquery/connection/v1
+./include/google/cloud/bigquery/datatransfer
+./include/google/cloud/bigquery/datatransfer/v1
 ./include/google/cloud/bigquery/internal
 ./include/google/cloud/bigquery/mocks
 ./include/google/cloud/bigquery/reservation
