@@ -71,16 +71,13 @@ class ResumableAsyncStreamingReadWriteRpc {
    *
    * Whether `Read()` can be called before a `Write()` operation is specified by
    * each service and RPC. Most services require at least one `Write()` call
-   * before calling `Read()`.  Many services may return more than one response
+   * before calling `Read()`. Many services may return more than one response
    * for a single `Write()` request.  Each service and RPC specifies how to
    * discover if more responses will be forthcoming.
    *
-   * If the `optional<>` is not engaged, a successful `ResponseType` is
-   * returned. If it is engaged, the call failed, but the user may call `Read`
-   * again unless `Start` had finished with a permanent error `Status`. The
-   * application should wait until any other pending operations (typically any
-   * other `Write()` calls) complete and then call `Finish()` to find the status
-   * of the streaming RPC.
+   * If the `optional<>` is engaged, a successful `ResponseType` is
+   * returned. If it is not engaged, the call failed, but the user may call `Read`
+   * again unless `Start` had finished with a permanent error `Status`.
    */
   virtual future<absl::optional<ResponseType>> Read() = 0;
 
@@ -98,9 +95,7 @@ class ResumableAsyncStreamingReadWriteRpc {
    *
    * If `true` is returned, the call was successful. If `false` is returned,
    * the call failed, but the user may call `Write` again unless `Start` had
-   * finished with a permanent error `Status`. The application should wait until
-   * any other pending operations (typically any other `Read()` calls) complete
-   * and then call `Finish()` to find the status of the streaming RPC.
+   * finished with a permanent error `Status`.
    */
   virtual future<bool> Write(Request const&, grpc::WriteOptions) = 0;
 
@@ -288,15 +283,12 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   future<Status> Finish() override {
-    bool shutdown = false;
     {
       std::lock_guard<std::mutex> g{mu_};
-      shutdown = stream_state_ == State::kShutdown;
+      if (stream_state_ == State::kShutdown) {
+        return make_ready_future(kPermanentErrorStatus);
+      }
       stream_state_ = State::kShutdown;
-    }
-
-    if (shutdown) {
-      return make_ready_future(kPermanentErrorStatus);
     }
 
     // Since `Finish` is being called, there must be no outstanding `Read` and
