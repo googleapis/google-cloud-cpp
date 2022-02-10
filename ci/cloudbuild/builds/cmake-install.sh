@@ -62,7 +62,6 @@ expected_dirs+=(
   ./include/google/bigtable/v2
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
-  ./include/google/cloud/bigquery/v2
   ./include/google/cloud/bigtable/admin/mocks
   ./include/google/cloud/bigtable/internal
   # no RPC services in google/cloud/clouddms

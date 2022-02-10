@@ -97,6 +97,21 @@ add_library(
     internal/data_transfer_stub.h
     internal/data_transfer_stub_factory.cc
     internal/data_transfer_stub_factory.h
+    internal/model_auth_decorator.cc
+    internal/model_auth_decorator.h
+    internal/model_connection_impl.cc
+    internal/model_connection_impl.h
+    internal/model_logging_decorator.cc
+    internal/model_logging_decorator.h
+    internal/model_metadata_decorator.cc
+    internal/model_metadata_decorator.h
+    internal/model_option_defaults.cc
+    internal/model_option_defaults.h
+    internal/model_retry_traits.h
+    internal/model_stub.cc
+    internal/model_stub.h
+    internal/model_stub_factory.cc
+    internal/model_stub_factory.h
     internal/reservation_auth_decorator.cc
     internal/reservation_auth_decorator.h
     internal/reservation_connection_impl.cc
@@ -113,6 +128,13 @@ add_library(
     internal/reservation_stub_factory.cc
     internal/reservation_stub_factory.h
     internal/streaming.cc
+    model_client.cc
+    model_client.h
+    model_connection.cc
+    model_connection.h
+    model_connection_idempotency_policy.cc
+    model_connection_idempotency_policy.h
+    model_options.h
     reservation_client.cc
     reservation_client.h
     reservation_connection.cc
@@ -158,6 +180,7 @@ target_sources(
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_transfer_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_model_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_reservation_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
