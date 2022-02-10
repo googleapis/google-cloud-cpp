@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_CLIENT_H
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
@@ -87,7 +88,6 @@ class AdminClient {
   // them protected, so the mock classes can override them, and then make the
   // classes that do use them friends.
  protected:
-  friend class TableAdmin;
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
   friend class internal::LoggingAdminClient;
@@ -291,6 +291,18 @@ class AdminClient {
                     google::longrunning::GetOperationRequest const& request,
                     grpc::CompletionQueue* cq) = 0;
   //@}
+
+ private:
+  friend class TableAdmin;
+
+  // TODO(#7530): Make this a pure virtual function, when we break the class.
+  virtual std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
+  connection() {
+    return nullptr;
+  }
+
+  // TODO(#7530): Make this a pure virtual function, when we break the class.
+  virtual CompletionQueue cq() { return {}; }
 };
 
 /// Create a new table admin client configured via @p options.

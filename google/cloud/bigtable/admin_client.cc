@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
+#include "google/cloud/bigtable/internal/admin_client_params.h"
 #include "google/cloud/bigtable/internal/common_client.h"
 #include "google/cloud/bigtable/internal/logging_admin_client.h"
 #include "google/cloud/log.h"
@@ -130,7 +132,13 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
             options.has<UserProjectOption>()
                 ? absl::nullopt
                 : absl::make_optional(options.get<UserProjectOption>())),
-        impl_(std::move(options)) {}
+        impl_(options) {
+    auto params = bigtable_internal::AdminClientParams(std::move(options));
+    cq_ = std::move(params.cq);
+    background_threads_ = std::move(params.background_threads);
+    connection_ = bigtable_admin::MakeBigtableTableAdminConnection(
+        std::move(params.options));
+  }
 
   std::string const& project() const override { return project_; }
   std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
@@ -431,6 +439,13 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
   }
 
  private:
+  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection()
+      override {
+    return connection_;
+  }
+
+  CompletionQueue cq() override { return cq_; }
+
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.BackgroundThreadsFactory();
   }
@@ -443,6 +458,9 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
   std::string project_;
   absl::optional<std::string> user_project_;
   internal::CommonClient<btadmin::BigtableTableAdmin> impl_;
+  CompletionQueue cq_;
+  std::unique_ptr<BackgroundThreads> background_threads_;
+  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
 };
 
 }  // namespace
