@@ -45,22 +45,19 @@ this library.
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
-    std::cerr << "Usage: " << argv[0]
-              << " project-id location-id recommender-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
-  // This quickstart does not attempt to validate the Recommender ID. The full
-  // list of Recommender IDs can be found here:
-  //
-  //     https://cloud.google.com/recommender/docs/recommenders#recommenders
 
   namespace recommender = ::google::cloud::recommender;
   auto client =
       recommender::RecommenderClient(recommender::MakeRecommenderConnection());
-
-  auto const parent = std::string("projects/") + argv[1] + "/locations/" +
-                      argv[2] + "/recommenders/" + argv[3];
+  // For additional recommenders see:
+  //     https://cloud.google.com/recommender/docs/recommenders#recommenders
+  auto const parent =
+      std::string("projects/") + argv[1] + "/locations/" + argv[2] +
+      "/recommenders/google.compute.instance.MachineTypeRecommender";
   for (auto r : client.ListRecommendations(parent)) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
