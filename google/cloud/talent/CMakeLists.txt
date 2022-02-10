@@ -126,6 +126,23 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_talent_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(talent_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(talent_quickstart
+                          PRIVATE google-cloud-cpp::experimental-talent)
+    google_cloud_cpp_add_common_options(talent_quickstart)
+    add_test(
+        NAME talent_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:talent_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(
+        talent_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

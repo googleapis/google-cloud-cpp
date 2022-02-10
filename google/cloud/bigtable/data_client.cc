@@ -48,6 +48,10 @@ class DefaultDataClient : public DataClient {
                     Options options = {})
       : project_(std::move(project)),
         instance_(std::move(instance)),
+        user_project_(
+            options.has<UserProjectOption>()
+                ? absl::nullopt
+                : absl::make_optional(options.get<UserProjectOption>())),
         impl_(std::move(options)) {}
 
   std::string const& project_id() const override { return project_; };
@@ -59,6 +63,7 @@ class DefaultDataClient : public DataClient {
   grpc::Status MutateRow(grpc::ClientContext* context,
                          btproto::MutateRowRequest const& request,
                          btproto::MutateRowResponse* response) override {
+    ApplyOptions(context);
     return impl_.Stub()->MutateRow(context, request, response);
   }
 
@@ -67,6 +72,7 @@ class DefaultDataClient : public DataClient {
   AsyncMutateRow(grpc::ClientContext* context,
                  btproto::MutateRowRequest const& request,
                  grpc::CompletionQueue* cq) override {
+    ApplyOptions(context);
     return impl_.Stub()->AsyncMutateRow(context, request, cq);
   }
 
@@ -74,6 +80,7 @@ class DefaultDataClient : public DataClient {
       grpc::ClientContext* context,
       btproto::CheckAndMutateRowRequest const& request,
       btproto::CheckAndMutateRowResponse* response) override {
+    ApplyOptions(context);
     return impl_.Stub()->CheckAndMutateRow(context, request, response);
   }
 
@@ -82,6 +89,7 @@ class DefaultDataClient : public DataClient {
   AsyncCheckAndMutateRow(grpc::ClientContext* context,
                          btproto::CheckAndMutateRowRequest const& request,
                          grpc::CompletionQueue* cq) override {
+    ApplyOptions(context);
     return impl_.Stub()->AsyncCheckAndMutateRow(context, request, cq);
   }
 
@@ -89,6 +97,7 @@ class DefaultDataClient : public DataClient {
       grpc::ClientContext* context,
       btproto::ReadModifyWriteRowRequest const& request,
       btproto::ReadModifyWriteRowResponse* response) override {
+    ApplyOptions(context);
     return impl_.Stub()->ReadModifyWriteRow(context, request, response);
   }
 
@@ -97,12 +106,14 @@ class DefaultDataClient : public DataClient {
   AsyncReadModifyWriteRow(grpc::ClientContext* context,
                           btproto::ReadModifyWriteRowRequest const& request,
                           grpc::CompletionQueue* cq) override {
+    ApplyOptions(context);
     return impl_.Stub()->AsyncReadModifyWriteRow(context, request, cq);
   }
 
   std::unique_ptr<grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
   ReadRows(grpc::ClientContext* context,
            btproto::ReadRowsRequest const& request) override {
+    ApplyOptions(context);
     return impl_.Stub()->ReadRows(context, request);
   }
 
@@ -110,6 +121,7 @@ class DefaultDataClient : public DataClient {
   AsyncReadRows(grpc::ClientContext* context,
                 btproto::ReadRowsRequest const& request,
                 grpc::CompletionQueue* cq, void* tag) override {
+    ApplyOptions(context);
     return impl_.Stub()->AsyncReadRows(context, request, cq, tag);
   }
 
@@ -117,12 +129,14 @@ class DefaultDataClient : public DataClient {
   PrepareAsyncReadRows(grpc::ClientContext* context,
                        btproto::ReadRowsRequest const& request,
                        grpc::CompletionQueue* cq) override {
+    ApplyOptions(context);
     return impl_.Stub()->PrepareAsyncReadRows(context, request, cq);
   }
 
   std::unique_ptr<grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
   SampleRowKeys(grpc::ClientContext* context,
                 btproto::SampleRowKeysRequest const& request) override {
+    ApplyOptions(context);
     return impl_.Stub()->SampleRowKeys(context, request);
   }
 
@@ -131,6 +145,7 @@ class DefaultDataClient : public DataClient {
   AsyncSampleRowKeys(grpc::ClientContext* context,
                      btproto::SampleRowKeysRequest const& request,
                      grpc::CompletionQueue* cq, void* tag) override {
+    ApplyOptions(context);
     return impl_.Stub()->AsyncSampleRowKeys(context, request, cq, tag);
   }
 
@@ -139,12 +154,14 @@ class DefaultDataClient : public DataClient {
   PrepareAsyncSampleRowKeys(grpc::ClientContext* context,
                             btproto::SampleRowKeysRequest const& request,
                             grpc::CompletionQueue* cq) override {
+    ApplyOptions(context);
     return impl_.Stub()->PrepareAsyncSampleRowKeys(context, request, cq);
   }
 
   std::unique_ptr<grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request) override {
+    ApplyOptions(context);
     return impl_.Stub()->MutateRows(context, request);
   }
 
@@ -153,6 +170,7 @@ class DefaultDataClient : public DataClient {
   AsyncMutateRows(grpc::ClientContext* context,
                   btproto::MutateRowsRequest const& request,
                   grpc::CompletionQueue* cq, void* tag) override {
+    ApplyOptions(context);
     return impl_.Stub()->AsyncMutateRows(context, request, cq, tag);
   }
 
@@ -161,6 +179,7 @@ class DefaultDataClient : public DataClient {
   PrepareAsyncMutateRows(grpc::ClientContext* context,
                          btproto::MutateRowsRequest const& request,
                          grpc::CompletionQueue* cq) override {
+    ApplyOptions(context);
     return impl_.Stub()->PrepareAsyncMutateRows(context, request, cq);
   }
 
@@ -169,8 +188,14 @@ class DefaultDataClient : public DataClient {
     return impl_.BackgroundThreadsFactory();
   }
 
+  void ApplyOptions(grpc::ClientContext* context) {
+    if (!user_project_) return;
+    context->AddMetadata("x-goog-user-project", *user_project_);
+  }
+
   std::string project_;
   std::string instance_;
+  absl::optional<std::string> user_project_;
   internal::CommonClient<btproto::Bigtable> impl_;
 };
 

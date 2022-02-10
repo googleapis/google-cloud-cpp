@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_ADMIN_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_ADMIN_H
 
+#include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/column_family.h"
 #include "google/cloud/bigtable/completion_queue.h"
@@ -28,6 +29,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/iam_policy.h"
 #include "google/cloud/internal/attributes.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -142,6 +144,7 @@ class TableAdmin {
    */
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : client_(std::move(client)),
+        connection_(client_->connection()),
         project_id_(client_->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
@@ -1022,6 +1025,21 @@ class TableAdmin {
  private:
   friend class TableAdminTester;
 
+  explicit TableAdmin(
+      std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection,
+      std::string project_id, std::string instance_id)
+      : connection_(std::move(connection)),
+        project_id_(std::move(project_id)),
+        instance_id_(std::move(instance_id)),
+        instance_name_(InstanceName()),
+        rpc_retry_policy_prototype_(
+            DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
+        rpc_backoff_policy_prototype_(
+            DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
+        polling_policy_prototype_(
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {}
+
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
@@ -1081,6 +1099,7 @@ class TableAdmin {
       std::string const& consistency_token);
 
   std::shared_ptr<AdminClient> client_;
+  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
   std::string project_id_;
   std::string instance_id_;
   std::string instance_name_;
