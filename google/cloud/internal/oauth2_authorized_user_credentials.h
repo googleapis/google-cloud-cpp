@@ -55,10 +55,11 @@ ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
  *
- * Takes a AuthorizedUserCredentialsInfo and obtains access tokens from the
- * Google Authorization Service as needed. Instances of this class should
- * usually be created via the convenience methods declared in
- * google_credentials.h.
+ * Takes a service account email address or alias (e.g. "default") and uses the
+ * Google Compute Engine instance's metadata server to obtain service account
+ * metadata and OAuth 2.0 access tokens as needed. Instances of this class
+ * should usually be created via the convenience methods declared in
+ * google/cloud/credentials.h.
  *
  * An HTTP Authorization header, with an access token as its value,
  * can be obtained by calling the AuthorizationHeader() method; if the current
@@ -70,8 +71,6 @@ ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
  */
 class AuthorizedUserCredentials : public Credentials {
  public:
-  using RestClientFn = std::function<std::unique_ptr<rest_internal::RestClient>(
-      std::string endpoint_address, Options options)>;
   using CurrentTimeFn =
       std::function<std::chrono::time_point<std::chrono::system_clock>()>;
 
