@@ -174,16 +174,23 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           absl::optional<promise<void>> in_progress_read;
           future<void> read_reinit_done;
           auto optional_response = optional_response_future.get();
+          bool shutdown;
+
           {
             std::lock_guard<std::mutex> g{mu_};
             in_progress_read.swap(in_progress_read_);
-            if (!optional_response.has_value()) {
+            shutdown = stream_state_ == State::kShutdown;
+            if (!optional_response.has_value() && !shutdown) {
               read_reinit_done_.emplace();
               read_reinit_done = read_reinit_done_->get_future();
             }
           }
 
           in_progress_read->set_value();
+
+          if (shutdown) {
+            return make_ready_future(absl::optional<ResponseType>());
+          }
 
           if (optional_response.has_value()) {
             return make_ready_future(std::move(optional_response));
@@ -219,11 +226,13 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       absl::optional<promise<void>> in_progress_write;
       future<void> write_reinit_done;
       bool write_response = write_fu.get();
+      bool shutdown;
 
       {
         std::lock_guard<std::mutex> g{mu_};
         in_progress_write.swap(in_progress_write_);
-        if (!write_response) {
+        shutdown = stream_state_ == State::kShutdown;
+        if (!write_response && !shutdown) {
           write_reinit_done_.emplace();
           write_reinit_done = write_reinit_done_->get_future();
         }
@@ -231,9 +240,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
       in_progress_write->set_value();
 
-      if (write_response) {
-        return make_ready_future(true);
-      }
+      if (shutdown) return make_ready_future(false);
+
+      if (write_response) return make_ready_future(true);
 
       ReadWriteRetryFailedStream();
 
