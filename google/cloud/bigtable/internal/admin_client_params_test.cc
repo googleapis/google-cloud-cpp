@@ -18,12 +18,6 @@
 
 namespace google {
 namespace cloud {
-
-bool operator==(CompletionQueue const& a, CompletionQueue const& b) {
-  using internal::GetCompletionQueueImpl;
-  return GetCompletionQueueImpl(a) == GetCompletionQueueImpl(b);
-}
-
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
@@ -31,24 +25,29 @@ namespace {
 using ::testing::IsNull;
 using ::testing::NotNull;
 
+bool SameCQ(CompletionQueue const& a, CompletionQueue const& b) {
+  using ::google::cloud::internal::GetCompletionQueueImpl;
+  return GetCompletionQueueImpl(a) == GetCompletionQueueImpl(b);
+}
+
 TEST(AdminClientParams, WithSuppliedThreads) {
   CompletionQueue user_cq;
   auto cq_opts = Options{}.set<GrpcCompletionQueueOption>(user_cq);
-  auto params = AdminClientParams(cq_opts);
+  auto p = AdminClientParams(cq_opts);
 
-  EXPECT_THAT(params.background_threads, IsNull());
-  ASSERT_TRUE(params.options.has<GrpcCompletionQueueOption>());
-  EXPECT_EQ(user_cq, params.cq);
-  EXPECT_EQ(user_cq, params.options.get<GrpcCompletionQueueOption>());
+  EXPECT_THAT(p.background_threads, IsNull());
+  ASSERT_TRUE(p.options.has<GrpcCompletionQueueOption>());
+  EXPECT_TRUE(SameCQ(user_cq, p.cq));
+  EXPECT_TRUE(SameCQ(user_cq, p.options.get<GrpcCompletionQueueOption>()));
 }
 
 TEST(AdminClientParams, WithoutSuppliedThreads) {
-  auto params = AdminClientParams(Options{});
+  auto p = AdminClientParams(Options{});
 
-  EXPECT_THAT(params.background_threads, NotNull());
-  ASSERT_TRUE(params.options.has<GrpcCompletionQueueOption>());
-  EXPECT_EQ(params.background_threads->cq(),
-            params.options.get<GrpcCompletionQueueOption>());
+  ASSERT_THAT(p.background_threads, NotNull());
+  ASSERT_TRUE(p.options.has<GrpcCompletionQueueOption>());
+  EXPECT_TRUE(SameCQ(p.cq, p.background_threads->cq()));
+  EXPECT_TRUE(SameCQ(p.cq, p.options.get<GrpcCompletionQueueOption>()));
 }
 
 }  // namespace
