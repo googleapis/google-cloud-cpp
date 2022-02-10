@@ -445,7 +445,7 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
 }
 
 // Verify maximum JSON nesting.
-TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
+TEST_F(DataTypeIntegrationTest, DISABLED_JsonMaxNesting) {
   // TODO(#6873): Remove this check when the emulator supports JSON.
   if (UsingEmulator()) GTEST_SKIP();
 
