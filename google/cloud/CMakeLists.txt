@@ -643,6 +643,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/oauth2_access_token_credentials.h
         internal/oauth2_anonymous_credentials.cc
         internal/oauth2_anonymous_credentials.h
+        internal/oauth2_authorized_user_credentials.cc
+        internal/oauth2_authorized_user_credentials.h
         internal/oauth2_compute_engine_credentials.cc
         internal/oauth2_compute_engine_credentials.h
         internal/oauth2_credential_constants.h
@@ -716,6 +718,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/http_payload_test.cc
             internal/oauth2_access_token_credentials_test.cc
             internal/oauth2_anonymous_credentials_test.cc
+            internal/oauth2_authorized_user_credentials_test.cc
             internal/oauth2_compute_engine_credentials_test.cc
             internal/oauth2_refreshing_credentials_wrapper_test.cc
             internal/rest_client_test.cc
