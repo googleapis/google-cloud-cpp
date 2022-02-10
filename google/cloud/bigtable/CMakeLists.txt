@@ -143,6 +143,8 @@ add_library(
     instance_list_responses.h
     instance_update_config.cc
     instance_update_config.h
+    internal/admin_client_params.cc
+    internal/admin_client_params.h
     internal/async_bulk_apply.cc
     internal/async_bulk_apply.h
     internal/async_longrunning_op.h
@@ -304,6 +306,7 @@ if (BUILD_TESTING)
         instance_admin_test.cc
         instance_config_test.cc
         instance_update_config_test.cc
+        internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
         internal/async_longrunning_op_test.cc
         internal/async_poll_op_test.cc
