@@ -123,6 +123,23 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_resourcemanager_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(resourcemanager_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(
+        resourcemanager_quickstart
+        PRIVATE google-cloud-cpp::experimental-resourcemanager)
+    google_cloud_cpp_add_common_options(resourcemanager_quickstart)
+    add_test(
+        NAME resourcemanager_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:resourcemanager_quickstart>
+            GOOGLE_CLOUD_CPP_RESOURCEMANAGER_TEST_FOLDER)
+    set_tests_properties(resourcemanager_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
