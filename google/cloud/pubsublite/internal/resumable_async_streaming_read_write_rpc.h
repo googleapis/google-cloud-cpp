@@ -392,6 +392,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       std::lock_guard<std::mutex> g{mu_};
       FinishRetryPromiseLockHeld();
       if (stream_state_ == State::kShutdown) return;
+      stream_state_ = State::kShutdown;
     }
 
     CompleteStream(status);
