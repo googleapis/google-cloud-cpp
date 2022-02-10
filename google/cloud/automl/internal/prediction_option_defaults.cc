@@ -34,8 +34,8 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PredictionServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PREDICTION_SERVICE_ENDPOINT", "",
-      "automl.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_AUTOML_PREDICTION_SERVICE_ENDPOINT",
+      "", "automl.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<automl::PredictionServiceRetryPolicyOption>()) {

@@ -43,6 +43,7 @@ service {
   service_proto_path: "google/cloud/apigeeconnect/v1/connection.proto"
   product_path: "google/cloud/apigeeconnect"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_APIGEE_CONNECTION_SERVICE_ENDPOINT"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
@@ -92,6 +93,7 @@ service {
   service_proto_path: "google/cloud/automl/v1/prediction_service.proto"
   product_path: "google/cloud/automl"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_AUTOML_PREDICTION_SERVICE_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -109,6 +111,7 @@ service {
   service_proto_path: "google/cloud/bigquery/connection/v1/connection.proto"
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -708,6 +711,7 @@ service {
   service_proto_path: "google/cloud/retail/v2/prediction_service.proto"
   product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
+  service_endpoint_env_var: "GOOGLE_CLOUD_CPP_RETAIL_PREDICTION_SERVICE_ENDPOINT"
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
