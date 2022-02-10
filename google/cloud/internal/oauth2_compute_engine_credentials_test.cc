@@ -14,17 +14,13 @@
 
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/compute_engine_util.h"
-#include "google/cloud/internal/oauth2_credential_constants.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
-#include <nlohmann/json.hpp>
 #include <chrono>
-#include <cstring>
 
 namespace google {
 namespace cloud {
@@ -35,7 +31,6 @@ namespace {
 using ::google::cloud::internal::GceMetadataHostname;
 using ::google::cloud::rest_internal::HttpPayload;
 using ::google::cloud::rest_internal::HttpStatusCode;
-using ::google::cloud::rest_internal::RestClient;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::IsOk;
@@ -43,7 +38,6 @@ using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::A;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -59,9 +53,7 @@ class ComputeEngineCredentialsTest : public ::testing::Test {
     mock_rest_client_ = absl::make_unique<MockRestClient>();
   }
   std::unique_ptr<MockRestClient> mock_rest_client_;
-  std::string endpoint_;
   Options options_;
-  std::multimap<std::string, std::string> headers_;
 };
 
 /// @test Verify that we can create and refresh ComputeEngineCredentials.
@@ -134,16 +126,8 @@ TEST_F(ComputeEngineCredentialsTest,
         return std::unique_ptr<RestResponse>(std::move(mock_response2));
       });
 
-  testing::MockFunction<ComputeEngineCredentials::RestClientFn> mock_client_fn;
-  EXPECT_CALL(mock_client_fn, Call(_, _))
-      .WillOnce([&](std::string const& endpoint,
-                    Options const&) -> std::unique_ptr<RestClient> {
-        EXPECT_THAT(endpoint, Eq("http://" + hostname));
-        return std::move(mock_rest_client_);
-      });
-
   ComputeEngineCredentials credentials(alias, options_,
-                                       mock_client_fn.AsStdFunction());
+                                       std::move(mock_rest_client_));
   // Calls Refresh to obtain the access token for our authorization header.
   EXPECT_EQ(std::make_pair(std::string{"Authorization"},
                            std::string{"tokentype mysupersecrettoken"}),
@@ -338,31 +322,31 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
       "scopes": ["scope1","scope2"]
   })""";
 
-  auto mock_http_payload2 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload2, Read).WillOnce([](absl::Span<char>) {
-    return 0;
-  });
-
-  auto mock_http_payload3 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload3, Read)
-      .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                  buffer.begin());
-        return svc_acct_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
-  auto* mock_response2 = new MockRestResponse();
+  auto mock_response2 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
-  EXPECT_CALL(std::move(*mock_response2), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload2))));
+  EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read).WillOnce([](absl::Span<char>) {
+      return 0;
+    });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
 
-  auto* mock_response3 = new MockRestResponse();
+  auto mock_response3 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response3, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response3), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload3))));
+  EXPECT_CALL(std::move(*mock_response3), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
+          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
+                    buffer.begin());
+          return svc_acct_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
 
   EXPECT_CALL(
       *mock_rest_client_,
@@ -376,7 +360,6 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
-
         return Status{StatusCode::kAborted, "Fake Curl error", {}};
       })
       .WillOnce([&](RestRequest const& request,
@@ -387,7 +370,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
-        return std::unique_ptr<RestResponse>(mock_response2);
+        return std::unique_ptr<RestResponse>(std::move(mock_response2));
       })
       .WillOnce([&](RestRequest const& request,
                     std::vector<std::pair<std::string, std::string>> const&) {
@@ -397,19 +380,11 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
-        return std::unique_ptr<RestResponse>(mock_response3);
-      });
-
-  testing::MockFunction<ComputeEngineCredentials::RestClientFn> mock_client_fn;
-  EXPECT_CALL(mock_client_fn, Call(_, _))
-      .WillOnce([&](std::string const& endpoint,
-                    Options const&) -> std::unique_ptr<RestClient> {
-        EXPECT_THAT(endpoint, Eq("http://" + hostname));
-        return std::move(mock_rest_client_);
+        return std::unique_ptr<RestResponse>(std::move(mock_response3));
       });
 
   ComputeEngineCredentials credentials(alias, options_,
-                                       mock_client_fn.AsStdFunction());
+                                       std::move(mock_rest_client_));
   // Response 1
   auto status = credentials.AuthorizationHeader();
   EXPECT_THAT(status, Not(IsOk()));
@@ -437,75 +412,77 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
       "expires_in": 3600,
       "token_type": "tokentype"
   })""";
-  auto mock_http_payload2 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload2, Read)
-      .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                  buffer.begin());
-        return svc_acct_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
 
-  auto mock_http_payload4 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload4, Read)
-      .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                  buffer.begin());
-        return svc_acct_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
-  auto mock_http_payload5 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload5, Read).WillOnce([](absl::Span<char>) {
-    return 0;
-  });
-
-  auto mock_http_payload6 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload6, Read)
-      .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                  buffer.begin());
-        return svc_acct_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
-  auto mock_http_payload7 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload7, Read)
-      .WillOnce([token_info_resp](absl::Span<char> buffer) {
-        std::copy(token_info_resp.begin(), token_info_resp.end(),
-                  buffer.begin());
-        return token_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
-  auto* mock_response2 = new MockRestResponse();
+  auto mock_response2 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response2), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload2))));
-  auto* mock_response4 = new MockRestResponse();
+  EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
+          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
+                    buffer.begin());
+          return svc_acct_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
+
+  auto mock_response4 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response4, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response4), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload4))));
+  EXPECT_CALL(std::move(*mock_response4), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
+          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
+                    buffer.begin());
+          return svc_acct_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
 
-  auto* mock_response5 = new MockRestResponse();
+  auto mock_response5 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response5, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
-  EXPECT_CALL(std::move(*mock_response5), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload5))));
+  EXPECT_CALL(std::move(*mock_response5), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read).WillOnce([](absl::Span<char>) {
+      return 0;
+    });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
 
-  auto* mock_response6 = new MockRestResponse();
+  auto mock_response6 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response6, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response6), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload6))));
+  EXPECT_CALL(std::move(*mock_response6), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
+          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
+                    buffer.begin());
+          return svc_acct_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
 
-  auto* mock_response7 = new MockRestResponse();
+  auto mock_response7 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response7, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response7), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload7))));
+  EXPECT_CALL(std::move(*mock_response7), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([token_info_resp](absl::Span<char> buffer) {
+          std::copy(token_info_resp.begin(), token_info_resp.end(),
+                    buffer.begin());
+          return token_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
 
   // Fail the first call to RetrieveServiceAccountInfo immediately.
   EXPECT_CALL(
@@ -522,7 +499,6 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
-
         return Status{StatusCode::kAborted, "Fake Curl error", {}};
       })
       // Make the call to RetrieveServiceAccountInfo return a good response,
@@ -536,7 +512,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
-        return std::unique_ptr<RestResponse>(mock_response2);
+        return std::unique_ptr<RestResponse>(std::move(mock_response2));
       })
       // but fail the token request immediately.
       .WillOnce([&](RestRequest const& request,
@@ -559,7 +535,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                email + "/"));
-        return std::unique_ptr<RestResponse>(mock_response4);
+        return std::unique_ptr<RestResponse>(std::move(mock_response4));
       })
       // but fail the token request with a bad HTTP error code.
       .WillOnce([&](RestRequest const& request,
@@ -569,7 +545,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                email + "/token"));
-        return std::unique_ptr<RestResponse>(mock_response5);
+        return std::unique_ptr<RestResponse>(std::move(mock_response5));
       })
       // Make the call to RetrieveServiceAccountInfo return a good response,
       .WillOnce([&](RestRequest const& request,
@@ -582,7 +558,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                email + "/"));
-        return std::unique_ptr<RestResponse>(mock_response6);
+        return std::unique_ptr<RestResponse>(std::move(mock_response6));
       })
       // but, parse with an invalid token response.
       .WillOnce([&](RestRequest const& request,
@@ -592,19 +568,11 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                email + "/token"));
-        return std::unique_ptr<RestResponse>(mock_response7);
-      });
-
-  testing::MockFunction<ComputeEngineCredentials::RestClientFn> mock_client_fn;
-  EXPECT_CALL(mock_client_fn, Call(_, _))
-      .WillOnce([&](std::string const& endpoint,
-                    Options const&) -> std::unique_ptr<RestClient> {
-        EXPECT_THAT(endpoint, Eq("http://" + hostname));
-        return std::move(mock_rest_client_);
+        return std::unique_ptr<RestResponse>(std::move(mock_response7));
       });
 
   ComputeEngineCredentials credentials(alias, options_,
-                                       mock_client_fn.AsStdFunction());
+                                       std::move(mock_rest_client_));
   // Response 1
   auto status = credentials.AuthorizationHeader();
   EXPECT_THAT(status, StatusIs(StatusCode::kAborted));
@@ -631,20 +599,20 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
       "scopes": ["scope1","scope2"]
   })""";
 
-  auto mock_http_payload1 = absl::make_unique<MockHttpPayload>();
-  EXPECT_CALL(*mock_http_payload1, Read)
-      .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-        std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                  buffer.begin());
-        return svc_acct_info_resp.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
-  auto* mock_response1 = new MockRestResponse();
+  auto mock_response1 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response1), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload1))));
+  EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
+    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
+    EXPECT_CALL(*mock_http_payload, Read)
+        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
+          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
+                    buffer.begin());
+          return svc_acct_info_resp.size();
+        })
+        .WillOnce([](absl::Span<char>) { return 0; });
+    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  });
 
   EXPECT_CALL(
       *mock_rest_client_,
@@ -658,19 +626,11 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
             request.path(),
             Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
-        return std::unique_ptr<RestResponse>(mock_response1);
-      });
-
-  testing::MockFunction<ComputeEngineCredentials::RestClientFn> mock_client_fn;
-  EXPECT_CALL(mock_client_fn, Call(_, _))
-      .WillOnce([&](std::string const& endpoint,
-                    Options const&) -> std::unique_ptr<RestClient> {
-        EXPECT_THAT(endpoint, Eq("http://" + hostname));
-        return std::move(mock_rest_client_);
+        return std::unique_ptr<RestResponse>(std::move(mock_response1));
       });
 
   ComputeEngineCredentials credentials(alias, options_,
-                                       mock_client_fn.AsStdFunction());
+                                       std::move(mock_rest_client_));
   EXPECT_EQ(credentials.service_account_email(), alias);
   auto refreshed_email = credentials.AccountEmail();
   EXPECT_EQ(email, refreshed_email);

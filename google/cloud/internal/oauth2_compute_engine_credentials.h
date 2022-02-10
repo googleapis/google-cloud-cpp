@@ -65,15 +65,13 @@ class ComputeEngineCredentials : public Credentials {
  public:
   using CurrentTimeFn =
       std::function<std::chrono::time_point<std::chrono::system_clock>()>;
-  using RestClientFn = std::function<std::unique_ptr<rest_internal::RestClient>(
-      std::string endpoint_address, Options options)>;
 
   explicit ComputeEngineCredentials();
 
   /**
    * Creates an instance of ComputeEngineCredentials.
    *
-   * @param rest_client_fn a dependency injection point. It makes it possible to
+   * @param rest_client a dependency injection point. It makes it possible to
    *     mock internal libcurl wrappers. This should generally not be overridden
    *     except for testing.
    * @param current_time_fn a dependency injection point to fetch the current
@@ -81,7 +79,7 @@ class ComputeEngineCredentials : public Credentials {
    */
   explicit ComputeEngineCredentials(
       std::string service_account_email, Options options = {},
-      RestClientFn const& rest_client_fn = rest_internal::GetDefaultRestClient,
+      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr,
       CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
 
   /**

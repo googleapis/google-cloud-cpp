@@ -84,12 +84,17 @@ ComputeEngineCredentials::ComputeEngineCredentials()
 
 ComputeEngineCredentials::ComputeEngineCredentials(
     std::string service_account_email, Options options,
-    RestClientFn const& rest_client_fn, CurrentTimeFn current_time_fn)
+    std::unique_ptr<rest_internal::RestClient> rest_client,
+    CurrentTimeFn current_time_fn)
     : current_time_fn_(std::move(current_time_fn)),
-      rest_client_(rest_client_fn(
-          "http://" + google::cloud::internal::GceMetadataHostname(), options)),
+      rest_client_(std::move(rest_client)),
       service_account_email_(std::move(service_account_email)),
-      options_(std::move(options)) {}
+      options_(std::move(options)) {
+  if (!rest_client_) {
+    rest_client_ = rest_internal::GetDefaultRestClient(
+        "http://" + google::cloud::internal::GceMetadataHostname(), options_);
+  }
+}
 
 StatusOr<std::pair<std::string, std::string>>
 ComputeEngineCredentials::AuthorizationHeader() {
