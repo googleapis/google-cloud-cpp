@@ -162,6 +162,11 @@ void MetadataSpannerStub::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-request-params", request_params);
   context.AddMetadata("x-goog-api-client", api_client_header_);
   context.AddMetadata("google-cloud-resource-prefix", resource_prefix_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
