@@ -4,9 +4,9 @@ github:
   owner: googleapis
   push:
     branch: ^(master|main|v\d+\..*)$
-name: bazel-latest-ci
+name: bazel-oldest-ci
 substitutions:
-  _BUILD_NAME: bazel-latest
+  _BUILD_NAME: bazel-oldest
   _DISTRO: fedora-34
   _TRIGGER_TYPE: ci
 tags:

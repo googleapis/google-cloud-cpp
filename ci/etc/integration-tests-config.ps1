@@ -14,6 +14,10 @@
 
 # The name of the project used to run the integration tests and examples.
 $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Some quickstarts require a x-goog-user-project header, either when using
+# our own user account in local builds, or when using the GCB service
+# account
+$env:GOOGLE_CLOUD_CPP_USER_PROJECT="${env:GOOGLE_CLOUD_PROJECT}"
 # Many tests and quickstarts need a location, this is typically a region.
 $env:GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
@@ -63,3 +67,7 @@ $env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-d
 $env:GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT="iam-credentials-test-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 $env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT="iam-test-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 $env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT="invalid-test-account@cloud-cpp-testing-resources.iam.gserviceaccount.com"
+
+# To run google/cloud/gameservices' quickstart
+$env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
+$env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"

@@ -111,14 +111,15 @@ gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
 io::log_h1 "Starting Build: ${BUILD_NAME}"
 if "ci/kokoro/macos/builds/${BUILD_NAME}.sh"; then
   io::log_green "build script was successful."
+  exit_status=0
+  io::log_h1 "Uploading cache"
+  gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
+    "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 else
   io::log_red "build script reported errors."
-  exit 1
+  # Exit only after cleaning up the artifacts.
+  exit_status=1
 fi
-
-io::log_h1 "Uploading cache"
-gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
-  "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
 if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
   # Our CI system (Kokoro) syncs the data in this directory to somewhere after
@@ -130,3 +131,5 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
 else
   io::log_yellow "Not a CI build; skipping artifact cleanup"
 fi
+
+exit "${exit_status}"

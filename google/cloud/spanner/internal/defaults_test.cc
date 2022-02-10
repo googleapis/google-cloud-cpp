@@ -52,6 +52,8 @@ TEST(Options, Defaults) {
       "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
                                                absl::nullopt);
+  testing_util::ScopedEnvironment user_project_env(
+      "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
   auto opts = spanner_internal::DefaultOptions();
 
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
@@ -64,6 +66,7 @@ TEST(Options, Defaults) {
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
+  EXPECT_FALSE(opts.has<UserProjectOption>());
 
   EXPECT_EQ(0, opts.get<SessionPoolMinSessionsOption>());
   EXPECT_EQ(100, opts.get<SessionPoolMaxSessionsPerChannelOption>());
@@ -87,6 +90,8 @@ TEST(Options, AdminDefaults) {
       "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
                                                absl::nullopt);
+  testing_util::ScopedEnvironment user_project_env(
+      "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
   auto opts = spanner_internal::DefaultAdminOptions();
 
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
@@ -99,6 +104,7 @@ TEST(Options, AdminDefaults) {
   EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
+  EXPECT_FALSE(opts.has<UserProjectOption>());
 
   EXPECT_TRUE(opts.has<SpannerRetryPolicyOption>());
   EXPECT_TRUE(opts.has<SpannerBackoffPolicyOption>());
@@ -152,6 +158,20 @@ TEST(Options, TracingOptionsFromEnv) {
   EXPECT_FALSE(options.single_line_mode());
   EXPECT_FALSE(options.use_short_repeated_primitives());
   EXPECT_EQ(256, options.truncate_string_field_longer_than());
+}
+
+TEST(Options, UserProject) {
+  auto env = testing_util::ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT",
+                                             absl::nullopt);
+  auto opts = spanner_internal::DefaultOptions(
+      Options{}.set<UserProjectOption>("opt-user-project"));
+  EXPECT_THAT(opts.get<UserProjectOption>(), "opt-user-project");
+
+  env = testing_util::ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT",
+                                        "env-user-project");
+  opts = spanner_internal::DefaultOptions(
+      Options{}.set<UserProjectOption>("opt-user-project"));
+  EXPECT_THAT(opts.get<UserProjectOption>(), "env-user-project");
 }
 
 TEST(Options, PassThroughUnknown) {

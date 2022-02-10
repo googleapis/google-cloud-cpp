@@ -251,7 +251,7 @@ void RetryResumableUploadSession::AppendDebug(char const* action,
 }
 
 Status RetryResumableUploadSession::HandleUncommitError(
-    const char* caller, ResumableUploadResponse const& result) {
+    char const* caller, ResumableUploadResponse const& result) {
   std::stringstream os;
   os << caller << ": server previously confirmed " << committed_size_
      << " bytes as committed, but the current response only reports "

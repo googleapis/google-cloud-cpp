@@ -52,26 +52,33 @@ TEST(GoldenKitchenSinkDefaultOptions, OptionEndpoint) {
   EXPECT_EQ("bar.googleapis.com", updated_options.get<EndpointOption>());
 }
 
-TEST(GoldenKitchenSinkDefaultOptions, DefaultUserProject) {
+TEST(GoldenKitchenSinkDefaultOptions, UserProjectDefault) {
   auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
-  Options options;
+  auto options = Options{};
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_FALSE(updated_options.has<UserProjectOption>());
   EXPECT_EQ("", updated_options.get<UserProjectOption>());
 }
 
-TEST(GoldenKitchenSinkDefaultOptions, EnvVarUserProject) {
+TEST(GoldenKitchenSinkDefaultOptions, UserProjectEnvVar) {
   auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "test-project");
-  Options options;
+  auto options = Options{};
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("test-project", updated_options.get<UserProjectOption>());
 }
 
-TEST(GoldenKitchenSinkDefaultOptions, OptionUserProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "test-project");
+TEST(GoldenKitchenSinkDefaultOptions, UserProjectOptions) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
   auto options = Options{}.set<UserProjectOption>("another-project");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("another-project", updated_options.get<UserProjectOption>());
+}
+
+TEST(GoldenKitchenSinkDefaultOptions, UserProjectOptionAndEnvVar) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "test-project");
+  auto options = Options{}.set<UserProjectOption>("another-project");
+  auto updated_options = GoldenKitchenSinkDefaultOptions(options);
+  EXPECT_EQ("test-project", updated_options.get<UserProjectOption>());
 }
 
 }  // namespace

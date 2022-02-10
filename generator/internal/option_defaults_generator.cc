@@ -72,12 +72,10 @@ Status OptionDefaultsGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes(
-      {vars("option_defaults_header_path"), vars("connection_header_path"),
-       vars("options_header_path"), "google/cloud/common_options.h",
-       "google/cloud/connection_options.h", "google/cloud/grpc_options.h",
-       "google/cloud/internal/getenv.h",
-       "google/cloud/internal/user_agent_prefix.h", "google/cloud/options.h"});
+  CcLocalIncludes({vars("option_defaults_header_path"),
+                   vars("connection_header_path"), vars("options_header_path"),
+                   "google/cloud/internal/populate_common_options.h",
+                   "google/cloud/internal/populate_grpc_options.h"});
   CcSystemIncludes({"memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -94,35 +92,14 @@ Status OptionDefaultsGenerator::GenerateCc() {
   CcPrint(  // clang-format off
   {{R"""(
 Options $service_name$DefaultOptions(Options options) {
-  if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("$service_endpoint_env_var$");
-    options.set<EndpointOption>(
-        env && !env->empty() ? *env : "$service_endpoint$");
-  }
-  if (!options.has<UserProjectOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
-  }
+  options = google::cloud::internal::PopulateCommonOptions(
+      std::move(options), "$service_endpoint_env_var$",
+      "$emulator_endpoint_env_var$", "$service_endpoint$");
+  options = google::cloud::internal::PopulateGrpcOptions(
+      std::move(options), "$emulator_endpoint_env_var$");
 )"""
     },
-   {[this]{return vars("emulator_endpoint_env_var").empty();}, "",
-    "  if (auto emulator = internal::GetEnv(\"$emulator_endpoint_env_var$\")) {\n"
-    "    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(\n"
-    "        grpc::InsecureChannelCredentials());\n"
-    "  }\n"},
-   {"  if (!options.has<GrpcCredentialOption>()) {\n"
-    "    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());\n"
-    "  }\n"
-    "  if (!options.has<TracingComponentsOption>()) {\n"
-    "    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());\n"
-    "  }\n"
-    "  if (!options.has<GrpcTracingOptionsOption>()) {\n"
-    "    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());\n"
-    "  }\n"
-    "  auto& products = options.lookup<UserAgentProductsOption>();\n"
-    "  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());\n"
-    "\n"
-    "  if (!options.has<$product_namespace$::$retry_policy_name$Option>()) {\n"
+   {"  if (!options.has<$product_namespace$::$retry_policy_name$Option>()) {\n"
     "    options.set<$product_namespace$::$retry_policy_name$Option>(\n"
     "        $product_namespace$::$limited_time_retry_policy_name$(\n"
     "            std::chrono::minutes(30)).clone());\n"

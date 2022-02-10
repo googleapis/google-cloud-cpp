@@ -146,6 +146,25 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
       new CurlRestResponse(options_, std::move(*impl)))};
 }
 
+StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
+    RestRequest request,
+    std::vector<std::pair<std::string, std::string>> const& form_data) {
+  auto impl = CreateCurlImpl(request);
+  if (!impl.ok()) return impl.status();
+  std::string form_payload = absl::StrJoin(
+      form_data, "&",
+      [&](std::string* out, std::pair<std::string, std::string> const& i) {
+        out->append(
+            absl::StrCat(i.first, "=", (*impl)->MakeEscapedString(i.second)));
+      });
+  request.AddHeader("content-type", "application/x-www-form-urlencoded");
+  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, request,
+                                           **impl, {form_payload});
+  if (!response.ok()) return response;
+  return {std::unique_ptr<CurlRestResponse>(
+      new CurlRestResponse(options_, std::move(*impl)))};
+}
+
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
     RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {

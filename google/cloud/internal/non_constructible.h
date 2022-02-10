@@ -31,7 +31,7 @@ namespace internal {
  */
 struct NonConstructible {
   NonConstructible() = delete;
-  NonConstructible(const NonConstructible&) = delete;
+  NonConstructible(NonConstructible const&) = delete;
   NonConstructible(NonConstructible&&) = delete;
 };
 

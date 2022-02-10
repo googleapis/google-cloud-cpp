@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/stream_range.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -26,6 +27,10 @@ namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+
+struct StringOption {
+  using Type = std::string;
+};
 
 TEST(StreamRange, DefaultConstructed) {
   StreamRange<int> sr;
@@ -56,11 +61,14 @@ TEST(StreamRange, EmptyRange) {
 TEST(StreamRange, OneElement) {
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "OneElement");
     if (counter++ < 1) return 42;
     return Status{};
   };
 
+  internal::OptionsSpan span(Options{}.set<StringOption>("OneElement"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_TRUE(*it);
@@ -71,10 +79,13 @@ TEST(StreamRange, OneElement) {
 
 TEST(StreamRange, OneError) {
   auto reader = []() -> internal::StreamReader<int>::result_type {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "OneError");
     return Status(StatusCode::kUnknown, "oops");
   };
 
+  internal::OptionsSpan span(Options{}.set<StringOption>("OneError"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_FALSE(*it);
@@ -86,11 +97,14 @@ TEST(StreamRange, OneError) {
 TEST(StreamRange, FiveElements) {
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "FiveElements");
     if (counter++ < 5) return counter;
     return Status{};
   };
 
+  internal::OptionsSpan span(Options{}.set<StringOption>("FiveElements"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<int> v;
   for (StatusOr<int>& x : sr) {
     EXPECT_TRUE(x);
@@ -102,11 +116,15 @@ TEST(StreamRange, FiveElements) {
 TEST(StreamRange, PostFixIteration) {
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              "PostFixIteration");
     if (counter++ < 5) return counter;
     return Status{};
   };
 
+  internal::OptionsSpan span(Options{}.set<StringOption>("PostFixIteration"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<int> v;
   // NOLINTNEXTLINE(modernize-loop-convert)
   for (auto it = sr.begin(); it != sr.end(); it++) {
@@ -123,31 +141,40 @@ TEST(StreamRange, Distance) {
 
   // Range of one element
   auto counter = 0;
+  internal::OptionsSpan span1(Options{}.set<StringOption>("Distance1"));
   StreamRange<int> one = internal::MakeStreamRange<int>(
       [&counter]() -> internal::StreamReader<int>::result_type {
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "Distance1");
         if (counter++ < 1) return counter;
         return Status{};
       });
+  internal::OptionsSpan overlay1(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(1, std::distance(one.begin(), one.end()));
 
   // Range of five elements
   counter = 0;
+  internal::OptionsSpan span5(Options{}.set<StringOption>("Distance5"));
   StreamRange<int> five = internal::MakeStreamRange<int>(
       [&counter]() -> internal::StreamReader<int>::result_type {
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "Distance5");
         if (counter++ < 5) return counter;
         return Status{};
       });
+  internal::OptionsSpan overlay5(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(5, std::distance(five.begin(), five.end()));
 }
 
 TEST(StreamRange, StreamError) {
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "StreamError");
     if (counter++ < 2) return counter;
     return Status(StatusCode::kUnknown, "oops");
   };
 
+  internal::OptionsSpan span(Options{}.set<StringOption>("StreamError"));
   StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
 
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());

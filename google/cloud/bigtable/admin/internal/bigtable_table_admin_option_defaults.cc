@@ -19,12 +19,8 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/user_agent_prefix.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
@@ -37,32 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options BigtableTableAdminDefaultOptions(Options options) {
-  if (!options.has<EndpointOption>()) {
-    auto env =
-        internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TABLE_ADMIN_ENDPOINT");
-    options.set<EndpointOption>(
-        env && !env->empty() ? *env : "bigtableadmin.googleapis.com");
-  }
-  if (!options.has<UserProjectOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
-  }
-  if (auto emulator = internal::GetEnv("BIGTABLE_EMULATOR_HOST")) {
-    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
-        grpc::InsecureChannelCredentials());
-  }
-  if (!options.has<GrpcCredentialOption>()) {
-    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
-  if (!options.has<TracingComponentsOption>()) {
-    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
-  }
-  if (!options.has<GrpcTracingOptionsOption>()) {
-    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
-  }
-  auto& products = options.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
-
+  options = google::cloud::internal::PopulateCommonOptions(
+      std::move(options), "GOOGLE_CLOUD_CPP_BIGTABLE_TABLE_ADMIN_ENDPOINT",
+      "BIGTABLE_EMULATOR_HOST", "bigtableadmin.googleapis.com");
+  options = google::cloud::internal::PopulateGrpcOptions(
+      std::move(options), "BIGTABLE_EMULATOR_HOST");
   if (!options.has<bigtable_admin::BigtableTableAdminRetryPolicyOption>()) {
     options.set<bigtable_admin::BigtableTableAdminRetryPolicyOption>(
         bigtable_admin::BigtableTableAdminLimitedTimeRetryPolicy(

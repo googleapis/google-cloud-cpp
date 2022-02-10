@@ -20,6 +20,8 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
@@ -38,8 +40,6 @@ template <typename ConnectionTraits>
 class ConnectionOptions;
 
 namespace internal {
-std::set<std::string> DefaultTracingComponents();
-TracingOptions DefaultTracingOptions();
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads(std::size_t);
 template <typename ConnectionTraits>
 Options MakeOptions(ConnectionOptions<ConnectionTraits>);

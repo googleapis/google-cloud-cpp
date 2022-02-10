@@ -376,7 +376,7 @@ void CurlImpl::SetUrl(
     return;
   }
   url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
-  const char* query_parameter_separator = InitialQueryParameterSeparator(url_);
+  char const* query_parameter_separator = InitialQueryParameterSeparator(url_);
   auto append_params = [&](RestRequest::HttpParameters const& parameters) {
     for (auto const& param : parameters) {
       absl::StrAppend(&url_, query_parameter_separator,

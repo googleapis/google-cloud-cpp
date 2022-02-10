@@ -15,12 +15,9 @@
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/options.h"
-#include "google/cloud/spanner/session_pool_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/options.h"
 #include <chrono>
 #include <string>
@@ -34,29 +31,14 @@ namespace {
 
 // Sets basic defaults that apply to normal and admin connections.
 void SetBasicDefaults(Options& opts) {
-  if (!opts.has<EndpointOption>()) {
-    auto e = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
-    opts.set<EndpointOption>(e && !e->empty() ? *e : "spanner.googleapis.com");
-  }
-  if (auto emulator = internal::GetEnv("SPANNER_EMULATOR_HOST")) {
-    opts.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
-        grpc::InsecureChannelCredentials());
-  }
-  if (!opts.has<GrpcCredentialOption>()) {
-    opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
+  opts = internal::PopulateCommonOptions(
+      std::move(opts), "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
+      "SPANNER_EMULATOR_HOST", "spanner.googleapis.com");
+  opts =
+      internal::PopulateGrpcOptions(std::move(opts), "SPANNER_EMULATOR_HOST");
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(4);
   }
-  if (!opts.has<TracingComponentsOption>()) {
-    opts.set<TracingComponentsOption>(internal::DefaultTracingComponents());
-  }
-  if (!opts.has<GrpcTracingOptionsOption>()) {
-    opts.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
-  }
-  // Inserts our user-agent string at the front.
-  auto& products = opts.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), internal::UserAgentPrefix());
 }
 
 }  // namespace

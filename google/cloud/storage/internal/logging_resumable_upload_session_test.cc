@@ -118,7 +118,7 @@ TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
 TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
-  const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
+  StatusOr<ResumableUploadResponse> const last_response(ResumableUploadResponse{
       "upload url", ResumableUploadResponse::kInProgress, 1, {}, {}});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 
@@ -135,7 +135,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
 TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
-  const StatusOr<ResumableUploadResponse> last_response(
+  StatusOr<ResumableUploadResponse> const last_response(
       Status(StatusCode::kFailedPrecondition, "something bad"));
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 

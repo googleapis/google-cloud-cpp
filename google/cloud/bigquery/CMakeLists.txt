@@ -38,6 +38,20 @@ add_library(
     bigquery_read_connection_idempotency_policy.cc
     bigquery_read_connection_idempotency_policy.h
     bigquery_read_options.h
+    connection_client.cc
+    connection_client.h
+    connection_connection.cc
+    connection_connection.h
+    connection_connection_idempotency_policy.cc
+    connection_connection_idempotency_policy.h
+    connection_options.h
+    data_transfer_client.cc
+    data_transfer_client.h
+    data_transfer_connection.cc
+    data_transfer_connection.h
+    data_transfer_connection_idempotency_policy.cc
+    data_transfer_connection_idempotency_policy.h
+    data_transfer_options.h
     internal/bigquery_read_auth_decorator.cc
     internal/bigquery_read_auth_decorator.h
     internal/bigquery_read_connection_impl.cc
@@ -53,7 +67,59 @@ add_library(
     internal/bigquery_read_stub.h
     internal/bigquery_read_stub_factory.cc
     internal/bigquery_read_stub_factory.h
+    internal/connection_auth_decorator.cc
+    internal/connection_auth_decorator.h
+    internal/connection_connection_impl.cc
+    internal/connection_connection_impl.h
+    internal/connection_logging_decorator.cc
+    internal/connection_logging_decorator.h
+    internal/connection_metadata_decorator.cc
+    internal/connection_metadata_decorator.h
+    internal/connection_option_defaults.cc
+    internal/connection_option_defaults.h
+    internal/connection_retry_traits.h
+    internal/connection_stub.cc
+    internal/connection_stub.h
+    internal/connection_stub_factory.cc
+    internal/connection_stub_factory.h
+    internal/data_transfer_auth_decorator.cc
+    internal/data_transfer_auth_decorator.h
+    internal/data_transfer_connection_impl.cc
+    internal/data_transfer_connection_impl.h
+    internal/data_transfer_logging_decorator.cc
+    internal/data_transfer_logging_decorator.h
+    internal/data_transfer_metadata_decorator.cc
+    internal/data_transfer_metadata_decorator.h
+    internal/data_transfer_option_defaults.cc
+    internal/data_transfer_option_defaults.h
+    internal/data_transfer_retry_traits.h
+    internal/data_transfer_stub.cc
+    internal/data_transfer_stub.h
+    internal/data_transfer_stub_factory.cc
+    internal/data_transfer_stub_factory.h
+    internal/reservation_auth_decorator.cc
+    internal/reservation_auth_decorator.h
+    internal/reservation_connection_impl.cc
+    internal/reservation_connection_impl.h
+    internal/reservation_logging_decorator.cc
+    internal/reservation_logging_decorator.h
+    internal/reservation_metadata_decorator.cc
+    internal/reservation_metadata_decorator.h
+    internal/reservation_option_defaults.cc
+    internal/reservation_option_defaults.h
+    internal/reservation_retry_traits.h
+    internal/reservation_stub.cc
+    internal/reservation_stub.h
+    internal/reservation_stub_factory.cc
+    internal/reservation_stub_factory.h
     internal/streaming.cc
+    reservation_client.cc
+    reservation_client.h
+    reservation_connection.cc
+    reservation_connection.h
+    reservation_connection_idempotency_policy.cc
+    reservation_connection_idempotency_policy.h
+    reservation_options.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_bigquery
@@ -88,7 +154,11 @@ create_bazel_config(google_cloud_cpp_bigquery YEAR "2021")
 add_library(google_cloud_cpp_bigquery_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_mocks
-    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h)
+    INTERFACE # cmake-format: sort
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_transfer_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_reservation_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
     INTERFACE google-cloud-cpp::bigquery GTest::gmock_main GTest::gmock

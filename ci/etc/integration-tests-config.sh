@@ -22,6 +22,10 @@ fi # include guard
 
 # The name of the project used to run the integration tests and examples.
 export GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Some quickstarts require a x-goog-user-project header, either when using
+# our own user account in local builds, or when using the GCB service
+# account
+export GOOGLE_CLOUD_CPP_USER_PROJECT="${GOOGLE_CLOUD_PROJECT}"
 # Many tests and quickstarts need a location, this is typically a region.
 export GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
@@ -85,3 +89,7 @@ export GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT="invalid-test-account@c
 export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT="hello-world-caller@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 # The URL for the HTTP Hello World service, typically set by the CI scripts
 export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=""
+
+# To run google/cloud/gameservices' quickstart
+export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
+export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"

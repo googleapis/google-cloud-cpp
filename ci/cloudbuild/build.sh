@@ -25,6 +25,7 @@
 #     -l|--local           Run the build in the local environment
 #     -d|--docker          Run the build in a local docker (default)
 #     -s|--docker-shell    Run a shell in the build's docker container
+#     --verbose            Print additional information during the build
 #     -h|--help            Print this help message
 #
 #   Note: flags may be specified in any order and with or without an equals
@@ -91,7 +92,7 @@ function die() {
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="t:c:ldsh" \
-  --longoptions="build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,help" \
+  --longoptions="build:,distro:,trigger:,cloud:,local,docker,docker-shell,docker-clean,verbose,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
@@ -104,6 +105,7 @@ CLEAN_FLAG="false"
 LOCAL_FLAG="false"
 DOCKER_FLAG="false"
 SHELL_FLAG="false"
+VERBOSE_FLAG="false"
 while true; do
   case "$1" in
     --build)
@@ -138,6 +140,10 @@ while true; do
     --docker-clean)
       DOCKER_FLAG="true"
       CLEAN_FLAG="true"
+      shift
+      ;;
+    --verbose)
+      VERBOSE_FLAG="true"
       shift
       ;;
     -h | --help)
@@ -190,13 +196,6 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
     die "Only one of --local, --docker, or --cloud may be specified"
   fi
 
-  # Prints links to the log files for the current build. These can be useful to
-  # copy-n-paste into issues. The GCB link will require auth but the raw link
-  # may be publicly accessible.
-  io::log_h1 "Log Links"
-  printf "GCB: %s\n" "${CONSOLE_LOG_URL:-none}"
-  printf "Raw: %s\n" "${RAW_LOG_URL:-none}"
-
   function mem_total() {
     awk '$1 == "MemTotal:" {printf "%0.2f GiB", $2/1024/1024}' /proc/meminfo
   }
@@ -204,17 +203,32 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
     # Extracts the time that Google thinks it is.
     curl -sI google.com | sed -n 's/Date: \(.*\)\r/\1/p'
   }
-  io::log_h1 "Machine Info"
-  printf "%10s %s\n" "host:" "$(date -u --rfc-3339=seconds)"
-  printf "%10s %s\n" "google:" "$(date -ud "$(google_time)" --rfc-3339=seconds)"
-  printf "%10s %s\n" "kernel:" "$(uname -v)"
-  printf "%10s %s\n" "os:" "$(grep PRETTY_NAME /etc/os-release)"
-  printf "%10s %s\n" "nproc:" "$(nproc)"
-  printf "%10s %s\n" "mem:" "$(mem_total)"
-  printf "%10s %s\n" "term:" "${TERM-}"
-  printf "%10s %s\n" "gcc:" "$(gcc --version 2>&1 | head -1)"
-  printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
-  printf "%10s %s\n" "cc:" "$(cc --version 2>&1 | head -1)"
+  if [[ "${TRIGGER_TYPE}" != "manual" ]]; then
+    # Prints links to the log files for the current build. These can be useful
+    # to copy-n-paste into issues. The GCB link will require auth but the raw
+    # link may be publicly accessible. In manual builds this information is
+    # never useful (both are "none").
+    io::log_h1 "Log Links"
+    printf "GCB: %s\n" "${CONSOLE_LOG_URL:-none}"
+    printf "Raw: %s\n" "${RAW_LOG_URL:-none}"
+  fi
+
+  if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
+    # Prints information about the machine and compiler. In manual builds this
+    # information is almost never useful.
+    io::log_h1 "Machine Info"
+    printf "%10s %s\n" "host:" "$(date -u --rfc-3339=seconds)"
+    printf "%10s %s\n" "google:" "$(date -ud "$(google_time)" --rfc-3339=seconds)"
+    printf "%10s %s\n" "kernel:" "$(uname -v)"
+    printf "%10s %s\n" "os:" "$(grep PRETTY_NAME /etc/os-release)"
+    printf "%10s %s\n" "nproc:" "$(nproc)"
+    printf "%10s %s\n" "mem:" "$(mem_total)"
+    printf "%10s %s\n" "term:" "${TERM-}"
+    printf "%10s %s\n" "gcc:" "$(gcc --version 2>&1 | head -1)"
+    printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
+    printf "%10s %s\n" "cc:" "$(cc --version 2>&1 | head -1)"
+  fi
+
   io::log_h1 "Starting local build: ${BUILD_FLAG}"
   readonly TIMEFORMAT="==> 🕑 ${BUILD_FLAG} completed in %R seconds"
   time "${PROGRAM_DIR}/builds/${BUILD_FLAG}.sh"

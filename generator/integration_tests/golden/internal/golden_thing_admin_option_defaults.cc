@@ -19,12 +19,8 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/golden_thing_admin_connection.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/connection_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/user_agent_prefix.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
@@ -37,31 +33,11 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options GoldenThingAdminDefaultOptions(Options options) {
-  if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT");
-    options.set<EndpointOption>(
-        env && !env->empty() ? *env : "test.googleapis.com");
-  }
-  if (!options.has<UserProjectOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-    if (env.has_value() && !env->empty()) options.set<UserProjectOption>(*env);
-  }
-  if (auto emulator = internal::GetEnv("GOLDEN_KITCHEN_SINK_EMULATOR_HOST")) {
-    options.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
-        grpc::InsecureChannelCredentials());
-  }
-  if (!options.has<GrpcCredentialOption>()) {
-    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
-  if (!options.has<TracingComponentsOption>()) {
-    options.set<TracingComponentsOption>(internal::DefaultTracingComponents());
-  }
-  if (!options.has<GrpcTracingOptionsOption>()) {
-    options.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
-  }
-  auto& products = options.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
-
+  options = google::cloud::internal::PopulateCommonOptions(
+      std::move(options), "GOLDEN_KITCHEN_SINK_ENDPOINT",
+      "GOLDEN_KITCHEN_SINK_EMULATOR_HOST", "test.googleapis.com");
+  options = google::cloud::internal::PopulateGrpcOptions(
+      std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
   if (!options.has<golden::GoldenThingAdminRetryPolicyOption>()) {
     options.set<golden::GoldenThingAdminRetryPolicyOption>(
         golden::GoldenThingAdminLimitedTimeRetryPolicy(

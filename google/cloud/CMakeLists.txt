@@ -101,6 +101,8 @@ add_library(
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
+    internal/populate_common_options.cc
+    internal/populate_common_options.h
     internal/port_platform.h
     internal/random.cc
     internal/random.h
@@ -219,6 +221,7 @@ if (BUILD_TESTING)
         internal/log_impl_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
+        internal/populate_common_options_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
         internal/status_payload_keys_test.cc
@@ -372,6 +375,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/log_wrapper.h
         internal/minimal_iam_credentials_stub.cc
         internal/minimal_iam_credentials_stub.h
+        internal/populate_grpc_options.cc
+        internal/populate_grpc_options.h
         internal/resumable_streaming_read_rpc.h
         internal/retry_loop.h
         internal/retry_loop_helpers.cc
@@ -501,6 +506,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/grpc_service_account_authentication_test.cc
             internal/log_wrapper_test.cc
             internal/minimal_iam_credentials_stub_test.cc
+            internal/populate_grpc_options_test.cc
             internal/resumable_streaming_read_rpc_test.cc
             internal/retry_loop_test.cc
             internal/streaming_read_rpc_logging_test.cc
@@ -634,10 +640,13 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/oauth2_access_token_credentials.h
         internal/oauth2_anonymous_credentials.cc
         internal/oauth2_anonymous_credentials.h
+        internal/oauth2_credential_constants.h
         internal/oauth2_credentials.cc
         internal/oauth2_credentials.h
         internal/oauth2_error_credentials.cc
         internal/oauth2_error_credentials.h
+        internal/oauth2_refreshing_credentials_wrapper.cc
+        internal/oauth2_refreshing_credentials_wrapper.h
         internal/rest_client.cc
         internal/rest_client.h
         internal/rest_options.h
@@ -702,6 +711,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/http_payload_test.cc
             internal/oauth2_access_token_credentials_test.cc
             internal/oauth2_anonymous_credentials_test.cc
+            internal/oauth2_refreshing_credentials_wrapper_test.cc
             internal/rest_client_test.cc
             internal/rest_request_test.cc
             internal/rest_response_test.cc)

@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -58,6 +59,9 @@ class RestClient {
   virtual StatusOr<std::unique_ptr<RestResponse>> Post(
       RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;
+  virtual StatusOr<std::unique_ptr<RestResponse>> Post(
+      RestRequest request,
+      std::vector<std::pair<std::string, std::string>> const& form_data) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Put(
       RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;
@@ -85,6 +89,10 @@ class CurlRestClient : public RestClient {
   StatusOr<std::unique_ptr<RestResponse>> Post(
       RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;
+  StatusOr<std::unique_ptr<RestResponse>> Post(
+      RestRequest request,
+      std::vector<std::pair<std::string, std::string>> const& form_data)
+      override;
   StatusOr<std::unique_ptr<RestResponse>> Put(
       RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;

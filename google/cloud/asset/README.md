@@ -55,7 +55,10 @@ int main(int argc, char* argv[]) try {
   auto client = asset::AssetServiceClient(asset::MakeAssetServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto a : client.ListAssets(project.FullName())) {
+  google::cloud::asset::v1::ListAssetsRequest request;
+  request.set_parent(project.FullName());
+  request.add_asset_types("storage.googleapis.com/Bucket");
+  for (auto a : client.ListAssets(request)) {
     if (!a) throw std::runtime_error(a.status().message());
     std::cout << a->DebugString() << "\n";
   }
