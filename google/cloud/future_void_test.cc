@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/future_void.h"
+#include "google/cloud/future.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/expect_future_error.h"
 #include "google/cloud/testing_util/scoped_thread.h"
@@ -720,6 +720,12 @@ TEST(FutureTestVoid, CreateInvalid) {
   promise<void> p0(null_promise_t{});
 
   ExpectFutureError([&] { p0.set_value(); }, std::future_errc::no_state);
+}
+
+/// @test Verify we can create futures from convertible types.
+TEST(FutureTestVoid, ConvertFuture) {
+  promise<int> p0;
+  future<void> f0{p0.get_future()};
 }
 
 }  // namespace
