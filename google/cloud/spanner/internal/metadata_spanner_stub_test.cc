@@ -28,6 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::testing::Contains;
+using ::testing::Not;
+using ::testing::Pair;
 namespace spanner_proto = ::google::spanner::v1;
 
 // This ugly macro and the supporting template member function refactor most
@@ -87,6 +90,42 @@ class MetadataSpannerStubTest : public ::testing::Test {
   std::string expected_api_client_header_;
   spanner::Database db_{"test-project", "test-instance", "test-database"};
 };
+
+TEST_F(MetadataSpannerStubTest, UserProject) {
+  EXPECT_CALL(*mock_, CreateSession)
+      .WillOnce([](grpc::ClientContext& context,
+                   spanner_proto::CreateSessionRequest const&) {
+        auto metadata = testing_util::GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    Not(Contains(Pair("x-goog-user-project", ::testing::_))));
+        return TransientError();
+      })
+      .WillOnce([](grpc::ClientContext& context,
+                   spanner_proto::CreateSessionRequest const&) {
+        auto metadata = testing_util::GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    Contains(Pair("x-goog-user-project", "test-project")));
+        return TransientError();
+      });
+
+  MetadataSpannerStub stub(mock_, db_.FullName());
+  spanner_proto::CreateSessionRequest request;
+  request.set_database(db_.FullName());
+  {
+    internal::OptionsSpan span(Options{});
+    grpc::ClientContext context;
+    auto status = stub.CreateSession(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+
+  {
+    internal::OptionsSpan span(
+        Options{}.set<UserProjectOption>("test-project"));
+    grpc::ClientContext context;
+    auto status = stub.CreateSession(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+}
 
 TEST_F(MetadataSpannerStubTest, CreateSession) {
   EXPECT_CALL(*mock_, CreateSession)
