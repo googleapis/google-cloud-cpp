@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/internal/logging_admin_client.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -22,6 +23,15 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::testing::IsNull;
+using ::testing::NotNull;
+
+void CompareCQ(CompletionQueue const& a, CompletionQueue const& b) {
+  auto impl_a = google::cloud::internal::GetCompletionQueueImpl(a);
+  auto impl_b = google::cloud::internal::GetCompletionQueueImpl(b);
+  EXPECT_EQ(impl_a, impl_b);
+}
 
 TEST(AdminClientTest, Default) {
   auto admin_client = CreateDefaultAdminClient(
@@ -67,6 +77,26 @@ TEST(AdminClientTest, Logging) {
   ASSERT_TRUE(
       dynamic_cast<internal::LoggingAdminClient const*>(admin_client.get()))
       << "Should create LoggingAdminClient";
+}
+
+TEST(AdminClientParams, WithSuppliedThreads) {
+  CompletionQueue user_cq;
+  auto cq_opts = Options{}.set<GrpcCompletionQueueOption>(user_cq);
+  auto params = bigtable_internal::AdminClientParams(cq_opts);
+
+  EXPECT_THAT(params.background_threads, IsNull());
+  ASSERT_TRUE(params.options.has<GrpcCompletionQueueOption>());
+  CompareCQ(user_cq, params.cq);
+  CompareCQ(user_cq, params.options.get<GrpcCompletionQueueOption>());
+}
+
+TEST(AdminClientParams, WithoutSuppliedThreads) {
+  auto params = bigtable_internal::AdminClientParams(Options{});
+
+  EXPECT_THAT(params.background_threads, NotNull());
+  ASSERT_TRUE(params.options.has<GrpcCompletionQueueOption>());
+  CompareCQ(params.background_threads->cq(),
+            params.options.get<GrpcCompletionQueueOption>());
 }
 
 }  // namespace

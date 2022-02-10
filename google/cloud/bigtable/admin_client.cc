@@ -425,5 +425,26 @@ std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+AdminClientParams::AdminClientParams(Options opts) : options(std::move(opts)) {
+  // If the CQ option is set, the user is running the background threads.
+  // We can use their CQ.
+  if (options.has<GrpcCompletionQueueOption>()) {
+    cq = options.get<GrpcCompletionQueueOption>();
+  } else {
+    background_threads =
+        google::cloud::internal::MakeBackgroundThreadsFactory(options)();
+    cq = background_threads->cq();
+
+    // Set this option so that the Connection will know not to create any
+    // new threads. We will just run the CQ on our own threads.
+    options.set<GrpcCompletionQueueOption>(cq);
+  }
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
