@@ -228,6 +228,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   future<Status> Finish() override {
+    absl::optional<future<Status>> retry_future;
+
     {
       std::lock_guard<std::mutex> g{mu_};
       if (stream_state_ == State::kShutdown) {
@@ -236,21 +238,23 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       }
       stream_state_ = State::kShutdown;
       if (retry_promise_.has_value()) {
-        // can the then occur inline when it's a return value?
-        return retry_promise_->get_future().then(
-            [this](future<Status> retry_fu) {
-              auto status = retry_fu.get();
-              if (status.ok()) {
-                future<Status> finish_fu;
-                {
-                  std::lock_guard<std::mutex> g{mu_};
-                  finish_fu = stream_->Finish();
-                }
-                return finish_fu;
-              }
-              return make_ready_future(status);
-            });
+        retry_future = retry_promise_->get_future();
       }
+    }
+
+    if (retry_future.has_value()) {
+      return retry_future->then([this](future<Status> retry_fu) {
+        auto status = retry_fu.get();
+        if (status.ok()) {
+          future<Status> finish_fu;
+          {
+            std::lock_guard<std::mutex> g{mu_};
+            finish_fu = stream_->Finish();
+          }
+          return finish_fu;
+        }
+        return make_ready_future(status);
+      });
     }
 
     status_promise_.set_value(Status(StatusCode::kOk, "Ok"));
@@ -336,25 +340,25 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     if (read_pending) {
       // want to set member variable to nullopt before setting future returned
       // to caller
-      absl::optional<promise<void>> read_promise;
+      promise<void> read_promise;
       {
         std::lock_guard<std::mutex> g{mu_};
-        read_promise = std::move(read_reinit_done_);
+        read_promise = std::move(*read_reinit_done_);
         read_reinit_done_ = absl::nullopt;
       }
-      read_promise->set_value();
+      read_promise.set_value();
     }
 
     if (write_pending) {
       // want to set member variable to nullopt before setting future returned
       // to caller
-      absl::optional<promise<void>> write_promise;
+      promise<void> write_promise;
       {
         std::lock_guard<std::mutex> g{mu_};
-        write_promise = std::move(write_reinit_done_);
+        write_promise = std::move(*write_reinit_done_);
         write_reinit_done_ = absl::nullopt;
       }
-      write_promise->set_value();
+      write_promise.set_value();
     }
   }
 
@@ -375,14 +379,14 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       return;
     }
 
-    absl::optional<promise<Status>> retry_promise;
+    promise<Status> retry_promise;
     {
       std::lock_guard<std::mutex> g{mu_};
       stream_state_ = State::kShutdown;
-      retry_promise = std::move(retry_promise_);
+      retry_promise = std::move(*retry_promise_);
       retry_promise_ = absl::nullopt;
     }
-    retry_promise->set_value(status);
+    retry_promise.set_value(status);
     status_promise_.set_value(status);
     SetReadWriteFutures();
   }
@@ -427,7 +431,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
             return;
           }
 
-          absl::optional<promise<Status>> retry_promise;
+          promise<Status> retry_promise;
           {
             std::lock_guard<std::mutex> g{mu_};
             stream_ = std::move(*start_initialize_response);
@@ -436,10 +440,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
             if (stream_state_ != State::kShutdown) {
               stream_state_ = State::kInitialized;
             }
-            retry_promise = std::move(retry_promise_);
+            retry_promise = std::move(*retry_promise_);
             retry_promise_ = absl::nullopt;
           }
-          retry_promise->set_value(Status());
+          retry_promise.set_value(Status());
 
           SetReadWriteFutures();
         });
