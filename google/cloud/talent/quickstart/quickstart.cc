@@ -13,12 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/talent/company_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id tenant-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
@@ -26,9 +27,8 @@ int main(int argc, char* argv[]) try {
   auto client =
       talent::CompanyServiceClient(talent::MakeCompanyServiceConnection());
 
-  auto const parent =
-      std::string("projects/") + argv[1] + "/tenants/" + argv[2];
-  for (auto c : client.ListCompanies(parent)) {
+  auto const project = google::cloud::Project(argv[1]);
+  for (auto c : client.ListCompanies(project.FullName())) {
     if (!c) throw std::runtime_error(c.status().message());
     std::cout << c->DebugString() << "\n";
   }
