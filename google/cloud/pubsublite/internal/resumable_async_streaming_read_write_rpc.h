@@ -22,6 +22,7 @@
 #include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -50,6 +51,8 @@ using StreamInitializer = std::function<future<StatusOr<
     std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>)>;
 
 using AsyncSleeper = std::function<future<void>(std::chrono::duration<double>)>;
+
+using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc {
@@ -107,10 +110,8 @@ class ResumableAsyncStreamingReadWriteRpc {
   /**
    * Return the final status of the streaming RPC.
    *
-   * The application must wait until all pending `Read()` and `Write()`
-   * operations have completed before calling `Finish()`.
+   * This will cause any outstanding `Read` or `Write` to fail.
    *
-   * @note The future from `Start` will finish before the future from `Finish`.
    */
   virtual future<Status> Finish() = 0;
 };
@@ -120,15 +121,15 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     : public ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType> {
  public:
   ResumableAsyncStreamingReadWriteRpcImpl(
-      std::shared_ptr<RetryPolicy const> retry_policy,
       std::shared_ptr<BackoffPolicy const> backoff_policy,
       AsyncSleeper const& sleeper,
       AsyncStreamFactory<RequestType, ResponseType> stream_factory,
-      StreamInitializer<RequestType, ResponseType> initializer)
-      : retry_policy_prototype_(std::move(retry_policy)),
-        backoff_policy_prototype_(std::move(backoff_policy)),
+      StreamInitializer<RequestType, ResponseType> initializer,
+      RetryPolicyFactory retry_factory)
+      : backoff_policy_prototype_(std::move(backoff_policy)),
         sleeper_(std::move(sleeper)),
         stream_factory_(std::move(stream_factory)),
+        retry_factory_(std::move(retry_factory)),
         initializer_(std::move(initializer)) {}
 
   ResumableAsyncStreamingReadWriteRpcImpl(
@@ -146,8 +147,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       retry_promise_.emplace();
     }
 
-    // RetryPolicy doesn't have a `clone` function
-    Initialize(std::make_shared<RetryPolicy const>(*retry_policy_prototype_),
+    Initialize(std::make_shared<RetryPolicy const>(retry_factory_()),
                backoff_policy_prototype_->clone());
     return status_future;
   }
@@ -171,20 +171,27 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     return read_future.then(
         [this](future<absl::optional<ResponseType>> optional_response_future) {
-          in_progress_read_->set_value();
+          absl::optional<promise<void>> in_progress_read;
+          future<void> read_reinit_done;
+          auto optional_response = optional_response_future.get();
           {
             std::lock_guard<std::mutex> g{mu_};
-            in_progress_read_ = absl::nullopt;
+            in_progress_read.swap(in_progress_read_);
+            if (!optional_response.has_value()) {
+              read_reinit_done_.emplace();
+              read_reinit_done = read_reinit_done_->get_future();
+            }
           }
-          auto optional_response = optional_response_future.get();
+
+          in_progress_read->set_value();
+
           if (optional_response.has_value()) {
             return make_ready_future(std::move(optional_response));
           }
 
-          ReadWriteRetryFailedStream(std::ref(read_reinit_done_),
-                                     std::ref(in_progress_write_));
+          ReadWriteRetryFailedStream();
 
-          return read_reinit_done_->get_future().then([](future<void>) {
+          return read_reinit_done.then([](future<void>) {
             return make_ready_future(absl::optional<ResponseType>());
           });
         });
@@ -209,111 +216,104 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     }
 
     return write_future.then([this](future<bool> write_fu) {
-      in_progress_write_->set_value();
+      absl::optional<promise<void>> in_progress_write;
+      future<void> write_reinit_done;
+      bool write_response = write_fu.get();
+
       {
         std::lock_guard<std::mutex> g{mu_};
-        in_progress_write_ = absl::nullopt;
+        in_progress_write.swap(in_progress_write_);
+        if (!write_response) {
+          write_reinit_done_.emplace();
+          write_reinit_done = write_reinit_done_->get_future();
+        }
       }
 
-      if (write_fu.get()) {
+      in_progress_write->set_value();
+
+      if (write_response) {
         return make_ready_future(true);
       }
 
-      ReadWriteRetryFailedStream(std::ref(write_reinit_done_),
-                                 std::ref(in_progress_read_));
+      ReadWriteRetryFailedStream();
 
-      return write_reinit_done_->get_future().then(
+      return write_reinit_done.then(
           [](future<void>) { return make_ready_future(false); });
     });
   }
 
   future<Status> Finish() override {
-    absl::optional<future<Status>> retry_future;
-
-    {
-      std::lock_guard<std::mutex> g{mu_};
-      if (stream_state_ == State::kShutdown) {
+    std::lock_guard<std::mutex> g{mu_};
+    switch (stream_state_) {
+      case State::kShutdown:
         return make_ready_future(
             Status(StatusCode::kAborted, "Permanent error"));
-      }
-      stream_state_ = State::kShutdown;
-      if (retry_promise_.has_value()) {
-        retry_future = retry_promise_->get_future();
-      }
-    }
-
-    if (retry_future.has_value()) {
-      return retry_future->then([this](future<Status> retry_fu) {
-        auto status = retry_fu.get();
-        if (status.ok()) {
-          future<Status> finish_fu;
-          {
-            std::lock_guard<std::mutex> g{mu_};
-            finish_fu = stream_->Finish();
-          }
-          return finish_fu;
+      case State::kRetrying:
+        stream_state_ = State::kShutdown;
+        return retry_promise_->get_future().then(
+            [this](future<void>) { CompleteStream(Status()); });
+      case State::kInitialized:
+        stream_state_ = State::kShutdown;
+        CompleteStream(Status());
+        future<void> to_finish_future = make_ready_future();
+        if (in_progress_read_) {
+          auto read_future = in_progress_read_->get_future();
+          to_finish_future = to_finish_future.then(
+              [read_future](future<void>) { return read_future; });
         }
-        return make_ready_future(status);
-      });
+        if (in_progress_write_) {
+          auto write_future = in_progress_write_->get_future();
+          to_finish_future = to_finish_future.then(
+              [write_future](future<void>) { return write_future; });
+        }
+        std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
+            stream = std::move(stream_);
+        return to_finish_future.then(
+            [stream](future<void>) { return stream->Finish(); });
     }
-
-    status_promise_.set_value(Status(StatusCode::kOk, "Ok"));
-    return stream_->Finish();
   }
 
  private:
   enum class State { kRetrying, kInitialized, kShutdown };
 
-  // helper uses abstractions, but Dan said that this shouldn't need
-  // abstractions
-  void ReadWriteRetryFailedStream(
-      std::reference_wrapper<absl::optional<promise<void>>> reinit_done,
-      std::reference_wrapper<absl::optional<promise<void>>> in_progress_op) {
-    bool retrying;
+  void ReadWriteRetryFailedStream() {
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      if (stream_state_ != State::kInitialized) return;
+    }
+
+    promise<void> root;
 
     {
       std::lock_guard<std::mutex> g{mu_};
-      reinit_done.get().emplace();
-      retrying = stream_state_ == State::kRetrying;
-    }
+      stream_state_ = State::kRetrying;
+      retry_promise_.emplace();
 
-    if (!retrying) {
-      bool outstanding_operation;
-      future<void> outstanding_operation_future;
+      // If an outstanding operation is present, we can't enter the retry
+      // loop, so we defer it until the outstanding `Write` finishes at
+      // which point we can enter the retry loop. Since we will return
+      // `reinit_done_`, we guarantee that another operation of the same type
+      // is not called while we're waiting for the outstanding operation to
+      // finish and the retry loop to finish afterward.
 
-      {
-        std::lock_guard<std::mutex> g{mu_};
-        stream_state_ = State::kRetrying;
-        if (!retry_promise_.has_value()) {
-          retry_promise_.emplace();
-        }
+      future<void> root_future = root.get_future();
 
-        // If an outstanding operation is present, we can't enter the retry
-        // loop, so we defer it until the outstanding `Write` finishes at
-        // which point we can enter the retry loop. Since we will return
-        // `reinit_done_`, we guarantee that another operation of the same type
-        // is not called while we're waiting for the outstanding operation to
-        // finish and the retry loop to finish afterward.
-
-        outstanding_operation = in_progress_op.get().has_value();
-        if (outstanding_operation) {
-          outstanding_operation_future = in_progress_op.get()->get_future();
-        }
+      if (in_progress_read_.has_value()) {
+        future<void> in_progress = in_progress_read_->get_future();
+        root_future = root_future.then(
+            [in_progress](future<void>) { return in_progress; });
       }
 
-      if (outstanding_operation) {
-        outstanding_operation_future.then(
-            [this](future<void>) { FinishOnStreamFail(); });
-      } else {
-        FinishOnStreamFail();
+      if (in_progress_write_.has_value()) {
+        future<void> in_progress = in_progress_write_->get_future();
+        root_future = root_future.then(
+            [in_progress](future<void>) { return in_progress; });
       }
-    }
-  }
 
-  void OnFailure(Status const& status) {
-    AttemptRetry(status,
-                 std::make_shared<RetryPolicy const>(*retry_policy_prototype_),
-                 backoff_policy_prototype_->clone());
+      root_future.then([this](future<void>) { FinishOnStreamFail(); });
+    }
+
+    root.set_value();
   }
 
   void FinishOnStreamFail() {
@@ -323,55 +323,55 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       fail_finish = stream_->Finish();
     }
     fail_finish.then([this](future<Status> finish_status) {
-      OnFailure(finish_status.get());
+      // retry policy refactor
+      AttemptRetry(finish_status.get(),
+                   std::make_shared<RetryPolicy const>(retry_factory_()),
+                   backoff_policy_prototype_->clone());
     });
   }
 
-  void SetReadWriteFutures() {
-    bool read_pending;
-    bool write_pending;
+  void SetReadWriteFuturesLockHeld() {
+    absl::optional<promise<void>> read_reinit_done;
+    absl::optional<promise<void>> write_reinit_done;
 
     {
+      read_reinit_done.swap(read_reinit_done_);
+      write_reinit_done.swap(write_reinit_done_);
+    }
+    mu_.unlock();
+    if (read_reinit_done) read_reinit_done->set_value();
+
+    if (write_reinit_done) write_reinit_done->set_value();
+    mu_.lock();
+  }
+
+  void CompleteStream(Status status) {
+    {
       std::lock_guard<std::mutex> g{mu_};
-      read_pending = read_reinit_done_.has_value();
-      write_pending = write_reinit_done_.has_value();
+      SetReadWriteFuturesLockHeld();
     }
+    status_promise_.set_value(std::move(status));
+  }
 
-    if (read_pending) {
-      // want to set member variable to nullopt before setting future returned
-      // to caller
-      promise<void> read_promise;
-      {
-        std::lock_guard<std::mutex> g{mu_};
-        read_promise = std::move(*read_reinit_done_);
-        read_reinit_done_ = absl::nullopt;
-      }
-      read_promise.set_value();
-    }
-
-    if (write_pending) {
-      // want to set member variable to nullopt before setting future returned
-      // to caller
-      promise<void> write_promise;
-      {
-        std::lock_guard<std::mutex> g{mu_};
-        write_promise = std::move(*write_reinit_done_);
-        write_reinit_done_ = absl::nullopt;
-      }
-      write_promise.set_value();
-    }
+  void FinishRetryPromiseLockHeld() {
+    promise<void> retry_promise = std::move(retry_promise_);
+    mu_.unlock();
+    retry_promise.set_value();
+    mu_.lock();
   }
 
   void AttemptRetry(Status const& status,
                     std::shared_ptr<RetryPolicy> retry_policy,
                     std::shared_ptr<BackoffPolicy> backoff_policy) {
-    bool shutdown;
     {
       std::lock_guard<std::mutex> g{mu_};
-      shutdown = stream_state_ == State::kShutdown;
+      if (stream_state_ == State::kShutdown) {
+        return FinishRetryPromiseLockHeld();
+      }
+      assert(stream_state_ == State::kRetrying);
     }
-    if (!shutdown && !retry_policy->IsExhausted() &&
-        retry_policy->OnFailure(status)) {
+
+    if (!retry_policy->IsExhausted() && retry_policy->OnFailure(status)) {
       sleeper_(backoff_policy->OnCompletion())
           .then([this, retry_policy, backoff_policy](future<void>) {
             Initialize();
@@ -379,16 +379,13 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       return;
     }
 
-    promise<Status> retry_promise;
     {
       std::lock_guard<std::mutex> g{mu_};
-      stream_state_ = State::kShutdown;
-      retry_promise = std::move(*retry_promise_);
-      retry_promise_ = absl::nullopt;
+      FinishRetryPromiseLockHeld();
+      if (stream_state_ == State::kShutdown) return;
     }
-    retry_promise.set_value(status);
-    status_promise_.set_value(status);
-    SetReadWriteFutures();
+
+    CompleteStream(status);
   }
 
   void Initialize(std::shared_ptr<RetryPolicy> retry_policy,
@@ -397,6 +394,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     {
       std::lock_guard<std::mutex> g{mu_};
+      if (stream_state_ == State::kShutdown)
+        return FinishRetryPromiseLockHeld();
       stream_ = stream_factory_();
       start_future = stream_->Start();
     }
@@ -431,25 +430,24 @@ class ResumableAsyncStreamingReadWriteRpcImpl
             return;
           }
 
-          promise<Status> retry_promise;
           {
             std::lock_guard<std::mutex> g{mu_};
-            stream_ = std::move(*start_initialize_response);
-            // if `Finish` acquires lock and updates `stream_state_` before
-            // this, we don't want `stream_state_` to be changed again
-            if (stream_state_ != State::kShutdown) {
+            if (stream_state_ == State::kShutdown) {
+              std::shared_ptr<
+                  AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
+                  to_delete = std::move(*start_initialize_response);
+              to_delete->Finish().then([to_delete](future<Status>) {});
+            } else {
+              stream_ = std::move(*start_initialize_response);
               stream_state_ = State::kInitialized;
             }
-            retry_promise = std::move(*retry_promise_);
-            retry_promise_ = absl::nullopt;
+            FinishRetryPromiseLockHeld();
+            SetReadWriteFuturesLockHeld();
           }
-          retry_promise.set_value(Status());
-
-          SetReadWriteFutures();
         });
   }
 
-  std::shared_ptr<RetryPolicy const> const retry_policy_prototype_;
+  RetryPolicyFactory retry_factory_;
   std::shared_ptr<BackoffPolicy const> const backoff_policy_prototype_;
   AsyncSleeper const sleeper_;
   AsyncStreamFactory<RequestType, ResponseType> const stream_factory_;
@@ -472,8 +470,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   // more outstanding `Read`s or `Write`s.
   absl::optional<promise<void>> in_progress_read_;   // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<void>> in_progress_write_;  // ABSL_GUARDED_BY(mu_)
-  absl::optional<promise<Status>> retry_promise_;    // ABSL_GUARDED_BY(mu_)
-  promise<Status> status_promise_;                   // ABSL_GUARDED_BY(mu_)
+  absl::optional<promise<void>> retry_promise_;      // ABSL_GUARDED_BY(mu_)
+
+  promise<Status> status_promise_;
 };
 
 /// A helper to apply type deduction.
