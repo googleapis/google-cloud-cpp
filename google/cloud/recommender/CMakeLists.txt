@@ -113,6 +113,25 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_recommender_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(recommender_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(recommender_quickstart
+                          PRIVATE google-cloud-cpp::experimental-recommender)
+    google_cloud_cpp_add_common_options(recommender_quickstart)
+    add_test(
+        NAME recommender_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:recommender_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_REGION)
+    set_tests_properties(
+        recommender_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
