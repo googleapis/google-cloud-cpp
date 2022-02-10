@@ -61,6 +61,15 @@ class future final : private internal::future_base<T> {
   future(future<future<T>>&& rhs) noexcept(false);
 
   /**
+   * Creates a future from a future whose result type is convertible to this
+   * future's result type.
+   */
+  template <class U,
+            typename Enable = std::enable_if<std::is_constructible<T, U>{}>>
+  future(future<U>&& rhs)
+      : future<T>(rhs.then([](future<U> other) { return T(other.get()); })) {}
+
+  /**
    * Waits until the shared state becomes ready, then retrieves the value stored
    * in the shared state.
    *
