@@ -71,3 +71,6 @@ $env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT="invalid-test-account@clo
 # To run google/cloud/gameservices' quickstart
 $env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
 $env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"
+
+# To run google/cloud/resourcemanager's quickstart, this is the Cloud C++ team community folder
+$env:GOOGLE_CLOUD_CPP_RESOURCEMANAGER_TEST_FOLDER="543594345201"
