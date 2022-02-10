@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/metadata_spanner_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
