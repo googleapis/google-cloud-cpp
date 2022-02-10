@@ -42,6 +42,12 @@ using secs = std::chrono::seconds;
 using mins = std::chrono::minutes;
 
 TEST(OptionsTest, Defaults) {
+  ScopedEnvironment user_project("GOOGLE_CLOUD_CPP_USER_PROJECT",
+                                 absl::nullopt);
+  ScopedEnvironment emulator_host("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment instance_emulator_host(
+      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", absl::nullopt);
+
   auto opts = DefaultOptions();
   EXPECT_EQ("bigtable.googleapis.com", opts.get<DataEndpointOption>());
   EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
@@ -49,6 +55,7 @@ TEST(OptionsTest, Defaults) {
             opts.get<InstanceAdminEndpointOption>());
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
+  EXPECT_FALSE(opts.has<UserProjectOption>());
 
   auto args = google::cloud::internal::MakeChannelArguments(opts);
   // Check that the pool domain is not set by default
@@ -146,6 +153,42 @@ TEST(OptionsTest, DefaultTableAdminOptions) {
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
   options = DefaultTableAdminOptions(std::move(options));
   EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
+}
+
+TEST(OptionsTest, InstanceAdminUserProjectOption) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  auto options = DefaultInstanceAdminOptions(
+      Options{}.set<UserProjectOption>("test-project"));
+  EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
+
+  env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
+  options = DefaultInstanceAdminOptions(
+      Options{}.set<UserProjectOption>("test-project"));
+  EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
+}
+
+TEST(OptionsTest, TableAdminUserProjectOption) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  auto options = DefaultTableAdminOptions(
+      Options{}.set<UserProjectOption>("test-project"));
+  EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
+
+  env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
+  options = DefaultTableAdminOptions(
+      Options{}.set<UserProjectOption>("test-project"));
+  EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
+}
+
+TEST(OptionsTest, DataUserProjectOption) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  auto options =
+      DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
+  EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
+
+  env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
+  options =
+      DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
+  EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
 }
 
 TEST(EndpointEnvTest, EmulatorEnvOnly) {
