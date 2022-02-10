@@ -306,6 +306,7 @@ void CreateFilteredSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
   //! [create-filtered-subscription]
+  // [START pubsub_create_subscription_with_filter]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
      std::string topic_id, std::string subscription_id) {
@@ -323,6 +324,7 @@ void CreateFilteredSubscription(
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
   }
+  // [END pubsub_create_subscription_with_filter]
   //! [create-filtered-subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
