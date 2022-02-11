@@ -24,6 +24,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/curl_options.h",
     "internal/curl_wrappers.h",
     "internal/http_payload.h",
+    "internal/make_jwt_assertion.h",
     "internal/oauth2_access_token_credentials.h",
     "internal/oauth2_anonymous_credentials.h",
     "internal/oauth2_authorized_user_credentials.h",
@@ -32,10 +33,12 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/oauth2_credentials.h",
     "internal/oauth2_error_credentials.h",
     "internal/oauth2_refreshing_credentials_wrapper.h",
+    "internal/openssl_util.h",
     "internal/rest_client.h",
     "internal/rest_options.h",
     "internal/rest_request.h",
     "internal/rest_response.h",
+    "internal/write_base64.h",
 ]
 
 google_cloud_cpp_rest_internal_srcs = [
@@ -45,6 +48,7 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/curl_impl.cc",
     "internal/curl_wrappers.cc",
     "internal/http_payload.cc",
+    "internal/make_jwt_assertion.cc",
     "internal/oauth2_access_token_credentials.cc",
     "internal/oauth2_anonymous_credentials.cc",
     "internal/oauth2_authorized_user_credentials.cc",
@@ -52,7 +56,9 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/oauth2_credentials.cc",
     "internal/oauth2_error_credentials.cc",
     "internal/oauth2_refreshing_credentials_wrapper.cc",
+    "internal/openssl_util.cc",
     "internal/rest_client.cc",
     "internal/rest_request.cc",
     "internal/rest_response.cc",
+    "internal/write_base64.cc",
 ]
