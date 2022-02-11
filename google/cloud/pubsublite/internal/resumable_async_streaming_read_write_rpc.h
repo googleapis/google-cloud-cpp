@@ -108,12 +108,12 @@ class ResumableAsyncStreamingReadWriteRpc {
   virtual future<bool> Write(RequestType const&, grpc::WriteOptions) = 0;
 
   /**
-   * Return the final status of the streaming RPC.
+   * Finishes the streaming RPC.
    *
    * This will cause any outstanding `Read` or `Write` to fail.
    *
    */
-  virtual future<Status> Finish() = 0;
+  virtual future<void> Finish() = 0;
 };
 
 template <typename RequestType, typename ResponseType>
@@ -251,12 +251,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     });
   }
 
-  future<Status> Finish() override {
+  future<void> Finish() override {
     std::lock_guard<std::mutex> g{mu_};
     switch (stream_state_) {
       case State::kShutdown:
-        return make_ready_future(
-            Status(StatusCode::kAborted, "Permanent error"));
+        return make_ready_future();
       case State::kRetrying:
         stream_state_ = State::kShutdown;
         return retry_promise_->get_future().then(
@@ -277,8 +276,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         }
         std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
             stream = std::move(stream_);
-        return to_finish_future.then(
-            [stream](future<void>) { return stream->Finish(); });
+        return to_finish_future.then([stream](future<void>) {
+          return stream->Finish().then([](future<Status>) {});
+        });
     }
   }
 
