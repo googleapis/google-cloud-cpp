@@ -120,8 +120,7 @@ class TableAdminTest : public ::testing::Test {
                btadmin::ListTablesRequest const& request,
                btadmin::ListTablesResponse* response) {
       EXPECT_STATUS_OK(IsContextMDValid(
-          *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables",
-          google::cloud::internal::ApiClientHeader()));
+          *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
       auto const instance_name =
           "projects/" + kProjectId + "/instances/" + kInstanceId;
       EXPECT_EQ(instance_name, request.parent());
@@ -220,8 +219,7 @@ class TableAdminTest : public ::testing::Test {
                btadmin::ListBackupsRequest const& request,
                btadmin::ListBackupsResponse* response) {
       EXPECT_STATUS_OK(IsContextMDValid(
-          *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups",
-          google::cloud::internal::ApiClientHeader()));
+          *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
       auto const instance_name =
           "projects/" + kProjectId + "/instances/" + kInstanceId;
       auto const cluster_name = instance_name + "/clusters/-";
@@ -1339,8 +1337,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
                     grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency",
-            google::cloud::internal::ApiClientHeader()));
+            "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency"));
         EXPECT_EQ(
             "projects/the-project/instances/test-instance/tables/test-table",
             request.name());

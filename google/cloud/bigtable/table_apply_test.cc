@@ -40,12 +40,10 @@ class TableApplyTest : public bigtable::testing::TableTestFixture {
         context, method, google::cloud::internal::ApiClientHeader());
   }
 
-  using MutateRowMock =
-      std::function<grpc::Status(grpc::ClientContext* context,
-                                 google::bigtable::v2::MutateRowRequest const&,
-                                 google::bigtable::v2::MutateRowResponse*)>;
-
-  MutateRowMock CreateMutateRowMock(grpc::Status const& status) {
+  std::function<grpc::Status(grpc::ClientContext* context,
+                             google::bigtable::v2::MutateRowRequest const&,
+                             google::bigtable::v2::MutateRowResponse*)>
+  CreateMutateRowMock(grpc::Status const& status) {
     return [this, status](grpc::ClientContext* context,
                           google::bigtable::v2::MutateRowRequest const&,
                           google::bigtable::v2::MutateRowResponse*) {

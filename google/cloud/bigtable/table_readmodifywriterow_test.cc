@@ -36,12 +36,11 @@ class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {
  public:
   TableReadModifyWriteTest() : TableTestFixture(CompletionQueue{}) {}
 
-  using ReadWriteMock = std::function<grpc::Status(
-      grpc::ClientContext*, btproto::ReadModifyWriteRowRequest const&,
-      btproto::ReadModifyWriteRowResponse*)>;
-
-  ReadWriteMock CreateRules(std::string const& expected_request_string,
-                            std::string const& generated_response_string) {
+  std::function<grpc::Status(grpc::ClientContext*,
+                             btproto::ReadModifyWriteRowRequest const&,
+                             btproto::ReadModifyWriteRowResponse*)>
+  CreateRules(std::string const& expected_request_string,
+              std::string const& generated_response_string) {
     return [this, expected_request_string, generated_response_string](
                grpc::ClientContext* context,
                btproto::ReadModifyWriteRowRequest const& request,

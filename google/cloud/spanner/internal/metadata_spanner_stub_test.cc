@@ -77,9 +77,8 @@ class MetadataSpannerStubTest : public ::testing::Test {
                      MemberFunction member_function) {
     call.WillOnce(
         [this, rpc_name](grpc::ClientContext& context, Request const&) {
-          EXPECT_STATUS_OK(validate_metadata_fixture_.IsContextMDValid(
-              context, "google.spanner.v1.Spanner." + rpc_name,
-              google::cloud::internal::ApiClientHeader(), db_.FullName()));
+          EXPECT_STATUS_OK(IsContextMDValid(
+              context, "google.spanner.v1.Spanner." + rpc_name));
           return TransientError();
         });
 

@@ -38,12 +38,11 @@ class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
         context, method, google::cloud::internal::ApiClientHeader());
   }
 
-  using MockCheckAndMutate = std::function<grpc::Status(
-      grpc::ClientContext* context,
-      google::bigtable::v2::CheckAndMutateRowRequest const&,
-      google::bigtable::v2::CheckAndMutateRowResponse*)>;
-
-  MockCheckAndMutate CreateMockCheckAndMutate(grpc::Status const& status) {
+  std::function<
+      grpc::Status(grpc::ClientContext* context,
+                   google::bigtable::v2::CheckAndMutateRowRequest const&,
+                   google::bigtable::v2::CheckAndMutateRowResponse*)>
+  CreateCheckAndMutateMock(grpc::Status const& status) {
     return [this, status](grpc::ClientContext* context,
                           google::bigtable::v2::CheckAndMutateRowRequest const&,
                           google::bigtable::v2::CheckAndMutateRowResponse*) {
@@ -60,7 +59,7 @@ class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
 TEST_F(TableCheckAndMutateRowTest, Simple) {
   EXPECT_CALL(*client_, CheckAndMutateRow)
-      .WillOnce(CreateMockCheckAndMutate(grpc::Status::OK));
+      .WillOnce(CreateCheckAndMutateMock(grpc::Status::OK));
 
   auto mut = table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
@@ -74,7 +73,7 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
 /// @test Verify that Table::CheckAndMutateRow() raises an on failures.
 TEST_F(TableCheckAndMutateRowTest, Failure) {
   EXPECT_CALL(*client_, CheckAndMutateRow)
-      .WillRepeatedly(CreateMockCheckAndMutate(
+      .WillRepeatedly(CreateCheckAndMutateMock(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_FALSE(table_.CheckAndMutateRow(
