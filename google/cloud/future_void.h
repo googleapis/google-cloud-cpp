@@ -65,7 +65,7 @@ class future<void> final : private internal::future_base<void> {
    * future's result type.
    */
   template <class T>
-  future(future<T>&& rhs) : future<void>(rhs.then([](future<T>) {})) {}
+  explicit future(future<T>&& rhs) : future<void>(rhs.then([](future<T>) {})) {}
 
   /**
    * Waits until the shared state becomes ready, then retrieves the value stored
