@@ -116,8 +116,7 @@ struct ClientImplDetails;
  *
  * To load a service account credentials key file use:
  *
- * @snippet storage_client_initialization_samples.cc
- * service-account-keyfile-json
+ * @snippet storage_client_initialization_samples.cc service-account-keyfile
  *
  * Other credential types are available, including:
  *
