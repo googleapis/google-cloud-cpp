@@ -665,9 +665,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/rest_request.cc
         internal/rest_request.h
         internal/rest_response.cc
-        internal/rest_response.h
-        internal/write_base64.cc
-        internal/write_base64.h)
+        internal/rest_response.h)
     target_link_libraries(
         google_cloud_cpp_rest_internal
         PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
