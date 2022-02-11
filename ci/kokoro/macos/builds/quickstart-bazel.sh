@@ -42,7 +42,6 @@ bazel_args=(
   "--verbose_failures=true"
   "--keep_going")
 
-run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly CREDENTIALS_FILE="${CONFIG_DIR}/kokoro-run-key.json"
 readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
@@ -61,12 +60,7 @@ if [[ -r "${CREDENTIALS_FILE}" ]]; then
   # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
   # and https://github.com/bazelbuild/bazel/issues/3360
   bazel_args+=("--experimental_guard_against_concurrent_changes")
-  # The driver script (../build.sh) should have downloaded this file.
-  if [[ -r "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH:-}/roots.pem" ]]; then
-    run_quickstart="true"
-  fi
 fi
-readonly run_quickstart
 
 build_quickstart() {
   local -r library="$1"
@@ -94,18 +88,6 @@ build_quickstart() {
 
   io::log_h2 "Compiling ${library}'s quickstart"
   bazelisk build "${bazel_args[@]}" ...
-
-  if [[ "${run_quickstart}" == "true" ]]; then
-    echo
-    io::log_yellow "Running ${library}'s quickstart"
-    args=()
-    while IFS="" read -r line; do
-      args+=("${line}")
-    done < <(quickstart::arguments "${library}")
-    env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
-      bazelisk run "${bazel_args[@]}" "--spawn_strategy=local" \
-      :quickstart -- "${args[@]}"
-  fi
 
   # Kokoro needs bazel to be shutdown.
   bazelisk shutdown
