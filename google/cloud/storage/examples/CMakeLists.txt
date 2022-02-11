@@ -23,13 +23,13 @@ if (BUILD_TESTING)
 
     set(storage_examples
         # cmake-format: sort
-        storage_auth_samples.cc
         storage_bucket_acl_samples.cc
         storage_bucket_cors_samples.cc
         storage_bucket_default_kms_key_samples.cc
         storage_bucket_iam_samples.cc
         storage_bucket_requester_pays_samples.cc
         storage_bucket_samples.cc
+        storage_client_initialization_samples.cc
         storage_default_object_acl_samples.cc
         storage_event_based_hold_samples.cc
         storage_grpc_samples.cc
