@@ -29,14 +29,17 @@ class TableAdminTester {
  public:
   static TableAdmin MakeTestTableAdmin(
       std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> conn,
-      std::string const& kProjectId, std::string const& kInstanceId) {
-    return TableAdmin(std::move(conn), kProjectId, kInstanceId);
+      CompletionQueue cq, std::string const& kProjectId,
+      std::string const& kInstanceId) {
+    return TableAdmin(std::move(conn), std::move(cq), kProjectId, kInstanceId);
   }
 
   static std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
   Connection(TableAdmin const& admin) {
     return admin.connection_;
   }
+
+  static CompletionQueue CQ(TableAdmin const& admin) { return admin.cq_; }
 };
 
 namespace {
@@ -54,10 +57,15 @@ Options TestOptions() {
       grpc::InsecureChannelCredentials());
 }
 
+bool SameCQ(CompletionQueue const& a, CompletionQueue const& b) {
+  using ::google::cloud::internal::GetCompletionQueueImpl;
+  return GetCompletionQueueImpl(a) == GetCompletionQueueImpl(b);
+}
+
 class TableAdminTest : public ::testing::Test {
  protected:
   TableAdmin DefaultTableAdmin() {
-    return TableAdminTester::MakeTestTableAdmin(connection_, kProjectId,
+    return TableAdminTester::MakeTestTableAdmin(connection_, {}, kProjectId,
                                                 kInstanceId);
   }
 
@@ -90,6 +98,17 @@ TEST_F(TableAdminTest, LegacyConstructorSharesConnection) {
 
   EXPECT_EQ(conn_1, conn_2);
   EXPECT_THAT(conn_1, NotNull());
+}
+
+TEST_F(TableAdminTest, LegacyConstructorSetsCQ) {
+  auto admin_client = MakeAdminClient(kProjectId, TestOptions());
+  auto admin = TableAdmin(admin_client, kInstanceId);
+  auto conn = TableAdminTester::Connection(admin);
+  ASSERT_TRUE(conn->options().has<GrpcCompletionQueueOption>());
+  auto conn_cq = conn->options().get<GrpcCompletionQueueOption>();
+  auto client_cq = TableAdminTester::CQ(admin);
+
+  EXPECT_TRUE(SameCQ(conn_cq, client_cq));
 }
 
 }  // namespace

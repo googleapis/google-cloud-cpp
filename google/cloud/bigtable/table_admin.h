@@ -145,6 +145,7 @@ class TableAdmin {
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
       : client_(std::move(client)),
         connection_(client_->connection()),
+        cq_(client_->cq()),
         project_id_(client_->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
@@ -1027,8 +1028,9 @@ class TableAdmin {
 
   explicit TableAdmin(
       std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection,
-      std::string project_id, std::string instance_id)
+      CompletionQueue cq, std::string project_id, std::string instance_id)
       : connection_(std::move(connection)),
+        cq_(std::move(cq)),
         project_id_(std::move(project_id)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
@@ -1100,6 +1102,7 @@ class TableAdmin {
 
   std::shared_ptr<AdminClient> client_;
   std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
+  CompletionQueue cq_;
   std::string project_id_;
   std::string instance_id_;
   std::string instance_name_;
