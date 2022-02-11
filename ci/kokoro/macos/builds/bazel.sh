@@ -88,5 +88,14 @@ bazelisk test "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 io::log_h2 "build all targets"
 bazelisk build "${bazel_args[@]}" ...
 
+io::log_h2 "running minimal quickstart programs"
+bazelisk run "${bazel_args[@]}" \
+  //google/cloud/storage/quickstart:quickstart -- \
+  "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+
+bazelisk run "${bazel_args[@]}" \
+  //google/cloud/pubsub/quickstart:quickstart -- \
+  "${GOOGLE_CLOUD_PROJECT}" "${GOOGLE_CLOUD_CPP_PUBSUB_TEST_TOPIC_NAME}"
+
 # Kokoro needs bazel to be shutdown.
 bazelisk shutdown

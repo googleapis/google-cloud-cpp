@@ -100,4 +100,7 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart programs $env:CONFIG"
+ctest $ctest_args -R "(storage_quickstart|pubsub_quickstart)"
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
