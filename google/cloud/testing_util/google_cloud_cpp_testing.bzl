@@ -23,7 +23,6 @@ google_cloud_cpp_testing_hdrs = [
     "command_line_parsing.h",
     "contains_once.h",
     "crash_handler.h",
-    "credentials_constants.h",
     "example_driver.h",
     "expect_exception.h",
     "expect_future_error.h",
