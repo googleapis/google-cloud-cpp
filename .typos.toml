@@ -14,6 +14,7 @@ extend-exclude = [
     # Files with crypto-keys in them
     "google/cloud/internal/rest_client_integration_test.cc",
     "google/cloud/internal/grpc_service_account_authentication_test.cc",
+    "google/cloud/testing_util/credentials_constants.h",
     "google/cloud/storage/client_options_test.cc",
     "google/cloud/storage/client_sign_policy_document_test.cc",
     "google/cloud/storage/client_sign_url_test.cc",
