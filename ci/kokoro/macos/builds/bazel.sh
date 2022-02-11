@@ -95,7 +95,7 @@ bazelisk run "${bazel_args[@]}" \
 
 bazelisk run "${bazel_args[@]}" \
   //google/cloud/pubsub/quickstart:quickstart -- \
-  "${GOOGLE_CLOUD_PROJECT}" "${GOOGLE_CLOUD_CPP_PUBSUB_TEST_TOPIC_NAME}"
+  "${GOOGLE_CLOUD_PROJECT}" "${GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
 
 # Kokoro needs bazel to be shutdown.
 bazelisk shutdown

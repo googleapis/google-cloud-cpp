@@ -145,7 +145,7 @@ if ($LastExitCode) {
 
 bazelisk $common_flags run $build_flags `
   //google/cloud/pubsub/quickstart:quickstart -- `
-  "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_TOPIC_NAME}"
+  "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel build (pubsub/quickstart) failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
