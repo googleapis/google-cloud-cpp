@@ -771,12 +771,6 @@ TEST(FutureTestConvertingConstructor, ConvertFuture) {
   future<FromInt> f0{p0.get_future()};
 }
 
-TEST(FutureTestConvertingConstructor, ConvertFutureThen) {
-  promise<int> p0;
-  future<FromInt> f0 =
-      p0.get_future().then([](future<int> f) -> future<FromInt> { return f; });
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
