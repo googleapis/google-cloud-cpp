@@ -101,6 +101,46 @@ if ($LastExitCode) {
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart programs $env:CONFIG"
-ctest $ctest_args -R "(storage_quickstart|pubsub_quickstart)"
+function Integration-Tests-Enabled {
+    if ((Test-Path env:KOKORO_GFILE_DIR) -and
+       (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
+        return $True
+    }
+    return $False
+}
+
+function Download-Roots-Pem {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+        "Downloading roots.pem [$_]"
+    ForEach($attempt in (1, 2, 3)) {
+        try {
+            (New-Object System.Net.WebClient).Downloadfile(
+                    'https://pki.google.com/roots.pem',
+                    "${env:KOKORO_GFILE_DIR}/roots.pem")
+            return
+        } catch {
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
+        }
+        Start-Sleep -Seconds (60 * $attempt)
+    }
+    Write-Host -ForegroundColor Red "cannot download roots.pem file."
+    Exit 1
+}
+
+$PROJECT_ROOT = (Get-Item -Path ".\" -Verbose).FullName
+if (Integration-Tests-Enabled) {
+    $integration_tests_config="${PROJECT_ROOT}/ci/etc/integration-tests-config.ps1"
+    . "${integration_tests_config}"
+
+    Download-Roots-Pem
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+
+    ctest $ctest_args -R "(storage_quickstart|pubsub_quickstart)"
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
+    }
+}
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"

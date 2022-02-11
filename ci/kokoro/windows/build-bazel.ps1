@@ -135,20 +135,62 @@ if ($LastExitCode) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart prorams"
 
-bazelisk $common_flags run $build_flags `
-  //google/cloud/storage/quickstart:quickstart -- `
-  "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-if ($LastExitCode) {
-    Write-Host -ForegroundColor Red "bazel build (storage/quickstart) failed with exit code ${LastExitCode}."
-    Exit ${LastExitCode}
+function Integration-Tests-Enabled {
+    if ((Test-Path env:KOKORO_GFILE_DIR) -and
+       (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
+        return $True
+    }
+    return $False
 }
 
-bazelisk $common_flags run $build_flags `
-  //google/cloud/pubsub/quickstart:quickstart -- `
-  "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
-if ($LastExitCode) {
-    Write-Host -ForegroundColor Red "bazel build (pubsub/quickstart) failed with exit code ${LastExitCode}."
-    Exit ${LastExitCode}
+function Download-Roots-Pem {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+        "Downloading roots.pem [$_]"
+    ForEach($attempt in (1, 2, 3)) {
+        try {
+            (New-Object System.Net.WebClient).Downloadfile(
+                    'https://pki.google.com/roots.pem',
+                    "${env:KOKORO_GFILE_DIR}/roots.pem")
+            return
+        } catch {
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
+        }
+        Start-Sleep -Seconds (60 * $attempt)
+    }
+    Write-Host -ForegroundColor Red "cannot download roots.pem file."
+    Exit 1
+}
+
+function Run-REST-Quickstart {
+    bazelisk $common_flags run $build_flags `
+      //google/cloud/storage/quickstart:quickstart -- `
+      "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "bazel run (storage/quickstart) failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
+    }
+}
+
+function Run-gRPC-Quickstart {
+    bazelisk $common_flags run $build_flags `
+      //google/cloud/pubsub/quickstart:quickstart -- `
+      "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "bazel run (pubsub/quickstart) failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
+    }
+}
+
+$PROJECT_ROOT = (Get-Item -Path ".\" -Verbose).FullName
+if (Integration-Tests-Enabled) {
+    $integration_tests_config="${PROJECT_ROOT}/ci/etc/integration-tests-config.ps1"
+    . "${integration_tests_config}"
+
+    Download-Roots-Pem
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    Run-REST-Quickstart
+    Run-gRPC-Quickstart
 }
 
 # Shutdown the Bazel server to release any locks
