@@ -68,8 +68,8 @@ TEST(MakeJWTAssertionNoThrow, Basic) {
       {"iat", "1511900000"},
       {"exp", "1511903600"},
   };
-  auto const assertion = MakeJWTAssertionNoThrow(
-      header.dump(), payload.dump(), kWellFormattedKey);
+  auto const assertion =
+      MakeJWTAssertionNoThrow(header.dump(), payload.dump(), kWellFormattedKey);
   ASSERT_THAT(assertion, IsOk());
 
   std::vector<std::string> components = absl::StrSplit(*assertion, '.');
