@@ -27,11 +27,22 @@ namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
-using ::google::cloud::testing_util::GetMetadata;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
+
+class GrpcClientTest : public ::testing::Test {
+ protected:
+  std::multimap<std::string, std::string> GetMetadata(
+      grpc::ClientContext& context) {
+    return validate_metadata_fixture_.GetMetadata(context);
+  }
+
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
+};
 
 Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "uh-oh");
@@ -44,11 +55,11 @@ std::shared_ptr<GrpcClient> CreateTestClient(
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
 }
 
-TEST(GrpcClient, QueryResumableUpload) {
+TEST_F(GrpcClientTest, QueryResumableUpload) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, QueryWriteStatus)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::QueryWriteStatusRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::QueryWriteStatusRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -66,11 +77,11 @@ TEST(GrpcClient, QueryResumableUpload) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, GetBucket) {
+TEST_F(GrpcClientTest, GetBucket) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::storage::v2::GetBucketRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::storage::v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -86,10 +97,10 @@ TEST(GrpcClient, GetBucket) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, InsertObjectMedia) {
+TEST_F(GrpcClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject)
-      .WillOnce([](std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -115,11 +126,11 @@ TEST(GrpcClient, InsertObjectMedia) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, CopyObject) {
+TEST_F(GrpcClientTest, CopyObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::RewriteObjectRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::RewriteObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -143,11 +154,11 @@ TEST(GrpcClient, CopyObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, CopyObjectTooLarge) {
+TEST_F(GrpcClientTest, CopyObjectTooLarge) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::RewriteObjectRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::RewriteObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -174,11 +185,11 @@ TEST(GrpcClient, CopyObjectTooLarge) {
   EXPECT_THAT(response.status(), StatusIs(StatusCode::kOutOfRange));
 }
 
-TEST(GrpcClient, GetObjectMetadata) {
+TEST_F(GrpcClientTest, GetObjectMetadata) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::GetObjectRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -195,11 +206,11 @@ TEST(GrpcClient, GetObjectMetadata) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, ReadObject) {
+TEST_F(GrpcClientTest, ReadObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([](std::unique_ptr<grpc::ClientContext> context,
-                   v2::ReadObjectRequest const& request) {
+      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
+                       v2::ReadObjectRequest const& request) {
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -217,11 +228,11 @@ TEST(GrpcClient, ReadObject) {
                                 QuotaUser("test-quota-user")));
 }
 
-TEST(GrpcClient, ListObjects) {
+TEST_F(GrpcClientTest, ListObjects) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, ListObjects)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::ListObjectsRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::ListObjectsRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -237,11 +248,12 @@ TEST(GrpcClient, ListObjects) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, DeleteObject) {
+TEST_F(GrpcClientTest, DeleteObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, DeleteObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::storage::v2::DeleteObjectRequest const& request) {
+      .WillOnce([this](
+                    grpc::ClientContext& context,
+                    google::storage::v2::DeleteObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -258,11 +270,12 @@ TEST(GrpcClient, DeleteObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, UpdateObject) {
+TEST_F(GrpcClientTest, UpdateObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::storage::v2::UpdateObjectRequest const& request) {
+      .WillOnce([this](
+                    grpc::ClientContext& context,
+                    google::storage::v2::UpdateObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -284,11 +297,11 @@ TEST(GrpcClient, UpdateObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, PatchObject) {
+TEST_F(GrpcClientTest, PatchObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::UpdateObjectRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::UpdateObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -308,11 +321,11 @@ TEST(GrpcClient, PatchObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, ComposeObject) {
+TEST_F(GrpcClientTest, ComposeObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, ComposeObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::ComposeObjectRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::ComposeObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -330,11 +343,11 @@ TEST(GrpcClient, ComposeObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, RewriteObject) {
+TEST_F(GrpcClientTest, RewriteObject) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::RewriteObjectRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::RewriteObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -358,11 +371,11 @@ TEST(GrpcClient, RewriteObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, CreateResumableSession) {
+TEST_F(GrpcClientTest, CreateResumableSession) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, StartResumableWrite)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::StartResumableWriteRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::StartResumableWriteRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -383,11 +396,11 @@ TEST(GrpcClient, CreateResumableSession) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST(GrpcClient, GetServiceAccount) {
+TEST_F(GrpcClientTest, GetServiceAccount) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetServiceAccount)
-      .WillOnce([](grpc::ClientContext& context,
-                   v2::GetServiceAccountRequest const& request) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       v2::GetServiceAccountRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),

@@ -67,10 +67,10 @@ namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::cloud::testing_util::chrono_literals::operator"" _h;
 using ::google::cloud::testing_util::chrono_literals::operator"" _min;
 using ::google::cloud::testing_util::chrono_literals::operator"" _s;
@@ -95,159 +95,188 @@ class TableAdminTest : public ::testing::Test {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   }
 
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
+
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method,
+                          std::string const& resource_name) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader(),
+        resource_name);
+  }
+
+  std::function<grpc::Status(grpc::ClientContext* context,
+                             btadmin::ListTablesRequest const& request,
+                             btadmin::ListTablesResponse* response)>
+  CreateListTablesMock(std::string const& expected_token,
+                       std::string const& returned_token,
+                       std::vector<std::string> const& table_names) {
+    return [this, expected_token, returned_token, table_names](
+               grpc::ClientContext* context,
+               btadmin::ListTablesRequest const& request,
+               btadmin::ListTablesResponse* response) {
+      EXPECT_STATUS_OK(IsContextMDValid(
+          *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
+      auto const instance_name =
+          "projects/" + kProjectId + "/instances/" + kInstanceId;
+      EXPECT_EQ(instance_name, request.parent());
+      EXPECT_EQ(btadmin::Table::FULL, request.view());
+      EXPECT_EQ(expected_token, request.page_token());
+
+      EXPECT_NE(nullptr, response);
+      for (auto const& table_name : table_names) {
+        auto& table = *response->add_tables();
+        // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
+        table.set_name(instance_name + "/tables/" + table_name);
+        table.set_granularity(btadmin::Table::MILLIS);
+      }
+      // Return the right token.
+      response->set_next_page_token(returned_token);
+      return grpc::Status::OK;
+    };
+  }
+
+  std::function<grpc::Status(grpc::ClientContext* context,
+                             ::google::iam::v1::GetIamPolicyRequest const&,
+                             ::google::iam::v1::Policy* response)>
+  CreateGetPolicyMock() {
+    return [this](grpc::ClientContext* context,
+                  ::google::iam::v1::GetIamPolicyRequest const&,
+                  ::google::iam::v1::Policy* response) {
+      EXPECT_STATUS_OK(IsContextMDValid(
+          *context,
+          "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy"));
+      EXPECT_NE(nullptr, response);
+      response->set_version(3);
+      response->set_etag("random-tag");
+      return grpc::Status::OK;
+    };
+  }
+
+  std::function<grpc::Status(grpc::ClientContext* context,
+                             ::google::iam::v1::GetIamPolicyRequest const&,
+                             ::google::iam::v1::Policy* response)>
+  CreateGetPolicyMockForBackup(std::string const& backup_id) {
+    return [this, backup_id](grpc::ClientContext* context,
+                             ::google::iam::v1::GetIamPolicyRequest const&,
+                             ::google::iam::v1::Policy* response) {
+      EXPECT_STATUS_OK(IsContextMDValid(
+          *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
+          backup_id));
+      EXPECT_NE(nullptr, response);
+      response->set_version(3);
+      response->set_etag("random-tag");
+      return grpc::Status::OK;
+    };
+  }
+
+  std::function<
+      grpc::Status(grpc::ClientContext* context,
+                   ::google::iam::v1::SetIamPolicyRequest const& request,
+                   ::google::iam::v1::Policy* response)>
+  CreatePolicyMockWithParams() {
+    return [this](grpc::ClientContext* context,
+                  ::google::iam::v1::SetIamPolicyRequest const& request,
+                  ::google::iam::v1::Policy* response) {
+      EXPECT_STATUS_OK(IsContextMDValid(
+          *context,
+          "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy"));
+      EXPECT_NE(nullptr, response);
+      *response = request.policy();
+      return grpc::Status::OK;
+    };
+  }
+
+  std::function<grpc::Status(grpc::ClientContext*,
+                             ::google::iam::v1::SetIamPolicyRequest const&,
+                             ::google::iam::v1::Policy*)>
+  CreatePolicyWithParamsForBackup(std::string const& backup_id) {
+    return [this, backup_id](
+               grpc::ClientContext* context,
+               ::google::iam::v1::SetIamPolicyRequest const& request,
+               ::google::iam::v1::Policy* response) {
+      EXPECT_STATUS_OK(IsContextMDValid(
+          *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
+          backup_id));
+      EXPECT_NE(nullptr, response);
+      *response = request.policy();
+      return grpc::Status::OK;
+    };
+  }
+
+  std::function<grpc::Status(grpc::ClientContext*,
+                             btadmin::ListBackupsRequest const&,
+                             btadmin::ListBackupsResponse*)>
+  CreateListBackupsMock(std::string const& expected_token,
+                        std::string const& returned_token,
+                        std::vector<std::string> const& backup_names) {
+    return [this, expected_token, returned_token, backup_names](
+               grpc::ClientContext* context,
+               btadmin::ListBackupsRequest const& request,
+               btadmin::ListBackupsResponse* response) {
+      EXPECT_STATUS_OK(IsContextMDValid(
+          *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
+      auto const instance_name =
+          "projects/" + kProjectId + "/instances/" + kInstanceId;
+      auto const cluster_name = instance_name + "/clusters/-";
+      EXPECT_EQ(cluster_name, request.parent());
+      EXPECT_EQ(expected_token, request.page_token());
+
+      EXPECT_NE(nullptr, response);
+      for (auto const& backup_name : backup_names) {
+        auto& backup = *response->add_backups();
+        // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
+        backup.set_name(instance_name + "/clusters/the-cluster/backups/" +
+                        backup_name);
+      }
+      // Return the right token.
+      response->set_next_page_token(returned_token);
+      return grpc::Status::OK;
+    };
+  }
+
+  /**
+   * Helper class to create the expectations for a simple RPC call.
+   *
+   * Given the type of the request and responses, this struct provides a
+   * function to create a mock implementation with the right signature and
+   * checks.
+   *
+   * @tparam RequestType the protobuf type for the request.
+   * @tparam ResponseType the protobuf type for the response.
+   */
+  template <typename RequestType, typename ResponseType>
+  std::function<grpc::Status(grpc::ClientContext*, RequestType const&,
+                             ResponseType*)>
+  CreateMockRpc(std::string const& expected_request,
+                std::string const& method) {
+    return [this, expected_request, method](grpc::ClientContext* context,
+                                            RequestType const& request,
+                                            ResponseType* response) {
+      EXPECT_STATUS_OK(IsContextMDValid(*context, method));
+      if (response == nullptr) {
+        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
+                            "invalid call to MockRpcFactory::Create()");
+      }
+      RequestType expected;
+      // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
+      EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+          expected_request, &expected));
+      EXPECT_THAT(expected, IsProtoEqual(request));
+
+      return grpc::Status::OK;
+    };
+  }
+
   std::shared_ptr<MockAdminClient> client_ =
       std::make_shared<MockAdminClient>();
-};
 
-// A lambda to create lambdas.  Basically we would be rewriting the same
-// lambda twice without this thing.
-auto create_list_tables_lambda =
-    [](std::string const& expected_token, std::string const& returned_token,
-       std::vector<std::string> const& table_names) {
-      return [expected_token, returned_token, table_names](
-                 grpc::ClientContext* context,
-                 btadmin::ListTablesRequest const& request,
-                 btadmin::ListTablesResponse* response) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables",
-            google::cloud::internal::ApiClientHeader()));
-        auto const instance_name =
-            "projects/" + kProjectId + "/instances/" + kInstanceId;
-        EXPECT_EQ(instance_name, request.parent());
-        EXPECT_EQ(btadmin::Table::FULL, request.view());
-        EXPECT_EQ(expected_token, request.page_token());
-
-        EXPECT_NE(nullptr, response);
-        for (auto const& table_name : table_names) {
-          auto& table = *response->add_tables();
-          // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
-          table.set_name(instance_name + "/tables/" + table_name);
-          table.set_granularity(btadmin::Table::MILLIS);
-        }
-        // Return the right token.
-        response->set_next_page_token(returned_token);
-        return grpc::Status::OK;
-      };
-    };
-
-auto create_get_policy_mock = []() {
-  return [](grpc::ClientContext* context,
-            ::google::iam::v1::GetIamPolicyRequest const&,
-            ::google::iam::v1::Policy* response) {
-    EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
-    EXPECT_NE(nullptr, response);
-    response->set_version(3);
-    response->set_etag("random-tag");
-    return grpc::Status::OK;
-  };
-};
-
-auto create_get_policy_mock_for_backup = [](std::string const& backup_id) {
-  return [backup_id](grpc::ClientContext* context,
-                     ::google::iam::v1::GetIamPolicyRequest const&,
-                     ::google::iam::v1::Policy* response) {
-    EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader(), backup_id));
-    EXPECT_NE(nullptr, response);
-    response->set_version(3);
-    response->set_etag("random-tag");
-    return grpc::Status::OK;
-  };
-};
-auto create_policy_with_params = []() {
-  return [](grpc::ClientContext* context,
-            ::google::iam::v1::SetIamPolicyRequest const& request,
-            ::google::iam::v1::Policy* response) {
-    EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
-    EXPECT_NE(nullptr, response);
-    *response = request.policy();
-    return grpc::Status::OK;
-  };
-};
-
-auto create_policy_with_params_for_backup = [](std::string const& backup_id) {
-  return [backup_id](grpc::ClientContext* context,
-                     ::google::iam::v1::SetIamPolicyRequest const& request,
-                     ::google::iam::v1::Policy* response) {
-    EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader(), backup_id));
-    EXPECT_NE(nullptr, response);
-    *response = request.policy();
-    return grpc::Status::OK;
-  };
-};
-auto create_list_backups_lambda =
-    [](std::string const& expected_token, std::string const& returned_token,
-       std::vector<std::string> const& backup_names) {
-      return [expected_token, returned_token, backup_names](
-                 grpc::ClientContext* context,
-                 btadmin::ListBackupsRequest const& request,
-                 btadmin::ListBackupsResponse* response) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups",
-            google::cloud::internal::ApiClientHeader()));
-        auto const instance_name =
-            "projects/" + kProjectId + "/instances/" + kInstanceId;
-        auto const cluster_name = instance_name + "/clusters/-";
-        EXPECT_EQ(cluster_name, request.parent());
-        EXPECT_EQ(expected_token, request.page_token());
-
-        EXPECT_NE(nullptr, response);
-        for (auto const& backup_name : backup_names) {
-          auto& backup = *response->add_backups();
-          // NOLINTNEXTLINE(performance-inefficient-string-concatenation)
-          backup.set_name(instance_name + "/clusters/the-cluster/backups/" +
-                          backup_name);
-        }
-        // Return the right token.
-        response->set_next_page_token(returned_token);
-        return grpc::Status::OK;
-      };
-    };
-
-/**
- * Helper class to create the expectations for a simple RPC call.
- *
- * Given the type of the request and responses, this struct provides a function
- * to create a mock implementation with the right signature and checks.
- *
- * @tparam RequestType the protobuf type for the request.
- * @tparam ResponseType the protobuf type for the response.
- */
-template <typename RequestType, typename ResponseType>
-struct MockRpcFactory {
-  using SignatureType = grpc::Status(grpc::ClientContext* ctx,
-                                     RequestType const& request,
-                                     ResponseType* response);
-
-  /// Refactor the boilerplate common to most tests.
-  static std::function<SignatureType> Create(
-      std::string const& expected_request, std::string const& method) {
-    return std::function<SignatureType>(
-        [expected_request, method](grpc::ClientContext* context,
-                                   RequestType const& request,
-                                   ResponseType* response) {
-          EXPECT_STATUS_OK(IsContextMDValid(
-              *context, method, google::cloud::internal::ApiClientHeader()));
-          if (response == nullptr) {
-            return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
-                                "invalid call to MockRpcFactory::Create()");
-          }
-          RequestType expected;
-          // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
-          EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-              expected_request, &expected));
-          EXPECT_THAT(expected, IsProtoEqual(request));
-
-          return grpc::Status::OK;
-        });
-  }
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 /// @test Verify basic functionality in the `bigtable::TableAdmin` class.
@@ -261,7 +290,7 @@ TEST_F(TableAdminTest, Default) {
 /// @test Verify that `bigtable::TableAdmin::ListTables` works in the easy case.
 TEST_F(TableAdminTest, ListTables) {
   TableAdmin tested(client_, kInstanceId);
-  auto mock_list_tables = create_list_tables_lambda("", "", {"t0", "t1"});
+  auto mock_list_tables = CreateListTablesMock("", "", {"t0", "t1"});
   EXPECT_CALL(*client_, ListTables).WillOnce(mock_list_tables);
 
   // After all the setup, make the actual call we want to test.
@@ -277,16 +306,15 @@ TEST_F(TableAdminTest, ListTables) {
 /// @test Verify that `bigtable::TableAdmin::ListTables` handles failures.
 TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   TableAdmin tested(client_, "the-instance");
-  auto mock_recoverable_failure = [](grpc::ClientContext* context,
-                                     btadmin::ListTablesRequest const&,
-                                     btadmin::ListTablesResponse*) {
+  auto mock_recoverable_failure = [this](grpc::ClientContext* context,
+                                         btadmin::ListTablesRequest const&,
+                                         btadmin::ListTablesResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables",
-        google::cloud::internal::ApiClientHeader()));
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
-  auto batch1 = create_list_tables_lambda("token-001", "", {"t2", "t3"});
+  auto batch0 = CreateListTablesMock("", "token-001", {"t0", "t1"});
+  auto batch1 = CreateListTablesMock("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*client_, ListTables)
       .WillOnce(mock_recoverable_failure)
       .WillOnce(batch0)
@@ -326,12 +354,11 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
 TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   TableAdmin tested(client_, "the-instance", LimitedErrorCountRetryPolicy(3),
                     ExponentialBackoffPolicy(10_ms, 10_min));
-  auto mock_recoverable_failure = [](grpc::ClientContext* context,
-                                     btadmin::ListTablesRequest const&,
-                                     btadmin::ListTablesResponse*) {
+  auto mock_recoverable_failure = [this](grpc::ClientContext* context,
+                                         btadmin::ListTablesRequest const&,
+                                         btadmin::ListTablesResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables",
-        google::cloud::internal::ApiClientHeader()));
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListTables).WillRepeatedly(mock_recoverable_failure);
@@ -362,7 +389,7 @@ TEST_F(TableAdminTest, CreateTableSimple) {
     initial_splits { key: 'p' }
   )pb";
   auto mock_create_table =
-      MockRpcFactory<btadmin::CreateTableRequest, btadmin::Table>::Create(
+      CreateMockRpc<btadmin::CreateTableRequest, btadmin::Table>(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable");
   EXPECT_CALL(*client_, CreateTable).WillOnce(mock_create_table);
@@ -442,7 +469,7 @@ TEST_F(TableAdminTest, GetTableSimple) {
     name: 'projects/the-project/instances/the-instance/tables/the-table'
     view: SCHEMA_VIEW
   )pb";
-  auto mock = MockRpcFactory<btadmin::GetTableRequest, btadmin::Table>::Create(
+  auto mock = CreateMockRpc<btadmin::GetTableRequest, btadmin::Table>(
       expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.GetTable");
   EXPECT_CALL(*client_, GetTable)
       .WillOnce(
@@ -490,7 +517,7 @@ TEST_F(TableAdminTest, DeleteTable) {
   std::string expected_text = R"pb(
     name: 'projects/the-project/instances/the-instance/tables/the-table'
   )pb";
-  auto mock = MockRpcFactory<btadmin::DeleteTableRequest, Empty>::Create(
+  auto mock = CreateMockRpc<btadmin::DeleteTableRequest, Empty>(
       expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable");
   EXPECT_CALL(*client_, DeleteTable).WillOnce(mock);
 
@@ -516,7 +543,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
 /// case.
 TEST_F(TableAdminTest, ListBackups) {
   TableAdmin tested(client_, kInstanceId);
-  auto mock_list_backups = create_list_backups_lambda("", "", {"b0", "b1"});
+  auto mock_list_backups = CreateListBackupsMock("", "", {"b0", "b1"});
   EXPECT_CALL(*client_, ListBackups).WillOnce(mock_list_backups);
 
   // After all the setup, make the actual call we want to test.
@@ -532,16 +559,15 @@ TEST_F(TableAdminTest, ListBackups) {
 /// @test Verify that `bigtable::TableAdmin::ListBackups` handles failures.
 TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
   TableAdmin tested(client_, "the-instance");
-  auto mock_recoverable_failure = [](grpc::ClientContext* context,
-                                     btadmin::ListBackupsRequest const&,
-                                     btadmin::ListBackupsResponse*) {
+  auto mock_recoverable_failure = [this](grpc::ClientContext* context,
+                                         btadmin::ListBackupsRequest const&,
+                                         btadmin::ListBackupsResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups",
-        google::cloud::internal::ApiClientHeader()));
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto batch0 = create_list_backups_lambda("", "token-001", {"b0", "b1"});
-  auto batch1 = create_list_backups_lambda("token-001", "", {"b2", "b3"});
+  auto batch0 = CreateListBackupsMock("", "token-001", {"b0", "b1"});
+  auto batch1 = CreateListBackupsMock("token-001", "", {"b2", "b3"});
   EXPECT_CALL(*client_, ListBackups)
       .WillOnce(mock_recoverable_failure)
       .WillOnce(batch0)
@@ -581,12 +607,11 @@ TEST_F(TableAdminTest, ListBackupsUnrecoverableFailures) {
 TEST_F(TableAdminTest, ListBackupsTooManyFailures) {
   TableAdmin tested(client_, "the-instance", LimitedErrorCountRetryPolicy(3),
                     ExponentialBackoffPolicy(10_ms, 10_min));
-  auto mock_recoverable_failure = [](grpc::ClientContext* context,
-                                     btadmin::ListBackupsRequest const&,
-                                     btadmin::ListBackupsResponse*) {
+  auto mock_recoverable_failure = [this](grpc::ClientContext* context,
+                                         btadmin::ListBackupsRequest const&,
+                                         btadmin::ListBackupsResponse*) {
     EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups",
-        google::cloud::internal::ApiClientHeader()));
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListBackups"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListBackups).WillRepeatedly(mock_recoverable_failure);
@@ -600,10 +625,8 @@ TEST_F(TableAdminTest, GetBackupSimple) {
   std::string expected_text = R"pb(
     name: 'projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup'
   )pb";
-  auto mock =
-      MockRpcFactory<btadmin::GetBackupRequest, btadmin::Backup>::Create(
-          expected_text,
-          "google.bigtable.admin.v2.BigtableTableAdmin.GetBackup");
+  auto mock = CreateMockRpc<btadmin::GetBackupRequest, btadmin::Backup>(
+      expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.GetBackup");
   EXPECT_CALL(*client_, GetBackup)
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
@@ -654,10 +677,9 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
     update_mask: { paths: 'expire_time' }
   )pb";
 
-  auto mock =
-      MockRpcFactory<btadmin::UpdateBackupRequest, btadmin::Backup>::Create(
-          expected_text,
-          "google.bigtable.admin.v2.BigtableTableAdmin.UpdateBackup");
+  auto mock = CreateMockRpc<btadmin::UpdateBackupRequest, btadmin::Backup>(
+      expected_text,
+      "google.bigtable.admin.v2.BigtableTableAdmin.UpdateBackup");
   EXPECT_CALL(*client_, UpdateBackup)
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
@@ -722,7 +744,7 @@ TEST_F(TableAdminTest, DeleteBackup) {
   std::string expected_text = R"pb(
     name: 'projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup'
   )pb";
-  auto mock = MockRpcFactory<btadmin::DeleteBackupRequest, Empty>::Create(
+  auto mock = CreateMockRpc<btadmin::DeleteBackupRequest, Empty>(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DeleteBackup");
   EXPECT_CALL(*client_, DeleteBackup).WillOnce(mock).WillOnce(mock);
@@ -770,9 +792,8 @@ TEST_F(TableAdminTest, ModifyColumnFamilies) {
       update { gc_rule { max_age { seconds: 86400 } } }
     }
   )pb";
-  auto mock = MockRpcFactory<btadmin::ModifyColumnFamiliesRequest,
-                             btadmin::Table>::
-      Create(
+  auto mock =
+      CreateMockRpc<btadmin::ModifyColumnFamiliesRequest, btadmin::Table>(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies");
   EXPECT_CALL(*client_, ModifyColumnFamilies).WillOnce(mock);
@@ -812,7 +833,7 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
     name: 'projects/the-project/instances/the-instance/tables/the-table'
     row_key_prefix: 'foobar'
   )pb";
-  auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
+  auto mock = CreateMockRpc<btadmin::DropRowRangeRequest, Empty>(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
   EXPECT_CALL(*client_, DropRowRange).WillOnce(mock);
@@ -843,7 +864,7 @@ TEST_F(TableAdminTest, DropAllRows) {
     name: 'projects/the-project/instances/the-instance/tables/the-table'
     delete_all_data_from_table: true
   )pb";
-  auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
+  auto mock = CreateMockRpc<btadmin::DropRowRangeRequest, Empty>(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
   EXPECT_CALL(*client_, DropRowRange).WillOnce(mock);
@@ -875,11 +896,11 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
   std::string expected_text = R"pb(
     name: 'projects/the-project/instances/the-instance/tables/the-table'
   )pb";
-  auto mock = MockRpcFactory<btadmin::GenerateConsistencyTokenRequest,
-                             btadmin::GenerateConsistencyTokenResponse>::
-      Create(expected_text,
-             "google.bigtable.admin.v2.BigtableTableAdmin."
-             "GenerateConsistencyToken");
+  auto mock = CreateMockRpc<btadmin::GenerateConsistencyTokenRequest,
+                            btadmin::GenerateConsistencyTokenResponse>(
+      expected_text,
+      "google.bigtable.admin.v2.BigtableTableAdmin."
+      "GenerateConsistencyToken");
   EXPECT_CALL(*client_, GenerateConsistencyToken).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
@@ -910,10 +931,10 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
     name: 'projects/the-project/instances/the-instance/tables/the-table'
     consistency_token: 'test-token'
   )pb";
-  auto mock = MockRpcFactory<btadmin::CheckConsistencyRequest,
-                             btadmin::CheckConsistencyResponse>::
-      Create(expected_text,
-             "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency");
+  auto mock = CreateMockRpc<btadmin::CheckConsistencyRequest,
+                            btadmin::CheckConsistencyResponse>(
+      expected_text,
+      "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency");
   EXPECT_CALL(*client_, CheckConsistency).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
@@ -938,7 +959,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 /// @test Verify positive scenario for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicy) {
   TableAdmin tested(client_, "the-instance");
-  auto mock_policy = create_get_policy_mock();
+  auto mock_policy = CreateGetPolicyMock();
   EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
@@ -951,7 +972,7 @@ TEST_F(TableAdminTest, GetIamPolicy) {
 /// @test Verify positive scenario for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyForBackup) {
   TableAdmin tested(client_, "the-instance");
-  auto mock_policy = create_get_policy_mock_for_backup("the-backup");
+  auto mock_policy = CreateGetPolicyMockForBackup("the-backup");
   EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
@@ -980,15 +1001,14 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
 
   TableAdmin tested(client_, "the-instance");
 
-  auto mock_recoverable_failure = [](grpc::ClientContext* context,
-                                     iamproto::GetIamPolicyRequest const&,
-                                     iamproto::Policy*) {
+  auto mock_recoverable_failure = [this](grpc::ClientContext* context,
+                                         iamproto::GetIamPolicyRequest const&,
+                                         iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto mock_policy = create_get_policy_mock();
+  auto mock_policy = CreateGetPolicyMock();
 
   EXPECT_CALL(*client_, GetIamPolicy)
       .WillOnce(mock_recoverable_failure)
@@ -1004,7 +1024,7 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
 /// @test Verify positive scenario for TableAdmin::SetIamPolicy.
 TEST_F(TableAdminTest, SetIamPolicy) {
   TableAdmin tested(client_, "the-instance");
-  auto mock_policy = create_policy_with_params();
+  auto mock_policy = CreatePolicyMockWithParams();
   EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
@@ -1021,7 +1041,7 @@ TEST_F(TableAdminTest, SetIamPolicy) {
 /// @test Verify positive scenario for TableAdmin::SetIamPolicy.
 TEST_F(TableAdminTest, SetIamPolicyForBackup) {
   TableAdmin tested(client_, "the-instance");
-  auto mock_policy = create_policy_with_params_for_backup("the-backup");
+  auto mock_policy = CreatePolicyWithParamsForBackup("the-backup");
   EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
@@ -1056,15 +1076,14 @@ TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
 
   TableAdmin tested(client_, "the-instance");
 
-  auto mock_recoverable_failure = [](grpc::ClientContext* context,
-                                     iamproto::SetIamPolicyRequest const&,
-                                     iamproto::Policy*) {
+  auto mock_recoverable_failure = [this](grpc::ClientContext* context,
+                                         iamproto::SetIamPolicyRequest const&,
+                                         iamproto::Policy*) {
     EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
-        google::cloud::internal::ApiClientHeader()));
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto mock_policy = create_policy_with_params();
+  auto mock_policy = CreatePolicyMockWithParams();
 
   EXPECT_CALL(*client_, SetIamPolicy)
       .WillOnce(mock_recoverable_failure)
@@ -1087,13 +1106,12 @@ TEST_F(TableAdminTest, TestIamPermissions) {
   TableAdmin tested(client_, "the-instance");
 
   auto mock_permission_set =
-      [](grpc::ClientContext* context,
-         iamproto::TestIamPermissionsRequest const&,
-         iamproto::TestIamPermissionsResponse* response) {
+      [this](grpc::ClientContext* context,
+             iamproto::TestIamPermissionsRequest const&,
+             iamproto::TestIamPermissionsResponse* response) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader()));
+            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions"));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -1117,13 +1135,13 @@ TEST_F(TableAdminTest, TestIamPermissionsForBackup) {
   std::string const& backup_id = "the-backup";
 
   auto mock_permission_set =
-      [backup_id](grpc::ClientContext* context,
-                  iamproto::TestIamPermissionsRequest const&,
-                  iamproto::TestIamPermissionsResponse* response) {
+      [this, backup_id](grpc::ClientContext* context,
+                        iamproto::TestIamPermissionsRequest const&,
+                        iamproto::TestIamPermissionsResponse* response) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader(), backup_id));
+            backup_id));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -1160,24 +1178,23 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
   namespace iamproto = ::google::iam::v1;
   TableAdmin tested(client_, "the-instance");
 
-  auto mock_recoverable_failure = [](grpc::ClientContext* context,
-                                     iamproto::TestIamPermissionsRequest const&,
-                                     iamproto::TestIamPermissionsResponse*) {
-    EXPECT_STATUS_OK(IsContextMDValid(
-        *context,
-        "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-        google::cloud::internal::ApiClientHeader()));
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  };
-
-  auto mock_permission_set =
-      [](grpc::ClientContext* context,
-         iamproto::TestIamPermissionsRequest const&,
-         iamproto::TestIamPermissionsResponse* response) {
+  auto mock_recoverable_failure =
+      [this](grpc::ClientContext* context,
+             iamproto::TestIamPermissionsRequest const&,
+             iamproto::TestIamPermissionsResponse*) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
-            google::cloud::internal::ApiClientHeader()));
+            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions"));
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+      };
+
+  auto mock_permission_set =
+      [this](grpc::ClientContext* context,
+             iamproto::TestIamPermissionsRequest const&,
+             iamproto::TestIamPermissionsResponse* response) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions"));
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
@@ -1229,22 +1246,22 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
         *status = grpc::Status::OK;
       });
 
-  auto make_invoke = [](std::unique_ptr<MockAsyncCheckConsistencyResponse>& r) {
-    return [&r](grpc::ClientContext* context,
-                btadmin::CheckConsistencyRequest const& request,
-                grpc::CompletionQueue*) {
-      EXPECT_STATUS_OK(IsContextMDValid(
-          *context,
-          "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency",
-          google::cloud::internal::ApiClientHeader()));
-      EXPECT_EQ(
-          "projects/the-project/instances/test-instance/tables/test-table",
-          request.name());
-      // This is safe, see comments in MockAsyncResponseReader.
-      return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-          btadmin::CheckConsistencyResponse>>(r.get());
-    };
-  };
+  auto make_invoke =
+      [this](std::unique_ptr<MockAsyncCheckConsistencyResponse>& r) {
+        return [this, &r](grpc::ClientContext* context,
+                          btadmin::CheckConsistencyRequest const& request,
+                          grpc::CompletionQueue*) {
+          EXPECT_STATUS_OK(IsContextMDValid(
+              *context,
+              "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency"));
+          EXPECT_EQ(
+              "projects/the-project/instances/test-instance/tables/test-table",
+              request.name());
+          // This is safe, see comments in MockAsyncResponseReader.
+          return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+              btadmin::CheckConsistencyResponse>>(r.get());
+        };
+      };
 
   EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   EXPECT_CALL(*client_, AsyncCheckConsistency)
@@ -1320,8 +1337,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
                     grpc::CompletionQueue*) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency",
-            google::cloud::internal::ApiClientHeader()));
+            "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency"));
         EXPECT_EQ(
             "projects/the-project/instances/test-instance/tables/test-table",
             request.name());

@@ -28,7 +28,7 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 namespace gcsa = ::google::spanner::admin::instance::v1;
 
 class InstanceAdminMetadataTest : public ::testing::Test {
@@ -36,17 +36,22 @@ class InstanceAdminMetadataTest : public ::testing::Test {
   void SetUp() override {
     mock_ = std::make_shared<spanner_testing::MockInstanceAdminStub>();
     InstanceAdminMetadata stub(mock_);
-    expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
   }
 
   void TearDown() override {}
+
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
   std::shared_ptr<spanner_testing::MockInstanceAdminStub> mock_;
-  std::string expected_api_client_header_;
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 TEST_F(InstanceAdminMetadataTest, GetInstance) {
@@ -56,8 +61,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstance) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "GetInstance",
-                             expected_api_client_header_));
+                             "GetInstance"));
         return TransientError();
       });
 
@@ -79,8 +83,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "GetInstanceConfig",
-                             expected_api_client_header_));
+                             "GetInstanceConfig"));
         return TransientError();
       });
 
@@ -100,8 +103,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "ListInstanceConfigs",
-                             expected_api_client_header_));
+                             "ListInstanceConfigs"));
         return TransientError();
       });
 
@@ -121,8 +123,7 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "CreateInstance",
-                             expected_api_client_header_));
+                             "CreateInstance"));
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -145,8 +146,7 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "UpdateInstance",
-                             expected_api_client_header_));
+                             "UpdateInstance"));
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -170,8 +170,7 @@ TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "DeleteInstance",
-                             expected_api_client_header_));
+                             "DeleteInstance"));
         return TransientError();
       });
 
@@ -193,8 +192,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstances) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "ListInstances",
-                             expected_api_client_header_));
+                             "ListInstances"));
         return TransientError();
       });
 
@@ -213,8 +211,7 @@ TEST_F(InstanceAdminMetadataTest, GetIamPolicy) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "GetIamPolicy",
-                             expected_api_client_header_));
+                             "GetIamPolicy"));
         return TransientError();
       });
 
@@ -236,8 +233,7 @@ TEST_F(InstanceAdminMetadataTest, SetIamPolicy) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "SetIamPolicy",
-                             expected_api_client_header_));
+                             "SetIamPolicy"));
         return TransientError();
       });
 
@@ -259,8 +255,7 @@ TEST_F(InstanceAdminMetadataTest, TestIamPermissions) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
-                             "TestIamPermissions",
-                             expected_api_client_header_));
+                             "TestIamPermissions"));
         return TransientError();
       });
 

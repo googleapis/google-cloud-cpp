@@ -79,7 +79,8 @@ TEST(PublisherConnectionTest, Metadata) {
       .WillRepeatedly([&](google::cloud::CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext> context,
                           google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
+        google::cloud::testing_util::ValidateMetadataFixture fixture;
+        EXPECT_STATUS_OK(fixture.IsContextMDValid(
             *context, "google.pubsub.v1.Publisher.Publish",
             google::cloud::internal::ApiClientHeader()));
         google::pubsub::v1::PublishResponse response;

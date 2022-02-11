@@ -71,7 +71,8 @@ TEST(SchemaAdminConnectionTest, Create) {
                     google::pubsub::v1::CreateSchemaRequest const&) {
         // Use this test to also verify the metadata decorator is automatically
         // configured.
-        EXPECT_THAT(google::cloud::testing_util::IsContextMDValid(
+        google::cloud::testing_util::ValidateMetadataFixture fixture;
+        EXPECT_THAT(fixture.IsContextMDValid(
                         context, "google.pubsub.v1.SchemaService.CreateSchema",
                         google::cloud::internal::ApiClientHeader()),
                     IsOk());
