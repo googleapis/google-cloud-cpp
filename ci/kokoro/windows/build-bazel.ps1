@@ -1,4 +1,4 @@
-# !/usr/bin/env powershell
+#!/usr/bin/env powershell
 #
 # Copyright 2020 Google LLC
 #
@@ -133,35 +133,10 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart prorams"
+# Import the functions and variables used to run integration tests
+. ci/kokoro/windows/lib/integration.ps1
 
-function Integration-Tests-Enabled {
-    if ((Test-Path env:KOKORO_GFILE_DIR) -and
-       (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
-        return $True
-    }
-    return $False
-}
-
-function Download-Roots-Pem {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "Downloading roots.pem [$_]"
-    ForEach($attempt in (1, 2, 3)) {
-        try {
-            (New-Object System.Net.WebClient).Downloadfile(
-                    'https://pki.google.com/roots.pem',
-                    "${env:KOKORO_GFILE_DIR}/roots.pem")
-            return
-        } catch {
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
-        }
-        Start-Sleep -Seconds (60 * $attempt)
-    }
-    Write-Host -ForegroundColor Red "cannot download roots.pem file."
-    Exit 1
-}
-
-function Run-REST-Quickstart {
+function Invoke-REST-Quickstart {
     bazelisk $common_flags run $build_flags `
       //google/cloud/storage/quickstart:quickstart -- `
       "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
@@ -171,7 +146,7 @@ function Run-REST-Quickstart {
     }
 }
 
-function Run-gRPC-Quickstart {
+function Invoke-gRPC-Quickstart {
     bazelisk $common_flags run $build_flags `
       //google/cloud/pubsub/quickstart:quickstart -- `
       "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
@@ -181,16 +156,13 @@ function Run-gRPC-Quickstart {
     }
 }
 
-$PROJECT_ROOT = (Get-Item -Path ".\" -Verbose).FullName
-if (Integration-Tests-Enabled) {
-    $integration_tests_config="${PROJECT_ROOT}/ci/etc/integration-tests-config.ps1"
-    . "${integration_tests_config}"
-
-    Download-Roots-Pem
+if (Test-Integration-Enabled) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart prorams"
+    Install-Roots-Pem
     ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
     ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
-    Run-REST-Quickstart
-    Run-gRPC-Quickstart
+    Invoke-REST-Quickstart
+    Invoke-gRPC-Quickstart
 }
 
 # Shutdown the Bazel server to release any locks
