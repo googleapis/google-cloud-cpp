@@ -325,6 +325,18 @@ endif (BUILD_TESTING)
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(samples)
+
+    add_executable(pubsub_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(pubsub_quickstart PRIVATE google-cloud-cpp::pubsub)
+    google_cloud_cpp_add_common_options(pubsub_quickstart)
+    add_test(
+        NAME pubsub_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:pubsub_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC)
+    set_tests_properties(pubsub_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

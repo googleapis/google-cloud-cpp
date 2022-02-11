@@ -34,6 +34,7 @@ this library.
 <!-- inject-quickstart-start -->
 ```cc
 #include "google/cloud/iam/iam_client.h"
+#include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -43,23 +44,19 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  std::string const project_id = argv[1];
-
   // Create a namespace alias to make the code easier to read.
   namespace iam = ::google::cloud::iam;
   iam::IAMClient client(iam::MakeIAMConnection());
-  std::cout << "Service Accounts for project: " << project_id << "\n";
+  auto const project = google::cloud::Project(argv[1]);
+  std::cout << "Service Accounts for project: " << project.project_id() << "\n";
   int count = 0;
-  for (auto const& service_account :
-       client.ListServiceAccounts("projects/" + project_id)) {
-    if (!service_account) {
-      throw std::runtime_error(service_account.status().message());
-    }
-    std::cout << service_account->name() << "\n";
+  for (auto const& sa : client.ListServiceAccounts(project.FullName())) {
+    if (!sa) throw std::runtime_error(sa.status().message());
+    std::cout << sa->name() << "\n";
     ++count;
   }
-
   if (count == 0) std::cout << "No Service Accounts found.\n";
+
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
