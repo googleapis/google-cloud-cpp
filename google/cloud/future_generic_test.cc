@@ -762,13 +762,19 @@ TEST(FutureTestInt, CreateInvalid) {
 }
 
 struct FromInt {
-  FromInt(int x) {}
+  explicit FromInt(int) {}
 };
 
 /// @test Verify we can create futures from convertible types.
 TEST(FutureTestConvertingConstructor, ConvertFuture) {
   promise<int> p0;
   future<FromInt> f0{p0.get_future()};
+}
+
+TEST(FutureTestConvertingConstructor, ConvertFutureThen) {
+  promise<int> p0;
+  future<FromInt> f0 =
+      p0.get_future().then([](future<int> f) -> future<FromInt> { return f; });
 }
 
 }  // namespace
