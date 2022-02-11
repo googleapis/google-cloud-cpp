@@ -16,7 +16,7 @@
 
 $PROJECT_ROOT = (Get-Item -Path ".\" -Verbose).FullName
 $integration_tests_config="${PROJECT_ROOT}/ci/etc/integration-tests-config.ps1"
-. "${integration_tests_config}"    
+. "${integration_tests_config}"
 
 function Test-Integration-Enabled {
     if ((Test-Path env:KOKORO_GFILE_DIR) -and
