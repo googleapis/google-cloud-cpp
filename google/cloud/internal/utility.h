@@ -89,12 +89,6 @@ using make_integer_sequence =
 template <size_t N>
 using make_index_sequence = make_integer_sequence<size_t, N>;
 
-/**
- * Backport of std::enable_if_t from c++14
- */
-template <bool Enable, typename T = void>
-using enable_if_t = typename std::enable_if<Enable, T>::type;
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
