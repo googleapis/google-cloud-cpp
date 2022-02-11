@@ -25,29 +25,42 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
 class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
- public:
+ protected:
   TableCheckAndMutateRowTest() : TableTestFixture(CompletionQueue{}) {}
-};
 
-auto mock_check_and_mutate = [](grpc::Status const& status) {
-  return [status](grpc::ClientContext* context,
-                  google::bigtable::v2::CheckAndMutateRowRequest const&,
-                  google::bigtable::v2::CheckAndMutateRowResponse*) {
-    EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.v2.Bigtable.CheckAndMutateRow",
-        google::cloud::internal::ApiClientHeader()));
-    return status;
-  };
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
+
+  using MockCheckAndMutate = std::function<grpc::Status(
+      grpc::ClientContext* context,
+      google::bigtable::v2::CheckAndMutateRowRequest const&,
+      google::bigtable::v2::CheckAndMutateRowResponse*)>;
+
+  MockCheckAndMutate CreateMockCheckAndMutate(grpc::Status const& status) {
+    return [this, status](grpc::ClientContext* context,
+                          google::bigtable::v2::CheckAndMutateRowRequest const&,
+                          google::bigtable::v2::CheckAndMutateRowResponse*) {
+      EXPECT_STATUS_OK(IsContextMDValid(
+          *context, "google.bigtable.v2.Bigtable.CheckAndMutateRow"));
+      return status;
+    };
+  }
+
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
 TEST_F(TableCheckAndMutateRowTest, Simple) {
   EXPECT_CALL(*client_, CheckAndMutateRow)
-      .WillOnce(mock_check_and_mutate(grpc::Status::OK));
+      .WillOnce(CreateMockCheckAndMutate(grpc::Status::OK));
 
   auto mut = table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
@@ -61,7 +74,7 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
 /// @test Verify that Table::CheckAndMutateRow() raises an on failures.
 TEST_F(TableCheckAndMutateRowTest, Failure) {
   EXPECT_CALL(*client_, CheckAndMutateRow)
-      .WillRepeatedly(mock_check_and_mutate(
+      .WillRepeatedly(CreateMockCheckAndMutate(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_FALSE(table_.CheckAndMutateRow(

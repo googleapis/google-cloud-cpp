@@ -29,7 +29,7 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 class DatabaseAdminMetadataTest : public ::testing::Test {
@@ -37,17 +37,22 @@ class DatabaseAdminMetadataTest : public ::testing::Test {
   void SetUp() override {
     mock_ = std::make_shared<spanner_testing::MockDatabaseAdminStub>();
     DatabaseAdminMetadata stub(mock_);
-    expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
   }
 
   void TearDown() override {}
+
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
   std::shared_ptr<spanner_testing::MockDatabaseAdminStub> mock_;
-  std::string expected_api_client_header_;
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
@@ -58,8 +63,7 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "CreateDatabase",
-                             expected_api_client_header_));
+                             "CreateDatabase"));
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -84,8 +88,7 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "UpdateDatabaseDdl",
-                             expected_api_client_header_));
+                             "UpdateDatabaseDdl"));
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -111,8 +114,7 @@ TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "DropDatabase",
-                             expected_api_client_header_));
+                             "DropDatabase"));
         return TransientError();
       });
 
@@ -136,8 +138,7 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListDatabases",
-                             expected_api_client_header_));
+                             "ListDatabases"));
         return TransientError();
       });
 
@@ -160,8 +161,7 @@ TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "RestoreDatabase",
-                             expected_api_client_header_));
+                             "RestoreDatabase"));
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -185,8 +185,7 @@ TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "GetIamPolicy",
-                             expected_api_client_header_));
+                             "GetIamPolicy"));
         return TransientError();
       });
 
@@ -210,8 +209,7 @@ TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "SetIamPolicy",
-                             expected_api_client_header_));
+                             "SetIamPolicy"));
         return TransientError();
       });
 
@@ -241,8 +239,7 @@ TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "TestIamPermissions",
-                             expected_api_client_header_));
+                             "TestIamPermissions"));
         return TransientError();
       });
 
@@ -267,8 +264,7 @@ TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "CreateBackup",
-                             expected_api_client_header_));
+                             "CreateBackup"));
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -292,8 +288,7 @@ TEST_F(DatabaseAdminMetadataTest, GetBackup) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.spanner.admin.database.v1.DatabaseAdmin."
-                "GetBackup",
-                expected_api_client_header_));
+                "GetBackup"));
             return TransientError();
           });
 
@@ -317,8 +312,7 @@ TEST_F(DatabaseAdminMetadataTest, DeleteBackup) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "DeleteBackup",
-                             expected_api_client_header_));
+                             "DeleteBackup"));
         return TransientError();
       });
 
@@ -342,8 +336,7 @@ TEST_F(DatabaseAdminMetadataTest, ListBackups) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListBackups",
-                             expected_api_client_header_));
+                             "ListBackups"));
         return TransientError();
       });
 
@@ -365,8 +358,7 @@ TEST_F(DatabaseAdminMetadataTest, UpdateBackup) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "UpdateBackup",
-                             expected_api_client_header_));
+                             "UpdateBackup"));
         return TransientError();
       });
 
@@ -390,8 +382,7 @@ TEST_F(DatabaseAdminMetadataTest, ListBackupOperations) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListBackupOperations",
-                             expected_api_client_header_));
+                             "ListBackupOperations"));
         return TransientError();
       });
 
@@ -413,8 +404,7 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabaseOperations) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListDatabaseOperations",
-                             expected_api_client_header_));
+                             "ListDatabaseOperations"));
         return TransientError();
       });
 
@@ -435,8 +425,7 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
                        std::unique_ptr<grpc::ClientContext> context,
                        google::longrunning::GetOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.longrunning.Operations.GetOperation",
-            expected_api_client_header_));
+            *context, "google.longrunning.Operations.GetOperation"));
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -456,8 +445,7 @@ TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
                        std::unique_ptr<grpc::ClientContext> context,
                        google::longrunning::CancelOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.longrunning.Operations.CancelOperation",
-            expected_api_client_header_));
+            *context, "google.longrunning.Operations.CancelOperation"));
         return make_ready_future(TransientError());
       });
 

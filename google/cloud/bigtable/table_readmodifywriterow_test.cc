@@ -28,34 +28,41 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 
 /// Define helper types and functions for this test.
 class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {
  public:
   TableReadModifyWriteTest() : TableTestFixture(CompletionQueue{}) {}
-};
 
-auto create_rules_lambda = [](std::string const& expected_request_string,
-                              std::string const& generated_response_string) {
-  return [expected_request_string, generated_response_string](
-             grpc::ClientContext* context,
-             btproto::ReadModifyWriteRowRequest const& request,
-             btproto::ReadModifyWriteRowResponse* response) {
-    EXPECT_STATUS_OK(IsContextMDValid(
-        *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-        google::cloud::internal::ApiClientHeader()));
-    btproto::ReadModifyWriteRowRequest expected_request;
-    EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
-        expected_request_string, &expected_request));
-    EXPECT_THAT(expected_request, IsProtoEqual(request));
+  using ReadWriteMock = std::function<grpc::Status(
+      grpc::ClientContext*, btproto::ReadModifyWriteRowRequest const&,
+      btproto::ReadModifyWriteRowResponse*)>;
 
-    EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
-        generated_response_string, response));
+  ReadWriteMock CreateRules(std::string const& expected_request_string,
+                            std::string const& generated_response_string) {
+    return [this, expected_request_string, generated_response_string](
+               grpc::ClientContext* context,
+               btproto::ReadModifyWriteRowRequest const& request,
+               btproto::ReadModifyWriteRowResponse* response) {
+      EXPECT_STATUS_OK(validate_metadata_fixture_.IsContextMDValid(
+          *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
+          google::cloud::internal::ApiClientHeader()));
+      btproto::ReadModifyWriteRowRequest expected_request;
+      EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
+          expected_request_string, &expected_request));
+      EXPECT_THAT(expected_request, IsProtoEqual(request));
 
-    return grpc::Status::OK;
-  };
+      EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
+          generated_response_string, response));
+
+      return grpc::Status::OK;
+    };
+  }
+
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 TEST_F(TableReadModifyWriteTest, MultipleAppendValueTest) {
@@ -92,8 +99,7 @@ row {
 }
 )""";
 
-  auto mock_read_modify_write_row =
-      create_rules_lambda(request_text, response_text);
+  auto mock_read_modify_write_row = CreateRules(request_text, response_text);
 
   EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillOnce(mock_read_modify_write_row);
@@ -162,8 +168,7 @@ TEST_F(TableReadModifyWriteTest, MultipleIncrementAmountTest) {
                         }
                         )""";
 
-  auto mock_read_modify_write_row =
-      create_rules_lambda(request_text, response_text);
+  auto mock_read_modify_write_row = CreateRules(request_text, response_text);
 
   EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillOnce(mock_read_modify_write_row);
@@ -236,8 +241,7 @@ TEST_F(TableReadModifyWriteTest, MultipleMixedRuleTest) {
                         }
                         )""";
 
-  auto mock_read_modify_write_row =
-      create_rules_lambda(request_text, response_text);
+  auto mock_read_modify_write_row = CreateRules(request_text, response_text);
 
   EXPECT_CALL(*client_, ReadModifyWriteRow)
       .WillOnce(mock_read_modify_write_row);
@@ -270,7 +274,8 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
       .WillRepeatedly([](grpc::ClientContext* context,
                          google::bigtable::v2::ReadModifyWriteRowRequest const&,
                          google::bigtable::v2::ReadModifyWriteRowResponse*) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+        ::google::cloud::testing_util::ValidateMetadataFixture fixture;
+        EXPECT_STATUS_OK(fixture.IsContextMDValid(
             *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
             google::cloud::internal::ApiClientHeader()));
         return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");

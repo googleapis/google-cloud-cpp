@@ -30,9 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::iam::credentials::v1::GenerateAccessTokenRequest;
 using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 using ::testing::Contains;
@@ -49,11 +49,18 @@ class MockMinimalIamCredentialsStub : public MinimalIamCredentialsStub {
 
 class MinimalIamCredentialsStubTest : public ::testing::Test {
  protected:
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
+
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
   testing_util::ScopedLog log_;
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenLogging) {
@@ -125,13 +132,12 @@ TEST_F(MinimalIamCredentialsStubTest,
        DISABLED_AsyncGenerateAccessTokenMetadata) {
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
   EXPECT_CALL(*mock, AsyncGenerateAccessToken)
-      .WillOnce([](CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext> context,
-                   GenerateAccessTokenRequest const&) {
+      .WillOnce([this](CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       GenerateAccessTokenRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
-            "google.iam.credentials.v1.IAMCredentials.GenerateAccessToken",
-            google::cloud::internal::ApiClientHeader()));
+            "google.iam.credentials.v1.IAMCredentials.GenerateAccessToken"));
         GenerateAccessTokenResponse response;
         response.set_access_token("test-only-token");
         return make_ready_future(make_status_or(response));

@@ -33,9 +33,9 @@ namespace {
 namespace btproto = ::google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
 
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
@@ -167,12 +167,12 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
       EXPECT_CALL(*reader, StartCall).Times(1);
 
       EXPECT_CALL(*client_, PrepareAsyncMutateRows)
-          .WillOnce([reader, exchange](grpc::ClientContext* context,
-                                       btproto::MutateRowsRequest const& r,
-                                       grpc::CompletionQueue*) {
+          .WillOnce([this, reader, exchange](
+                        grpc::ClientContext* context,
+                        btproto::MutateRowsRequest const& r,
+                        grpc::CompletionQueue*) {
             EXPECT_STATUS_OK(IsContextMDValid(
-                *context, "google.bigtable.v2.Bigtable.MutateRows",
-                google::cloud::internal::ApiClientHeader()));
+                *context, "google.bigtable.v2.Bigtable.MutateRows"));
             EXPECT_EQ(exchange.req.size(), r.entries_size());
             for (std::size_t i = 0; i != exchange.req.size(); ++i) {
               google::bigtable::v2::MutateRowsRequest::Entry expected;
@@ -246,7 +246,16 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
 
   std::size_t NumOperationsOutstanding() { return cq_impl_->size(); }
 
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
+
   std::unique_ptr<MutationBatcher> batcher_;
+
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 TEST(OptionsTest, Defaults) {

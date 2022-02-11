@@ -39,7 +39,7 @@ using ::google::cloud::bigtable::Row;
 using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockReadRowsReader;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
-using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::_;
 using ::testing::An;
 using ::testing::Contains;
@@ -191,9 +191,10 @@ TEST_F(RowReaderTest, ReadOneRowAppProfileId) {
   EXPECT_CALL(*client_, ReadRows)
       .WillOnce([expected_id](grpc::ClientContext* context,
                               ReadRowsRequest const& req) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                             google::cloud::internal::ApiClientHeader()));
+        ValidateMetadataFixture fixture;
+        EXPECT_STATUS_OK(fixture.IsContextMDValid(
+            *context, "google.bigtable.v2.Bigtable.ReadRows",
+            google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ(expected_id, req.app_profile_id());
         auto stream = absl::make_unique<MockReadRowsReader>(
             "google.bigtable.v2.Bigtable.ReadRows");

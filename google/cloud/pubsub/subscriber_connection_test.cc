@@ -31,8 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -222,9 +222,10 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
           [&](google::cloud::CompletionQueue& cq,
               std::unique_ptr<grpc::ClientContext> context,
               google::pubsub::v1::StreamingPullRequest const& request) {
-            EXPECT_STATUS_OK(
-                IsContextMDValid(*context, "google.pubsub.v1.Subscriber.Pull",
-                                 google::cloud::internal::ApiClientHeader()));
+            ValidateMetadataFixture fixture;
+            EXPECT_STATUS_OK(fixture.IsContextMDValid(
+                *context, "google.pubsub.v1.Subscriber.Pull",
+                google::cloud::internal::ApiClientHeader()));
             return FakeAsyncStreamingPull(cq, std::move(context), request);
           });
 

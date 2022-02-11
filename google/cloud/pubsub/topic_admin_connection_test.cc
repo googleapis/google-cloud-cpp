@@ -72,7 +72,8 @@ TEST(TopicAdminConnectionTest, Metadata) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext& context,
                     google::pubsub::v1::Topic const& request) {
-        EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
+        ::google::cloud::testing_util::ValidateMetadataFixture fixture;
+        EXPECT_STATUS_OK(fixture.IsContextMDValid(
             context, "google.pubsub.v1.Publisher.CreateTopic",
             google::cloud::internal::ApiClientHeader()));
         return make_status_or(request);

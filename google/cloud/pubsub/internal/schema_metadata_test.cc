@@ -28,17 +28,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::pubsub::Schema;
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 
-TEST(SchemaMetadataTest, CreateSchema) {
+class SchemaMetadataTest : public ::testing::Test {
+ protected:
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
+
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
+};
+
+TEST_F(SchemaMetadataTest, CreateSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, CreateSchema)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::CreateSchemaRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::CreateSchemaRequest const&) {
         EXPECT_THAT(IsContextMDValid(
-                        context, "google.pubsub.v1.SchemaService.CreateSchema",
-                        google::cloud::internal::ApiClientHeader()),
+                        context, "google.pubsub.v1.SchemaService.CreateSchema"),
                     IsOk());
         return make_status_or(google::pubsub::v1::Schema{});
       });
@@ -50,14 +61,13 @@ TEST(SchemaMetadataTest, CreateSchema) {
   EXPECT_THAT(status, IsOk());
 }
 
-TEST(SchemaMetadataTest, GetSchema) {
+TEST_F(SchemaMetadataTest, GetSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, GetSchema)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::GetSchemaRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::GetSchemaRequest const&) {
         EXPECT_THAT(IsContextMDValid(
-                        context, "google.pubsub.v1.SchemaService.GetSchema",
-                        google::cloud::internal::ApiClientHeader()),
+                        context, "google.pubsub.v1.SchemaService.GetSchema"),
                     IsOk());
         return make_status_or(google::pubsub::v1::Schema{});
       });
@@ -69,14 +79,13 @@ TEST(SchemaMetadataTest, GetSchema) {
   EXPECT_THAT(status, IsOk());
 }
 
-TEST(SchemaMetadataTest, ListSchemas) {
+TEST_F(SchemaMetadataTest, ListSchemas) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, ListSchemas)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::ListSchemasRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListSchemasRequest const&) {
         EXPECT_THAT(IsContextMDValid(
-                        context, "google.pubsub.v1.SchemaService.ListSchemas",
-                        google::cloud::internal::ApiClientHeader()),
+                        context, "google.pubsub.v1.SchemaService.ListSchemas"),
                     IsOk());
         return make_status_or(google::pubsub::v1::ListSchemasResponse{});
       });
@@ -88,14 +97,13 @@ TEST(SchemaMetadataTest, ListSchemas) {
   EXPECT_THAT(status, IsOk());
 }
 
-TEST(SchemaMetadataTest, DeleteSchema) {
+TEST_F(SchemaMetadataTest, DeleteSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, DeleteSchema)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::DeleteSchemaRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DeleteSchemaRequest const&) {
         EXPECT_THAT(IsContextMDValid(
-                        context, "google.pubsub.v1.SchemaService.DeleteSchema",
-                        google::cloud::internal::ApiClientHeader()),
+                        context, "google.pubsub.v1.SchemaService.DeleteSchema"),
                     IsOk());
         return Status{};
       });
@@ -107,15 +115,14 @@ TEST(SchemaMetadataTest, DeleteSchema) {
   EXPECT_THAT(status, IsOk());
 }
 
-TEST(SchemaMetadataTest, ValidateSchema) {
+TEST_F(SchemaMetadataTest, ValidateSchema) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, ValidateSchema)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::ValidateSchemaRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ValidateSchemaRequest const&) {
         EXPECT_THAT(
             IsContextMDValid(context,
-                             "google.pubsub.v1.SchemaService.ValidateSchema",
-                             google::cloud::internal::ApiClientHeader()),
+                             "google.pubsub.v1.SchemaService.ValidateSchema"),
             IsOk());
         return make_status_or(google::pubsub::v1::ValidateSchemaResponse{});
       });
@@ -127,15 +134,14 @@ TEST(SchemaMetadataTest, ValidateSchema) {
   EXPECT_THAT(status, IsOk());
 }
 
-TEST(SchemaMetadataTest, ValidateMessage) {
+TEST_F(SchemaMetadataTest, ValidateMessage) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
   EXPECT_CALL(*mock, ValidateMessage)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::ValidateMessageRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ValidateMessageRequest const&) {
         EXPECT_THAT(
             IsContextMDValid(context,
-                             "google.pubsub.v1.SchemaService.ValidateMessage",
-                             google::cloud::internal::ApiClientHeader()),
+                             "google.pubsub.v1.SchemaService.ValidateMessage"),
             IsOk());
         return make_status_or(google::pubsub::v1::ValidateMessageResponse{});
       });

@@ -31,7 +31,6 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
@@ -78,7 +77,8 @@ TEST(SubscriptionAdminConnectionTest, CreateWithMetadata) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext& context,
                     google::pubsub::v1::Subscription const& request) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+        testing_util::ValidateMetadataFixture fixture;
+        EXPECT_STATUS_OK(fixture.IsContextMDValid(
             context, "google.pubsub.v1.Subscriber.CreateSubscription",
             google::cloud::internal::ApiClientHeader()));
         EXPECT_EQ(subscription.FullName(), request.name());

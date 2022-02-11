@@ -24,12 +24,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::GetMetadata;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Pair;
 
-TEST(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
+class GrpcConfigureClientContext : public ::testing::Test {
+ protected:
+  std::multimap<std::string, std::string> GetMetadata(
+      grpc::ClientContext& context) {
+    return validate_metadata_fixture_.GetMetadata(context);
+  }
+
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
+};
+
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
   grpc::ClientContext context;
   ApplyQueryParameters(context,
                        ReadObjectRangeRequest("test-bucket", "test-object"));
@@ -37,7 +48,7 @@ TEST(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
   EXPECT_THAT(metadata, IsEmpty());
 }
 
-TEST(GrpcConfigureClientContext, ApplyQueryParametersWithFields) {
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFields) {
   grpc::ClientContext context;
   ApplyQueryParameters(
       context, ReadObjectRangeRequest("test-bucket", "test-object")
@@ -47,7 +58,7 @@ TEST(GrpcConfigureClientContext, ApplyQueryParametersWithFields) {
                                       "bucket,name,generation,contentType")));
 }
 
-TEST(GrpcConfigureClientContext, ApplyQueryParametersWithFieldsAndPrefix) {
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFieldsAndPrefix) {
   grpc::ClientContext context;
   ApplyQueryParameters(
       context,
@@ -60,7 +71,7 @@ TEST(GrpcConfigureClientContext, ApplyQueryParametersWithFieldsAndPrefix) {
                             "resource(bucket,name,generation,contentType)")));
 }
 
-TEST(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {
   struct {
     ReadObjectRangeRequest request;
     std::string expected;
