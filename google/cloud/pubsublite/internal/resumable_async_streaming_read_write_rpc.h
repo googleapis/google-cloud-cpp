@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -484,20 +484,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   promise<Status> status_promise_;
 };
-
-/// A helper to apply type deduction.
-template <typename RequestType, typename ResponseType>
-std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
-MakeAsyncResumableStreamingReadWriteRpc(
-    std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy, AsyncSleeper sleeper,
-    AsyncStreamFactory<ResponseType, RequestType> stream_factory,
-    StreamInitializer<ResponseType, RequestType> initializer) {
-  return std::make_shared<
-      AsyncStreamingReadWriteRpc<ResponseType, RequestType>>(
-      std::move(retry_policy), std::move(backoff_policy), sleeper,
-      std::move(stream_factory), std::move(initializer));
-}
 
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
