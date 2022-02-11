@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/column_family.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/iam_policy.h"
+#include "google/cloud/bigtable/internal/convert_policies.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/resource_names.h"
@@ -149,13 +150,15 @@ class TableAdmin {
         project_id_(client_->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
-        rpc_retry_policy_prototype_(
+        retry_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
-        rpc_backoff_policy_prototype_(
+        backoff_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_prototype_(
+        polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
+        policies_(bigtable_internal::MakeTableAdminOptions(
+            retry_prototype_, backoff_prototype_, polling_prototype_)),
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
         background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
@@ -187,8 +190,23 @@ class TableAdmin {
   template <typename... Policies>
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              Policies&&... policies)
-      : TableAdmin(std::move(client), std::move(instance_id)) {
+      : client_(std::move(client)),
+        connection_(client_->connection()),
+        cq_(client_->cq()),
+        project_id_(client_->project()),
+        instance_id_(std::move(instance_id)),
+        instance_name_(InstanceName()),
+        retry_prototype_(
+            DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
+        backoff_prototype_(
+            DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
+        polling_prototype_(
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
+        background_threads_(client_->BackgroundThreadsFactory()()) {
     ChangePolicies(std::forward<Policies>(policies)...);
+    policies_ = bigtable_internal::MakeTableAdminOptions(
+        retry_prototype_, backoff_prototype_, polling_prototype_);
   }
 
   TableAdmin(TableAdmin const&) = default;
@@ -1034,26 +1052,28 @@ class TableAdmin {
         project_id_(std::move(project_id)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
-        rpc_retry_policy_prototype_(
+        retry_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
-        rpc_backoff_policy_prototype_(
+        backoff_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_prototype_(
-            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {}
+        polling_prototype_(
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
+        policies_(bigtable_internal::MakeTableAdminOptions(
+            retry_prototype_, backoff_prototype_, polling_prototype_)),
+        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT) {}
 
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
-    rpc_retry_policy_prototype_ = policy.clone();
+    retry_prototype_ = policy.clone();
   }
 
   void ChangePolicy(RPCBackoffPolicy const& policy) {
-    rpc_backoff_policy_prototype_ = policy.clone();
+    backoff_prototype_ = policy.clone();
   }
 
   void ChangePolicy(PollingPolicy const& policy) {
-    polling_policy_prototype_ = policy.clone();
+    polling_prototype_ = policy.clone();
   }
 
   template <typename Policy, typename... Policies>
@@ -1065,11 +1085,11 @@ class TableAdmin {
   //@}
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return rpc_retry_policy_prototype_->clone();
+    return retry_prototype_->clone();
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return rpc_backoff_policy_prototype_->clone();
+    return backoff_prototype_->clone();
   }
 
   MetadataUpdatePolicy clone_metadata_update_policy() {
@@ -1077,7 +1097,7 @@ class TableAdmin {
   }
 
   std::unique_ptr<PollingPolicy> clone_polling_policy() {
-    return polling_policy_prototype_->clone();
+    return polling_prototype_->clone();
   }
 
   /// Compute the fully qualified instance name.
@@ -1106,10 +1126,11 @@ class TableAdmin {
   std::string project_id_;
   std::string instance_id_;
   std::string instance_name_;
-  std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
-  std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
+  std::shared_ptr<RPCRetryPolicy> retry_prototype_;
+  std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
+  std::shared_ptr<PollingPolicy> polling_prototype_;
+  Options policies_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<PollingPolicy const> polling_policy_prototype_;
   std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
