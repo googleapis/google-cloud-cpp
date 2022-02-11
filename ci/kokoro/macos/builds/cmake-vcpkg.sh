@@ -86,6 +86,13 @@ ctest_args=(
   ctest "${ctest_args[@]}" -LE "integration-test"
 )
 
+# Cannot use `env -C` as the version of env on macOS does not support that flag
+io::log_h2 "Running minimal quickstart programs"
+(
+  cd "${BINARY_DIR}"
+  ctest "${ctest_args[@]}" -R "(storage_quickstart|pubsub_quickstart)"
+)
+
 io::log_h2 "ccache stats"
 ccache --show-stats
 ccache --zero-stats

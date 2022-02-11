@@ -100,4 +100,19 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
+# Import the functions and variables used to run integration tests
+. ci/kokoro/windows/lib/integration.ps1
+
+if (Test-Integration-Enabled) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart programs $env:CONFIG"
+    Install-Roots-Pem
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    ctest $ctest_args -R "(storage_quickstart|pubsub_quickstart)"
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"
+        Exit ${LastExitCode}
+    }
+}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"

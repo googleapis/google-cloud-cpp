@@ -1,4 +1,4 @@
-# !/usr/bin/env powershell
+#!/usr/bin/env powershell
 #
 # Copyright 2020 Google LLC
 #
@@ -129,8 +129,40 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra prog
 Write-Host -ForegroundColor Yellow bazel $common_flags build $build_flags ...
 bazelisk $common_flags build $build_flags ...
 if ($LastExitCode) {
-    Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
+    Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
+}
+
+# Import the functions and variables used to run integration tests
+. ci/kokoro/windows/lib/integration.ps1
+
+function Invoke-REST-Quickstart {
+    bazelisk $common_flags run $build_flags `
+      //google/cloud/storage/quickstart:quickstart -- `
+      "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "bazel run (storage/quickstart) failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
+    }
+}
+
+function Invoke-gRPC-Quickstart {
+    bazelisk $common_flags run $build_flags `
+      //google/cloud/pubsub/quickstart:quickstart -- `
+      "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "bazel run (pubsub/quickstart) failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
+    }
+}
+
+if (Test-Integration-Enabled) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart prorams"
+    Install-Roots-Pem
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    Invoke-REST-Quickstart
+    Invoke-gRPC-Quickstart
 }
 
 # Shutdown the Bazel server to release any locks
