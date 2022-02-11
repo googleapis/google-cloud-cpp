@@ -112,65 +112,6 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
     }
 }
 
-$quickstart_config=@{
-    "bigquery"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE}")
-    "storage"=@(":quickstart", "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}")
-    # TODO(#6467) - enable GCS+gRPC quickstart after next release
-    # "storage"=@(":quickstart_grpc", "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}");
-    "bigtable"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}", "quickstart")
-    "spanner"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}", "quickstart-db")
-    "pubsub"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}", "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}")
-    "iam"=@(":quickstart", "${env:GOOGLE_CLOUD_PROJECT}")
-}
-
-ForEach ($c in $quickstart_config.GetEnumerator()) {
-    $library = $($c.Name)
-    $target, $args = $($c.Value)
-    Set-Location "${project_root}/google/cloud/${library}/quickstart"
-    ForEach($_ in (1, 2, 3)) {
-        # Additional dependencies, these are not downloaded by `bazel fetch ...`,
-        # but are needed to compile the code
-        $external=@(
-            "@local_config_platform//...",
-            "@local_config_cc_toolchains//...",
-            "@local_config_sh//...",
-            "@go_sdk//...",
-            "@remotejdk11_win//:jdk"
-        )
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "Fetch dependencies for ${library} [$_]"
-        bazelisk $common_flags fetch $build_flags ... $external
-        if ($LastExitCode -eq 0) {
-            break
-        }
-        Start-Sleep -Seconds (60 * $_)
-    }
-
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "Compiling quickstart for ${library}"
-    bazelisk $common_flags build $build_flags $target
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red `
-            "bazel test failed with exit code ${LastExitCode}."
-        Exit ${LastExitCode}
-    }
-
-    if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "Running quickstart for ${library}"
-        bazelisk $common_flags run "--spawn_strategy=local" "${target}" -- $args
-        if ($LastExitCode) {
-            Write-Host -ForegroundColor Red `
-                "quickstart test for ${library} failed with exit code ${LastExitCode}."
-            Exit ${LastExitCode}
-        }
-    }
-
-    # Need to free up the open files or the caching below fails.
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "Shutting down Bazel for ${library}"
-    bazelisk $common_flags shutdown
-}
 Set-Location "${project_root}"
 
 # Shutdown the Bazel server to release any locks

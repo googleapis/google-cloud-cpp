@@ -27,7 +27,6 @@ export CXX=g++
 mapfile -t args < <(bazel::common_args)
 for lib in $(quickstart::libraries); do
   io::log_h2 "Running Bazel quickstart for ${lib}"
-  mapfile -t run_args < <(quickstart::arguments "${lib}")
   env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \
-    bazel run "${args[@]}" :quickstart -- "${run_args[@]}"
+    bazel build "${args[@]}" :quickstart
 done

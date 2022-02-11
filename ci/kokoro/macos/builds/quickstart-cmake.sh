@@ -43,17 +43,6 @@ ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/
   ./vcpkg install google-cloud-cpp
 )
 
-run_quickstart="false"
-readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
-readonly CREDENTIALS_FILE="${CONFIG_DIR}/kokoro-run-key.json"
-if [[ -r "${CREDENTIALS_FILE}" ]]; then
-  # The driver script (../build.sh) should have downloaded this file.
-  if [[ -r "${CONFIG_DIR}/roots.pem" ]]; then
-    run_quickstart="true"
-  fi
-fi
-readonly run_quickstart
-
 export NINJA_STATUS="T+%es [%f/%t] "
 cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
@@ -75,17 +64,6 @@ build_quickstart() {
   echo
   io::log_h2 "Compiling ${library}'s quickstart"
   "${cmake}" --build "${binary_dir}"
-
-  if [[ "${run_quickstart}" == "true" ]]; then
-    echo
-    io::log_h2 "Running ${library}'s quickstart"
-    args=()
-    while IFS="" read -r line; do
-      args+=("${line}")
-    done < <(quickstart::arguments "${library}")
-    env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
-      "${binary_dir}/quickstart" "${args[@]}"
-  fi
 }
 
 errors=""

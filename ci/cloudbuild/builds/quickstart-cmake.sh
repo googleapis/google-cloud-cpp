@@ -40,10 +40,3 @@ cmake -G Ninja \
   -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake" \
   -DLIBRARIES="${libraries}"
 cmake --build "${PROJECT_ROOT}/cmake-out/quickstart" --target verify-quickstart-cmake
-
-for lib in $(quickstart::libraries); do
-  io::log_h2 "Running CMake quickstart for ${lib}"
-  bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${lib}"
-  mapfile -t run_args < <(quickstart::arguments "${lib}")
-  "${bin_dir}/quickstart" "${run_args[@]}"
-done
