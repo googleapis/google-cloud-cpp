@@ -51,6 +51,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
 using ::testing::Contains;
 using ::testing::ElementsAreArray;
+using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::UnorderedElementsAreArray;
 
@@ -152,6 +153,7 @@ TEST_F(InstanceAdminTest, LegacyConstructorSharesConnection) {
   auto conn_2 = InstanceAdminTester::Connection(admin_2);
 
   EXPECT_EQ(conn_1, conn_2);
+  EXPECT_THAT(conn_1, NotNull());
 }
 
 TEST_F(InstanceAdminTest, LegacyConstructorDefaultsPolicies) {

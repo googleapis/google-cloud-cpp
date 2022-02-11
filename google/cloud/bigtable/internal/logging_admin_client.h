@@ -258,6 +258,13 @@ class LoggingAdminClient : public google::cloud::bigtable::AdminClient {
     return child_->BackgroundThreadsFactory();
   }
 
+  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection()
+      override {
+    return child_->connection();
+  }
+
+  CompletionQueue cq() override { return child_->cq(); }
+
   std::shared_ptr<google::cloud::bigtable::AdminClient> child_;
   google::cloud::TracingOptions tracing_options_;
 };

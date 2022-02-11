@@ -41,6 +41,7 @@ class TableAdminTester {
 
 namespace {
 
+using ::testing::NotNull;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
 
@@ -55,21 +56,24 @@ Options TestOptions() {
 
 class TableAdminTest : public ::testing::Test {
  protected:
+  TableAdmin DefaultTableAdmin() {
+    return TableAdminTester::MakeTestTableAdmin(connection_, kProjectId,
+                                                kInstanceId);
+  }
+
   std::shared_ptr<MockConnection> connection_ =
       std::make_shared<MockConnection>();
 };
 
 TEST_F(TableAdminTest, ResourceNames) {
-  auto admin = TableAdminTester::MakeTestTableAdmin(connection_, kProjectId,
-                                                    kInstanceId);
+  auto admin = DefaultTableAdmin();
   EXPECT_EQ(kProjectId, admin.project());
   EXPECT_EQ(kInstanceId, admin.instance_id());
   EXPECT_EQ(kInstanceName, admin.instance_name());
 }
 
 TEST_F(TableAdminTest, WithNewTarget) {
-  auto admin = TableAdminTester::MakeTestTableAdmin(connection_, kProjectId,
-                                                    kInstanceId);
+  auto admin = DefaultTableAdmin();
   auto other_admin = admin.WithNewTarget("other-project", "other-instance");
   EXPECT_EQ(other_admin.project(), "other-project");
   EXPECT_EQ(other_admin.instance_id(), "other-instance");
@@ -85,6 +89,7 @@ TEST_F(TableAdminTest, LegacyConstructorSharesConnection) {
   auto conn_2 = TableAdminTester::Connection(admin_2);
 
   EXPECT_EQ(conn_1, conn_2);
+  EXPECT_THAT(conn_1, NotNull());
 }
 
 }  // namespace
