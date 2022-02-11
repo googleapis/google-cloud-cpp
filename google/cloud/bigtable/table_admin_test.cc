@@ -14,7 +14,9 @@
 
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_table_admin_connection.h"
+#include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include <gmock/gmock.h>
@@ -40,10 +42,16 @@ class TableAdminTester {
   }
 
   static CompletionQueue CQ(TableAdmin const& admin) { return admin.cq_; }
+
+  static Options Policies(TableAdmin const& admin) { return admin.policies_; }
 };
 
 namespace {
 
+using ::google::cloud::bigtable::testing::MockBackoffPolicy;
+using ::google::cloud::bigtable::testing::MockPollingPolicy;
+using ::google::cloud::bigtable::testing::MockRetryPolicy;
+using ::testing::An;
 using ::testing::NotNull;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
@@ -60,6 +68,17 @@ Options TestOptions() {
 bool SameCQ(CompletionQueue const& a, CompletionQueue const& b) {
   using ::google::cloud::internal::GetCompletionQueueImpl;
   return GetCompletionQueueImpl(a) == GetCompletionQueueImpl(b);
+}
+
+void CheckPolicies(Options const& options) {
+  EXPECT_TRUE(
+      options.has<bigtable_admin::BigtableTableAdminRetryPolicyOption>());
+  EXPECT_TRUE(
+      options.has<bigtable_admin::BigtableTableAdminBackoffPolicyOption>());
+  EXPECT_TRUE(
+      options.has<bigtable_admin::BigtableTableAdminPollingPolicyOption>());
+  EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupOption>());
+  EXPECT_TRUE(options.has<google::cloud::internal::GrpcSetupPollOption>());
 }
 
 class TableAdminTest : public ::testing::Test {
@@ -109,6 +128,75 @@ TEST_F(TableAdminTest, LegacyConstructorSetsCQ) {
   auto client_cq = TableAdminTester::CQ(admin);
 
   EXPECT_TRUE(SameCQ(conn_cq, client_cq));
+}
+TEST_F(TableAdminTest, LegacyConstructorDefaultsPolicies) {
+  auto admin_client = MakeAdminClient(kProjectId, TestOptions());
+  auto admin = TableAdmin(std::move(admin_client), kInstanceId);
+  auto policies = TableAdminTester::Policies(admin);
+  CheckPolicies(policies);
+}
+
+TEST_F(TableAdminTest, LegacyConstructorWithPolicies) {
+  // In this test, we make a series of simple calls to verify that the policies
+  // passed to the `TableAdmin` constructor are actually collected as
+  // `Options`.
+  //
+  // Upon construction of an TableAdmin, each policy is cloned twice: Once
+  // while processing the variadic parameters, once while converting from
+  // Bigtable policies to common policies. This should explain the nested mocks
+  // below.
+
+  auto mock_r = std::make_shared<MockRetryPolicy>();
+  auto mock_b = std::make_shared<MockBackoffPolicy>();
+  auto mock_p = std::make_shared<MockPollingPolicy>();
+
+  EXPECT_CALL(*mock_r, clone).WillOnce([] {
+    auto clone_1 = absl::make_unique<MockRetryPolicy>();
+    EXPECT_CALL(*clone_1, clone).WillOnce([] {
+      auto clone_2 = absl::make_unique<MockRetryPolicy>();
+      EXPECT_CALL(*clone_2, OnFailure(An<Status const&>()));
+      return clone_2;
+    });
+    return clone_1;
+  });
+
+  EXPECT_CALL(*mock_b, clone).WillOnce([] {
+    auto clone_1 = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone_1, clone).WillOnce([] {
+      auto clone_2 = absl::make_unique<MockBackoffPolicy>();
+      EXPECT_CALL(*clone_2, OnCompletion(An<Status const&>()));
+      return clone_2;
+    });
+    return clone_1;
+  });
+
+  EXPECT_CALL(*mock_p, clone).WillOnce([] {
+    auto clone_1 = absl::make_unique<MockPollingPolicy>();
+    EXPECT_CALL(*clone_1, clone).WillOnce([] {
+      auto clone_2 = absl::make_unique<MockPollingPolicy>();
+      EXPECT_CALL(*clone_2, WaitPeriod);
+      return clone_2;
+    });
+    return clone_1;
+  });
+
+  auto admin_client = MakeAdminClient(kProjectId, TestOptions());
+  auto admin = TableAdmin(std::move(admin_client), kInstanceId, *mock_r,
+                          *mock_b, *mock_p);
+  auto policies = TableAdminTester::Policies(admin);
+  CheckPolicies(policies);
+
+  auto const& common_retry =
+      policies.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>();
+  (void)common_retry->OnFailure({});
+
+  auto const& common_backoff =
+      policies.get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>();
+  (void)common_backoff->OnCompletion();
+
+  auto const& common_polling =
+      policies.get<bigtable_admin::BigtableTableAdminPollingPolicyOption>();
+  (void)common_polling->WaitPeriod();
 }
 
 }  // namespace
