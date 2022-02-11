@@ -209,8 +209,8 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
     # link may be publicly accessible. In manual builds this information is
     # never useful (both are "none").
     io::log_h1 "Log Links"
-    printf "GCB: %s\n" "${CONSOLE_LOG_URL:-none}"
-    printf "Raw: %s\n" "${RAW_LOG_URL:-none}"
+    printf "* GCB: %s\n" "${CONSOLE_LOG_URL:-none}"
+    printf "* Raw: %s\n" "${RAW_LOG_URL:-none}"
   fi
 
   if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
