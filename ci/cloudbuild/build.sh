@@ -306,9 +306,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--build-arg=NCPU=$(nproc)"
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile"
   )
-  if [[ "${TRIGGER_TYPE}" == "manual" ]]; then
-    build_flags+=("--quiet")
-  fi
+  export DOCKER_BUILDKIT=1
   io::run docker build "${build_flags[@]}" ci
   io::log_h2 "Starting docker container: ${image}"
   run_flags=(
