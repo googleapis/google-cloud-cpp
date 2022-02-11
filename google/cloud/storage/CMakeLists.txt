@@ -654,6 +654,18 @@ endif ()
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(examples)
+
+    add_executable(storage_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(storage_quickstart PRIVATE google-cloud-cpp::storage)
+    google_cloud_cpp_add_common_options(storage_quickstart)
+    add_test(
+        NAME storage_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:storage_quickstart>
+            GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME)
+    set_tests_properties(storage_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 install(

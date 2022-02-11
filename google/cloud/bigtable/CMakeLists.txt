@@ -400,6 +400,20 @@ endif ()
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(examples)
+
+    add_executable(bigtable_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(bigtable_quickstart
+                          PRIVATE google-cloud-cpp::bigtable)
+    google_cloud_cpp_add_common_options(bigtable_quickstart)
+    add_test(
+        NAME bigtable_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:bigtable_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID
+            GOOGLE_CLOUD_CPP_BIGTABLE_TEST_QUICKSTART_TABLE)
+    set_tests_properties(bigtable_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 # Export the CMake targets to make it easy to create configuration files.

@@ -127,6 +127,16 @@ add_subdirectory(integration_tests)
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(samples)
+
+    add_executable(iam_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(iam_quickstart PRIVATE google-cloud-cpp::iam)
+    google_cloud_cpp_add_common_options(iam_quickstart)
+    add_test(
+        NAME iam_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:iam_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(iam_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

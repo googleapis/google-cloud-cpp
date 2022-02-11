@@ -41,6 +41,7 @@ $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID="test-instance-c1"
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="us-west2-b"
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="us-west2-c"
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="bigtable-test-iam-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+$env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_QUICKSTART_TABLE="quickstart"
 
 # Cloud Storage configuration parameters
 $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="cloud-cpp-testing-bucket"
@@ -55,6 +56,7 @@ $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${env:GOOGLE_CLOUD_PROJE
 # Cloud Spanner configuration parameters
 $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
 $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT="spanner-iam-test-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+$env:GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 #$env:GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT="staging-wrenchworks.sandbox.googleapis.com"
 
 # Cloud Pub/Sub configuration parameters
