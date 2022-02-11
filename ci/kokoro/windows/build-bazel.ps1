@@ -135,16 +135,16 @@ if ($LastExitCode) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart prorams"
 
-bazelisk $common_flags run $build_flags \
-  //google/cloud/storage/quickstart:quickstart -- \
+bazelisk $common_flags run $build_flags `
+  //google/cloud/storage/quickstart:quickstart -- `
   "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel build (storage/quickstart) failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
 }
 
-bazelisk $common_flags run $build_flags \
-  //google/cloud/pubsub/quickstart:quickstart -- \
+bazelisk $common_flags run $build_flags `
+  //google/cloud/pubsub/quickstart:quickstart -- `
   "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_TOPIC_NAME}"
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel build (pubsub/quickstart) failed with exit code ${LastExitCode}."
