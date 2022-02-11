@@ -26,6 +26,7 @@ if (BUILD_TESTING)
         contains_once.h
         crash_handler.cc
         crash_handler.h
+        credentials_constants.h
         example_driver.cc
         example_driver.h
         expect_exception.h

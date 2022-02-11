@@ -43,27 +43,8 @@ inline std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> GetDigestCtx() {
 #endif
 }  // namespace
 
-StatusOr<std::vector<std::uint8_t>> Base64Decode(std::string const& str) {
-  return google::cloud::internal::Base64DecodeToBytes(str);
-}
-
-std::string Base64Encode(std::string const& str) {
-  google::cloud::internal::Base64Encoder enc;
-  for (auto c : str) enc.PushBack(c);
-  return std::move(enc).FlushAndPad();
-}
-
-std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
-  google::cloud::internal::Base64Encoder enc;
-  for (auto c : bytes) enc.PushBack(c);
-  return std::move(enc).FlushAndPad();
-}
-
-StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
-    std::string const& str, std::string const& pem_contents,
-    oauth2_internal::JwtSigningAlgorithms alg) {
-  using ::google::cloud::oauth2_internal::JwtSigningAlgorithms;
-
+StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
+    std::string const& str, std::string const& pem_contents) {
   auto digest_ctx = GetDigestCtx();
   if (!digest_ctx) {
     return Status(StatusCode::kInvalidArgument,
@@ -71,12 +52,7 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
                   "could not create context for OpenSSL digest. ");
   }
 
-  EVP_MD const* digest_type = nullptr;
-  switch (alg) {
-    case JwtSigningAlgorithms::RS256:
-      digest_type = EVP_sha256();
-      break;
-  }
+  EVP_MD const* digest_type = EVP_sha256();
   if (digest_type == nullptr) {
     return Status(StatusCode::kInvalidArgument,
                   "Invalid ServiceAccountCredentials: "
@@ -167,21 +143,7 @@ StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
   } else if (b64str.length() % 4 == 3) {
     b64str.append("=");
   }
-  return Base64Decode(b64str);
-}
-
-std::vector<std::uint8_t> MD5Hash(std::string const& payload) {
-  MD5_CTX md5;
-  MD5_Init(&md5);
-  MD5_Update(&md5, payload.c_str(), payload.size());
-
-  std::vector<std::uint8_t> hash(MD5_DIGEST_LENGTH, 0);
-  // Note: MD5_Final consumes a `unsigned char*` in its first parameter, on some
-  // platforms (PowerPC and ARM I read), the default `char` is unsigned. In
-  // those platforms it is possible that `std::uint8_t != unsigned char` and
-  // the `reinterpret_cast<>` is not trivial (but still safe I think).
-  MD5_Final(reinterpret_cast<unsigned char*>(hash.data()), &md5);
-  return hash;
+  return Base64DecodeToBytes(b64str);
 }
 
 }  // namespace internal

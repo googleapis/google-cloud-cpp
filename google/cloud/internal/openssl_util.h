@@ -15,10 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
 
-#include "google/cloud/internal/oauth2_credential_constants.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -28,30 +27,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Decodes a Base64-encoded string.
- */
-StatusOr<std::vector<std::uint8_t>> Base64Decode(std::string const& str);
-
-/**
- * Encodes a string using Base64.
- */
-std::string Base64Encode(std::string const& str);
-
-/**
- * Encodes a byte array using Base64.
- */
-std::string Base64Encode(std::vector<std::uint8_t> const& bytes);
-
-/**
  * Signs a string with the private key from a PEM container.
  *
  * @return Returns the signature as an *unencoded* byte array. The caller
  *   might want to use `Base64Encode()` or `HexEncode()` to convert this byte
  *   array to a format more suitable for transmission over HTTP.
  */
-StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
-    std::string const& str, std::string const& pem_contents,
-    oauth2_internal::JwtSigningAlgorithms alg);
+StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
+    std::string const& str, std::string const& pem_contents);
 
 /**
  * Returns a Base64-encoded version of @p bytes. Using the URL- and
@@ -62,7 +45,9 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
  */
 template <typename Collection>
 inline std::string UrlsafeBase64Encode(Collection const& bytes) {
-  std::string b64str = Base64Encode(bytes);
+  Base64Encoder encoder;
+  for (auto c : bytes) encoder.PushBack(c);
+  std::string b64str = std::move(encoder).FlushAndPad();
   std::replace(b64str.begin(), b64str.end(), '+', '-');
   std::replace(b64str.begin(), b64str.end(), '/', '_');
   auto end_pos = b64str.find_last_not_of('=');
@@ -76,9 +61,6 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
  * Decodes a Url-safe Base64-encoded string.
  */
 StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(std::string const& str);
-
-/// Compute the MD5 hash of @p payload
-std::vector<std::uint8_t> MD5Hash(std::string const& payload);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
