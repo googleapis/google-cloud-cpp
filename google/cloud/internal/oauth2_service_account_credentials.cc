@@ -172,8 +172,13 @@ ServiceAccountCredentials::ServiceAccountCredentials(
       rest_client_(std::move(rest_client)),
       options_(std::move(options)) {
   if (!rest_client_) {
-    rest_client_ =
-        rest_internal::GetDefaultRestClient(info_.token_uri, options_);
+    if (options_.has<ServiceAccountCredentialsTokenUriOption>()) {
+      rest_client_ = rest_internal::GetDefaultRestClient(
+          options_.get<ServiceAccountCredentialsTokenUriOption>(), options_);
+    } else {
+      rest_client_ =
+          rest_internal::GetDefaultRestClient(info_.token_uri, options_);
+    }
   }
 }
 

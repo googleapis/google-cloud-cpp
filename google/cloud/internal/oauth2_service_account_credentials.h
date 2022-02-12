@@ -33,6 +33,14 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * Overrides the token uri provided by the service account credentials key
+ * file.
+ */
+struct ServiceAccountCredentialsTokenUriOption {
+  using Type = std::string;
+};
+
 /// Object to hold information used to instantiate an ServiceAccountCredentials.
 struct ServiceAccountCredentialsInfo {
   std::string client_email;
@@ -91,7 +99,7 @@ CreateServiceAccountRefreshPayload(
  * Wrapper class for Google OAuth 2.0 service account credentials.
  *
  * Takes a ServiceAccountCredentialsInfo and obtains access tokens from the
- * Google Authorization Service as needed.  Instances of this class should
+ * Google Authorization Service as needed. Instances of this class should
  * usually be created via the convenience methods declared in
  * google/cloud/credentials.h.
  *
