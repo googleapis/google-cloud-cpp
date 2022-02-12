@@ -36,25 +36,19 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_speech_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/speech/v1/cloud_speech.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/speech/v1/resource.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
+add_library(google_cloud_cpp_speech_protos INTERFACE)
 external_googleapis_set_version_and_alias(speech_protos)
 target_link_libraries(
     google_cloud_cpp_speech_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos)
+    INTERFACE #
+              google-cloud-cpp::cloud_speech_protos
+              google-cloud-cpp::api_annotations_protos
+              google-cloud-cpp::api_client_protos
+              google-cloud-cpp::api_field_behavior_protos
+              google-cloud-cpp::api_http_protos
+              google-cloud-cpp::api_resource_protos
+              google-cloud-cpp::longrunning_operations_protos
+              google-cloud-cpp::rpc_status_protos)
 
 file(
     GLOB source_files
@@ -120,13 +114,13 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(speech_quickstart)
     add_test(
         NAME speech_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:speech_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
-    set_tests_properties(speech_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:speech_quickstart>)
+    set_tests_properties(
+        speech_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

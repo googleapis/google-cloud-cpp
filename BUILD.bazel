@@ -77,6 +77,7 @@ EXPERIMENTAL_LIBRARIES = [
     "servicemanagement",
     "serviceusage",
     "shell",
+    "speech",
     "storagetransfer",
     "talent",
     "texttospeech",

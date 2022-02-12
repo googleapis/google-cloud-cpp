@@ -3,8 +3,10 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Speech-to-Text API][cloud-service-docs], a service to Converts audio to text by applying powerful neural network models.
+[Cloud Speech-to-Text API][cloud-service-docs], a service which converts audio
+to text by applying powerful neural network models.
 
+<!-- TODO(#7991): verify the StreamingRecognize API is usable before GA -->
 This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow
@@ -38,25 +40,31 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/speech/ EDIT HERE .h"
+#include "google/cloud/speech/speech_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  auto constexpr kDefaultUri = "gs://cloud-samples-data/speech/hello.wav";
+  if (argc > 2) {
+    std::cerr << "Usage: " << argv[0] << " [gcs-uri]\n"
+              << "  The gcs-uri must be in gs://... format. It defaults to "
+              << kDefaultUri << "\n";
     return 1;
   }
+  auto uri = std::string{argc == 2 ? argv[1] : kDefaultUri};
 
   namespace speech = ::google::cloud::speech;
-  auto client = speech::Client(speech::MakeConnection(/* EDIT HERE */));
+  auto client = speech::SpeechClient(speech::MakeSpeechConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  google::cloud::speech::v1::RecognitionConfig config;
+  config.set_language_code("en-US");
+  google::cloud::speech::v1::RecognitionAudio audio;
+  audio.set_uri(uri);
+  auto response = client.Recognize(config, audio);
+  if (!response) throw std::runtime_error(response.status().message());
+  std::cout << response->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

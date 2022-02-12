@@ -3,7 +3,7 @@
 @mainpage Cloud Speech-to-Text API C++ Client Library
 
 An idiomatic C++ client library for the [Cloud Speech-to-Text API][cloud-service-docs], a service
-to Converts audio to text by applying powerful neural network models.
+which converts audio to text by applying powerful neural network models.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
