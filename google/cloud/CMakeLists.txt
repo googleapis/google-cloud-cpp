@@ -655,6 +655,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/oauth2_credentials.h
         internal/oauth2_error_credentials.cc
         internal/oauth2_error_credentials.h
+        internal/oauth2_google_application_default_credentials_file.cc
+        internal/oauth2_google_application_default_credentials_file.h
         internal/oauth2_refreshing_credentials_wrapper.cc
         internal/oauth2_refreshing_credentials_wrapper.h
         internal/oauth2_service_account_credentials.cc
@@ -728,6 +730,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/oauth2_anonymous_credentials_test.cc
             internal/oauth2_authorized_user_credentials_test.cc
             internal/oauth2_compute_engine_credentials_test.cc
+            internal/oauth2_google_application_default_credentials_file_test.cc
             internal/oauth2_refreshing_credentials_wrapper_test.cc
             internal/oauth2_service_account_credentials_test.cc
             internal/openssl_util_test.cc
