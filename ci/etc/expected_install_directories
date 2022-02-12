@@ -263,6 +263,10 @@
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
+./include/google/cloud/speech
+./include/google/cloud/speech/internal
+./include/google/cloud/speech/mocks
+./include/google/cloud/speech/v1
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
 ./include/google/cloud/storagetransfer
@@ -424,6 +428,7 @@
 ./lib64/cmake/google_cloud_cpp_servicemanagement
 ./lib64/cmake/google_cloud_cpp_serviceusage
 ./lib64/cmake/google_cloud_cpp_shell
+./lib64/cmake/google_cloud_cpp_speech
 ./lib64/cmake/google_cloud_cpp_storage
 ./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_talent
