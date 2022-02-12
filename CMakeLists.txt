@@ -83,23 +83,22 @@ option(GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
 # Help our users by giving them some guidance.
 if (APPLE
     AND GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
-    AND NOT DEFINED ENV{OPENSSL_ROOT_DIR})
+    AND NOT DEFINED OPENSSL_ROOT_DIR)
     message(
-        FATAL_ERROR
-            [===[
-The Google Cloud C++ client libraries use the native OpenSSL library. In most
-macOS systems, you need to set the OPENSSL_ROOT_DIR environment variable to find
-this dependency, for example:
-
-export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
-
-You have not set this environment variable. Most likely, this will result in a
-broken build with fairly obscure error messages. If your environment does not
-require setting OPENSSL_ROOT_DIR, you can disable this check using:
-
-cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...
-
-]===])
+        WARNING
+            "The Google Cloud C++ client libraries use the native OpenSSL "
+            "library. In most macOS systems, you need to set the "
+            "OPENSSL_ROOT_DIR environment variable to find this dependency, "
+            "for example:"
+            "\n"
+            "    cmake -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl ..."
+            "\n"
+            "You have not set this variable. Most likely, this will result in "
+            "a broken build with fairly obscure error messages. If your "
+            "environment does not require setting OPENSSL_ROOT_DIR, you can "
+            "disable this check using:"
+            "\n"
+            "    cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...")
 endif ()
 
 # If ccache is installed use it for the build.
