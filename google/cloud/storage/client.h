@@ -105,18 +105,18 @@ struct ClientImplDetails;
  * The default approach for creating a Client uses Google Application Default
  * Credentials (ADCs). Note that a default-constructed client uses the ADCs:
  *
- * @snippet storage_auth_samples.cc default-client
+ * @snippet storage_client_initialization_samples.cc default-client
  *
  * Finding or loading the ADCs can fail. This will result in run-time errors
  * when making requests.
  *
  * If you prefer to explicitly load the ADCs use:
  *
- * @snippet storage_auth_samples.cc explicit-adcs
+ * @snippet storage_client_initialization_samples.cc explicit-adcs
  *
  * To load a service account credentials key file use:
  *
- * @snippet storage_auth_samples.cc service-account-keyfile-json
+ * @snippet storage_client_initialization_samples.cc service-account-keyfile
  *
  * Other credential types are available, including:
  *
@@ -235,7 +235,7 @@ class Client {
    * @snippet storage_object_samples.cc insert object modified retry
    *
    * @par Change Credentials Example
-   * @snippet storage_auth_samples.cc service-account-keyfile-json
+   * @snippet storage_client_initialization_samples.cc service-account-keyfile
    */
   explicit Client(Options opts = {});
 
