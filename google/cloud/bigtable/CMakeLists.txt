@@ -387,8 +387,6 @@ endif ()
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    add_subdirectory(examples)
-
     add_executable(bigtable_quickstart "quickstart/quickstart.cc")
     target_link_libraries(bigtable_quickstart
                           PRIVATE google-cloud-cpp::bigtable)

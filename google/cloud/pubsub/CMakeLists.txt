@@ -324,8 +324,6 @@ endif (BUILD_TESTING)
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    add_subdirectory(samples)
-
     add_executable(pubsub_quickstart "quickstart/quickstart.cc")
     target_link_libraries(pubsub_quickstart PRIVATE google-cloud-cpp::pubsub)
     google_cloud_cpp_add_common_options(pubsub_quickstart)
