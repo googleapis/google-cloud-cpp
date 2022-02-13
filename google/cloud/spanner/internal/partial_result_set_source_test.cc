@@ -41,21 +41,46 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::HasSubstr;
-using ::testing::Return;
+using ::testing::UnitTest;
+
+std::string CurrentTestName() {
+  return UnitTest::GetInstance()->current_test_info()->name();
+}
 
 struct StringOption {
   using Type = std::string;
 };
 
-// Create the `PartialResultSetSource` within a particular `OptionsSpan` so
-// that we might check that all `PartialResultSetReader` calls happen within
-// a matching span.
+// Create the `PartialResultSetSource` within an `OptionsSpan` that has its
+// `StringOption` set to the current test name, so that we might check that
+// all `PartialResultSetReader` calls happen within a matching span.
 StatusOr<std::unique_ptr<ResultSourceInterface>> CreatePartialResultSetSource(
-    std::unique_ptr<PartialResultSetReader> reader,
-    std::string const& string_option) {
-  internal::OptionsSpan span(Options{}.set<StringOption>(string_option));
+    std::unique_ptr<PartialResultSetReader> reader) {
+  internal::OptionsSpan span(Options{}.set<StringOption>(CurrentTestName()));
   return PartialResultSetSource::Create(std::move(reader));
 }
+
+// Returns a functor that expects the current `StringOption` to match the test
+// name.
+std::function<void()> VoidMock() {
+  return [] {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
+  };
+}
+
+// Returns a functor that will return the argument after expecting that the
+// current `StringOption` matches the test name.
+template <typename T>
+std::function<T()> ResultMock(T const& result) {
+  return [result]() {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
+    return result;
+  };
+}
+
+using ReadResult = absl::optional<spanner_proto::PartialResultSet>;
 
 MATCHER_P(IsValidAndEquals, expected,
           "Verifies that a StatusOr<Row> contains the given Row") {
@@ -65,19 +90,15 @@ MATCHER_P(IsValidAndEquals, expected,
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "InitialReadFailure");
-    return absl::optional<spanner_proto::PartialResultSet>{};
-  });
-  Status finish_status(StatusCode::kInvalidArgument, "invalid");
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
+  EXPECT_CALL(*grpc_reader, Read())
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish())
+      .WillOnce(ResultMock(Status(StatusCode::kInvalidArgument, "invalid")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "InitialReadFailure");
-  EXPECT_THAT(reader, StatusIs(StatusCode::kInvalidArgument));
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
+  EXPECT_THAT(reader, StatusIs(StatusCode::kInvalidArgument, "invalid"));
 }
 
 /**
@@ -100,58 +121,33 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ReadSuccessThenFailure");
-        return response;
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ReadSuccessThenFailure");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  Status finish_status(StatusCode::kCancelled, "cancelled");
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([&finish_status] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ReadSuccessThenFailure");
-    return finish_status;
-  });
+      .WillOnce(ResultMock<ReadResult>(response))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish())
+      .WillOnce(ResultMock(Status(StatusCode::kCancelled, "cancelled")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   // The first call to NextRow() yields a row but the second gives an error.
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ReadSuccessThenFailure");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
   EXPECT_THAT((*reader)->NextRow(),
               IsValidAndEquals(MakeTestRow({{"AnInt", spanner::Value(80)}})));
   auto row = (*reader)->NextRow();
-  EXPECT_THAT(row, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(row, StatusIs(StatusCode::kCancelled, "cancelled"));
 }
 
 /// @test Verify the behavior when the first response does not contain metadata.
 TEST(PartialResultSetSourceTest, MissingMetadata) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  spanner_proto::PartialResultSet response;
-  EXPECT_CALL(*grpc_reader, Read()).WillOnce([&response] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MissingMetadata");
-    return response;
-  });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MissingMetadata");
-    return Status();
-  });
+  EXPECT_CALL(*grpc_reader, Read())
+      .WillOnce(ResultMock<ReadResult>(spanner_proto::PartialResultSet()));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MissingMetadata");
-  });
+  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader =
-      CreatePartialResultSetSource(std::move(grpc_reader), "MissingMetadata");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_THAT(reader, StatusIs(StatusCode::kInternal,
                                "response contained no metadata"));
 }
@@ -166,26 +162,13 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MissingRowTypeNoData");
-        return response;
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MissingRowTypeNoData");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MissingRowTypeNoData");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "MissingRowTypeNoData");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   EXPECT_THAT((*reader)->NextRow(), IsValidAndEquals(spanner::Row{}));
 }
@@ -201,25 +184,13 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
     values: { string_value: "10" })pb";
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-  EXPECT_CALL(*grpc_reader, Read()).WillOnce([&response] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MissingRowTypeWithData");
-    return response;
-  });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MissingRowTypeWithData");
-    return Status();
-  });
+  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock<ReadResult>(response));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MissingRowTypeWithData");
-  });
+  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "MissingRowTypeWithData");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   StatusOr<spanner::Row> row = (*reader)->NextRow();
   EXPECT_THAT(row, StatusIs(StatusCode::kInternal,
@@ -268,25 +239,13 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "SingleResponse");
-        return response;
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "SingleResponse");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "SingleResponse");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader =
-      CreatePartialResultSetSource(std::move(grpc_reader), "SingleResponse");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned metadata is correct.
@@ -400,46 +359,17 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MultipleResponses");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MultipleResponses");
-        return response[1];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MultipleResponses");
-        return response[2];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MultipleResponses");
-        return response[3];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MultipleResponses");
-        return response[4];
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "MultipleResponses");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "MultipleResponses");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]))
+      .WillOnce(ResultMock<ReadResult>(response[2]))
+      .WillOnce(ResultMock<ReadResult>(response[3]))
+      .WillOnce(ResultMock<ReadResult>(response[4]))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader =
-      CreatePartialResultSetSource(std::move(grpc_reader), "MultipleResponses");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned rows are correct.
@@ -488,36 +418,15 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ResponseWithNoValues");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ResponseWithNoValues");
-        return response[1];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ResponseWithNoValues");
-        return response[2];
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ResponseWithNoValues");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ResponseWithNoValues");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]))
+      .WillOnce(ResultMock<ReadResult>(response[2]))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ResponseWithNoValues");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned row is correct.
@@ -572,46 +481,17 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedStringValueWellFormed");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedStringValueWellFormed");
-        return response[1];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedStringValueWellFormed");
-        return response[2];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedStringValueWellFormed");
-        return response[3];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedStringValueWellFormed");
-        return response[4];
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedStringValueWellFormed");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedStringValueWellFormed");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]))
+      .WillOnce(ResultMock<ReadResult>(response[2]))
+      .WillOnce(ResultMock<ReadResult>(response[3]))
+      .WillOnce(ResultMock<ReadResult>(response[4]))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ChunkedStringValueWellFormed");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned values are correct.
@@ -653,30 +533,14 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueSetNoValue");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueSetNoValue");
-        return response[1];
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedValueSetNoValue");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedValueSetNoValue");
-  });
+  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ChunkedValueSetNoValue");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Trying to read the next row should fail.
@@ -713,30 +577,14 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueSetNoFollowingValue");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueSetNoFollowingValue");
-        return response[1];
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedValueSetNoFollowingValue");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedValueSetNoFollowingValue");
-  });
+  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ChunkedValueSetNoFollowingValue");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Trying to read the next row should fail.
@@ -773,31 +621,14 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueSetAtEndOfStream");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueSetAtEndOfStream");
-        return response[1];
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueSetAtEndOfStream");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedValueSetAtEndOfStream");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ChunkedValueSetAtEndOfStream");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Trying to read the next row should fail.
@@ -837,35 +668,15 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueMergeFailure");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueMergeFailure");
-        return response[1];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ChunkedValueMergeFailure");
-        return response[2];
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedValueMergeFailure");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]))
+      .WillOnce(ResultMock<ReadResult>(response[2]));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
-  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ChunkedValueMergeFailure");
-  });
+  EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ChunkedValueMergeFailure");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Trying to read the next row should fail.
@@ -929,46 +740,17 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ErrorOnIncompleteRow");
-        return response[0];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ErrorOnIncompleteRow");
-        return response[1];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ErrorOnIncompleteRow");
-        return response[2];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ErrorOnIncompleteRow");
-        return response[3];
-      })
-      .WillOnce([&response] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ErrorOnIncompleteRow");
-        return response[4];
-      })
-      .WillOnce([] {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ErrorOnIncompleteRow");
-        return absl::optional<spanner_proto::PartialResultSet>{};
-      });
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce([] {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "ErrorOnIncompleteRow");
-    return Status();
-  });
+      .WillOnce(ResultMock<ReadResult>(response[0]))
+      .WillOnce(ResultMock<ReadResult>(response[1]))
+      .WillOnce(ResultMock<ReadResult>(response[2]))
+      .WillOnce(ResultMock<ReadResult>(response[3]))
+      .WillOnce(ResultMock<ReadResult>(response[4]))
+      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  auto reader = CreatePartialResultSetSource(std::move(grpc_reader),
-                                             "ErrorOnIncompleteRow");
+  auto reader = CreatePartialResultSetSource(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the first two rows are correct.
