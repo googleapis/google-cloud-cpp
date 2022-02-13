@@ -84,6 +84,7 @@ PartialResultSetSource::~PartialResultSetSource() {
     // If there is actual data in the streaming RPC Finish() can deadlock, so
     // before trying to read the final status we need to cancel the streaming
     // RPC.
+    internal::OptionsSpan span(options_);
     reader_->TryCancel();
     // The user didn't iterate over all the data; finish the stream on their
     // behalf, but we have no way to communicate error status.
@@ -95,6 +96,7 @@ PartialResultSetSource::~PartialResultSetSource() {
 }
 
 Status PartialResultSetSource::ReadFromStream() {
+  internal::OptionsSpan span(options_);
   auto result_set = reader_->Read();
   if (!result_set) {
     // Read() returns false for end of stream, whether we read all the data or
