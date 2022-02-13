@@ -134,7 +134,7 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
                 : absl::make_optional(options.get<UserProjectOption>())),
         impl_(options) {
     auto params = bigtable_internal::AdminClientParams(std::move(options));
-    cq_ = std::move(params.cq);
+    cq_ = params.options.get<GrpcCompletionQueueOption>();
     background_threads_ = std::move(params.background_threads);
     connection_ = bigtable_admin::MakeBigtableTableAdminConnection(
         std::move(params.options));
