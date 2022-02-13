@@ -40,7 +40,6 @@ void EmbeddedServerTestFixture::StartServer() {
   builder_.AddListeningPort(server_address, grpc::InsecureServerCredentials(),
                             &port);
   builder_.RegisterService(&bigtable_service_);
-  builder_.RegisterService(&admin_service_);
   server_ = builder_.BuildAndStart();
   wait_thread_ = std::thread([this]() { server_->Wait(); });
 }
@@ -51,22 +50,12 @@ void EmbeddedServerTestFixture::SetUp() {
   grpc::ChannelArguments channel_arguments;
   channel_arguments.SetUserAgentPrefix(
       google::cloud::internal::UserAgentPrefix());
-  std::string project_id = kProjectId;
-  std::string instance_id = kInstanceId;
-  std::string table_id = kTableId;
 
   std::shared_ptr<grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);
-  data_client_ = std::make_shared<InProcessDataClient>(project_id, instance_id,
+  data_client_ = std::make_shared<InProcessDataClient>(kProjectId, kInstanceId,
                                                        std::move(data_channel));
-  table_ = std::make_shared<bigtable::Table>(data_client_, std::move(table_id));
-
-  std::shared_ptr<grpc::Channel> admin_channel =
-      server_->InProcessChannel(channel_arguments);
-  admin_client_ = std::make_shared<InProcessAdminClient>(
-      std::move(project_id), std::move(admin_channel));
-  admin_ = std::make_shared<bigtable::TableAdmin>(admin_client_,
-                                                  std::move(instance_id));
+  table_ = std::make_shared<bigtable::Table>(data_client_, kTableId);
 }
 
 void EmbeddedServerTestFixture::TearDown() {
