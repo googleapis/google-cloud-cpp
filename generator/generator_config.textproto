@@ -842,6 +842,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Speech
+service {
+  service_proto_path: "google/cloud/speech/v1/cloud_speech.proto"
+  product_path: "google/cloud/speech"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Storage
 service {
   service_proto_path: "google/storage/v2/storage.proto"
