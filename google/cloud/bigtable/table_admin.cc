@@ -587,33 +587,19 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
 
 StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
     std::string const& table_id) {
-  grpc::Status status;
-
-  ::google::iam::v1::GetIamPolicyRequest request;
-  auto resource = TableName(table_id);
-  request.set_resource(resource);
-
-  MetadataUpdatePolicy metadata_update_policy(resource,
-                                              MetadataParamTypes::RESOURCE);
-
-  auto proto = ClientUtils::MakeCall(
-      *client_, *clone_rpc_retry_policy(), *clone_rpc_backoff_policy(),
-      metadata_update_policy, &AdminClient::GetIamPolicy, request,
-      "GetIamPolicy", status, Idempotency::kIdempotent);
-
-  if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
-  }
-
-  return proto;
+  return GetIamPolicyImpl(TableName(table_id));
 }
 
 StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
     std::string const& cluster_id, std::string const& backup_id) {
+  return GetIamPolicyImpl(BackupName(cluster_id, backup_id));
+}
+
+StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicyImpl(
+    std::string const& resource) {
   grpc::Status status;
 
   ::google::iam::v1::GetIamPolicyRequest request;
-  auto resource = BackupName(cluster_id, backup_id);
   request.set_resource(resource);
 
   MetadataUpdatePolicy metadata_update_policy(resource,
@@ -633,35 +619,20 @@ StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
     std::string const& table_id, google::iam::v1::Policy const& iam_policy) {
-  grpc::Status status;
-
-  ::google::iam::v1::SetIamPolicyRequest request;
-  auto resource = TableName(table_id);
-  request.set_resource(resource);
-  *request.mutable_policy() = iam_policy;
-
-  MetadataUpdatePolicy metadata_update_policy(resource,
-                                              MetadataParamTypes::RESOURCE);
-
-  auto proto = ClientUtils::MakeCall(
-      *client_, *clone_rpc_retry_policy(), *clone_rpc_backoff_policy(),
-      metadata_update_policy, &AdminClient::SetIamPolicy, request,
-      "SetIamPolicy", status, Idempotency::kIdempotent);
-
-  if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
-  }
-
-  return proto;
+  return SetIamPolicyImpl(TableName(table_id), iam_policy);
 }
 
 StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
     std::string const& cluster_id, std::string const& backup_id,
     google::iam::v1::Policy const& iam_policy) {
+  return SetIamPolicyImpl(BackupName(cluster_id, backup_id), iam_policy);
+}
+
+StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicyImpl(
+    std::string const& resource, google::iam::v1::Policy const& iam_policy) {
   grpc::Status status;
 
   ::google::iam::v1::SetIamPolicyRequest request;
-  auto resource = BackupName(cluster_id, backup_id);
   request.set_resource(resource);
   *request.mutable_policy() = iam_policy;
 
@@ -682,42 +653,19 @@ StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
 
 StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
     std::string const& table_id, std::vector<std::string> const& permissions) {
-  grpc::Status status;
-  ::google::iam::v1::TestIamPermissionsRequest request;
-  auto resource = TableName(table_id);
-  request.set_resource(resource);
-
-  for (auto const& permission : permissions) {
-    request.add_permissions(permission);
-  }
-
-  MetadataUpdatePolicy metadata_update_policy(resource,
-                                              MetadataParamTypes::RESOURCE);
-
-  auto response = ClientUtils::MakeCall(
-      *client_, *clone_rpc_retry_policy(), *clone_rpc_backoff_policy(),
-      metadata_update_policy, &AdminClient::TestIamPermissions, request,
-      "TestIamPermissions", status, Idempotency::kIdempotent);
-
-  std::vector<std::string> resource_permissions;
-
-  for (auto& permission : *response.mutable_permissions()) {
-    resource_permissions.push_back(permission);
-  }
-
-  if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
-  }
-
-  return resource_permissions;
+  return TestIamPermissionsImpl(TableName(table_id), permissions);
 }
 
 StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
     std::string const& cluster_id, std::string const& backup_id,
     std::vector<std::string> const& permissions) {
+  return TestIamPermissionsImpl(BackupName(cluster_id, backup_id), permissions);
+}
+
+StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissionsImpl(
+    std::string const& resource, std::vector<std::string> const& permissions) {
   grpc::Status status;
   ::google::iam::v1::TestIamPermissionsRequest request;
-  auto resource = BackupName(cluster_id, backup_id);
   request.set_resource(resource);
 
   for (auto const& permission : permissions) {
