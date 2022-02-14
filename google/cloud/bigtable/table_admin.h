@@ -1120,6 +1120,15 @@ class TableAdmin {
       CompletionQueue& cq, std::string const& table_id,
       std::string const& consistency_token);
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicyImpl(
+      std::string const& resource);
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicyImpl(
+      std::string const& resource, google::iam::v1::Policy const& iam_policy);
+
+  StatusOr<std::vector<std::string>> TestIamPermissionsImpl(
+      std::string const& resource, std::vector<std::string> const& permissions);
+
   std::shared_ptr<AdminClient> client_;
   std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
   CompletionQueue cq_;
