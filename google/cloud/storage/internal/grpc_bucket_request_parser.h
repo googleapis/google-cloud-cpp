@@ -27,6 +27,9 @@ namespace internal {
 
 /// Convert JSON requests to gRPC requests and gRPC responses to JSON responses
 struct GrpcBucketRequestParser {
+  static google::storage::v2::DeleteBucketRequest ToProto(
+      DeleteBucketRequest const& request);
+
   static google::storage::v2::GetBucketRequest ToProto(
       GetBucketMetadataRequest const& request);
 
