@@ -71,6 +71,25 @@ MakeInsertStream(std::unique_ptr<grpc::ClientContext>) {
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
+TEST(StorageRoundRobinTest, DeleteBucket) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, DeleteBucket)
+          .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+    }
+  }
+
+  StorageRoundRobin under_test(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    grpc::ClientContext context;
+    google::storage::v2::DeleteBucketRequest request;
+    auto response = under_test.DeleteBucket(context, request);
+    EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
 TEST(StorageRoundRobinTest, GetBucket) {
   auto mocks = MakeMocks();
   InSequence sequence;
