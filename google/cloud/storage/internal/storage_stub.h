@@ -35,6 +35,10 @@ class StorageStub {
  public:
   virtual ~StorageStub() = 0;
 
+  virtual Status DeleteBucket(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteBucketRequest const& request) = 0;
+
   virtual StatusOr<google::storage::v2::Bucket> GetBucket(
       grpc::ClientContext& context,
       google::storage::v2::GetBucketRequest const& request) = 0;
@@ -97,6 +101,10 @@ class DefaultStorageStub : public StorageStub {
   explicit DefaultStorageStub(
       std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
+
+  Status DeleteBucket(
+      grpc::ClientContext& client_context,
+      google::storage::v2::DeleteBucketRequest const& request) override;
 
   StatusOr<google::storage::v2::Bucket> GetBucket(
       grpc::ClientContext& client_context,

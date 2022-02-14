@@ -38,6 +38,10 @@ class StorageLogging : public StorageStub {
                  TracingOptions tracing_options,
                  std::set<std::string> components);
 
+  Status DeleteBucket(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteBucketRequest const& request) override;
+
   StatusOr<google::storage::v2::Bucket> GetBucket(
       grpc::ClientContext& context,
       google::storage::v2::GetBucketRequest const& request) override;
