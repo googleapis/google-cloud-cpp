@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/mocks/mock_bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include <gmock/gmock.h>
@@ -51,14 +52,26 @@ namespace {
 using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockPollingPolicy;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
+using ::google::cloud::internal::ToChronoTimePoint;
 using ::testing::An;
+using ::testing::ElementsAre;
 using ::testing::NotNull;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
 
 auto const* const kProjectId = "the-project";
 auto const* const kInstanceId = "the-instance";
+auto const* const kTableId = "the-table";
+auto const* const kClusterId = "the-cluster";
+auto const* const kBackupId = "the-backup";
 auto const* const kInstanceName = "projects/the-project/instances/the-instance";
+auto const* const kTableName =
+    "projects/the-project/instances/the-instance/tables/the-table";
+auto const* const kClusterName =
+    "projects/the-project/instances/the-instance/clusters/the-cluster";
+auto const* const kBackupName =
+    "projects/the-project/instances/the-instance/clusters/the-cluster/backups/"
+    "the-backup";
 
 Options TestOptions() {
   return Options{}.set<GrpcCredentialOption>(
@@ -197,6 +210,50 @@ TEST_F(TableAdminTest, LegacyConstructorWithPolicies) {
   auto const& common_polling =
       policies.get<bigtable_admin::BigtableTableAdminPollingPolicyOption>();
   (void)common_polling->WaitPeriod();
+}
+
+TEST_F(TableAdminTest, CreateBackupParams) {
+  auto const expire_time =
+      std::chrono::system_clock::now() + std::chrono::hours(24);
+  TableAdmin::CreateBackupParams params(kClusterId, kBackupId, kTableId,
+                                        expire_time);
+
+  auto request = params.AsProto(kInstanceName);
+  EXPECT_EQ(kClusterName, request.parent());
+  EXPECT_EQ(kBackupId, request.backup_id());
+  EXPECT_EQ(kTableName, request.backup().source_table());
+  EXPECT_EQ(expire_time, ToChronoTimePoint(request.backup().expire_time()));
+}
+
+TEST_F(TableAdminTest, UpdateBackupParams) {
+  auto const expire_time =
+      std::chrono::system_clock::now() + std::chrono::hours(24);
+  TableAdmin::UpdateBackupParams params(kClusterId, kBackupId, expire_time);
+
+  auto request = params.AsProto(kInstanceName);
+  EXPECT_EQ(kBackupName, request.backup().name());
+  EXPECT_EQ(expire_time, ToChronoTimePoint(request.backup().expire_time()));
+  EXPECT_THAT(request.update_mask().paths(), ElementsAre("expire_time"));
+}
+
+TEST_F(TableAdminTest, ListBackupsParams) {
+  TableAdmin::ListBackupsParams params;
+  auto request = params.AsProto(kInstanceName);
+  EXPECT_EQ(request.parent(), ClusterName(kProjectId, kInstanceId, "-"));
+
+  params.set_cluster(kClusterId).set_filter("state:READY").set_order_by("name");
+  request = params.AsProto(kInstanceName);
+  EXPECT_EQ(request.parent(), kClusterName);
+  EXPECT_EQ(*request.mutable_filter(), "state:READY");
+  EXPECT_EQ(*request.mutable_order_by(), "name");
+}
+
+TEST_F(TableAdminTest, RestoreTableParams) {
+  TableAdmin::RestoreTableParams params(kTableId, kClusterId, kBackupId);
+  auto request = params.AsProto(kInstanceName);
+  EXPECT_EQ(kInstanceName, request.parent());
+  EXPECT_EQ(kTableId, request.table_id());
+  EXPECT_EQ(kBackupName, request.backup());
 }
 
 }  // namespace
