@@ -108,6 +108,14 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/bigquery/storage/v1/storage.proto"
+  product_path: "google/cloud/bigquery"
+  initial_copyright_year: "2022"
+  omitted_services: ["BigQueryRead"]
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/bigquery/connection/v1/connection.proto"
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
