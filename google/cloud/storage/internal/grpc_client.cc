@@ -156,8 +156,14 @@ StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
   return Status(StatusCode::kUnimplemented, __func__);
 }
 
-StatusOr<BucketMetadata> GrpcClient::CreateBucket(CreateBucketRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<BucketMetadata> GrpcClient::CreateBucket(
+    CreateBucketRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->CreateBucket(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketMetadataParser::FromProto(*response);
 }
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
