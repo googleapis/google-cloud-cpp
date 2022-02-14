@@ -72,6 +72,7 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
 TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
   EXPECT_EQ(GoogleAdcFilePathFromWellKnownPathOrEmpty(), "");
 }
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal

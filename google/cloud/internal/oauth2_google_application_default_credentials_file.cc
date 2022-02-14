@@ -37,11 +37,7 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string GoogleAdcFilePathFromEnvVarOrEmpty() {
-  auto override_value = google::cloud::internal::GetEnv(GoogleAdcEnvVar());
-  if (override_value.has_value()) {
-    return *override_value;
-  }
-  return "";
+  return google::cloud::internal::GetEnv(GoogleAdcEnvVar()).value_or("");
 }
 
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty() {
