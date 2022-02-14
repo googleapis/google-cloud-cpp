@@ -36,12 +36,15 @@ auto constexpr kUseSlack = std::chrono::seconds(30);
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,
-    std::shared_ptr<MinimalIamCredentialsRest> stub)
-    : stub_(std::move(stub)), request_(MakeRequest(config)) {}
+    std::shared_ptr<MinimalIamCredentialsRest> stub,
+    CurrentTimeFn current_time_fn)
+    : stub_(std::move(stub)),
+      request_(MakeRequest(config)),
+      current_time_fn_(std::move(current_time_fn)) {}
 
 StatusOr<std::pair<std::string, std::string>>
 ImpersonateServiceAccountCredentials::AuthorizationHeader() {
-  return AuthorizationHeader(std::chrono::system_clock::now());
+  return AuthorizationHeader(current_time_fn_());
 }
 
 StatusOr<std::pair<std::string, std::string>>
@@ -50,7 +53,10 @@ ImpersonateServiceAccountCredentials::AuthorizationHeader(
   std::unique_lock<std::mutex> lk(mu_);
   if (now + kUseSlack <= expiration_) return header_;
   auto response = stub_->GenerateAccessToken(request_);
-  if (!response) return std::move(response).status();
+  if (!response) {
+    if (current_time_fn_() < expiration_) return header_;
+    return std::move(response).status();
+  }
   expiration_ = response->expiration;
   header_ = std::make_pair("Authorization", "Bearer " + response->token);
   return header_;

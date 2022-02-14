@@ -18,6 +18,7 @@
 #include "google/cloud//version.h"
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/rest_client.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
@@ -46,6 +47,50 @@ class MinimalIamCredentialsRest {
 
   virtual StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) = 0;
+};
+
+/**
+ * Uses REST to obtain an AccessToken via IAM from the provided Credentials.
+ */
+class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
+ public:
+  /**
+   * Creates an instance of MinimalIamCredentialsRestStub.
+   *
+   * @param rest_client a dependency injection point. It makes it possible to
+   *     mock internal REST types. This should generally not be overridden
+   *     except for testing.
+   */
+  MinimalIamCredentialsRestStub(
+      std::shared_ptr<oauth2_internal::Credentials> credentials,
+      Options options,
+      std::shared_ptr<rest_internal::RestClient> rest_client = nullptr);
+
+  StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+      GenerateAccessTokenRequest const& request) override;
+
+ private:
+  static std::string MakeRequestPath(GenerateAccessTokenRequest const& request);
+
+  std::string endpoint_;
+  std::shared_ptr<oauth2_internal::Credentials> credentials_;
+  std::shared_ptr<rest_internal::RestClient> rest_client_;
+  Options options_;
+};
+
+/**
+ * Logging Decorator for use with MinimalIamCredentialsRestStub.
+ */
+class MinimalIamCredentialsRestLogging : public MinimalIamCredentialsRest {
+ public:
+  explicit MinimalIamCredentialsRestLogging(
+      std::shared_ptr<MinimalIamCredentialsRest> child);
+
+  StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+      GenerateAccessTokenRequest const& request) override;
+
+ private:
+  std::shared_ptr<MinimalIamCredentialsRest> child_;
 };
 
 std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(
