@@ -864,7 +864,6 @@ service {
     "GetIamPolicy",
     "SetIamPolicy",
     "TestIamPermissions",
-    "UpdateBucket",
     "DeleteNotification",
     "GetNotification",
     "CreateNotification",
