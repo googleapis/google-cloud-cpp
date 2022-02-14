@@ -110,6 +110,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_shell_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(shell_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(shell_quickstart
+                          PRIVATE google-cloud-cpp::experimental-shell)
+    google_cloud_cpp_add_common_options(shell_quickstart)
+    add_test(
+        NAME shell_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:shell_quickstart> "invalid@example.com")
+    set_tests_properties(
+        shell_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Permanent error in GetEnvironment:")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
