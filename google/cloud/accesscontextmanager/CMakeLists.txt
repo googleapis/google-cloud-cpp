@@ -120,6 +120,23 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_accesscontextmanager_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(accesscontextmanager_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(
+        accesscontextmanager_quickstart
+        PRIVATE google-cloud-cpp::experimental-accesscontextmanager)
+    google_cloud_cpp_add_common_options(accesscontextmanager_quickstart)
+    add_test(
+        NAME accesscontextmanager_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:accesscontextmanager_quickstart> "")
+    set_tests_properties(
+        accesscontextmanager_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Permanent error in ListAccessLevels:")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
