@@ -41,11 +41,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Otherwise, we will create and store the background threads
  * in this class. Then we will tell the Connection to use our threads for
  * its background work.
+ *
+ * The CQ will be stored in `options` as a `GrpcCompletionQueueOption`.
  */
 struct AdminClientParams {
   explicit AdminClientParams(Options opts);
 
-  CompletionQueue cq;
   std::unique_ptr<BackgroundThreads> background_threads;
   Options options;
 };
