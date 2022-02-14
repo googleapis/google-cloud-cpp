@@ -28,6 +28,27 @@ namespace {
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
 
+TEST(GrpcBucketRequestParser, DeleteBucketMetadataAllOptions) {
+  v2::DeleteBucketRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/_/buckets/test-bucket"
+        if_metageneration_match: 1
+        if_metageneration_not_match: 2
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  DeleteBucketRequest req("test-bucket");
+  req.set_multiple_options(
+      IfMetagenerationMatch(1), IfMetagenerationNotMatch(2),
+      UserProject("test-user-project"), QuotaUser("test-quota-user"),
+      UserIp("test-user-ip"));
+
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcBucketRequestParser, GetBucketMetadataAllOptions) {
   v2::GetBucketRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(

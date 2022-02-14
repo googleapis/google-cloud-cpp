@@ -29,6 +29,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -70,6 +71,12 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   EXPECT_EQ(get->location(), insert->location());
   EXPECT_EQ(get->location_type(), insert->location_type());
   EXPECT_EQ(get->storage_class(), insert->storage_class());
+
+  auto delete_status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(delete_status);
+
+  auto post_delete = client->GetBucketMetadata(bucket_name);
+  EXPECT_THAT(post_delete, StatusIs(StatusCode::kNotFound));
 }
 
 }  // namespace

@@ -24,6 +24,22 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+google::storage::v2::DeleteBucketRequest GrpcBucketRequestParser::ToProto(
+    DeleteBucketRequest const& request) {
+  google::storage::v2::DeleteBucketRequest result;
+  SetCommonParameters(result, request);
+  result.set_name("projects/_/buckets/" + request.bucket_name());
+  if (request.HasOption<IfMetagenerationMatch>()) {
+    result.set_if_metageneration_match(
+        request.GetOption<IfMetagenerationMatch>().value());
+  }
+  if (request.HasOption<IfMetagenerationNotMatch>()) {
+    result.set_if_metageneration_not_match(
+        request.GetOption<IfMetagenerationNotMatch>().value());
+  }
+  return result;
+}
+
 google::storage::v2::GetBucketRequest GrpcBucketRequestParser::ToProto(
     GetBucketMetadataRequest const& request) {
   google::storage::v2::GetBucketRequest result;
