@@ -44,16 +44,14 @@ this library.
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " debuggee-id client-version\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const debuggee_id = argv[1];
-  auto const client_version = argv[2];
   namespace debugger = ::google::cloud::debugger;
   auto client = debugger::Debugger2Client(debugger::MakeDebugger2Connection());
-  auto response = client.ListBreakpoints(debuggee_id, client_version);
+  auto response = client.ListDebuggees(argv[1], "quickstart");
   if (!response) throw std::runtime_error(response.status().message());
   std::cout << response->DebugString() << "\n";
 
