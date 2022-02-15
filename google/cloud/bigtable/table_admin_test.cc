@@ -47,6 +47,11 @@ class TableAdminTester {
     return admin.cq_;
   }
 
+  static std::shared_ptr<BackgroundThreads> Threads(
+      bigtable::TableAdmin const& admin) {
+    return admin.background_threads_;
+  }
+
   static Options Policies(bigtable::TableAdmin const& admin) {
     return admin.policies_;
   }
@@ -66,6 +71,7 @@ using ::google::cloud::bigtable_internal::TableAdminTester;
 using ::google::cloud::internal::ToChronoTimePoint;
 using ::testing::An;
 using ::testing::ElementsAre;
+using ::testing::IsNull;
 using ::testing::NotNull;
 using MockConnection =
     ::google::cloud::bigtable_admin_mocks::MockBigtableTableAdminConnection;
@@ -152,7 +158,24 @@ TEST_F(TableAdminTest, LegacyConstructorSetsCQ) {
   auto client_cq = TableAdminTester::CQ(admin);
 
   EXPECT_TRUE(SameCQ(conn_cq, client_cq));
+  EXPECT_THAT(TableAdminTester::Threads(admin), NotNull());
 }
+
+TEST_F(TableAdminTest, LegacyConstructorSetsCustomCQ) {
+  CompletionQueue user_cq;
+  auto admin_client = MakeAdminClient(
+      kProjectId, TestOptions().set<GrpcCompletionQueueOption>(user_cq));
+  auto admin = TableAdmin(admin_client, kInstanceId);
+  auto conn = TableAdminTester::Connection(admin);
+  ASSERT_TRUE(conn->options().has<GrpcCompletionQueueOption>());
+  auto conn_cq = conn->options().get<GrpcCompletionQueueOption>();
+  auto client_cq = TableAdminTester::CQ(admin);
+
+  EXPECT_TRUE(SameCQ(user_cq, client_cq));
+  EXPECT_TRUE(SameCQ(conn_cq, client_cq));
+  EXPECT_THAT(TableAdminTester::Threads(admin), IsNull());
+}
+
 TEST_F(TableAdminTest, LegacyConstructorDefaultsPolicies) {
   auto admin_client = MakeAdminClient(kProjectId, TestOptions());
   auto admin = TableAdmin(std::move(admin_client), kInstanceId);

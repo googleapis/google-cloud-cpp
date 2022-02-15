@@ -303,6 +303,11 @@ class AdminClient {
 
   // TODO(#7530): Make this a pure virtual function, when we break the class.
   virtual CompletionQueue cq() { return {}; }
+
+  // TODO(#7530): Make this a pure virtual function, when we break the class.
+  virtual std::shared_ptr<BackgroundThreads> background_threads() {
+    return nullptr;
+  }
 };
 
 /// Create a new table admin client configured via @p options.
