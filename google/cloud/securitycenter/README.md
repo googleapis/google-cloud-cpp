@@ -46,7 +46,7 @@ this library.
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " organization-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
@@ -54,8 +54,8 @@ int main(int argc, char* argv[]) try {
   auto client = securitycenter::SecurityCenterClient(
       securitycenter::MakeSecurityCenterConnection());
 
-  auto const parent = std::string{"organizations/"} + argv[1];
-  for (auto c : client.ListNotificationConfigs(parent)) {
+  auto const project = google::cloud::Project(argv[1]);
+  for (auto c : client.ListSources(project.FullName())) {
     if (!c) throw std::runtime_error(c.status().message());
     std::cout << c->DebugString() << "\n";
   }
