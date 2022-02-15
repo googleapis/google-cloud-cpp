@@ -35,6 +35,9 @@ struct GrpcBucketRequestParser {
 
   static google::storage::v2::CreateBucketRequest ToProto(
       CreateBucketRequest const& request);
+
+  static StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
+      PatchBucketRequest const& request);
 };
 
 }  // namespace internal
