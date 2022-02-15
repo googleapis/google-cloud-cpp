@@ -21,7 +21,6 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>

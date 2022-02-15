@@ -63,7 +63,7 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
   auto sr = connection_->ListTables(request);
   for (auto& t : sr) {
     if (!t) return std::move(t).status();
-    result.emplace_back(std::move(t).value());
+    result.emplace_back(*std::move(t));
   }
   return result;
 }
@@ -163,7 +163,7 @@ StatusOr<std::vector<btadmin::Backup>> TableAdmin::ListBackups(
   auto sr = connection_->ListBackups(request);
   for (auto& b : sr) {
     if (!b) return std::move(b).status();
-    result.emplace_back(std::move(b).value());
+    result.emplace_back(*std::move(b));
   }
   return result;
 }
@@ -325,7 +325,7 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissionsImpl(
   }
   auto sor = connection_->TestIamPermissions(request);
   if (!sor) return std::move(sor).status();
-  auto response = std::move(sor).value();
+  auto response = *std::move(sor);
   std::vector<std::string> result;
   auto& ps = *response.mutable_permissions();
   std::move(ps.begin(), ps.end(), std::back_inserter(result));
