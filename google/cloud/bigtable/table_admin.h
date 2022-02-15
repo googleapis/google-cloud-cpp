@@ -152,6 +152,7 @@ class TableAdmin {
       : client_(std::move(client)),
         connection_(client_->connection()),
         cq_(client_->cq()),
+        background_threads_(client_->background_threads()),
         project_id_(client_->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
@@ -164,7 +165,7 @@ class TableAdmin {
         policies_(bigtable_internal::MakeTableAdminOptions(
             retry_prototype_, backoff_prototype_, polling_prototype_)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        background_threads_(client_->BackgroundThreadsFactory()()) {}
+        legacy_background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -198,6 +199,7 @@ class TableAdmin {
       : client_(std::move(client)),
         connection_(client_->connection()),
         cq_(client_->cq()),
+        background_threads_(client_->background_threads()),
         project_id_(client_->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
@@ -208,7 +210,7 @@ class TableAdmin {
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        background_threads_(client_->BackgroundThreadsFactory()()) {
+        legacy_background_threads_(client_->BackgroundThreadsFactory()()) {
     ChangePolicies(std::forward<Policies>(policies)...);
     policies_ = bigtable_internal::MakeTableAdminOptions(
         retry_prototype_, backoff_prototype_, polling_prototype_);
@@ -1137,6 +1139,7 @@ class TableAdmin {
   std::shared_ptr<AdminClient> client_;
   std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
   CompletionQueue cq_;
+  std::shared_ptr<BackgroundThreads> background_threads_;
   std::string project_id_;
   std::string instance_id_;
   std::string instance_name_;
@@ -1145,7 +1148,7 @@ class TableAdmin {
   std::shared_ptr<PollingPolicy> polling_prototype_;
   Options policies_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<BackgroundThreads> background_threads_;
+  std::shared_ptr<BackgroundThreads> legacy_background_threads_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -157,7 +157,7 @@ TableAdmin::CreateBackupParams::AsProto(std::string instance_name) const {
 
 StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::CreateBackup(
     CreateBackupParams const& params) {
-  auto cq = background_threads_->cq();
+  auto cq = legacy_background_threads_->cq();
   return AsyncCreateBackupImpl(cq, params).get();
 }
 
@@ -332,7 +332,7 @@ TableAdmin::RestoreTableParams::AsProto(
 
 StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
     RestoreTableParams const& params) {
-  auto cq = background_threads_->cq();
+  auto cq = legacy_background_threads_->cq();
   return AsyncRestoreTableImpl(cq, params).get();
 }
 
@@ -357,7 +357,7 @@ google::bigtable::admin::v2::RestoreTableRequest AsProto(
 
 StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
     RestoreTableFromInstanceParams params) {
-  auto cq = background_threads_->cq();
+  auto cq = legacy_background_threads_->cq();
   return AsyncRestoreTableImpl(cq, std::move(params)).get();
 }
 
@@ -421,7 +421,7 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
 
 google::cloud::future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
     std::string const& table_id, std::string const& consistency_token) {
-  auto cq = background_threads_->cq();
+  auto cq = legacy_background_threads_->cq();
   return AsyncWaitForConsistencyImpl(cq, table_id, consistency_token);
 }
 

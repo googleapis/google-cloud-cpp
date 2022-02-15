@@ -446,6 +446,10 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
 
   CompletionQueue cq() override { return cq_; }
 
+  std::shared_ptr<BackgroundThreads> background_threads() override {
+    return background_threads_;
+  }
+
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.BackgroundThreadsFactory();
   }
@@ -459,7 +463,7 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
   absl::optional<std::string> user_project_;
   internal::CommonClient<btadmin::BigtableTableAdmin> impl_;
   CompletionQueue cq_;
-  std::unique_ptr<BackgroundThreads> background_threads_;
+  std::shared_ptr<BackgroundThreads> background_threads_;
   std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
 };
 
