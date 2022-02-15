@@ -108,9 +108,15 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
     EXPECT_CALL(*stream, Start).WillOnce([]() {
       return make_ready_future(true);
     });
+    EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([]() {
+      return make_ready_future(true);
+    });
     EXPECT_CALL(*stream, Read).WillOnce([]() {
       return make_ready_future(
           absl::make_optional(FakeResponse{"key0", "value0_0"}));
+    }).WillOnce([]() {
+      return make_ready_future(
+          absl::make_optional(FakeResponse{"key0", "value0_1"}));
     });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
       return make_ready_future(make_ready_future(Status()));
@@ -132,11 +138,19 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
 
   auto start = stream->Start();
 
-  auto read0 = stream->Read();
-  auto response0 = read0.get();
+  auto write = stream->Write(FakeRequest{"key0"},
+                             grpc::WriteOptions().set_last_message());
+  ASSERT_TRUE(write.get());
+
+  auto response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ("key0", response0->key);
   EXPECT_EQ("value0_0", response0->value);
+
+  response0 = stream->Read().get();
+  ASSERT_TRUE(response0.has_value());
+  EXPECT_EQ("key0", response0->key);
+  EXPECT_EQ("value0_1", response0->value);
 
   auto finish = stream->Finish();
   finish.get();
