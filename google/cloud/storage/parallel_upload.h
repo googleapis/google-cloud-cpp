@@ -640,7 +640,8 @@ StatusOr<ResumableParallelUploadState> PrepareParallelUpload(
   if (resumable_session_id.empty()) {
     return ResumableParallelUploadState::CreateNew(
         std::move(client), bucket_name, object_name, num_shards, prefix,
-        extra_state_arg ? *std::move(extra_state_arg).payload() : std::string(),
+        extra_state_arg ? (*std::move(extra_state_arg)).payload()
+                        : std::string(),
         std::move(forwarded_args));
   }
   return ResumableParallelUploadState::Resume(
