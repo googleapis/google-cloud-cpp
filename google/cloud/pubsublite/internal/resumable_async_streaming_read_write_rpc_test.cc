@@ -320,6 +320,53 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   EXPECT_THAT(start.get(), IsOk());
 }
 
+TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfWrite) {
+  MockStub mock;
+  promise<bool> to_set_write_promise;
+  EXPECT_CALL(mock, FakeStream).WillOnce([&to_set_write_promise]() {
+    auto stream = absl::make_unique<MockAsyncReaderWriter>();
+    EXPECT_CALL(*stream, Start).WillOnce([]() {
+      return make_ready_future(true);
+    });
+    EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([&to_set_write_promise]() {
+      promise<bool> write_promise;
+      auto write_future = write_promise.get_future();
+      to_set_write_promise = std::move(write_promise);
+      return std::move(write_future);
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([]() {
+      return make_ready_future(make_ready_future(Status()));
+    });
+    return stream;
+  });
+
+  std::shared_ptr<BackoffPolicy const> backoff_policy =
+      std::move(DefaultBackoffPolicy());
+
+  EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
+    return absl::make_unique<MockRetryPolicy>();
+  });
+
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [&mock](MockAsyncStreamReturnType stream) {
+            return make_ready_future(
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
+          });
+
+  auto start = stream->Start();
+  auto write = stream->Write(FakeRequest{"key0"},
+                             grpc::WriteOptions().set_last_message());
+  auto finish_future = stream->Finish();
+  to_set_write_promise.set_value(true);
+  ASSERT_FALSE(write.get());
+
+  finish_future.get();
+  EXPECT_THAT(start.get(), IsOk());
+}
+
 }  // namespace
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
