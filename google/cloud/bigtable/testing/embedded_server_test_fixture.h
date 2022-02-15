@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/bigtable/testing/inprocess_admin_client.h"
 #include "google/cloud/bigtable/testing/inprocess_data_client.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gtest/gtest.h>
@@ -65,30 +64,6 @@ class BigtableImpl final : public google::bigtable::v2::Bigtable::Service {
   ReceivedMetadata client_metadata_;
 };
 
-class TableAdminImpl final
-    : public google::bigtable::admin::v2::BigtableTableAdmin::Service {
- public:
-  TableAdminImpl() = default;
-
-  grpc::Status CreateTable(
-      grpc::ServerContext* context,
-      google::bigtable::admin::v2::CreateTableRequest const*,
-      google::bigtable::admin::v2::Table*) override {
-    GetClientMetadata(context, client_metadata_);
-    return grpc::Status::OK;
-  }
-  grpc::Status GetTable(grpc::ServerContext* context,
-                        google::bigtable::admin::v2::GetTableRequest const*,
-                        google::bigtable::admin::v2::Table*) override {
-    GetClientMetadata(context, client_metadata_);
-    return grpc::Status::OK;
-  }
-  ReceivedMetadata const& client_metadata() const { return client_metadata_; }
-
- private:
-  ReceivedMetadata client_metadata_;
-};
-
 /// Common fixture for integrating embedded server into tests.
 class EmbeddedServerTestFixture : public ::testing::Test {
  protected:
@@ -105,12 +80,9 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   std::string project_id_ = kProjectId;
   std::string instance_id_ = kInstanceId;
   std::shared_ptr<DataClient> data_client_;
-  std::shared_ptr<AdminClient> admin_client_;
   std::shared_ptr<bigtable::Table> table_;
-  std::shared_ptr<bigtable::TableAdmin> admin_;
   std::thread wait_thread_;
   BigtableImpl bigtable_service_;
-  TableAdminImpl admin_service_;
   grpc::ServerBuilder builder_;
   std::unique_ptr<grpc::Server> server_;
 };

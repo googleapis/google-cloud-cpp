@@ -31,29 +31,6 @@ class MetadataUpdatePolicyTest : public testing::EmbeddedServerTestFixture {};
 
 using ::testing::HasSubstr;
 
-/// @test A test for setting metadata for admin operations.
-TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServer) {
-  grpc::string expected = "parent=" + std::string(kInstanceName);
-  auto gc = GcRule::MaxNumVersions(42);
-  admin_->CreateTable(kTableName, TableConfig({{"fam", gc}}, {}));
-  // Get metadata from embedded server
-  auto client_metadata = admin_service_.client_metadata();
-  auto range = client_metadata.equal_range("x-goog-request-params");
-  ASSERT_EQ(1, std::distance(range.first, range.second));
-  EXPECT_EQ(expected, range.first->second);
-}
-
-/// @test A test for setting metadata when table is not known.
-TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerLazyMetadata) {
-  grpc::string expected = "name=" + std::string(kTableName);
-  admin_->GetTable(kTableId);
-  // Get metadata from embedded server
-  auto client_metadata = admin_service_.client_metadata();
-  auto range = client_metadata.equal_range("x-goog-request-params");
-  ASSERT_EQ(1, std::distance(range.first, range.second));
-  EXPECT_EQ(expected, range.first->second);
-}
-
 /// @test A test for setting metadata when table is known.
 TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
   grpc::string expected = "table_name=" + std::string(kTableName);

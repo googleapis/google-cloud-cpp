@@ -148,12 +148,12 @@ class TableAdmin {
    *   name (e.g. '/projects/my-project/instances/my-instance') is built using
    *   the project id in the @p client parameter.
    */
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
-      : client_(std::move(client)),
-        connection_(client_->connection()),
-        cq_(client_->cq()),
-        background_threads_(client_->background_threads()),
-        project_id_(client_->project()),
+      : connection_(client->connection()),
+        cq_(client->cq()),
+        background_threads_(client->background_threads()),
+        project_id_(client->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         retry_prototype_(
@@ -163,9 +163,7 @@ class TableAdmin {
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
         policies_(bigtable_internal::MakeTableAdminOptions(
-            retry_prototype_, backoff_prototype_, polling_prototype_)),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        legacy_background_threads_(client_->BackgroundThreadsFactory()()) {}
+            retry_prototype_, backoff_prototype_, polling_prototype_)) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -194,13 +192,13 @@ class TableAdmin {
    *     LimitedErrorCountRetryPolicy, LimitedTimeRetryPolicy.
    */
   template <typename... Policies>
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              Policies&&... policies)
-      : client_(std::move(client)),
-        connection_(client_->connection()),
-        cq_(client_->cq()),
-        background_threads_(client_->background_threads()),
-        project_id_(client_->project()),
+      : connection_(client->connection()),
+        cq_(client->cq()),
+        background_threads_(client->background_threads()),
+        project_id_(client->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
         retry_prototype_(
@@ -208,9 +206,7 @@ class TableAdmin {
         backoff_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
         polling_prototype_(
-            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        legacy_background_threads_(client_->BackgroundThreadsFactory()()) {
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {
     ChangePolicies(std::forward<Policies>(policies)...);
     policies_ = bigtable_internal::MakeTableAdminOptions(
         retry_prototype_, backoff_prototype_, polling_prototype_);
@@ -1066,8 +1062,7 @@ class TableAdmin {
         polling_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
         policies_(bigtable_internal::MakeTableAdminOptions(
-            retry_prototype_, backoff_prototype_, polling_prototype_)),
-        metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT) {}
+            retry_prototype_, backoff_prototype_, polling_prototype_)) {}
 
   //@{
   /// @name Helper functions to implement constructors with changed policies.
@@ -1091,52 +1086,17 @@ class TableAdmin {
   void ChangePolicies() {}
   //@}
 
-  std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return retry_prototype_->clone();
-  }
-
-  std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return backoff_prototype_->clone();
-  }
-
-  MetadataUpdatePolicy clone_metadata_update_policy() {
-    return metadata_update_policy_;
-  }
-
-  std::unique_ptr<PollingPolicy> clone_polling_policy() {
-    return polling_prototype_->clone();
-  }
-
   /// Compute the fully qualified instance name.
   std::string InstanceName() const;
 
-  future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackupImpl(
-      CompletionQueue& cq, CreateBackupParams const& params);
-
-  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTableImpl(
-      CompletionQueue& cq, RestoreTableParams const& params);
-
-  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTableImpl(
-      CompletionQueue& cq, RestoreTableFromInstanceParams params);
-
-  future<StatusOr<Consistency>> AsyncCheckConsistency(
-      CompletionQueue& cq, std::string const& table_id,
-      std::string const& consistency_token);
-
-  future<StatusOr<Consistency>> AsyncWaitForConsistencyImpl(
-      CompletionQueue& cq, std::string const& table_id,
-      std::string const& consistency_token);
-
-  StatusOr<google::iam::v1::Policy> GetIamPolicyImpl(
-      std::string const& resource);
+  StatusOr<google::iam::v1::Policy> GetIamPolicyImpl(std::string resource);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicyImpl(
-      std::string const& resource, google::iam::v1::Policy const& iam_policy);
+      std::string resource, google::iam::v1::Policy const& iam_policy);
 
   StatusOr<std::vector<std::string>> TestIamPermissionsImpl(
-      std::string const& resource, std::vector<std::string> const& permissions);
+      std::string resource, std::vector<std::string> const& permissions);
 
-  std::shared_ptr<AdminClient> client_;
   std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
   CompletionQueue cq_;
   std::shared_ptr<BackgroundThreads> background_threads_;
@@ -1147,8 +1107,6 @@ class TableAdmin {
   std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
   std::shared_ptr<PollingPolicy> polling_prototype_;
   Options policies_;
-  bigtable::MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<BackgroundThreads> legacy_background_threads_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

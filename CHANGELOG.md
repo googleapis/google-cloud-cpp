@@ -103,6 +103,40 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.37.0 - TBD
 
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+**BREAKING CHANGE:** The `bigtable::TableAdminClient` interface has changed
+significantly. Any code that extends this class or calls its experimental public
+APIs (`reset()`, `Channel()`) will be broken. For the most part, this should
+only affect customers who mock this class in their tests. Code that calls
+`bigtable::MakeAdminClient()` or `bigtable::CreateDefaultAdminClient()` will
+continue to work as before.
+
+This change will allow us to deliver new features more quickly by reducing the
+maintenance costs of the library. It also provides a better mocking interface
+for `bigtable::TableAdmin`. We apologize if you are inconvenienced by this
+change.
+
+If only your tests are broken, please use
+`bigtable_admin_mocks::MockBigtableTableAdminConnection` in place of
+`bigtable::testing::MockAdminClient`. The new mock should be more intuitive
+because of the differences described below:
+
+|`MockBigtableTableAdminConnection` | `MockAdminClient` |
+|-|-|
+| Mocks result of entire retry loop | Mocks result of one call in a retry loop |
+| Returns familiar `google::cloud::` types | Returns `grpc::` types |
+
+If more than your tests are broken, please use
+`bigtable_admin::BigtableTableAdminClient` in favor of `bigtable::TableAdmin`,
+and `bigtable_admin::BigtableTableAdminConnection` in favor of
+`bigtable::AdminClient`. These classes will incorporate the newest features of
+both the [Cloud Bigtable Admin API] and the C++ client library. For more
+information on these new classes, see our [Architecture Design] document.
+
+Again, we apologize for making this breaking change, but we believe it is in the
+best long-term interest of our customers.
+
 ### New Libraries
 
 <!-- TODO: update library count with next release -->
