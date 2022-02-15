@@ -209,7 +209,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     find_package(GTest CONFIG REQUIRED)
 
     set(pubsublite_unit_tests # cmake-format: sort
-                              endpoint_test.cc internal/stream_factory_test.cc)
+                              endpoint_test.cc internal/resumable_async_streaming_read_write_rpc_test.cc internal/stream_factory_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"
                          YEAR "2021")
