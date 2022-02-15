@@ -38,6 +38,13 @@ add_library(
     bigquery_read_connection_idempotency_policy.cc
     bigquery_read_connection_idempotency_policy.h
     bigquery_read_options.h
+    bigquery_write_client.cc
+    bigquery_write_client.h
+    bigquery_write_connection.cc
+    bigquery_write_connection.h
+    bigquery_write_connection_idempotency_policy.cc
+    bigquery_write_connection_idempotency_policy.h
+    bigquery_write_options.h
     connection_client.cc
     connection_client.h
     connection_connection.cc
@@ -67,6 +74,21 @@ add_library(
     internal/bigquery_read_stub.h
     internal/bigquery_read_stub_factory.cc
     internal/bigquery_read_stub_factory.h
+    internal/bigquery_write_auth_decorator.cc
+    internal/bigquery_write_auth_decorator.h
+    internal/bigquery_write_connection_impl.cc
+    internal/bigquery_write_connection_impl.h
+    internal/bigquery_write_logging_decorator.cc
+    internal/bigquery_write_logging_decorator.h
+    internal/bigquery_write_metadata_decorator.cc
+    internal/bigquery_write_metadata_decorator.h
+    internal/bigquery_write_option_defaults.cc
+    internal/bigquery_write_option_defaults.h
+    internal/bigquery_write_retry_traits.h
+    internal/bigquery_write_stub.cc
+    internal/bigquery_write_stub.h
+    internal/bigquery_write_stub_factory.cc
+    internal/bigquery_write_stub_factory.h
     internal/connection_auth_decorator.cc
     internal/connection_auth_decorator.h
     internal/connection_connection_impl.cc
@@ -178,6 +200,7 @@ target_sources(
     google_cloud_cpp_bigquery_mocks
     INTERFACE # cmake-format: sort
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_write_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_transfer_connection.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_model_connection.h
