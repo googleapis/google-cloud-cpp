@@ -39,8 +39,6 @@ using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::_;
 using ::testing::ReturnRef;
 
-using ::google::cloud::internal::AsyncGrpcOperation;
-using ::google::cloud::internal::MakeStreamingReadWriteRpc;
 using ::google::cloud::internal::RetryPolicy;
 
 struct FakeRequest {
@@ -57,24 +55,8 @@ bool operator==(FakeRequest const& lhs, FakeRequest const& rhs) {
   return lhs.key == rhs.key;
 }
 
-using MockReturnType = std::unique_ptr<
-    grpc::ClientAsyncReaderWriterInterface<FakeRequest, FakeResponse>>;
-
-using MockAsyncReturnType =
+using MockAsyncStreamReturnType =
     std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
-
-class MockReaderWriter
-    : public grpc::ClientAsyncReaderWriterInterface<FakeRequest, FakeResponse> {
- public:
-  MOCK_METHOD(void, WritesDone, (void*), (override));
-  MOCK_METHOD(void, Read, (FakeResponse*, void*), (override));
-  MOCK_METHOD(void, Write, (FakeRequest const&, void*), (override));
-  MOCK_METHOD(void, Write, (FakeRequest const&, grpc::WriteOptions, void*),
-              (override));
-  MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
-  MOCK_METHOD(void, StartCall, (void*), (override));
-  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
-};
 
 class MockAsyncReaderWriter
     : public AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse> {
@@ -97,9 +79,7 @@ class MockRetryPolicy : public RetryPolicy {
 
 class MockStub {
  public:
-  MOCK_METHOD(MockAsyncReturnType, FakeStream, (), ());
-  MOCK_METHOD(MockReturnType, FakeRpc,
-              (grpc::ClientContext*, grpc::CompletionQueue*), ());
+  MOCK_METHOD(MockAsyncStreamReturnType, FakeStream, (), ());
 };
 
 std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
@@ -113,49 +93,29 @@ future<void> MockSleeper(std::chrono::duration<double>) {
   return make_ready_future();
 }
 
+template <typename T>
+void SetOpValue(std::deque<std::shared_ptr<promise<T>>>& operations,
+                T response) {
+  auto op = std::move(operations.front());
+  operations.pop_front();
+  op->set_value(response);
+}
+
 TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   MockStub mock;
-  std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
-  auto notify_next_op = [&](bool ok = true) {
-    auto op = std::move(operations.front());
-    operations.pop_front();
-    op->Notify(ok);
-  };
-  EXPECT_CALL(mock, FakeStream).WillOnce([&operations, &mock]() {
-    EXPECT_CALL(mock, FakeRpc)
-        .WillOnce([](grpc::ClientContext*, grpc::CompletionQueue*) {
-          auto stream = absl::make_unique<MockReaderWriter>();
-          EXPECT_CALL(*stream, StartCall).Times(1);
-          EXPECT_CALL(*stream, Read)
-              .WillOnce([](FakeResponse* response, void*) {
-                response->key = "key0";
-                response->value = "value0_0";
-              });
-          EXPECT_CALL(*stream, Finish)
-              .WillOnce([](grpc::Status* status, void*) {
-                *status = grpc::Status::OK;
-              });
-          return stream;
-        });
-
-    auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-    grpc::CompletionQueue grpc_cq;
-    EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
-
-    EXPECT_CALL(*mock_cq, StartOperation)
-        .WillRepeatedly([&operations](std::shared_ptr<AsyncGrpcOperation> op,
-                                      absl::FunctionRef<void(void*)> call) {
-          void* tag = op.get();
-          operations.push_back(std::move(op));
-          call(tag);
-        });
-
-    google::cloud::CompletionQueue cq(mock_cq);
-    return MakeStreamingReadWriteRpc<FakeRequest, FakeResponse>(
-        cq, absl::make_unique<grpc::ClientContext>(),
-        [&mock](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-          return mock.FakeRpc(context, cq);
-        });
+  EXPECT_CALL(mock, FakeStream).WillOnce([]() {
+    auto stream = absl::make_unique<MockAsyncReaderWriter>();
+    EXPECT_CALL(*stream, Start).WillOnce([]() {
+      return make_ready_future(true);
+    });
+    EXPECT_CALL(*stream, Read).WillOnce([]() {
+      return make_ready_future(
+          absl::make_optional(FakeResponse{"key0", "value0_0"}));
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([]() {
+      return make_ready_future(make_ready_future(Status()));
+    });
+    return stream;
   });
 
   std::shared_ptr<BackoffPolicy const> backoff_policy =
@@ -165,28 +125,20 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
           []() { return absl::make_unique<MockRetryPolicy>(); }, backoff_policy,
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
-          [&mock](MockAsyncReturnType stream) {
+          [&mock](MockAsyncStreamReturnType stream) {
             return make_ready_future(
-                StatusOr<std::unique_ptr<
-                    AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>>(
-                    std::move(stream)));
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
           });
 
   auto start = stream->Start();
-  ASSERT_EQ(1, operations.size());
-  notify_next_op();
 
   auto read0 = stream->Read();
-  ASSERT_EQ(1, operations.size());
-  notify_next_op();
   auto response0 = read0.get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ("key0", response0->key);
   EXPECT_EQ("value0_0", response0->value);
 
   auto finish = stream->Finish();
-  ASSERT_EQ(1, operations.size());
-  notify_next_op();
   finish.get();
 
   EXPECT_THAT(start.get(), IsOk());
