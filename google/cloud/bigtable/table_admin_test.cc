@@ -24,34 +24,45 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Helper class for checking that the legacy API still functions correctly
 class TableAdminTester {
  public:
-  static TableAdmin MakeTestTableAdmin(
+  static bigtable::TableAdmin MakeTestTableAdmin(
       std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> conn,
       CompletionQueue cq, std::string const& kProjectId,
       std::string const& kInstanceId) {
-    return TableAdmin(std::move(conn), std::move(cq), kProjectId, kInstanceId);
+    return bigtable::TableAdmin(std::move(conn), std::move(cq), kProjectId,
+                                kInstanceId);
   }
 
   static std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
-  Connection(TableAdmin const& admin) {
+  Connection(bigtable::TableAdmin const& admin) {
     return admin.connection_;
   }
 
-  static CompletionQueue CQ(TableAdmin const& admin) { return admin.cq_; }
+  static CompletionQueue CQ(bigtable::TableAdmin const& admin) {
+    return admin.cq_;
+  }
 
-  static Options Policies(TableAdmin const& admin) { return admin.policies_; }
+  static Options Policies(bigtable::TableAdmin const& admin) {
+    return admin.policies_;
+  }
 };
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+namespace bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
 using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockPollingPolicy;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
+using ::google::cloud::bigtable_internal::TableAdminTester;
 using ::google::cloud::internal::ToChronoTimePoint;
 using ::testing::An;
 using ::testing::ElementsAre;

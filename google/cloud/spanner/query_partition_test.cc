@@ -20,15 +20,17 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class QueryPartitionTester {
  public:
   QueryPartitionTester() = default;
-  explicit QueryPartitionTester(QueryPartition partition)
+  explicit QueryPartitionTester(spanner::QueryPartition partition)
       : partition_(std::move(partition)) {}
-  SqlStatement const& Statement() const { return partition_.sql_statement(); }
+  spanner::SqlStatement const& Statement() const {
+    return partition_.sql_statement();
+  }
   std::string const& PartitionToken() const {
     return partition_.partition_token();
   }
@@ -39,14 +41,19 @@ class QueryPartitionTester {
   std::string const& TransactionTag() const {
     return partition_.transaction_tag();
   }
-  QueryPartition Partition() const { return partition_; }
+  spanner::QueryPartition Partition() const { return partition_; }
 
  private:
-  QueryPartition partition_;
+  spanner::QueryPartition partition_;
 };
 
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner_internal
+namespace spanner {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::spanner_internal::QueryPartitionTester;
 using ::google::cloud::spanner_testing::HasSessionAndTransaction;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::Not;

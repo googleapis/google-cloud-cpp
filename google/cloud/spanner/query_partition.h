@@ -26,6 +26,7 @@ namespace google {
 namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class QueryPartitionTester;
 struct QueryPartitionInternals;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
@@ -113,7 +114,7 @@ class QueryPartition {
   ///@}
 
  private:
-  friend class QueryPartitionTester;
+  friend class spanner_internal::QueryPartitionTester;
   friend struct spanner_internal::QueryPartitionInternals;
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);

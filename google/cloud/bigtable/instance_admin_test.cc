@@ -22,22 +22,26 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Helper class for checking that the legacy API still functions correctly
 class InstanceAdminTester {
  public:
   static std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
-  Connection(InstanceAdmin const& admin) {
+  Connection(bigtable::InstanceAdmin const& admin) {
     return admin.connection_;
   }
 
-  static Options Policies(InstanceAdmin const& admin) {
+  static Options Policies(bigtable::InstanceAdmin const& admin) {
     return admin.policies_;
   }
 };
 
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+namespace bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -46,6 +50,7 @@ namespace iamproto = ::google::iam::v1;
 using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockPollingPolicy;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
+using ::google::cloud::bigtable_internal::InstanceAdminTester;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
