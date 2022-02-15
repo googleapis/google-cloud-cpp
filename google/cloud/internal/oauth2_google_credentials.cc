@@ -13,11 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_google_credentials.h"
-#include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
-#include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
@@ -60,7 +58,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
   }
   std::string contents(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nlohmann::json::parse(contents, nullptr, false);
-  if (cred_json.is_discarded()) {
+  if (!cred_json.is_object()) {
     return Status(StatusCode::kInvalidArgument,
                   "Invalid credentials file " + path);
   }
@@ -156,11 +154,9 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
   auto gce_creds = std::make_shared<ComputeEngineCredentials>();
-  auto override_val =
-      google::cloud::internal::GetEnv(internal::GceCheckOverrideEnvVar());
-  if (override_val.has_value() ? (std::string("1") == *override_val)
-                               : gce_creds->AuthorizationHeader().ok()) {
-    return StatusOr<std::shared_ptr<Credentials>>(std::move(gce_creds));
+  if (options.get<oauth2_internal::ForceGceOption>() ||
+      gce_creds->AuthorizationHeader().ok()) {
+    return std::shared_ptr<Credentials>(std::move(gce_creds));
   }
 
   // We've exhausted all search points, thus credentials cannot be constructed.
@@ -169,120 +165,6 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
              "Could not automatically determine credentials. For more "
              "information, please see " +
                  std::string(kAdcLink)));
-}
-
-std::shared_ptr<Credentials> CreateAnonymousCredentials() {
-  return std::make_shared<AnonymousCredentials>();
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
-  std::ifstream is(path);
-  std::string contents(std::istreambuf_iterator<char>{is}, {});
-  auto info = ParseAuthorizedUserCredentials(contents, path);
-  if (!info) {
-    return StatusOr<std::shared_ptr<Credentials>>(info.status());
-  }
-  return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<AuthorizedUserCredentials>(*info));
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents,
-                                                Options const& options) {
-  auto info = ParseAuthorizedUserCredentials(contents, "memory");
-  if (!info) {
-    return StatusOr<std::shared_ptr<Credentials>>(info.status());
-  }
-  return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<AuthorizedUserCredentials>(*info, options));
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonFile(std::string const& path) {
-  return CreateServiceAccountCredentialsFromJsonFile(path, {}, {});
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonFile(
-    std::string const& path, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, Options const& options) {
-  std::ifstream is(path);
-  std::string contents(std::istreambuf_iterator<char>{is}, {});
-  auto info = ParseServiceAccountCredentials(contents, path);
-  if (!info) {
-    return StatusOr<std::shared_ptr<Credentials>>(info.status());
-  }
-  // These are supplied as extra parameters to this method, not in the JSON
-  // file.
-  info->subject = std::move(subject);
-  info->scopes = std::move(scopes);
-  return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<ServiceAccountCredentials>(*info, options));
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromDefaultPaths(Options const& options) {
-  return CreateServiceAccountCredentialsFromDefaultPaths({}, {}, options);
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromDefaultPaths(
-    absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, Options const& options) {
-  auto creds = MaybeLoadCredsFromAdcPaths(false, std::move(scopes),
-                                          std::move(subject), options);
-  if (!creds) {
-    return StatusOr<std::shared_ptr<Credentials>>(creds.status());
-  }
-  if (*creds) {
-    return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
-  }
-
-  // We've exhausted all search points, thus credentials cannot be constructed.
-  return StatusOr<std::shared_ptr<Credentials>>(
-      Status(StatusCode::kUnknown,
-             "Could not create service account credentials using Application"
-             "Default Credentials paths. For more information, please see " +
-                 std::string(kAdcLink)));
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
-                                                Options const& options) {
-  return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {},
-                                                         options);
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, absl::optional<std::set<std::string>> scopes,
-    absl::optional<std::string> subject, Options const& options) {
-  auto info = ParseServiceAccountCredentials(contents, "memory");
-  if (!info) {
-    return StatusOr<std::shared_ptr<Credentials>>(info.status());
-  }
-  std::chrono::system_clock::time_point now;
-  auto components = AssertionComponentsFromInfo(*info, now);
-  auto jwt_assertion = internal::MakeJWTAssertionNoThrow(
-      components.first, components.second, info->private_key);
-  if (!jwt_assertion) return std::move(jwt_assertion).status();
-
-  // These are supplied as extra parameters to this method, not in the JSON
-  // file.
-  info->subject = std::move(subject);
-  info->scopes = std::move(scopes);
-  return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<ServiceAccountCredentials>(*info, options));
-}
-
-std::shared_ptr<Credentials> CreateComputeEngineCredentials() {
-  return std::make_shared<ComputeEngineCredentials>();
-}
-
-std::shared_ptr<Credentials> CreateComputeEngineCredentials(
-    std::string const& service_account_email) {
-  return std::make_shared<ComputeEngineCredentials>(service_account_email);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -23,23 +23,6 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/**
- * Returns the env var used to override the check for if we're running on GCE.
- *
- * This environment variable is used for testing to override the return value
- * for the function that checks whether we're running on a GCE VM. Some CI
- * testing services sometimes run on GCE VMs, and we don't want to accidentally
- * try to use their service account credentials during our tests.
- *
- * If set to "1", this will force `RunningOnComputeEngineVm` to return true. If
- * set to anything else, it will return false. If unset, the function will
- * actually check whether we're running on a GCE VM.
- */
-inline char const* GceCheckOverrideEnvVar() {
-  static constexpr char kEnvVarName[] = "GOOGLE_RUNNING_ON_GCE_CHECK_OVERRIDE";
-  return kEnvVarName;
-}
-
 /// Returns the hostname for a GCE instance's metadata server.
 std::string GceMetadataHostname();
 

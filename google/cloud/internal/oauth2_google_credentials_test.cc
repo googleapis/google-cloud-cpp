@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_google_credentials.h"
-#include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
@@ -33,7 +32,6 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::GceCheckOverrideEnvVar;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
@@ -48,8 +46,7 @@ class GoogleCredentialsTest : public ::testing::Test {
   GoogleCredentialsTest()
       : home_env_var_(GoogleAdcHomeEnvVar(), {}),
         adc_env_var_(GoogleAdcEnvVar(), {}),
-        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar(), {}),
-        gce_check_override_env_var_(GceCheckOverrideEnvVar(), {}) {}
+        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar(), {}) {}
 
  protected:
   std::string CreateRandomFileName() {
@@ -67,7 +64,6 @@ class GoogleCredentialsTest : public ::testing::Test {
   ScopedEnvironment home_env_var_;
   ScopedEnvironment adc_env_var_;
   ScopedEnvironment gcloud_path_override_env_var_;
-  ScopedEnvironment gce_check_override_env_var_;
 };
 
 std::string const kAuthorizedUserCredFilename = "oauth2-authorized-user.json";
@@ -122,45 +118,6 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
   EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials));
-}
-
-TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromFilename) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupAuthorizedUserCredentialsFileForTest(filename);
-  auto creds = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
-  ASSERT_STATUS_OK(creds);
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials));
-}
-
-TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsFromContents) {
-  // Test that the authorized user credentials are loaded from a string
-  // representing JSON contents.
-  auto creds = CreateAuthorizedUserCredentialsFromJsonContents(
-      kAuthorizedUserCredContents);
-  ASSERT_STATUS_OK(creds);
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(AuthorizedUserCredentials));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadInvalidAuthorizedUserCredentialsFromFilename) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), "oauth2-invalid-credentials.json");
-  std::ofstream os(filename);
-  std::string contents_str = R"""( not-a-json-object-string )""";
-  os << contents_str;
-  os.close();
-  auto creds = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
-  EXPECT_THAT(creds, Not(IsOk()));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadInvalidAuthorizedUserCredentialsFromJsonContents) {
-  std::string contents_str = R"""( not-a-json-object-string )""";
-  auto creds = CreateAuthorizedUserCredentialsFromJsonContents(contents_str);
-  EXPECT_THAT(creds, Not(IsOk()));
 }
 
 /**
@@ -238,200 +195,15 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials));
 }
 
-TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromFilename) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), kServiceAccountCredFilename);
-  SetupServiceAccountCredentialsFileForTest(filename);
-
-  // Test that the service account credentials are loaded from a file.
-  auto creds = CreateServiceAccountCredentialsFromJsonFile(filename);
-  ASSERT_STATUS_OK(creds);
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials));
-
-  // Test the wrapper function.
-  creds = CreateServiceAccountCredentialsFromJsonFile(filename);
-  ASSERT_STATUS_OK(creds);
-  auto* ptr2 = creds->get();
-  EXPECT_EQ(typeid(*ptr2), typeid(ServiceAccountCredentials));
-
-  creds = CreateServiceAccountCredentialsFromJsonFile(
-      filename, {{"https://www.googleapis.com/auth/devstorage.full_control"}},
-      "user@foo.bar");
-  ASSERT_STATUS_OK(creds);
-  auto* ptr3 = creds->get();
-  EXPECT_EQ(typeid(*ptr3), typeid(ServiceAccountCredentials));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadValidServiceAccountCredentialsFromFilenameWithOptionalArgs) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), kServiceAccountCredFilename);
-  SetupServiceAccountCredentialsFileForTest(filename);
-
-  // Test that the service account credentials are loaded from a file.
-  auto creds = CreateServiceAccountCredentialsFromJsonFile(
-      filename, {{"https://www.googleapis.com/auth/devstorage.full_control"}},
-      "user@foo.bar");
-  ASSERT_STATUS_OK(creds);
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadInvalidServiceAccountCredentialsFromFilename) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), "invalid-credentials.json");
-  std::ofstream os(filename);
-  std::string contents_str = R"""( not-a-json-object-string )""";
-  os << contents_str;
-  os.close();
-
-  auto creds = CreateServiceAccountCredentialsFromJsonFile(
-      filename, {{"https://www.googleapis.com/auth/devstorage.full_control"}},
-      "user@foo.bar");
-  EXPECT_THAT(creds, Not(IsOk()));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadValidServiceAccountCredentialsFromDefaultPathsViaEnvVar) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupServiceAccountCredentialsFileForTest(filename);
-
-  // Test that the service account credentials are loaded as the default when
-  // specified via the well known environment variable.
-  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
-  auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
-  ASSERT_STATUS_OK(creds);
-  // Need to create a temporary for the pointer because clang-tidy warns about
-  // using expressions with (potential) side-effects inside typeid().
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadValidServiceAccountCredentialsFromDefaultPathsViaGcloudFile) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupServiceAccountCredentialsFileForTest(filename);
-
-  // Test that the service account credentials are loaded as the default when
-  // stored in the the well known gcloud ADC file path.
-  ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
-                                                 filename.c_str());
-  auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
-  ASSERT_STATUS_OK(creds);
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadValidServiceAccountCredentialsFromDefaultPathsWithOptionalArgs) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupServiceAccountCredentialsFileForTest(filename);
-
-  // Test that the service account credentials are loaded as the default when
-  // specified via the well known environment variable.
-  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
-  auto creds = CreateServiceAccountCredentialsFromDefaultPaths(
-      {{"https://www.googleapis.com/auth/devstorage.full_control"}},
-      "user@foo.bar");
-  ASSERT_STATUS_OK(creds);
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials));
-}
-
-TEST_F(
-    GoogleCredentialsTest,
-    DoNotLoadAuthorizedUserCredentialsFromCreateServiceAccountCredentialsFromDefaultPaths) {
-  std::string filename = google::cloud::internal::PathAppend(
-      ::testing::TempDir(), kAuthorizedUserCredFilename);
-  SetupAuthorizedUserCredentialsFileForTest(filename);
-
-  // Test that the authorized user credentials are loaded as the default when
-  // specified via the well known environment variable.
-  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
-  auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),
-                              HasSubstr("Unsupported credential type")));
-}
-
-TEST_F(GoogleCredentialsTest,
-       MissingCredentialsCreateServiceAccountCredentialsFromDefaultPaths) {
-  // The developer may have configured something that are not service account
-  // credentials in the well-known path. Change the search location to a
-  // directory that should have have developer configuration files.
-  ScopedEnvironment home_env_var(GoogleAdcHomeEnvVar(), ::testing::TempDir());
-  // Test that when CreateServiceAccountCredentialsFromDefaultPaths cannot
-  // find any credentials, it fails.
-  auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
-  EXPECT_THAT(
-      creds,
-      StatusIs(Not(StatusCode::kOk),
-               HasSubstr("Could not create service account credentials")));
-}
-
-TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
-  // Test that the service account credentials are loaded from a string
-  // representing JSON contents.
-  auto creds = CreateServiceAccountCredentialsFromJsonContents(
-      kServiceAccountCredContents,
-      {{"https://www.googleapis.com/auth/devstorage.full_control"}},
-      "user@foo.bar");
-  ASSERT_STATUS_OK(creds);
-  auto* ptr = creds->get();
-  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadInvalidServiceAccountCredentialsFromContents) {
-  // Test that providing invalid contents returns a failure status.
-  auto creds = CreateServiceAccountCredentialsFromJsonContents(
-      "not-a-valid-jason-object",
-      {{"https://www.googleapis.com/auth/devstorage.full_control"}},
-      "user@foo.bar");
-  EXPECT_THAT(creds, Not(IsOk()));
-}
-
-TEST_F(GoogleCredentialsTest,
-       LoadInvalidServiceAccountCredentialsWithInvalidKey) {
-  // Test that providing invalid private_key returns a failure status.
-  auto creds = CreateServiceAccountCredentialsFromJsonContents(
-      kServiceAccountCredInvalidPrivateKey);
-  EXPECT_THAT(creds, Not(IsOk()));
-}
-
 TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  "");
   // If the ADC flow thinks we're on a GCE instance, it should return
   // ComputeEngineCredentials.
-  ScopedEnvironment gce_check_override_env_var(GceCheckOverrideEnvVar(), "1");
-
-  auto creds = GoogleDefaultCredentials();
+  auto creds = GoogleDefaultCredentials(Options{}.set<ForceGceOption>(true));
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
   EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials));
-}
-
-TEST_F(GoogleCredentialsTest, CreateComputeEngineCredentialsWithDefaultEmail) {
-  auto credentials = CreateComputeEngineCredentials();
-  auto* ptr = credentials.get();
-  EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials));
-  EXPECT_EQ(
-      std::string("default"),
-      dynamic_cast<ComputeEngineCredentials*>(ptr)->service_account_email());
-}
-
-TEST_F(GoogleCredentialsTest, CreateComputeEngineCredentialsWithExplicitEmail) {
-  auto credentials = CreateComputeEngineCredentials("foo@bar.baz");
-  auto* ptr = credentials.get();
-  EXPECT_EQ(typeid(*ptr), typeid(ComputeEngineCredentials));
-  EXPECT_EQ(
-      std::string("foo@bar.baz"),
-      dynamic_cast<ComputeEngineCredentials*>(ptr)->service_account_email());
 }
 
 TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
@@ -504,7 +276,6 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   char const filename[] = "missing-credentials.json";
 
-  ScopedEnvironment gce_check_override_env_var(GceCheckOverrideEnvVar(), "0");
   // The method to create default credentials should see that no file exists at
   // this path, then continue trying to load the other credential types,
   // eventually finding no valid credentials and hitting a runtime error.
