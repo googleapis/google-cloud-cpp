@@ -254,6 +254,72 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
   EXPECT_THAT(start.get(), IsOk());
 }
 
+TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
+  MockStub mock;
+  EXPECT_CALL(mock, FakeStream)
+      .WillOnce([]() {
+        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        EXPECT_CALL(*stream, Start).WillOnce([]() {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable")));
+        });
+        return stream;
+      })
+      .WillOnce([]() {
+        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        EXPECT_CALL(*stream, Start).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([]() {
+              return make_ready_future(
+                  absl::make_optional(FakeResponse{"key0", "value0_0"}));
+            });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(make_ready_future(Status()));
+        });
+        return stream;
+      });
+
+  EXPECT_CALL(mock, FakeRetryPolicy)
+      .WillOnce([]() {
+        auto mock_retry_policy = absl::make_unique<MockRetryPolicy>();
+        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
+          return false;
+        });
+        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
+          return true;
+        });
+        return mock_retry_policy;
+      });
+
+  std::shared_ptr<BackoffPolicy const> backoff_policy =
+      std::move(DefaultBackoffPolicy());
+
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [&mock](MockAsyncStreamReturnType stream) {
+            return make_ready_future(
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
+          });
+
+  auto start = stream->Start();
+
+  auto response0 = stream->Read().get();
+  ASSERT_TRUE(response0.has_value());
+  EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_0"}));
+
+  auto finish = stream->Finish();
+  finish.get();
+
+  EXPECT_THAT(start.get(), IsOk());
+}
+
 }  // namespace
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
