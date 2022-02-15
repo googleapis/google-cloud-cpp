@@ -3048,7 +3048,7 @@ class Client {
     if (!result) {
       return std::move(result).status();
     }
-    return std::move(result).value().items;
+    return std::move(result.value().items);
   }
 
   /**

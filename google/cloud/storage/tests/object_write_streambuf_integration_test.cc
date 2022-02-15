@@ -52,7 +52,7 @@ class ObjectWriteStreambufIntegrationTest
     ASSERT_STATUS_OK(session);
 
     ObjectWriteStream writer(absl::make_unique<ObjectWriteStreambuf>(
-        std::move(session).value(),
+        *std::move(session),
         internal::ClientImplDetails::GetRawClient(*client)
             ->client_options()
             .upload_buffer_size(),

@@ -209,8 +209,7 @@ LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
     return std::move(result).status();
   }
   return std::unique_ptr<ResumableUploadSession>(
-      absl::make_unique<LoggingResumableUploadSession>(
-          std::move(result).value()));
+      absl::make_unique<LoggingResumableUploadSession>(*std::move(result)));
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
