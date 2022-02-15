@@ -117,6 +117,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_servicecontrol_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(servicecontrol_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(servicecontrol_quickstart
+                          PRIVATE google-cloud-cpp::experimental-servicecontrol)
+    google_cloud_cpp_add_common_options(servicecontrol_quickstart)
+    add_test(
+        NAME servicecontrol_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:servicecontrol_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(
+        servicecontrol_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Error in non-idempotent operation Check:")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
