@@ -41,6 +41,11 @@
 
 namespace google {
 namespace cloud {
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class InstanceAdminTester;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -750,7 +755,7 @@ class InstanceAdmin {
       std::vector<std::string> const& permissions);
 
  private:
-  friend class InstanceAdminTester;
+  friend class bigtable_internal::InstanceAdminTester;
 
   //@{
   /// @name Helper functions to implement constructors with changed policies.

@@ -31,28 +31,30 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TableAdminTester {
  public:
   TableAdminTester() = default;
 
-  void SetTableAdmin(std::unique_ptr<TableAdmin> table_admin) {
+  void SetTableAdmin(std::unique_ptr<bigtable::TableAdmin> table_admin) {
     table_admin_ = std::move(table_admin);
   }
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackupImpl(
-      CompletionQueue& cq, TableAdmin::CreateBackupParams const& params) {
+      CompletionQueue& cq,
+      bigtable::TableAdmin::CreateBackupParams const& params) {
     return table_admin_->AsyncCreateBackupImpl(cq, params);
   };
 
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTableImpl(
-      CompletionQueue& cq, TableAdmin::RestoreTableParams const& params) {
+      CompletionQueue& cq,
+      bigtable::TableAdmin::RestoreTableParams const& params) {
     return table_admin_->AsyncRestoreTableImpl(cq, params);
   }
 
-  future<StatusOr<Consistency>> AsyncWaitForConsistencyImpl(
+  future<StatusOr<bigtable::Consistency>> AsyncWaitForConsistencyImpl(
       CompletionQueue& cq, std::string const& table_id,
       std::string const& consistency_token) {
     return table_admin_->AsyncWaitForConsistencyImpl(cq, table_id,
@@ -60,13 +62,19 @@ class TableAdminTester {
   }
 
  private:
-  std::unique_ptr<TableAdmin> table_admin_;
+  std::unique_ptr<bigtable::TableAdmin> table_admin_;
 };
 
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+namespace bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
+using ::google::cloud::bigtable_internal::TableAdminTester;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -75,7 +83,6 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _h;
 using ::google::cloud::testing_util::chrono_literals::operator"" _min;
 using ::google::cloud::testing_util::chrono_literals::operator"" _s;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;

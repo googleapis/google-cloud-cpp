@@ -20,19 +20,19 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ReadPartitionTester {
  public:
   ReadPartitionTester() = default;
-  explicit ReadPartitionTester(ReadPartition partition)
+  explicit ReadPartitionTester(spanner::ReadPartition partition)
       : partition_(std::move(partition)) {}
   std::string PartitionToken() const { return partition_.PartitionToken(); }
   std::string SessionId() const { return partition_.SessionId(); }
   std::string TransactionId() const { return partition_.TransactionId(); }
   std::string TransactionTag() const { return partition_.TransactionTag(); }
-  ReadPartition Partition() const { return partition_; }
+  spanner::ReadPartition Partition() const { return partition_; }
   std::string TableName() const { return partition_.TableName(); }
   google::spanner::v1::KeySet KeySet() const { return partition_.KeySet(); }
   std::vector<std::string> ColumnNames() const {
@@ -43,11 +43,16 @@ class ReadPartitionTester {
   }
 
  private:
-  ReadPartition partition_;
+  spanner::ReadPartition partition_;
 };
 
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner_internal
+namespace spanner {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::spanner_internal::ReadPartitionTester;
 using ::google::cloud::spanner_testing::HasSessionAndTransaction;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
