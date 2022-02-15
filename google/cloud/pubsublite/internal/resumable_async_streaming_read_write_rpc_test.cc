@@ -55,6 +55,10 @@ bool operator==(FakeRequest const& lhs, FakeRequest const& rhs) {
   return lhs.key == rhs.key;
 }
 
+bool operator==(FakeResponse const& lhs, FakeResponse const& rhs) {
+  return lhs.key == rhs.key && lhs.value == rhs.value;
+}
+
 using MockAsyncStreamReturnType =
     std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
 
@@ -101,7 +105,7 @@ void SetOpValue(std::deque<std::shared_ptr<promise<T>>>& operations,
   op->set_value(response);
 }
 
-TEST(AsyncReadWriteStreamingRpcTest, Basic) {
+TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
   MockStub mock;
   EXPECT_CALL(mock, FakeStream).WillOnce([]() {
     auto stream = absl::make_unique<MockAsyncReaderWriter>();
@@ -111,13 +115,15 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
     EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([]() {
       return make_ready_future(true);
     });
-    EXPECT_CALL(*stream, Read).WillOnce([]() {
-      return make_ready_future(
-          absl::make_optional(FakeResponse{"key0", "value0_0"}));
-    }).WillOnce([]() {
-      return make_ready_future(
-          absl::make_optional(FakeResponse{"key0", "value0_1"}));
-    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([]() {
+          return make_ready_future(
+              absl::make_optional(FakeResponse{"key0", "value0_0"}));
+        })
+        .WillOnce([]() {
+          return make_ready_future(
+              absl::make_optional(FakeResponse{"key0", "value0_1"}));
+        });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
       return make_ready_future(make_ready_future(Status()));
     });
@@ -144,13 +150,11 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
 
   auto response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
-  EXPECT_EQ("key0", response0->key);
-  EXPECT_EQ("value0_0", response0->value);
+  EXPECT_EQ(response0, FakeResponse{"key0", "value0_0"});
 
   response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
-  EXPECT_EQ("key0", response0->key);
-  EXPECT_EQ("value0_1", response0->value);
+  EXPECT_EQ(response0, FakeResponse{"key0", "value0_1"});
 
   auto finish = stream->Finish();
   finish.get();
