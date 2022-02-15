@@ -17,6 +17,7 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -29,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 using google::cloud::internal::BackoffPolicy;
-// using google::cloud::internal::RetryPolicy;
+using google::cloud::internal::RetryPolicy;
 
 /**
  * `ResumableAsyncStreamingReadWriteRpc<ResponseType, RequestType>` uses
@@ -50,6 +51,8 @@ using StreamInitializer = std::function<future<StatusOr<
     std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>)>;
 
 using AsyncSleeper = std::function<future<void>(std::chrono::duration<double>)>;
+
+using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc {
@@ -113,7 +116,7 @@ class ResumableAsyncStreamingReadWriteRpc {
   virtual future<void> Finish() = 0;
 };
 
-template <typename RequestType, typename ResponseType, typename RetryPolicy>
+template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpcImpl
     : public ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType> {
  public:
@@ -122,8 +125,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       AsyncSleeper const& sleeper,
       AsyncStreamFactory<RequestType, ResponseType> stream_factory,
       StreamInitializer<RequestType, ResponseType> initializer,
-      std::unique_ptr<RetryPolicy const> retry_policy)
-      : retry_policy_prototype_(std::move(retry_policy)),
+      RetryPolicyFactory retry_factory)
+      : retry_factory_(std::move(retry_factory)),
         backoff_policy_prototype_(std::move(backoff_policy)),
         sleeper_(std::move(sleeper)),
         stream_factory_(std::move(stream_factory)),
@@ -144,8 +147,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       retry_promise_.emplace();
     }
 
-    Initialize(std::move(retry_policy_prototype_->clone()),
-               backoff_policy_prototype_->clone());
+    Initialize(retry_factory_(), backoff_policy_prototype_->clone());
     return status_future;
   }
 
@@ -344,8 +346,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     }
     fail_finish.then([this](future<Status> finish_status) {
       // retry policy refactor
-      AttemptRetry(finish_status.get(),
-                   std::move(retry_policy_prototype_->clone()),
+      AttemptRetry(finish_status.get(), retry_factory_(),
                    backoff_policy_prototype_->clone());
     });
   }
@@ -440,7 +441,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
             future<StatusOr<std::unique_ptr<
                 AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>
                 start_initialize_future) {
-
           auto start_initialize_response = start_initialize_future.get();
 
           if (!start_initialize_response.ok()) {
@@ -466,7 +466,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         });
   }
 
-  std::unique_ptr<RetryPolicy const> const retry_policy_prototype_;
+  RetryPolicyFactory retry_factory_;
   std::shared_ptr<BackoffPolicy const> const backoff_policy_prototype_;
   AsyncSleeper const sleeper_;
   AsyncStreamFactory<RequestType, ResponseType> const stream_factory_;

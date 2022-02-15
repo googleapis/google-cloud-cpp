@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/async_operation.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -41,6 +41,7 @@ using ::testing::ReturnRef;
 
 using ::google::cloud::internal::AsyncGrpcOperation;
 using ::google::cloud::internal::MakeStreamingReadWriteRpc;
+using ::google::cloud::internal::RetryPolicy;
 
 struct FakeRequest {
   std::string key;
@@ -87,32 +88,19 @@ class MockAsyncReaderWriter
   MOCK_METHOD(future<bool>, Start, (), (override));
 };
 
+class MockRetryPolicy : public RetryPolicy {
+ public:
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
+  MOCK_METHOD(bool, IsExhausted, (), (const, override));
+  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+};
+
 class MockStub {
  public:
   MOCK_METHOD(MockAsyncReturnType, FakeStream, (), ());
   MOCK_METHOD(MockReturnType, FakeRpc,
               (grpc::ClientContext*, grpc::CompletionQueue*), ());
 };
-
-struct TestRetryablePolicy {
-  static bool IsPermanentFailure(google::cloud::Status const& s) {
-    return !s.ok() &&
-           (s.code() == google::cloud::StatusCode::kPermissionDenied);
-  }
-};
-
-using RetryPolicyForTest =
-    ::google::cloud::internal::TraitBasedRetryPolicy<TestRetryablePolicy>;
-
-using LimitedErrorCountRetryPolicyForTest =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        TestRetryablePolicy>;
-
-std::unique_ptr<RetryPolicyForTest> DefaultRetryPolicy() {
-  // With maximum_failures==2 it tolerates up to 2 failures, so the *third*
-  // failure is an error.
-  return LimitedErrorCountRetryPolicyForTest(/*maximum_failures=*/2).clone();
-}
 
 std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
   using us = std::chrono::microseconds;
@@ -173,17 +161,15 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   std::shared_ptr<BackoffPolicy const> backoff_policy =
       std::move(DefaultBackoffPolicy());
 
-  ResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse,
-                                          RetryPolicyForTest>
-      stream(
-          backoff_policy, &MockSleeper, [&mock]() { return mock.FakeStream(); },
-          [&mock](MockAsyncReturnType stream) {
-            return make_ready_future(
-                StatusOr<std::unique_ptr<
-                    AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>>(
-                    std::move(stream)));
-          },
-          std::move(DefaultRetryPolicy()));
+  ResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse> stream(
+      backoff_policy, &MockSleeper, [&mock]() { return mock.FakeStream(); },
+      [&mock](MockAsyncReturnType stream) {
+        return make_ready_future(
+            StatusOr<std::unique_ptr<
+                AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>>(
+                std::move(stream)));
+      },
+      []() { return absl::make_unique<MockRetryPolicy>(); });
 
   auto start = stream.Start();
   ASSERT_EQ(1, operations.size());
