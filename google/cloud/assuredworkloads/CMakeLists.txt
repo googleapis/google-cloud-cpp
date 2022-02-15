@@ -122,6 +122,27 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_assuredworkloads_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(assuredworkloads_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(
+        assuredworkloads_quickstart
+        PRIVATE google-cloud-cpp::experimental-assuredworkloads)
+    google_cloud_cpp_add_common_options(assuredworkloads_quickstart)
+    add_test(
+        NAME assuredworkloads_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:assuredworkloads_quickstart> "invalid"
+            GOOGLE_CLOUD_CPP_TEST_REGION)
+    set_tests_properties(
+        assuredworkloads_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT}
+            PASS_REGULAR_EXPRESSION "Permanent error in ListWorkloads:")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
