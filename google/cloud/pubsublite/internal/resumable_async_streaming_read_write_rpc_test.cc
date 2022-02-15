@@ -13,19 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
-#include "google/cloud/async_operation.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <deque>
+#include <iostream>
 #include <memory>
 
 namespace google {
@@ -35,7 +33,6 @@ namespace pubsublite_internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::_;
 using ::testing::ReturnRef;
 
@@ -84,6 +81,7 @@ class MockRetryPolicy : public RetryPolicy {
 class MockStub {
  public:
   MOCK_METHOD(MockAsyncStreamReturnType, FakeStream, (), ());
+  MOCK_METHOD(std::unique_ptr<RetryPolicy>, FakeRetryPolicy, (), ());
 };
 
 std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
@@ -133,9 +131,13 @@ TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
   std::shared_ptr<BackoffPolicy const> backoff_policy =
       std::move(DefaultBackoffPolicy());
 
+  EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
+    return absl::make_unique<MockRetryPolicy>();
+  });
+
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          []() { return absl::make_unique<MockRetryPolicy>(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [&mock](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -150,11 +152,101 @@ TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
 
   auto response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
-  EXPECT_EQ(response0, FakeResponse{"key0", "value0_0"});
+  EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_0"}));
 
   response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
-  EXPECT_EQ(response0, FakeResponse{"key0", "value0_1"});
+  EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_1"}));
+
+  auto finish = stream->Finish();
+  finish.get();
+
+  EXPECT_THAT(start.get(), IsOk());
+}
+
+TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
+  MockStub mock;
+  EXPECT_CALL(mock, FakeStream)
+      .WillOnce([]() {
+        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        EXPECT_CALL(*stream, Start).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read).WillOnce([]() {
+          return make_ready_future(absl::optional<FakeResponse>());
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable")));
+        });
+        return stream;
+      })
+      .WillOnce([]() {
+        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        EXPECT_CALL(*stream, Start).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([]() {
+              return make_ready_future(
+                  absl::make_optional(FakeResponse{"key0", "value0_0"}));
+            })
+            .WillOnce([]() {
+              return make_ready_future(
+                  absl::make_optional(FakeResponse{"key0", "value0_1"}));
+            });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(make_ready_future(Status()));
+        });
+        return stream;
+      });
+
+  EXPECT_CALL(mock, FakeRetryPolicy)
+      // Initialize call
+      .WillOnce([]() { return absl::make_unique<MockRetryPolicy>(); })
+      .WillOnce([]() {
+        auto mock_retry_policy = absl::make_unique<MockRetryPolicy>();
+        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
+          return false;
+        });
+        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
+          return true;
+        });
+        return mock_retry_policy;
+      });
+
+  std::shared_ptr<BackoffPolicy const> backoff_policy =
+      std::move(DefaultBackoffPolicy());
+
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [&mock](MockAsyncStreamReturnType stream) {
+            return make_ready_future(
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
+          });
+
+  auto start = stream->Start();
+
+  ASSERT_TRUE(
+      stream
+          ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
+          .get());
+
+  auto response0 = stream->Read().get();
+  ASSERT_FALSE(response0.has_value());
+
+  response0 = stream->Read().get();
+  ASSERT_TRUE(response0.has_value());
+  EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_0"}));
+
+  response0 = stream->Read().get();
+  ASSERT_TRUE(response0.has_value());
+  EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_1"}));
 
   auto finish = stream->Finish();
   finish.get();
