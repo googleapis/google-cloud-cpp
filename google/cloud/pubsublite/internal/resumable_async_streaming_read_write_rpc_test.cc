@@ -161,21 +161,22 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   std::shared_ptr<BackoffPolicy const> backoff_policy =
       std::move(DefaultBackoffPolicy());
 
-  ResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse> stream(
-      backoff_policy, &MockSleeper, [&mock]() { return mock.FakeStream(); },
-      [&mock](MockAsyncReturnType stream) {
-        return make_ready_future(
-            StatusOr<std::unique_ptr<
-                AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>>(
-                std::move(stream)));
-      },
-      []() { return absl::make_unique<MockRetryPolicy>(); });
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          []() { return absl::make_unique<MockRetryPolicy>(); }, backoff_policy,
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [&mock](MockAsyncReturnType stream) {
+            return make_ready_future(
+                StatusOr<std::unique_ptr<
+                    AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>>(
+                    std::move(stream)));
+          });
 
-  auto start = stream.Start();
+  auto start = stream->Start();
   ASSERT_EQ(1, operations.size());
   notify_next_op();
 
-  auto read0 = stream.Read();
+  auto read0 = stream->Read();
   ASSERT_EQ(1, operations.size());
   notify_next_op();
   auto response0 = read0.get();
@@ -183,7 +184,7 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   EXPECT_EQ("key0", response0->key);
   EXPECT_EQ("value0_0", response0->value);
 
-  auto finish = stream.Finish();
+  auto finish = stream->Finish();
   ASSERT_EQ(1, operations.size());
   notify_next_op();
   finish.get();

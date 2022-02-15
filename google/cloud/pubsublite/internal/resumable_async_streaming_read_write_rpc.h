@@ -121,11 +121,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     : public ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType> {
  public:
   ResumableAsyncStreamingReadWriteRpcImpl(
+      RetryPolicyFactory retry_factory,
       std::shared_ptr<BackoffPolicy const> backoff_policy,
       AsyncSleeper const& sleeper,
       AsyncStreamFactory<RequestType, ResponseType> stream_factory,
-      StreamInitializer<RequestType, ResponseType> initializer,
-      RetryPolicyFactory retry_factory)
+      StreamInitializer<RequestType, ResponseType> initializer)
       : retry_factory_(std::move(retry_factory)),
         backoff_policy_prototype_(std::move(backoff_policy)),
         sleeper_(std::move(sleeper)),
@@ -493,6 +493,21 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   promise<Status> status_promise_;
 };
+
+template <typename RequestType, typename ResponseType>
+std::unique_ptr<
+    ResumableAsyncStreamingReadWriteRpcImpl<RequestType, ResponseType>>
+MakeResumableAsyncStreamingReadWriteRpcImpl(
+    RetryPolicyFactory retry_factory,
+    std::shared_ptr<BackoffPolicy const> backoff_policy,
+    AsyncSleeper const& sleeper,
+    AsyncStreamFactory<RequestType, ResponseType> stream_factory,
+    StreamInitializer<RequestType, ResponseType> initializer) {
+  return absl::make_unique<
+      ResumableAsyncStreamingReadWriteRpcImpl<RequestType, ResponseType>>(
+      std::move(retry_factory), std::move(backoff_policy), std::move(sleeper),
+      std::move(stream_factory), std::move(initializer));
+}
 
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
