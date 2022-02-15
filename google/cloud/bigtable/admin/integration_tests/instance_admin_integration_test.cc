@@ -78,7 +78,7 @@ class InstanceAdminIntegrationTest
     auto const project_name = Project(project_id_).FullName();
     auto sor = client.ListInstances(project_name);
     if (!sor) return std::move(sor).status();
-    auto resp = std::move(sor).value();
+    auto resp = *std::move(sor);
 
     std::vector<std::string> names;
     names.reserve(resp.instances_size());
@@ -95,7 +95,7 @@ class InstanceAdminIntegrationTest
     auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
     auto sor = client_.ListClusters(instance_name);
     if (!sor) return std::move(sor).status();
-    auto resp = std::move(sor).value();
+    auto resp = *std::move(sor);
 
     std::vector<std::string> names;
     names.reserve(resp.clusters_size());

@@ -99,7 +99,7 @@ TEST(ListObjectsAndPrefixesReaderTest, Basic) {
   std::vector<ObjectOrPrefix> actual;
   for (auto&& object : reader) {
     ASSERT_STATUS_OK(object);
-    actual.emplace_back(std::move(object).value());
+    actual.emplace_back(*std::move(object));
   }
   EXPECT_THAT(actual, ContainerEq(expected));
 }

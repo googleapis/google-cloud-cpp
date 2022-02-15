@@ -375,7 +375,7 @@ RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
 
   return std::unique_ptr<ResumableUploadSession>(
       absl::make_unique<RetryResumableUploadSession>(
-          std::move(result).value(), std::move(retry_policy),
+          *std::move(result), std::move(retry_policy),
           std::move(backoff_policy)));
 }
 

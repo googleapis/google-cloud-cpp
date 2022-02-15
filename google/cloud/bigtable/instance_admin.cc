@@ -38,7 +38,7 @@ StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   request.set_parent(project_name());
   auto sor = connection_->ListInstances(request);
   if (!sor) return std::move(sor).status();
-  auto response = std::move(sor).value();
+  auto response = *std::move(sor);
   auto& instances = *response.mutable_instances();
   std::move(instances.begin(), instances.end(),
             std::back_inserter(result.instances));
@@ -116,7 +116,7 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
   request.set_parent(InstanceName(instance_id));
   auto sor = connection_->ListClusters(request);
   if (!sor) return std::move(sor).status();
-  auto response = std::move(sor).value();
+  auto response = *std::move(sor);
   auto& clusters = *response.mutable_clusters();
   std::move(clusters.begin(), clusters.end(),
             std::back_inserter(result.clusters));
@@ -177,7 +177,7 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
   auto sr = connection_->ListAppProfiles(request);
   for (auto& ap : sr) {
     if (!ap) return std::move(ap).status();
-    result.emplace_back(std::move(ap).value());
+    result.emplace_back(*std::move(ap));
   }
   return result;
 }
@@ -199,7 +199,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
   request.set_resource(InstanceName(instance_id));
   auto sor = connection_->GetIamPolicy(request);
   if (!sor) return std::move(sor).status();
-  return ProtoToWrapper(std::move(sor).value());
+  return ProtoToWrapper(*std::move(sor));
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdmin::GetNativeIamPolicy(
@@ -230,7 +230,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
   *request.mutable_policy() = std::move(policy);
   auto sor = connection_->SetIamPolicy(request);
   if (!sor) return std::move(sor).status();
-  return ProtoToWrapper(std::move(sor).value());
+  return ProtoToWrapper(*std::move(sor));
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdmin::SetIamPolicy(
@@ -253,7 +253,7 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
   }
   auto sor = connection_->TestIamPermissions(request);
   if (!sor) return std::move(sor).status();
-  auto response = std::move(sor).value();
+  auto response = *std::move(sor);
   std::vector<std::string> result;
   auto& ps = *response.mutable_permissions();
   std::move(ps.begin(), ps.end(), std::back_inserter(result));
