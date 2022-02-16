@@ -214,8 +214,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
           return make_ready_future(absl::optional<FakeResponse>());
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable"));
+          return make_ready_future(kFailStatus);
         });
         return stream;
       })
@@ -299,8 +298,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable"));
+          return make_ready_future(kFailStatus);
         });
         return stream;
       })
@@ -408,8 +406,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable"));
+          return make_ready_future(kFailStatus);
         });
         return stream;
       })
@@ -505,7 +502,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryBeforeStart) {
                              grpc::WriteOptions().set_last_message());
 
   auto finish = stream->Finish();
-  finish_promise.set_value(Status(StatusCode::kUnavailable, "Unavailable"));
+  finish_promise.set_value(kFailStatus);
   finish.get();
   ASSERT_FALSE(write.get());
   EXPECT_THAT(start.get(), IsOk());
@@ -523,7 +520,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryDuringSleep) {
       return make_ready_future(false);
     });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
-      return make_ready_future(Status(StatusCode::kUnavailable, "Unavailable"));
+      return make_ready_future(kFailStatus);
     });
     return stream;
   });
@@ -615,7 +612,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishWhileShutdown) {
           ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
           .get());
 
-  EXPECT_EQ(start.get(), Status(StatusCode::kUnavailable, "Unavailable"));
+  EXPECT_EQ(start.get(), kFailStatus);
 
   auto finish = stream->Finish();
   finish.get();
@@ -637,8 +634,7 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
           return make_ready_future(absl::optional<FakeResponse>());
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable"));
+          return make_ready_future(kFailStatus);
         });
         return stream;
       })
@@ -777,8 +773,7 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable"));
+          return make_ready_future(kFailStatus);
         });
         return stream;
       })
