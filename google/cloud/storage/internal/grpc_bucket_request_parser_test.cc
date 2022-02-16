@@ -28,6 +28,7 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::ElementsAre;
 using ::testing::UnorderedElementsAre;
 
 TEST(GrpcBucketRequestParser, DeleteBucketMetadataAllOptions) {
@@ -160,6 +161,55 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
 
   auto const actual = GrpcBucketRequestParser::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
+  google::storage::v2::ListBucketsRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        parent: "projects/test-project"
+        page_size: 123
+        page_token: "test-token"
+        prefix: "test-prefix"
+        read_mask { paths: [ "*" ] }
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  ListBucketsRequest req("test-project");
+  req.set_page_token("test-token");
+  req.set_multiple_options(MaxResults(123), Prefix("test-prefix"),
+                           Projection("full"), UserProject("test-user-project"),
+                           QuotaUser("test-quota-user"),
+                           UserIp("test-user-ip"));
+
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcBucketRequestParser, ListBucketsResponse) {
+  google::storage::v2::ListBucketsResponse input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        buckets {
+          name: "projects/_/buckets/test-bucket-1"
+          bucket_id: "test-bucket-1"
+        }
+        buckets {
+          name: "projects/_/buckets/test-bucket-2"
+          bucket_id: "test-bucket-2"
+        }
+        next_page_token: "test-token"
+      )pb",
+      &input));
+
+  auto const actual = GrpcBucketRequestParser::FromProto(input);
+  EXPECT_EQ(actual.next_page_token, "test-token");
+  std::vector<std::string> names;
+  std::transform(actual.items.begin(), actual.items.end(),
+                 std::back_inserter(names),
+                 [](BucketMetadata const& b) { return b.name(); });
+  EXPECT_THAT(names, ElementsAre("test-bucket-1", "test-bucket-2"));
 }
 
 TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
