@@ -20,7 +20,6 @@
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/crash_handler.h"
 #include <sstream>
 
 namespace {
@@ -183,8 +182,6 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InstallCrashHandler(argv[0]);
-
   namespace examples = ::google::cloud::bigtable::examples;
   examples::Example example({
       examples::MakeCommandEntry("get-iam-policy", {"<table-id>"},

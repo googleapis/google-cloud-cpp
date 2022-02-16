@@ -22,7 +22,6 @@
 //! [bigtable includes]
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/crash_handler.h"
 #include "absl/strings/str_split.h"
 #include <chrono>
 #include <sstream>
@@ -904,8 +903,6 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
-  google::cloud::testing_util::InstallCrashHandler(argv[0]);
-
   using ::google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("apply", {"<row-key>"}, Apply),

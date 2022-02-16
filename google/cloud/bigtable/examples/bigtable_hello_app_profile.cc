@@ -21,7 +21,6 @@
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/crash_handler.h"
 
 //! [cbt namespace]
 namespace cbt = ::google::cloud::bigtable;
@@ -162,8 +161,6 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InstallCrashHandler(argv[0]);
-
   google::cloud::bigtable::examples::Example example({
       {"auto", RunAll},
       {"hello-world-app-profile", HelloWorldAppProfile},

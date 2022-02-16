@@ -18,8 +18,6 @@
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/crash_handler.h"
-#include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
 #include <chrono>
 #include <sstream>
 #include <thread>
@@ -892,8 +890,6 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InstallCrashHandler(argv[0]);
-
   namespace examples = ::google::cloud::bigtable::examples;
   google::cloud::bigtable::examples::Example example({
       examples::MakeCommandEntry("create-table", {"<table-id>"}, CreateTable),
