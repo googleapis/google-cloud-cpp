@@ -16,6 +16,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -420,9 +421,39 @@ TEST_F(RestClientIntegrationTest, PostFormData) {
   EXPECT_THAT((*form)[form_pair_2.first], Eq(form_pair_2.second));
   EXPECT_THAT((*form)[form_pair_3.first], Eq(form_pair_3.second));
 }
-
+#if 0
 TEST_F(RestClientIntegrationTest, BigQueryListDatasets) {
+#if 0
+  // unauthenticated
+  options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+
+  // works
+  auto default_creds = oauth2_internal::GoogleDefaultCredentials();
+  auto header = default_creds.value()->AuthorizationHeader();
+  auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
+  std::string token = header->second.substr(6, header->second.size() - 6);
+//  std::cout << token << "\n";
+  options_.set<UnifiedCredentialsOption>(MakeAccessTokenCredentials(
+      token, expiration));
+
+  // MakeRequestImplurl = https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/kokoro-run@cloud-cpp-testing-resources.iam.gserviceaccount.com:generateAccessToken
+  // Received HTTP status code: 400
+  auto service_account = internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT");
+  ASSERT_TRUE(service_account.has_value());
+  options_.set<UnifiedCredentialsOption>(MakeImpersonateServiceAccountCredentials(MakeGoogleDefaultCredentials(), *service_account));
+
+  // Invalid ServiceAccountCredentials,parsing failed on data loaded from memory
+  auto keyfile = internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+  options_.set<UnifiedCredentialsOption>(MakeServiceAccountCredentials(contents));
+#endif
+
+  // works
   options_.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+
   std::string bigquery_endpoint = "https://bigquery.googleapis.com";
   auto client = PooledRestClient::GetRestClient(bigquery_endpoint, options_);
   RestRequest request;
@@ -443,6 +474,7 @@ TEST_F(RestClientIntegrationTest, BigQueryListDatasets) {
     std::cout << *response_json << "\n";
   }
 }
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

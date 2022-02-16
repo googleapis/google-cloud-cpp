@@ -195,7 +195,7 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
 
-load(":google_cloud_cpp_rest_internal_integration_tests.bzl", "google_cloud_cpp_rest_internal_integration_tests")
+load(":google_cloud_cpp_rest_internal_emulator_integration_tests.bzl", "google_cloud_cpp_rest_internal_emulator_integration_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -208,4 +208,19 @@ load(":google_cloud_cpp_rest_internal_integration_tests.bzl", "google_cloud_cpp_
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
-) for test in google_cloud_cpp_rest_internal_integration_tests]
+) for test in google_cloud_cpp_rest_internal_emulator_integration_tests]
+
+load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google_cloud_cpp_rest_internal_production_integration_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    tags = [
+        "integration-test",
+    ],
+    deps = [
+        ":google_cloud_cpp_rest_internal",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_rest_internal_production_integration_tests]

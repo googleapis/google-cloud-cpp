@@ -750,10 +750,17 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/rest_response_test.cc
             internal/unified_rest_credentials_test.cc)
 
-        # List the integration tests, then setup the targets and dependencies.
-        set(google_cloud_cpp_rest_internal_integration_tests
+        # List the emulator integration tests, then setup the targets and
+        # dependencies.
+        set(google_cloud_cpp_rest_internal_emulator_integration_tests
             # cmake-format: sort
             internal/rest_client_integration_test.cc)
+
+        # List the production integration tests, then setup the targets and
+        # dependencies.
+        set(google_cloud_cpp_rest_internal_production_integration_tests
+            # cmake-format: sort
+            internal/unified_rest_credentials_integration_test.cc)
 
         # Export the list of unit and integration tests so the Bazel BUILD file
         # can pick them up.
@@ -761,16 +768,28 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             "google_cloud_cpp_rest_internal_unit_tests.bzl"
             "google_cloud_cpp_rest_internal_unit_tests" YEAR 2021)
         export_list_to_bazel(
-            "google_cloud_cpp_rest_internal_integration_tests.bzl"
-            "google_cloud_cpp_rest_internal_integration_tests" YEAR 2022)
+            "google_cloud_cpp_rest_internal_emulator_integration_tests.bzl"
+            "google_cloud_cpp_rest_internal_emulator_integration_tests" YEAR
+            2022)
+        export_list_to_bazel(
+            "google_cloud_cpp_rest_internal_production_integration_tests.bzl"
+            "google_cloud_cpp_rest_internal_production_integration_tests" YEAR
+            2022)
 
         foreach (fname ${google_cloud_cpp_rest_internal_unit_tests})
             google_cloud_cpp_rest_internal_add_test("${fname}" "")
         endforeach ()
 
-        foreach (fname ${google_cloud_cpp_rest_internal_integration_tests})
+        foreach (fname
+                 ${google_cloud_cpp_rest_internal_emulator_integration_tests})
             google_cloud_cpp_rest_internal_add_test(
                 "${fname}" "integration-test;integration-test-emulator")
+        endforeach ()
+
+        foreach (fname
+                 ${google_cloud_cpp_rest_internal_production_integration_tests})
+            google_cloud_cpp_rest_internal_add_test(
+                "${fname}" "integration-test;integration-test-production")
         endforeach ()
     endif ()
 
