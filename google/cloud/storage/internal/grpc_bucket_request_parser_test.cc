@@ -220,6 +220,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           }
         }
         predefined_acl: BUCKET_ACL_PROJECT_PRIVATE
+        predefined_default_object_acl: OBJECT_ACL_PROJECT_PRIVATE
         if_metageneration_match: 3
         if_metageneration_not_match: 4
         common_request_params: { user_project: "test-user-project" }
@@ -289,7 +290,8 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
               /*.public_access_prevention=*/PublicAccessPreventionEnforced()}));
   req.set_multiple_options(
       IfMetagenerationMatch(3), IfMetagenerationNotMatch(4),
-      PredefinedAcl("projectPrivate"), Projection("full"),
+      PredefinedAcl("projectPrivate"),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"),
       UserProject("test-user-project"), QuotaUser("test-quota-user"),
       UserIp("test-user-ip"));
 
