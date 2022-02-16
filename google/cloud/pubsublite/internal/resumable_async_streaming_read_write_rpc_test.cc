@@ -345,16 +345,20 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfWrite) {
+TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfReadWrite) {
   StrictMock<MockStub> mock;
   promise<bool> write_promise;
-  EXPECT_CALL(mock, FakeStream).WillOnce([&write_promise]() {
+  promise<absl::optional<FakeResponse>> read_promise;
+  EXPECT_CALL(mock, FakeStream).WillOnce([&write_promise, &read_promise]() {
     auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
     EXPECT_CALL(*stream, Start).WillOnce([]() {
       return make_ready_future(true);
     });
     EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _))
         .WillOnce([&write_promise]() { return write_promise.get_future(); });
+    EXPECT_CALL(*stream, Read).WillOnce([&read_promise]() {
+          return read_promise.get_future();
+        });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
       return make_ready_future(Status());
     });
@@ -377,9 +381,12 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfWrite) {
   auto start = stream->Start();
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
+  auto read = stream->Read();
   auto finish_future = stream->Finish();
   write_promise.set_value(true);
+  read_promise.set_value(absl::make_optional(FakeResponse{"key0", "value0_0"}));
   ASSERT_FALSE(write.get());
+  ASSERT_FALSE(read.get().has_value());
 
   finish_future.get();
   EXPECT_THAT(start.get(), IsOk());

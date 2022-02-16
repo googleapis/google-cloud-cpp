@@ -309,6 +309,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       stream_state_ = State::kRetrying;
       retry_promise_.emplace();
 
+      // Assuming that a `Read` fails:
       // If an outstanding operation is present, we can't enter the retry
       // loop, so we defer it until the outstanding `Write` finishes at
       // which point we can enter the retry loop. Since we will return
@@ -319,13 +320,12 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       future<void> root_future = root.get_future();
 
       if (in_progress_read_.has_value()) {
+        assert(!in_progress_write_.has_value());
         auto in_progress =
             std::make_shared<future<void>>(in_progress_read_->get_future());
         root_future = root_future.then(
             [in_progress](future<void>) { return std::move(*in_progress); });
-      }
-
-      if (in_progress_write_.has_value()) {
+      } else if (in_progress_write_.has_value()) {
         auto in_progress =
             std::make_shared<future<void>>(in_progress_write_->get_future());
         root_future = root_future.then(
