@@ -370,7 +370,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     SetReadWriteFuturesLockHeld();
     mu_.unlock();
     status_promise_.set_value(std::move(status));
-    mu_.lock();
+    // don't relock because all current callers invoke this at end of lock scope
   }
 
   void FinishRetryPromiseLockHeld() {
