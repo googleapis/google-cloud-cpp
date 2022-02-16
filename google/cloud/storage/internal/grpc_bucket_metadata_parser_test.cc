@@ -30,6 +30,26 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::ElementsAreArray;
 
+TEST(GrpcBucketMetadataParser, PublicAccessPreventionToProto) {
+  using google::storage::v2::Bucket;
+  EXPECT_EQ(
+      Bucket::IamConfig::INHERITED,
+      GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("inherited"));
+  EXPECT_EQ(
+      Bucket::IamConfig::ENFORCED,
+      GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("enforced"));
+  EXPECT_EQ(Bucket::IamConfig::PUBLIC_ACCESS_PREVENTION_UNSPECIFIED,
+            GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("invalid"));
+}
+
+TEST(GrpcBucketMetadataParser, PublicAccessPreventionFromProto) {
+  using google::storage::v2::Bucket;
+  EXPECT_EQ("inherited",
+            GrpcBucketMetadataParser::FromProto(Bucket::IamConfig::INHERITED));
+  EXPECT_EQ("enforced",
+            GrpcBucketMetadataParser::FromProto(Bucket::IamConfig::ENFORCED));
+}
+
 TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
   google::storage::v2::Bucket input;
   // Keep the proto fields in the order they show up in the proto file. It is
@@ -105,6 +125,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
         enabled: true
         lock_time { seconds: 1565194927 nanos: 123456000 }
       }
+      public_access_prevention: INHERITED
     }
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
@@ -200,7 +221,8 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       "uniformBucketLevelAccess": {
         "enabled": true,
         "lockedTime": "2019-08-07T16:22:07.123456000Z"
-      }
+      },
+      "publicAccessPrevention": "inherited"
     }
   })""");
   ASSERT_THAT(expected, IsOk());
@@ -271,6 +293,7 @@ TEST(GrpcBucketMetadataParser, BucketIamConfigRoundtrip) {
       enabled: true
       lock_time { seconds: 1234 nanos: 5678000 }
     }
+    public_access_prevention: ENFORCED
   )pb";
   google::storage::v2::Bucket::IamConfig start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
@@ -279,7 +302,7 @@ TEST(GrpcBucketMetadataParser, BucketIamConfigRoundtrip) {
                 std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
   auto const expected = BucketIamConfiguration{
       /*.uniform_bucket_level_access=*/UniformBucketLevelAccess{true, tp},
-      /*.public_access_prevention=*/{}};
+      /*.public_access_prevention=*/PublicAccessPreventionEnforced()};
   auto const middle = GrpcBucketMetadataParser::FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = GrpcBucketMetadataParser::ToProto(middle);
@@ -307,6 +330,10 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleConditionRoundtrip) {
     num_newer_versions: 3
     matches_storage_class: "STANDARD"
     matches_storage_class: "NEARLINE"
+    days_since_custom_time: 4
+    custom_time_before { year: 2022 month: 2 day: 15 }
+    days_since_noncurrent_time: 5
+    noncurrent_time_before { year: 2022 month: 1 day: 2 }
   )pb";
   google::storage::v2::Bucket::Lifecycle::Rule::Condition start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
@@ -314,7 +341,11 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleConditionRoundtrip) {
       LifecycleRule::MaxAge(7),
       LifecycleRule::CreatedBefore(absl::CivilDay(2021, 12, 20)),
       LifecycleRule::IsLive(true), LifecycleRule::NumNewerVersions(3),
-      LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"}));
+      LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"}),
+      LifecycleRule::DaysSinceCustomTime(4),
+      LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 2, 15)),
+      LifecycleRule::DaysSinceNoncurrentTime(5),
+      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 1, 2)));
   auto const middle = GrpcBucketMetadataParser::FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = GrpcBucketMetadataParser::ToProto(middle);
