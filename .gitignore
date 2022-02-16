@@ -22,6 +22,7 @@ compile_commands.json
 # Ignore IDEA / IntelliJ files
 .idea/
 cmake-build-*/
+.clwb/
 
 # Ignore Visual Studio Code files
 .vsbuild/
