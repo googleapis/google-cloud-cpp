@@ -149,7 +149,8 @@ TEST_F(RestClientIntegrationTest, Get) {
 
 TEST_F(RestClientIntegrationTest, Delete) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  auto client = GetDefaultRestClient(url_, {});
+  options_.set<UserIpOption>("127.0.0.1");
+  auto client = GetDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("delete");
   request.AddQueryParameter({"key", "value"});
@@ -164,11 +165,10 @@ TEST_F(RestClientIntegrationTest, Delete) {
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
-  EXPECT_FALSE(parsed_response.is_discarded());
-  ASSERT_FALSE(parsed_response.is_null());
+  ASSERT_TRUE(parsed_response.is_object());
   auto url = parsed_response.find("url");
   ASSERT_NE(url, parsed_response.end());
-  EXPECT_THAT(url.value(), HasSubstr("/delete?key=value"));
+  EXPECT_THAT(url.value(), HasSubstr("/delete?key=value&userIp=127.0.0.1"));
 }
 
 TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
@@ -199,6 +199,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
   ASSERT_NE(url, parsed_response.end());
   EXPECT_THAT(url.value(),
               HasSubstr("/patch?type=service_account&project_id=foo-project"));
+  EXPECT_THAT(url.value(), Not(HasSubstr("userIp=")));
   auto data = parsed_response.find("data");
   ASSERT_NE(data, parsed_response.end());
   EXPECT_THAT(data.value(),
