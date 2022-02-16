@@ -117,7 +117,7 @@ TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
               absl::make_optional(FakeResponse{"key0", "value0_1"}));
         });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
-      return make_ready_future(make_ready_future(Status()));
+      return make_ready_future(Status());
     });
     return stream;
   });
@@ -166,7 +166,7 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadWriteAfterShutdown) {
       return make_ready_future(true);
     });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
-      return make_ready_future(make_ready_future(Status()));
+      return make_ready_future(Status());
     });
     return stream;
   });
@@ -214,8 +214,8 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
           return make_ready_future(absl::optional<FakeResponse>());
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable")));
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable"));
         });
         return stream;
       })
@@ -234,7 +234,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
                   absl::make_optional(FakeResponse{"key0", "value0_1"}));
             });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(Status()));
+          return make_ready_future(Status());
         });
         return stream;
       });
@@ -299,8 +299,8 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable")));
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable"));
         });
         return stream;
       })
@@ -314,7 +314,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
               absl::make_optional(FakeResponse{"key0", "value0_0"}));
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(Status()));
+          return make_ready_future(Status());
         });
         return stream;
       });
@@ -364,7 +364,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfWrite) {
     EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _))
         .WillOnce([&write_promise]() { return write_promise.get_future(); });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
-      return make_ready_future(make_ready_future(Status()));
+      return make_ready_future(Status());
     });
     return stream;
   });
@@ -408,8 +408,8 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable")));
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable"));
         });
         return stream;
       })
@@ -419,7 +419,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
           return start_promise.get_future();
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(Status()));
+          return make_ready_future(Status());
         });
         return stream;
       });
@@ -580,7 +580,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishWhileShutdown) {
       return make_ready_future(false);
     });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
-      return make_ready_future(make_ready_future(kFailStatus));
+      return make_ready_future(kFailStatus);
     });
     return stream;
   });
@@ -637,8 +637,8 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
           return make_ready_future(absl::optional<FakeResponse>());
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable")));
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable"));
         });
         return stream;
       })
@@ -652,7 +652,7 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
               absl::make_optional(FakeResponse{"key0", "value0_0"}));
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(Status()));
+          return make_ready_future(Status());
         });
         return stream;
       });
@@ -715,7 +715,7 @@ TEST(AsyncReadWriteStreamingRpcTest, StartFailsDuringRetryPermanentError) {
           return make_ready_future(absl::optional<FakeResponse>());
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(kFailStatus));
+          return make_ready_future(kFailStatus);
         });
         return stream;
       })
@@ -725,7 +725,7 @@ TEST(AsyncReadWriteStreamingRpcTest, StartFailsDuringRetryPermanentError) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(kFailStatus));
+          return make_ready_future(kFailStatus);
         });
         return stream;
       });
@@ -777,8 +777,8 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(
-              Status(StatusCode::kUnavailable, "Unavailable")));
+          return make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable"));
         });
         return stream;
       })
@@ -788,7 +788,7 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
           return start_promise.get_future();
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(Status()));
+          return make_ready_future(Status());
         });
         return stream;
       });
@@ -829,6 +829,49 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
   stream->Finish().get();
   ASSERT_FALSE(write.get());
   ASSERT_FALSE(read.get().has_value());
+  EXPECT_THAT(start.get(), IsOk());
+}
+
+TEST(AsyncReadWriteStreamingRpcTest, WriteFinishesAfterShutdown) {
+  StrictMock<MockStub> mock;
+  promise<bool> write_promise;
+  EXPECT_CALL(mock, FakeStream).WillOnce([&write_promise]() {
+    auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
+    EXPECT_CALL(*stream, Start).WillOnce([]() {
+      return make_ready_future(true);
+    });
+    EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _))
+        .WillOnce([&write_promise]() { return write_promise.get_future(); });
+    EXPECT_CALL(*stream, Finish).WillOnce([]() {
+      return make_ready_future(Status());
+    });
+    return stream;
+  });
+
+  EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
+    return absl::make_unique<StrictMock<MockRetryPolicy>>();
+  });
+
+  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
+
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [](MockAsyncStreamReturnType stream) {
+            return make_ready_future(
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
+          });
+
+  auto start = stream->Start();
+
+  auto write = stream->Write(FakeRequest{"key0"},
+                             grpc::WriteOptions().set_last_message());
+
+  auto finish = stream->Finish();
+  write_promise.set_value(true);
+  finish.get();
+  ASSERT_FALSE(write.get());
   EXPECT_THAT(start.get(), IsOk());
 }
 
