@@ -69,6 +69,17 @@ StatusOr<google::storage::v2::Bucket> StorageLogging::CreateBucket(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::ListBucketsResponse> StorageLogging::ListBuckets(
+    grpc::ClientContext& context,
+    google::storage::v2::ListBucketsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::ListBucketsRequest const& request) {
+        return child_->ListBuckets(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageLogging::UpdateBucket(
     grpc::ClientContext& context,
     google::storage::v2::UpdateBucketRequest const& request) {
