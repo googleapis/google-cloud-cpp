@@ -150,8 +150,8 @@ enumerate the `retryable_status_codes`, you need to manually create the file as
 `google/cloud/$library/internal/<service_name>_retry_traits.h`.
 
 Likewise, for services using streaming operations you may need to implement the
-streaming `*Updater` function. Use `google/cloud/bigquery/streaming.cc` for
-inspiration.
+streaming `*Updater` function. Use `google/cloud/bigquery/internal/streaming.cc`
+or `google/cloud/logging/internal/streaming.cc` for inspiration.
 
 ## Potentially fix the bazel build
 

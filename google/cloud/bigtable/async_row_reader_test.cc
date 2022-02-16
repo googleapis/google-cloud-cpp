@@ -35,7 +35,7 @@ namespace {
 namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
-using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::HasSubstr;
@@ -69,13 +69,13 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
             std::move(request_expectations));
 
     EXPECT_CALL(*client_, PrepareAsyncReadRows)
-        .WillOnce([&reader, request_expectations_ptr](
+        .WillOnce([this, &reader, request_expectations_ptr](
                       grpc::ClientContext* context,
                       btproto::ReadRowsRequest const& r,
                       grpc::CompletionQueue*) {
-          EXPECT_STATUS_OK(
-              IsContextMDValid(*context, "google.bigtable.v2.Bigtable.ReadRows",
-                               google::cloud::internal::ApiClientHeader()));
+          EXPECT_STATUS_OK(validate_metadata_fixture_.IsContextMDValid(
+              *context, "google.bigtable.v2.Bigtable.ReadRows",
+              google::cloud::internal::ApiClientHeader()));
           (*request_expectations_ptr)(r);
           return std::unique_ptr<
               MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>(
@@ -151,6 +151,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   /// I-th promise corresponds to the future returned from the ith on_row cb.
   std::vector<promise<bool>> promises_from_user_cb_;
   std::queue<future<bool>> futures_from_user_cb_;
+  ValidateMetadataFixture validate_metadata_fixture_;
 };
 
 /// @test Verify that successfully reading a single row works.

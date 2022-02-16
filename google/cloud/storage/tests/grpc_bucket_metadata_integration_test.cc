@@ -29,6 +29,7 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -43,30 +44,39 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   // TODO(#7257) - restore gRPC integration tests against production
   if (!UsingEmulator()) GTEST_SKIP();
 
-  auto const bucket_name =
-      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
-  ASSERT_THAT(bucket_name, Not(IsEmpty()))
-      << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
+  auto const project_name = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  ASSERT_THAT(project_name, Not(IsEmpty()))
+      << "GOOGLE_CLOUD_PROJECT is not set";
 
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto rest_client = google::cloud::storage::Client();
-  auto rest = rest_client.GetBucketMetadata(bucket_name);
-  ASSERT_STATUS_OK(rest);
+  auto bucket_name = MakeRandomBucketName();
+  auto insert = client->CreateBucketForProject(bucket_name, project_name,
+                                               BucketMetadata());
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+  EXPECT_EQ(insert->name(), bucket_name);
 
   auto get = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(get);
+
   // There are too many fields with missing values in the testbench, just test
   // some interesting ones:
-  EXPECT_EQ(get->name(), rest->name());
-  EXPECT_EQ(get->metageneration(), rest->metageneration());
-  EXPECT_EQ(get->time_created(), rest->time_created());
-  EXPECT_EQ(get->updated(), rest->updated());
-  EXPECT_EQ(get->rpo(), rest->rpo());
-  EXPECT_EQ(get->location(), rest->location());
-  EXPECT_EQ(get->location_type(), rest->location_type());
-  EXPECT_EQ(get->storage_class(), rest->storage_class());
+  EXPECT_EQ(get->name(), insert->name());
+  EXPECT_EQ(get->metageneration(), insert->metageneration());
+  EXPECT_EQ(get->time_created(), insert->time_created());
+  EXPECT_EQ(get->updated(), insert->updated());
+  EXPECT_EQ(get->rpo(), insert->rpo());
+  EXPECT_EQ(get->location(), insert->location());
+  EXPECT_EQ(get->location_type(), insert->location_type());
+  EXPECT_EQ(get->storage_class(), insert->storage_class());
+
+  auto delete_status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(delete_status);
+
+  auto post_delete = client->GetBucketMetadata(bucket_name);
+  EXPECT_THAT(post_delete, StatusIs(StatusCode::kNotFound));
 }
 
 }  // namespace

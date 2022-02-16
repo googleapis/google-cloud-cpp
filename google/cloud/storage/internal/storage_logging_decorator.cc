@@ -36,6 +36,17 @@ StorageLogging::StorageLogging(std::shared_ptr<StorageStub> child,
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
+Status StorageLogging::DeleteBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::DeleteBucketRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::DeleteBucketRequest const& request) {
+        return child_->DeleteBucket(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageLogging::GetBucket(
     grpc::ClientContext& context,
     google::storage::v2::GetBucketRequest const& request) {
@@ -43,6 +54,17 @@ StatusOr<google::storage::v2::Bucket> StorageLogging::GetBucket(
       [this](grpc::ClientContext& context,
              google::storage::v2::GetBucketRequest const& request) {
         return child_->GetBucket(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::v2::Bucket> StorageLogging::CreateBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateBucketRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::CreateBucketRequest const& request) {
+        return child_->CreateBucket(context, request);
       },
       context, request, __func__, tracing_options_);
 }

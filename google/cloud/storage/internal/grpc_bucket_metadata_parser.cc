@@ -20,6 +20,8 @@
 #include "google/cloud/internal/time_utils.h"
 #include "absl/algorithm/container.h"
 #include "absl/time/civil_time.h"
+#include <algorithm>
+#include <cctype>
 
 namespace google {
 namespace cloud {
@@ -225,6 +227,28 @@ BucketEncryption GrpcBucketMetadataParser::FromProto(
   return result;
 }
 
+google::storage::v2::Bucket::IamConfig::PublicAccessPrevention
+GrpcBucketMetadataParser::ToProtoPublicAccessPrevention(
+    std::string const& pap) {
+  if (pap == PublicAccessPreventionEnforced()) {
+    return google::storage::v2::Bucket::IamConfig::ENFORCED;
+  }
+  if (pap == PublicAccessPreventionInherited()) {
+    return google::storage::v2::Bucket::IamConfig::INHERITED;
+  }
+  return google::storage::v2::Bucket::IamConfig::
+      PUBLIC_ACCESS_PREVENTION_UNSPECIFIED;
+}
+
+std::string GrpcBucketMetadataParser::FromProto(
+    google::storage::v2::Bucket::IamConfig::PublicAccessPrevention pap) {
+  auto name =
+      google::storage::v2::Bucket::IamConfig::PublicAccessPrevention_Name(pap);
+  std::transform(name.begin(), name.end(), name.begin(),
+                 [](char c) { return static_cast<char>(std::tolower(c)); });
+  return name;
+}
+
 google::storage::v2::Bucket::IamConfig GrpcBucketMetadataParser::ToProto(
     BucketIamConfiguration const& rhs) {
   google::storage::v2::Bucket::IamConfig result;
@@ -233,6 +257,10 @@ google::storage::v2::Bucket::IamConfig GrpcBucketMetadataParser::ToProto(
     *ubla.mutable_lock_time() = google::cloud::internal::ToProtoTimestamp(
         rhs.uniform_bucket_level_access->locked_time);
     ubla.set_enabled(rhs.uniform_bucket_level_access->enabled);
+  }
+  if (rhs.public_access_prevention.has_value()) {
+    result.set_public_access_prevention(
+        ToProtoPublicAccessPrevention(*rhs.public_access_prevention));
   }
   return result;
 }
@@ -246,6 +274,11 @@ BucketIamConfiguration GrpcBucketMetadataParser::FromProto(
     ubla.locked_time = google::cloud::internal::ToChronoTimePoint(
         rhs.uniform_bucket_level_access().lock_time());
     result.uniform_bucket_level_access = std::move(ubla);
+  }
+  if (rhs.public_access_prevention() !=
+      google::storage::v2::Bucket::IamConfig::
+          PUBLIC_ACCESS_PREVENTION_UNSPECIFIED) {
+    result.public_access_prevention = FromProto(rhs.public_access_prevention());
   }
   return result;
 }
@@ -278,13 +311,26 @@ GrpcBucketMetadataParser::ToProto(LifecycleRuleCondition rhs) {
   if (rhs.is_live.has_value()) {
     result.set_is_live(*rhs.is_live);
   }
-  if (rhs.num_newer_versions.has_value()) {
-    result.set_num_newer_versions(*rhs.num_newer_versions);
-  }
   if (rhs.matches_storage_class.has_value()) {
     for (auto& v : *rhs.matches_storage_class) {
       *result.add_matches_storage_class() = std::move(v);
     }
+  }
+  if (rhs.num_newer_versions.has_value()) {
+    result.set_num_newer_versions(*rhs.num_newer_versions);
+  }
+  if (rhs.days_since_noncurrent_time.has_value()) {
+    result.set_days_since_noncurrent_time(*rhs.days_since_noncurrent_time);
+  }
+  if (rhs.noncurrent_time_before.has_value()) {
+    *result.mutable_noncurrent_time_before() =
+        ToProtoDate(*rhs.noncurrent_time_before);
+  }
+  if (rhs.days_since_custom_time.has_value()) {
+    result.set_days_since_custom_time(*rhs.days_since_custom_time);
+  }
+  if (rhs.custom_time_before.has_value()) {
+    *result.mutable_custom_time_before() = ToProtoDate(*rhs.custom_time_before);
   }
   return result;
 }
@@ -301,15 +347,27 @@ LifecycleRuleCondition GrpcBucketMetadataParser::FromProto(
   if (rhs.has_is_live()) {
     result.is_live = rhs.is_live();
   }
-  if (rhs.num_newer_versions() != 0) {
-    result.num_newer_versions = rhs.num_newer_versions();
-  }
   if (rhs.matches_storage_class_size() != 0) {
     std::vector<std::string> tmp;
     for (auto& v : *rhs.mutable_matches_storage_class()) {
       tmp.push_back(std::move(v));
     }
     result.matches_storage_class = std::move(tmp);
+  }
+  if (rhs.has_num_newer_versions()) {
+    result.num_newer_versions = rhs.num_newer_versions();
+  }
+  if (rhs.has_days_since_noncurrent_time()) {
+    result.days_since_noncurrent_time = rhs.days_since_noncurrent_time();
+  }
+  if (rhs.has_noncurrent_time_before()) {
+    result.noncurrent_time_before = ToCivilDay(rhs.noncurrent_time_before());
+  }
+  if (rhs.has_days_since_custom_time()) {
+    result.days_since_custom_time = rhs.days_since_custom_time();
+  }
+  if (rhs.has_custom_time_before()) {
+    result.custom_time_before = ToCivilDay(rhs.custom_time_before());
   }
   return result;
 }

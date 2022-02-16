@@ -147,10 +147,7 @@ add_library(
     internal/admin_client_params.h
     internal/async_bulk_apply.cc
     internal/async_bulk_apply.h
-    internal/async_longrunning_op.h
-    internal/async_poll_op.h
     internal/async_retry_op.h
-    internal/async_retry_unary_rpc_and_poll.h
     internal/async_row_sampler.cc
     internal/async_row_sampler.h
     internal/bulk_mutator.cc
@@ -164,8 +161,6 @@ add_library(
     internal/defaults.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
-    internal/logging_admin_client.cc
-    internal/logging_admin_client.h
     internal/logging_data_client.cc
     internal/logging_data_client.h
     internal/prefix_range_end.cc
@@ -247,11 +242,8 @@ if (BUILD_TESTING)
         testing/cleanup_stale_resources.h
         testing/embedded_server_test_fixture.cc
         testing/embedded_server_test_fixture.h
-        testing/inprocess_admin_client.cc
-        testing/inprocess_admin_client.h
         testing/inprocess_data_client.cc
         testing/inprocess_data_client.h
-        testing/mock_admin_client.h
         testing/mock_async_failing_rpc_factory.h
         testing/mock_data_client.h
         testing/mock_mutate_rows_reader.h
@@ -308,15 +300,12 @@ if (BUILD_TESTING)
         instance_update_config_test.cc
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
-        internal/async_longrunning_op_test.cc
-        internal/async_poll_op_test.cc
         internal/async_row_sampler_test.cc
         internal/bulk_mutator_test.cc
         internal/common_client_test.cc
         internal/convert_policies_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
-        internal/logging_admin_client_test.cc
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
         internal/wait_for_consistency_test.cc
@@ -331,7 +320,6 @@ if (BUILD_TESTING)
         row_test.cc
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc
-        table_admin_legacy_test.cc
         table_admin_test.cc
         table_apply_test.cc
         table_bulk_apply_test.cc
@@ -399,7 +387,19 @@ endif ()
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    add_subdirectory(examples)
+    add_executable(bigtable_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(bigtable_quickstart
+                          PRIVATE google-cloud-cpp::bigtable)
+    google_cloud_cpp_add_common_options(bigtable_quickstart)
+    add_test(
+        NAME bigtable_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:bigtable_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID
+            GOOGLE_CLOUD_CPP_BIGTABLE_TEST_QUICKSTART_TABLE)
+    set_tests_properties(bigtable_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 # Export the CMake targets to make it easy to create configuration files.

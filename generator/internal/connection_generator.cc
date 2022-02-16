@@ -229,13 +229,7 @@ Status ConnectionGenerator::GenerateCc() {
        vars("connection_impl_header_path"), vars("option_defaults_header_path"),
        vars("stub_factory_header_path"), "google/cloud/background_threads.h",
        "google/cloud/common_options.h", "google/cloud/grpc_options.h",
-       HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
-       HasLongrunningMethod()
-           ? "google/cloud/internal/async_long_running_operation.h"
-           : "",
-       HasStreamingReadMethod()
-           ? "google/cloud/internal/resumable_streaming_read_rpc.h"
-           : ""});
+       HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
   CcSystemIncludes({"memory"});
 
   auto result = CcOpenNamespaces();

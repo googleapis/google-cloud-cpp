@@ -57,6 +57,27 @@ void DefaultClient(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void SetClientEndpoint(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::storage::examples;
+  if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 2) {
+    throw examples::Usage{
+        "default-client"
+        " <bucket-name> <object-name>"};
+  }
+  //! [START storage_set_client_endpoint] [set-client-endpoint]
+  namespace g = ::google::cloud;
+  namespace gcs = ::google::cloud::storage;
+  [](std::string const& bucket_name, std::string const& object_name) {
+    // NOTE: the CLOUD_STORAGE_EMULATOR_HOST environment variable overrides any
+    //     value provided here.
+    auto client = gcs::Client(g::Options{}.set<gcs::RestEndpointOption>(
+        "https://storage.googleapis.com"));
+    PerformSomeOperations(client, bucket_name, object_name);
+  }
+  //! [END storage_set_client_endpoint] [set-client-endpoint]
+  (argv.at(0), argv.at(1));
+}
+
 void ExplicitADCs(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 2) {
@@ -77,14 +98,14 @@ void ExplicitADCs(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
-void ServiceAccountKeyfileJson(std::vector<std::string> const& argv) {
+void ServiceAccountKeyfile(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 3) {
     throw examples::Usage{
         "service-account-keyfile-json"
         " <service-account-file> <bucket-name> <object-name>"};
   }
-  //! [service-account-keyfile-json]
+  //! [service-account-keyfile]
   namespace gcs = ::google::cloud::storage;
   [](std::string const& filename, std::string const& bucket_name,
      std::string const& object_name) {
@@ -101,7 +122,7 @@ void ServiceAccountKeyfileJson(std::vector<std::string> const& argv) {
                 .set<google::cloud::UnifiedCredentialsOption>(credentials)),
         bucket_name, object_name);
   }
-  //! [service-account-keyfile-json]
+  //! [service-account-keyfile]
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -133,6 +154,9 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const object_name = examples::MakeRandomObjectName(generator, "object-");
   DefaultClient({bucket_name, object_name});
 
+  std::cout << "\nRunning SetClientEndpoint()" << std::endl;
+  SetClientEndpoint({bucket_name, object_name});
+
   std::cout << "\nRunning ExplicitADCs()" << std::endl;
   ExplicitADCs({bucket_name, object_name});
 
@@ -140,7 +164,7 @@ void RunAll(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (filename.has_value()) {
     std::cout << "\nRunning ServiceAccountKeyfileJson()" << std::endl;
-    ServiceAccountKeyfileJson({*filename, bucket_name, object_name});
+    ServiceAccountKeyfile({*filename, bucket_name, object_name});
   }
 
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(delete_after);
@@ -154,7 +178,8 @@ int main(int argc, char* argv[]) {
   examples::Example example({
       {"default-client", DefaultClient},
       {"explicit-adcs", ExplicitADCs},
-      {"service-account-keyfile-json", ServiceAccountKeyfileJson},
+      {"service-account-keyfile", ServiceAccountKeyfile},
+      {"set-client-endpoint", SetClientEndpoint},
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

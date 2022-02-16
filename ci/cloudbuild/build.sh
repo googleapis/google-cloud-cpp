@@ -209,8 +209,8 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
     # link may be publicly accessible. In manual builds this information is
     # never useful (both are "none").
     io::log_h1 "Log Links"
-    printf "GCB: %s\n" "${CONSOLE_LOG_URL:-none}"
-    printf "Raw: %s\n" "${RAW_LOG_URL:-none}"
+    printf "* GCB: %s\n" "${CONSOLE_LOG_URL:-none}"
+    printf "* Raw: %s\n" "${RAW_LOG_URL:-none}"
   fi
 
   if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
@@ -306,9 +306,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--build-arg=NCPU=$(nproc)"
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile"
   )
-  if [[ "${TRIGGER_TYPE}" == "manual" ]]; then
-    build_flags+=("--quiet")
-  fi
+  export DOCKER_BUILDKIT=1
   io::run docker build "${build_flags[@]}" ci
   io::log_h2 "Starting docker container: ${image}"
   run_flags=(
@@ -326,6 +324,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=BRANCH_NAME=${BRANCH_NAME}"
     "--env=COMMIT_SHA=${COMMIT_SHA}"
     "--env=TRIGGER_TYPE=${TRIGGER_TYPE:-}"
+    "--env=VERBOSE_FLAG=${VERBOSE_FLAG:-}"
     "--env=USE_BAZEL_VERSION=${USE_BAZEL_VERSION:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.

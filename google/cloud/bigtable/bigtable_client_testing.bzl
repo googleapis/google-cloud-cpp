@@ -19,9 +19,7 @@
 bigtable_client_testing_hdrs = [
     "testing/cleanup_stale_resources.h",
     "testing/embedded_server_test_fixture.h",
-    "testing/inprocess_admin_client.h",
     "testing/inprocess_data_client.h",
-    "testing/mock_admin_client.h",
     "testing/mock_async_failing_rpc_factory.h",
     "testing/mock_data_client.h",
     "testing/mock_mutate_rows_reader.h",
@@ -37,7 +35,6 @@ bigtable_client_testing_hdrs = [
 bigtable_client_testing_srcs = [
     "testing/cleanup_stale_resources.cc",
     "testing/embedded_server_test_fixture.cc",
-    "testing/inprocess_admin_client.cc",
     "testing/inprocess_data_client.cc",
     "testing/random_names.cc",
     "testing/table_integration_test.cc",

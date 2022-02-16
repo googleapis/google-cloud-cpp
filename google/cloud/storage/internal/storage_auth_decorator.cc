@@ -30,12 +30,28 @@ StorageAuth::StorageAuth(
     std::shared_ptr<StorageStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+Status StorageAuth::DeleteBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::DeleteBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBucket(context, request);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageAuth::GetBucket(
     grpc::ClientContext& context,
     google::storage::v2::GetBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBucket(context, request);
+}
+
+StatusOr<google::storage::v2::Bucket> StorageAuth::CreateBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateBucketRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBucket(context, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageAuth::ComposeObject(

@@ -23,7 +23,6 @@ target_link_libraries(gcs2cbt google-cloud-cpp::bigtable
 google_cloud_cpp_add_common_options(gcs2cbt)
 
 if (BUILD_TESTING)
-    include(FindGMockWithTargets)
     include(FindCurlWithTargets)
     include(FindgRPC)
 

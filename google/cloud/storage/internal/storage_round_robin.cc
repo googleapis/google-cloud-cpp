@@ -19,10 +19,22 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+Status StorageRoundRobin::DeleteBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::DeleteBucketRequest const& request) {
+  return Child()->DeleteBucket(context, request);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageRoundRobin::GetBucket(
     grpc::ClientContext& context,
     google::storage::v2::GetBucketRequest const& request) {
   return Child()->GetBucket(context, request);
+}
+
+StatusOr<google::storage::v2::Bucket> StorageRoundRobin::CreateBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::CreateBucketRequest const& request) {
+  return Child()->CreateBucket(context, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageRoundRobin::ComposeObject(

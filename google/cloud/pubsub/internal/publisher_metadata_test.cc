@@ -28,18 +28,29 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
 
-TEST(PublisherMetadataTest, CreateTopic) {
+class PublisherMetadataTest : public ::testing::Test {
+ protected:
+  Status IsContextMDValid(grpc::ClientContext& context,
+                          std::string const& method) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, google::cloud::internal::ApiClientHeader());
+  }
+
+ private:
+  ValidateMetadataFixture validate_metadata_fixture_;
+};
+
+TEST_F(PublisherMetadataTest, CreateTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, CreateTopic)
-      .WillOnce(
-          [](grpc::ClientContext& context, google::pubsub::v1::Topic const&) {
-            EXPECT_STATUS_OK(IsContextMDValid(
-                context, "google.pubsub.v1.Publisher.CreateTopic",
-                google::cloud::internal::ApiClientHeader()));
-            return make_status_or(google::pubsub::v1::Topic{});
-          });
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::Topic const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            context, "google.pubsub.v1.Publisher.CreateTopic"));
+        return make_status_or(google::pubsub::v1::Topic{});
+      });
 
   PublisherMetadata stub(mock);
   grpc::ClientContext context;
@@ -49,14 +60,13 @@ TEST(PublisherMetadataTest, CreateTopic) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, GetTopic) {
+TEST_F(PublisherMetadataTest, GetTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, GetTopic)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::GetTopicRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::GetTopicRequest const&) {
         EXPECT_STATUS_OK(
-            IsContextMDValid(context, "google.pubsub.v1.Publisher.GetTopic",
-                             google::cloud::internal::ApiClientHeader()));
+            IsContextMDValid(context, "google.pubsub.v1.Publisher.GetTopic"));
         return make_status_or(google::pubsub::v1::Topic{});
       });
   PublisherMetadata stub(mock);
@@ -67,14 +77,13 @@ TEST(PublisherMetadataTest, GetTopic) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, UpdateTopic) {
+TEST_F(PublisherMetadataTest, UpdateTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, UpdateTopic)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::UpdateTopicRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context, "google.pubsub.v1.Publisher.UpdateTopic",
-                             google::cloud::internal::ApiClientHeader()));
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::UpdateTopicRequest const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            context, "google.pubsub.v1.Publisher.UpdateTopic"));
         return make_status_or(google::pubsub::v1::Topic{});
       });
   PublisherMetadata stub(mock);
@@ -86,14 +95,13 @@ TEST(PublisherMetadataTest, UpdateTopic) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, ListTopics) {
+TEST_F(PublisherMetadataTest, ListTopics) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, ListTopics)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::ListTopicsRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListTopicsRequest const&) {
         EXPECT_STATUS_OK(
-            IsContextMDValid(context, "google.pubsub.v1.Publisher.ListTopics",
-                             google::cloud::internal::ApiClientHeader()));
+            IsContextMDValid(context, "google.pubsub.v1.Publisher.ListTopics"));
         return make_status_or(google::pubsub::v1::ListTopicsResponse{});
       });
   PublisherMetadata stub(mock);
@@ -104,14 +112,13 @@ TEST(PublisherMetadataTest, ListTopics) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, DeleteTopic) {
+TEST_F(PublisherMetadataTest, DeleteTopic) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, DeleteTopic)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::DeleteTopicRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context, "google.pubsub.v1.Publisher.DeleteTopic",
-                             google::cloud::internal::ApiClientHeader()));
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DeleteTopicRequest const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            context, "google.pubsub.v1.Publisher.DeleteTopic"));
         return Status{};
       });
   PublisherMetadata stub(mock);
@@ -122,14 +129,13 @@ TEST(PublisherMetadataTest, DeleteTopic) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, DetachSubscription) {
+TEST_F(PublisherMetadataTest, DetachSubscription) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, DetachSubscription)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::DetachSubscriptionRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DetachSubscriptionRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Publisher.DetachSubscription",
-            google::cloud::internal::ApiClientHeader()));
+            context, "google.pubsub.v1.Publisher.DetachSubscription"));
         return make_status_or(google::pubsub::v1::DetachSubscriptionResponse{});
       });
   PublisherMetadata stub(mock);
@@ -141,17 +147,17 @@ TEST(PublisherMetadataTest, DetachSubscription) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, ListTopicSubscriptions) {
+TEST_F(PublisherMetadataTest, ListTopicSubscriptions) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, ListTopicSubscriptions)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::ListTopicSubscriptionsRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Publisher.ListTopicSubscriptions",
-            google::cloud::internal::ApiClientHeader()));
-        return make_status_or(
-            google::pubsub::v1::ListTopicSubscriptionsResponse{});
-      });
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::ListTopicSubscriptionsRequest const&) {
+            EXPECT_STATUS_OK(IsContextMDValid(
+                context, "google.pubsub.v1.Publisher.ListTopicSubscriptions"));
+            return make_status_or(
+                google::pubsub::v1::ListTopicSubscriptionsResponse{});
+          });
   PublisherMetadata stub(mock);
   grpc::ClientContext context;
   google::pubsub::v1::ListTopicSubscriptionsRequest request;
@@ -160,14 +166,13 @@ TEST(PublisherMetadataTest, ListTopicSubscriptions) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, ListTopicSnapshots) {
+TEST_F(PublisherMetadataTest, ListTopicSnapshots) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, ListTopicSnapshots)
-      .WillOnce([](grpc::ClientContext& context,
-                   google::pubsub::v1::ListTopicSnapshotsRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListTopicSnapshotsRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            context, "google.pubsub.v1.Publisher.ListTopicSnapshots",
-            google::cloud::internal::ApiClientHeader()));
+            context, "google.pubsub.v1.Publisher.ListTopicSnapshots"));
         return make_status_or(google::pubsub::v1::ListTopicSnapshotsResponse{});
       });
   PublisherMetadata stub(mock);
@@ -178,15 +183,14 @@ TEST(PublisherMetadataTest, ListTopicSnapshots) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST(PublisherMetadataTest, AsyncPublish) {
+TEST_F(PublisherMetadataTest, AsyncPublish) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([](google::cloud::CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext> context,
-                   google::pubsub::v1::PublishRequest const&) {
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       google::pubsub::v1::PublishRequest const&) {
         EXPECT_STATUS_OK(
-            IsContextMDValid(*context, "google.pubsub.v1.Publisher.Publish",
-                             google::cloud::internal::ApiClientHeader()));
+            IsContextMDValid(*context, "google.pubsub.v1.Publisher.Publish"));
         return make_ready_future(
             make_status_or(google::pubsub::v1::PublishResponse{}));
       });

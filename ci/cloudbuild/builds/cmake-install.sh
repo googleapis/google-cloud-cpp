@@ -93,8 +93,6 @@ expected_dirs+=(
   ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
-  ./include/google/cloud/speech
-  ./include/google/cloud/speech/v1
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
   # no gRPC services in google/cloud/workflows/type.

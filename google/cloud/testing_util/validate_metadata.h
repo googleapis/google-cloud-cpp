@@ -18,7 +18,8 @@
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <grpcpp/client_context.h>
+#include <grpcpp/generic/async_generic_service.h>
+#include <grpcpp/grpcpp.h>
 #include <map>
 #include <string>
 
@@ -28,42 +29,64 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 /**
- * Verify that the metadata in the context is appropriate for a gRPC method.
+ * Keep the test required to test metadata contents in a grpc::Context object.
  *
- * `ClientContext` should instruct gRPC to set a `x-goog-request-params` HTTP
- * header with a value dictated by a `google.api.http` option in the gRPC
- * service specification. This function checks if the header is set and whether
- * it has a valid value.
+ * Our libraries need to set a number of metadata attributes in the
+ * `grpc::ClientContext` objects used to make RPCs.  Naturally, we want to write
+ * tests for the functions that set this metadata, but `grpc::ClientContext`
+ * does not have any APIs to examine the metadata previously set.
  *
- * @param context the context to validate
- * @param method a gRPC method which which this context will be passed to
- * @param api_client_header expected value for the x-goog-api-client metadata
- *     header.
- * @param resource_prefix_header if specified, this is the expected value for
- *     the google-cloud-resource-prefix metadata header.
- *
- * @warning The `context` will be destroyed and shouldn't be used after passing
- *     it to this function.
- *
- * @return an OK status if the `context` is properly set up
+ * However, we can make a call to a *local* gRPC server, and then examine the
+ * metadata on this server. Unfortunately, initializing these servers can be
+ * slow, particularly on Windows.  It is worthwhile to cache the state and the
+ * server in a fixture, so the tests run faster.
  */
-Status IsContextMDValid(
-    grpc::ClientContext& context, std::string const& method,
-    std::string const& api_client_header,
-    absl::optional<std::string> const& resource_name = {},
-    absl::optional<std::string> const& resource_prefix_header = {});
+class ValidateMetadataFixture {
+ public:
+  ValidateMetadataFixture();
+  ~ValidateMetadataFixture();
 
-/**
- * GetMetadata from `ClientContext`.
- *
- * `ClientContext` doesn't give access to the metadata, but `ServerContext`
- * does. In order to transform the `ClientContext` into `ServerContext`
- * we spin up a server and a client and send some garbage with this context.
- *
- * @note This invalidates the @p context parameter.
- */
-std::multimap<std::string, std::string> GetMetadata(
-    grpc::ClientContext& context);
+  /**
+   * GetMetadata from `ClientContext`.
+   *
+   * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
+   *   cannot reuse @p context for other RPCs or other calls to this function.
+   */
+  std::multimap<std::string, std::string> GetMetadata(
+      grpc::ClientContext& context);
+
+  /**
+   * Verify that the metadata in the context is appropriate for a gRPC method.
+   *
+   * `ClientContext` should instruct gRPC to set a `x-goog-request-params` HTTP
+   * header with a value dictated by a `google.api.http` option in the gRPC
+   * service specification. This function checks if the header is set and
+   * whether it has a valid value.
+   *
+   * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
+   *   cannot reuse @p context for other RPCs or other calls to this function.
+   *
+   * @param context the context to validate
+   * @param method a gRPC method which which this context will be passed to
+   * @param api_client_header expected value for the x-goog-api-client metadata
+   *     header.
+   * @param resource_prefix_header if specified, this is the expected value for
+   *     the google-cloud-resource-prefix metadata header.
+   *
+   * @return an OK status if the `context` is properly set up
+   */
+  Status IsContextMDValid(
+      grpc::ClientContext& context, std::string const& method,
+      std::string const& api_client_header,
+      absl::optional<std::string> const& resource_name = {},
+      absl::optional<std::string> const& resource_prefix_header = {});
+
+ private:
+  grpc::CompletionQueue cli_cq_;
+  grpc::AsyncGenericService generic_service_;
+  std::unique_ptr<grpc::ServerCompletionQueue> srv_cq_;
+  std::unique_ptr<grpc::Server> server_;
+};
 
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

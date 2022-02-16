@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
@@ -60,10 +61,11 @@ class PartialResultSetSource : public ResultSourceInterface {
  private:
   explicit PartialResultSetSource(
       std::unique_ptr<PartialResultSetReader> reader)
-      : reader_(std::move(reader)) {}
+      : options_(internal::CurrentOptions()), reader_(std::move(reader)) {}
 
   Status ReadFromStream();
 
+  Options options_;
   std::unique_ptr<PartialResultSetReader> reader_;
   absl::optional<google::spanner::v1::ResultSetMetadata> metadata_;
   absl::optional<google::spanner::v1::ResultSetStats> stats_;

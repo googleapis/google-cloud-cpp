@@ -23,13 +23,13 @@ if (BUILD_TESTING)
 
     set(storage_examples
         # cmake-format: sort
-        storage_auth_samples.cc
         storage_bucket_acl_samples.cc
         storage_bucket_cors_samples.cc
         storage_bucket_default_kms_key_samples.cc
         storage_bucket_iam_samples.cc
         storage_bucket_requester_pays_samples.cc
         storage_bucket_samples.cc
+        storage_client_initialization_samples.cc
         storage_default_object_acl_samples.cc
         storage_event_based_hold_samples.cc
         storage_grpc_samples.cc
@@ -81,6 +81,12 @@ if (BUILD_TESTING)
                     GTest::gtest)
         add_test(NAME ${target} COMMAND ${target})
         google_cloud_cpp_add_common_options(${target})
+        # With googletest it is relatively easy to exceed the default number of
+        # sections (~65,000) in a single .obj file. Add the /bigobj option to
+        # all the tests, even if it is not needed.
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
     endforeach ()
 
     foreach (fname ${storage_examples})
@@ -95,6 +101,12 @@ if (BUILD_TESTING)
             ${target} PROPERTIES LABELS
                                  "integration-test;integration-test-emulator")
         google_cloud_cpp_add_common_options(${target})
+        # With googletest it is relatively easy to exceed the default number of
+        # sections (~65,000) in a single .obj file. Add the /bigobj option to
+        # all the tests, even if it is not needed.
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
     endforeach ()
 
     # We just know that these tests need to be run against production.
@@ -107,5 +119,11 @@ if (BUILD_TESTING)
         set_tests_properties(
             ${target} PROPERTIES LABELS
                                  "integration-test;integration-test-production")
+        # With googletest it is relatively easy to exceed the default number of
+        # sections (~65,000) in a single .obj file. Add the /bigobj option to
+        # all the tests, even if it is not needed.
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
     endforeach ()
 endif ()

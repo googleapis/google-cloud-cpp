@@ -201,7 +201,18 @@ add_subdirectory(integration_tests)
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    add_subdirectory(samples)
+    add_executable(bigquery_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(bigquery_quickstart
+                          PRIVATE google-cloud-cpp::bigquery)
+    google_cloud_cpp_add_common_options(bigquery_quickstart)
+    add_test(
+        NAME bigquery_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:bigquery_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE)
+    set_tests_properties(bigquery_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

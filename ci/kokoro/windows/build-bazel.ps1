@@ -1,4 +1,4 @@
-# !/usr/bin/env powershell
+#!/usr/bin/env powershell
 #
 # Copyright 2020 Google LLC
 #
@@ -129,94 +129,40 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra prog
 Write-Host -ForegroundColor Yellow bazel $common_flags build $build_flags ...
 bazelisk $common_flags build $build_flags ...
 if ($LastExitCode) {
-    Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
+    Write-Host -ForegroundColor Red "bazel build failed with exit code ${LastExitCode}."
     Exit ${LastExitCode}
 }
 
-function Integration-Tests-Enabled {
-    if ((Test-Path env:KOKORO_GFILE_DIR) -and
-        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
-        return $True
-    }
-    return $False
-}
+# Import the functions and variables used to run integration tests
+. ci/kokoro/windows/lib/integration.ps1
 
-$PROJECT_ROOT = (Get-Item -Path ".\" -Verbose).FullName
-if (Integration-Tests-Enabled) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
-    $integration_tests_config="${PROJECT_ROOT}/ci/etc/integration-tests-config.ps1"
-    . "${integration_tests_config}"
-    ForEach($_ in (1, 2, 3)) {
-        if ( $_ -ne 1) {
-            Start-Sleep -Seconds (60 * $_)
-        }
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "Downloading roots.pem [$_]"
-        try {
-            (New-Object System.Net.WebClient).Downloadfile(
-                    'https://pki.google.com/roots.pem',
-                    "${env:KOKORO_GFILE_DIR}/roots.pem")
-            break
-        } catch {
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
-        }
-    }
-    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
-
-    $integration_flags=@(
-        # Common configuration
-        "--test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}",
-        "--test_env=GOOGLE_APPLICATION_CREDENTIALS=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
-        "--test_env=GOOGLE_CLOUD_PROJECT=${env:GOOGLE_CLOUD_PROJECT}",
-        "--test_env=GOOGLE_CLOUD_CPP_TEST_REGION=${env:GOOGLE_CLOUD_CPP_TEST_REGION}",
-        "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${env:GOOGLE_CLOUD_CPP_TEST_ZONE}",
-        "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes",
-        "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING",
-        "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams",
-        "--test_env=GOOGLE_CLOUD_CPP_TRACING_OPTIONS=truncate_string_field_longer_than=512",
-        "--test_env=CLOUD_STORAGE_ENABLE_TRACING=raw-client",
-
-        # Bigtable
-        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}",
-        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}",
-        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}",
-        "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}",
-
-        # Storage
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
-        # Spanner
-        "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}",
-        "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}",
-
-        # IAM
-        "--test_env=GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT}",
-        "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}",
-        "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}",
-        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM=${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
-    )
-    $excluded_rules=@(
-        "-//google/cloud/bigtable/examples:bigtable_grpc_credentials",
-        "-//google/cloud/storage/examples:storage_service_account_samples",
-        "-//google/cloud/storage/tests:service_account_integration_test",
-        "-//google/cloud/examples:grpc_credential_types",
-        "-//google/cloud/storage/tests:grpc_integration_test"
-    )
-    bazelisk $common_flags test $test_flags $integration_flags `
-        "--test_tag_filters=integration-test" `
-        -- ... $excluded_rules
+function Invoke-REST-Quickstart {
+    bazelisk $common_flags run $build_flags `
+      //google/cloud/storage/quickstart:quickstart -- `
+      "${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
     if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "Integration tests failed with exit code ${LastExitCode}."
+        Write-Host -ForegroundColor Red "bazel run (storage/quickstart) failed with exit code ${LastExitCode}."
         Exit ${LastExitCode}
     }
+}
+
+function Invoke-gRPC-Quickstart {
+    bazelisk $common_flags run $build_flags `
+      //google/cloud/pubsub/quickstart:quickstart -- `
+      "${env:GOOGLE_CLOUD_PROJECT}" "${env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC}"
+    if ($LastExitCode) {
+        Write-Host -ForegroundColor Red "bazel run (pubsub/quickstart) failed with exit code ${LastExitCode}."
+        Exit ${LastExitCode}
+    }
+}
+
+if (Test-Integration-Enabled) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart prorams"
+    Install-Roots-Pem
+    ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
+    ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    Invoke-REST-Quickstart
+    Invoke-gRPC-Quickstart
 }
 
 # Shutdown the Bazel server to release any locks

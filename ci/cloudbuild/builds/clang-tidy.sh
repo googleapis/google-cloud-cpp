@@ -37,7 +37,9 @@ env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test
 
 integration::ctest_with_emulators "cmake-out"
 
-io::log_h2 "ctcache stats"
-printf "%s: %s\n" "total size" "$(du -sh "${CTCACHE_DIR}")"
-printf "%s: %s\n" " num files" "$(find "${CTCACHE_DIR}" | wc -l)"
-echo
+if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
+  io::log_h2 "ctcache stats"
+  printf "%s: %s\n" "total size" "$(du -sh "${CTCACHE_DIR}")"
+  printf "%s: %s\n" " num files" "$(find "${CTCACHE_DIR}" | wc -l)"
+  echo
+fi

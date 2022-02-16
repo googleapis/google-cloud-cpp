@@ -16,9 +16,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/annotations.pb.h>
 #include <google/protobuf/descriptor.h>
-#include <grpcpp/channel.h>
 #include <grpcpp/completion_queue.h>
-#include <grpcpp/generic/async_generic_service.h>
 #include <grpcpp/generic/generic_stub.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
@@ -150,88 +148,71 @@ StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
   return res;
 }
 
-/**
- * Cache the state required to implement `GetMetadata()`.
- *
- * The implementation of `GetMetadata()` requires substantial state, including
- * a gRPC server and completion queues.  On Windows it is fairly expensive to
- * startup and shutdown these resources, we need to cache them so the tests run
- * fast.
- */
-class GetMetadataState {
- public:
-  GetMetadataState() {
-    // Start the generic server.
-    grpc::ServerBuilder builder;
-    builder.RegisterAsyncGenericService(&generic_service_);
-    srv_cq_ = builder.AddCompletionQueue();
-    server_ = builder.BuildAndStart();
-  }
-  ~GetMetadataState() {
-    // Shut everything down.
-    server_->Shutdown(std::chrono::system_clock::now());
-    srv_cq_->Shutdown();
-    cli_cq_.Shutdown();
-
-    // Drain completion queues.
-    void* placeholder;
-    bool ok;
-    while (srv_cq_->Next(&placeholder, &ok))
-      ;
-    while (cli_cq_.Next(&placeholder, &ok))
-      ;
-  }
-
-  std::multimap<std::string, std::string> GetMetadata(
-      grpc::ClientContext& context) {
-    // Set the deadline to far in the future. If the deadline is in the past,
-    // gRPC doesn't send the initial metadata at all (which makes sense, given
-    // that the context is already expired). The `context` is destroyed by this
-    // function anyway, so we're not making things worse by changing the
-    // deadline.
-    context.set_deadline(std::chrono::system_clock::now() +
-                         std::chrono::hours(24));
-
-    // Send some garbage with the supplied context.
-    grpc::GenericStub generic_stub(
-        server_->InProcessChannel(grpc::ChannelArguments()));
-
-    auto cli_stream =
-        generic_stub.PrepareCall(&context, "made_up_method", &cli_cq_);
-    cli_stream->StartCall(nullptr);
-    bool ok;
-    void* placeholder;
-    cli_cq_.Next(&placeholder, &ok);  // actually start the client call
-
-    // Receive the garbage with the supplied context.
-    grpc::GenericServerContext server_context;
-    grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
-    generic_service_.RequestCall(&server_context, &reader_writer, srv_cq_.get(),
-                                 srv_cq_.get(), nullptr);
-    srv_cq_->Next(&placeholder, &ok);  // actually receive the data
-
-    // Now we've got the data - save it before cleaning up.
-    std::multimap<std::string, std::string> res;
-    auto const& cli_md = server_context.client_metadata();
-    std::transform(cli_md.begin(), cli_md.end(),
-                   std::inserter(res, res.begin()),
-                   [](std::pair<grpc::string_ref, grpc::string_ref> const& md) {
-                     return std::make_pair(
-                         std::string(md.first.data(), md.first.length()),
-                         std::string(md.second.data(), md.second.length()));
-                   });
-
-    return res;
-  }
-
- private:
-  grpc::CompletionQueue cli_cq_;
-  grpc::AsyncGenericService generic_service_;
-  std::unique_ptr<grpc::ServerCompletionQueue> srv_cq_;
-  std::unique_ptr<grpc::Server> server_;
-};
-
 }  // namespace
+
+ValidateMetadataFixture::ValidateMetadataFixture() {
+  // Start the generic server.
+  grpc::ServerBuilder builder;
+  builder.RegisterAsyncGenericService(&generic_service_);
+  srv_cq_ = builder.AddCompletionQueue();
+  server_ = builder.BuildAndStart();
+}
+
+ValidateMetadataFixture::~ValidateMetadataFixture() {
+  // Shut everything down.
+  server_->Shutdown(std::chrono::system_clock::now());
+  srv_cq_->Shutdown();
+  cli_cq_.Shutdown();
+
+  // Drain completion queues.
+  void* placeholder;
+  bool ok;
+  while (srv_cq_->Next(&placeholder, &ok))
+    ;
+  while (cli_cq_.Next(&placeholder, &ok))
+    ;
+}
+
+std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
+    grpc::ClientContext& context) {
+  // Set the deadline to far in the future. If the deadline is in the past,
+  // gRPC doesn't send the initial metadata at all (which makes sense, given
+  // that the context is already expired). The `context` is destroyed by this
+  // function anyway, so we're not making things worse by changing the
+  // deadline.
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::hours(24));
+
+  // Send some garbage with the supplied context.
+  grpc::GenericStub generic_stub(
+      server_->InProcessChannel(grpc::ChannelArguments()));
+
+  auto cli_stream =
+      generic_stub.PrepareCall(&context, "made_up_method", &cli_cq_);
+  cli_stream->StartCall(nullptr);
+  bool ok;
+  void* placeholder;
+  cli_cq_.Next(&placeholder, &ok);  // actually start the client call
+
+  // Receive the garbage with the supplied context.
+  grpc::GenericServerContext server_context;
+  grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
+  generic_service_.RequestCall(&server_context, &reader_writer, srv_cq_.get(),
+                               srv_cq_.get(), nullptr);
+  srv_cq_->Next(&placeholder, &ok);  // actually receive the data
+
+  // Now we've got the data - save it before cleaning up.
+  std::multimap<std::string, std::string> res;
+  auto const& cli_md = server_context.client_metadata();
+  std::transform(cli_md.begin(), cli_md.end(), std::inserter(res, res.begin()),
+                 [](std::pair<grpc::string_ref, grpc::string_ref> const& md) {
+                   return std::make_pair(
+                       std::string(md.first.data(), md.first.length()),
+                       std::string(md.second.data(), md.second.length()));
+                 });
+
+  return res;
+}
 
 /**
  * We use reflection to extract the `google.api.http` option from the given
@@ -239,7 +220,7 @@ class GetMetadataState {
  * `x-goog-request-params` header in `context` set all the parameters listed in
  * the curly braces.
  */
-Status IsContextMDValid(
+Status ValidateMetadataFixture::IsContextMDValid(
     grpc::ClientContext& context, std::string const& method,
     std::string const& api_client_header,
     absl::optional<std::string> const& resource_name,
@@ -303,12 +284,6 @@ Status IsContextMDValid(
   }
 
   return Status();
-}
-
-std::multimap<std::string, std::string> GetMetadata(
-    grpc::ClientContext& context) {
-  static auto* const kState = new GetMetadataState;
-  return kState->GetMetadata(context);
 }
 
 }  // namespace testing_util

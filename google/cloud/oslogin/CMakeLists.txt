@@ -110,6 +110,22 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_oslogin_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(oslogin_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(oslogin_quickstart
+                          PRIVATE google-cloud-cpp::experimental-oslogin)
+    google_cloud_cpp_add_common_options(oslogin_quickstart)
+    add_test(
+        NAME oslogin_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:oslogin_quickstart> "invalid@example.com")
+    set_tests_properties(
+        oslogin_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Permanent error in GetLoginProfile:")
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

@@ -37,7 +37,6 @@ TEST(AdminClientParams, WithSuppliedThreads) {
 
   EXPECT_THAT(p.background_threads, IsNull());
   ASSERT_TRUE(p.options.has<GrpcCompletionQueueOption>());
-  EXPECT_TRUE(SameCQ(user_cq, p.cq));
   EXPECT_TRUE(SameCQ(user_cq, p.options.get<GrpcCompletionQueueOption>()));
 }
 
@@ -46,8 +45,8 @@ TEST(AdminClientParams, WithoutSuppliedThreads) {
 
   ASSERT_THAT(p.background_threads, NotNull());
   ASSERT_TRUE(p.options.has<GrpcCompletionQueueOption>());
-  EXPECT_TRUE(SameCQ(p.cq, p.background_threads->cq()));
-  EXPECT_TRUE(SameCQ(p.cq, p.options.get<GrpcCompletionQueueOption>()));
+  EXPECT_TRUE(SameCQ(p.background_threads->cq(),
+                     p.options.get<GrpcCompletionQueueOption>()));
 }
 
 }  // namespace

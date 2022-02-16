@@ -31,9 +31,17 @@ class StorageRoundRobin : public StorageStub {
       : children_(std::move(children)) {}
   ~StorageRoundRobin() override = default;
 
+  Status DeleteBucket(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteBucketRequest const& request) override;
+
   StatusOr<google::storage::v2::Bucket> GetBucket(
       grpc::ClientContext& context,
       google::storage::v2::GetBucketRequest const& request) override;
+
+  StatusOr<google::storage::v2::Bucket> CreateBucket(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateBucketRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,

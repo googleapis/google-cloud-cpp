@@ -100,58 +100,19 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
-if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
-    ctest $ctest_args -L integration-test
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "Integration tests failed with exit code $LastExitCode"
-        Exit ${LastExitCode}
-    }
-}
+# Import the functions and variables used to run integration tests
+Set-Location "${project_root}"
+. ci/kokoro/windows/lib/integration.ps1
 
-function Integration-Tests-Enabled {
-    if ((Test-Path env:KOKORO_GFILE_DIR) -and
-        (Test-Path "${env:KOKORO_GFILE_DIR}/kokoro-run-key.json")) {
-        return $True
-    }
-    return $False
-}
-
-if (Integration-Tests-Enabled) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
-    $integration_tests_config="${project_root}/ci/etc/integration-tests-config.ps1"
-    . "${integration_tests_config}"
-    ForEach($_ in (1, 2, 3)) {
-        if ( $_ -ne 1) {
-            Start-Sleep -Seconds (60 * $_)
-        }
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "Downloading roots.pem [$_]"
-        try {
-            (New-Object System.Net.WebClient).Downloadfile(
-                    'https://pki.google.com/roots.pem',
-                    "${env:KOKORO_GFILE_DIR}/roots.pem")
-            break
-        } catch {
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
-        }
-    }
+if (Test-Integration-Enabled) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running minimal quickstart programs $env:CONFIG"
+    Install-Roots-Pem
     ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
     ${env:GOOGLE_APPLICATION_CREDENTIALS}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
-    ${env:GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES}="yes"
-    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
-    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM}="${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
-    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE}="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
-    ${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME}="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
-
-    Set-Location "${project_root}"
     Set-Location "${binary_dir}"
-    # TODO(6062) - restore the GCS+gRPC tests (i.e. remove storage_grpc_ from the -E option)
-    ctest $ctest_args `
-        -L 'integration-test-production' `
-        -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test|storage_grpc_)'
+    ctest $ctest_args -R "(storage_quickstart|pubsub_quickstart)"
     if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "Integration tests failed with exit code ${LastExitCode}."
+        Write-Host -ForegroundColor Red "ctest failed with exit code $LastExitCode"
         Exit ${LastExitCode}
     }
     Set-Location "${project_root}"
