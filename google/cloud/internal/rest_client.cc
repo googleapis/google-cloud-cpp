@@ -103,10 +103,14 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   impl->SetHeader(HostHeader(options_, endpoint_address_));
   impl->SetHeader(x_goog_api_client_header_);
   impl->SetHeaders(request);
-  auto user_ip = options_.get<UserIpOption>();
-  if (user_ip.empty()) user_ip = impl->LastClientIpAddress();
   RestRequest::HttpParameters additional_parameters;
-  if (!user_ip.empty()) additional_parameters.emplace_back("userIp", user_ip);
+  // The UserIp option has been deprecated in favor of quotaUser. Only add the
+  // parameter if the option has been set.
+  if (options_.has<UserIpOption>()) {
+    auto user_ip = options_.get<UserIpOption>();
+    if (user_ip.empty()) user_ip = impl->LastClientIpAddress();
+    if (!user_ip.empty()) additional_parameters.emplace_back("userIp", user_ip);
+  }
   impl->SetUrl(endpoint_address_, request, additional_parameters);
   return impl;
 }
