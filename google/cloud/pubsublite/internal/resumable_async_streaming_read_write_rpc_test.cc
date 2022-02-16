@@ -57,7 +57,7 @@ bool operator==(FakeResponse const& lhs, FakeResponse const& rhs) {
 }
 
 using MockAsyncStreamReturnType =
-    std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
+std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
 
 class MockAsyncReaderWriter
     : public AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse> {
@@ -87,7 +87,7 @@ class MockStub {
 std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
   using us = std::chrono::microseconds;
   return ExponentialBackoffPolicy(/*initial_delay=*/us(10),
-                                  /*maximum_delay=*/us(40), /*scaling=*/2.0)
+      /*maximum_delay=*/us(40), /*scaling=*/2.0)
       .clone();
 }
 
@@ -96,6 +96,22 @@ future<void> MockSleeper(std::chrono::duration<double>) {
 }
 
 const Status kFailStatus = Status(StatusCode::kUnavailable, "Unavailable");
+
+#define STANDARD_SINGLE_RETRY_POLICY \
+EXPECT_CALL(mock, FakeRetryPolicy) \
+      .WillOnce( \
+          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); }) \
+      .WillOnce([]() { \
+        auto mock_retry_policy = \
+            absl::make_unique<StrictMock<MockRetryPolicy>>(); \
+        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() { \
+          return false; \
+        }); \
+        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() { \
+          return true; \
+        }); \
+        return mock_retry_policy; \
+      });
 
 TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
   StrictMock<MockStub> mock;
@@ -227,21 +243,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
         return stream;
       });
 
-  EXPECT_CALL(mock, FakeRetryPolicy)
-      // Initialize call
-      .WillOnce(
-          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-          return false;
-        });
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-          return true;
-        });
-        return mock_retry_policy;
-      });
+  STANDARD_SINGLE_RETRY_POLICY
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
@@ -403,20 +405,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
         return stream;
       });
 
-  EXPECT_CALL(mock, FakeRetryPolicy)
-      .WillOnce(
-          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-          return false;
-        });
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-          return true;
-        });
-        return mock_retry_policy;
-      });
+  STANDARD_SINGLE_RETRY_POLICY
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
@@ -499,20 +488,7 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryDuringSleep) {
     return stream;
   });
 
-  EXPECT_CALL(mock, FakeRetryPolicy)
-      .WillOnce(
-          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-          return false;
-        });
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-          return true;
-        });
-        return mock_retry_policy;
-      });
+  STANDARD_SINGLE_RETRY_POLICY
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
@@ -618,20 +594,7 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
         return stream;
       });
 
-  EXPECT_CALL(mock, FakeRetryPolicy)
-      .WillOnce(
-          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-          return false;
-        });
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-          return true;
-        });
-        return mock_retry_policy;
-      });
+  STANDARD_SINGLE_RETRY_POLICY
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
@@ -691,20 +654,7 @@ TEST(AsyncReadWriteStreamingRpcTest, WriteFailWhileReadInFlight) {
         return stream;
       });
 
-  EXPECT_CALL(mock, FakeRetryPolicy)
-      .WillOnce(
-          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-          return false;
-        });
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-          return true;
-        });
-        return mock_retry_policy;
-      });
+  STANDARD_SINGLE_RETRY_POLICY
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
@@ -818,20 +768,7 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
         return stream;
       });
 
-  EXPECT_CALL(mock, FakeRetryPolicy)
-      .WillOnce(
-          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-          return false;
-        });
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-          return true;
-        });
-        return mock_retry_policy;
-      });
+  STANDARD_SINGLE_RETRY_POLICY
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
