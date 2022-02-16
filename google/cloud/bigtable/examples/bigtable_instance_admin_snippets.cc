@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include "google/cloud/project.h"
 #include <iterator>
 
@@ -937,7 +938,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) try {
   namespace examples = ::google::cloud::bigtable::examples;
   examples::Example example({
       examples::MakeCommandEntry("create-instance", {"<instance-id>", "<zone>"},
@@ -1001,4 +1002,8 @@ int main(int argc, char* argv[]) {
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
+} catch (std::exception const& ex) {
+  std::cerr << ex.what() << "\n";
+  ::google::cloud::LogSink::Instance().Flush();
+  return 1;
 }

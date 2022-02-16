@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include <chrono>
 #include <sstream>
 #include <thread>
@@ -889,7 +890,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) try {
   namespace examples = ::google::cloud::bigtable::examples;
   google::cloud::bigtable::examples::Example example({
       examples::MakeCommandEntry("create-table", {"<table-id>"}, CreateTable),
@@ -945,4 +946,8 @@ int main(int argc, char* argv[]) {
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
+} catch (std::exception const& ex) {
+  std::cerr << ex.what() << "\n";
+  ::google::cloud::LogSink::Instance().Flush();
+  return 1;
 }
