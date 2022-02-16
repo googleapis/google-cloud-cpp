@@ -136,23 +136,18 @@ TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
           });
 
   auto start = stream->Start();
-
   ASSERT_TRUE(
       stream
           ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
           .get());
-
   auto response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_0"}));
-
   response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_1"}));
-
   auto finish = stream->Finish();
   finish.get();
-
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -183,10 +178,8 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadWriteAfterShutdown) {
           });
 
   auto start = stream->Start();
-
   auto finish = stream->Finish();
   finish.get();
-
   ASSERT_FALSE(
       stream
           ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
@@ -260,26 +253,20 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
           });
 
   auto start = stream->Start();
-
   ASSERT_TRUE(
       stream
           ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
           .get());
-
   auto response0 = stream->Read().get();
   ASSERT_FALSE(response0.has_value());
-
   response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_0"}));
-
   response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_1"}));
-
   auto finish = stream->Finish();
   finish.get();
-
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -334,14 +321,11 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
           });
 
   auto start = stream->Start();
-
   auto response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_0"}));
-
   auto finish = stream->Finish();
   finish.get();
-
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -357,8 +341,8 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfReadWrite) {
     EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _))
         .WillOnce([&write_promise]() { return write_promise.get_future(); });
     EXPECT_CALL(*stream, Read).WillOnce([&read_promise]() {
-          return read_promise.get_future();
-        });
+      return read_promise.get_future();
+    });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
       return make_ready_future(Status());
     });
@@ -387,7 +371,6 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfReadWrite) {
   read_promise.set_value(absl::make_optional(FakeResponse{"key0", "value0_0"}));
   ASSERT_FALSE(write.get());
   ASSERT_FALSE(read.get().has_value());
-
   finish_future.get();
   EXPECT_THAT(start.get(), IsOk());
 }
@@ -445,10 +428,8 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
           });
 
   auto start = stream->Start();
-
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
-
   auto finish = stream->Finish();
   start_promise.set_value(true);
   finish.get();
@@ -492,10 +473,8 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryBeforeStart) {
           });
 
   auto start = stream->Start();
-
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
-
   auto finish = stream->Finish();
   finish_promise.set_value(kFailStatus);
   finish.get();
@@ -548,10 +527,8 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryDuringSleep) {
           });
 
   auto start = stream->Start();
-
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
-
   auto finish = stream->Finish();
   sleep_promise.set_value();
   finish.get();
@@ -597,14 +574,11 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishWhileShutdown) {
           });
 
   auto start = stream->Start();
-
   ASSERT_FALSE(
       stream
           ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
           .get());
-
   EXPECT_EQ(start.get(), kFailStatus);
-
   auto finish = stream->Finish();
   finish.get();
 }
@@ -669,22 +643,92 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
           });
 
   auto start = stream->Start();
-
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
-
   auto response0_fut = stream->Read();
   write_promise.set_value(true);
   ASSERT_FALSE(response0_fut.get().has_value());
   ASSERT_TRUE(write.get());
-
   auto response0 = stream->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, (FakeResponse{"key0", "value0_0"}));
-
   auto finish = stream->Finish();
   finish.get();
+  EXPECT_THAT(start.get(), IsOk());
+}
 
+TEST(AsyncReadWriteStreamingRpcTest, WriteFailWhileReadInFlight) {
+  StrictMock<MockStub> mock;
+  promise<absl::optional<FakeResponse>> read_promise;
+  EXPECT_CALL(mock, FakeStream)
+      .WillOnce([&read_promise]() {
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
+        EXPECT_CALL(*stream, Start).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Read).WillOnce([&read_promise]() {
+          return read_promise.get_future();
+        });
+        EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([]() {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(kFailStatus);
+        });
+        return stream;
+      })
+      .WillOnce([]() {
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
+        EXPECT_CALL(*stream, Start).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(Status());
+        });
+        return stream;
+      });
+
+  EXPECT_CALL(mock, FakeRetryPolicy)
+      .WillOnce(
+          []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
+      .WillOnce([]() {
+        auto mock_retry_policy =
+            absl::make_unique<StrictMock<MockRetryPolicy>>();
+        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
+          return false;
+        });
+        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
+          return true;
+        });
+        return mock_retry_policy;
+      });
+
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [](MockAsyncStreamReturnType stream) {
+            return make_ready_future(
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
+          });
+
+  auto start = stream->Start();
+  auto read = stream->Read();
+  auto write = stream->Write(FakeRequest{"key0"},
+                             grpc::WriteOptions().set_last_message());
+  read_promise.set_value(absl::make_optional(FakeResponse{"key0", "value0_0"}));
+  auto read_response = read.get();
+  ASSERT_TRUE(read_response.has_value());
+  EXPECT_EQ(*read_response, (FakeResponse{"key0", "value0_0"}));
+  ASSERT_FALSE(write.get());
+  write = stream->Write(FakeRequest{"key0"},
+                        grpc::WriteOptions().set_last_message());
+  ASSERT_TRUE(write.get());
+  auto finish = stream->Finish();
+  finish.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -741,7 +785,6 @@ TEST(AsyncReadWriteStreamingRpcTest, StartFailsDuringRetryPermanentError) {
 
   auto start = stream->Start();
   ASSERT_FALSE(stream->Read().get().has_value());
-
   auto finish = stream->Finish();
   finish.get();
   EXPECT_EQ(start.get(), kFailStatus);
@@ -800,10 +843,8 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
           });
 
   auto start = stream->Start();
-
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
-
   auto read = stream->Read();
   start_promise.set_value(true);
   stream->Finish().get();
@@ -842,10 +883,8 @@ TEST(AsyncReadWriteStreamingRpcTest, WriteFinishesAfterShutdown) {
           });
 
   auto start = stream->Start();
-
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
-
   auto finish = stream->Finish();
   write_promise.set_value(true);
   finish.get();
