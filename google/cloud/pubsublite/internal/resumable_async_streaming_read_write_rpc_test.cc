@@ -34,7 +34,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
-using ::testing::ReturnRef;
+using ::testing::StrictMock;
 
 using ::google::cloud::internal::RetryPolicy;
 
@@ -104,9 +104,9 @@ void SetOpValue(std::deque<std::shared_ptr<promise<T>>>& operations,
 }
 
 TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
-  MockStub mock;
+  StrictMock<MockStub> mock;
   EXPECT_CALL(mock, FakeStream).WillOnce([]() {
-    auto stream = absl::make_unique<MockAsyncReaderWriter>();
+    auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
     EXPECT_CALL(*stream, Start).WillOnce([]() {
       return make_ready_future(true);
     });
@@ -128,18 +128,17 @@ TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
     return stream;
   });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy =
-      std::move(DefaultBackoffPolicy());
+  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
 
   EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
-    return absl::make_unique<MockRetryPolicy>();
+    return absl::make_unique<StrictMock<MockRetryPolicy>>();
   });
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
           [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
-          [&mock](MockAsyncStreamReturnType stream) {
+          [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
                 StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
           });
@@ -165,10 +164,10 @@ TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
 }
 
 TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
-  MockStub mock;
+  StrictMock<MockStub> mock;
   EXPECT_CALL(mock, FakeStream)
       .WillOnce([]() {
-        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
         EXPECT_CALL(*stream, Start).WillOnce([]() {
           return make_ready_future(true);
         });
@@ -185,7 +184,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
         return stream;
       })
       .WillOnce([]() {
-        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
         EXPECT_CALL(*stream, Start).WillOnce([]() {
           return make_ready_future(true);
         });
@@ -206,9 +205,9 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
 
   EXPECT_CALL(mock, FakeRetryPolicy)
       // Initialize call
-      .WillOnce([]() { return absl::make_unique<MockRetryPolicy>(); })
+      .WillOnce([]() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
       .WillOnce([]() {
-        auto mock_retry_policy = absl::make_unique<MockRetryPolicy>();
+        auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
         EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
           return false;
         });
@@ -218,14 +217,13 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy =
-      std::move(DefaultBackoffPolicy());
+  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
           [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
-          [&mock](MockAsyncStreamReturnType stream) {
+          [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
                 StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
           });
@@ -255,10 +253,10 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
 }
 
 TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
-  MockStub mock;
+  StrictMock<MockStub> mock;
   EXPECT_CALL(mock, FakeStream)
       .WillOnce([]() {
-        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
         EXPECT_CALL(*stream, Start).WillOnce([]() {
           return make_ready_future(false);
         });
@@ -269,41 +267,38 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
         return stream;
       })
       .WillOnce([]() {
-        auto stream = absl::make_unique<MockAsyncReaderWriter>();
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
         EXPECT_CALL(*stream, Start).WillOnce([]() {
           return make_ready_future(true);
         });
-        EXPECT_CALL(*stream, Read)
-            .WillOnce([]() {
-              return make_ready_future(
-                  absl::make_optional(FakeResponse{"key0", "value0_0"}));
-            });
+        EXPECT_CALL(*stream, Read).WillOnce([]() {
+          return make_ready_future(
+              absl::make_optional(FakeResponse{"key0", "value0_0"}));
+        });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
           return make_ready_future(make_ready_future(Status()));
         });
         return stream;
       });
 
-  EXPECT_CALL(mock, FakeRetryPolicy)
-      .WillOnce([]() {
-        auto mock_retry_policy = absl::make_unique<MockRetryPolicy>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-          return false;
-        });
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-          return true;
-        });
-        return mock_retry_policy;
-      });
+  EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
+    auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+    EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
+      return false;
+    });
+    EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
+      return true;
+    });
+    return mock_retry_policy;
+  });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy =
-      std::move(DefaultBackoffPolicy());
+  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
           [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
-          [&mock](MockAsyncStreamReturnType stream) {
+          [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
                 StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
           });
@@ -321,37 +316,32 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
 }
 
 TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfWrite) {
-  MockStub mock;
-  promise<bool> to_set_write_promise;
-  EXPECT_CALL(mock, FakeStream).WillOnce([&to_set_write_promise]() {
-    auto stream = absl::make_unique<MockAsyncReaderWriter>();
+  StrictMock<MockStub> mock;
+  promise<bool> write_promise;
+  EXPECT_CALL(mock, FakeStream).WillOnce([&write_promise]() {
+    auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
     EXPECT_CALL(*stream, Start).WillOnce([]() {
       return make_ready_future(true);
     });
-    EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([&to_set_write_promise]() {
-      promise<bool> write_promise;
-      auto write_future = write_promise.get_future();
-      to_set_write_promise = std::move(write_promise);
-      return std::move(write_future);
-    });
+    EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _))
+        .WillOnce([&write_promise]() { return write_promise.get_future(); });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
       return make_ready_future(make_ready_future(Status()));
     });
     return stream;
   });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy =
-      std::move(DefaultBackoffPolicy());
+  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
 
   EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
-    return absl::make_unique<MockRetryPolicy>();
+    return absl::make_unique<StrictMock<MockRetryPolicy>>();
   });
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
           [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
-          [&mock](MockAsyncStreamReturnType stream) {
+          [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
                 StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
           });
@@ -360,10 +350,124 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfWrite) {
   auto write = stream->Write(FakeRequest{"key0"},
                              grpc::WriteOptions().set_last_message());
   auto finish_future = stream->Finish();
-  to_set_write_promise.set_value(true);
+  write_promise.set_value(true);
   ASSERT_FALSE(write.get());
 
   finish_future.get();
+  EXPECT_THAT(start.get(), IsOk());
+}
+
+TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
+  StrictMock<MockStub> mock;
+  promise<bool> start_promise;
+  EXPECT_CALL(mock, FakeStream)
+      .WillOnce([]() {
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
+        EXPECT_CALL(*stream, Start).WillOnce([]() {
+          return make_ready_future(true);
+        });
+        EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([]() {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(make_ready_future(
+              Status(StatusCode::kUnavailable, "Unavailable")));
+        });
+        return stream;
+      })
+      .WillOnce([&start_promise]() {
+        auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
+        EXPECT_CALL(*stream, Start).WillOnce([&start_promise]() {
+          return start_promise.get_future();
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([]() {
+          return make_ready_future(make_ready_future(Status()));
+        });
+        return stream;
+      });
+
+  EXPECT_CALL(mock, FakeRetryPolicy)
+      // Initialize call
+      .WillOnce([]() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
+      .WillOnce([]() {
+        auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillRepeatedly([]() {
+          return false;
+        });
+        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillRepeatedly([]() {
+          return true;
+        });
+        return mock_retry_policy;
+      });
+
+  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
+
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [](MockAsyncStreamReturnType stream) {
+            return make_ready_future(
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
+          });
+
+  auto start = stream->Start();
+
+  auto write = stream->Write(FakeRequest{"key0"},
+                             grpc::WriteOptions().set_last_message());
+
+  auto finish = stream->Finish();
+  start_promise.set_value(true);
+  finish.get();
+  ASSERT_FALSE(write.get());
+  EXPECT_THAT(start.get(), IsOk());
+}
+
+TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryBeforeStart) {
+  StrictMock<MockStub> mock;
+  promise<Status> finish_promise;
+  EXPECT_CALL(mock, FakeStream).WillOnce([&finish_promise]() {
+    auto stream = absl::make_unique<StrictMock<MockAsyncReaderWriter>>();
+    EXPECT_CALL(*stream, Start).WillOnce([]() {
+      return make_ready_future(true);
+    });
+    EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _)).WillOnce([]() {
+      return make_ready_future(false);
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&finish_promise]() {
+      return finish_promise.get_future();
+    });
+    return stream;
+  });
+
+  EXPECT_CALL(mock, FakeRetryPolicy)
+      // Initialize call
+      .WillOnce([]() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
+      .WillOnce([]() {
+        auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+        return mock_retry_policy;
+      });
+
+  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
+
+  auto stream =
+      MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
+          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          &MockSleeper, [&mock]() { return mock.FakeStream(); },
+          [](MockAsyncStreamReturnType stream) {
+            return make_ready_future(
+                StatusOr<MockAsyncStreamReturnType>(std::move(stream)));
+          });
+
+  auto start = stream->Start();
+
+  auto write = stream->Write(FakeRequest{"key0"},
+                             grpc::WriteOptions().set_last_message());
+
+  auto finish = stream->Finish();
+  finish_promise.set_value(Status(StatusCode::kUnavailable, "Unavailable"));
+  finish.get();
+  ASSERT_FALSE(write.get());
   EXPECT_THAT(start.get(), IsOk());
 }
 
