@@ -95,7 +95,7 @@ future<void> MockSleeper(std::chrono::duration<double>) {
   return make_ready_future();
 }
 
-const Status fail_status = Status(StatusCode::kUnavailable, "Unavailable");
+const Status kFailStatus = Status(StatusCode::kUnavailable, "Unavailable");
 
 TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
   StrictMock<MockStub> mock;
@@ -383,7 +383,6 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
       });
 
   EXPECT_CALL(mock, FakeRetryPolicy)
-      // Initialize call
       .WillOnce(
           []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
       .WillOnce([]() {
@@ -439,7 +438,6 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryBeforeStart) {
   });
 
   EXPECT_CALL(mock, FakeRetryPolicy)
-      // Initialize call
       .WillOnce(
           []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
       .WillOnce([]() {
@@ -489,7 +487,6 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryDuringSleep) {
   });
 
   EXPECT_CALL(mock, FakeRetryPolicy)
-      // Initialize call
       .WillOnce(
           []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
       .WillOnce([]() {
@@ -541,13 +538,12 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishWhileShutdown) {
       return make_ready_future(false);
     });
     EXPECT_CALL(*stream, Finish).WillOnce([]() {
-      return make_ready_future(make_ready_future(fail_status));
+      return make_ready_future(make_ready_future(kFailStatus));
     });
     return stream;
   });
 
   EXPECT_CALL(mock, FakeRetryPolicy)
-      // Initialize call
       .WillOnce(
           []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
       .WillOnce([]() {
@@ -620,7 +616,6 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
       });
 
   EXPECT_CALL(mock, FakeRetryPolicy)
-      // Initialize call
       .WillOnce(
           []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
       .WillOnce([]() {
@@ -680,7 +675,7 @@ TEST(AsyncReadWriteStreamingRpcTest, StartFailsDuringRetryPermanentError) {
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
           return make_ready_future(make_ready_future(
-              fail_status));
+              kFailStatus));
         });
         return stream;
       })
@@ -690,7 +685,7 @@ TEST(AsyncReadWriteStreamingRpcTest, StartFailsDuringRetryPermanentError) {
           return make_ready_future(false);
         });
         EXPECT_CALL(*stream, Finish).WillOnce([]() {
-          return make_ready_future(make_ready_future(fail_status));
+          return make_ready_future(make_ready_future(kFailStatus));
         });
         return stream;
       });
@@ -728,7 +723,7 @@ TEST(AsyncReadWriteStreamingRpcTest, StartFailsDuringRetryPermanentError) {
 
   auto finish = stream->Finish();
   finish.get();
-  EXPECT_EQ(start.get(), fail_status);
+  EXPECT_EQ(start.get(), kFailStatus);
 }
 
 }  // namespace
