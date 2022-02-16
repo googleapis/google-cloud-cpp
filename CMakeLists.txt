@@ -277,6 +277,11 @@ include(CTest)
 # used in the depends condition of the next option.
 include(EnableCxxExceptions)
 
+if (BUILD_TESTING)
+    # Discover and add targets for the GTest::gtest and GTest::gmock libraries.
+    include(FindGMockWithTargets)
+endif ()
+
 # The examples use exception handling to simplify the code. Therefore they
 # cannot be compiled when exceptions are disabled, and applications cannot force
 # the flag.
@@ -305,6 +310,19 @@ function (google_cloud_cpp_enable_features)
                 continue()
             endif ()
             add_subdirectory(google/cloud/${feature})
+            if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
+                AND IS_DIRECTORY
+                    "${CMAKE_SOURCE_DIR}/google/cloud/${feature}/samples")
+                add_subdirectory(google/cloud/${feature}/samples)
+            endif ()
+            # Older libraries used examples/ to host their examples. The
+            # directory name cannot be easily changed as cloud.google.com
+            # references these files explicitly.
+            if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
+                AND IS_DIRECTORY
+                    "${CMAKE_SOURCE_DIR}/google/cloud/${feature}/examples")
+                add_subdirectory(google/cloud/${feature}/examples)
+            endif ()
         endif ()
     endforeach ()
 endfunction ()

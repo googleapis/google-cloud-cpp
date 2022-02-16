@@ -126,8 +126,6 @@ add_subdirectory(integration_tests)
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    add_subdirectory(samples)
-
     add_executable(iam_quickstart "quickstart/quickstart.cc")
     target_link_libraries(iam_quickstart PRIVATE google-cloud-cpp::iam)
     google_cloud_cpp_add_common_options(iam_quickstart)

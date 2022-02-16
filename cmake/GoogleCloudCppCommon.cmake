@@ -18,14 +18,8 @@
 get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
                        "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
 
-# C++ Exceptions are enabled by default, but allow the user to turn them off.
-include(EnableCxxExceptions)
-
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
-
-# Discover and add targets for the GTest::gtest and GTest::gmock libraries.
-include(FindGMockWithTargets)
 
 # Pick the right MSVC runtime libraries.
 include(SelectMSVCRuntime)

@@ -201,8 +201,6 @@ add_subdirectory(integration_tests)
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    add_subdirectory(samples)
-
     add_executable(bigquery_quickstart "quickstart/quickstart.cc")
     target_link_libraries(bigquery_quickstart
                           PRIVATE google-cloud-cpp::bigquery)
