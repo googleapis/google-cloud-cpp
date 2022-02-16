@@ -23,6 +23,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/strip.h"
 
 namespace google {
 namespace cloud {
@@ -53,6 +54,13 @@ Status MakeRequestWithPayload(
   return impl.MakeRequest(http_method, payload);
 }
 
+std::string FormatHostHeaderValue(absl::string_view hostname) {
+  if (!absl::ConsumePrefix(&hostname, "https://")) {
+    absl::ConsumePrefix(&hostname, "http://");
+  }
+  return std::string(hostname.substr(0, hostname.find('/')));
+}
+
 }  // namespace
 
 std::string CurlRestClient::HostHeader(Options const& options,
@@ -66,7 +74,7 @@ std::string CurlRestClient::HostHeader(Options const& options,
   // or their own proxy, and need to provide the target's service host.
   auto const& endpoint = options.get<RestEndpointOption>();
   if (absl::StrContains(endpoint, "googleapis.com"))
-    return absl::StrCat("Host: ", default_endpoint);
+    return absl::StrCat("Host: ", FormatHostHeaderValue(default_endpoint));
   return {};
 }
 

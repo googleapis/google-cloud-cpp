@@ -41,6 +41,20 @@ TEST(HostHeader, OptionSetGoogleapis) {
   EXPECT_THAT(result, Eq("Host: endpoint.googleapis.com"));
 }
 
+TEST(HostHeader, OptionSetGoogleapisMisformatted) {
+  auto result = CurlRestClient::HostHeader(
+      Options{}.set<RestEndpointOption>("private.googleapis.com"),
+      "https://endpoint.googleapis.com");
+  EXPECT_THAT(result, Eq("Host: endpoint.googleapis.com"));
+}
+
+TEST(HostHeader, OptionSetGoogleapisMisformattedAgain) {
+  auto result = CurlRestClient::HostHeader(
+      Options{}.set<RestEndpointOption>("private.googleapis.com"),
+      "https://endpoint.googleapis.com/v1/");
+  EXPECT_THAT(result, Eq("Host: endpoint.googleapis.com"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

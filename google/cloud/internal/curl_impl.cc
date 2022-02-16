@@ -348,6 +348,7 @@ std::size_t CurlImpl::HeaderCallback(char* contents, std::size_t size,
 }
 
 void CurlImpl::SetHeader(std::string const& header) {
+  if (header.empty()) return;
   auto* new_headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();
   request_headers_.reset(new_headers);
