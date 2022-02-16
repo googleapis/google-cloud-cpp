@@ -190,8 +190,15 @@ StatusOr<BucketMetadata> GrpcClient::UpdateBucket(UpdateBucketRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
 }
 
-StatusOr<BucketMetadata> GrpcClient::PatchBucket(PatchBucketRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<BucketMetadata> GrpcClient::PatchBucket(
+    PatchBucketRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->UpdateBucket(context, *proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketMetadataParser::FromProto(*response);
 }
 
 StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(

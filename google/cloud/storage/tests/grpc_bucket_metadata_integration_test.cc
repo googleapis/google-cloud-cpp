@@ -30,8 +30,10 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::Pair;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
@@ -71,6 +73,11 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   EXPECT_EQ(get->location(), insert->location());
   EXPECT_EQ(get->location_type(), insert->location_type());
   EXPECT_EQ(get->storage_class(), insert->storage_class());
+
+  auto patch = client->PatchBucket(
+      bucket_name, BucketMetadataPatchBuilder{}.SetLabel("l0", "k0"));
+  ASSERT_STATUS_OK(patch);
+  EXPECT_THAT(patch->labels(), ElementsAre(Pair("l0", "k0")));
 
   auto delete_status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);

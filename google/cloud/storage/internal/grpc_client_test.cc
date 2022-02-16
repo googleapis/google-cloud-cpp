@@ -141,6 +141,28 @@ TEST_F(GrpcClientTest, DeleteBucket) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, PatchBucket) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, UpdateBucket)
+      .WillOnce([this](
+                    grpc::ClientContext& context,
+                    google::storage::v2::UpdateBucketRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.bucket().name(), "projects/_/buckets/test-bucket");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->PatchBucket(
+      PatchBucketRequest("test-bucket",
+                         BucketMetadataPatchBuilder{}.SetLabel("l0", "v0"))
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST_F(GrpcClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject)
