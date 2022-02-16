@@ -23,7 +23,6 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
-#include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 
 namespace google {
@@ -59,9 +58,7 @@ std::string FormatHostHeaderValue(absl::string_view hostname) {
   if (!absl::ConsumePrefix(&hostname, "https://")) {
     absl::ConsumePrefix(&hostname, "http://");
   }
-  std::vector<std::string> splits =
-      absl::StrSplit(hostname, absl::MaxSplits(absl::ByChar('/'), 1));
-  return splits[0];
+  return std::string(hostname.substr(0, hostname.find('/')));
 }
 
 }  // namespace
