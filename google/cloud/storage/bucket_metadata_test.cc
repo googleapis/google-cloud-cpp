@@ -1058,26 +1058,48 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
                        LifecycleRule::MatchesStorageClassStandard(),
                        LifecycleRule::NumNewerVersions(3)),
                    LifecycleRule::SetStorageClassNearline());
+  LifecycleRule r3(
+      LifecycleRule::ConditionConjunction(
+          LifecycleRule::MaxAge(1),
+          LifecycleRule::CreatedBefore(absl::CivilDay(2022, 01, 01)),
+          LifecycleRule::IsLive(true),
+          LifecycleRule::MatchesStorageClassArchive(),
+          LifecycleRule::NumNewerVersions(2),
+          LifecycleRule::DaysSinceNoncurrentTime(3),
+          LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 01, 02)),
+          LifecycleRule::DaysSinceCustomTime(4),
+          LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 01, 03))),
+      LifecycleRule::SetStorageClassColdline());
   lifecycle.rule.emplace_back(r1);
   lifecycle.rule.emplace_back(r2);
+  lifecycle.rule.emplace_back(r3);
   builder.SetLifecycle(lifecycle);
 
-  auto actual = builder.BuildPatch();
-  auto json = nlohmann::json::parse(actual);
-  ASSERT_EQ(1U, json.count("lifecycle")) << json;
-  ASSERT_TRUE(json["lifecycle"].is_object()) << json;
-  ASSERT_EQ(1U, json["lifecycle"].count("rule")) << json;
-  auto rule = json["lifecycle"]["rule"];
-  ASSERT_TRUE(rule.is_array()) << json;
-  ASSERT_EQ(2U, rule.size());
-
-  EXPECT_EQ(365, rule[0]["condition"].value("age", 0)) << json;
-  EXPECT_EQ("Delete", rule[0]["action"].value("type", "")) << json;
-
-  EXPECT_EQ(3, rule[1]["condition"].value("numNewerVersions", 0)) << json;
-  EXPECT_EQ("STANDARD", rule[1]["condition"]["matchesStorageClass"][0]) << json;
-  EXPECT_EQ("SetStorageClass", rule[1]["action"].value("type", "")) << json;
-  EXPECT_EQ("NEARLINE", rule[1]["action"].value("storageClass", "")) << json;
+  auto patch = builder.BuildPatch();
+  auto const actual = nlohmann::json::parse(patch);
+  auto const expected = nlohmann::json::parse(R"js({
+    "lifecycle": {
+      "rule": [
+        {"action": {"type": "Delete"}, "condition": {"age": 365}},
+        {"action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
+         "condition": {"matchesStorageClass": ["STANDARD"], "numNewerVersions": 3}},
+        {"action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
+         "condition": {
+            "age": 1,
+            "createdBefore": "2022-01-01",
+            "isLive": true,
+            "matchesStorageClass": ["ARCHIVE"],
+            "numNewerVersions": 2,
+            "daysSinceNoncurrentTime": 3,
+            "noncurrentTimeBefore": "2022-01-02",
+            "daysSinceCustomTime": 4,
+            "customTimeBefore": "2022-01-03"
+         }
+        }
+      ]
+    }
+  })js");
+  EXPECT_EQ(expected, actual) << nlohmann::json::diff(actual, expected);
 }
 
 TEST(BucketMetadataPatchBuilder, ResetLifecycle) {
