@@ -25,7 +25,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include <memory>
 
 namespace google {
