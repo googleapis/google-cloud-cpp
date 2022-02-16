@@ -23,6 +23,7 @@
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/log.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -122,6 +123,40 @@ ListBucketsResponse GrpcBucketRequestParser::FromProto(
                  [](google::storage::v2::Bucket const& b) {
                    return GrpcBucketMetadataParser::FromProto(b);
                  });
+  return result;
+}
+
+google::iam::v1::GetIamPolicyRequest GrpcBucketRequestParser::ToProto(
+    GetBucketIamPolicyRequest const& request) {
+  google::iam::v1::GetIamPolicyRequest result;
+  result.set_resource("projects/_/buckets/" + request.bucket_name());
+  if (request.HasOption<RequestedPolicyVersion>()) {
+    result.mutable_options()->set_requested_policy_version(
+        static_cast<std::int32_t>(
+            request.GetOption<RequestedPolicyVersion>().value()));
+  }
+  return result;
+}
+
+NativeIamBinding GrpcBucketRequestParser::FromProto(
+    google::iam::v1::Binding const& b) {
+  std::vector<std::string> members{b.members().begin(), b.members().end()};
+  if (!b.has_condition()) return {b.role(), std::move(members)};
+  NativeExpression expr(b.condition().expression(), b.condition().title(),
+                        b.condition().description(), b.condition().location());
+  return {b.role(), std::move(members), std::move(expr)};
+}
+
+NativeIamPolicy GrpcBucketRequestParser::FromProto(
+    google::iam::v1::Policy const& response) {
+  std::vector<NativeIamBinding> bindings;
+  std::transform(
+      response.bindings().begin(), response.bindings().end(),
+      std::back_inserter(bindings),
+      [](google::iam::v1::Binding const& b) { return FromProto(b); });
+
+  NativeIamPolicy result(std::move(bindings), response.etag(),
+                         response.version());
   return result;
 }
 
