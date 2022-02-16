@@ -59,7 +59,8 @@ class RestClientIntegrationTest : public ::testing::Test {
 
   static void VerifyJsonPayloadResponse(
       std::string const& method, std::string const& json_payload,
-      StatusOr<std::unique_ptr<RestResponse>> response_status) {
+      StatusOr<std::unique_ptr<RestResponse>> response_status,
+      absl::optional<int> const& request_content_length) {
     ASSERT_STATUS_OK(response_status);
     auto response = std::move(response_status.value());
     EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
@@ -96,6 +97,14 @@ class RestClientIntegrationTest : public ::testing::Test {
     auto user_agent = sent_headers->find("User-Agent");
     ASSERT_FALSE(user_agent == sent_headers->end());
     EXPECT_THAT(user_agent.value(), HasSubstr("gcloud-cpp/"));
+    // TODO(#8396): httbin.org doesn't send back our content-length header on
+    //  PUT methods.
+    if (method == "POST" && request_content_length) {
+      auto sent_content_length = sent_headers->find("Content-Length");
+      ASSERT_FALSE(sent_content_length == sent_headers->end());
+      EXPECT_THAT(std::string(sent_content_length.value()),
+                  Eq(std::to_string(*request_content_length)));
+    }
 
     auto response_json = parsed_response.find("json");
     ASSERT_FALSE(response_json == parsed_response.end());
@@ -252,7 +261,8 @@ TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {
   request.AddHeader("content-type", "application/json");
   auto response_status =
       RetryRestRequest([&] { return client->Post(request, {span}); });
-  VerifyJsonPayloadResponse("POST", json_payload_, std::move(response_status));
+  VerifyJsonPayloadResponse("POST", json_payload_, std::move(response_status),
+                            json_payload_.size());
 }
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
@@ -265,7 +275,8 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
   request.AddHeader("content-type", "application/json");
   auto response_status =
       RetryRestRequest([&] { return client->Put(request, {span}); });
-  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
+  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status),
+                            json_payload_.size());
 }
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeTwoSpans) {
@@ -288,7 +299,8 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeTwoSpans) {
   auto response_status = RetryRestRequest([&] {
     return client->Put(request, {span1, span2});
   });
-  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
+  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status),
+                            span1.size() + span2.size());
 }
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyMiddleSpan) {
@@ -309,7 +321,8 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyMiddleSpan) {
   auto response_status = RetryRestRequest([&] {
     return client->Put(request, {span1, empty_span, span2});
   });
-  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
+  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status),
+                            span1.size() + empty_span.size() + span2.size());
 }
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyFirstSpan) {
@@ -330,7 +343,8 @@ TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeEmptyFirstSpan) {
   auto response_status = RetryRestRequest([&] {
     return client->Put(request, {empty_span, span1, span2});
   });
-  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status));
+  VerifyJsonPayloadResponse("PUT", json_payload_, std::move(response_status),
+                            span1.size() + empty_span.size() + span2.size());
 }
 
 TEST_F(RestClientIntegrationTest, ResponseBodyLargerThanSpillBuffer) {
@@ -349,7 +363,8 @@ TEST_F(RestClientIntegrationTest, ResponseBodyLargerThanSpillBuffer) {
     return client->Put(request, {absl::MakeConstSpan(large_json_payload)});
   });
   VerifyJsonPayloadResponse("PUT", large_json_payload,
-                            std::move(response_status));
+                            std::move(response_status),
+                            large_json_payload.size());
 }
 
 TEST_F(RestClientIntegrationTest, PostFormData) {
