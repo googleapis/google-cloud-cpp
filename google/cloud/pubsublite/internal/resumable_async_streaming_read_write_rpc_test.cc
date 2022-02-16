@@ -122,15 +122,13 @@ TEST(AsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
     return stream;
   });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
     return absl::make_unique<StrictMock<MockRetryPolicy>>();
   });
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -171,15 +169,13 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadWriteAfterShutdown) {
     return stream;
   });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
     return absl::make_unique<StrictMock<MockRetryPolicy>>();
   });
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -254,11 +250,9 @@ TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -367,15 +361,13 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfWrite) {
     return stream;
   });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
     return absl::make_unique<StrictMock<MockRetryPolicy>>();
   });
 
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -436,11 +428,9 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryAfterStart) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -485,11 +475,9 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryBeforeStart) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -540,11 +528,9 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishInMiddleOfRetryDuringSleep) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           [&sleep_promise](std::chrono::duration<double>) {
             return sleep_promise.get_future();
           },
@@ -594,11 +580,9 @@ TEST(AsyncReadWriteStreamingRpcTest, FinishWhileShutdown) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -668,11 +652,9 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -741,11 +723,9 @@ TEST(AsyncReadWriteStreamingRpcTest, StartFailsDuringRetryPermanentError) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -803,11 +783,9 @@ TEST(AsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
         return mock_retry_policy;
       });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
@@ -847,11 +825,9 @@ TEST(AsyncReadWriteStreamingRpcTest, WriteFinishesAfterShutdown) {
     return absl::make_unique<StrictMock<MockRetryPolicy>>();
   });
 
-  std::shared_ptr<BackoffPolicy const> backoff_policy = DefaultBackoffPolicy();
-
   auto stream =
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [&mock]() { return mock.FakeRetryPolicy(); }, backoff_policy,
+          [&mock]() { return mock.FakeRetryPolicy(); }, DefaultBackoffPolicy(),
           &MockSleeper, [&mock]() { return mock.FakeStream(); },
           [](MockAsyncStreamReturnType stream) {
             return make_ready_future(
