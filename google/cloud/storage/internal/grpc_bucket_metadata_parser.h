@@ -41,6 +41,11 @@ struct GrpcBucketMetadataParser {
   static BucketEncryption FromProto(
       google::storage::v2::Bucket::Encryption const& rhs);
 
+  static google::storage::v2::Bucket::IamConfig::PublicAccessPrevention
+  ToProtoPublicAccessPrevention(std::string const&);
+  static std::string FromProto(
+      google::storage::v2::Bucket::IamConfig::PublicAccessPrevention);
+
   static google::storage::v2::Bucket::IamConfig ToProto(
       BucketIamConfiguration const& rhs);
   static BucketIamConfiguration FromProto(
