@@ -25,6 +25,10 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * Maps a GUAC `google::cloud::Credentials` type to its corresponding OAuth 2.0
+ * `google::cloud::oauth2_internal::Credentials` type.
+ */
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::Credentials> const& credentials);
 

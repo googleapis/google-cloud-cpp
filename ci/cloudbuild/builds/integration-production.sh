@@ -34,6 +34,7 @@ excluded_rules=(
   "-//google/cloud/storage/tests:service_account_integration_test"
   "-//google/cloud/examples:grpc_credential_types"
   "-//google/cloud/storage/tests:grpc_integration_test"
+  "-//google/cloud:internal_unified_rest_credentials_integration_test"
 )
 
 io::log_h2 "Running the integration tests against prod"

@@ -348,6 +348,7 @@ std::size_t CurlImpl::HeaderCallback(char* contents, std::size_t size,
 }
 
 void CurlImpl::SetHeader(std::string const& header) {
+  if (header.empty()) return;
   auto* new_headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();
   request_headers_.reset(new_headers);
@@ -617,7 +618,6 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
 
 Status CurlImpl::MakeRequestImpl() {
   TRACE_STATE() << "url_ " << url_ << "\n";
-  std::cout << __func__ << "url = " << url_ << "\n";
   // Setting BUFFERSIZE is a request, not an order. libcurl can and will write
   // fewer bytes as it wishes.
   handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultCurlWriteBufferSize);

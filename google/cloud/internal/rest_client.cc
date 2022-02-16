@@ -25,6 +25,7 @@
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/strip.h"
 
 namespace google {
 namespace cloud {
@@ -49,10 +50,24 @@ Status MakeRequestWithPayload(
       concatenated_payload += std::string(p.begin(), p.end());
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
+    impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
     return impl.MakeRequest(http_method,
                             {{encoded_payload.data(), encoded_payload.size()}});
   }
+
+  std::size_t content_length = 0;
+  for (auto const& p : payload) {
+    content_length += p.size();
+  }
+  impl.SetHeader(absl::StrCat("content-length: ", content_length));
   return impl.MakeRequest(http_method, payload);
+}
+
+std::string FormatHostHeaderValue(absl::string_view hostname) {
+  if (!absl::ConsumePrefix(&hostname, "https://")) {
+    absl::ConsumePrefix(&hostname, "http://");
+  }
+  return std::string(hostname.substr(0, hostname.find('/')));
 }
 
 }  // namespace
@@ -68,7 +83,7 @@ std::string CurlRestClient::HostHeader(Options const& options,
   // or their own proxy, and need to provide the target's service host.
   auto const& endpoint = options.get<RestEndpointOption>();
   if (absl::StrContains(endpoint, "googleapis.com"))
-    return absl::StrCat("Host: ", default_endpoint);
+    return absl::StrCat("Host: ", FormatHostHeaderValue(default_endpoint));
   return {};
 }
 
@@ -96,6 +111,8 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   impl->SetHeader(x_goog_api_client_header_);
   impl->SetHeaders(request);
   RestRequest::HttpParameters additional_parameters;
+  // The UserIp option has been deprecated in favor of quotaUser. Only add the
+  // parameter if the option has been set.
   if (options_.has<UserIpOption>()) {
     auto user_ip = options_.get<UserIpOption>();
     if (user_ip.empty()) user_ip = impl->LastClientIpAddress();
@@ -166,7 +183,6 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
         out->append(
             absl::StrCat(i.first, "=", (*impl)->MakeEscapedString(i.second)));
       });
-  std::cout << form_payload << "\n";
   request.AddHeader("content-type", "application/x-www-form-urlencoded");
   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, request,
                                            **impl, {form_payload});
