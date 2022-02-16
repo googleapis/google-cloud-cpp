@@ -264,7 +264,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         mu_.unlock();
         return retry_future.then([this](future<void>) {
           std::lock_guard<std::mutex> g{mu_};
-          CompleteStreamLockHeld(Status());
+          CompleteStreamLockHeldNotRelocked(Status());
         });
       case State::kInitialized:
         stream_state_ = State::kShutdown;
@@ -285,7 +285,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         }
         std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
             stream = std::move(stream_);
-        CompleteStreamLockHeld(Status());
+        CompleteStreamLockHeldNotRelocked(Status());
         return to_finish_future.then([stream](future<void>) {
           return stream->Finish().then(
               [](future<Status>) { return make_ready_future(); });
@@ -351,7 +351,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     });
   }
 
-  void SetReadWriteFuturesLockHeld() {
+  void SetReadWriteFuturesLockHeldNotRelocked() {
     absl::optional<promise<void>> read_reinit_done;
     absl::optional<promise<void>> write_reinit_done;
 
@@ -366,8 +366,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     // don't relock because all current callers invoke this at end of lock scope
   }
 
-  void CompleteStreamLockHeld(Status status) {
-    SetReadWriteFuturesLockHeld();
+  void CompleteStreamLockHeldNotRelocked(Status status) {
+    SetReadWriteFuturesLockHeldNotRelocked();
     status_promise_.set_value(std::move(status));
     // don't relock because all current callers invoke this at end of lock scope
   }
@@ -403,7 +403,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     if (stream_state_ == State::kShutdown) return;
     stream_state_ = State::kShutdown;
 
-    CompleteStreamLockHeld(status);
+    CompleteStreamLockHeldNotRelocked(status);
   }
 
   void Initialize(std::shared_ptr<RetryPolicy> retry_policy,
@@ -460,7 +460,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
               stream_state_ = State::kInitialized;
             }
             FinishRetryPromiseLockHeld();
-            SetReadWriteFuturesLockHeld();
+            SetReadWriteFuturesLockHeldNotRelocked();
           }
         });
   }
