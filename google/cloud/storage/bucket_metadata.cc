@@ -390,6 +390,22 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
     if (c.num_newer_versions.has_value()) {
       condition["numNewerVersions"] = *c.num_newer_versions;
     }
+    if (c.days_since_noncurrent_time.has_value()) {
+      condition["daysSinceNoncurrentTime"] = *c.days_since_noncurrent_time;
+    }
+    if (c.noncurrent_time_before.has_value()) {
+      condition["noncurrentTimeBefore"] = absl::StrFormat(
+          "%04d-%02d-%02d", c.noncurrent_time_before->year(),
+          c.noncurrent_time_before->month(), c.noncurrent_time_before->day());
+    }
+    if (c.days_since_custom_time.has_value()) {
+      condition["daysSinceCustomTime"] = *c.days_since_custom_time;
+    }
+    if (c.custom_time_before.has_value()) {
+      condition["customTimeBefore"] = absl::StrFormat(
+          "%04d-%02d-%02d", c.custom_time_before->year(),
+          c.custom_time_before->month(), c.custom_time_before->day());
+    }
     nlohmann::json action;
     if (!a.action().type.empty()) {
       action["type"] = a.action().type;
