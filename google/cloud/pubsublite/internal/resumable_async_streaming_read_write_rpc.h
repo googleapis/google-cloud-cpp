@@ -363,12 +363,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     if (read_reinit_done) read_reinit_done->set_value();
 
     if (write_reinit_done) write_reinit_done->set_value();
-    mu_.lock();
+    // don't relock because all current callers invoke this at end of lock scope
   }
 
   void CompleteStreamLockHeld(Status status) {
     SetReadWriteFuturesLockHeld();
-    mu_.unlock();
     status_promise_.set_value(std::move(status));
     // don't relock because all current callers invoke this at end of lock scope
   }
