@@ -19,6 +19,7 @@
 google_cloud_cpp_pubsublite_mocks_hdrs = [
     "mocks/mock_admin_connection.h",
     "internal/mock_async_reader_writer.h",
+    "internal/mock_backoff_policy.h",
     "internal/mock_retry_policy.h",
     "mocks/mock_topic_stats_connection.h",
 ]

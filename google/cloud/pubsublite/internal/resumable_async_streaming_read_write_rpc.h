@@ -495,7 +495,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
 template <typename RequestType, typename ResponseType>
 std::unique_ptr<
-    ResumableAsyncStreamingReadWriteRpcImpl<RequestType, ResponseType>>
+    ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType>>
 MakeResumableAsyncStreamingReadWriteRpcImpl(
     RetryPolicyFactory retry_factory,
     std::shared_ptr<BackoffPolicy const> backoff_policy,

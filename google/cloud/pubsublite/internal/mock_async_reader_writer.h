@@ -17,7 +17,7 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/version.h"
-#include "googlemock/include/gmock/gmock.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
