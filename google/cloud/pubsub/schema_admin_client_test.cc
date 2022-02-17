@@ -30,6 +30,14 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
 
+std::string CurrentOptionsProbe() {
+  return internal::CurrentOptions().get<UserProjectOption>();
+}
+
+Options TestOptions() {
+  return Options{}.set<UserProjectOption>("test-options");
+}
+
 TEST(SchemaAdminClient, CreateAvroProtobuf) {
   auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const schema("test-project", "test-schema");
@@ -44,6 +52,7 @@ TEST(SchemaAdminClient, CreateAvroProtobuf) {
 
   EXPECT_CALL(*mock, CreateSchema)
       .WillOnce([&](google::pubsub::v1::CreateSchemaRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(expected));
         google::pubsub::v1::Schema response = r.schema();
         response.set_name(schema.FullName());
@@ -51,7 +60,7 @@ TEST(SchemaAdminClient, CreateAvroProtobuf) {
       });
   SchemaAdminClient client(mock);
   auto const response =
-      client.CreateAvroSchema(schema, "test-only-invalid-avro");
+      client.CreateAvroSchema(schema, "test-only-invalid-avro", TestOptions());
   EXPECT_THAT(response, IsOk());
   EXPECT_EQ(schema.FullName(), response->name());
 }
@@ -70,14 +79,15 @@ TEST(SchemaAdminClient, CreateSchemaProtobuf) {
 
   EXPECT_CALL(*mock, CreateSchema)
       .WillOnce([&](google::pubsub::v1::CreateSchemaRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(expected));
         google::pubsub::v1::Schema response = r.schema();
         response.set_name(schema.FullName());
         return make_status_or(response);
       });
   SchemaAdminClient client(mock);
-  auto const response =
-      client.CreateProtobufSchema(schema, "test-only-invalid-protobuf");
+  auto const response = client.CreateProtobufSchema(
+      schema, "test-only-invalid-protobuf", TestOptions());
   EXPECT_THAT(response, IsOk());
   EXPECT_EQ(schema.FullName(), response->name());
 }
@@ -95,13 +105,15 @@ TEST(SchemaAdminClient, GetSchemaDefault) {
 
   EXPECT_CALL(*mock, GetSchema)
       .WillOnce([&](google::pubsub::v1::GetSchemaRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(request));
         google::pubsub::v1::Schema response;
         response.set_name(schema.FullName());
         return make_status_or(response);
       });
   SchemaAdminClient client(mock);
-  auto const response = client.GetSchema(schema);
+  auto const response =
+      client.GetSchema(schema, google::pubsub::v1::BASIC, TestOptions());
   EXPECT_THAT(response, IsOk());
   EXPECT_EQ(schema.FullName(), response->name());
 }
@@ -119,13 +131,15 @@ TEST(SchemaAdminClient, GetSchemaFull) {
 
   EXPECT_CALL(*mock, GetSchema)
       .WillOnce([&](google::pubsub::v1::GetSchemaRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(request));
         google::pubsub::v1::Schema response;
         response.set_name(schema.FullName());
         return make_status_or(response);
       });
   SchemaAdminClient client(mock);
-  auto const response = client.GetSchema(schema, google::pubsub::v1::FULL);
+  auto const response =
+      client.GetSchema(schema, google::pubsub::v1::FULL, TestOptions());
   EXPECT_THAT(response, IsOk());
   EXPECT_EQ(schema.FullName(), response->name());
 }
@@ -144,6 +158,7 @@ TEST(SchemaAdminClient, ListSchemasDefault) {
 
   EXPECT_CALL(*mock, ListSchemas)
       .WillOnce([&](google::pubsub::v1::ListSchemasRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(request));
         return internal::MakePaginationRange<ListSchemasRange>(
             google::pubsub::v1::ListSchemasRequest{},
@@ -161,7 +176,8 @@ TEST(SchemaAdminClient, ListSchemasDefault) {
       });
   SchemaAdminClient client(mock);
   std::vector<std::string> names;
-  for (auto const& t : client.ListSchemas("test-project")) {
+  for (auto const& t : client.ListSchemas(
+           "test-project", google::pubsub::v1::BASIC, TestOptions())) {
     ASSERT_THAT(t, IsOk());
     names.push_back(t->name());
   }
@@ -181,6 +197,7 @@ TEST(SchemaAdminClient, ListSchemasFull) {
 
   EXPECT_CALL(*mock, ListSchemas)
       .WillOnce([&](google::pubsub::v1::ListSchemasRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(request));
         return internal::MakePaginationRange<ListSchemasRange>(
             google::pubsub::v1::ListSchemasRequest{},
@@ -198,8 +215,8 @@ TEST(SchemaAdminClient, ListSchemasFull) {
       });
   SchemaAdminClient client(mock);
   std::vector<std::string> names;
-  for (auto const& t :
-       client.ListSchemas("test-project", google::pubsub::v1::FULL)) {
+  for (auto const& t : client.ListSchemas(
+           "test-project", google::pubsub::v1::FULL, TestOptions())) {
     ASSERT_THAT(t, IsOk());
     names.push_back(t->name());
   }
@@ -222,7 +239,7 @@ TEST(SchemaAdminClient, DeleteSchema) {
         return Status{};
       });
   SchemaAdminClient client(mock);
-  auto const response = client.DeleteSchema(schema);
+  auto const response = client.DeleteSchema(schema, TestOptions());
   EXPECT_THAT(response, IsOk());
 }
 
@@ -238,13 +255,14 @@ TEST(SchemaAdminClient, ValidateSchemaAvro) {
 
   EXPECT_CALL(*mock, ValidateSchema)
       .WillOnce([&](google::pubsub::v1::ValidateSchemaRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(expected));
         google::pubsub::v1::ValidateSchemaResponse response;
         return make_status_or(response);
       });
   SchemaAdminClient client(mock);
-  auto const response =
-      client.ValidateAvroSchema("test-project", "test-only-invalid-avro");
+  auto const response = client.ValidateAvroSchema(
+      "test-project", "test-only-invalid-avro", TestOptions());
   EXPECT_THAT(response, IsOk());
 }
 
@@ -260,13 +278,14 @@ TEST(SchemaAdminClient, ValidateSchemaProtobuf) {
 
   EXPECT_CALL(*mock, ValidateSchema)
       .WillOnce([&](google::pubsub::v1::ValidateSchemaRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(expected));
         google::pubsub::v1::ValidateSchemaResponse response;
         return make_status_or(response);
       });
   SchemaAdminClient client(mock);
   auto const response = client.ValidateProtobufSchema(
-      "test-project", "test-only-invalid-protobuf");
+      "test-project", "test-only-invalid-protobuf", TestOptions());
 
   EXPECT_THAT(response, IsOk());
 }
@@ -285,6 +304,7 @@ TEST(SchemaAdminClient, ValidateMessageWithNamedSchema) {
 
   EXPECT_CALL(*mock, ValidateMessage)
       .WillOnce([&](google::pubsub::v1::ValidateMessageRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(expected));
         google::pubsub::v1::ValidateMessageResponse response;
         return make_status_or(response);
@@ -292,7 +312,7 @@ TEST(SchemaAdminClient, ValidateMessageWithNamedSchema) {
   SchemaAdminClient client(mock);
   auto const response = client.ValidateMessageWithNamedSchema(
       google::pubsub::v1::BINARY, "test-only-invalid-message",
-      Schema("test-project", "test-schema"));
+      Schema("test-project", "test-schema"), TestOptions());
   EXPECT_THAT(response, IsOk());
 }
 
@@ -310,6 +330,7 @@ TEST(SchemaAdminClient, ValidateMessageWithAvro) {
 
   EXPECT_CALL(*mock, ValidateMessage)
       .WillOnce([&](google::pubsub::v1::ValidateMessageRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(expected));
         google::pubsub::v1::ValidateMessageResponse response;
         return make_status_or(response);
@@ -317,7 +338,7 @@ TEST(SchemaAdminClient, ValidateMessageWithAvro) {
   SchemaAdminClient client(mock);
   auto const response = client.ValidateMessageWithAvro(
       google::pubsub::v1::BINARY, "test-only-invalid-message", "test-project",
-      "test-only-invalid-schema");
+      "test-only-invalid-schema", TestOptions());
   EXPECT_THAT(response, IsOk());
 }
 
@@ -335,6 +356,7 @@ TEST(SchemaAdminClient, ValidateMessageWithProtobuf) {
 
   EXPECT_CALL(*mock, ValidateMessage)
       .WillOnce([&](google::pubsub::v1::ValidateMessageRequest const& r) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_THAT(r, IsProtoEqual(expected));
         google::pubsub::v1::ValidateMessageResponse response;
         return make_status_or(response);
@@ -342,7 +364,7 @@ TEST(SchemaAdminClient, ValidateMessageWithProtobuf) {
   SchemaAdminClient client(mock);
   auto const response = client.ValidateMessageWithProtobuf(
       google::pubsub::v1::BINARY, "test-only-invalid-message", "test-project",
-      "test-only-invalid-schema");
+      "test-only-invalid-schema", TestOptions());
   EXPECT_THAT(response, IsOk());
 }
 

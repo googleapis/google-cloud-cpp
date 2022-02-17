@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class SchemaAdminClient {
  public:
-  explicit SchemaAdminClient(std::shared_ptr<SchemaAdminConnection> connection);
+  explicit SchemaAdminClient(std::shared_ptr<SchemaAdminConnection> connection,
+                             Options opts = {});
 
   /**
    * The default constructor is deleted.
@@ -71,22 +72,22 @@ class SchemaAdminClient {
   SchemaAdminClient() = delete;
 
   /**
-   * @copydoc CreateSchema(google::pubsub::v1::CreateSchemaRequest const&)
+   * @copydoc CreateSchema(google::pubsub::v1::CreateSchemaRequest const&,Options)
    *
    * @par Example
    * @snippet samples.cc create-avro-schema
    */
   StatusOr<google::pubsub::v1::Schema> CreateAvroSchema(
-      Schema const& schema, std::string schema_definition);
+      Schema const& schema, std::string schema_definition, Options opts = {});
 
   /**
-   * @copydoc CreateSchema(google::pubsub::v1::CreateSchemaRequest const&)
+   * @copydoc CreateSchema(google::pubsub::v1::CreateSchemaRequest const&,Options)
    *
    * @par Example
    * @snippet samples.cc create-protobuf-schema
    */
   StatusOr<google::pubsub::v1::Schema> CreateProtobufSchema(
-      Schema const& schema, std::string schema_definition);
+      Schema const& schema, std::string schema_definition, Options opts = {});
 
   /**
    * Creates a new Cloud Pub/Sub schema.
@@ -97,7 +98,8 @@ class SchemaAdminClient {
    * as a consequence of retrying a successful (but reported as failed) request.
    */
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      google::pubsub::v1::CreateSchemaRequest const& request);
+      google::pubsub::v1::CreateSchemaRequest const& request,
+      Options opts = {});
 
   /**
    * Gets information about an existing Cloud Pub/Sub schema.
@@ -111,10 +113,13 @@ class SchemaAdminClient {
    * @param schema the full name of the schema
    * @param view Use `BASIC` to include the name and type of the schema, but not
    *     the definition. Use `FULL` to include the definition.
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   StatusOr<google::pubsub::v1::Schema> GetSchema(
       Schema const& schema,
-      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC);
+      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC,
+      Options opts = {});
 
   /**
    * Lists all the schemas for a given project id.
@@ -128,10 +133,13 @@ class SchemaAdminClient {
    * @param project_id lists the schemas in this project
    * @param view Use `BASIC` to include the name and type of each schema, but
    *     not the definition. Use `FULL` to include the definition.
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   ListSchemasRange ListSchemas(
       std::string const& project_id,
-      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC);
+      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC,
+      Options opts = {});
 
   /**
    * Deletes an existing schema in Cloud Pub/Sub.
@@ -146,8 +154,10 @@ class SchemaAdminClient {
    * @snippet samples.cc delete-schema
    *
    * @param schema the name of the schema to be deleted.
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
-  Status DeleteSchema(Schema const& schema);
+  Status DeleteSchema(Schema const& schema, Options opts = {});
 
   /**
    * Validates a schema definition.
@@ -159,7 +169,8 @@ class SchemaAdminClient {
    * @snippet samples.cc validate-avro-schema
    */
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateAvroSchema(
-      std::string const& project_id, std::string schema_definition);
+      std::string const& project_id, std::string schema_definition,
+      Options opts = {});
 
   /**
    * Validates a schema definition.
@@ -171,7 +182,8 @@ class SchemaAdminClient {
    * @snippet samples.cc validate-protobuf-schema
    */
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateProtobufSchema(
-      std::string const& project_id, std::string schema_definition);
+      std::string const& project_id, std::string schema_definition,
+      Options opts = {});
 
   /**
    * Validates a schema definition.
@@ -180,10 +192,11 @@ class SchemaAdminClient {
    * This is a read-only operation and therefore always idempotent and retried.
    */
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      std::string const& project_id, google::pubsub::v1::Schema schema);
+      std::string const& project_id, google::pubsub::v1::Schema schema,
+      Options opts = {});
 
   /**
-   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
+   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&,Options)
    *
    * @par Example
    * @snippet samples.cc validate-message-named-schema
@@ -192,14 +205,16 @@ class SchemaAdminClient {
    * support some encodings.
    * @param message the message to validate
    * @param named_schema the name of an existing schema to validate against
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   StatusOr<google::pubsub::v1::ValidateMessageResponse>
   ValidateMessageWithNamedSchema(google::pubsub::v1::Encoding encoding,
                                  std::string message,
-                                 Schema const& named_schema);
+                                 Schema const& named_schema, Options opts = {});
 
   /**
-   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
+   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&,Options)
    *
    * @par Example
    * @snippet samples.cc validate-message-avro
@@ -209,13 +224,15 @@ class SchemaAdminClient {
    * @param message the message to validate
    * @param project_id the project used to perform the validation
    * @param schema_definition the schema definition, in AVRO format
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessageWithAvro(
       google::pubsub::v1::Encoding encoding, std::string message,
-      std::string project_id, std::string schema_definition);
+      std::string project_id, std::string schema_definition, Options opts = {});
 
   /**
-   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
+   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&,Options)
    *
    * @par Example
    * @snippet samples.cc validate-message-protobuf
@@ -225,11 +242,13 @@ class SchemaAdminClient {
    * @param message the message to validate
    * @param project_id the project used to perform the validation
    * @param schema_definition the schema definition, in protocol buffers format
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   StatusOr<google::pubsub::v1::ValidateMessageResponse>
   ValidateMessageWithProtobuf(google::pubsub::v1::Encoding encoding,
                               std::string message, std::string project_id,
-                              std::string schema_definition);
+                              std::string schema_definition, Options opts = {});
 
   /**
    * Validates a message against a schema.
@@ -238,10 +257,12 @@ class SchemaAdminClient {
    * This is a read-only operation and therefore always idempotent and retried.
    */
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      google::pubsub::v1::ValidateMessageRequest const& request);
+      google::pubsub::v1::ValidateMessageRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SchemaAdminConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
