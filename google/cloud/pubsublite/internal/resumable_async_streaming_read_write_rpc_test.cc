@@ -151,21 +151,20 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
 };
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
-  EXPECT_CALL(stream_factory_, Call).WillOnce([]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream,
-                Start).WillOnce(Return(ByMove(make_ready_future(true))));
-    EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-        make_ready_future(true))));
-    EXPECT_CALL(*stream, Read)
-        .WillOnce(Return(ByMove(make_ready_future(
-            absl::make_optional(kBasicResponse)))))
-        .WillOnce(Return(ByMove(make_ready_future(
-            absl::make_optional(kBasicResponse1)))));
-    EXPECT_CALL(*stream,
-                Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
-    return stream;
-  });
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream,
+              Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(true))));
+  EXPECT_CALL(*stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(kBasicResponse)))))
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(kBasicResponse1)))));
+  EXPECT_CALL(*stream,
+              Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
+  EXPECT_CALL(stream_factory_,
+              Call).WillOnce(Return(ByMove(std::move(stream))));
 
   InitializerBehavior(1);
   NoRetryInvocation(1);
@@ -188,14 +187,13 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadWriteAfterShutdown) {
-  EXPECT_CALL(stream_factory_, Call).WillOnce([]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream,
-                Start).WillOnce(Return(ByMove(make_ready_future(true))));
-    EXPECT_CALL(*stream,
-                Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
-    return stream;
-  });
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream,
+              Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream,
+              Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
+  EXPECT_CALL(stream_factory_,
+              Call).WillOnce(Return(ByMove(std::move(stream))));
 
   InitializerBehavior(1);
   NoRetryInvocation(1);
@@ -213,33 +211,31 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadWriteAfterShutdown) {
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(true))));
+  EXPECT_CALL(*stream,
+              Read).WillOnce(Return(ByMove(make_ready_future(absl::optional<
+      FakeResponse>()))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream1, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream1, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(kBasicResponse)))))
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(kBasicResponse1)))));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(ByMove(make_ready_future(
+      Status()))));
+
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-            make_ready_future(true))));
-        EXPECT_CALL(*stream,
-                    Read).WillOnce(Return(ByMove(make_ready_future(absl::optional<
-            FakeResponse>()))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      })
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(ByMove(make_ready_future(
-                absl::make_optional(kBasicResponse)))))
-            .WillOnce(Return(ByMove(make_ready_future(
-                absl::make_optional(kBasicResponse1)))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            Status()))));
-        return stream;
-      });
+      .WillOnce(Return(ByMove(std::move(stream))))
+      .WillOnce(Return(ByMove(std::move(stream1))));
 
   StandardSingleRetryPolicy();
   InitializerBehavior(2);
@@ -265,34 +261,30 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
-  EXPECT_CALL(stream_factory_, Call)
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            false))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      })
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream, Read).WillOnce(Return(ByMove(make_ready_future(
-            absl::make_optional(kBasicResponse)))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            Status()))));
-        return stream;
-      });
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
+      false))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
 
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream1, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream1, Read).WillOnce(Return(ByMove(make_ready_future(
+      absl::make_optional(kBasicResponse)))));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(ByMove(make_ready_future(
+      Status()))));
+
+  EXPECT_CALL(stream_factory_, Call)
+      .WillOnce(Return(ByMove(std::move(stream))))
+      .WillOnce(Return(ByMove(std::move(stream1))));
+
+  auto mock_retry_policy =
+      absl::make_unique<StrictMock<MockRetryPolicy>>();
+  EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce(Return(false));
+  EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce(Return(true));
   EXPECT_CALL(retry_policy_factory_, Call)
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce(Return(false));
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce(Return(true));
-        return mock_retry_policy;
-      });
+      .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
   EXPECT_CALL(*backoff_policy,
@@ -315,19 +307,19 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, FinishInMiddleOfReadWrite) {
   promise<bool> write_promise;
   promise<absl::optional<FakeResponse>> read_promise;
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream,
+              Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _))
+      .WillOnce(Return(ByMove(write_promise.get_future())));
+  EXPECT_CALL(*stream,
+              Read).WillOnce(Return(ByMove(read_promise.get_future())));
+  EXPECT_CALL(*stream,
+              Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
+
   EXPECT_CALL(stream_factory_,
-              Call).WillOnce([&write_promise, &read_promise]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream,
-                Start).WillOnce(Return(ByMove(make_ready_future(true))));
-    EXPECT_CALL(*stream, Write(kBasicRequest, _))
-        .WillOnce(Return(ByMove(write_promise.get_future())));
-    EXPECT_CALL(*stream,
-                Read).WillOnce(Return(ByMove(read_promise.get_future())));
-    EXPECT_CALL(*stream,
-                Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
-    return stream;
-  });
+              Call).WillOnce(Return(ByMove(std::move(stream))));
 
   NoRetryInvocation(1);
   InitializerBehavior(1);
@@ -349,25 +341,24 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, FinishInMiddleOfReadWrite) {
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryAfterStart) {
   promise<bool> start_promise;
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(false))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream1,
+              Start).WillOnce(Return(ByMove(start_promise.get_future())));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(ByMove(make_ready_future(
+      Status()))));
+
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-            make_ready_future(false))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      })
-      .WillOnce([&start_promise]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream,
-                    Start).WillOnce(Return(ByMove(start_promise.get_future())));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            Status()))));
-        return stream;
-      });
+      .WillOnce(Return(ByMove(std::move(stream))))
+      .WillOnce(Return(ByMove(std::move(stream1))));
 
   StandardSingleRetryPolicy();
   StandardSingleRetryBackoffPolicy();
@@ -387,16 +378,17 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryBeforeStart) {
   promise<Status> finish_promise;
-  EXPECT_CALL(stream_factory_, Call).WillOnce([&finish_promise]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream,
-                Start).WillOnce(Return(ByMove(make_ready_future(true))));
-    EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-        make_ready_future(false))));
-    EXPECT_CALL(*stream,
-                Finish).WillOnce(Return(ByMove(finish_promise.get_future())));
-    return stream;
-  });
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream,
+              Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(false))));
+  EXPECT_CALL(*stream,
+              Finish).WillOnce(Return(ByMove(finish_promise.get_future())));
+
+  EXPECT_CALL(stream_factory_,
+              Call).WillOnce(Return(ByMove(std::move(stream))));
 
   NoRetryInvocation(2);
   NoBackoffInvocation(2);
@@ -415,16 +407,17 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryDuringSleep) {
   promise<void> sleep_promise;
-  EXPECT_CALL(stream_factory_, Call).WillOnce([]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream,
-                Start).WillOnce(Return(ByMove(make_ready_future(true))));
-    EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-        make_ready_future(false))));
-    EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-        kFailStatus))));
-    return stream;
-  });
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream,
+              Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(false))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
+  EXPECT_CALL(stream_factory_,
+              Call).WillOnce(Return(ByMove(std::move(stream))));
 
   StandardSingleRetryPolicy();
   StandardSingleRetryBackoffPolicy();
@@ -443,25 +436,23 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, FinishWhileShutdown) {
-  EXPECT_CALL(stream_factory_, Call).WillOnce([]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream,
-                Start).WillOnce(Return(ByMove(make_ready_future(true))));
-    EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-        make_ready_future(false))));
-    EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-        kFailStatus))));
-    return stream;
-  });
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream,
+              Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(false))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+  EXPECT_CALL(stream_factory_,
+              Call).WillOnce(Return(ByMove(std::move(stream))));
+
+  auto mock_retry_policy =
+      absl::make_unique<StrictMock<MockRetryPolicy>>();
+  EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce(Return(true));
 
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(absl::make_unique<StrictMock<MockRetryPolicy>>())))
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce(Return(true));
-        return mock_retry_policy;
-      });
+      .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
   NoBackoffInvocation(2);
   InitializerBehavior(1);
 
@@ -477,31 +468,30 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, FinishWhileShutdown) {
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
   promise<bool> write_promise;
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _))
+      .WillOnce(Return(ByMove(write_promise.get_future())));
+  EXPECT_CALL(*stream,
+              Read).WillOnce(Return(ByMove(make_ready_future(absl::optional<
+      FakeResponse>()))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream1, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream1,
+              Read).WillOnce(Return(ByMove(make_ready_future(absl::make_optional(
+      kBasicResponse)))));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(ByMove(make_ready_future(
+      Status()))));
+
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce([&write_promise]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream, Write(kBasicRequest, _))
-            .WillOnce(Return(ByMove(write_promise.get_future())));
-        EXPECT_CALL(*stream,
-                    Read).WillOnce(Return(ByMove(make_ready_future(absl::optional<
-            FakeResponse>()))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      })
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream,
-                    Read).WillOnce(Return(ByMove(make_ready_future(absl::make_optional(
-            kBasicResponse)))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            Status()))));
-        return stream;
-      });
+      .WillOnce(Return(ByMove(std::move(stream))))
+      .WillOnce(Return(ByMove(std::move(stream1))));
 
   StandardSingleRetryPolicy();
   StandardSingleRetryBackoffPolicy();
@@ -525,29 +515,28 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, WriteFailWhileReadInFlight) {
   promise<absl::optional<FakeResponse>> read_promise;
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream,
+              Read).WillOnce(Return(ByMove(read_promise.get_future())));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(false))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream1, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream1, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(true))));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(ByMove(make_ready_future(
+      Status()))));
+
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce([&read_promise]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream,
-                    Read).WillOnce(Return(ByMove(read_promise.get_future())));
-        EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-            make_ready_future(false))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      })
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-            make_ready_future(true))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            Status()))));
-        return stream;
-      });
+      .WillOnce(Return(ByMove(std::move(stream))))
+      .WillOnce(Return(ByMove(std::move(stream1))));
 
   StandardSingleRetryPolicy();
   StandardSingleRetryBackoffPolicy();
@@ -573,38 +562,35 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, WriteFailWhileReadInFlight) {
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        StartFailsDuringRetryPermanentError) {
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream,
+              Read).WillOnce(Return(ByMove(make_ready_future(absl::optional<
+      FakeResponse>()))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream1, Start).WillOnce(Return(ByMove(make_ready_future(
+      false))));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream,
-                    Read).WillOnce(Return(ByMove(make_ready_future(absl::optional<
-            FakeResponse>()))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      })
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            false))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      });
+      .WillOnce(Return(ByMove(std::move(stream))))
+      .WillOnce(Return(ByMove(std::move(stream1))));
+
+  auto mock_retry_policy =
+      absl::make_unique<StrictMock<MockRetryPolicy>>();
+  EXPECT_CALL(*mock_retry_policy, IsExhausted)
+      .WillOnce(Return(false))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce(Return(true));
 
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(absl::make_unique<StrictMock<MockRetryPolicy>>())))
-      .WillOnce([]() {
-        auto mock_retry_policy =
-            absl::make_unique<StrictMock<MockRetryPolicy>>();
-        EXPECT_CALL(*mock_retry_policy, IsExhausted)
-            .WillOnce(Return(false))
-            .WillOnce(Return(true));
-        EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce(Return(true));
-        return mock_retry_policy;
-      });
+      .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
   StandardSingleRetryBackoffPolicy();
   InitializerBehavior(1);
@@ -619,25 +605,24 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
   promise<bool> start_promise;
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
+      true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
+      make_ready_future(false))));
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
+      kFailStatus))));
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream1,
+              Start).WillOnce(Return(ByMove(start_promise.get_future())));
+  EXPECT_CALL(*stream1, Finish).WillOnce(Return(ByMove(make_ready_future(
+      Status()))));
+
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce([]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream, Start).WillOnce(Return(ByMove(make_ready_future(
-            true))));
-        EXPECT_CALL(*stream, Write(kBasicRequest, _)).WillOnce(Return(ByMove(
-            make_ready_future(false))));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            kFailStatus))));
-        return stream;
-      })
-      .WillOnce([&start_promise]() {
-        auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-        EXPECT_CALL(*stream,
-                    Start).WillOnce(Return(ByMove(start_promise.get_future())));
-        EXPECT_CALL(*stream, Finish).WillOnce(Return(ByMove(make_ready_future(
-            Status()))));
-        return stream;
-      });
+      .WillOnce(Return(ByMove(std::move(stream))))
+      .WillOnce(Return(ByMove(std::move(stream1))));
 
   StandardSingleRetryPolicy();
   StandardSingleRetryBackoffPolicy();
@@ -657,16 +642,17 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, WriteFinishesAfterShutdown) {
   promise<bool> write_promise;
-  EXPECT_CALL(stream_factory_, Call).WillOnce([&write_promise]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream,
-                Start).WillOnce(Return(ByMove(make_ready_future(true))));
-    EXPECT_CALL(*stream, Write(kBasicRequest, _))
-        .WillOnce(Return(ByMove(write_promise.get_future())));
-    EXPECT_CALL(*stream,
-                Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
-    return stream;
-  });
+
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*stream,
+              Start).WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*stream, Write(kBasicRequest, _))
+      .WillOnce(Return(ByMove(write_promise.get_future())));
+  EXPECT_CALL(*stream,
+              Finish).WillOnce(Return(ByMove(make_ready_future(Status()))));
+
+  EXPECT_CALL(stream_factory_,
+              Call).WillOnce(Return(ByMove(std::move(stream))));
 
   NoRetryInvocation(1);
   NoBackoffInvocation(1);
