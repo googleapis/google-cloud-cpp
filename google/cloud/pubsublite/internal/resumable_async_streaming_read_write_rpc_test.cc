@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/pubsublite/internal/mock_async_reader_writer.h"
 #include "google/cloud/pubsublite/internal/mock_retry_policy.h"
