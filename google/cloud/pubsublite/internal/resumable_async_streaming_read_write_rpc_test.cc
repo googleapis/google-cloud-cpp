@@ -245,36 +245,6 @@ auto stream = \
                 StatusOr<AsyncReadWriteStreamReturnType>(std::move(stream))); \
           });
 
-TEST(AsyncReadWriteStreamingRpcTest, ReadWriteAfterShutdown) {
-  StrictMock<MockStub> mock;
-  EXPECT_CALL(mock, FakeStream).WillOnce([]() {
-    auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-    EXPECT_CALL(*stream, Start).WillOnce([]() {
-      return make_ready_future(true);
-    });
-    EXPECT_CALL(*stream, Finish).WillOnce([]() {
-      return make_ready_future(Status());
-    });
-    return stream;
-  });
-
-  EXPECT_CALL(mock, FakeRetryPolicy).WillOnce([]() {
-    return absl::make_unique<StrictMock<MockRetryPolicy>>();
-  });
-
-  INIT_BASIC_STREAM
-
-  auto start = stream->Start();
-  auto finish = stream->Finish();
-  finish.get();
-  ASSERT_FALSE(
-      stream
-          ->Write(kBasicRequest, grpc::WriteOptions().set_last_message())
-          .get());
-  ASSERT_FALSE(stream->Read().get().has_value());
-  EXPECT_THAT(start.get(), IsOk());
-}
-
 TEST(AsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
   StrictMock<MockStub> mock;
   EXPECT_CALL(mock, FakeStream)
