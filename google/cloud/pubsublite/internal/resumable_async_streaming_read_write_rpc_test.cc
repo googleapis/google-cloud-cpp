@@ -109,7 +109,7 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
   }
 
   void NoRetryInvocation(unsigned int times) {
-    // Return(ByMove(...)) results in runtime error on times > 1
+    // Return(ByMove(...)) results in runtime error on times > 1 ?
     EXPECT_CALL(retry_policy_factory_,
                 Call).Times(times).WillRepeatedly([]() {
       return absl::make_unique<StrictMock<
