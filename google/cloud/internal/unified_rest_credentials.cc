@@ -34,21 +34,22 @@ using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
 
-StatusOr<std::shared_ptr<oauth2_internal::Credentials>>
+std::shared_ptr<oauth2_internal::Credentials>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   auto info =
       oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
-  if (!info) {
-    return StatusOr<std::shared_ptr<oauth2_internal::Credentials>>(
-        info.status());
-  }
+  if (!info)
+    return std::make_shared<oauth2_internal::ErrorCredentials>(info.status());
+
   std::chrono::system_clock::time_point now;
   auto components = AssertionComponentsFromInfo(*info, now);
   auto jwt_assertion = internal::MakeJWTAssertionNoThrow(
       components.first, components.second, info->private_key);
-  if (!jwt_assertion) return std::move(jwt_assertion).status();
+  if (!jwt_assertion)
+    return std::make_shared<oauth2_internal::ErrorCredentials>(
+        std::move(jwt_assertion).status());
 
-  return StatusOr<std::shared_ptr<oauth2_internal::Credentials>>(
+  return std::shared_ptr<oauth2_internal::Credentials>(
       std::make_shared<oauth2_internal::ServiceAccountCredentials>(*info,
                                                                    Options{}));
 }
@@ -86,12 +87,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(ServiceAccountConfig& cfg) override {
       auto credentials =
           CreateServiceAccountCredentialsFromJsonContents(cfg.json_object());
-      if (credentials) {
-        result = *std::move(credentials);
-        return;
-      }
-      result = std::make_shared<oauth2_internal::ErrorCredentials>(
-          std::move(credentials).status());
+      result = std::move(credentials);
     }
   } visitor;
 
