@@ -118,20 +118,17 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
   }
 
   void StandardSingleRetryPolicy() {
+    auto mock_retry_policy =
+        absl::make_unique<StrictMock<MockRetryPolicy>>();
+    EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
+      return false;
+    });
+    EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
+      return true;
+    });
     EXPECT_CALL(retry_policy_factory_, Call)
-        .WillOnce(
-            []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); })
-        .WillOnce([]() {
-          auto mock_retry_policy =
-              absl::make_unique<StrictMock<MockRetryPolicy>>();
-          EXPECT_CALL(*mock_retry_policy, IsExhausted).WillOnce([]() {
-            return false;
-          });
-          EXPECT_CALL(*mock_retry_policy, OnFailure(_)).WillOnce([]() {
-            return true;
-          });
-          return mock_retry_policy;
-        });
+        .WillOnce(Return(ByMove(absl::make_unique<StrictMock<MockRetryPolicy>>())))
+        .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
   }
 
   void NoBackoffInvocation(unsigned int times) {
