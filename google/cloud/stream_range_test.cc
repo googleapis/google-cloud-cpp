@@ -27,10 +27,21 @@ namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+using ::testing::UnitTest;
 
 struct StringOption {
   using Type = std::string;
 };
+
+std::string CurrentTestName() {
+  return UnitTest::GetInstance()->current_test_info()->name();
+}
+
+template <typename T>
+StreamRange<T> MakeStreamRange(internal::StreamReader<T> reader) {
+  internal::OptionsSpan span(Options{}.set<StringOption>(CurrentTestName()));
+  return internal::MakeStreamRange(std::move(reader));
+}
 
 TEST(StreamRange, DefaultConstructed) {
   StreamRange<int> sr;
@@ -43,14 +54,14 @@ TEST(StreamRange, DefaultConstructed) {
 
 TEST(StreamRange, MoveOnly) {
   auto const reader = [] { return Status{}; };
-  StreamRange<int> sr = internal::MakeStreamRange<int>(reader);
-  StreamRange<int> move_construct = std::move(sr);
-  StreamRange<int> move_assign = internal::MakeStreamRange<int>(reader);
+  auto sr = MakeStreamRange<int>(reader);
+  auto move_construct = std::move(sr);
+  auto move_assign = MakeStreamRange<int>(reader);
   move_assign = std::move(move_construct);
 }
 
 TEST(StreamRange, EmptyRange) {
-  StreamRange<int> sr = internal::MakeStreamRange<int>([] { return Status{}; });
+  auto sr = MakeStreamRange<int>([] { return Status{}; });
   auto it = sr.begin();
   auto end = sr.end();
   EXPECT_EQ(it, end);
@@ -59,16 +70,16 @@ TEST(StreamRange, EmptyRange) {
 }
 
 TEST(StreamRange, OneElement) {
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "OneElement");
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
     if (counter++ < 1) return 42;
     return Status{};
   };
 
-  internal::OptionsSpan span(Options{}.set<StringOption>("OneElement"));
-  StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto sr = MakeStreamRange<int>(std::move(reader));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_TRUE(*it);
@@ -78,14 +89,14 @@ TEST(StreamRange, OneElement) {
 }
 
 TEST(StreamRange, OneError) {
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = []() -> internal::StreamReader<int>::result_type {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "OneError");
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
     return Status(StatusCode::kUnknown, "oops");
   };
 
-  internal::OptionsSpan span(Options{}.set<StringOption>("OneError"));
-  StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto sr = MakeStreamRange<int>(std::move(reader));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_FALSE(*it);
@@ -95,16 +106,16 @@ TEST(StreamRange, OneError) {
 }
 
 TEST(StreamRange, FiveElements) {
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "FiveElements");
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
     if (counter++ < 5) return counter;
     return Status{};
   };
 
-  internal::OptionsSpan span(Options{}.set<StringOption>("FiveElements"));
-  StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto sr = MakeStreamRange<int>(std::move(reader));
   std::vector<int> v;
   for (StatusOr<int>& x : sr) {
     EXPECT_TRUE(x);
@@ -114,17 +125,16 @@ TEST(StreamRange, FiveElements) {
 }
 
 TEST(StreamRange, PostFixIteration) {
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
     EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-              "PostFixIteration");
+              CurrentTestName());
     if (counter++ < 5) return counter;
     return Status{};
   };
 
-  internal::OptionsSpan span(Options{}.set<StringOption>("PostFixIteration"));
-  StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto sr = MakeStreamRange<int>(std::move(reader));
   std::vector<int> v;
   // NOLINTNEXTLINE(modernize-loop-convert)
   for (auto it = sr.begin(); it != sr.end(); it++) {
@@ -135,46 +145,46 @@ TEST(StreamRange, PostFixIteration) {
 }
 
 TEST(StreamRange, Distance) {
+  internal::OptionsSpan overlay1(Options{}.set<StringOption>("uh-oh"));
+
   // Empty range
-  StreamRange<int> sr = internal::MakeStreamRange<int>([] { return Status{}; });
+  auto sr = MakeStreamRange<int>([] { return Status{}; });
   EXPECT_EQ(0, std::distance(sr.begin(), sr.end()));
 
   // Range of one element
   auto counter = 0;
-  internal::OptionsSpan span1(Options{}.set<StringOption>("Distance1"));
-  StreamRange<int> one = internal::MakeStreamRange<int>(
+  auto one = MakeStreamRange<int>(
       [&counter]() -> internal::StreamReader<int>::result_type {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "Distance1");
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                  CurrentTestName());
         if (counter++ < 1) return counter;
         return Status{};
       });
-  internal::OptionsSpan overlay1(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(1, std::distance(one.begin(), one.end()));
 
   // Range of five elements
   counter = 0;
-  internal::OptionsSpan span5(Options{}.set<StringOption>("Distance5"));
-  StreamRange<int> five = internal::MakeStreamRange<int>(
+  auto five = MakeStreamRange<int>(
       [&counter]() -> internal::StreamReader<int>::result_type {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "Distance5");
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                  CurrentTestName());
         if (counter++ < 5) return counter;
         return Status{};
       });
-  internal::OptionsSpan overlay5(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(5, std::distance(five.begin(), five.end()));
 }
 
 TEST(StreamRange, StreamError) {
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto counter = 0;
   auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
-    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "StreamError");
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
     if (counter++ < 2) return counter;
     return Status(StatusCode::kUnknown, "oops");
   };
 
-  internal::OptionsSpan span(Options{}.set<StringOption>("StreamError"));
-  StreamRange<int> sr = internal::MakeStreamRange<int>(std::move(reader));
-  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto sr = MakeStreamRange<int>(std::move(reader));
 
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
@@ -195,6 +205,41 @@ TEST(StreamRange, StreamError) {
   // Since the previous result was an error, we're at the end.
   ++it;
   EXPECT_EQ(it, sr.end());
+}
+
+template <typename ResponseType>
+class FakeResumableStreamingReadRpc {
+ public:
+  ~FakeResumableStreamingReadRpc() {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
+    EXPECT_TRUE(read_called_);
+  }
+
+  typename internal::StreamReader<ResponseType>::result_type Read() {
+    EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+              CurrentTestName());
+    EXPECT_FALSE(read_called_);
+    read_called_ = true;
+    return ResponseType{};
+  }
+
+ private:
+  bool read_called_ = false;
+};
+
+TEST(StreamRange, ReaderDestructorOptionsSpan) {
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  auto reader = [] {
+    auto resumable = std::make_shared<FakeResumableStreamingReadRpc<int>>();
+    return [resumable]() -> internal::StreamReader<int>::result_type {
+      return resumable->Read();
+    };
+  }();
+  auto sr = MakeStreamRange<int>(std::move(reader));
+  // `~StreamRange()` will now delete the reader, which will drop the last
+  // reference to the `FakeResumableStreamingReadRpc`, and all of that should
+  // happen with `CurrentOptions()` matching those at `StreamRange` ctor time.
 }
 
 }  // namespace
