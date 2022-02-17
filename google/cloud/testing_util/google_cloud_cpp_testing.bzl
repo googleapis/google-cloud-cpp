@@ -22,7 +22,6 @@ google_cloud_cpp_testing_hdrs = [
     "chrono_literals.h",
     "command_line_parsing.h",
     "contains_once.h",
-    "crash_handler.h",
     "example_driver.h",
     "expect_exception.h",
     "expect_future_error.h",
@@ -38,7 +37,6 @@ google_cloud_cpp_testing_hdrs = [
 
 google_cloud_cpp_testing_srcs = [
     "command_line_parsing.cc",
-    "crash_handler.cc",
     "example_driver.cc",
     "integration_test.cc",
     "mock_fake_clock.cc",

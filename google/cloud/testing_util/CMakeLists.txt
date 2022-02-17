@@ -24,8 +24,6 @@ if (BUILD_TESTING)
         command_line_parsing.cc
         command_line_parsing.h
         contains_once.h
-        crash_handler.cc
-        crash_handler.h
         example_driver.cc
         example_driver.h
         expect_exception.h
@@ -71,7 +69,6 @@ if (BUILD_TESTING)
         async_sequencer_test.cc
         command_line_parsing_test.cc
         contains_once_test.cc
-        crash_handler_test.cc
         example_driver_test.cc
         scoped_environment_test.cc
         status_matchers_test.cc)

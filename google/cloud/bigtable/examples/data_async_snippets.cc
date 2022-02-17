@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/crash_handler.h"
+#include "google/cloud/log.h"
 #include <sstream>
 
 namespace {
@@ -392,9 +392,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InstallCrashHandler(argv[0]);
-
+int main(int argc, char* argv[]) try {
   using ::google::cloud::bigtable::examples::MakeCommandEntry;
   google::cloud::bigtable::examples::Example example({
       MakeCommandEntry("async-apply", {"<row-key>"}, AsyncApply),
@@ -411,4 +409,8 @@ int main(int argc, char* argv[]) {
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
+} catch (std::exception const& ex) {
+  std::cerr << ex.what() << "\n";
+  ::google::cloud::LogSink::Instance().Flush();
+  return 1;
 }
