@@ -38,16 +38,18 @@ std::shared_ptr<oauth2_internal::Credentials>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   auto info =
       oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
-  if (!info)
+  if (!info) {
     return std::make_shared<oauth2_internal::ErrorCredentials>(info.status());
+  }
 
   std::chrono::system_clock::time_point now;
   auto components = AssertionComponentsFromInfo(*info, now);
   auto jwt_assertion = internal::MakeJWTAssertionNoThrow(
       components.first, components.second, info->private_key);
-  if (!jwt_assertion)
+  if (!jwt_assertion) {
     return std::make_shared<oauth2_internal::ErrorCredentials>(
         std::move(jwt_assertion).status());
+  }
 
   return std::shared_ptr<oauth2_internal::Credentials>(
       std::make_shared<oauth2_internal::ServiceAccountCredentials>(*info,
