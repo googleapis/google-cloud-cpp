@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
