@@ -15,8 +15,8 @@
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/pubsublite/internal/mock_async_reader_writer.h"
+#include "google/cloud/pubsublite/internal/mock_retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -36,7 +36,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
 using ::testing::StrictMock;
 
-using ::google::cloud::internal::RetryPolicy;
+using ::google::cloud::pubsublite_internal::MockRetryPolicy;
 
 struct FakeRequest {
   std::string key;
@@ -56,27 +56,12 @@ bool operator==(FakeResponse const& lhs, FakeResponse const& rhs) {
   return lhs.key == rhs.key && lhs.value == rhs.value;
 }
 
+using MockAsyncReaderWriter = ::google::cloud::pubsublite_internal::MockAsyncReaderWriter<
+    FakeRequest,
+    FakeResponse>;
+
 using MockAsyncStreamReturnType =
 std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
-
-class MockAsyncReaderWriter
-    : public AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse> {
- public:
-  MOCK_METHOD(future<absl::optional<FakeResponse>>, Read, (), (override));
-  MOCK_METHOD(future<bool>, Write, (FakeRequest const&, grpc::WriteOptions),
-              (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-};
-
-class MockRetryPolicy : public RetryPolicy {
- public:
-  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
-  MOCK_METHOD(bool, IsExhausted, (), (const, override));
-  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
-};
 
 class MockStub {
  public:

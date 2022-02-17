@@ -183,6 +183,8 @@ add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_async_reader_writer.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_retry_policy.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_stats_connection.h)
 target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
