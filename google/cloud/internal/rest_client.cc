@@ -20,7 +20,9 @@
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
@@ -99,7 +101,12 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   auto handle = GetCurlHandle(handle_factory_);
   auto impl =
       absl::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
-  // TODO(#8130): Add Authorization header from UnifiedCredentialsOption
+  if (options_.has<UnifiedCredentialsOption>()) {
+    auto credentials = MapCredentials(options_.get<UnifiedCredentialsOption>());
+    auto auth_header = credentials->AuthorizationHeader();
+    if (!auth_header.ok()) return std::move(auth_header).status();
+    impl->SetHeader(auth_header.value());
+  }
   impl->SetHeader(HostHeader(options_, endpoint_address_));
   impl->SetHeader(x_goog_api_client_header_);
   impl->SetHeaders(request);

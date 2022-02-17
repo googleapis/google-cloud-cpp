@@ -74,6 +74,9 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
     "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
+    # Rest
+    "--test_env=GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT}"
+
     # Storage
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=${GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG:-}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
@@ -109,6 +112,7 @@ function integration::bazel_args() {
   gsutil cp "${SECRETS_BUCKET}/${key_base}.json" "${KEY_DIR}/${key_base}.json"
   gsutil cp "${SECRETS_BUCKET}/${key_base}.p12" "${KEY_DIR}/${key_base}.p12"
   args+=(
+    "--test_env=GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
@@ -149,6 +153,8 @@ function integration::bazel_with_emulators() {
     "google/cloud/iam/..."
     # Logging integration tests
     "google/cloud/logging/..."
+    # Unified Rest Credentials test
+    "google/cloud:internal_unified_rest_credentials_integration_test"
   )
 
   tag_filters="integration-test"
