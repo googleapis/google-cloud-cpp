@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RESUMABLE_STREAMING_READ_RPC_H
 
 #include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
@@ -81,6 +82,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
         backoff_policy_prototype_(std::move(backoff_policy)),
         sleeper_(std::move(sleeper)),
         stream_factory_(std::move(stream_factory)),
+        options_(internal::CurrentOptions()),
         updater_(std::move(updater)),
         request_(std::move(request)),
         impl_(stream_factory_(request_)) {}
@@ -88,9 +90,13 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   ResumableStreamingReadRpc(ResumableStreamingReadRpc&&) = delete;
   ResumableStreamingReadRpc& operator=(ResumableStreamingReadRpc&&) = delete;
 
-  void Cancel() override { impl_->Cancel(); }
+  void Cancel() override {
+    internal::OptionsSpan span(options_);
+    impl_->Cancel();
+  }
 
   absl::variant<Status, ResponseType> Read() override {
+    internal::OptionsSpan span(options_);
     auto response = impl_->Read();
     if (absl::holds_alternative<ResponseType>(response)) {
       updater_(absl::get<ResponseType>(response), request_);
@@ -128,6 +134,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   }
 
   StreamingRpcMetadata GetRequestMetadata() const override {
+    internal::OptionsSpan span(options_);
     return impl_ ? impl_->GetRequestMetadata() : StreamingRpcMetadata{};
   }
 
@@ -136,6 +143,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   std::unique_ptr<BackoffPolicy const> const backoff_policy_prototype_;
   Sleeper sleeper_;
   StreamFactory<ResponseType, RequestType> const stream_factory_;
+  Options const options_;
   RequestUpdater<ResponseType, RequestType> const updater_;
   RequestType request_;
   std::unique_ptr<StreamingReadRpc<ResponseType>> impl_;

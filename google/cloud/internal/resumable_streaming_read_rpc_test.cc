@@ -42,6 +42,10 @@ struct FakeResponse {
   std::string token;
 };
 
+struct FakeOption {
+  using Type = std::string;
+};
+
 using ReadReturn = absl::variant<Status, FakeResponse>;
 
 class MockStreamingReadRpc : public StreamingReadRpc<FakeResponse> {
@@ -105,6 +109,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead)
       .WillOnce([](FakeRequest const& request) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         EXPECT_EQ(request.key, "test-key");
         EXPECT_THAT(request.token, IsEmpty());
         auto stream = absl::make_unique<MockStreamingReadRpc>();
@@ -115,6 +120,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
         return stream;
       })
       .WillOnce([](FakeRequest const& request) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         EXPECT_EQ(request.key, "test-key");
         EXPECT_THAT(request.token, "token-2");
         auto stream = absl::make_unique<MockStreamingReadRpc>();
@@ -123,6 +129,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
             .WillOnce(Return(StreamSuccess()));
         return stream;
       });
+  internal::OptionsSpan create_span(Options{}.set<FakeOption>("create-time"));
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
       DefaultRetryPolicy(), DefaultBackoffPolicy(),
       [](std::chrono::milliseconds) {},
@@ -131,6 +138,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
       },
       DefaultUpdater, FakeRequest{"test-key", {}});
 
+  internal::OptionsSpan use_span(Options{}.set<FakeOption>("use-time"));
   std::vector<std::string> values;
   for (;;) {
     auto v = reader->Read();
@@ -148,16 +156,19 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead)
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         auto stream = absl::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         auto stream = absl::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         // Event though this stream ends with a failure it will be resumed
         // because its successful Read() resets the retry policy.
         auto stream = absl::make_unique<MockStreamingReadRpc>();
@@ -167,20 +178,25 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         auto stream = absl::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         auto stream = absl::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         auto stream = absl::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       });
+
+  internal::OptionsSpan create_span(Options{}.set<FakeOption>("create-time"));
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
       DefaultRetryPolicy(), DefaultBackoffPolicy(),
       [](std::chrono::milliseconds) {},
@@ -189,6 +205,7 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
       },
       DefaultUpdater, FakeRequest{"test-key", {}});
 
+  internal::OptionsSpan use_span(Options{}.set<FakeOption>("use-time"));
   std::vector<std::string> values;
   for (;;) {
     auto v = reader->Read();
@@ -207,6 +224,7 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead)
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         // Event though this stream ends with a failure it will be resumed
         // because its successful Read() resets the retry policy.
         auto stream = absl::make_unique<MockStreamingReadRpc>();
@@ -216,10 +234,13 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
+        EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
         auto stream = absl::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentFailure()));
         return stream;
       });
+
+  internal::OptionsSpan create_span(Options{}.set<FakeOption>("create-time"));
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
       DefaultRetryPolicy(), DefaultBackoffPolicy(),
       [](std::chrono::milliseconds) {},
@@ -228,6 +249,7 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
       },
       DefaultUpdater, FakeRequest{"test-key", {}});
 
+  internal::OptionsSpan use_span(Options{}.set<FakeOption>("use-time"));
   std::vector<std::string> values;
   for (;;) {
     auto v = reader->Read();
@@ -245,10 +267,13 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
 TEST(ResumableStreamingReadRpc, PermanentFailureAtStart) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead).WillOnce([](FakeRequest const&) {
+    EXPECT_EQ("create-time", internal::CurrentOptions().get<FakeOption>());
     auto stream = absl::make_unique<MockStreamingReadRpc>();
     EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentFailure()));
     return stream;
   });
+
+  internal::OptionsSpan create_span(Options{}.set<FakeOption>("create-time"));
   auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
       DefaultRetryPolicy(), DefaultBackoffPolicy(),
       [](std::chrono::milliseconds) {},
@@ -257,6 +282,7 @@ TEST(ResumableStreamingReadRpc, PermanentFailureAtStart) {
       },
       DefaultUpdater, FakeRequest{"test-key", {}});
 
+  internal::OptionsSpan use_span(Options{}.set<FakeOption>("use-time"));
   std::vector<std::string> values;
   for (;;) {
     auto v = reader->Read();
