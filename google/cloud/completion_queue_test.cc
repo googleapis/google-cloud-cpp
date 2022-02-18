@@ -694,14 +694,11 @@ TEST_P(RunAsyncTest, TortureBursts) {
     burst(burst_size);
   }
   cq.Shutdown();
-  for (auto& t : tasks) t.join();
 
   // This test is largely here to trigger (now fixed) race conditions under TSAN
-  // and/or deadlocks under load. Just getting here is enough to declare
-  // success, but we should verify that at least some interesting stuff happened
-  EXPECT_GE(impl->thread_pool_hwm(), kThreads / 2);
-  EXPECT_GE(impl->run_async_pool_hwm(), kThreads / 2);
-  EXPECT_GE(impl->notify_counter(), kBurstCount);
+  // and/or deadlocks under load. If the threads join the test passed.
+  for (auto& t : tasks) t.join();
+
   // At least one of the notifications should be avoided (thus _LT and not _LE):
   EXPECT_LT(impl->notify_counter(), kBurstCount * burst_size);
 }
