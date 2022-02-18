@@ -39,21 +39,17 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
  public:
   explicit TopicAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
+      std::shared_ptr<pubsub_internal::PublisherStub> stub, Options opts)
       : background_(std::move(background)),
         stub_(std::move(stub)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        options_(std::move(opts)) {}
 
   ~TopicAdminConnectionImpl() override = default;
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::Topic const& request) {
           return stub_->CreateTopic(context, request);
@@ -65,8 +61,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     google::pubsub::v1::GetTopicRequest request;
     request.set_topic(p.topic.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::GetTopicRequest const& request) {
           return stub_->GetTopic(context, request);
@@ -77,8 +72,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
       UpdateTopicParams p) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::UpdateTopicRequest const& request) {
           return stub_->UpdateTopic(context, request);
@@ -92,10 +86,9 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy_->clone());
+    auto retry = std::shared_ptr<pubsub::RetryPolicy const>(retry_policy());
     auto backoff =
-        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy_->clone());
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy());
     char const* function_name = __func__;
     auto list_functor =
         [stub, retry, backoff,
@@ -124,8 +117,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     google::pubsub::v1::DeleteTopicRequest request;
     request.set_topic(p.topic.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DeleteTopicRequest const& request) {
           return stub_->DeleteTopic(context, request);
@@ -139,8 +131,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     request.set_subscription(p.subscription.FullName());
     grpc::ClientContext context;
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DetachSubscriptionRequest const& request) {
           return stub_->DetachSubscription(context, request);
@@ -155,10 +146,9 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy_->clone());
+    auto retry = std::shared_ptr<pubsub::RetryPolicy const>(retry_policy());
     auto backoff =
-        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy_->clone());
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy());
     char const* function_name = __func__;
     auto list_functor =
         [stub, retry, backoff, function_name](
@@ -191,10 +181,9 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy_->clone());
+    auto retry = std::shared_ptr<pubsub::RetryPolicy const>(retry_policy());
     auto backoff =
-        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy_->clone());
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy());
     char const* function_name = __func__;
     auto list_functor =
         [stub, retry, backoff, function_name](
@@ -219,11 +208,28 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
         });
   }
 
+  Options options() const override { return options_; }
+
  private:
+  std::unique_ptr<pubsub::RetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<pubsub::RetryPolicyOption>()) {
+      return options.get<pubsub::RetryPolicyOption>()->clone();
+    }
+    return options_.get<pubsub::RetryPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<pubsub::BackoffPolicyOption>()) {
+      return options.get<pubsub::BackoffPolicyOption>()->clone();
+    }
+    return options_.get<pubsub::BackoffPolicyOption>()->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::PublisherStub> stub_;
-  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
-  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
+  Options options_;
 };
 
 // Decorates a TopicAdminStub. This works for both mock and real stubs.
@@ -309,9 +315,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(Options opts) {
 
   stub = DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
   return std::make_shared<TopicAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
+      std::move(background), std::move(stub), std::move(opts));
 }
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
@@ -337,9 +341,7 @@ std::shared_ptr<pubsub::TopicAdminConnection> MakeTestTopicAdminConnection(
       background->cq(), opts);
   stub = pubsub::DecorateTopicAdminStub(opts, std::move(auth), std::move(stub));
   return std::make_shared<pubsub::TopicAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
+      std::move(background), std::move(stub), opts);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

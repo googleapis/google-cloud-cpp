@@ -25,11 +25,20 @@ namespace {
 
 using ::testing::ElementsAre;
 
+std::string CurrentOptionsProbe() {
+  return internal::CurrentOptions().get<UserProjectOption>();
+}
+
+Options TestOptions() {
+  return Options{}.set<UserProjectOption>("test-options");
+}
+
 TEST(TopicAdminClient, CreateTopic) {
   auto mock = std::make_shared<pubsub_mocks::MockTopicAdminConnection>();
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, CreateTopic)
       .WillOnce([&](TopicAdminConnection::CreateTopicParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(topic.FullName(), p.topic.name());
         EXPECT_EQ("test-kms-key-name", p.topic.kms_key_name());
         google::pubsub::v1::Topic response = p.topic;
@@ -37,7 +46,7 @@ TEST(TopicAdminClient, CreateTopic) {
       });
   TopicAdminClient client(mock);
   auto const response = client.CreateTopic(
-      TopicBuilder(topic).set_kms_key_name("test-kms-key-name"));
+      TopicBuilder(topic).set_kms_key_name("test-kms-key-name"), TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ("test-kms-key-name", response->kms_key_name());
   EXPECT_EQ(topic.FullName(), response->name());
@@ -48,6 +57,7 @@ TEST(TopicAdminClient, GetTopic) {
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, GetTopic)
       .WillOnce([&](TopicAdminConnection::GetTopicParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(topic.FullName(), p.topic.FullName());
         google::pubsub::v1::Topic response;
         response.set_name(p.topic.FullName());
@@ -55,7 +65,7 @@ TEST(TopicAdminClient, GetTopic) {
         return make_status_or(response);
       });
   TopicAdminClient client(mock);
-  auto const response = client.GetTopic(topic);
+  auto const response = client.GetTopic(topic, TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ("test-kms-key-name", response->kms_key_name());
   EXPECT_EQ(topic.FullName(), response->name());
@@ -66,6 +76,7 @@ TEST(TopicAdminClient, UpdateTopic) {
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, UpdateTopic)
       .WillOnce([&](TopicAdminConnection::UpdateTopicParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(topic.FullName(), p.request.topic().name());
         EXPECT_EQ("test-kms-key-name", p.request.topic().kms_key_name());
         EXPECT_THAT(p.request.update_mask().paths(),
@@ -75,7 +86,7 @@ TEST(TopicAdminClient, UpdateTopic) {
       });
   TopicAdminClient client(mock);
   auto const response = client.UpdateTopic(
-      TopicBuilder(topic).set_kms_key_name("test-kms-key-name"));
+      TopicBuilder(topic).set_kms_key_name("test-kms-key-name"), TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ("test-kms-key-name", response->kms_key_name());
   EXPECT_EQ(topic.FullName(), response->name());
@@ -87,6 +98,7 @@ TEST(TopicAdminClient, ListTopics) {
   auto const t2 = Topic("test-project", "t2");
   EXPECT_CALL(*mock, ListTopics)
       .WillOnce([&](TopicAdminConnection::ListTopicsParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ("projects/test-project", p.project_id);
         return internal::MakePaginationRange<pubsub::ListTopicsRange>(
             google::pubsub::v1::ListTopicsRequest{},
@@ -104,7 +116,7 @@ TEST(TopicAdminClient, ListTopics) {
       });
   TopicAdminClient client(mock);
   std::vector<std::string> names;
-  for (auto const& t : client.ListTopics("test-project")) {
+  for (auto const& t : client.ListTopics("test-project", TestOptions())) {
     ASSERT_STATUS_OK(t);
     names.push_back(t->name());
   }
@@ -116,11 +128,12 @@ TEST(TopicAdminClient, DeleteTopic) {
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, DeleteTopic)
       .WillOnce([&](TopicAdminConnection::DeleteTopicParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(topic.FullName(), p.topic.FullName());
         return Status{};
       });
   TopicAdminClient client(mock);
-  auto const response = client.DeleteTopic(topic);
+  auto const response = client.DeleteTopic(topic, TestOptions());
   EXPECT_STATUS_OK(response);
 }
 
@@ -129,11 +142,12 @@ TEST(TopicAdminClient, DetachSubscription) {
   Subscription const subscription("test-project", "test-subscription");
   EXPECT_CALL(*mock, DetachSubscription)
       .WillOnce([&](TopicAdminConnection::DetachSubscriptionParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(subscription.FullName(), p.subscription.FullName());
         return make_status_or(google::pubsub::v1::DetachSubscriptionResponse{});
       });
   TopicAdminClient client(mock);
-  auto const response = client.DetachSubscription(subscription);
+  auto const response = client.DetachSubscription(subscription, TestOptions());
   EXPECT_STATUS_OK(response);
 }
 
@@ -145,6 +159,7 @@ TEST(TopicAdminClient, ListTopicSubscriptions) {
   EXPECT_CALL(*mock, ListTopicSubscriptions)
       .WillOnce([&](TopicAdminConnection::ListTopicSubscriptionsParams const&
                         p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(topic.FullName(), p.topic_full_name);
         return internal::MakePaginationRange<
             pubsub::ListTopicSubscriptionsRange>(
@@ -163,7 +178,7 @@ TEST(TopicAdminClient, ListTopicSubscriptions) {
       });
   TopicAdminClient client(mock);
   std::vector<std::string> names;
-  for (auto const& s : client.ListTopicSubscriptions(topic)) {
+  for (auto const& s : client.ListTopicSubscriptions(topic, TestOptions())) {
     ASSERT_STATUS_OK(s);
     names.push_back(*s);
   }
@@ -177,6 +192,7 @@ TEST(TopicAdminClient, ListTopicSnapshots) {
   auto const s2 = Snapshot("test-project", "s2");
   EXPECT_CALL(*mock, ListTopicSnapshots)
       .WillOnce([&](TopicAdminConnection::ListTopicSnapshotsParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(topic.FullName(), p.topic_full_name);
         return internal::MakePaginationRange<pubsub::ListTopicSnapshotsRange>(
             google::pubsub::v1::ListTopicSnapshotsRequest{},
@@ -194,7 +210,7 @@ TEST(TopicAdminClient, ListTopicSnapshots) {
       });
   TopicAdminClient client(mock);
   std::vector<std::string> names;
-  for (auto const& s : client.ListTopicSnapshots(topic)) {
+  for (auto const& s : client.ListTopicSnapshots(topic, TestOptions())) {
     ASSERT_STATUS_OK(s);
     names.push_back(*s);
   }

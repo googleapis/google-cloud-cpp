@@ -58,7 +58,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class TopicAdminClient {
  public:
-  explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection);
+  explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection,
+                            Options opts = {});
 
   /**
    * The default constructor is deleted.
@@ -81,13 +82,17 @@ class TopicAdminClient {
    *
    * @param builder the configuration for the new topic, includes the name.
    */
-  StatusOr<google::pubsub::v1::Topic> CreateTopic(TopicBuilder builder) {
-    return CreateTopic(std::move(builder).BuildCreateRequest());
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(TopicBuilder builder,
+                                                  Options opts = {}) {
+    return CreateTopic(std::move(builder).BuildCreateRequest(),
+                       std::move(opts));
   }
 
   /// Create a new topic in Cloud Pub/Sub.
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      google::pubsub::v1::Topic request) {
+      google::pubsub::v1::Topic request, Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->CreateTopic({std::move(request)});
   }
 
@@ -100,7 +105,9 @@ class TopicAdminClient {
    * @par Example
    * @snippet samples.cc get-topic
    */
-  StatusOr<google::pubsub::v1::Topic> GetTopic(Topic topic) {
+  StatusOr<google::pubsub::v1::Topic> GetTopic(Topic topic, Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->GetTopic({std::move(topic)});
   }
 
@@ -116,7 +123,10 @@ class TopicAdminClient {
    *
    * @param builder the configuration for the new topic, includes the name.
    */
-  StatusOr<google::pubsub::v1::Topic> UpdateTopic(TopicBuilder builder) {
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(TopicBuilder builder,
+                                                  Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->UpdateTopic({std::move(builder).BuildUpdateRequest()});
   }
 
@@ -129,7 +139,9 @@ class TopicAdminClient {
    * @par Example
    * @snippet samples.cc list-topics
    */
-  ListTopicsRange ListTopics(std::string const& project_id) {
+  ListTopicsRange ListTopics(std::string const& project_id, Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->ListTopics({"projects/" + project_id});
   }
 
@@ -147,7 +159,9 @@ class TopicAdminClient {
    *
    * @param topic the name of the topic to be deleted.
    */
-  Status DeleteTopic(Topic topic) {
+  Status DeleteTopic(Topic topic, Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->DeleteTopic({std::move(topic)});
   }
 
@@ -168,7 +182,9 @@ class TopicAdminClient {
    * @param subscription the name of the subscription to detach.
    */
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      Subscription subscription) {
+      Subscription subscription, Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->DetachSubscription({std::move(subscription)});
   }
 
@@ -186,7 +202,10 @@ class TopicAdminClient {
    * @par Example
    * @snippet samples.cc list-topic-subscriptions
    */
-  ListTopicSubscriptionsRange ListTopicSubscriptions(Topic const& topic) {
+  ListTopicSubscriptionsRange ListTopicSubscriptions(Topic const& topic,
+                                                     Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->ListTopicSubscriptions({topic.FullName()});
   }
 
@@ -207,12 +226,16 @@ class TopicAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
-  ListTopicSnapshotsRange ListTopicSnapshots(Topic const& topic) {
+  ListTopicSnapshotsRange ListTopicSnapshots(Topic const& topic,
+                                             Options opts = {}) {
+    internal::OptionsSpan span(
+        internal::MergeOptions(std::move(opts), options_));
     return connection_->ListTopicSnapshots({topic.FullName()});
   }
 
  private:
   std::shared_ptr<TopicAdminConnection> connection_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
