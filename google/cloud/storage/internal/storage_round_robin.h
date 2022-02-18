@@ -43,6 +43,10 @@ class StorageRoundRobin : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::CreateBucketRequest const& request) override;
 
+  StatusOr<google::storage::v2::ListBucketsResponse> ListBuckets(
+      grpc::ClientContext& context,
+      google::storage::v2::ListBucketsRequest const& request) override;
+
   StatusOr<google::storage::v2::Bucket> UpdateBucket(
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) override;

@@ -152,8 +152,13 @@ ClientOptions const& GrpcClient::client_options() const {
 }
 
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
-    ListBucketsRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListBucketsRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->ListBuckets(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketRequestParser::FromProto(*response);
 }
 
 StatusOr<BucketMetadata> GrpcClient::CreateBucket(

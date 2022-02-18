@@ -32,6 +32,7 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::IsSupersetOf;
 using ::testing::Not;
 using ::testing::Pair;
 
@@ -78,6 +79,20 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
       bucket_name, BucketMetadataPatchBuilder{}.SetLabel("l0", "k0"));
   ASSERT_STATUS_OK(patch);
   EXPECT_THAT(patch->labels(), ElementsAre(Pair("l0", "k0")));
+
+  // Create a second bucket to make the list more interesting.
+  auto bucket_name_2 = MakeRandomBucketName();
+  auto insert_2 = client->CreateBucketForProject(bucket_name_2, project_name,
+                                                 BucketMetadata());
+  ASSERT_STATUS_OK(insert_2);
+  ScheduleForDelete(*insert_2);
+
+  std::vector<std::string> names;
+  for (auto const& b : client->ListBucketsForProject(project_name)) {
+    ASSERT_STATUS_OK(b);
+    names.push_back(b->name());
+  }
+  EXPECT_THAT(names, IsSupersetOf({bucket_name, bucket_name_2}));
 
   auto delete_status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);

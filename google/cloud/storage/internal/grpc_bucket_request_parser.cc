@@ -89,6 +89,42 @@ google::storage::v2::CreateBucketRequest GrpcBucketRequestParser::ToProto(
   return result;
 }
 
+google::storage::v2::ListBucketsRequest GrpcBucketRequestParser::ToProto(
+    ListBucketsRequest const& request) {
+  google::storage::v2::ListBucketsRequest result;
+  SetCommonParameters(result, request);
+  result.set_parent("projects/" + request.project_id());
+  auto const page_size = request.GetOption<MaxResults>().value_or(0);
+  // Clamp out of range values. The service will clamp to its own range
+  // ([0, 1000] as of this writing) anyway.
+  if (page_size < 0) {
+    result.set_page_size(0);
+  } else if (page_size < std::numeric_limits<std::int32_t>::max()) {
+    result.set_page_size(static_cast<std::int32_t>(page_size));
+  } else {
+    result.set_page_size(std::numeric_limits<std::int32_t>::max());
+  }
+  result.set_page_token(request.page_token());
+  result.set_prefix(request.GetOption<Prefix>().value_or(""));
+  if (request.GetOption<Projection>().value_or("") == "full") {
+    result.mutable_read_mask()->add_paths("*");
+  }
+  return result;
+}
+
+ListBucketsResponse GrpcBucketRequestParser::FromProto(
+    google::storage::v2::ListBucketsResponse const& response) {
+  ListBucketsResponse result;
+  result.next_page_token = response.next_page_token();
+  result.items.reserve(response.buckets_size());
+  std::transform(response.buckets().begin(), response.buckets().end(),
+                 std::back_inserter(result.items),
+                 [](google::storage::v2::Bucket const& b) {
+                   return GrpcBucketMetadataParser::FromProto(b);
+                 });
+  return result;
+}
+
 StatusOr<google::storage::v2::UpdateBucketRequest>
 GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
   google::storage::v2::UpdateBucketRequest result;
