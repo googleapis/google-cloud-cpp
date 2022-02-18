@@ -157,6 +157,9 @@ class TopicAdminConnection {
 
   /// Defines the interface for `TopicAdminClient::ListTopicSnapshots()`
   virtual ListTopicSnapshotsRange ListTopicSnapshots(ListTopicSnapshotsParams);
+
+  /// Returns the options used to create the connection
+  virtual Options options() const { return Options{}; }
 };
 
 /**
