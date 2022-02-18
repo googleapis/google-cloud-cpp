@@ -43,6 +43,8 @@ struct GrpcBucketRequestParser {
 
   static StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
       PatchBucketRequest const& request);
+  static google::storage::v2::UpdateBucketRequest ToProto(
+      UpdateBucketRequest const& request);
 };
 
 }  // namespace internal
