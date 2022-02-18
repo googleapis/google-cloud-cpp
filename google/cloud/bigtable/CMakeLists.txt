@@ -439,7 +439,7 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Bigtable.")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_bigtable")
 string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " googleapis_cpp_bigtable_protos"
+              " google_cloud_cpp_common" " google_cloud_cpp_bigtable_protos"
               " absl_memory")
 
 # Create and install the pkg-config files.
@@ -464,19 +464,3 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
     COMPONENT google_cloud_cpp_development)
-
-# TODO(#5726) - generate backwards compatibility files for pkg-config and CMake
-set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_bigtable absl_memory")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-               "bigtable_client.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
-configure_file("legacy.cmake.in" "bigtable_client-config.cmake" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client"
-    COMPONENT google_cloud_cpp_development)
-# TODO(#5726) - END

@@ -60,6 +60,7 @@ foreach (library ${experimental_libraries})
 endforeach ()
 
 foreach (library ${common_libraries} ${ga_libraries} ${experimental_libraries})
+    message("library=${library}")
     pkg_check_modules(${library} IMPORTED_TARGET REQUIRED
                       google_cloud_cpp_${library})
     add_test_case(test_pc_${library} PkgConfig::${library})

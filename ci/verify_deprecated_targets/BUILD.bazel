@@ -24,14 +24,6 @@ licenses(["notice"])  # Apache 2.0
 DEPRECATED_TARGETS = [
     "google/cloud:google_cloud_cpp_common",
     "google/cloud:google_cloud_cpp_grpc_utils",
-    "google/cloud/bigtable:bigtable_client",
-    "google/cloud/pubsub:pubsub_client",
-    "google/cloud/spanner:spanner_client",
-    "google/cloud/storage:storage_client",
-    ":bigtable_client",
-    ":pubsub_client",
-    ":spanner_client",
-    ":storage_client",
 ]
 
 [cc_test(

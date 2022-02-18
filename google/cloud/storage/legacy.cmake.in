@@ -14,17 +14,3 @@
 
 include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_storage)
-
-foreach (target storage_client)
-    if (TARGET ${target})
-        continue ()
-    endif ()
-    add_library(${target} IMPORTED INTERFACE)
-    set_target_properties(${target} PROPERTIES
-        INTERFACE_LINK_LIBRARIES "google-cloud-cpp::storage")
-    if (CMAKE_VERSION VERSION_GREATER 3.17)
-        set_target_properties(${target} PROPERTIES
-            DEPRECATION
-            "This target will be removed on or about 2022-02-15, please use google-cloud-cpp::storage instead")
-    endif ()
-endforeach ()
