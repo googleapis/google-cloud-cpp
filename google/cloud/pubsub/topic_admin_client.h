@@ -81,6 +81,8 @@ class TopicAdminClient {
    * @snippet samples.cc create-topic
    *
    * @param builder the configuration for the new topic, includes the name.
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   StatusOr<google::pubsub::v1::Topic> CreateTopic(TopicBuilder builder,
                                                   Options opts = {}) {
@@ -122,6 +124,8 @@ class TopicAdminClient {
    * @snippet samples.cc update-topic
    *
    * @param builder the configuration for the new topic, includes the name.
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(TopicBuilder builder,
                                                   Options opts = {}) {
@@ -158,6 +162,8 @@ class TopicAdminClient {
    * @snippet samples.cc delete-topic
    *
    * @param topic the name of the topic to be deleted.
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   Status DeleteTopic(Topic topic, Options opts = {}) {
     internal::OptionsSpan span(
@@ -180,6 +186,8 @@ class TopicAdminClient {
    * @snippet samples.cc detach-subscription
    *
    * @param subscription the name of the subscription to detach.
+   * @param opts Override the class-level options, such as retry and backoff
+   *     policies.
    */
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
       Subscription subscription, Options opts = {}) {
