@@ -102,7 +102,8 @@ class SchemaAdminConnection {
  *     existing code that calls `MakeSchemaAdminConnection({})` from breaking,
  *     due to ambiguity.
  *
- * @deprecated Please use `MakeSchemaAdminConnection()` instead.
+ * @deprecated Please use the `MakeSchemaAdminConnection` function that accepts
+ *     `google::cloud::Options` instead.
  */
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
     std::initializer_list<internal::NonConstructible>);
