@@ -89,6 +89,9 @@ class SchemaAdminConnection {
   /// Defines the interface for `SchemaAdminClient::ValidateMessage()`
   virtual StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
       google::pubsub::v1::ValidateMessageRequest const&) = 0;
+
+  /// Return the options used to create the connection.
+  virtual Options options() const { return Options{}; }
 };
 
 /**
