@@ -224,7 +224,8 @@ StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(
   if (!response) return std::move(response).status();
   IamBindings bindings;
   for (auto const& b : response->bindings()) {
-    bindings.AddMembers(b.role(), std::set<std::string>(b.members().begin(), b.members().end()));
+    bindings.AddMembers(b.role(), std::set<std::string>(b.members().begin(),
+                                                        b.members().end()));
   }
   return IamPolicy{response->version(), std::move(bindings), response->etag()};
 }
