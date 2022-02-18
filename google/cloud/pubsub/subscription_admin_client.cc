@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscription_admin_client.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 
 namespace google {
 namespace cloud {
@@ -20,12 +21,16 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriptionAdminClient::SubscriptionAdminClient(
-    std::shared_ptr<SubscriptionAdminConnection> connection)
-    : connection_(std::move(connection)) {}
+    std::shared_ptr<SubscriptionAdminConnection> connection, Options opts)
+    : connection_(std::move(connection)),
+      options_(internal::MergeOptions(
+          std::move(opts),
+          pubsub_internal::DefaultCommonOptions(connection_->options()))) {}
 
 StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminClient::Seek(
     Subscription const& subscription,
-    std::chrono::system_clock::time_point timestamp) {
+    std::chrono::system_clock::time_point timestamp, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::SeekRequest request;
   request.set_subscription(subscription.FullName());
   *request.mutable_time() =
@@ -34,7 +39,8 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminClient::Seek(
 }
 
 StatusOr<google::pubsub::v1::SeekResponse> SubscriptionAdminClient::Seek(
-    Subscription const& subscription, Snapshot const& snapshot) {
+    Subscription const& subscription, Snapshot const& snapshot, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::SeekRequest request;
   request.set_subscription(subscription.FullName());
   request.set_snapshot(snapshot.FullName());

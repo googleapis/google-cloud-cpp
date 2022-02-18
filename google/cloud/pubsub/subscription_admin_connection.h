@@ -183,6 +183,9 @@ class SubscriptionAdminConnection {
 
   /// Defines the interface for `SubscriptionAdminClient::Seek()`
   virtual StatusOr<google::pubsub::v1::SeekResponse> Seek(SeekParams);
+
+  /// Return the options used to create the connection.
+  virtual Options options() const { return Options{}; }
 };
 
 /**
