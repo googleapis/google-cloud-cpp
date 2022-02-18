@@ -54,6 +54,13 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
   return child_->CreateBucket(context, request);
 }
 
+StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
+    grpc::ClientContext& context,
+    google::storage::v2::UpdateBucketRequest const& request) {
+  SetMetadata(context, {});
+  return child_->UpdateBucket(context, request);
+}
+
 StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
     grpc::ClientContext& context,
     google::storage::v2::ComposeObjectRequest const& request) {
