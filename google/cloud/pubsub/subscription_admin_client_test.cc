@@ -25,6 +25,14 @@ namespace {
 
 using ::testing::ElementsAre;
 
+std::string CurrentOptionsProbe() {
+  return internal::CurrentOptions().get<UserProjectOption>();
+}
+
+Options TestOptions() {
+  return Options{}.set<UserProjectOption>("test-options");
+}
+
 TEST(SubscriptionAdminClient, CreateSubscription) {
   auto mock = std::make_shared<pubsub_mocks::MockSubscriptionAdminConnection>();
   Topic const topic("test-project", "test-topic");
@@ -33,6 +41,7 @@ TEST(SubscriptionAdminClient, CreateSubscription) {
   EXPECT_CALL(*mock, CreateSubscription)
       .WillOnce(
           [&](SubscriptionAdminConnection::CreateSubscriptionParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(topic.FullName(), p.subscription.topic());
             EXPECT_EQ(subscription.FullName(), p.subscription.name());
             EXPECT_EQ(kDeadlineSeconds, p.subscription.ack_deadline_seconds());
@@ -43,7 +52,8 @@ TEST(SubscriptionAdminClient, CreateSubscription) {
   auto const response =
       client.CreateSubscription(topic, subscription,
                                 SubscriptionBuilder{}.set_ack_deadline(
-                                    std::chrono::seconds(kDeadlineSeconds)));
+                                    std::chrono::seconds(kDeadlineSeconds)),
+                                TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(kDeadlineSeconds, response->ack_deadline_seconds());
   EXPECT_EQ(topic.FullName(), response->topic());
@@ -57,6 +67,7 @@ TEST(SubscriptionAdminClient, GetSubscription) {
   EXPECT_CALL(*mock, GetSubscription)
       .WillOnce(
           [&](SubscriptionAdminConnection::GetSubscriptionParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(subscription.FullName(), p.subscription.FullName());
             google::pubsub::v1::Subscription response;
             response.set_name(p.subscription.FullName());
@@ -64,7 +75,7 @@ TEST(SubscriptionAdminClient, GetSubscription) {
             return make_status_or(response);
           });
   SubscriptionAdminClient client(mock);
-  auto const response = client.GetSubscription(subscription);
+  auto const response = client.GetSubscription(subscription, TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(kDeadlineSeconds, response->ack_deadline_seconds());
   EXPECT_EQ(subscription.FullName(), response->name());
@@ -77,6 +88,7 @@ TEST(SubscriptionAdminClient, UpdateSubscription) {
   EXPECT_CALL(*mock, UpdateSubscription)
       .WillOnce(
           [&](SubscriptionAdminConnection::UpdateSubscriptionParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(subscription.FullName(), p.request.subscription().name());
             EXPECT_EQ(kDeadlineSeconds,
                       p.request.subscription().ack_deadline_seconds());
@@ -87,9 +99,11 @@ TEST(SubscriptionAdminClient, UpdateSubscription) {
             return make_status_or(response);
           });
   SubscriptionAdminClient client(mock);
-  auto const response = client.UpdateSubscription(
-      subscription, SubscriptionBuilder{}.set_ack_deadline(
-                        std::chrono::seconds(kDeadlineSeconds)));
+  auto const response =
+      client.UpdateSubscription(subscription,
+                                SubscriptionBuilder{}.set_ack_deadline(
+                                    std::chrono::seconds(kDeadlineSeconds)),
+                                TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(kDeadlineSeconds, response->ack_deadline_seconds());
   EXPECT_EQ(subscription.FullName(), response->name());
@@ -102,6 +116,7 @@ TEST(SubscriptionAdminClient, ListSubscriptions) {
   EXPECT_CALL(*mock, ListSubscriptions)
       .WillOnce([&](SubscriptionAdminConnection::ListSubscriptionsParams const&
                         p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ("projects/test-project", p.project_id);
         return internal::MakePaginationRange<pubsub::ListSubscriptionsRange>(
             google::pubsub::v1::ListSubscriptionsRequest{},
@@ -119,7 +134,8 @@ TEST(SubscriptionAdminClient, ListSubscriptions) {
       });
   SubscriptionAdminClient client(mock);
   std::vector<std::string> names;
-  for (auto const& t : client.ListSubscriptions("test-project")) {
+  for (auto const& t :
+       client.ListSubscriptions("test-project", TestOptions())) {
     ASSERT_STATUS_OK(t);
     names.push_back(t->name());
   }
@@ -132,11 +148,12 @@ TEST(SubscriptionAdminClient, DeleteSubscription) {
   EXPECT_CALL(*mock, DeleteSubscription)
       .WillOnce(
           [&](SubscriptionAdminConnection::DeleteSubscriptionParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(subscription.FullName(), p.subscription.FullName());
             return Status{};
           });
   SubscriptionAdminClient client(mock);
-  auto const response = client.DeleteSubscription(subscription);
+  auto const response = client.DeleteSubscription(subscription, TestOptions());
   EXPECT_STATUS_OK(response);
 }
 
@@ -146,15 +163,18 @@ TEST(SubscriptionAdminClient, ModifyPushConfig) {
   EXPECT_CALL(*mock, ModifyPushConfig)
       .WillOnce(
           [&](SubscriptionAdminConnection::ModifyPushConfigParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(subscription.FullName(), p.request.subscription());
             EXPECT_EQ("https://test-endpoint.example.com",
                       p.request.push_config().push_endpoint());
             return Status{};
           });
   SubscriptionAdminClient client(mock);
-  auto const response = client.ModifyPushSubscription(
-      subscription, PushConfigBuilder{}.set_push_endpoint(
-                        "https://test-endpoint.example.com"));
+  auto const response =
+      client.ModifyPushSubscription(subscription,
+                                    PushConfigBuilder{}.set_push_endpoint(
+                                        "https://test-endpoint.example.com"),
+                                    TestOptions());
   EXPECT_STATUS_OK(response);
 }
 
@@ -165,6 +185,7 @@ TEST(SubscriptionAdminClient, CreateSnapshot) {
   EXPECT_CALL(*mock, CreateSnapshot)
       .WillOnce(
           [&](SubscriptionAdminConnection::CreateSnapshotParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(subscription.FullName(), p.request.subscription());
             EXPECT_EQ(snapshot.FullName(), p.request.name());
             google::pubsub::v1::Snapshot response;
@@ -173,7 +194,8 @@ TEST(SubscriptionAdminClient, CreateSnapshot) {
           });
   SubscriptionAdminClient client(mock);
   auto const response = client.CreateSnapshot(
-      subscription, snapshot, SnapshotBuilder{}.add_label("k0", "l0"));
+      subscription, snapshot, SnapshotBuilder{}.add_label("k0", "l0"),
+      TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(snapshot.FullName(), response->name());
 }
@@ -183,13 +205,14 @@ TEST(SubscriptionAdminClient, GetSnapshot) {
   Snapshot const snapshot("test-project", "test-snapshot");
   EXPECT_CALL(*mock, GetSnapshot)
       .WillOnce([&](SubscriptionAdminConnection::GetSnapshotParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(snapshot.FullName(), p.snapshot.FullName());
         google::pubsub::v1::Snapshot response;
         response.set_name(p.snapshot.FullName());
         return make_status_or(response);
       });
   SubscriptionAdminClient client(mock);
-  auto const response = client.GetSnapshot(snapshot);
+  auto const response = client.GetSnapshot(snapshot, TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(snapshot.FullName(), response->name());
 }
@@ -200,14 +223,15 @@ TEST(SubscriptionAdminClient, UpdateSnapshot) {
   EXPECT_CALL(*mock, UpdateSnapshot)
       .WillOnce(
           [&](SubscriptionAdminConnection::UpdateSnapshotParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(snapshot.FullName(), p.request.snapshot().name());
             EXPECT_THAT(p.request.update_mask().paths(), ElementsAre("labels"));
             google::pubsub::v1::Snapshot response = p.request.snapshot();
             return make_status_or(response);
           });
   SubscriptionAdminClient client(mock);
-  auto const response =
-      client.UpdateSnapshot(snapshot, SnapshotBuilder{}.add_label("k1", "l1"));
+  auto const response = client.UpdateSnapshot(
+      snapshot, SnapshotBuilder{}.add_label("k1", "l1"), TestOptions());
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(snapshot.FullName(), response->name());
 }
@@ -218,6 +242,7 @@ TEST(SubscriptionAdminClient, ListSnapshots) {
   auto const s2 = Snapshot("test-project", "s2");
   EXPECT_CALL(*mock, ListSnapshots)
       .WillOnce([&](SubscriptionAdminConnection::ListSnapshotsParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ("projects/test-project", p.project_id);
         return internal::MakePaginationRange<pubsub::ListSnapshotsRange>(
             google::pubsub::v1::ListSnapshotsRequest{},
@@ -235,7 +260,7 @@ TEST(SubscriptionAdminClient, ListSnapshots) {
       });
   SubscriptionAdminClient client(mock);
   std::vector<std::string> names;
-  for (auto const& t : client.ListSnapshots("test-project")) {
+  for (auto const& t : client.ListSnapshots("test-project", TestOptions())) {
     ASSERT_STATUS_OK(t);
     names.push_back(t->name());
   }
@@ -248,11 +273,12 @@ TEST(SubscriptionAdminClient, DeleteSnapshot) {
   EXPECT_CALL(*mock, DeleteSnapshot)
       .WillOnce(
           [&](SubscriptionAdminConnection::DeleteSnapshotParams const& p) {
+            EXPECT_EQ(CurrentOptionsProbe(), "test-options");
             EXPECT_EQ(snapshot.FullName(), p.snapshot.FullName());
             return Status{};
           });
   SubscriptionAdminClient client(mock);
-  auto const response = client.DeleteSnapshot(snapshot);
+  auto const response = client.DeleteSnapshot(snapshot, TestOptions());
   EXPECT_STATUS_OK(response);
 }
 
@@ -262,13 +288,14 @@ TEST(SubscriptionAdminClient, Seek) {
   Snapshot const snapshot("test-project", "test-snapshot");
   EXPECT_CALL(*mock, Seek)
       .WillOnce([&](SubscriptionAdminConnection::SeekParams const& p) {
+        EXPECT_EQ(CurrentOptionsProbe(), "test-options");
         EXPECT_EQ(subscription.FullName(), p.request.subscription());
         EXPECT_EQ(snapshot.FullName(), p.request.snapshot());
         google::pubsub::v1::SeekResponse response;
         return make_status_or(response);
       });
   SubscriptionAdminClient client(mock);
-  auto const response = client.Seek(subscription, snapshot);
+  auto const response = client.Seek(subscription, snapshot, TestOptions());
   EXPECT_STATUS_OK(response);
 }
 
