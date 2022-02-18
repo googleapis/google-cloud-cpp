@@ -83,13 +83,11 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
   ResumableAsyncReadWriteStreamingRpcTest() : backoff_policy_{
       std::make_shared<StrictMock<MockBackoffPolicy>>()}, stream_{
       MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest, FakeResponse>(
-          [this]() { return retry_policy_factory_.Call(); },
+          retry_policy_factory_.AsStdFunction(),
           backoff_policy_,
-          [this](std::chrono::duration<double> t) { return sleeper_.Call(t); },
-          [this]() { return stream_factory_.Call(); },
-          [this](AsyncReadWriteStreamReturnType stream) {
-            return initializer_.Call(std::move(stream));
-          })} {
+          sleeper_.AsStdFunction(),
+          stream_factory_.AsStdFunction(),
+          initializer_.AsStdFunction())} {
   }
 
   StrictMock<MockFunction<future<void>(std::chrono::duration<double>)>>
