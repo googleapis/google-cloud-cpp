@@ -96,58 +96,73 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
   auto& bucket = *result.mutable_bucket();
   bucket.set_name("projects/_/buckets/" + request.bucket());
 
+  auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
+
+  // The `labels` field is too special, handle separately
+  if (request.patch().labels_subpatch_dirty_) {
+    // The semantics in gRPC are to replace any labels
+    auto const& subpatch =
+        PatchBuilderDetails::GetPatch(request.patch().labels_subpatch_);
+    for (auto const& kv : subpatch.items()) {
+      auto const& v = kv.value();
+      if (!v.is_string()) continue;
+      (*bucket.mutable_labels())[kv.key()] = v.get<std::string>();
+    }
+    result.mutable_update_mask()->add_paths("labels");
+  }
+
   // This struct and the vector refactors some common code to create patches for
-  // each field. We build the vector following the order of the fields in the
-  // proto. This is to ease inspection of the code as new protos get added.
+  // each field.
+  using google::storage::v2::Bucket;
   struct Field {
     std::string name;
-    std::function<void(google::storage::v2::Bucket&, nlohmann::json const&)>
-        action;
-  };
-  std::vector<Field> fields;
-
-  auto const& patch = PatchBuilderDetails::GetPatch(request.patch().impl_);
-  if (patch.contains("storageClass")) {
-    bucket.set_storage_class(patch.value("storageClass", ""));
-    result.mutable_update_mask()->add_paths("storage_class");
-  }
-
-  if (patch.contains("rpo")) {
-    bucket.set_rpo(patch.value("rpo", ""));
-    result.mutable_update_mask()->add_paths("rpo");
-  }
-
-  fields.push_back(
-      {"acl", [](google::storage::v2::Bucket& b, nlohmann::json const& patch) {
+    std::string rename;
+    std::function<Status(Bucket&, nlohmann::json const&)> action;
+  } fields[] = {
+      // To ease inspection, the fields appear in the same order as they are
+      // declared in the proto
+      {"storageClass", "storage_class",
+       [](Bucket& b, nlohmann::json const& patch) {
+         b.set_storage_class(patch.get<std::string>());
+         return Status{};
+       }},
+      {"rpo", "",
+       [](Bucket& b, nlohmann::json const& patch) {
+         b.set_rpo(patch.get<std::string>());
+         return Status{};
+       }},
+      {"acl", "",
+       [](Bucket& b, nlohmann::json const& patch) {
          for (auto const& a : patch) {
            auto& acl = *b.add_acl();
            acl.set_entity(a.value("entity", ""));
            acl.set_role(a.value("role", ""));
          }
-       }});
-
-  if (patch.contains("defaultObjectAcl")) {
-    for (auto const& a : patch["defaultObjectAcl"]) {
-      auto& acl = *bucket.add_default_object_acl();
-      acl.set_entity(a.value("entity", ""));
-      acl.set_role(a.value("role", ""));
-    }
-    result.mutable_update_mask()->add_paths("default_object_acl");
-  }
-
-  if (patch.contains("lifecycle")) {
-    auto& lifecycle = *bucket.mutable_lifecycle();
-    // By construction, the PatchBuilder always includes the "rule" subobject.
-    for (auto const& r : patch["lifecycle"]["rule"]) {
-      auto lf = LifecycleRuleParser::FromJson(r);
-      if (!lf) return std::move(lf).status();
-      *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(*lf);
-    }
-    result.mutable_update_mask()->add_paths("lifecycle");
-  }
-
-  fields.push_back(
-      {"cors", [](google::storage::v2::Bucket& b, nlohmann::json const& patch) {
+         return Status{};
+       }},
+      {"defaultObjectAcl", "default_object_acl",
+       [](Bucket& b, nlohmann::json const& patch) {
+         for (auto const& a : patch) {
+           auto& acl = *b.add_default_object_acl();
+           acl.set_entity(a.value("entity", ""));
+           acl.set_role(a.value("role", ""));
+         }
+         return Status{};
+       }},
+      {"lifecycle", "",
+       [](Bucket& b, nlohmann::json const& patch) {
+         auto& lifecycle = *b.mutable_lifecycle();
+         // By construction, the PatchBuilder always includes the "rule"
+         // subobject.
+         for (auto const& r : patch["rule"]) {
+           auto lf = LifecycleRuleParser::FromJson(r);
+           if (!lf) return std::move(lf).status();
+           *lifecycle.add_rule() = GrpcBucketMetadataParser::ToProto(*lf);
+         }
+         return Status{};
+       }},
+      {"cors", "",
+       [](Bucket& b, nlohmann::json const& patch) {
          for (auto const& c : patch) {
            auto& cors = *b.add_cors();
            cors.set_max_age_seconds(c.value("maxAgeSeconds", std::int32_t{0}));
@@ -167,84 +182,72 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
              }
            }
          }
-       }});
-
-  if (patch.contains("defaultEventBasedHold")) {
-    bucket.set_default_event_based_hold(
-        patch.value("defaultEventBasedHold", false));
-    result.mutable_update_mask()->add_paths("default_event_based_hold");
-  }
-
-  if (request.patch().labels_subpatch_dirty_) {
-    // The semantics in gRPC are to replace any labels
-    auto const& subpatch =
-        PatchBuilderDetails::GetPatch(request.patch().labels_subpatch_);
-    for (auto const& kv : subpatch.items()) {
-      auto const& v = kv.value();
-      if (!v.is_string()) continue;
-      (*bucket.mutable_labels())[kv.key()] = v.get<std::string>();
-    }
-    result.mutable_update_mask()->add_paths("labels");
-  }
-
-  fields.push_back(
-      {"website", [](google::storage::v2::Bucket& b, nlohmann::json const& w) {
+         return Status{};
+       }},
+      {"defaultEventBasedHold", "default_event_based_hold",
+       [](Bucket& b, nlohmann::json const& patch) {
+         b.set_default_event_based_hold(patch.get<bool>());
+         return Status{};
+       }},
+      {"website", "",
+       [](Bucket& b, nlohmann::json const& w) {
          b.mutable_website()->set_main_page_suffix(
              w.value("mainPageSuffix", ""));
          b.mutable_website()->set_not_found_page(w.value("notFoundPage", ""));
-       }});
-
-  fields.push_back(
-      {"versioning",
-       [](google::storage::v2::Bucket& b, nlohmann::json const& v) {
+         return Status{};
+       }},
+      {"versioning", "",
+       [](Bucket& b, nlohmann::json const& v) {
          b.mutable_versioning()->set_enabled(v.value("enabled", false));
-       }});
-
-  fields.push_back(
-      {"logging", [](google::storage::v2::Bucket& b, nlohmann::json const& l) {
+         return Status{};
+       }},
+      {"logging", "",
+       [](Bucket& b, nlohmann::json const& l) {
          b.mutable_logging()->set_log_bucket(l.value("logBucket", ""));
          b.mutable_logging()->set_log_object_prefix(
              l.value("logObjectPrefix", ""));
-       }});
-
-  fields.push_back({"encryption", [](google::storage::v2::Bucket& b,
-                                     nlohmann::json const& e) {
-                      b.mutable_encryption()->set_default_kms_key(
-                          e.value("defaultKmsKeyName", ""));
-                    }});
-
-  fields.push_back({"billing", [](google::storage::v2::Bucket& bucket,
-                                  nlohmann::json const& b) {
-                      bucket.mutable_billing()->set_requester_pays(
-                          b.value("requesterPays", false));
-                    }});
-
-  if (patch.contains("retentionPolicy")) {
-    auto const& r = patch["retentionPolicy"];
-    bucket.mutable_retention_policy()->set_retention_period(
-        r.value("retentionPeriod", int64_t{0}));
-    result.mutable_update_mask()->add_paths("retention_policy");
-  }
-
-  if (patch.contains("iamConfiguration")) {
-    auto const& i = patch["iamConfiguration"];
-    auto& iam_config = *bucket.mutable_iam_config();
-    if (i.contains("uniformBucketLevelAccess")) {
-      iam_config.mutable_uniform_bucket_level_access()->set_enabled(
-          i["uniformBucketLevelAccess"].value("enabled", false));
-    }
-    if (i.contains("publicAccessPrevention")) {
-      auto pap = i.value("publicAccessPrevention", "");
-      iam_config.set_public_access_prevention(
-          GrpcBucketMetadataParser::ToProtoPublicAccessPrevention(pap));
-    }
-    result.mutable_update_mask()->add_paths("iam_config");
-  }
+         return Status{};
+       }},
+      {"encryption", "",
+       [](Bucket& b, nlohmann::json const& e) {
+         b.mutable_encryption()->set_default_kms_key(
+             e.value("defaultKmsKeyName", ""));
+         return Status{};
+       }},
+      {"billing", "",
+       [](Bucket& bucket, nlohmann::json const& b) {
+         bucket.mutable_billing()->set_requester_pays(
+             b.value("requesterPays", false));
+         return Status{};
+       }},
+      {"retentionPolicy", "retention_policy",
+       [](Bucket& b, nlohmann::json const& r) {
+         b.mutable_retention_policy()->set_retention_period(
+             r.value("retentionPeriod", int64_t{0}));
+         return Status{};
+       }},
+      {"iamConfiguration", "iam_config",
+       [](Bucket& b, nlohmann::json const& i) {
+         auto& iam_config = *b.mutable_iam_config();
+         if (i.contains("uniformBucketLevelAccess")) {
+           iam_config.mutable_uniform_bucket_level_access()->set_enabled(
+               i["uniformBucketLevelAccess"].value("enabled", false));
+         }
+         if (i.contains("publicAccessPrevention")) {
+           auto pap = i.value("publicAccessPrevention", "");
+           iam_config.set_public_access_prevention(
+               GrpcBucketMetadataParser::ToProtoPublicAccessPrevention(pap));
+         }
+         return Status{};
+       }},
+  };
 
   for (auto const& field : fields) {
     if (!patch.contains(field.name)) continue;
-    field.action(bucket, patch[field.name]);
-    result.mutable_update_mask()->add_paths(field.name);
+    auto status = field.action(bucket, patch[field.name]);
+    if (!status.ok()) return status;
+    result.mutable_update_mask()->add_paths(
+        field.rename.empty() ? field.name : field.rename);
   }
 
   if (request.HasOption<IfMetagenerationMatch>()) {
