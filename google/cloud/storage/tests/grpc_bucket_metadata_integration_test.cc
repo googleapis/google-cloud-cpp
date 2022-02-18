@@ -35,6 +35,7 @@ using ::testing::IsEmpty;
 using ::testing::IsSupersetOf;
 using ::testing::Not;
 using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
@@ -79,6 +80,12 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
       bucket_name, BucketMetadataPatchBuilder{}.SetLabel("l0", "k0"));
   ASSERT_STATUS_OK(patch);
   EXPECT_THAT(patch->labels(), ElementsAre(Pair("l0", "k0")));
+
+  auto updated = client->UpdateBucket(
+      patch->name(), BucketMetadata(*patch).upsert_label("l1", "test-value"));
+  ASSERT_STATUS_OK(updated);
+  EXPECT_THAT(updated->labels(),
+              UnorderedElementsAre(Pair("l0", "k0"), Pair("l1", "test-value")));
 
   // Create a second bucket to make the list more interesting.
   auto bucket_name_2 = MakeRandomBucketName();
