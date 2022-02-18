@@ -42,6 +42,9 @@ using ::testing::ByMove;
 using ::google::cloud::pubsublite_internal::MockRetryPolicy;
 using ::google::cloud::pubsublite_internal::MockBackoffPolicy;
 
+using ms = std::chrono::milliseconds;
+const unsigned int kFutureWaitMs = 100;
+
 struct FakeRequest {
   std::string key;
 };
@@ -181,6 +184,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
   response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse1);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
@@ -200,6 +204,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadWriteAfterShutdown) {
   NoBackoffInvocation(1);
 
   auto start = stream_->Start();
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish = stream_->Finish();
   finish.get();
   ASSERT_FALSE(
@@ -255,6 +260,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleReadFailureThenGood) {
   response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse1);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
@@ -299,6 +305,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
@@ -329,8 +336,11 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, FinishInMiddleOfReadWrite) {
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
   auto read = stream_->Read();
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish_future = stream_->Finish();
   write_promise.set_value(true);
+  EXPECT_EQ(finish_future.wait_for(ms(kFutureWaitMs)),
+            std::future_status::timeout);
   read_promise.set_value(absl::make_optional(kBasicResponse));
   ASSERT_FALSE(write.get());
   ASSERT_FALSE(read.get().has_value());
@@ -369,6 +379,9 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
   auto finish = stream_->Finish();
+  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   start_promise.set_value(true);
   finish.get();
   ASSERT_FALSE(write.get());
@@ -398,6 +411,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
   auto finish = stream_->Finish();
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   finish_promise.set_value(kFailStatus);
   finish.get();
   ASSERT_FALSE(write.get());
@@ -429,6 +444,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
   auto finish = stream_->Finish();
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   sleep_promise.set_value();
   finish.get();
   ASSERT_FALSE(write.get());
@@ -501,13 +518,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadFailWhileWriteInFlight) {
   auto start = stream_->Start();
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
-  auto response0_fut = stream_->Read();
+  auto read = stream_->Read();
+  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   write_promise.set_value(true);
-  ASSERT_FALSE(response0_fut.get().has_value());
+  ASSERT_FALSE(read.get().has_value());
   ASSERT_TRUE(write.get());
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
@@ -547,6 +566,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, WriteFailWhileReadInFlight) {
   auto read = stream_->Read();
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   read_promise.set_value(absl::make_optional(kBasicResponse));
   auto read_response = read.get();
   ASSERT_TRUE(read_response.has_value());
@@ -555,6 +575,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, WriteFailWhileReadInFlight) {
   write = stream_->Write(kBasicRequest,
                          grpc::WriteOptions().set_last_message());
   ASSERT_TRUE(write.get());
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
@@ -598,9 +619,9 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 
   auto start = stream_->Start();
   ASSERT_FALSE(stream_->Read().get().has_value());
+  EXPECT_EQ(start.get(), kFailStatus);
   auto finish = stream_->Finish();
   finish.get();
-  EXPECT_EQ(start.get(), kFailStatus);
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
@@ -633,7 +654,10 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
   auto read = stream_->Read();
+  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   start_promise.set_value(true);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   stream_->Finish().get();
   ASSERT_FALSE(write.get());
   ASSERT_FALSE(read.get().has_value());
@@ -643,7 +667,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, ReadInMiddleOfRetryAfterStart) {
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, WriteFinishesAfterShutdown) {
   promise<bool> write_promise;
 
-  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream = absl::make_unique<StrictMock<AsyncReaderWriter>>
+      ();
   EXPECT_CALL(*stream,
               Start).WillOnce(Return(ByMove(make_ready_future(true))));
   EXPECT_CALL(*stream, Write(kBasicRequest, _))
@@ -661,7 +686,9 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, WriteFinishesAfterShutdown) {
   auto start = stream_->Start();
   auto write = stream_->Write(kBasicRequest,
                               grpc::WriteOptions().set_last_message());
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   auto finish = stream_->Finish();
+  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   write_promise.set_value(true);
   finish.get();
   ASSERT_FALSE(write.get());
