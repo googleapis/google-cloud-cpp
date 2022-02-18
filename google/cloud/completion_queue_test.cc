@@ -694,15 +694,13 @@ TEST_P(RunAsyncTest, TortureBursts) {
     burst(burst_size);
   }
   cq.Shutdown();
+
+  // This test is largely here to trigger (now fixed) race conditions under TSAN
+  // and/or deadlocks under load. If the threads join the test passed.
   for (auto& t : tasks) t.join();
 
   // At least one of the notifications should be avoided (thus _LT and not _LE):
   EXPECT_LT(impl->notify_counter(), kBurstCount * burst_size);
-
-  // This test is largely here to trigger (now fixed) race conditions under TSAN
-  // and/or deadlocks under load. Just getting here is enough to declare
-  // success.
-  GTEST_SUCCEED();
 }
 
 INSTANTIATE_TEST_SUITE_P(RunAsyncTest, RunAsyncTest,
