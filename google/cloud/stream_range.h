@@ -154,6 +154,11 @@ class StreamRange {
    */
   StreamRange() = default;
 
+  ~StreamRange() {
+    internal::OptionsSpan span(options_);
+    reader_ = nullptr;
+  }
+
   //@{
   // @name Move-only
   StreamRange(StreamRange const&) = delete;
@@ -226,8 +231,8 @@ class StreamRange {
     Next();
   }
 
-  internal::StreamReader<T> reader_;
   Options options_ = internal::CurrentOptions();
+  internal::StreamReader<T> reader_;
   StatusOr<T> current_;
   bool current_ok_ = false;
   bool is_end_ = true;

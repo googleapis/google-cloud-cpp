@@ -43,6 +43,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/rest_options.h",
     "internal/rest_request.h",
     "internal/rest_response.h",
+    "internal/unified_rest_credentials.h",
 ]
 
 google_cloud_cpp_rest_internal_srcs = [
@@ -69,4 +70,5 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/rest_client.cc",
     "internal/rest_request.cc",
     "internal/rest_response.cc",
+    "internal/unified_rest_credentials.cc",
 ]

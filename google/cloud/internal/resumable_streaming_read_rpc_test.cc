@@ -42,9 +42,6 @@ struct FakeResponse {
   std::string token;
 };
 
-using MockReturnType =
-    std::unique_ptr<grpc::ClientReaderInterface<FakeResponse>>;
-
 using ReadReturn = absl::variant<Status, FakeResponse>;
 
 class MockStreamingReadRpc : public StreamingReadRpc<FakeResponse> {

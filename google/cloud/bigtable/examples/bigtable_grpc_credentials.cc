@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/crash_handler.h"
+#include "google/cloud/log.h"
 #include <fstream>
 #include <sstream>
 
@@ -174,9 +174,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InstallCrashHandler(argv[0]);
-
+int main(int argc, char* argv[]) try {
   google::cloud::bigtable::examples::Commands commands = {
       {"test-access-token", AccessToken},
       {"test-jwt-access-token", JWTAccessToken},
@@ -186,4 +184,8 @@ int main(int argc, char* argv[]) {
 
   google::cloud::bigtable::examples::Example example(std::move(commands));
   return example.Run(argc, argv);
+} catch (std::exception const& ex) {
+  std::cerr << ex.what() << "\n";
+  ::google::cloud::LogSink::Instance().Flush();
+  return 1;
 }

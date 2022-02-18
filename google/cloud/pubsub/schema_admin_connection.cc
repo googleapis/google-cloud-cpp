@@ -37,21 +37,17 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
  public:
   explicit SchemaAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsub_internal::SchemaStub> stub,
-      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
+      std::shared_ptr<pubsub_internal::SchemaStub> stub, Options options)
       : background_(std::move(background)),
         stub_(std::move(stub)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        options_(std::move(options)) {}
 
   ~SchemaAdminConnectionImpl() override = default;
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       google::pubsub::v1::CreateSchemaRequest const& request) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::CreateSchemaRequest const& request) {
           return stub_->CreateSchema(context, request);
@@ -61,8 +57,7 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
   StatusOr<google::pubsub::v1::Schema> GetSchema(
       google::pubsub::v1::GetSchemaRequest const& request) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::GetSchemaRequest const& request) {
           return stub_->GetSchema(context, request);
@@ -75,10 +70,9 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
     auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy_->clone());
+    auto retry = std::shared_ptr<pubsub::RetryPolicy const>(retry_policy());
     auto backoff =
-        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy_->clone());
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy());
     char const* function_name = __func__;
     auto list_functor =
         [stub, retry, backoff,
@@ -106,8 +100,7 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
   Status DeleteSchema(
       google::pubsub::v1::DeleteSchemaRequest const& request) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DeleteSchemaRequest const& request) {
           return stub_->DeleteSchema(context, request);
@@ -117,8 +110,7 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
       google::pubsub::v1::ValidateSchemaRequest const& request) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::ValidateSchemaRequest const& request) {
           return stub_->ValidateSchema(context, request);
@@ -128,8 +120,7 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
       google::pubsub::v1::ValidateMessageRequest const& request) override {
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(),
-        Idempotency::kIdempotent,
+        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::ValidateMessageRequest const& request) {
           return stub_->ValidateMessage(context, request);
@@ -137,11 +128,28 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
         request, __func__);
   }
 
+  Options options() const override { return options_; }
+
  private:
+  std::unique_ptr<pubsub::RetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<pubsub::RetryPolicyOption>()) {
+      return options.get<pubsub::RetryPolicyOption>()->clone();
+    }
+    return options_.get<pubsub::RetryPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<pubsub::BackoffPolicyOption>()) {
+      return options.get<pubsub::BackoffPolicyOption>()->clone();
+    }
+    return options_.get<pubsub::BackoffPolicyOption>()->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::SchemaStub> stub_;
-  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
-  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
+  Options options_;
 };
 
 // Decorates a SchemaAdminStub. This works for both mock and real stubs.
@@ -185,19 +193,7 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
 
   stub = DecorateSchemaAdminStub(opts, std::move(auth), std::move(stub));
   return std::make_shared<SchemaAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
-}
-
-std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
-    pubsub::ConnectionOptions const& options,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  auto opts = internal::MakeOptions(options);
-  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
-  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
-  return MakeSchemaAdminConnection(std::move(opts));
+      std::move(background), std::move(stub), std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -214,9 +210,7 @@ std::shared_ptr<pubsub::SchemaAdminConnection> MakeTestSchemaAdminConnection(
   stub =
       pubsub::DecorateSchemaAdminStub(opts, std::move(auth), std::move(stub));
   return std::make_shared<pubsub::SchemaAdminConnectionImpl>(
-      std::move(background), std::move(stub),
-      opts.get<pubsub::RetryPolicyOption>()->clone(),
-      opts.get<pubsub::BackoffPolicyOption>()->clone());
+      std::move(background), std::move(stub), opts);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

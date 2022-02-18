@@ -23,6 +23,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/strip.h"
 
 namespace google {
 namespace cloud {
@@ -47,10 +48,24 @@ Status MakeRequestWithPayload(
       concatenated_payload += std::string(p.begin(), p.end());
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
+    impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
     return impl.MakeRequest(http_method,
                             {{encoded_payload.data(), encoded_payload.size()}});
   }
+
+  std::size_t content_length = 0;
+  for (auto const& p : payload) {
+    content_length += p.size();
+  }
+  impl.SetHeader(absl::StrCat("content-length: ", content_length));
   return impl.MakeRequest(http_method, payload);
+}
+
+std::string FormatHostHeaderValue(absl::string_view hostname) {
+  if (!absl::ConsumePrefix(&hostname, "https://")) {
+    absl::ConsumePrefix(&hostname, "http://");
+  }
+  return std::string(hostname.substr(0, hostname.find('/')));
 }
 
 }  // namespace
@@ -66,7 +81,7 @@ std::string CurlRestClient::HostHeader(Options const& options,
   // or their own proxy, and need to provide the target's service host.
   auto const& endpoint = options.get<RestEndpointOption>();
   if (absl::StrContains(endpoint, "googleapis.com"))
-    return absl::StrCat("Host: ", default_endpoint);
+    return absl::StrCat("Host: ", FormatHostHeaderValue(default_endpoint));
   return {};
 }
 
@@ -88,10 +103,14 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   impl->SetHeader(HostHeader(options_, endpoint_address_));
   impl->SetHeader(x_goog_api_client_header_);
   impl->SetHeaders(request);
-  auto user_ip = options_.get<UserIpOption>();
-  if (user_ip.empty()) user_ip = impl->LastClientIpAddress();
   RestRequest::HttpParameters additional_parameters;
-  if (!user_ip.empty()) additional_parameters.emplace_back("userIp", user_ip);
+  // The UserIp option has been deprecated in favor of quotaUser. Only add the
+  // parameter if the option has been set.
+  if (options_.has<UserIpOption>()) {
+    auto user_ip = options_.get<UserIpOption>();
+    if (user_ip.empty()) user_ip = impl->LastClientIpAddress();
+    if (!user_ip.empty()) additional_parameters.emplace_back("userIp", user_ip);
+  }
   impl->SetUrl(endpoint_address_, request, additional_parameters);
   return impl;
 }

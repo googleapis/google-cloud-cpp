@@ -61,6 +61,13 @@ class future<void> final : private internal::future_base<void> {
   future(future<future<void>>&& rhs) noexcept(false);
 
   /**
+   * Creates a future from a future whose result type is convertible to this
+   * future's result type.
+   */
+  template <class T>
+  explicit future(future<T>&& rhs) : future<void>(rhs.then([](future<T>) {})) {}
+
+  /**
    * Waits until the shared state becomes ready, then retrieves the value stored
    * in the shared state.
    *

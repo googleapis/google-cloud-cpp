@@ -302,10 +302,11 @@ void CheckExpectedOptions(Options const& opts, char const* caller) {
 }
 
 /**
- * Moves the options from @p b into @p a and returns the result, unless the
- * option already exists in @p a.
+ * Moves the options from @p alternatives into @p preferred and returns the
+ * result. If an option already exists in @p preferred its value is used instead
+ * of the values in @p alternatives.
  */
-Options MergeOptions(Options a, Options b);
+Options MergeOptions(Options preferred, Options alternatives);
 
 /**
  * The prevailing options for the current operation.

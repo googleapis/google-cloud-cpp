@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/future_generic.h"
+#include "google/cloud/future.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/expect_future_error.h"
 #include "google/cloud/testing_util/scoped_thread.h"
@@ -760,6 +760,19 @@ TEST(FutureTestInt, CreateInvalid) {
 
   ExpectFutureError([&] { p0.set_value(42); }, std::future_errc::no_state);
 }
+
+struct FromInt {
+  explicit FromInt(int) {}
+};
+
+/// @test Verify we can create futures from convertible types.
+TEST(FutureTestConvertingConstructor, ConvertFuture) {
+  promise<int> p0;
+  future<FromInt> f0{p0.get_future()};
+}
+
+static_assert(!std::is_constructible<future<FromInt>, future<int*>>{},
+              "Should not compile.");
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

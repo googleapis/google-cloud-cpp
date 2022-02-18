@@ -35,9 +35,6 @@ struct FakeResponse {
   std::string value;
 };
 
-using MockReturnType =
-    std::unique_ptr<grpc::ClientReaderInterface<FakeResponse>>;
-
 class MockWriter : public grpc::ClientWriterInterface<FakeRequest> {
  public:
   MOCK_METHOD(bool, Write, (FakeRequest const&, grpc::WriteOptions),
