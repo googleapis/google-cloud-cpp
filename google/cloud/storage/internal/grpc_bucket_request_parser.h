@@ -43,7 +43,7 @@ struct GrpcBucketRequestParser {
 
   static StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
       PatchBucketRequest const& request);
-  static StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
+  static google::storage::v2::UpdateBucketRequest ToProto(
       UpdateBucketRequest const& request);
 };
 

@@ -308,8 +308,8 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
   return result;
 }
 
-StatusOr<google::storage::v2::UpdateBucketRequest>
-GrpcBucketRequestParser::ToProto(UpdateBucketRequest const& request) {
+google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
+    UpdateBucketRequest const& request) {
   google::storage::v2::UpdateBucketRequest result;
 
   auto& bucket = *result.mutable_bucket();

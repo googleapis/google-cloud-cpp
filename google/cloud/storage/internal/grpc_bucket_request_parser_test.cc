@@ -495,10 +495,9 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
       UserIp("test-user-ip"));
 
   auto actual = GrpcBucketRequestParser::ToProto(req);
-  ASSERT_STATUS_OK(actual);
   // First check the paths, we do not care about their order, so checking them
   // with IsProtoEqual does not work.
-  EXPECT_THAT(actual->update_mask().paths(),
+  EXPECT_THAT(actual.update_mask().paths(),
               UnorderedElementsAre(
                   "storage_class", "rpo", "acl", "default_object_acl",
                   "lifecycle", "cors", "default_event_based_hold", "labels",
@@ -506,8 +505,8 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
                   "retention_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and test the rest
-  actual->mutable_update_mask()->clear_paths();
-  EXPECT_THAT(*actual, IsProtoEqual(expected));
+  actual.mutable_update_mask()->clear_paths();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 }  // namespace
