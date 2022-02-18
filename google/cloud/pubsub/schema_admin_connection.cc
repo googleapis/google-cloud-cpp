@@ -196,6 +196,16 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
       std::move(background), std::move(stub), std::move(opts));
 }
 
+std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+    pubsub::ConnectionOptions const& options,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  auto opts = internal::MakeOptions(options);
+  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
+  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
+  return MakeSchemaAdminConnection(std::move(opts));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 
