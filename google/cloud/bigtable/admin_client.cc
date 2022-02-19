@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/admin_client.h"
-#include "google/cloud/bigtable/internal/admin_client_params.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 
 namespace google {
@@ -21,46 +20,12 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace {
-
-class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
- public:
-  DefaultAdminClient(std::string project,
-                     bigtable_internal::AdminClientParams params)
-      : project_(std::move(project)),
-        cq_(params.options.get<GrpcCompletionQueueOption>()),
-        background_threads_(std::move(params.background_threads)),
-        connection_(bigtable_admin::MakeBigtableTableAdminConnection(
-            std::move(params.options))) {}
-
-  std::string const& project() const override { return project_; }
-
- private:
-  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection()
-      override {
-    return connection_;
-  }
-
-  CompletionQueue cq() override { return cq_; }
-
-  std::shared_ptr<BackgroundThreads> background_threads() override {
-    return background_threads_;
-  }
-
-  std::string project_;
-  CompletionQueue cq_;
-  std::shared_ptr<BackgroundThreads> background_threads_;
-  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
-};
-
-}  // namespace
-
 std::shared_ptr<AdminClient> MakeAdminClient(std::string project,
                                              Options options) {
   auto params = bigtable_internal::AdminClientParams(
       internal::DefaultTableAdminOptions(std::move(options)));
-  return std::make_shared<DefaultAdminClient>(std::move(project),
-                                              std::move(params));
+  return std::shared_ptr<AdminClient>(
+      new AdminClient(std::move(project), std::move(params)));
 }
 
 std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
