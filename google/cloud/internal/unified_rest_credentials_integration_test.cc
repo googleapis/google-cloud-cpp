@@ -20,6 +20,7 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <fstream>
@@ -37,8 +38,6 @@ class UnifiedRestCredentialsIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
     key_file_ = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
-    ASSERT_TRUE(key_file_);
-    internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", *key_file_);
   }
 
   void TearDown() override {
@@ -104,17 +103,23 @@ TEST_F(UnifiedRestCredentialsIntegrationTest, GoogleDefaultCredentials) {
 }
 
 TEST_F(UnifiedRestCredentialsIntegrationTest, AccessTokenCredentials) {
+  ASSERT_TRUE(key_file_);
+  internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", *key_file_);
   auto default_creds = oauth2_internal::GoogleDefaultCredentials();
   auto header = default_creds.value()->AuthorizationHeader();
+  // header is in format pair("Authorization", "Bearer <token>");
+  std::pair<std::string, std::string> bearer_token =
+      absl::StrSplit(header->second, absl::ByChar(' '));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  std::string token = header->second.substr(6, header->second.size() - 6);
   options_.set<UnifiedCredentialsOption>(
-      MakeAccessTokenCredentials(token, expiration));
+      MakeAccessTokenCredentials(bearer_token.second, expiration));
   MakeRestRpcCall(StatusCode::kOk);
 }
 
 TEST_F(UnifiedRestCredentialsIntegrationTest,
        ImpersonateServiceAccountCredentials) {
+  ASSERT_TRUE(key_file_);
+  internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", *key_file_);
   auto service_account =
       internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT");
   ASSERT_TRUE(service_account.has_value());
@@ -125,10 +130,9 @@ TEST_F(UnifiedRestCredentialsIntegrationTest,
 }
 
 TEST_F(UnifiedRestCredentialsIntegrationTest, ServiceAccountCredentials) {
-  auto contents = [](std::string const& filename) {
-    std::ifstream is(filename);
-    return std::string{std::istreambuf_iterator<char>{is}, {}};
-  }(key_file_.value());
+  ASSERT_TRUE(key_file_);
+  std::ifstream is(*key_file_);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
   options_.set<UnifiedCredentialsOption>(
       MakeServiceAccountCredentials(contents));
   MakeRestRpcCall(StatusCode::kOk);
