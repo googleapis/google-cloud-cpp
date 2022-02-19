@@ -662,6 +662,82 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+/// @test Verify that the last scanned row is respected.
+TEST_F(TableAsyncReadRowsTest, LastScannedRowKeyIsRespected) {
+  auto& stream2 = AddReader([](btproto::ReadRowsRequest const& req) {
+    // The server has told that "r2" has been scanned. Our second request
+    // should use the range ("r2", ""]. This is what is under test.
+    EXPECT_TRUE(req.has_rows());
+    auto const& rows = req.rows();
+    EXPECT_EQ(1, rows.row_ranges_size());
+    auto const& range = rows.row_ranges(0);
+    EXPECT_EQ("r2", range.start_key_open());
+  });
+  auto& stream1 = AddReader([](btproto::ReadRowsRequest const&) {});
+
+  EXPECT_CALL(stream1, Read)
+      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
+        *r = bigtable::testing::ReadRowsResponseFromString(
+            R"(
+                chunks {
+                  row_key: "r1"
+                  family_name { value: "fam" }
+                  qualifier { value: "col" }
+                  timestamp_micros: 42000
+                  value: "value"
+                  commit_row: true
+                })");
+      })
+      .WillOnce([](btproto::ReadRowsResponse* r, void*) {
+        std::cout << "Second Read for stream1 " << std::endl;
+        btproto::ReadRowsResponse resp;
+        resp.set_last_scanned_row_key("r2");
+        *r = resp;
+      })
+      .RetiresOnSaturation();
+  EXPECT_CALL(stream1, Finish).WillOnce([](grpc::Status* status, void*) {
+    *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "retry");
+  });
+
+  EXPECT_CALL(stream2, Finish).WillOnce([](grpc::Status* status, void*) {
+    *status = grpc::Status::OK;
+  });
+
+  ExpectRows({"r1", "r2", "r3"});
+  promises_from_user_cb_[0].set_value(true);
+  ReadRows();
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(true);  // Return "r1"
+
+  row_futures_[0].get();
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(true);  // Return last_scanned_row_key = "r2"
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(false);  // Finish stream1 with failure
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(true);  // Finish timer
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(false);  // Finish stream
+  ASSERT_EQ(1U, cq_impl_->size());
+  EXPECT_TRUE(Unsatisfied(stream_status_future_));
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
+
+  auto stream_status = stream_status_future_.get();
+  ASSERT_STATUS_OK(stream_status);
+  ASSERT_EQ(0U, cq_impl_->size());
+}
+
 /// @test Verify proper handling of bogus responses from the service.
 TEST_F(TableAsyncReadRowsTest, ParserFailure) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
