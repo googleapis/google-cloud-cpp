@@ -297,15 +297,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   enum class State { kRetrying, kInitialized, kShutdown };
 
   void ReadWriteRetryFailedStream() {
+    promise<void> root;
     {
       std::lock_guard<std::mutex> g{mu_};
       if (stream_state_ != State::kInitialized) return;
-    }
-
-    promise<void> root;
-
-    {
-      std::lock_guard<std::mutex> g{mu_};
+      
       stream_state_ = State::kRetrying;
       retry_promise_.emplace();
 
