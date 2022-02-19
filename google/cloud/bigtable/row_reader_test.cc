@@ -394,6 +394,61 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   EXPECT_EQ(++it, reader.end());
 }
 
+TEST_F(RowReaderTest, FailedStreamRetriesSkipToLastScannedRow) {
+  auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
+  auto parser = absl::make_unique<ReadRowsParserMock>();
+  parser->SetRows({"r1"});
+  google::bigtable::v2::ReadRowsResponse response;
+  response.set_last_scanned_row_key("r2");
+  {
+    ::testing::InSequence s;
+    // We start our call with 3 rows in the set: "r1", "r2", "r3".
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(3)))
+        .WillOnce(stream->MakeMockReturner());
+
+    // The mock `parser` will return "r1". Next, simulate the server returning
+    // an empty chunk with `last_scanned_row_key` set to "r2".
+    EXPECT_CALL(*stream, Read)
+        .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
+
+    // The stream fails with a retry-able error
+    EXPECT_CALL(*stream, Read).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish())
+        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
+
+    EXPECT_CALL(*retry_policy_, OnFailure(An<grpc::Status const&>()))
+        .WillOnce(Return(true));
+    EXPECT_CALL(*backoff_policy_, OnCompletion(An<grpc::Status const&>()))
+        .WillOnce(Return(std::chrono::milliseconds(0)));
+
+    auto* stream_retry =
+        new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
+
+    // We retry the remaining rows. We have "r1" returned, but the service has
+    // also told us that "r2" was scanned. This means there is only one row
+    // remaining to read: "r3".
+    EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(1)))
+        .WillOnce(stream_retry->MakeMockReturner());
+
+    // End the stream to clean up the test
+    EXPECT_CALL(*stream_retry, Read).WillOnce(Return(false));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+  }
+
+  parser_factory_->AddParser(std::move(parser));
+  bigtable::RowReader reader(
+      client_, "", bigtable::RowSet("r1", "r2", "r3"),
+      bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
+      std::move(retry_policy_), std::move(backoff_policy_),
+      metadata_update_policy_, std::move(parser_factory_));
+
+  auto it = reader.begin();
+  EXPECT_NE(it, reader.end());
+  ASSERT_STATUS_OK(*it);
+  EXPECT_EQ((*it)->row_key(), "r1");
+  EXPECT_EQ(++it, reader.end());
+}
+
 TEST_F(RowReaderTest, FailedParseIsRetried) {
   // wrapped in unique_ptr by ReadRows
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");

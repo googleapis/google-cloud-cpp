@@ -140,6 +140,9 @@ bool RowReader::NextChunk() {
       response_ = {};
       return false;
     }
+    if (!response_.last_scanned_row_key().empty()) {
+      last_read_row_key_ = std::move(*response_.mutable_last_scanned_row_key());
+    }
   }
   return true;
 }
