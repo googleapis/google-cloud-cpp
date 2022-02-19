@@ -38,7 +38,6 @@ using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::A;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::Eq;
@@ -102,26 +101,21 @@ TEST_F(ComputeEngineCredentialsTest,
     return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
   });
 
-  EXPECT_CALL(
-      *mock_rest_client_,
-      Post(A<RestRequest>(),
-           A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+  EXPECT_CALL(*mock_rest_client_, Get)
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response1));
       })
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                email + "/token"));
         return std::unique_ptr<RestResponse>(std::move(mock_response2));
       });
@@ -348,37 +342,31 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
     return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
   });
 
-  EXPECT_CALL(
-      *mock_rest_client_,
-      Post(A<RestRequest>(),
-           A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+  EXPECT_CALL(*mock_rest_client_, Get)
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return Status{StatusCode::kAborted, "Fake Curl error", {}};
       })
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response2));
       })
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response3));
       });
@@ -485,88 +473,78 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
   });
 
   // Fail the first call to RetrieveServiceAccountInfo immediately.
-  EXPECT_CALL(
-      *mock_rest_client_,
-      Post(A<RestRequest>(),
-           A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+  EXPECT_CALL(*mock_rest_client_, Get)
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         // For the first expected failures, the alias is used until the metadata
         // request succeeds.
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return Status{StatusCode::kAborted, "Fake Curl error", {}};
       })
       // Make the call to RetrieveServiceAccountInfo return a good response,
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         // For the first expected failures, the alias is used until the metadata
         // request succeeds.
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response2));
       })
       // but fail the token request immediately.
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                email + "/token"));
         return Status{StatusCode::kAborted, "Fake Curl error", {}};
       })
       // Make the call to RetrieveServiceAccountInfo return a good response,
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         // Now that the first request has succeeded and the metadata has been
         // retrieved, the the email is used for refresh.
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                email + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response4));
       })
       // but fail the token request with a bad HTTP error code.
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                email + "/token"));
         return std::unique_ptr<RestResponse>(std::move(mock_response5));
       })
       // Make the call to RetrieveServiceAccountInfo return a good response,
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         // Now that the first request has succeeded and the metadata has been
         // retrieved, the the email is used for refresh.
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                email + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response6));
       })
       // but, parse with an invalid token response.
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                email + "/token"));
         return std::unique_ptr<RestResponse>(std::move(mock_response7));
       });
@@ -614,17 +592,13 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
     return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
   });
 
-  EXPECT_CALL(
-      *mock_rest_client_,
-      Post(A<RestRequest>(),
-           A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<std::pair<std::string, std::string>> const&) {
+  EXPECT_CALL(*mock_rest_client_, Get)
+      .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
         EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
         EXPECT_THAT(
             request.path(),
-            Eq(std::string("/computeMetadata/v1/instance/service-accounts/") +
+            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
                alias + "/"));
         return std::unique_ptr<RestResponse>(std::move(mock_response1));
       });

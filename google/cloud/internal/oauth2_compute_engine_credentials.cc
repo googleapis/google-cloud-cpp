@@ -127,14 +127,13 @@ ComputeEngineCredentials::DoMetadataServerGetRequest(std::string const& path,
   request.SetPath(path);
   request.AddHeader("metadata-flavor", "Google");
   if (recursive) request.AddQueryParameter("recursive", "true");
-  return rest_client_->Post(request,
-                            std::vector<std::pair<std::string, std::string>>{});
+  return rest_client_->Get(request);
 }
 
 Status ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
   auto response = DoMetadataServerGetRequest(
-      "/computeMetadata/v1/instance/service-accounts/" +
-          service_account_email_ + "/",
+      "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
+          "/",
       true);
   if (!response) {
     return std::move(response).status();
@@ -160,8 +159,8 @@ ComputeEngineCredentials::Refresh() const {
   }
 
   auto response = DoMetadataServerGetRequest(
-      "/computeMetadata/v1/instance/service-accounts/" +
-          service_account_email_ + "/token",
+      "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
+          "/token",
       false);
   if (!response) {
     return std::move(response).status();
