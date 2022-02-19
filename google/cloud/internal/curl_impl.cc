@@ -654,10 +654,8 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
   using HttpMethod = CurlImpl::HttpMethod;
   handle_.SetOption(CURLOPT_CUSTOMREQUEST, HttpMethodAsChar(method));
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
-  if (options_.has<CurlFollowLocationOption>()) {
-    handle_.SetOption(CURLOPT_FOLLOWLOCATION,
-                      options_.get<CurlFollowLocationOption>() ? 1L : 0L);
-  }
+  handle_.SetOption(CURLOPT_FOLLOWLOCATION,
+                    options_.get<CurlFollowLocationOption>() ? 1L : 0L);
 
   if (method == HttpMethod::kGet) {
     handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
