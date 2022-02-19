@@ -87,13 +87,13 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
         `pubsub_client`, `storage_client`, `spanner_client`.
       - Some target aliases, including `bigtable::client`, `bigtable::protos`
   - **pkg-config users:** applications should use the modules starting with
-    `google_cloud_cpp`. All other modules are not retired.
+    `google_cloud_cpp`. All other modules are now retired.
   - **Direct users of -l${library} flags:** we do not recommend that
     applications uses `-l` flags directly, please use `pkg-config` and/or
     the target names under CMake or Bazel. We make this recommendation because
     we do not know of any mechanism to provide backwards compatibility for such
     flags.
-  - More details about the rationale for these change in [#5726].
+  - More details about the rationale for these changes in [#5726].
 
 [#5726]: https://github.com/googleapis/google-cloud-cpp/issues/5726
 
