@@ -5,41 +5,6 @@
 <!-- Keep these sorted by estimated date -->
 
 <details>
-<summary>2022-02-15: retiring legacy targets and rules</summary>
-<br>
-
-* In 2022-02-15 (or around that time) we are planning to remove a number of
-  backwards compatibility targets names for Bazel and CMake.  Specifically:
-  - **Bazel Users:** applications should use the targets at the top-level
-    directory, e.g. `//:bigtable`, or `//:pubsub`.
-    - All other Bazel targets will be marked as package private in or around
-      2022-02-15.
-  - **CMake Users:** applications should use the
-    `google-cloud-cpp::*` targets (e.g. `google-cloud-cpp::pubsub`).
-    - The legacy CMake targets generate warnings if using CMake >= 3.18 (the
-      earliest version that supports deprecation warnings).
-    - All exported targets without a `google-cloud-cpp::` prefix will be
-      retired in or around 2022-02-15. These include, but are not limited to:
-      - Any target starting with `googleapis-c++::`
-      - Any exported targets without a prefix, including:
-        `google_cloud_cpp_common`, `google_cloud_cpp_grpc_utils`,
-        `bigtable_client`, `bigtable_protos`, `firestore_client`,
-        `pubsub_client`, `storage_client`, `spanner_client`.
-      - Some target aliases, including `bigtable::client`, `bigtable::protos`,
-        `firestore::client`
-  - **pkg-config users:** applications should use the modules starting with
-    `google_cloud_cpp`
-    - All other modules will be retired in or around 2022-02-15
-  - **Direct users of -l${library} flags:** we do not recommend that
-    applications uses `-l` flags directly, please use `pkg-config` and/or
-    the target names under CMake or Bazel. We make this recommendation because
-    we do not know of any mechanism to provide backwards compatibility for such
-    flags.
-  - If you have any feedback about this change please add comments in
-    [#5726](https://github.com/googleapis/google-cloud-cpp/issues/5726)
-</details>
-
-<details>
 <summary>2022-04-01: retiring legacy IAM functions</summary>
 <br>
 
@@ -102,6 +67,35 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
 
 ## v1.37.0 - TBD
+
+**BREAKING CHANGES**
+
+* As previously announced, we are removing certain legacy CMake targets and
+  Bazel rules in this release.
+  - **Bazel Users:** applications should use the targets at the top-level
+    directory, e.g. `//:bigtable`, or `//:pubsub`.  Targets in each directory
+    (e.g. `//google/cloud/bigtable:bigtable_client`) are now retired or marked
+    private.
+  - **CMake Users:** applications should use the
+    `google-cloud-cpp::*` targets (e.g. `google-cloud-cpp::pubsub`).
+    - All exported targets without a `google-cloud-cpp::` prefix are retired.
+      These include, but are not limited to:
+      - Any target starting with `googleapis-c++::`
+      - Any exported targets without a prefix, including:
+        `google_cloud_cpp_common`, `google_cloud_cpp_grpc_utils`,
+        `bigtable_client`, `bigtable_protos`, `firestore_client`,
+        `pubsub_client`, `storage_client`, `spanner_client`.
+      - Some target aliases, including `bigtable::client`, `bigtable::protos`
+  - **pkg-config users:** applications should use the modules starting with
+    `google_cloud_cpp`. All other modules are not retired
+  - **Direct users of -l${library} flags:** we do not recommend that
+    applications uses `-l` flags directly, please use `pkg-config` and/or
+    the target names under CMake or Bazel. We make this recommendation because
+    we do not know of any mechanism to provide backwards compatibility for such
+    flags.
+  - More details about the rationale for these change in [#5726]
+
+[#5726]: https://github.com/googleapis/google-cloud-cpp/issues/5726
 
 ### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
 
