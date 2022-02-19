@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/compute_engine_util.h"
+#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
@@ -91,6 +92,7 @@ ComputeEngineCredentials::ComputeEngineCredentials(
       service_account_email_(std::move(service_account_email)),
       options_(std::move(options)) {
   if (!rest_client_) {
+    options_.set<rest_internal::CurlFollowLocationOption>(true);
     rest_client_ = rest_internal::GetDefaultRestClient(
         "http://" + google::cloud::internal::GceMetadataHostname(), options_);
   }
