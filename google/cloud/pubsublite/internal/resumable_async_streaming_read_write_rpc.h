@@ -301,7 +301,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     {
       std::lock_guard<std::mutex> g{mu_};
       if (stream_state_ != State::kInitialized) return;
-      
+
       stream_state_ = State::kRetrying;
       retry_promise_.emplace();
 
@@ -423,9 +423,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
               fail_finish = stream_->Finish();
             }
             return fail_finish.then([this](future<Status> fail_status) {
-              return make_ready_future(StatusOr<std::unique_ptr<
-                  AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>(
-                  fail_status.get()));
+              return make_ready_future(
+                  StatusOr<std::unique_ptr<
+                      AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>(
+                      fail_status.get()));
             });
           }
           return initializer_(std::move(stream_));
@@ -490,8 +491,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 };
 
 template <typename RequestType, typename ResponseType>
-std::unique_ptr<
-    ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType>>
+std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType>>
 MakeResumableAsyncStreamingReadWriteRpcImpl(
     RetryPolicyFactory retry_factory,
     std::shared_ptr<BackoffPolicy const> backoff_policy,
