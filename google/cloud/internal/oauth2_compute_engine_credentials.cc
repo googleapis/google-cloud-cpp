@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/compute_engine_util.h"
+#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
@@ -91,6 +92,7 @@ ComputeEngineCredentials::ComputeEngineCredentials(
       service_account_email_(std::move(service_account_email)),
       options_(std::move(options)) {
   if (!rest_client_) {
+    options_.set<rest_internal::CurlFollowLocationOption>(true);
     rest_client_ = rest_internal::GetDefaultRestClient(
         "http://" + google::cloud::internal::GceMetadataHostname(), options_);
   }
@@ -127,14 +129,13 @@ ComputeEngineCredentials::DoMetadataServerGetRequest(std::string const& path,
   request.SetPath(path);
   request.AddHeader("metadata-flavor", "Google");
   if (recursive) request.AddQueryParameter("recursive", "true");
-  return rest_client_->Post(request,
-                            std::vector<std::pair<std::string, std::string>>{});
+  return rest_client_->Get(request);
 }
 
 Status ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
   auto response = DoMetadataServerGetRequest(
-      "/computeMetadata/v1/instance/service-accounts/" +
-          service_account_email_ + "/",
+      "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
+          "/",
       true);
   if (!response) {
     return std::move(response).status();
@@ -160,8 +161,8 @@ ComputeEngineCredentials::Refresh() const {
   }
 
   auto response = DoMetadataServerGetRequest(
-      "/computeMetadata/v1/instance/service-accounts/" +
-          service_account_email_ + "/token",
+      "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
+          "/token",
       false);
   if (!response) {
     return std::move(response).status();

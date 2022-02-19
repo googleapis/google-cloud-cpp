@@ -117,10 +117,18 @@ struct MaximumCurlSocketSendSizeOption {
   using Type = std::size_t;
 };
 
+/**
+ * Issue a new request to any Location header specified in a HTTP 3xx response.
+ */
+struct CurlFollowLocationOption {
+  using Type = bool;
+};
+
 using CurlOptionList = ::google::cloud::OptionList<
     ConnectionPoolSizeOption, EnableCurlSslLockingOption,
     EnableCurlSigpipeHandlerOption, MaximumCurlSocketRecvSizeOption,
-    MaximumCurlSocketSendSizeOption, CAPathOption, HttpVersionOption>;
+    MaximumCurlSocketSendSizeOption, CAPathOption, HttpVersionOption,
+    CurlFollowLocationOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
