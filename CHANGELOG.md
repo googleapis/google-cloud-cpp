@@ -103,6 +103,15 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.37.0 - TBD
 
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+The library has been expanded to include the following services:
+
+* [BigQuery ML](https://cloud.google.com/bigquery-ml/docs)
+* [BigQuery Connection API](https://cloud.google.com/bigquery/docs/connections-api-intro)
+* [BigQuery Data Transfer Service](https://cloud.google.com/bigquery-transfer)
+* [BigQuery Reservations](https://cloud.google.com/bigquery/docs/reservations-intro)
+
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
 **BREAKING CHANGE:** The `bigtable::TableAdminClient` interface has changed
@@ -149,18 +158,13 @@ releasing them early in case they elicit some feedback that requires changes.
 <summary> Expand to see the full list of new libraries...</summary>
 <br>
 
-* [Apigee Hybrid](https://cloud.google.com/apigee/docs/hybrid/)
-* [BigQuery ML](https://cloud.google.com/bigquery-ml/docs)
-* [BigQuery Connection API](https://cloud.google.com/bigquery/docs/connections-api-intro)
-* [BigQuery Data Transfer Service](https://cloud.google.com/bigquery-transfer)
-* [BigQuery Reservations](https://cloud.google.com/bigquery/docs/reservations-intro)
+* [Apigee Hybrid](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/apigeeconnect/README.md)
 * [Contact Center AI Insights](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/contactcenterinsights/README.md)
 * [Data Catalog](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datacatalog/README.md)
 * [Dataproc](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dataproc/README.md)
 * [Managed Service for Microsoft Active Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/managedidentities/README.md)
 * [Natural Language AI](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/language/README.md)
-* [Resource Settings](https://cloud.google.com/resource-manager/docs/resource-settings/overview)
-* [Speech-to-Text](https://cloud.google.com/speech)
+* [Resource Settings](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/resourcesettings/README.md)
 
 </details>
 
