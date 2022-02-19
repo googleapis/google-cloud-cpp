@@ -427,9 +427,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
               fail_finish = stream_->Finish();
             }
             return fail_finish.then([this](future<Status> fail_status) {
-              return StatusOr<std::unique_ptr<
+              return make_ready_future(StatusOr<std::unique_ptr<
                   AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>(
-                  fail_status.get());
+                  fail_status.get()));
             });
           }
           return initializer_(std::move(stream_));
