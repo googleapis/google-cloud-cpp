@@ -3,7 +3,15 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Profiler API][cloud-service-docs], a service to Manages continuous profiling information.
+[Cloud Profiler API][cloud-service], a service that manages continuous CPU
+and heap profiling to improve performance and reduce costs.
+
+Note that this library allows you to interact with Cloud Profiler, but Cloud
+Profiler does not yet offer profiling of C++ libraries. The
+[types of profiling available][profiling] are listed in the service
+documentation.
+
+[profiling]: https://cloud.google.com/profiler/docs/concepts-profiling#types_of_profiling_available
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +33,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/cloudprofiler
+[cloud-service]: https://cloud.google.com/profiler
+[cloud-service-docs]: https://cloud.google.com/profiler/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-cloudprofiler/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/cloudprofiler
 
@@ -38,7 +47,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/cloudprofiler/ EDIT HERE .h"
+#include "google/cloud/cloudprofiler/profiler_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -50,14 +59,19 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace cloudprofiler = ::google::cloud::cloudprofiler;
-  auto client =
-      cloudprofiler::Client(cloudprofiler::MakeConnection(/* EDIT HERE */));
+  auto client = cloudprofiler::ProfilerServiceClient(
+      cloudprofiler::MakeProfilerServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  google::devtools::cloudprofiler::v2::CreateProfileRequest req;
+  req.set_parent(google::cloud::Project(argv[1]).FullName());
+  req.add_profile_type(google::devtools::cloudprofiler::v2::CPU);
+  auto& deployment = *req.mutable_deployment();
+  deployment.set_project_id(argv[1]);
+  deployment.set_target("quickstart");
+
+  auto profile = client.CreateProfile(req);
+  if (!profile) throw std::runtime_error(profile.status().message());
+  std::cout << profile->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

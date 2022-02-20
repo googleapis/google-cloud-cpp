@@ -2,8 +2,16 @@
 
 @mainpage Cloud Profiler API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Profiler API][cloud-service-docs], a service
-to Manages continuous profiling information.
+An idiomatic C++ client library for the [Cloud Profiler API][cloud-service-docs],
+a service that manages continuous CPU and heap profiling to improve performance
+and reduce costs.
+
+Note that this library allows you to interact with Cloud Profiler, but Cloud
+Profiler does not yet offer profiling of C++ libraries. The
+[types of profiling available][profiling] are listed in the service
+documentation.
+
+[profiling]: https://cloud.google.com/profiler/docs/concepts-profiling#types_of_profiling_available
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +89,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/cloudprofiler
+[cloud-service-docs]: https://cloud.google.com/profiler
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

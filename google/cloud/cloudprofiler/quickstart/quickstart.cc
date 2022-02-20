@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/cloudprofiler/ EDIT HERE .h"
+#include "google/cloud/cloudprofiler/profiler_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -24,14 +24,19 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace cloudprofiler = ::google::cloud::cloudprofiler;
-  auto client =
-      cloudprofiler::Client(cloudprofiler::MakeConnection(/* EDIT HERE */));
+  auto client = cloudprofiler::ProfilerServiceClient(
+      cloudprofiler::MakeProfilerServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  google::devtools::cloudprofiler::v2::CreateProfileRequest req;
+  req.set_parent(google::cloud::Project(argv[1]).FullName());
+  req.add_profile_type(google::devtools::cloudprofiler::v2::CPU);
+  auto& deployment = *req.mutable_deployment();
+  deployment.set_project_id(argv[1]);
+  deployment.set_target("quickstart");
+
+  auto profile = client.CreateProfile(req);
+  if (!profile) throw std::runtime_error(profile.status().message());
+  std::cout << profile->DebugString() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {
