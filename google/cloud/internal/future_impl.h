@@ -331,7 +331,7 @@ class future_shared_state;
  * We rely on these guarantees to simplify the implementation of this class.
  */
 template <typename T>
-class future_shared_state final : private future_shared_state_base {
+class future_shared_state final : public future_shared_state_base {
  public:
   future_shared_state() : future_shared_state_base(), buffer_() {}
   explicit future_shared_state(std::function<void()> cancellation_callback)
@@ -346,16 +346,6 @@ class future_shared_state final : private future_shared_state_base {
       reinterpret_cast<T*>(&buffer_)->~T();
     }
   }
-
-  using future_shared_state_base::abandon;
-  using future_shared_state_base::cancel;
-  using future_shared_state_base::is_ready;
-  using future_shared_state_base::release_cancellation_callback;
-  using future_shared_state_base::set_continuation;
-  using future_shared_state_base::set_exception;
-  using future_shared_state_base::wait;
-  using future_shared_state_base::wait_for;
-  using future_shared_state_base::wait_until;
 
   /// The implementation details for `future<T>::get()`
   T get() {
@@ -470,21 +460,11 @@ class future_shared_state final : private future_shared_state_base {
  * we want for that matter.
  */
 template <>
-class future_shared_state<void> final : private future_shared_state_base {
+class future_shared_state<void> final : public future_shared_state_base {
  public:
   future_shared_state() = default;
   explicit future_shared_state(std::function<void()> cancellation_callback)
       : future_shared_state_base(std::move(cancellation_callback)) {}
-
-  using future_shared_state_base::abandon;
-  using future_shared_state_base::cancel;
-  using future_shared_state_base::is_ready;
-  using future_shared_state_base::release_cancellation_callback;
-  using future_shared_state_base::set_continuation;
-  using future_shared_state_base::set_exception;
-  using future_shared_state_base::wait;
-  using future_shared_state_base::wait_for;
-  using future_shared_state_base::wait_until;
 
   /// The implementation details for `future<void>::get()`
   void get() {
@@ -865,6 +845,15 @@ future_shared_state<void>::make_continuation(
       std::unique_ptr<continuation_base>(std::move(continuation)));
   return result;
 }
+
+struct CoroutineSupport {
+  static std::shared_ptr<future_shared_state_base> get_shared_state(
+      future<void>& f);
+
+  template <typename T>
+  static std::shared_ptr<future_shared_state_base> get_shared_state(
+      future<T>& f);
+};
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

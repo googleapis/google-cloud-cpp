@@ -137,6 +137,10 @@ class future_base {  // NOLINT(readability-identifier-naming)
    */
   bool cancel() { return shared_state_->cancel(); }
 
+  std::shared_ptr<future_shared_state_base> shared_state() const {
+    return std::dynamic_pointer_cast<future_shared_state_base>(shared_state_);
+  }
+
  protected:
   /// Shorthand to refer to the shared state type.
   using shared_state_type = internal::future_shared_state<T>;
