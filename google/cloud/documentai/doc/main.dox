@@ -2,8 +2,9 @@
 
 @mainpage Cloud Document AI API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Document AI API][cloud-service-docs], a service
-to Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.
+An idiomatic C++ client library for the [Cloud Document AI API][cloud-service-docs],
+a service that uses machine learning on a scalable cloud-based platform to help
+your organization efficiently scan, analyze, and understand documents.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -81,7 +82,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/documentai
+[cloud-service-docs]: https://cloud.google.com/document-ai
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

@@ -2,8 +2,12 @@
 
 :construction:
 
+:warning: This library will not be declared GA until the quickstart is operable.
+
 This directory contains an idiomatic C++ client library for the
-[Cloud Document AI API][cloud-service-docs], a service to Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.
+[Cloud Document AI API][cloud-service], a service that uses machine
+learning on a scalable cloud-based platform to help your organization
+efficiently scan, analyze, and understand documents.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -25,7 +29,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/documentai
+[cloud-service]: https://cloud.google.com/document-ai
+[cloud-service-docs]: https://cloud.google.com/document-ai/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-documentai/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/documentai
 
@@ -38,25 +43,45 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/documentai/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/documentai/document_processor_client.h"
+#include "google/cloud/common_options.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id processor-id\n";
+    return 1;
+  }
+  std::string const location = argv[2];
+  if (location != "us" && location != "eu") {
+    std::cerr << "location-id must be either 'us' or 'eu'\n";
     return 1;
   }
 
-  namespace documentai = ::google::cloud::documentai;
-  auto client = documentai::Client(documentai::MakeConnection(/* EDIT HERE */));
+  namespace gc = ::google::cloud;
+  auto options = gc::Options{}.set<gc::EndpointOption>(
+      location + "-documentai.googleapis.com");
+  options.set<google::cloud::TracingComponentsOption>({"rpc"});
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  namespace documentai = ::google::cloud::documentai;
+  auto client = documentai::DocumentProcessorServiceClient(
+      documentai::MakeDocumentProcessorServiceConnection(options));
+
+  auto const resource = std::string{"projects/"} + argv[1] + "/locations/" +
+                        argv[2] + "/processors/" + argv[3];
+
+  google::cloud::documentai::v1::ProcessRequest req;
+  req.set_name(resource);
+  req.set_skip_human_review(true);
+  auto& doc = *req.mutable_inline_document();
+  doc.set_mime_type("application/pdf");
+  doc.set_uri("gs://cloud-samples-data/documentai/invoice.pdf");
+
+  auto resp = client.ProcessDocument(std::move(req));
+  if (!resp) throw std::runtime_error(resp.status().message());
+  std::cout << resp->document().text() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

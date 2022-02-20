@@ -12,25 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/documentai/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/documentai/document_processor_client.h"
+#include "google/cloud/common_options.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id processor-id\n";
+    return 1;
+  }
+  std::string const location = argv[2];
+  if (location != "us" && location != "eu") {
+    std::cerr << "location-id must be either 'us' or 'eu'\n";
     return 1;
   }
 
-  namespace documentai = ::google::cloud::documentai;
-  auto client = documentai::Client(documentai::MakeConnection(/* EDIT HERE */));
+  namespace gc = ::google::cloud;
+  auto options = gc::Options{}.set<gc::EndpointOption>(
+      location + "-documentai.googleapis.com");
+  options.set<google::cloud::TracingComponentsOption>({"rpc"});
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::runtime_error(r.status().message());
-    std::cout << r->DebugString() << "\n";
-  }
+  namespace documentai = ::google::cloud::documentai;
+  auto client = documentai::DocumentProcessorServiceClient(
+      documentai::MakeDocumentProcessorServiceConnection(options));
+
+  auto const resource = std::string{"projects/"} + argv[1] + "/locations/" +
+                        argv[2] + "/processors/" + argv[3];
+
+  google::cloud::documentai::v1::ProcessRequest req;
+  req.set_name(resource);
+  req.set_skip_human_review(true);
+  auto& doc = *req.mutable_inline_document();
+  doc.set_mime_type("application/pdf");
+  doc.set_uri("gs://cloud-samples-data/documentai/invoice.pdf");
+
+  auto resp = client.ProcessDocument(std::move(req));
+  if (!resp) throw std::runtime_error(resp.status().message());
+  std::cout << resp->document().text() << "\n";
 
   return 0;
 } catch (std::exception const& ex) {

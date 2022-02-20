@@ -131,10 +131,11 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:documentai_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
+            # TODO(#7976): Enable this quickstart and make it run.
     )
-    set_tests_properties(documentai_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        documentai_quickstart PROPERTIES DISABLED true LABELS
+                                         "integration-test;quickstart")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
