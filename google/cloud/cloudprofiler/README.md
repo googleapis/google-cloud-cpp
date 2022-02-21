@@ -7,7 +7,7 @@ This directory contains an idiomatic C++ client library for the
 and heap profiling to improve performance and reduce costs.
 
 Note that this library allows you to interact with Cloud Profiler, but Cloud
-Profiler does not yet offer profiling of C++ libraries. The
+Profiler does not yet offer profiling of C++ applications. The
 [types of profiling available][profiling] are listed in the service
 documentation.
 
