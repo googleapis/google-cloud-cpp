@@ -44,6 +44,7 @@ osconfig
 oslogin
 policytroubleshooter
 privateca
+profiler
 pubsublite
 recommender
 redis

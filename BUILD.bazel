@@ -65,6 +65,7 @@ EXPERIMENTAL_LIBRARIES = [
     "oslogin",
     "policytroubleshooter",
     "privateca",
+    "profiler",
     "pubsublite",
     "recommender",
     "redis",

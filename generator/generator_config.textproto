@@ -621,6 +621,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Cloud Profiler
+service {
+  service_proto_path: "google/devtools/cloudprofiler/v2/profiler.proto"
+  product_path: "google/cloud/profiler"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Pub/Sub Lite
 service {
   service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
