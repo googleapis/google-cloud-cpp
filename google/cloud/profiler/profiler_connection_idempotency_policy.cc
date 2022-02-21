@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#include "google/cloud/cloudprofiler/profiler_connection_idempotency_policy.h"
+#include "google/cloud/profiler/profiler_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler {
+namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -69,6 +69,6 @@ MakeDefaultProfilerServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler
+}  // namespace profiler
 }  // namespace cloud
 }  // namespace google

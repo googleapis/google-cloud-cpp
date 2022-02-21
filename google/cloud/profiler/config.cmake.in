@@ -19,4 +19,4 @@ find_dependency(google_cloud_cpp_common)
 find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
-include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_cloudprofiler-targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_profiler-targets.cmake")

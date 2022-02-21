@@ -16,17 +16,17 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_INTERNAL_PROFILER_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_INTERNAL_PROFILER_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_INTERNAL_PROFILER_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_INTERNAL_PROFILER_METADATA_DECORATOR_H
 
-#include "google/cloud/cloudprofiler/internal/profiler_stub.h"
+#include "google/cloud/profiler/internal/profiler_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ProfilerServiceMetadata : public ProfilerServiceStub {
@@ -59,8 +59,8 @@ class ProfilerServiceMetadata : public ProfilerServiceStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_INTERNAL_PROFILER_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_INTERNAL_PROFILER_METADATA_DECORATOR_H

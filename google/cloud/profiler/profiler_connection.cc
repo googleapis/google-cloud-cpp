@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#include "google/cloud/cloudprofiler/profiler_connection.h"
-#include "google/cloud/cloudprofiler/internal/profiler_connection_impl.h"
-#include "google/cloud/cloudprofiler/internal/profiler_option_defaults.h"
-#include "google/cloud/cloudprofiler/internal/profiler_stub_factory.h"
-#include "google/cloud/cloudprofiler/profiler_options.h"
+#include "google/cloud/profiler/profiler_connection.h"
+#include "google/cloud/profiler/internal/profiler_connection_impl.h"
+#include "google/cloud/profiler/internal/profiler_option_defaults.h"
+#include "google/cloud/profiler/internal/profiler_stub_factory.h"
+#include "google/cloud/profiler/profiler_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler {
+namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProfilerServiceConnection::~ProfilerServiceConnection() = default;
@@ -57,36 +57,34 @@ std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
                                  ProfilerServicePolicyOptionList>(options,
                                                                   __func__);
   options =
-      cloudprofiler_internal::ProfilerServiceDefaultOptions(std::move(options));
+      profiler_internal::ProfilerServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = cloudprofiler_internal::CreateDefaultProfilerServiceStub(
+  auto stub = profiler_internal::CreateDefaultProfilerServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      cloudprofiler_internal::ProfilerServiceConnectionImpl>(
+  return std::make_shared<profiler_internal::ProfilerServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler
+}  // namespace profiler
 }  // namespace cloud
 }  // namespace google
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<cloudprofiler::ProfilerServiceConnection>
+std::shared_ptr<profiler::ProfilerServiceConnection>
 MakeProfilerServiceConnection(std::shared_ptr<ProfilerServiceStub> stub,
                               Options options) {
   options = ProfilerServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      cloudprofiler_internal::ProfilerServiceConnectionImpl>(
+  return std::make_shared<profiler_internal::ProfilerServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CLIENT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CLIENT_H
 
-#include "google/cloud/cloudprofiler/profiler_connection.h"
+#include "google/cloud/profiler/profiler_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -30,7 +30,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler {
+namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
@@ -171,8 +171,8 @@ class ProfilerServiceClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler
+}  // namespace profiler
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CLIENT_H

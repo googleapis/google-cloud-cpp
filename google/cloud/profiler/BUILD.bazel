@@ -25,7 +25,7 @@ HEADER_GLOB = "**/*.h"
 MOCK_HEADER_GLOB = "mocks/*.h"
 
 cc_library(
-    name = "google_cloud_cpp_cloudprofiler",
+    name = "google_cloud_cpp_profiler",
     srcs = glob(
         include = [SOURCE_GLOB],
         exclude = [MOCK_SOURCE_GLOB],
@@ -38,12 +38,12 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc",
+        "@com_google_googleapis//google/devtools/cloudprofiler/v2:profiler_cc_grpc",
     ],
 )
 
 cc_library(
-    name = "google_cloud_cpp_cloudprofiler_mocks",
+    name = "google_cloud_cpp_profiler_mocks",
     srcs = glob(
         include = [MOCK_SOURCE_GLOB],
     ),
@@ -52,7 +52,7 @@ cc_library(
     ),
     visibility = ["//:__pkg__"],
     deps = [
-        ":google_cloud_cpp_cloudprofiler",
+        ":google_cloud_cpp_profiler",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
     ],

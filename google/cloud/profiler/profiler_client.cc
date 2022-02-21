@@ -16,22 +16,21 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#include "google/cloud/cloudprofiler/profiler_client.h"
-#include "google/cloud/cloudprofiler/internal/profiler_option_defaults.h"
+#include "google/cloud/profiler/profiler_client.h"
+#include "google/cloud/profiler/internal/profiler_option_defaults.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler {
+namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProfilerServiceClient::ProfilerServiceClient(
     std::shared_ptr<ProfilerServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(internal::MergeOptions(
-          std::move(opts),
-          cloudprofiler_internal::ProfilerServiceDefaultOptions(
-              connection_->options()))) {}
+          std::move(opts), profiler_internal::ProfilerServiceDefaultOptions(
+                               connection_->options()))) {}
 ProfilerServiceClient::~ProfilerServiceClient() = default;
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
@@ -60,6 +59,6 @@ ProfilerServiceClient::UpdateProfile(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler
+}  // namespace profiler
 }  // namespace cloud
 }  // namespace google

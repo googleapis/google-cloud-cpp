@@ -16,9 +16,9 @@
 # larger CMake project.
 
 cmake_minimum_required(VERSION 3.5)
-project(google-cloud-cpp-cloudprofiler-quickstart CXX)
+project(google-cloud-cpp-profiler-quickstart CXX)
 
-find_package(google_cloud_cpp_cloudprofiler REQUIRED)
+find_package(google_cloud_cpp_profiler REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
 if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -29,4 +29,4 @@ endif ()
 
 # Define your targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::experimental-cloudprofiler)
+target_link_libraries(quickstart google-cloud-cpp::experimental-profiler)

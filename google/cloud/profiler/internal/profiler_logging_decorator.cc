@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#include "google/cloud/cloudprofiler/internal/profiler_logging_decorator.h"
+#include "google/cloud/profiler/internal/profiler_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProfilerServiceLogging::ProfilerServiceLogging(
@@ -71,6 +71,6 @@ ProfilerServiceLogging::UpdateProfile(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google

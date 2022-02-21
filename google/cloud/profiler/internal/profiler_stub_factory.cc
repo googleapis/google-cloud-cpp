@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#include "google/cloud/cloudprofiler/internal/profiler_stub_factory.h"
-#include "google/cloud/cloudprofiler/internal/profiler_auth_decorator.h"
-#include "google/cloud/cloudprofiler/internal/profiler_logging_decorator.h"
-#include "google/cloud/cloudprofiler/internal/profiler_metadata_decorator.h"
-#include "google/cloud/cloudprofiler/internal/profiler_stub.h"
+#include "google/cloud/profiler/internal/profiler_stub_factory.h"
+#include "google/cloud/profiler/internal/profiler_auth_decorator.h"
+#include "google/cloud/profiler/internal/profiler_logging_decorator.h"
+#include "google/cloud/profiler/internal/profiler_metadata_decorator.h"
+#include "google/cloud/profiler/internal/profiler_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ProfilerServiceStub> CreateDefaultProfilerServiceStub(
@@ -61,6 +61,6 @@ std::shared_ptr<ProfilerServiceStub> CreateDefaultProfilerServiceStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google

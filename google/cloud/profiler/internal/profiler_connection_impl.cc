@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#include "google/cloud/cloudprofiler/internal/profiler_connection_impl.h"
-#include "google/cloud/cloudprofiler/internal/profiler_option_defaults.h"
+#include "google/cloud/profiler/internal/profiler_connection_impl.h"
+#include "google/cloud/profiler/internal/profiler_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -26,19 +26,18 @@
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProfilerServiceConnectionImpl::ProfilerServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<cloudprofiler_internal::ProfilerServiceStub> stub,
+    std::shared_ptr<profiler_internal::ProfilerServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          cloudprofiler_internal::ProfilerServiceDefaultOptions(
-              ProfilerServiceConnection::options()))) {}
+          std::move(options), profiler_internal::ProfilerServiceDefaultOptions(
+                                  ProfilerServiceConnection::options()))) {}
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceConnectionImpl::CreateProfile(
@@ -80,6 +79,6 @@ ProfilerServiceConnectionImpl::UpdateProfile(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google

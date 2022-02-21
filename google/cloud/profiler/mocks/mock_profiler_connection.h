@@ -16,19 +16,19 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_MOCKS_MOCK_PROFILER_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_MOCKS_MOCK_PROFILER_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_MOCKS_MOCK_PROFILER_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_MOCKS_MOCK_PROFILER_CONNECTION_H
 
-#include "google/cloud/cloudprofiler/profiler_connection.h"
+#include "google/cloud/profiler/profiler_connection.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_mocks {
+namespace profiler_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockProfilerServiceConnection
-    : public cloudprofiler::ProfilerServiceConnection {
+    : public profiler::ProfilerServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -53,8 +53,8 @@ class MockProfilerServiceConnection
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_mocks
+}  // namespace profiler_mocks
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_MOCKS_MOCK_PROFILER_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_MOCKS_MOCK_PROFILER_CONNECTION_H

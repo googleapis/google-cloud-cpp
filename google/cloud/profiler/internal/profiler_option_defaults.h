@@ -16,22 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_INTERNAL_PROFILER_OPTION_DEFAULTS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_INTERNAL_PROFILER_OPTION_DEFAULTS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_INTERNAL_PROFILER_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_INTERNAL_PROFILER_OPTION_DEFAULTS_H
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Options ProfilerServiceDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_INTERNAL_PROFILER_OPTION_DEFAULTS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_INTERNAL_PROFILER_OPTION_DEFAULTS_H

@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_OPTIONS_H
 
-#include "google/cloud/cloudprofiler/profiler_connection.h"
-#include "google/cloud/cloudprofiler/profiler_connection_idempotency_policy.h"
+#include "google/cloud/profiler/profiler_connection.h"
+#include "google/cloud/profiler/profiler_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler {
+namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Option to use with `google::cloud::Options`.
@@ -52,8 +52,8 @@ using ProfilerServicePolicyOptionList =
                ProfilerServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler
+}  // namespace profiler
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_OPTIONS_H

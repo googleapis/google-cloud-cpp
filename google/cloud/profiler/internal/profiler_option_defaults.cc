@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#include "google/cloud/cloudprofiler/internal/profiler_option_defaults.h"
-#include "google/cloud/cloudprofiler/profiler_connection.h"
-#include "google/cloud/cloudprofiler/profiler_options.h"
+#include "google/cloud/profiler/internal/profiler_option_defaults.h"
+#include "google/cloud/profiler/profiler_connection.h"
+#include "google/cloud/profiler/profiler_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -38,29 +38,28 @@ Options ProfilerServiceDefaultOptions(Options options) {
       "cloudprofiler.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<cloudprofiler::ProfilerServiceRetryPolicyOption>()) {
-    options.set<cloudprofiler::ProfilerServiceRetryPolicyOption>(
-        cloudprofiler::ProfilerServiceLimitedTimeRetryPolicy(
+  if (!options.has<profiler::ProfilerServiceRetryPolicyOption>()) {
+    options.set<profiler::ProfilerServiceRetryPolicyOption>(
+        profiler::ProfilerServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<cloudprofiler::ProfilerServiceBackoffPolicyOption>()) {
-    options.set<cloudprofiler::ProfilerServiceBackoffPolicyOption>(
+  if (!options.has<profiler::ProfilerServiceBackoffPolicyOption>()) {
+    options.set<profiler::ProfilerServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          cloudprofiler::ProfilerServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        cloudprofiler::ProfilerServiceConnectionIdempotencyPolicyOption>(
-        cloudprofiler::MakeDefaultProfilerServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<profiler::ProfilerServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<profiler::ProfilerServiceConnectionIdempotencyPolicyOption>(
+        profiler::MakeDefaultProfilerServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google

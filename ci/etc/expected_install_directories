@@ -81,9 +81,6 @@
 ./include/google/cloud/cloudbuild/mocks
 ./include/google/cloud/clouddms
 ./include/google/cloud/clouddms/v1
-./include/google/cloud/cloudprofiler
-./include/google/cloud/cloudprofiler/internal
-./include/google/cloud/cloudprofiler/mocks
 ./include/google/cloud/composer
 ./include/google/cloud/composer/internal
 ./include/google/cloud/composer/mocks
@@ -207,6 +204,9 @@
 ./include/google/cloud/privateca
 ./include/google/cloud/privateca/internal
 ./include/google/cloud/privateca/mocks
+./include/google/cloud/profiler
+./include/google/cloud/profiler/internal
+./include/google/cloud/profiler/mocks
 ./include/google/cloud/pubsublite
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
@@ -388,7 +388,6 @@
 ./lib64/cmake/google_cloud_cpp_binaryauthorization
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
-./lib64/cmake/google_cloud_cpp_cloudprofiler
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_contactcenterinsights
 ./lib64/cmake/google_cloud_cpp_container
@@ -420,6 +419,7 @@
 ./lib64/cmake/google_cloud_cpp_oslogin
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter
 ./lib64/cmake/google_cloud_cpp_privateca
+./lib64/cmake/google_cloud_cpp_profiler
 ./lib64/cmake/google_cloud_cpp_pubsublite
 ./lib64/cmake/google_cloud_cpp_recommender
 ./lib64/cmake/google_cloud_cpp_redis

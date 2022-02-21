@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CONNECTION_H
 
-#include "google/cloud/cloudprofiler/internal/profiler_retry_traits.h"
-#include "google/cloud/cloudprofiler/internal/profiler_stub.h"
-#include "google/cloud/cloudprofiler/profiler_connection_idempotency_policy.h"
+#include "google/cloud/profiler/internal/profiler_retry_traits.h"
+#include "google/cloud/profiler/internal/profiler_stub.h"
+#include "google/cloud/profiler/profiler_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler {
+namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ProfilerServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        cloudprofiler_internal::ProfilerServiceRetryTraits>;
+        profiler_internal::ProfilerServiceRetryTraits>;
 
 using ProfilerServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        cloudprofiler_internal::ProfilerServiceRetryTraits>;
+        profiler_internal::ProfilerServiceRetryTraits>;
 
 using ProfilerServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        cloudprofiler_internal::ProfilerServiceRetryTraits>;
+        profiler_internal::ProfilerServiceRetryTraits>;
 
 class ProfilerServiceConnection {
  public:
@@ -67,22 +67,22 @@ std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler
+}  // namespace profiler
 }  // namespace cloud
 }  // namespace google
 
 namespace google {
 namespace cloud {
-namespace cloudprofiler_internal {
+namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<cloudprofiler::ProfilerServiceConnection>
+std::shared_ptr<profiler::ProfilerServiceConnection>
 MakeProfilerServiceConnection(std::shared_ptr<ProfilerServiceStub> stub,
                               Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudprofiler_internal
+}  // namespace profiler_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDPROFILER_PROFILER_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CONNECTION_H

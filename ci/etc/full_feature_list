@@ -12,7 +12,6 @@ billing
 binaryauthorization
 channel
 cloudbuild
-cloudprofiler
 composer
 contactcenterinsights
 container
@@ -44,6 +43,7 @@ osconfig
 oslogin
 policytroubleshooter
 privateca
+profiler
 pubsublite
 recommender
 redis

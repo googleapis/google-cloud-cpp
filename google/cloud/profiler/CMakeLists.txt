@@ -18,12 +18,12 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Profiler API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Profiler API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "cloudprofiler_internal"
-                            "cloudprofiler_testing" "examples")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "profiler_internal" "profiler_testing"
+                            "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::cloudprofiler_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::profiler_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -36,15 +36,15 @@ endif ()
 
 include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloudprofiler_protos
+    google_cloud_cpp_profiler_protos
     # cmake-format: sort
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/cloudprofiler/v2/profiler.proto
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(cloudprofiler_protos)
+external_googleapis_set_version_and_alias(profiler_protos)
 target_link_libraries(
-    google_cloud_cpp_cloudprofiler_protos
+    google_cloud_cpp_profiler_protos
     PUBLIC #
            google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
@@ -55,27 +55,27 @@ file(
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
 list(SORT source_files)
-add_library(google_cloud_cpp_cloudprofiler ${source_files})
+add_library(google_cloud_cpp_profiler ${source_files})
 target_include_directories(
-    google_cloud_cpp_cloudprofiler
+    google_cloud_cpp_profiler
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    google_cloud_cpp_cloudprofiler
+    google_cloud_cpp_profiler
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::cloudprofiler_protos)
-google_cloud_cpp_add_common_options(google_cloud_cpp_cloudprofiler)
+           google-cloud-cpp::profiler_protos)
+google_cloud_cpp_add_common_options(google_cloud_cpp_profiler)
 set_target_properties(
-    google_cloud_cpp_cloudprofiler
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-cloudprofiler
+    google_cloud_cpp_profiler
+    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-profiler
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
-target_compile_options(google_cloud_cpp_cloudprofiler
+target_compile_options(google_cloud_cpp_profiler
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-cloudprofiler ALIAS
-            google_cloud_cpp_cloudprofiler)
+add_library(google-cloud-cpp::experimental-profiler ALIAS
+            google_cloud_cpp_profiler)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -90,34 +90,37 @@ set(mock_files)
 foreach (file IN LISTS relative_mock_files)
     list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
 endforeach ()
-add_library(google_cloud_cpp_cloudprofiler_mocks INTERFACE)
-target_sources(google_cloud_cpp_cloudprofiler_mocks INTERFACE ${mock_files})
+add_library(google_cloud_cpp_profiler_mocks INTERFACE)
+target_sources(google_cloud_cpp_profiler_mocks INTERFACE ${mock_files})
 target_link_libraries(
-    google_cloud_cpp_cloudprofiler_mocks
-    INTERFACE google-cloud-cpp::experimental-cloudprofiler GTest::gmock_main
+    google_cloud_cpp_profiler_mocks
+    INTERFACE google-cloud-cpp::experimental-profiler GTest::gmock_main
               GTest::gmock GTest::gtest)
 set_target_properties(
-    google_cloud_cpp_cloudprofiler_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-cloudprofiler_mocks)
+    google_cloud_cpp_profiler_mocks
+    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-profiler_mocks)
 target_include_directories(
-    google_cloud_cpp_cloudprofiler_mocks
+    google_cloud_cpp_profiler_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
               $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_cloudprofiler_mocks
+target_compile_options(google_cloud_cpp_profiler_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 include(CTest)
 if (BUILD_TESTING)
-    add_executable(cloudprofiler_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(cloudprofiler_quickstart
-                          PRIVATE google-cloud-cpp::experimental-cloudprofiler)
-    google_cloud_cpp_add_common_options(cloudprofiler_quickstart)
+    add_executable(profiler_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(profiler_quickstart
+                          PRIVATE google-cloud-cpp::experimental-profiler)
+    google_cloud_cpp_add_common_options(profiler_quickstart)
     add_test(
-        NAME cloudprofiler_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:cloudprofiler_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(cloudprofiler_quickstart
+        NAME profiler_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:profiler_quickstart> GOOGLE_CLOUD_PROJECT
+            # EDIT HERE
+    )
+    set_tests_properties(profiler_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
@@ -126,15 +129,15 @@ include(GNUInstallDirs)
 
 # Export the CMake targets to make it easy to create configuration files.
 install(
-    EXPORT google_cloud_cpp_cloudprofiler-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_cloudprofiler"
+    EXPORT google_cloud_cpp_profiler-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_profiler"
     COMPONENT google_cloud_cpp_development)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS google_cloud_cpp_cloudprofiler google_cloud_cpp_cloudprofiler_protos
-    EXPORT google_cloud_cpp_cloudprofiler-targets
+    TARGETS google_cloud_cpp_profiler google_cloud_cpp_profiler_protos
+    EXPORT google_cloud_cpp_profiler-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -145,21 +148,21 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS google_cloud_cpp_cloudprofiler google_cloud_cpp_cloudprofiler_protos
+    TARGETS google_cloud_cpp_profiler google_cloud_cpp_profiler_protos
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_proto_library_protos(
-    "google_cloud_cpp_cloudprofiler_protos" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+google_cloud_cpp_install_proto_library_protos("google_cloud_cpp_profiler_protos"
+                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
 google_cloud_cpp_install_proto_library_headers(
-    "google_cloud_cpp_cloudprofiler_protos")
-google_cloud_cpp_install_headers("google_cloud_cpp_cloudprofiler"
-                                 "include/google/cloud/cloudprofiler")
-google_cloud_cpp_install_headers("google_cloud_cpp_cloudprofiler_mocks"
-                                 "include/google/cloud/cloudprofiler")
+    "google_cloud_cpp_profiler_protos")
+google_cloud_cpp_install_headers("google_cloud_cpp_profiler"
+                                 "include/google/cloud/profiler")
+google_cloud_cpp_install_headers("google_cloud_cpp_profiler_mocks"
+                                 "include/google/cloud/profiler")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
@@ -168,34 +171,32 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Cloud Profiler API C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to use the Cloud Profiler API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_cloudprofiler")
+set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_profiler")
 string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_cloudprofiler_protos")
+              " google_cloud_cpp_common" " google_cloud_cpp_profiler_protos")
 
 # Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/cloudprofiler/config.pc.in"
-               "google_cloud_cpp_cloudprofiler.pc" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/profiler/config.pc.in"
+               "google_cloud_cpp_profiler.pc" @ONLY)
 install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_cloudprofiler.pc"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_profiler.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
     COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_cloudprofiler-config.cmake"
-               @ONLY)
+configure_file("config.cmake.in" "google_cloud_cpp_profiler-config.cmake" @ONLY)
 write_basic_package_version_file(
-    "google_cloud_cpp_cloudprofiler-config-version.cmake"
+    "google_cloud_cpp_profiler-config-version.cmake"
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(
     FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_cloudprofiler-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_cloudprofiler-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_cloudprofiler"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_profiler-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_profiler-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_profiler"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_cloudprofiler_protos"
+external_googleapis_install_pc("google_cloud_cpp_profiler_protos"
                                "${PROJECT_SOURCE_DIR}/external/googleapis")
