@@ -28,7 +28,10 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
+using ::testing::Property;
 using ::testing::UnorderedElementsAre;
 
 TEST(GrpcBucketRequestParser, DeleteBucketMetadataAllOptions) {
@@ -210,6 +213,70 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
                  std::back_inserter(names),
                  [](BucketMetadata const& b) { return b.name(); });
   EXPECT_THAT(names, ElementsAre("test-bucket-1", "test-bucket-2"));
+}
+
+TEST(GrpcBucketRequestParser, GetIamPolicyRequest) {
+  google::iam::v1::GetIamPolicyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        resource: "projects/_/buckets/test-bucket"
+        options { requested_policy_version: 3 }
+      )pb",
+      &expected));
+
+  GetBucketIamPolicyRequest req("test-bucket");
+  req.set_multiple_options(
+      RequestedPolicyVersion(3), UserProject("test-user-project"),
+      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcBucketRequestParser, NativeIamPolicy) {
+  google::iam::v1::Policy input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        version: 7
+        bindings {
+          role: "role/test.only"
+          members: "test-1"
+          members: "test-2"
+          condition {
+            expression: "test-expression"
+            title: "test-title"
+            description: "test-description"
+            location: "test-location"
+          }
+        }
+        bindings { role: "role/another.test.only" members: "test-3" }
+        etag: "test-etag"
+      )pb",
+      &input));
+
+  auto const actual = GrpcBucketRequestParser::FromProto(input);
+  EXPECT_EQ(7, actual.version());
+  EXPECT_EQ("test-etag", actual.etag());
+  NativeIamBinding b0(
+      "role/test.only", {"test-1", "test-2"},
+      {"test-expression", "test-title", "test-description", "test-location"});
+  NativeIamBinding b1("role/another.test.only", {"test-3"});
+
+  auto match_expr = [](NativeExpression const& e) {
+    return AllOf(Property(&NativeExpression::expression, e.expression()),
+                 Property(&NativeExpression::title, e.title()),
+                 Property(&NativeExpression::description, e.description()),
+                 Property(&NativeExpression::location, e.location()));
+  };
+  auto match_binding = [&](NativeIamBinding const& b) {
+    return AllOf(
+        Property(&NativeIamBinding::role, b.role()),
+        Property(&NativeIamBinding::members, ElementsAreArray(b.members())),
+        Property(&NativeIamBinding::has_condition, b.has_condition()));
+  };
+  ASSERT_THAT(actual.bindings(),
+              ElementsAre(match_binding(b0), match_binding(b1)));
+  ASSERT_TRUE(actual.bindings()[0].has_condition());
+  ASSERT_THAT(actual.bindings()[0].condition(), match_expr(b0.condition()));
 }
 
 TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {

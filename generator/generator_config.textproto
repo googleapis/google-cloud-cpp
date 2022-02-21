@@ -860,7 +860,6 @@ service {
   omit_stub_factory: true
   omitted_rpcs: [
     "LockBucketRetentionPolicy",
-    "GetIamPolicy",
     "SetIamPolicy",
     "TestIamPermissions",
     "DeleteNotification",

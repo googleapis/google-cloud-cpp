@@ -80,6 +80,17 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageLogging::ListBuckets(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::iam::v1::Policy> StorageLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageLogging::UpdateBucket(
     grpc::ClientContext& context,
     google::storage::v2::UpdateBucketRequest const& request) {

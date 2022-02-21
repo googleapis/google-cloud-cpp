@@ -44,6 +44,12 @@ StorageRoundRobin::ListBuckets(
   return Child()->ListBuckets(context, request);
 }
 
+StatusOr<google::iam::v1::Policy> StorageRoundRobin::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return Child()->GetIamPolicy(context, request);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageRoundRobin::UpdateBucket(
     grpc::ClientContext& context,
     google::storage::v2::UpdateBucketRequest const& request) {

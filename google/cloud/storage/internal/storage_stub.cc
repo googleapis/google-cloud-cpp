@@ -75,6 +75,17 @@ DefaultStorageStub::ListBuckets(
   return response;
 }
 
+StatusOr<google::iam::v1::Policy> DefaultStorageStub::GetIamPolicy(
+    grpc::ClientContext& client_context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::Bucket> DefaultStorageStub::UpdateBucket(
     grpc::ClientContext& client_context,
     google::storage::v2::UpdateBucketRequest const& request) {

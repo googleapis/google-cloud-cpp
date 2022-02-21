@@ -61,6 +61,13 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
   return child_->ListBuckets(context, request);
 }
 
+StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(context, {});
+  return child_->GetIamPolicy(context, request);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
     grpc::ClientContext& context,
     google::storage::v2::UpdateBucketRequest const& request) {

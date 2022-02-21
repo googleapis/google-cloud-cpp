@@ -18,6 +18,8 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
+#include <iterator>
 #include <vector>
 
 namespace google {
@@ -100,6 +102,17 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
     names.push_back(b->name());
   }
   EXPECT_THAT(names, IsSupersetOf({bucket_name, bucket_name_2}));
+
+  auto policy = client->GetNativeBucketIamPolicy(bucket_name);
+  ASSERT_STATUS_OK(policy);
+
+  std::vector<std::string> roles;
+  std::transform(policy->bindings().begin(), policy->bindings().end(),
+                 std::back_inserter(roles),
+                 [](NativeIamBinding const& b) { return b.role(); });
+  EXPECT_THAT(roles, IsSupersetOf({"roles/storage.legacyBucketOwner",
+                                   "roles/storage.legacyBucketWriter",
+                                   "roles/storage.legacyBucketReader"}));
 
   auto delete_status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);
