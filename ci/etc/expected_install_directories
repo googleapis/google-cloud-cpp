@@ -111,6 +111,10 @@
 ./include/google/cloud/dlp
 ./include/google/cloud/dlp/internal
 ./include/google/cloud/dlp/mocks
+./include/google/cloud/documentai
+./include/google/cloud/documentai/internal
+./include/google/cloud/documentai/mocks
+./include/google/cloud/documentai/v1
 ./include/google/cloud/eventarc
 ./include/google/cloud/eventarc/internal
 ./include/google/cloud/eventarc/mocks
@@ -392,6 +396,7 @@
 ./lib64/cmake/google_cloud_cpp_dataproc
 ./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_dlp
+./lib64/cmake/google_cloud_cpp_documentai
 ./lib64/cmake/google_cloud_cpp_eventarc
 ./lib64/cmake/google_cloud_cpp_filestore
 ./lib64/cmake/google_cloud_cpp_functions

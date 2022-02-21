@@ -342,6 +342,13 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Document AI
+service {
+  service_proto_path: "google/cloud/documentai/v1/document_processor_service.proto"
+  product_path: "google/cloud/documentai"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
 
 # Eventarc
 service {

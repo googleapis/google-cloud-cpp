@@ -1,0 +1,5 @@
+@com_google_googleapis//google/cloud/documentai/v1:document.proto
+@com_google_googleapis//google/cloud/documentai/v1:document_io.proto
+@com_google_googleapis//google/cloud/documentai/v1:document_processor_service.proto
+@com_google_googleapis//google/cloud/documentai/v1:geometry.proto
+@com_google_googleapis//google/cloud/documentai/v1:operation_metadata.proto
