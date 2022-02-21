@@ -70,6 +70,9 @@ $env:GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT="iam-credentials-test
 $env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT="iam-test-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 $env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT="invalid-test-account@cloud-cpp-testing-resources.iam.gserviceaccount.com"
 
+# Rest configuration parameters
+$env:GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+
 # To run google/cloud/gameservices' quickstart
 $env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
 $env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"
