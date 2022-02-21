@@ -35,8 +35,8 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 [cloud-service]: https://cloud.google.com/profiler
 [cloud-service-docs]: https://cloud.google.com/profiler/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-cloudprofiler/latest/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/cloudprofiler
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-profiler/latest/
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/profiler
 
 ## Quickstart
 
@@ -47,7 +47,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/cloudprofiler/profiler_client.h"
+#include "google/cloud/profiler/profiler_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -58,9 +58,9 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace cloudprofiler = ::google::cloud::cloudprofiler;
-  auto client = cloudprofiler::ProfilerServiceClient(
-      cloudprofiler::MakeProfilerServiceConnection());
+  namespace profiler = ::google::cloud::profiler;
+  auto client = profiler::ProfilerServiceClient(
+      profiler::MakeProfilerServiceConnection());
 
   google::devtools::cloudprofiler::v2::CreateProfileRequest req;
   req.set_parent(google::cloud::Project(argv[1]).FullName());

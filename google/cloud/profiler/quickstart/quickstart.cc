@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/cloudprofiler/profiler_client.h"
+#include "google/cloud/profiler/profiler_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -23,9 +23,9 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace cloudprofiler = ::google::cloud::cloudprofiler;
-  auto client = cloudprofiler::ProfilerServiceClient(
-      cloudprofiler::MakeProfilerServiceConnection());
+  namespace profiler = ::google::cloud::profiler;
+  auto client = profiler::ProfilerServiceClient(
+      profiler::MakeProfilerServiceConnection());
 
   google::devtools::cloudprofiler::v2::CreateProfileRequest req;
   req.set_parent(google::cloud::Project(argv[1]).FullName());

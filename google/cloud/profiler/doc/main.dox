@@ -33,13 +33,13 @@ your application. You can fetch the source from [GitHub][github-link] as normal:
 
 @code{.sh}
 git clone https://github.com/googleapis/google-cloud-cpp.git
-cd google-cloud-cpp/google/cloud/cloudprofiler/quickstart
+cd google-cloud-cpp/google/cloud/profiler/quickstart
 @endcode
 
 @par Example: Quickstart
 
 The following shows the code that you'll run in the
-`google/cloud/cloudprofiler/quickstart/` directory,
+`google/cloud/profiler/quickstart/` directory,
 which should give you a taste of the Cloud Profiler API C++ client library API.
 
 @include quickstart.cc
@@ -93,7 +93,7 @@ can override the default policies.
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->
-[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/cloudprofiler/README%2Emd
-[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/cloudprofiler/quickstart/README%2Emd
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/profiler/README%2Emd
+[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/profiler/quickstart/README%2Emd
 
 */

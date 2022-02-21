@@ -38,7 +38,7 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "@com_google_googleapis//google/devtools/cloudprofiler/v2:profiler_cc_grpc",
+        "@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc",
     ],
 )
 

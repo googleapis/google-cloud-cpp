@@ -115,11 +115,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(profiler_quickstart)
     add_test(
         NAME profiler_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:profiler_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:profiler_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(profiler_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
