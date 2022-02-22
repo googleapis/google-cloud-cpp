@@ -50,7 +50,9 @@ Status MakeRequestWithPayload(
       concatenated_payload += std::string(p.begin(), p.end());
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
-    impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
+    if (!encoded_payload.empty()) {
+      impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
+    }
     return impl.MakeRequest(http_method,
                             {{encoded_payload.data(), encoded_payload.size()}});
   }
@@ -59,7 +61,9 @@ Status MakeRequestWithPayload(
   for (auto const& p : payload) {
     content_length += p.size();
   }
-  impl.SetHeader(absl::StrCat("content-length: ", content_length));
+  if (content_length > 0) {
+    impl.SetHeader(absl::StrCat("content-length: ", content_length));
+  }
   return impl.MakeRequest(http_method, payload);
 }
 
