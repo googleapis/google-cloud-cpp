@@ -147,6 +147,25 @@ TEST(StorageRoundRobinTest, ListBuckets) {
   }
 }
 
+TEST(StorageRoundRobinTest, LockBucketRetentionPolicy) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, LockBucketRetentionPolicy)
+          .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+    }
+  }
+
+  StorageRoundRobin under_test(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    grpc::ClientContext context;
+    google::storage::v2::LockBucketRetentionPolicyRequest request;
+    auto response = under_test.LockBucketRetentionPolicy(context, request);
+    EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
 TEST(StorageRoundRobinTest, GetIamPolicy) {
   auto mocks = MakeMocks();
   InSequence sequence;
