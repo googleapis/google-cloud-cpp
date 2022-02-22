@@ -211,9 +211,21 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestBase,
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
   EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(true));
 
+  auto read = stream_->Read();
+  auto write =
+      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+
+  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(
+      write.wait_for(ms(kFutureWaitMs)),
+      std::future_status::timeout);  // read and write shouldn't finish until
+                                     // retry loop permanent error or `Finish`
+
   start_promise.set_value(false);
 
   EXPECT_EQ(status_future.get(), kFailStatus);
+  EXPECT_EQ(read.get(), absl::nullopt);
+  EXPECT_EQ(write.get(), false);
   auto finish = stream_->Finish();
   finish.get();
 }
