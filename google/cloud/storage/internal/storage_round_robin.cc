@@ -57,6 +57,12 @@ StatusOr<google::iam::v1::Policy> StorageRoundRobin::GetIamPolicy(
   return Child()->GetIamPolicy(context, request);
 }
 
+StatusOr<google::iam::v1::Policy> StorageRoundRobin::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return Child()->SetIamPolicy(context, request);
+}
+
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 StorageRoundRobin::TestIamPermissions(
     grpc::ClientContext& context,
