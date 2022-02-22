@@ -32,6 +32,7 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::IsSupersetOf;
@@ -89,6 +90,12 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   EXPECT_THAT(updated->labels(),
               UnorderedElementsAre(Pair("l0", "k0"), Pair("l1", "test-value")));
 
+  auto locked =
+      client->LockBucketRetentionPolicy(bucket_name, updated->metageneration());
+  ASSERT_STATUS_OK(locked);
+  EXPECT_FALSE(updated->has_retention_policy());
+  EXPECT_TRUE(locked->has_retention_policy());
+
   // Create a second bucket to make the list more interesting.
   auto bucket_name_2 = MakeRandomBucketName();
   auto insert_2 = client->CreateBucketForProject(bucket_name_2, project_name,
@@ -113,6 +120,11 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   EXPECT_THAT(roles, IsSupersetOf({"roles/storage.legacyBucketOwner",
                                    "roles/storage.legacyBucketWriter",
                                    "roles/storage.legacyBucketReader"}));
+
+  auto permissions = client->TestBucketIamPermissions(
+      bucket_name, {"storage.objects.list", "storage.buckets.update"});
+  ASSERT_STATUS_OK(permissions);
+  EXPECT_THAT(*permissions, Contains("storage.buckets.update"));
 
   auto delete_status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);

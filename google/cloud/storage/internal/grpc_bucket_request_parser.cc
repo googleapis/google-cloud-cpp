@@ -126,6 +126,16 @@ ListBucketsResponse GrpcBucketRequestParser::FromProto(
   return result;
 }
 
+google::storage::v2::LockBucketRetentionPolicyRequest
+GrpcBucketRequestParser::ToProto(
+    LockBucketRetentionPolicyRequest const& request) {
+  google::storage::v2::LockBucketRetentionPolicyRequest result;
+  SetCommonParameters(result, request);
+  result.set_bucket("projects/_/buckets/" + request.bucket_name());
+  result.set_if_metageneration_match(request.metageneration());
+  return result;
+}
+
 google::iam::v1::GetIamPolicyRequest GrpcBucketRequestParser::ToProto(
     GetBucketIamPolicyRequest const& request) {
   google::iam::v1::GetIamPolicyRequest result;
@@ -157,6 +167,25 @@ NativeIamPolicy GrpcBucketRequestParser::FromProto(
 
   NativeIamPolicy result(std::move(bindings), response.etag(),
                          response.version());
+  return result;
+}
+
+google::iam::v1::TestIamPermissionsRequest GrpcBucketRequestParser::ToProto(
+    TestBucketIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsRequest result;
+  result.set_resource("projects/_/buckets/" + request.bucket_name());
+  for (auto const& p : request.permissions()) {
+    result.add_permissions(p);
+  }
+  return result;
+}
+
+TestBucketIamPermissionsResponse GrpcBucketRequestParser::FromProto(
+    google::iam::v1::TestIamPermissionsResponse const& response) {
+  TestBucketIamPermissionsResponse result;
+  for (auto const& p : response.permissions()) {
+    result.permissions.push_back(p);
+  }
   return result;
 }
 

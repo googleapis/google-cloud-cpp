@@ -215,6 +215,25 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
   EXPECT_THAT(names, ElementsAre("test-bucket-1", "test-bucket-2"));
 }
 
+TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {
+  google::storage::v2::LockBucketRetentionPolicyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        if_metageneration_match: 7
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  LockBucketRetentionPolicyRequest req("test-bucket", /*metageneration=*/7);
+  req.set_multiple_options(UserProject("test-user-project"),
+                           QuotaUser("test-quota-user"),
+                           UserIp("test-user-ip"));
+
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcBucketRequestParser, GetIamPolicyRequest) {
   google::iam::v1::GetIamPolicyRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -277,6 +296,39 @@ TEST(GrpcBucketRequestParser, NativeIamPolicy) {
               ElementsAre(match_binding(b0), match_binding(b1)));
   ASSERT_TRUE(actual.bindings()[0].has_condition());
   ASSERT_THAT(actual.bindings()[0].condition(), match_expr(b0.condition()));
+}
+
+TEST(GrpcBucketRequestParser, TestBucketIamPermissionsRequest) {
+  google::iam::v1::TestIamPermissionsRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        resource: "projects/_/buckets/test-bucket"
+        permissions: "test-only.permission.1"
+        permissions: "test-only.permission.2"
+      )pb",
+      &expected));
+
+  TestBucketIamPermissionsRequest req(
+      "test-bucket", {"test-only.permission.1", "test-only.permission.2"});
+  req.set_multiple_options(UserProject("test-user-project"),
+                           QuotaUser("test-quota-user"),
+                           UserIp("test-user-ip"));
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcBucketRequestParser, TestBucketIamPermissionsResponse) {
+  google::iam::v1::TestIamPermissionsResponse input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        permissions: "test-only.permission.1"
+        permissions: "test-only.permission.2"
+      )pb",
+      &input));
+
+  auto const actual = GrpcBucketRequestParser::FromProto(input);
+  EXPECT_THAT(actual.permissions,
+              ElementsAre("test-only.permission.1", "test-only.permission.2"));
 }
 
 TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {

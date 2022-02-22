@@ -41,10 +41,18 @@ struct GrpcBucketRequestParser {
   static ListBucketsResponse FromProto(
       google::storage::v2::ListBucketsResponse const& response);
 
+  static google::storage::v2::LockBucketRetentionPolicyRequest ToProto(
+      LockBucketRetentionPolicyRequest const& request);
+
   static google::iam::v1::GetIamPolicyRequest ToProto(
       GetBucketIamPolicyRequest const& request);
   static NativeIamBinding FromProto(google::iam::v1::Binding const& b);
   static NativeIamPolicy FromProto(google::iam::v1::Policy const& response);
+
+  static google::iam::v1::TestIamPermissionsRequest ToProto(
+      TestBucketIamPermissionsRequest const& request);
+  static TestBucketIamPermissionsResponse FromProto(
+      google::iam::v1::TestIamPermissionsResponse const& response);
 
   static StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
       PatchBucketRequest const& request);

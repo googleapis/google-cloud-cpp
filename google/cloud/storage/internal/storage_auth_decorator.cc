@@ -62,12 +62,29 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageAuth::ListBuckets(
   return child_->ListBuckets(context, request);
 }
 
+StatusOr<google::storage::v2::Bucket> StorageAuth::LockBucketRetentionPolicy(
+    grpc::ClientContext& context,
+    google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LockBucketRetentionPolicy(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> StorageAuth::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, request);
 }
 
 StatusOr<google::storage::v2::Bucket> StorageAuth::UpdateBucket(

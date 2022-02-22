@@ -80,6 +80,18 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageLogging::ListBuckets(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::Bucket> StorageLogging::LockBucketRetentionPolicy(
+    grpc::ClientContext& context,
+    google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::storage::v2::LockBucketRetentionPolicyRequest const&
+                 request) {
+        return child_->LockBucketRetentionPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::iam::v1::Policy> StorageLogging::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -87,6 +99,18 @@ StatusOr<google::iam::v1::Policy> StorageLogging::GetIamPolicy(
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageLogging::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(context, request);
       },
       context, request, __func__, tracing_options_);
 }
