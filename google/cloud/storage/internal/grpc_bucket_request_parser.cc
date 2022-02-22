@@ -170,6 +170,25 @@ NativeIamPolicy GrpcBucketRequestParser::FromProto(
   return result;
 }
 
+google::iam::v1::TestIamPermissionsRequest GrpcBucketRequestParser::ToProto(
+    TestBucketIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsRequest result;
+  result.set_resource("projects/_/buckets/" + request.bucket_name());
+  for (auto const& p : request.permissions()) {
+    result.add_permissions(p);
+  }
+  return result;
+}
+
+TestBucketIamPermissionsResponse GrpcBucketRequestParser::FromProto(
+    google::iam::v1::TestIamPermissionsResponse const& response) {
+  TestBucketIamPermissionsResponse result;
+  for (auto const& p : response.permissions()) {
+    result.permissions.push_back(p);
+  }
+  return result;
+}
+
 StatusOr<google::storage::v2::UpdateBucketRequest>
 GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
   google::storage::v2::UpdateBucketRequest result;

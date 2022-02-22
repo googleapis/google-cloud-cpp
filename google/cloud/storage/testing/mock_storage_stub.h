@@ -49,6 +49,11 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::iam::v1::GetIamPolicyRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (grpc::ClientContext&,
+               google::iam::v1::TestIamPermissionsRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Bucket>, UpdateBucket,
               (grpc::ClientContext&,
                google::storage::v2::UpdateBucketRequest const&),

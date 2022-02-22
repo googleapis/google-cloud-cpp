@@ -59,6 +59,11 @@ class StorageStub {
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
   virtual StatusOr<google::storage::v2::Bucket> UpdateBucket(
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) = 0;
@@ -142,6 +147,10 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& client_context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& client_context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::storage::v2::Bucket> UpdateBucket(
       grpc::ClientContext& client_context,

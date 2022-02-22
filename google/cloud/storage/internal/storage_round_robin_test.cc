@@ -185,6 +185,25 @@ TEST(StorageRoundRobinTest, GetIamPolicy) {
   }
 }
 
+TEST(StorageRoundRobinTest, TestIamPermissions) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, TestIamPermissions)
+          .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+    }
+  }
+
+  StorageRoundRobin under_test(AsPlainStubs(mocks));
+  for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    grpc::ClientContext context;
+    google::iam::v1::TestIamPermissionsRequest request;
+    auto response = under_test.TestIamPermissions(context, request);
+    EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
+  }
+}
+
 TEST(StorageRoundRobinTest, UpdateBucket) {
   auto mocks = MakeMocks();
   InSequence sequence;

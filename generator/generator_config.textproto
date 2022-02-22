@@ -875,7 +875,6 @@ service {
   omit_stub_factory: true
   omitted_rpcs: [
     "SetIamPolicy",
-    "TestIamPermissions",
     "DeleteNotification",
     "GetNotification",
     "CreateNotification",
