@@ -70,6 +70,15 @@ StatusOr<google::iam::v1::Policy> StorageAuth::GetIamPolicy(
   return child_->GetIamPolicy(context, request);
 }
 
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, request);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageAuth::UpdateBucket(
     grpc::ClientContext& context,
     google::storage::v2::UpdateBucketRequest const& request) {

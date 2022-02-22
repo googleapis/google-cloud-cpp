@@ -86,6 +86,19 @@ StatusOr<google::iam::v1::Policy> DefaultStorageStub::GetIamPolicy(
   return response;
 }
 
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DefaultStorageStub::TestIamPermissions(
+    grpc::ClientContext& client_context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::storage::v2::Bucket> DefaultStorageStub::UpdateBucket(
     grpc::ClientContext& client_context,
     google::storage::v2::UpdateBucketRequest const& request) {

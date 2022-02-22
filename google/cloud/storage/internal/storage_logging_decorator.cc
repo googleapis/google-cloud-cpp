@@ -91,6 +91,18 @@ StatusOr<google::iam::v1::Policy> StorageLogging::GetIamPolicy(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageLogging::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::v2::Bucket> StorageLogging::UpdateBucket(
     grpc::ClientContext& context,
     google::storage::v2::UpdateBucketRequest const& request) {
