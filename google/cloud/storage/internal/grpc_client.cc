@@ -242,14 +242,34 @@ StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
   return GrpcBucketRequestParser::FromProto(*response);
 }
 
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    SetBucketIamPolicyRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->SetIamPolicy(context, proto);
+  if (!response) return std::move(response).status();
+  IamBindings bindings;
+  for (auto const& b : response->bindings()) {
+    bindings.AddMembers(b.role(), std::set<std::string>(b.members().begin(),
+                                                        b.members().end()));
+  }
+  return IamPolicy{response->version(), std::move(bindings), response->etag()};
 }
 
+#include "google/cloud/internal/diagnostics_pop.inc"
+
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
-    SetNativeBucketIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    SetNativeBucketIamPolicyRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->SetIamPolicy(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketRequestParser::FromProto(*response);
 }
 
 StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
