@@ -83,7 +83,6 @@ add_library(
     bytes.h
     client.cc
     client.h
-    client_options.cc
     client_options.h
     commit_options.cc
     commit_options.h
