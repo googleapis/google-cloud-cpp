@@ -37,11 +37,9 @@ class MockAsyncReaderWriter
   MOCK_METHOD(future<bool>, Start, (), (override));
 };
 
-
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-
-#endif // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_MOCK_ASYNC_READER_WRITER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_MOCK_ASYNC_READER_WRITER_H

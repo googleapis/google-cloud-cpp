@@ -184,9 +184,9 @@ add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_async_reader_writer.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_backoff_policy.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_retry_policy.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_async_reader_writer.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_backoff_policy.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_retry_policy.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_stats_connection.h)
 target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
@@ -212,8 +212,11 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    set(pubsublite_unit_tests # cmake-format: sort
-                              endpoint_test.cc internal/resumable_async_streaming_read_write_rpc_test.cc internal/stream_factory_test.cc)
+    set(pubsublite_unit_tests
+        # cmake-format: sort
+        endpoint_test.cc
+        internal/resumable_async_streaming_read_write_rpc_test.cc
+        internal/stream_factory_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"
                          YEAR "2021")
