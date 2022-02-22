@@ -230,6 +230,55 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestBase,
   finish.get();
 }
 
+TEST_F(ResumableAsyncReadWriteStreamingRpcTestBase,
+       SingleStartInitializerFailurePermanentError) {
+  InSequence seq;
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto& stream1_ref = *stream1;
+
+  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  EXPECT_CALL(*backoff_policy_, clone)
+      .WillOnce(Return(ByMove(std::move(backoff_policy))));
+
+  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto& retry_policy_ref = *mock_retry_policy;
+  EXPECT_CALL(retry_policy_factory_, Call)
+      .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
+
+  EXPECT_CALL(stream_factory_, Call)
+      .WillOnce(Return(ByMove(std::move(stream1))));
+
+  EXPECT_CALL(stream1_ref, Start)
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  promise<StatusOr<AsyncReadWriteStreamReturnType>> initializer_promise;
+  EXPECT_CALL(initializer_, Call)
+      .WillOnce(Return(ByMove(initializer_promise.get_future())));
+  EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(true));
+
+  auto status_future = stream_->Start();
+
+  auto read = stream_->Read();
+  auto write =
+      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+
+  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(
+      write.wait_for(ms(kFutureWaitMs)),
+      std::future_status::timeout);  // read and write shouldn't finish until
+                                     // retry loop permanent error or `Finish`
+
+  initializer_promise.set_value(
+      StatusOr<AsyncReadWriteStreamReturnType>(kFailStatus));
+
+  EXPECT_EQ(status_future.get(), kFailStatus);
+  EXPECT_EQ(read.get(), absl::nullopt);
+  EXPECT_EQ(write.get(), false);
+  auto finish = stream_->Finish();
+  finish.get();
+}
+
 class ResumableAsyncReadWriteStreamingRpcTest
     : public ResumableAsyncReadWriteStreamingRpcTestBase {
  protected:

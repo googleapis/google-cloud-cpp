@@ -25,6 +25,8 @@
 #include <memory>
 #include <utility>
 
+#include <iostream>
+
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
@@ -446,15 +448,19 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           if (!status.ok())
             return make_ready_future(StatusOr<UnderlyingStream>(status));
           std::lock_guard<std::mutex> g{mu_};
+          std::cerr << "initialize" << std::endl;
           return initializer_(std::move(stream_));
         });
 
     initializer_future.then([this, retry_policy,
                              backoff_policy](future<StatusOr<UnderlyingStream>>
                                                  initialize_future) {
+      std::cerr << "inside" << std::endl;
       auto start_initialize_response = initialize_future.get();
+      std::cerr << "inside 1" << std::endl;
 
       if (!start_initialize_response.ok()) {
+        std::cerr << "attempt retry" << std::endl;
         AttemptRetry(start_initialize_response.status(), retry_policy,
                      backoff_policy);
         return;
