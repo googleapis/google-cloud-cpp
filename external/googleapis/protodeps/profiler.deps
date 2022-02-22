@@ -1,0 +1,3 @@
+@com_google_googleapis//google/api:annotations_proto
+@com_google_googleapis//google/api:client_proto
+@com_google_googleapis//google/api:http_proto

@@ -342,6 +342,13 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Document AI
+service {
+  service_proto_path: "google/cloud/documentai/v1/document_processor_service.proto"
+  product_path: "google/cloud/documentai"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
 
 # Eventarc
 service {
@@ -614,6 +621,14 @@ service {
   retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
 }
 
+# Cloud Profiler
+service {
+  service_proto_path: "google/devtools/cloudprofiler/v2/profiler.proto"
+  product_path: "google/cloud/profiler"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Pub/Sub Lite
 service {
   service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
@@ -859,12 +874,9 @@ service {
   omit_connection: true
   omit_stub_factory: true
   omitted_rpcs: [
-    "ListBuckets",
     "LockBucketRetentionPolicy",
-    "GetIamPolicy",
     "SetIamPolicy",
     "TestIamPermissions",
-    "UpdateBucket",
     "DeleteNotification",
     "GetNotification",
     "CreateNotification",

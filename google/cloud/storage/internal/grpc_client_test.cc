@@ -141,6 +141,109 @@ TEST_F(GrpcClientTest, DeleteBucket) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, ListBuckets) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, ListBuckets)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::storage::v2::ListBucketsRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.parent(), "projects/test-project");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->ListBuckets(
+      ListBucketsRequest("test-project")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, UpdateBucket) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, UpdateBucket)
+      .WillOnce([this](
+                    grpc::ClientContext& context,
+                    google::storage::v2::UpdateBucketRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.bucket().name(), "projects/_/buckets/test-bucket");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->UpdateBucket(
+      UpdateBucketRequest(BucketMetadata{}.set_name("test-bucket"))
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, PatchBucket) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, UpdateBucket)
+      .WillOnce([this](
+                    grpc::ClientContext& context,
+                    google::storage::v2::UpdateBucketRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.bucket().name(), "projects/_/buckets/test-bucket");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->PatchBucket(
+      PatchBucketRequest("test-bucket",
+                         BucketMetadataPatchBuilder{}.SetLabel("l0", "v0"))
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, GetBucketIamPolicy) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::GetIamPolicyRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->GetBucketIamPolicy(
+      GetBucketIamPolicyRequest("test-bucket")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, GetIamPolicy)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::GetIamPolicyRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto response = client->GetNativeBucketIamPolicy(
+      GetBucketIamPolicyRequest("test-bucket")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST_F(GrpcClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject)

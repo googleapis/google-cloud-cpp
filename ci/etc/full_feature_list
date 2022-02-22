@@ -21,6 +21,7 @@ datamigration
 dataproc
 debugger
 dlp
+documentai
 eventarc
 filestore
 functions
@@ -43,6 +44,7 @@ osconfig
 oslogin
 policytroubleshooter
 privateca
+profiler
 pubsublite
 recommender
 redis

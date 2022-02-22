@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/topic_admin_client.h"
+#include "google/cloud/pubsub/internal/defaults.h"
 
 namespace google {
 namespace cloud {
@@ -20,8 +21,11 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TopicAdminClient::TopicAdminClient(
-    std::shared_ptr<TopicAdminConnection> connection)
-    : connection_(std::move(connection)) {}
+    std::shared_ptr<TopicAdminConnection> connection, Options opts)
+    : connection_(std::move(connection)),
+      options_(internal::MergeOptions(
+          std::move(opts),
+          pubsub_internal::DefaultCommonOptions(connection_->options()))) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub

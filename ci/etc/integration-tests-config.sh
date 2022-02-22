@@ -92,6 +92,9 @@ export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT="hello-world-caller@${G
 # The URL for the HTTP Hello World service, typically set by the CI scripts
 export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=""
 
+# Rest configuration parameters
+export GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+
 # To run google/cloud/gameservices' quickstart
 export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
 export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"

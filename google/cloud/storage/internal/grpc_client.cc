@@ -152,8 +152,13 @@ ClientOptions const& GrpcClient::client_options() const {
 }
 
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
-    ListBucketsRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListBucketsRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->ListBuckets(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketRequestParser::FromProto(*response);
 }
 
 StatusOr<BucketMetadata> GrpcClient::CreateBucket(
@@ -186,22 +191,55 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
   return EmptyResponse{};
 }
 
-StatusOr<BucketMetadata> GrpcClient::UpdateBucket(UpdateBucketRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
+    UpdateBucketRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->UpdateBucket(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketMetadataParser::FromProto(*response);
 }
 
-StatusOr<BucketMetadata> GrpcClient::PatchBucket(PatchBucketRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<BucketMetadata> GrpcClient::PatchBucket(
+    PatchBucketRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->UpdateBucket(context, *proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketMetadataParser::FromProto(*response);
 }
+
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(
-    GetBucketIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetBucketIamPolicyRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->GetIamPolicy(context, proto);
+  if (!response) return std::move(response).status();
+  IamBindings bindings;
+  for (auto const& b : response->bindings()) {
+    bindings.AddMembers(b.role(), std::set<std::string>(b.members().begin(),
+                                                        b.members().end()));
+  }
+  return IamPolicy{response->version(), std::move(bindings), response->etag()};
 }
 
+#include "google/cloud/internal/diagnostics_pop.inc"
+
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
-    GetBucketIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetBucketIamPolicyRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->GetIamPolicy(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketRequestParser::FromProto(*response);
 }
 
 StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(

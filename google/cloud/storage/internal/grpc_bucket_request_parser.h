@@ -35,6 +35,21 @@ struct GrpcBucketRequestParser {
 
   static google::storage::v2::CreateBucketRequest ToProto(
       CreateBucketRequest const& request);
+
+  static google::storage::v2::ListBucketsRequest ToProto(
+      ListBucketsRequest const& request);
+  static ListBucketsResponse FromProto(
+      google::storage::v2::ListBucketsResponse const& response);
+
+  static google::iam::v1::GetIamPolicyRequest ToProto(
+      GetBucketIamPolicyRequest const& request);
+  static NativeIamBinding FromProto(google::iam::v1::Binding const& b);
+  static NativeIamPolicy FromProto(google::iam::v1::Policy const& response);
+
+  static StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
+      PatchBucketRequest const& request);
+  static google::storage::v2::UpdateBucketRequest ToProto(
+      UpdateBucketRequest const& request);
 };
 
 }  // namespace internal

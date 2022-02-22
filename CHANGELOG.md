@@ -97,11 +97,20 @@
 `BigQueryReadReadRowsStreamingUpdater` from its declaration in
 `google/cloud/bigquery/read_connection.h` and from the `google::cloud::bigquery`
 namespace. The function continues to exist but in an internal file and
-namesapce. For status on this see
+namespace. For status on this see
 https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
 
 ## v1.37.0 - TBD
+
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+The library has been expanded to include the following services:
+
+* [BigQuery ML](https://cloud.google.com/bigquery-ml/docs)
+* [BigQuery Connection API](https://cloud.google.com/bigquery/docs/connections-api-intro)
+* [BigQuery Data Transfer Service](https://cloud.google.com/bigquery-transfer)
+* [BigQuery Reservations](https://cloud.google.com/bigquery/docs/reservations-intro)
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
@@ -149,11 +158,15 @@ releasing them early in case they elicit some feedback that requires changes.
 <summary> Expand to see the full list of new libraries...</summary>
 <br>
 
+* [Apigee Hybrid](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/apigeeconnect/README.md)
+* [Cloud Profiler](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/profiler/README.md)
 * [Contact Center AI Insights](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/contactcenterinsights/README.md)
 * [Data Catalog](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datacatalog/README.md)
 * [Dataproc](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dataproc/README.md)
+* [Document AI](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/documentai/README.md)
 * [Managed Service for Microsoft Active Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/managedidentities/README.md)
 * [Natural Language AI](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/language/README.md)
+* [Resource Settings](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/resourcesettings/README.md)
 
 </details>
 

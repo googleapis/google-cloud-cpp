@@ -71,6 +71,7 @@ declare -A -r LIBRARIES=(
   ["debugger"]="@com_google_googleapis//google/devtools/clouddebugger/v2:clouddebugger_cc_grpc"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
   ["dlp"]="@com_google_googleapis//google/privacy/dlp/v2:dlp_cc_grpc"
+  ["documentai"]="@com_google_googleapis//google/cloud/documentai/v1:documentai_cc_grpc"
   ["eventarc"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc" \
@@ -121,6 +122,7 @@ declare -A -r LIBRARIES=(
   )"
   ["policytroubleshooter"]="@com_google_googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc"
   ["privateca"]="@com_google_googleapis//google/cloud/security/privateca/v1:privateca_cc_grpc"
+  ["profiler"]="@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc"
   ["pubsublite"]="@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc"
   ["recommender"]="$(

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_google_credentials.h"
+#include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
@@ -281,6 +282,8 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   // eventually finding no valid credentials and hitting a runtime error.
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename);
+  ScopedEnvironment gcloud_metadata_host_override_env_var(
+      internal::GceMetadataHostnameEnvVar(), "nowhere.com");
 
   auto creds = GoogleDefaultCredentials();
   EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk),

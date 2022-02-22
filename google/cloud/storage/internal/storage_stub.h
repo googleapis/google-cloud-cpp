@@ -47,6 +47,18 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::CreateBucketRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::v2::ListBucketsResponse> ListBuckets(
+      grpc::ClientContext& context,
+      google::storage::v2::ListBucketsRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::storage::v2::Bucket> UpdateBucket(
+      grpc::ClientContext& context,
+      google::storage::v2::UpdateBucketRequest const& request) = 0;
+
   virtual StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,
       google::storage::v2::ComposeObjectRequest const& request) = 0;
@@ -113,6 +125,18 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::Bucket> CreateBucket(
       grpc::ClientContext& client_context,
       google::storage::v2::CreateBucketRequest const& request) override;
+
+  StatusOr<google::storage::v2::ListBucketsResponse> ListBuckets(
+      grpc::ClientContext& client_context,
+      google::storage::v2::ListBucketsRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::storage::v2::Bucket> UpdateBucket(
+      grpc::ClientContext& client_context,
+      google::storage::v2::UpdateBucketRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& client_context,
