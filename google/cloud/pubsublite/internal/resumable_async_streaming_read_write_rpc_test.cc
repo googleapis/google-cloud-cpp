@@ -94,9 +94,9 @@ std::function<std::unique_ptr<MockRetryPolicy>()> ReturnUnusedRetryPolicy() {
   return []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); };
 }
 
-class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
+class ResumableAsyncReadWriteStreamingRpcTestBase : public ::testing::Test {
  protected:
-  ResumableAsyncReadWriteStreamingRpcTest()
+  ResumableAsyncReadWriteStreamingRpcTestBase()
       : backoff_policy_{std::make_shared<StrictMock<MockBackoffPolicy>>()},
         stream_{MakeResumableAsyncStreamingReadWriteRpcImpl<FakeRequest,
                                                             FakeResponse>(
@@ -118,7 +118,7 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
   ResumableAsyncReadWriteStream stream_;
 };
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
+TEST_F(ResumableAsyncReadWriteStreamingRpcTestBase, SingleStartFailureThenGood) {
   InSequence seq;
 
   auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
@@ -169,7 +169,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse);
   EXPECT_EQ(status_future.wait_for(ms(kFutureWaitMs)),
-            std::future_status::timeout);
+            std::future_status::timeout); // start future doesn't finish until permanent error or `Finish`is called
 
   EXPECT_CALL(stream2_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
@@ -178,10 +178,10 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   EXPECT_THAT(status_future.get(), IsOk());
 }
 
-class ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream
-    : public ResumableAsyncReadWriteStreamingRpcTest {
+class ResumableAsyncReadWriteStreamingRpcTest
+    : public ResumableAsyncReadWriteStreamingRpcTestBase {
  protected:
-  ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream()
+  ResumableAsyncReadWriteStreamingRpcTest()
       : first_stream_{absl::make_unique<StrictMock<AsyncReaderWriter>>()},
         first_stream_ref_(*first_stream_) {
     InSequence seq;
@@ -192,57 +192,57 @@ class ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream
         .WillOnce(ReturnUnusedRetryPolicy());
     EXPECT_CALL(stream_factory_, Call)
         .WillOnce(Return(ByMove(std::move(first_stream_))));
-    EXPECT_CALL(first_stream_ref_.get(), Start)
+    EXPECT_CALL(first_stream_ref_, Start)
         .WillOnce(Return(ByMove(make_ready_future(true))));
     EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
   }
   std::unique_ptr<StrictMock<AsyncReaderWriter>> first_stream_;
-  std::reference_wrapper<StrictMock<AsyncReaderWriter>> first_stream_ref_;
+  StrictMock<AsyncReaderWriter>& first_stream_ref_;
 };
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        BasicReadWriteGood) {
   InSequence seq;
 
   auto start = stream_->Start();
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
   ASSERT_TRUE(
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message())
           .get());
 
-  EXPECT_CALL(first_stream_ref_.get(), Read)
+  EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(
           ByMove(make_ready_future(absl::make_optional(kBasicResponse)))));
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse);
 
-  EXPECT_CALL(first_stream_ref_.get(), Read)
+  EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(
           ByMove(make_ready_future(absl::make_optional(kBasicResponse1)))));
   response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse1);
 
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start future doesn't finish until permanent error or `Finish`
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        ReadWriteAfterShutdown) {
   InSequence seq;
 
   auto start = stream_->Start();
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start future doesn't finish until permanent error of `Finish`
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto finish = stream_->Finish();
   finish.get();
@@ -254,7 +254,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfReadWrite) {
   InSequence seq;
 
@@ -262,24 +262,24 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   promise<bool> write_promise;
   promise<absl::optional<FakeResponse>> read_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Read)
+  EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise.get_future())));
   auto read = stream_->Read();
 
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start future doesn't finish until permanent error or `Finish`
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto finish_future = stream_->Finish();
 
   write_promise.set_value(true);
   EXPECT_EQ(finish_future.wait_for(ms(kFutureWaitMs)),
-            std::future_status::timeout);
+            std::future_status::timeout); // finish future doesn't finish until read and write are finished
   read_promise.set_value(absl::make_optional(kBasicResponse));
 
   ASSERT_FALSE(write.get());
@@ -288,7 +288,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryBeforeStart) {
   InSequence seq;
 
@@ -296,12 +296,12 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   promise<Status> finish_promise;
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(finish_promise.get_future())));
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(
@@ -311,8 +311,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
 
   auto finish = stream_->Finish();
 
-  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // write shouldn't finish until retry loop done
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start shouldn't finish until permanent error from retry loop or `Finish`
 
   finish_promise.set_value(kFailStatus);
   ASSERT_FALSE(write.get());
@@ -320,7 +320,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryDuringSleep) {
   InSequence seq;
 
@@ -328,12 +328,12 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   promise<void> sleep_promise;
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
@@ -356,15 +356,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   write_promise.set_value(false);
 
   auto finish = stream_->Finish();
-  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // write shouldn't finish until retry loop finish after sleep
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start shouldn't finish until permanent error from retry loop or `Finish`
   sleep_promise.set_value();
   ASSERT_FALSE(write.get());
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishWhileShutdown) {
   InSequence seq;
 
@@ -372,12 +372,12 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
 
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   EXPECT_CALL(*backoff_policy_, clone)
@@ -397,59 +397,51 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
   finish.get();
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        WriteFinishesAfterShutdown) {
   InSequence seq;
 
   auto start = stream_->Start();
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
 
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start shouldn't finish until permanent error from retry loop or `Finish1
   auto finish = stream_->Finish();
-  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // finish shouldn't finish until write finishes
   write_promise.set_value(true);
   finish.get();
   ASSERT_FALSE(write.get());
   EXPECT_THAT(start.get(), IsOk());
 }
 
-class ResumableAsyncReadWriteStreamingRpcDoubleInternalStream
-    : public ResumableAsyncReadWriteStreamingRpcTestSingleInternalStream {
- protected:
-  ResumableAsyncReadWriteStreamingRpcDoubleInternalStream()
-      : second_stream_{absl::make_unique<StrictMock<AsyncReaderWriter>>()},
-        second_stream_ref_(*second_stream_) {}
-
-  std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream_;
-  std::reference_wrapper<StrictMock<AsyncReaderWriter>> second_stream_ref_;
-};
-
-TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        SingleReadFailureThenGood) {
+  std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+  StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
+
   InSequence seq;
 
   auto start = stream_->Start();
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
   ASSERT_TRUE(
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message())
           .get());
 
   promise<absl::optional<FakeResponse>> read_promise;
-  EXPECT_CALL(first_stream_ref_.get(), Read)
+  EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise.get_future())));
   auto response0 = stream_->Read();
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
@@ -468,55 +460,58 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce(Return(ByMove(std::move(second_stream_))));
-  EXPECT_CALL(second_stream_ref_.get(), Start)
+      .WillOnce(Return(ByMove(std::move(second_stream))));
+  EXPECT_CALL(second_stream_ref, Start)
       .WillOnce(Return(ByMove(make_ready_future(true))));
   EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
 
   read_promise.set_value(absl::optional<FakeResponse>());
   ASSERT_FALSE(response0.get().has_value());
 
-  EXPECT_CALL(second_stream_ref_.get(), Read)
+  EXPECT_CALL(second_stream_ref, Read)
       .WillOnce(Return(
           ByMove(make_ready_future(absl::make_optional(kBasicResponse)))));
   auto response0_opt_val = stream_->Read().get();
   ASSERT_TRUE(response0_opt_val.has_value());
   EXPECT_EQ(*response0_opt_val, kBasicResponse);
 
-  EXPECT_CALL(second_stream_ref_.get(), Read)
+  EXPECT_CALL(second_stream_ref, Read)
       .WillOnce(Return(
           ByMove(make_ready_future(absl::make_optional(kBasicResponse1)))));
   response0_opt_val = stream_->Read().get();
   ASSERT_TRUE(response0_opt_val.has_value());
   EXPECT_EQ(*response0_opt_val, kBasicResponse1);
 
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start shouldn't finish until permanent error from retry loop or `Finish`
 
-  EXPECT_CALL(second_stream_ref_.get(), Finish)
+  EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        WriteFailWhileReadInFlight) {
+  std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+  StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
+
   InSequence seq;
 
   promise<absl::optional<FakeResponse>> read_promise;
   auto start = stream_->Start();
 
-  EXPECT_CALL(first_stream_ref_.get(), Read)
+  EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise.get_future())));
   auto read = stream_->Read();
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(false))));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
-  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // write shouldn't finish until retry loop done
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
@@ -535,8 +530,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce(Return(ByMove(std::move(second_stream_))));
-  EXPECT_CALL(second_stream_ref_.get(), Start)
+      .WillOnce(Return(ByMove(std::move(second_stream))));
+  EXPECT_CALL(second_stream_ref, Start)
       .WillOnce(Return(ByMove(make_ready_future(true))));
   EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
 
@@ -547,40 +542,43 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
   EXPECT_EQ(*read_response, kBasicResponse);
   ASSERT_FALSE(write.get());
 
-  EXPECT_CALL(second_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(second_stream_ref, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
   write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
   ASSERT_TRUE(write.get());
 
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start shouldn't finish until permanent error from retry loop or `Finish`
 
-  EXPECT_CALL(second_stream_ref_.get(), Finish)
+  EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto finish = stream_->Finish();
   finish.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        ReadFailWhileWriteInFlight) {
+  std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+  StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
+
   InSequence seq;
 
   auto start = stream_->Start();
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Read)
+  EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<FakeResponse>()))));
   auto read = stream_->Read();
-  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // read shouldn't finish until retry loop done
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
@@ -599,8 +597,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce(Return(ByMove(std::move(second_stream_))));
-  EXPECT_CALL(second_stream_ref_.get(), Start)
+      .WillOnce(Return(ByMove(std::move(second_stream))));
+  EXPECT_CALL(second_stream_ref, Start)
       .WillOnce(Return(ByMove(make_ready_future(true))));
   EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
 
@@ -609,16 +607,16 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
   ASSERT_FALSE(read.get().has_value());
   ASSERT_TRUE(write.get());
 
-  EXPECT_CALL(second_stream_ref_.get(), Read)
+  EXPECT_CALL(second_stream_ref, Read)
       .WillOnce(Return(
           ByMove(make_ready_future(absl::make_optional(kBasicResponse)))));
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse);
 
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start shouldn't finish until permanent error from retry loop or `Finish`
 
-  EXPECT_CALL(second_stream_ref_.get(), Finish)
+  EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
 
   auto finish = stream_->Finish();
@@ -626,19 +624,22 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryAfterStart) {
+  std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+  StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
+
   InSequence seq;
 
   auto start = stream_->Start();
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
@@ -657,21 +658,21 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce(Return(ByMove(std::move(second_stream_))));
+      .WillOnce(Return(ByMove(std::move(second_stream))));
   promise<bool> start_promise;
-  EXPECT_CALL(second_stream_ref_.get(), Start)
+  EXPECT_CALL(second_stream_ref, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
   EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
 
   write_promise.set_value(false);
 
-  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // write shouldn't finish until retry loop done
 
   auto finish = stream_->Finish();
-  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
-  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // finish shouldn't finish until retry loop done
+  EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // start shouldn't finish until permanent error from retry loop or `Finish`
 
-  EXPECT_CALL(second_stream_ref_.get(), Finish)
+  EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   start_promise.set_value(true);
   finish.get();
@@ -679,17 +680,20 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
   EXPECT_THAT(start.get(), IsOk());
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        StartFailsDuringRetryPermanentError) {
+  std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+  StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
+
   InSequence seq;
   auto start = stream_->Start();
   promise<absl::optional<FakeResponse>> read_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Read)
+  EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise.get_future())));
   auto read = stream_->Read();
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
@@ -708,14 +712,14 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce(Return(ByMove(std::move(second_stream_))));
+      .WillOnce(Return(ByMove(std::move(second_stream))));
   promise<bool> start_promise;
-  EXPECT_CALL(second_stream_ref_.get(), Start)
+  EXPECT_CALL(second_stream_ref, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   read_promise.set_value(absl::optional<FakeResponse>());
 
-  EXPECT_CALL(second_stream_ref_.get(), Finish)
+  EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
   EXPECT_CALL(mock_retry_policy_ref, IsExhausted).WillOnce(Return(true));
 
@@ -727,19 +731,22 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
   finish.get();
 }
 
-TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        ReadInMiddleOfRetryAfterStart) {
+  std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+  StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
+
   InSequence seq;
 
   auto start = stream_->Start();
   promise<bool> write_promise;
 
-  EXPECT_CALL(first_stream_ref_.get(), Write(kBasicRequest, _))
+  EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
-  EXPECT_CALL(first_stream_ref_.get(), Finish)
+  EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
   auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
@@ -758,9 +765,9 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
   EXPECT_CALL(stream_factory_, Call)
-      .WillOnce(Return(ByMove(std::move(second_stream_))));
+      .WillOnce(Return(ByMove(std::move(second_stream))));
   promise<bool> start_promise;
-  EXPECT_CALL(second_stream_ref_.get(), Start)
+  EXPECT_CALL(second_stream_ref, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
   EXPECT_CALL(initializer_, Call).WillOnce(InitializeInline());
 
@@ -769,11 +776,10 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcDoubleInternalStream,
   EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   auto read = stream_->Read();
-  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
-  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout); // read and write above shouldn't finish until retry loop finishes
   start_promise.set_value(true);
 
-  EXPECT_CALL(second_stream_ref_.get(), Finish)
+  EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   ASSERT_FALSE(write.get());
   ASSERT_FALSE(read.get().has_value());
