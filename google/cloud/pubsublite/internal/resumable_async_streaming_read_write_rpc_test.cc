@@ -181,6 +181,43 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTestBase,
   EXPECT_THAT(status_future.get(), IsOk());
 }
 
+TEST_F(ResumableAsyncReadWriteStreamingRpcTestBase,
+       SingleStartFailurePermanentError) {
+  InSequence seq;
+
+  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto& stream1_ref = *stream1;
+
+  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto& backoff_policy_ref = *backoff_policy;
+  EXPECT_CALL(*backoff_policy_, clone)
+      .WillOnce(Return(ByMove(std::move(backoff_policy))));
+
+  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto& retry_policy_ref = *mock_retry_policy;
+  EXPECT_CALL(retry_policy_factory_, Call)
+      .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
+
+  EXPECT_CALL(stream_factory_, Call)
+      .WillOnce(Return(ByMove(std::move(stream1))));
+
+  promise<bool> start_promise;
+  EXPECT_CALL(stream1_ref, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  auto status_future = stream_->Start();
+
+  EXPECT_CALL(stream1_ref, Finish)
+      .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
+  EXPECT_CALL(retry_policy_ref, IsExhausted).WillOnce(Return(true));
+
+  start_promise.set_value(false);
+
+  EXPECT_EQ(status_future.get(), kFailStatus);
+  auto finish = stream_->Finish();
+  finish.get();
+}
+
 class ResumableAsyncReadWriteStreamingRpcTest
     : public ResumableAsyncReadWriteStreamingRpcTestBase {
  protected:
