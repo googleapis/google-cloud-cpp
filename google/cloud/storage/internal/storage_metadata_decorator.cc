@@ -76,6 +76,13 @@ StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
   return child_->GetIamPolicy(context, request);
 }
 
+StatusOr<google::iam::v1::Policy> StorageMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(context, {});
+  return child_->SetIamPolicy(context, request);
+}
+
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 StorageMetadata::TestIamPermissions(
     grpc::ClientContext& context,
