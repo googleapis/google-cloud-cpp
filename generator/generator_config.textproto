@@ -861,7 +861,6 @@ service {
   omitted_rpcs: [
     "LockBucketRetentionPolicy",
     "SetIamPolicy",
-    "TestIamPermissions",
     "DeleteNotification",
     "GetNotification",
     "CreateNotification",
