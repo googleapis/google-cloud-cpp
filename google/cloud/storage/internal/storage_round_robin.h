@@ -51,6 +51,10 @@ class StorageRoundRobin : public StorageStub {
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
   StatusOr<google::storage::v2::Bucket> UpdateBucket(
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) override;
