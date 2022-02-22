@@ -44,6 +44,13 @@ StorageRoundRobin::ListBuckets(
   return Child()->ListBuckets(context, request);
 }
 
+StatusOr<google::storage::v2::Bucket>
+StorageRoundRobin::LockBucketRetentionPolicy(
+    grpc::ClientContext& context,
+    google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
+  return Child()->LockBucketRetentionPolicy(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> StorageRoundRobin::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {

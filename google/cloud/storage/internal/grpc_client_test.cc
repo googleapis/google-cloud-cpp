@@ -161,6 +161,27 @@ TEST_F(GrpcClientTest, ListBuckets) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, LockBucketRetentionPolicy) {
+  auto mock = std::make_shared<testing::MockStorageStub>();
+  EXPECT_CALL(*mock, LockBucketRetentionPolicy)
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::storage::v2::LockBucketRetentionPolicyRequest const&) {
+            auto metadata = GetMetadata(context);
+            EXPECT_THAT(metadata,
+                        UnorderedElementsAre(
+                            Pair("x-goog-quota-user", "test-quota-user"),
+                            Pair("x-goog-fieldmask", "field1,field2")));
+            return PermanentError();
+          });
+  auto client = CreateTestClient(mock);
+  auto response = client->LockBucketRetentionPolicy(
+      LockBucketRetentionPolicyRequest("test-bucket", /*metageneration=*/7)
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST_F(GrpcClientTest, UpdateBucket) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, UpdateBucket)

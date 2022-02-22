@@ -75,6 +75,19 @@ DefaultStorageStub::ListBuckets(
   return response;
 }
 
+StatusOr<google::storage::v2::Bucket>
+DefaultStorageStub::LockBucketRetentionPolicy(
+    grpc::ClientContext& client_context,
+    google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
+  google::storage::v2::Bucket response;
+  auto status = grpc_stub_->LockBucketRetentionPolicy(&client_context, request,
+                                                      &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::iam::v1::Policy> DefaultStorageStub::GetIamPolicy(
     grpc::ClientContext& client_context,
     google::iam::v1::GetIamPolicyRequest const& request) {

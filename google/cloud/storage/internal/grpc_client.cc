@@ -258,8 +258,13 @@ StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
 }
 
 StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
-    LockBucketRetentionPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    LockBucketRetentionPolicyRequest const& request) {
+  auto proto = GrpcBucketRequestParser::ToProto(request);
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, request);
+  auto response = stub_->LockBucketRetentionPolicy(context, proto);
+  if (!response) return std::move(response).status();
+  return GrpcBucketMetadataParser::FromProto(*response);
 }
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(

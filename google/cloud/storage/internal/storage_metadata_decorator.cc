@@ -61,6 +61,14 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
   return child_->ListBuckets(context, request);
 }
 
+StatusOr<google::storage::v2::Bucket>
+StorageMetadata::LockBucketRetentionPolicy(
+    grpc::ClientContext& context,
+    google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
+  SetMetadata(context, {});
+  return child_->LockBucketRetentionPolicy(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> StorageMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {

@@ -126,6 +126,16 @@ ListBucketsResponse GrpcBucketRequestParser::FromProto(
   return result;
 }
 
+google::storage::v2::LockBucketRetentionPolicyRequest
+GrpcBucketRequestParser::ToProto(
+    LockBucketRetentionPolicyRequest const& request) {
+  google::storage::v2::LockBucketRetentionPolicyRequest result;
+  SetCommonParameters(result, request);
+  result.set_bucket("projects/_/buckets/" + request.bucket_name());
+  result.set_if_metageneration_match(request.metageneration());
+  return result;
+}
+
 google::iam::v1::GetIamPolicyRequest GrpcBucketRequestParser::ToProto(
     GetBucketIamPolicyRequest const& request) {
   google::iam::v1::GetIamPolicyRequest result;

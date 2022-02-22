@@ -89,6 +89,12 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   EXPECT_THAT(updated->labels(),
               UnorderedElementsAre(Pair("l0", "k0"), Pair("l1", "test-value")));
 
+  auto locked =
+      client->LockBucketRetentionPolicy(bucket_name, updated->metageneration());
+  ASSERT_STATUS_OK(locked);
+  EXPECT_FALSE(updated->has_retention_policy());
+  EXPECT_TRUE(locked->has_retention_policy());
+
   // Create a second bucket to make the list more interesting.
   auto bucket_name_2 = MakeRandomBucketName();
   auto insert_2 = client->CreateBucketForProject(bucket_name_2, project_name,
