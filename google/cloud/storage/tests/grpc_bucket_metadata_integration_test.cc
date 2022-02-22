@@ -32,6 +32,7 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::IsSupersetOf;
@@ -113,6 +114,11 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   EXPECT_THAT(roles, IsSupersetOf({"roles/storage.legacyBucketOwner",
                                    "roles/storage.legacyBucketWriter",
                                    "roles/storage.legacyBucketReader"}));
+
+  auto permissions = client->TestBucketIamPermissions(
+      bucket_name, {"storage.objects.list", "storage.buckets.update"});
+  ASSERT_STATUS_OK(permissions);
+  EXPECT_THAT(*permissions, Contains("storage.buckets.update"));
 
   auto delete_status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);
