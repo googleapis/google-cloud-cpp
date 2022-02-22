@@ -367,7 +367,7 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
 
 SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
     std::string bucket_name, google::cloud::IamPolicy const& policy)
-    : bucket_name_(std::move(bucket_name)) {
+    : bucket_name_(std::move(bucket_name)), policy_(policy) {
   nlohmann::json iam{{"kind", "storage#policy"},
                      {"etag", policy.etag},
                      {"version", policy.version}};
@@ -398,7 +398,9 @@ std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r) {
 
 SetNativeBucketIamPolicyRequest::SetNativeBucketIamPolicyRequest(
     std::string bucket_name, NativeIamPolicy const& policy)
-    : bucket_name_(std::move(bucket_name)), json_payload_(policy.ToJson()) {
+    : bucket_name_(std::move(bucket_name)),
+      policy_(policy),
+      json_payload_(policy.ToJson()) {
   if (!policy.etag().empty()) {
     set_option(IfMatchEtag(policy.etag()));
   }

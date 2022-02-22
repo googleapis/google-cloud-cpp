@@ -220,10 +220,12 @@ class SetBucketIamPolicyRequest
                                      google::cloud::IamPolicy const& policy);
 
   std::string const& bucket_name() const { return bucket_name_; }
+  google::cloud::IamPolicy const& policy() const { return policy_; }
   std::string const& json_payload() const { return json_payload_; }
 
  private:
   std::string bucket_name_;
+  google::cloud::IamPolicy policy_;
   std::string json_payload_;
 };
 
@@ -235,15 +237,16 @@ std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r);
 class SetNativeBucketIamPolicyRequest
     : public GenericRequest<SetNativeBucketIamPolicyRequest, UserProject> {
  public:
-  SetNativeBucketIamPolicyRequest() = default;
   explicit SetNativeBucketIamPolicyRequest(std::string bucket_name,
                                            NativeIamPolicy const& policy);
 
   std::string const& bucket_name() const { return bucket_name_; }
+  NativeIamPolicy const& policy() const { return policy_; }
   std::string const& json_payload() const { return json_payload_; }
 
  private:
   std::string bucket_name_;
+  NativeIamPolicy policy_;
   std::string json_payload_;
 };
 
