@@ -215,6 +215,25 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
   EXPECT_THAT(names, ElementsAre("test-bucket-1", "test-bucket-2"));
 }
 
+TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {
+  google::storage::v2::LockBucketRetentionPolicyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        if_metageneration_match: 7
+        common_request_params: { user_project: "test-user-project" }
+      )pb",
+      &expected));
+
+  LockBucketRetentionPolicyRequest req("test-bucket", /*metageneration=*/7);
+  req.set_multiple_options(UserProject("test-user-project"),
+                           QuotaUser("test-quota-user"),
+                           UserIp("test-user-ip"));
+
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcBucketRequestParser, GetIamPolicyRequest) {
   google::iam::v1::GetIamPolicyRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
