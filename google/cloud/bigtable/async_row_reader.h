@@ -355,7 +355,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
         return MakeStatusFromRpcError(status);
       }
       ++rows_count_;
-      last_read_row_key_ = std::string(parsed_row.row_key());
+      last_read_row_key_ = parsed_row.row_key();
       ready_rows_.emplace(std::move(parsed_row));
     }
     return Status();
@@ -375,8 +375,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
       }
     }
     if (!response.last_scanned_row_key().empty()) {
-      last_read_row_key_ =
-          std::string(std::move(*response.mutable_last_scanned_row_key()));
+      last_read_row_key_ = std::move(*response.mutable_last_scanned_row_key());
     }
     return Status();
   }
@@ -401,7 +400,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
   /// Number of rows read so far, used to set row_limit in retries.
   std::int64_t rows_count_;
   /// Holds the last read row key, for retries.
-  std::string last_read_row_key_;
+  RowKeyType last_read_row_key_;
   /// The queue of rows which we already received but no one has asked for them.
   std::queue<Row> ready_rows_;
   /**
