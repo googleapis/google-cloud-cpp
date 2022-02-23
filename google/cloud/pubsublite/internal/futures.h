@@ -32,6 +32,10 @@ struct ChainFutureImpl {
   future<T> f;
 };
 
+/**
+ * This is a templatized helper to chain futures together with an intended
+ * return type of `T` irrespective of the type passed in of `future<U>`.
+ */
 template <class T>
 ChainFutureImpl<T> ChainFuture(future<T> f) {
   return ChainFutureImpl<T>{std::move(f)};

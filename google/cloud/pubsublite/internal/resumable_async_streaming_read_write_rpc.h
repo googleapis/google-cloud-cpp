@@ -56,6 +56,10 @@ using AsyncSleeper = std::function<future<void>(std::chrono::milliseconds)>;
 
 using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 
+/**
+ * The purpose of this class is to encapsulate the retry logic of a generic
+ * bidirectional asynchronous RPC stream.
+ */
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc {
  public:
