@@ -257,6 +257,8 @@ void GetObjectMetadata(google::cloud::storage::Client client,
       throw std::runtime_error(object_metadata.status().message());
     }
 
+    //! Printing out metadata fields, for full list see:
+    //! https://googleapis.dev/cpp/google-cloud-storage/latest/classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html
     std::cout << "The metadata for object " << object_metadata->name()
               << " in bucket " << object_metadata->bucket() << " is "
               << " CacheControl : " << object_metadata->cache_control() << "\n"
