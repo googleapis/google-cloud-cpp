@@ -134,7 +134,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         stream_factory_(std::move(stream_factory)),
         initializer_(std::move(initializer)) {}
 
-  ~ResumableAsyncStreamingReadWriteRpcImpl() {
+  ~ResumableAsyncStreamingReadWriteRpcImpl() override {
     future<void> shutdown = Finish();
     if (!shutdown.is_ready()) {
       GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
