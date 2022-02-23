@@ -25,6 +25,7 @@ namespace pubsublite_internal {
 template <class T>
 struct ChainFutureImpl {
   template <class U>
+  // Note: this drops any exceptions contained in `future<U>`
   future<T> operator()(future<U>) {
     return std::move(f);
   }
@@ -34,7 +35,8 @@ struct ChainFutureImpl {
 
 /**
  * This is a templatized helper to chain futures together with an intended
- * return type of `T` irrespective of the type passed in of `future<U>`.
+ * internal return type of `T` irrespective of the type passed in of
+ * `future<U>`.
  */
 template <class T>
 ChainFutureImpl<T> ChainFuture(future<T> f) {
