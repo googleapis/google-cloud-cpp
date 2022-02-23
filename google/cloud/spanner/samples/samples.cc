@@ -1856,7 +1856,7 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
       std::tuple<std::int64_t, std::int64_t, absl::optional<std::int64_t>,
                  absl::optional<spanner::Timestamp>>;
 
-  auto rows = client.ExecuteQuery(select);
+  auto rows = client.ExecuteQuery(std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << std::get<0>(*row) << " " << std::get<1>(*row);
@@ -1944,7 +1944,7 @@ void QueryWithJsonParameter(google::cloud::spanner::Client client) {
       {{"details", spanner::Value(std::move(rating9_details))}});
   using RowType = std::tuple<std::int64_t, absl::optional<spanner::Json>>;
 
-  auto rows = client.ExecuteQuery(select);
+  auto rows = client.ExecuteQuery(std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "VenueId: " << std::get<0>(*row) << ", ";
@@ -2007,7 +2007,7 @@ void QueryWithNumericParameter(google::cloud::spanner::Client client) {
       {{"revenue", spanner::Value(std::move(revenue))}});
   using RowType = std::tuple<std::int64_t, absl::optional<spanner::Numeric>>;
 
-  auto rows = client.ExecuteQuery(select);
+  auto rows = client.ExecuteQuery(std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
@@ -2070,10 +2070,10 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
             " WHERE OutdoorVenue = false");
         // Sets the request tag to "app=concert,env=dev,action=update".
         // This will only be set on this request.
-        auto update =
-            client.ExecuteDml(txn, update_statement,
-                              spanner::QueryOptions().set_request_tag(
-                                  "app=concert,env=dev,action=update"));
+        auto update = client.ExecuteDml(
+            txn, std::move(update_statement),
+            google::cloud::Options{}.set<spanner::RequestTagOption>(
+                "app=concert,env=dev,action=update"));
         if (!update) return std::move(update).status();
 
         spanner::SqlStatement insert_statement(
@@ -2089,10 +2089,10 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
             });
         // Sets the request tag to "app=concert,env=dev,action=insert".
         // This will only be set on this request.
-        auto insert =
-            client.ExecuteDml(txn, insert_statement,
-                              spanner::QueryOptions().set_request_tag(
-                                  "app=concert,env=dev,action=select"));
+        auto insert = client.ExecuteDml(
+            txn, std::move(insert_statement),
+            google::cloud::Options{}.set<spanner::RequestTagOption>(
+                "app=concert,env=dev,action=select"));
         if (!insert) return std::move(insert).status();
         return spanner::Mutations{};
       },
@@ -2105,13 +2105,13 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
 void ReadStaleData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto opts = spanner::Transaction::ReadOnlyOptions(std::chrono::seconds(15));
-  auto read_only = spanner::MakeReadOnlyTransaction(opts);
+  auto read_only = spanner::MakeReadOnlyTransaction(std::move(opts));
 
   spanner::SqlStatement select(
       "SELECT SingerId, AlbumId, AlbumTitle FROM Albums");
   using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
 
-  auto rows = client.ExecuteQuery(read_only, select);
+  auto rows = client.ExecuteQuery(std::move(read_only), std::move(select));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row)
@@ -2128,9 +2128,9 @@ void SetRequestTag(google::cloud::spanner::Client client) {
       "SELECT SingerId, AlbumId, AlbumTitle FROM Albums");
   using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
 
-  auto opts = spanner::QueryOptions().set_request_tag(
+  auto opts = google::cloud::Options{}.set<spanner::RequestTagOption>(
       "app=concert,env=dev,action=select");
-  auto rows = client.ExecuteQuery(select, opts);
+  auto rows = client.ExecuteQuery(std::move(select), std::move(opts));
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row)
@@ -2149,7 +2149,8 @@ void UsePartitionQuery(google::cloud::spanner::Client client) {
       "SELECT SingerId, FirstName, LastName FROM Singers");
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
 
-  auto partitions = client.PartitionQuery(std::move(txn), select, {});
+  auto partitions =
+      client.PartitionQuery(std::move(txn), std::move(select), {});
   if (!partitions) throw std::runtime_error(partitions.status().message());
   int number_of_rows = 0;
   for (auto const& partition : *partitions) {
@@ -2267,10 +2268,10 @@ void CreateClientWithQueryOptions(std::string const& project_id,
   namespace spanner = ::google::cloud::spanner;
   spanner::Client client(
       spanner::MakeConnection(db),
-      spanner::ClientOptions().set_query_options(
-          spanner::QueryOptions()
-              .set_optimizer_version("1")
-              .set_optimizer_statistics_package("auto_20191128_14_47_22UTC")));
+      google::cloud::Options{}
+          .set<spanner::QueryOptimizerVersionOption>("1")
+          .set<spanner::QueryOptimizerStatisticsPackageOption>(
+              "auto_20191128_14_47_22UTC"));
   //! [END spanner_create_client_with_query_options]
 }
 
@@ -2287,9 +2288,10 @@ void CreateClientWithQueryOptionsCommand(std::vector<std::string> argv) {
 void QueryWithQueryOptions(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto sql = spanner::SqlStatement("SELECT SingerId, FirstName FROM Singers");
-  auto opts = spanner::QueryOptions()
-                  .set_optimizer_version("1")
-                  .set_optimizer_statistics_package("latest");
+  auto opts =
+      google::cloud::Options{}
+          .set<spanner::QueryOptimizerVersionOption>("1")
+          .set<spanner::QueryOptimizerStatisticsPackageOption>("latest");
   auto rows = client.ExecuteQuery(std::move(sql), std::move(opts));
 
   using RowType = std::tuple<std::int64_t, std::string>;

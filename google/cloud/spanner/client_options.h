@@ -40,7 +40,7 @@ class ClientOptions {
    * Convert the `ClientOptions` to the new, recommended way to represent
    * options of all varieties, `google::cloud::Options`.
    */
-  explicit operator Options() const;
+  explicit operator Options() const { return Options(query_options_); }
 
   /// Returns the `QueryOptions`
   QueryOptions const& query_options() const { return query_options_; }

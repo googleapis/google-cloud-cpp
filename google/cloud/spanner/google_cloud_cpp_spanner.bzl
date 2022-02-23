@@ -137,7 +137,6 @@ google_cloud_cpp_spanner_srcs = [
     "backup.cc",
     "bytes.cc",
     "client.cc",
-    "client_options.cc",
     "commit_options.cc",
     "connection.cc",
     "connection_options.cc",

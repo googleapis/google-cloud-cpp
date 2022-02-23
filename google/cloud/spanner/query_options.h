@@ -43,10 +43,16 @@ class QueryOptions {
   QueryOptions& operator=(QueryOptions&&) = default;
 
   /**
-   * Construct from the the new, recommended way to represent options of all
-   * varieties, `google::cloud::Options`.
+   * Constructs from the the new, recommended way to represent options
+   * of all varieties, `google::cloud::Options`.
    */
   explicit QueryOptions(Options const& opts);
+
+  /**
+   * Converts to the new, recommended way to represent options of all
+   * varieties, `google::cloud::Options`.
+   */
+  explicit operator Options() const;
 
   /// Returns the optimizer version
   absl::optional<std::string> const& optimizer_version() const {
@@ -112,8 +118,6 @@ class QueryOptions {
   }
 
  private:
-  // Note: If you add an attribute here, remember to update the implementation
-  // of Client::OverlayQueryOptions().
   absl::optional<std::string> optimizer_version_;
   absl::optional<std::string> optimizer_statistics_package_;
   absl::optional<RequestPriority> request_priority_;
