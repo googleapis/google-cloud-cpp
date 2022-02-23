@@ -234,7 +234,8 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         google_cloud_cpp_add_executable(target "pubsublite" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing
+            PRIVATE pubsublite_testing
+                    google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_pubsublite
                     google_cloud_cpp_pubsublite_mocks
