@@ -37,17 +37,19 @@ namespace {
 class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  public:
   InstanceAdminConnectionImpl(
-      std::shared_ptr<spanner_internal::InstanceAdminStub> stub,
-      Options const& opts)
+      std::shared_ptr<spanner_internal::InstanceAdminStub> stub, Options opts)
       : stub_(std::move(stub)),
-        retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
+        opts_(std::move(opts)),
+        retry_policy_prototype_(opts_.get<SpannerRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
-            opts.get<SpannerBackoffPolicyOption>()->clone()),
+            opts_.get<SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
-            opts.get<SpannerPollingPolicyOption>()->clone()),
-        background_threads_(internal::MakeBackgroundThreadsFactory(opts)()) {}
+            opts_.get<SpannerPollingPolicyOption>()->clone()),
+        background_threads_(internal::MakeBackgroundThreadsFactory(opts_)()) {}
 
   ~InstanceAdminConnectionImpl() override = default;
+
+  Options options() override { return opts_; }
 
   StatusOr<gcsa::Instance> GetInstance(GetInstanceParams gip) override {
     gcsa::GetInstanceRequest request;
@@ -258,6 +260,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
  private:
   std::shared_ptr<spanner_internal::InstanceAdminStub> stub_;
+  Options opts_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
