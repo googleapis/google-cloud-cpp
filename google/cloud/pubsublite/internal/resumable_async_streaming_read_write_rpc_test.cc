@@ -167,10 +167,10 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse);
-  EXPECT_EQ(
-      status_future.wait_for(ms(kFutureWaitMs)),
-      std::future_status::timeout);  // start future doesn't finish until
-                                     // permanent error or `Finish`is called
+  // start future doesn't finish until
+  // permanent error or `Finish`is called
+  EXPECT_EQ(status_future.wait_for(ms(kFutureWaitMs)),
+            std::future_status::timeout);
 
   EXPECT_CALL(stream2_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
@@ -214,10 +214,9 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
   EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
-  EXPECT_EQ(
-      write.wait_for(ms(kFutureWaitMs)),
-      std::future_status::timeout);  // read and write shouldn't finish until
-                                     // retry loop permanent error or `Finish`
+  // read and write shouldn't finish until
+  // retry loop permanent error or `Finish`
+  EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   start_promise.set_value(false);
 
@@ -328,6 +327,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
   auto response0 = stream_->Read().get();
   ASSERT_TRUE(response0.has_value());
   EXPECT_EQ(*response0, kBasicResponse);
+
   // start future doesn't finish until
   // permanent error or `Finish`is called
   EXPECT_EQ(status_future.wait_for(ms(kFutureWaitMs)),
@@ -403,6 +403,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   InSequence seq;
 
   auto start = stream_->Start();
+
   // start future doesn't finish until
   // permanent error of `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
@@ -599,6 +600,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   auto finish = stream_->Finish();
+
   // finish shouldn't finish until
   // write finishes
   EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
