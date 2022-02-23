@@ -159,8 +159,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       assert(!retry_promise_.has_value());
       retry_promise_.emplace();
     }
-
-    Initialize(retry_factory_(), backoff_policy_prototype_->clone());
+    auto retry_policy = retry_factory_();
+    auto backoff_policy = backoff_policy_prototype_->clone();
+    Initialize(std::move(retry_policy), std::move(backoff_policy));
     return status_future;
   }
 
@@ -372,8 +373,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     }
     fail_finish.then([this](future<Status> finish_status) {
       // retry policy refactor
-      AttemptRetry(finish_status.get(), retry_factory_(),
-                   backoff_policy_prototype_->clone());
+      auto retry_policy = retry_factory_();
+    auto backoff_policy = backoff_policy_prototype_->clone();
+      AttemptRetry(finish_status.get(), std::move(retry_policy),
+                   std::move(backoff_policy));
     });
   }
 
