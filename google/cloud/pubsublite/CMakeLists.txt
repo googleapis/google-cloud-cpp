@@ -209,18 +209,24 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    add_library(
-        pubsublite_testing # cmake-format: sort
-        testing/mock_async_reader_writer.h testing/mock_backoff_policy.h
-        testing/mock_retry_policy.h)
+    add_library(pubsublite_testing INTERFACE)
+    target_sources(
+        pubsublite_testing
+        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h)
+
     target_link_libraries(
         pubsublite_testing
-        PUBLIC google_cloud_cpp_pubsublite google-cloud-cpp::grpc_utils
-               google-cloud-cpp::common google-cloud-cpp::pubsublite_protos
-               GTest::gmock GTest::gtest)
-    google_cloud_cpp_add_common_options(pubsublite_testing)
+        INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
+                  GTest::gmock GTest::gtest)
+    target_include_directories(
+        pubsublite_testing
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
     target_compile_options(pubsublite_testing
-                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     create_bazel_config(pubsublite_testing YEAR "2022")
 
     set(pubsublite_unit_tests # cmake-format: sort
