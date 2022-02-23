@@ -375,7 +375,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
       }
     }
     if (!response.last_scanned_row_key().empty()) {
-      last_read_row_key_ = std::move(*response.mutable_last_scanned_row_key());
+      last_read_row_key_ =
+          std::string(std::move(*response.mutable_last_scanned_row_key()));
     }
     return Status();
   }
