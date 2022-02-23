@@ -36,10 +36,12 @@ Status AccessControlCommonParser::FromJson(AccessControlCommon& result,
   result.self_link_ = json.value("selfLink", "");
   if (json.count("projectTeam") != 0) {
     auto tmp = json["projectTeam"];
-    ProjectTeam p;
-    p.project_number = tmp.value("projectNumber", "");
-    p.team = tmp.value("team", "");
-    result.project_team_ = std::move(p);
+    if (!tmp.is_null()) {
+      ProjectTeam p;
+      p.project_number = tmp.value("projectNumber", "");
+      p.team = tmp.value("team", "");
+      result.project_team_ = std::move(p);
+    }
   }
   return Status();
 }
