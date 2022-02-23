@@ -19,6 +19,7 @@
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -132,6 +133,16 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         sleeper_(std::move(sleeper)),
         stream_factory_(std::move(stream_factory)),
         initializer_(std::move(initializer)) {}
+
+  ~ResumableAsyncStreamingReadWriteRpcImpl() {
+    future<void> shutdown = Finish();
+    if (!shutdown.is_ready()) {
+      GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
+                        "goes out of scope.";
+      assert(false);
+    }
+    shutdown.get();
+  }
 
   ResumableAsyncStreamingReadWriteRpcImpl(
       ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType>&&) =
