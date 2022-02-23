@@ -118,10 +118,10 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   /// The name of the bucket containing this object.
   std::string const& bucket() const { return bucket_; }
 
-  /// The cacheControl attribute.
+  /// The `cacheControl` attribute.
   std::string const& cache_control() const { return cache_control_; }
 
-  /// Set the cacheControl attributes.
+  /// Set the `cacheControl` attribute.
   ObjectMetadata& set_cache_control(std::string cache_control) {
     cache_control_ = std::move(cache_control);
     return *this;
@@ -227,7 +227,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::string const& media_link() const { return media_link_; }
 
   /**
-   * @name Accessors and modifiers for metadata metadata.
+   * @name Accessors and modifiers for metadata entries.
    *
    * The object metadata contains a user-defined set of `key`, `value` pairs,
    * which are also called "metadata". Applications can use these fields to
@@ -270,7 +270,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
     return *this;
   }
 
-  /// Returns all the Object's metadata entries,
+  /// Returns all the Object's metadata entries.
   std::map<std::string, std::string> const& metadata() const {
     return metadata_;
   }
@@ -279,13 +279,13 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   std::map<std::string, std::string>& mutable_metadata() { return metadata_; }
   ///@}
 
-  /// Returns `true` if the object has a `owner` attributes.
+  /// Returns `true` if the object has an `owner` attribute.
   using CommonMetadata::has_owner;
 
   /**
    * The generation of the object metadata.
    *
-   * Note that changes to the object metadata (e.g. changing the `cacheControl`
+   * @note Changes to the object metadata (e.g. changing the `cacheControl`
    * attribute) increases the metageneration, but does not change the object
    * generation.
    */
@@ -295,7 +295,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
   using CommonMetadata::name;
 
   /**
-   * The object's owner attributes.
+   * The object's `owner` attribute.
    *
    * It is undefined behavior to call this member function if
    * `has_owner() == false`.
