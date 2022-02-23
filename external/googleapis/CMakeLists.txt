@@ -492,9 +492,6 @@ endforeach ()
 foreach (target ${external_googleapis_installed_libraries_list}
                 google_cloud_cpp_logging_type_type_protos)
     external_googleapis_install_pc("${target}" "${CMAKE_CURRENT_LIST_DIR}")
-    # TODO(#5726) - also install the module with the legacy name
-    external_googleapis_install_legacy_pc("${target}"
-                                          "${CMAKE_CURRENT_LIST_DIR}")
 endforeach ()
 
 external_googleapis_install_pc_common(google_cloud_cpp_logging_type_protos)
@@ -503,13 +500,6 @@ configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in"
                "google_cloud_cpp_logging_type_protos.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_logging_type_protos.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
-# TODO(#5726) - also install the module with the legacy name
-configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in"
-               "googleapis_cpp_logging_type_protos.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_logging_type_protos.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
     COMPONENT google_cloud_cpp_development)
 
@@ -579,19 +569,4 @@ install(
         "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_googleapis"
-    COMPONENT google_cloud_cpp_development)
-
-# TODO(#5726) - we need to install the legacy CMake configuration under the
-# googleapis-c++ names:
-configure_file("${CMAKE_CURRENT_LIST_DIR}/legacy.cmake.in"
-               "googleapis-config.cmake" @ONLY)
-write_basic_package_version_file(
-    "googleapis-config-version.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY ExactVersion)
-
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config.cmake"
-          "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/googleapis"
     COMPONENT google_cloud_cpp_development)

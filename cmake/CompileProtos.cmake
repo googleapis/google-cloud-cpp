@@ -436,14 +436,3 @@ function (external_googleapis_install_pc target source_dir)
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
         COMPONENT google_cloud_cpp_development)
 endfunction ()
-
-# TODO(#5726) - this is only needed for existing libs, do not use for new libs
-function (external_googleapis_install_legacy_pc target source_dir)
-    external_googleapis_install_pc_common("${target}")
-    string(REPLACE "google_cloud_cpp_" "googleapis_cpp_" legacy ${target})
-    configure_file("${source_dir}/config.pc.in" "${legacy}.pc" @ONLY)
-    install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/${legacy}.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-        COMPONENT google_cloud_cpp_development)
-endfunction ()

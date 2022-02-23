@@ -405,7 +405,7 @@ string(
     CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
            "google_cloud_cpp_storage"
            " google_cloud_cpp_grpc_utils"
-           " googleapis_cpp_storage_protos"
+           " google_cloud_cpp_storage_protos"
            " google_cloud_cpp_rpc_status_protos"
            " google_cloud_cpp_rpc_error_details_protos"
            " google_cloud_cpp_common"
@@ -739,19 +739,3 @@ install(
     FILES testing/mock_client.h
     DESTINATION include/google/cloud/storage/testing
     COMPONENT google_cloud_cpp_development)
-
-# TODO(#5726) - generate pkg-config and CMake files for backwards compatibility
-set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_storage")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-               "storage_client.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
-configure_file("legacy.cmake.in" "storage_client-config.cmake" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client"
-    COMPONENT google_cloud_cpp_development)
-# TODO(#5726) - END

@@ -257,11 +257,6 @@ use, e.g.,`//:spanner`. Experimental rules have `experimental` in their name,
 e.g. `//:experimental-logging`. As previously stated, experimental rules are
 subject to change or removal without notice.
 
-Previously some of the rules in subdirectories
-(e.g. `//google/cloud/bigtable:bigtable_client`) had public visibility. These
-rules are deprecated as of 2021-02-15, and will be become inaccessible
-(or removed) on or shortly after **2022-02-15**.
-
 ### CMake targets and packages
 
 Only CMake packages starting with the `google_cloud_cpp_` prefix are intended
@@ -270,18 +265,9 @@ for customer use. Experimental targets have `experimental` in their name (e.g.
 `google-cloud-cpp::experimental-logging`). As previously stated, experimental
 targets are subject to change or removal without notice.
 
-In previous versions we released packages with other prefixes (or without
-specific prefixes), these are deprecated as of 2021-02-15, and will be retired
-on or shortly after **2022-02-15**. Same applies to any targets exported with
-other prefixes (or without an specific prefix).
-
 ### pkg-config modules
 
 Only modules starting with `google_cloud_cpp_` are intended for customer use.
-
-In previous versions we released modules with other prefixes (or without
-specific prefixes), these are deprecated as of 2021-02-15, and will be retired
-on or shortly after **2022-02-15**.
 
 ### Unsupported use cases
 

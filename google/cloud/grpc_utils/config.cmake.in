@@ -17,17 +17,5 @@ include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_common)
 find_dependency(absl)
-# TODO(#5726) - this is needed to preserve backwards compatibility
-find_dependency(googleapis)
 
 include("${CMAKE_CURRENT_LIST_DIR}/grpc_utils-targets.cmake")
-
-if (NOT TARGET google_cloud_cpp_grpc_utils)
-    add_library(google_cloud_cpp_grpc_utils IMPORTED INTERFACE)
-    set_target_properties(google_cloud_cpp_grpc_utils PROPERTIES
-        INTERFACE_LINK_LIBRARIES google-cloud-cpp::grpc_utils)
-    if (CMAKE_VERSION VERSION_GREATER 3.17)
-        set_target_properties(google_cloud_cpp_grpc_utils PROPERTIES
-        DEPRECATION "This target will be removed on or about 2022-02-15, please use google-cloud-cpp::grpc_utils instead")
-    endif ()
-endif ()
