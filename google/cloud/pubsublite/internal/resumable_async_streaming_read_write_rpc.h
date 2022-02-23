@@ -138,7 +138,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     future<void> shutdown = Finish();
     if (!shutdown.is_ready()) {
       GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
-                        "goes out of scope.";
+                          "goes out of scope.";
       assert(false);
     }
     shutdown.get();
