@@ -374,7 +374,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     fail_finish.then([this](future<Status> finish_status) {
       // retry policy refactor
       auto retry_policy = retry_factory_();
-    auto backoff_policy = backoff_policy_prototype_->clone();
+      auto backoff_policy = backoff_policy_prototype_->clone();
       AttemptRetry(finish_status.get(), std::move(retry_policy),
                    std::move(backoff_policy));
     });
