@@ -103,6 +103,17 @@ StatusOr<google::iam::v1::Policy> StorageLogging::GetIamPolicy(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::iam::v1::Policy> StorageLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 StorageLogging::TestIamPermissions(
     grpc::ClientContext& context,

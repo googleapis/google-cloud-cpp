@@ -121,6 +121,10 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
                                    "roles/storage.legacyBucketWriter",
                                    "roles/storage.legacyBucketReader"}));
 
+  auto new_policy = *policy;
+  policy = client->SetNativeBucketIamPolicy(bucket_name, new_policy);
+  ASSERT_STATUS_OK(policy);
+
   auto permissions = client->TestBucketIamPermissions(
       bucket_name, {"storage.objects.list", "storage.buckets.update"});
   ASSERT_STATUS_OK(permissions);
