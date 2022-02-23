@@ -259,7 +259,18 @@ void GetObjectMetadata(google::cloud::storage::Client client,
 
     std::cout << "The metadata for object " << object_metadata->name()
               << " in bucket " << object_metadata->bucket() << " is "
-              << *object_metadata << "\n";
+              << "\n CacheControl : " << object_metadata->cache_control()
+              << "\n ComponentCount : " << object_metadata->component_count()
+              << "\n ContentDisposition : "
+              << object_metadata->content_disposition()
+              << "\n ContentEncoding : " << object_metadata->content_encoding()
+              << "\n ContentLanguage : " << object_metadata->content_language()
+              << "\n ContentType : " << object_metadata->content_type()
+              << "\n Crc32c : " << object_metadata->crc32c()
+              << "\n Generation : " << object_metadata->generation()
+              << "\n KmsKeyName : " << object_metadata->kms_key_name()
+              << "\n Md5Hash : " << object_metadata->md5_hash()
+              << "\n MediaLink : " << object_metadata->media_link();
   }
   //! [get object metadata] [END storage_get_metadata]
   (std::move(client), argv.at(0), argv.at(1));
