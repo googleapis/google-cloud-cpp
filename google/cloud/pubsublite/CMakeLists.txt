@@ -95,6 +95,7 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/futures.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -115,6 +116,7 @@ add_library(
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
+    internal/resumable_async_streaming_read_write_rpc.h
     internal/stream_factory.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
@@ -182,6 +184,9 @@ add_library(google_cloud_cpp_pubsublite_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_pubsublite_mocks
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_async_reader_writer.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_backoff_policy.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/internal/mock_retry_policy.h
               ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_stats_connection.h)
 target_link_libraries(
     google_cloud_cpp_pubsublite_mocks
