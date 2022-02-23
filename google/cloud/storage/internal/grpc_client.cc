@@ -212,7 +212,7 @@ StatusOr<BucketMetadata> GrpcClient::PatchBucket(
   return GrpcBucketMetadataParser::FromProto(*response);
 }
 
-// TODO(#5929) - remove after decommission is completed
+// TODO(#5929) - remove this function and `.inc` includes
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(
@@ -242,7 +242,7 @@ StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
   return GrpcBucketRequestParser::FromProto(*response);
 }
 
-// TODO(#5929) - remove after decommission is completed
+// TODO(#5929) - remove this function and `.inc` includes
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(

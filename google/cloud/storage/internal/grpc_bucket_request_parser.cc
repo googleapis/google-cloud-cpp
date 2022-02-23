@@ -193,7 +193,7 @@ google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(
   return result;
 }
 
-// TODO(#5929) - remove after decommission is completed
+// TODO(#5929) - remove this function and `.inc` includes
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(

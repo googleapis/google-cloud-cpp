@@ -336,7 +336,7 @@ TEST(GrpcBucketRequestParser, SetNativeBucketIamPolicyRequest) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-// TODO(#5929) - remove after decommission is completed
+// TODO(#5929) - remove this test and `.inc` includes
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 TEST(GrpcBucketRequestParser, SetBucketIamPolicyRequest) {

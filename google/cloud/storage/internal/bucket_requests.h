@@ -217,15 +217,15 @@ class SetBucketIamPolicyRequest
  public:
   SetBucketIamPolicyRequest() = default;
   explicit SetBucketIamPolicyRequest(std::string bucket_name,
-                                     google::cloud::IamPolicy const& policy);
+                                     IamPolicy const& policy);
 
   std::string const& bucket_name() const { return bucket_name_; }
-  google::cloud::IamPolicy const& policy() const { return policy_; }
+  IamPolicy const& policy() const { return policy_; }
   std::string const& json_payload() const { return json_payload_; }
 
  private:
   std::string bucket_name_;
-  google::cloud::IamPolicy policy_;
+  IamPolicy policy_;
   std::string json_payload_;
 };
 
