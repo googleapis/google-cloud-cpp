@@ -76,17 +76,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @code
  * namespace cbt = google::cloud::bigtable;
  * namespace btadmin = google::bigtable::admin::v2;
- * cbt::TableAdmin admin = ...;
- * google::cloud::StatusOr<btadmin::Table> metadata = admin.GetTable(...);
+ * cbt::InstanceAdmin admin = ...;
+ * google::cloud::StatusOr<btadmin::Instance> instance = admin.GetInstance(...);
  *
- * if (!metadata) {
- *   std::cerr << "Error fetching table metadata\n";
+ * if (!instance) {
+ *   std::cerr << "Error fetching instance\n";
  *   return;
  * }
  *
- * // Use "metadata" as a smart pointer here, e.g.:
- * std::cout << "The full table name is " << table->name() << " the table has "
- *           << table->column_families_size() << " column families\n";
+ * // Use `instance` as a smart pointer here, e.g.:
+ * std::cout << "The full instance name is " << instance->name() << "\n";
  * @endcode
  *
  * In addition, the @ref index "main page" contains examples using `StatusOr<T>`

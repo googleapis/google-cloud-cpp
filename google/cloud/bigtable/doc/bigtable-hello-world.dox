@@ -34,7 +34,7 @@ The example uses the following headers:
 ## Connecting to Cloud Bigtable to manage tables
 
 To manage tables, connect to Cloud Bigtable using
-`bigtable::MakeAdminClient()`:
+`bigtable_admin::MakeBigtableTableAdminConnection()`:
 
 @snippet bigtable_hello_world.cc connect admin
 
@@ -125,7 +125,6 @@ Here is the full example
 @snippet bigtable_hello_world.cc all code
 
 [Filter]:          @ref google::cloud::bigtable::Filter
-[InstanceAdmin]:   @ref google::cloud::bigtable::InstanceAdmin
 [Mutation]:        @ref google::cloud::bigtable::Mutation
 [Row]:             @ref google::cloud::bigtable::Row
 [RowRange]:        @ref google::cloud::bigtable::RowRange

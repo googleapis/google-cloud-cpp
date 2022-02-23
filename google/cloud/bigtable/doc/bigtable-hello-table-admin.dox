@@ -56,10 +56,8 @@ Note that when you create a table you can define one or more column families for
 the table, and each column families is configured with a garbage collection rule
 to automatically delete excess cells.
 
-@see [bigtable::GcRule][GcRule] to learn about the garbage collection rules,
-    including how to delete cells that are [too old][GcRule-MaxAge],
-    have [too many versions][GcRule-MaxNumVersions],
-    or [combinations][GcRule-Union] of those criteria.
+@see [Configure garbage collection][CloudDocs-GcRule] to learn about the garbage
+    collection rules.
 
 ## Listing Tables in an Instance
 
@@ -78,10 +76,8 @@ Or retrieve the metadata, including column family definitions, using
 
 @snippet bigtable_hello_table_admin.cc retrieve table metadata
 
-@see [bigtable::GcRule][GcRule] as Cloud Bigtable column families can be
-    configured to automatically delete cells that are [too old][GcRule-MaxAge],
-    have [too many versions][GcRule-MaxNumVersions],
-    or [combinations][GcRule-Intersection] of those criteria.
+@see [Configure garbage collection][CloudDocs-GcRule] to learn about the garbage
+    collection rules.
 
 ## Modify a Column Family
 
@@ -120,11 +116,7 @@ Here is the full example
 
 @snippet bigtable_hello_table_admin.cc all code
 
-[GcRule]:                  @ref google::cloud::bigtable::GcRule
-[GcRule-MaxAge]:           @ref google::cloud::bigtable::GcRule::MaxAge()
-[GcRule-MaxNumVersions]:   @ref google::cloud::bigtable::GcRule::MaxNumVersions()
-[GcRule-Union]:            @ref google::cloud::bigtable::GcRule::Union()
-[GcRule-Intersection]:     @ref google::cloud::bigtable::GcRule::Intersection()
+[CloudDocs-GcRule]: https://cloud.google.com/bigtable/docs/configuring-garbage-collection#c++
 [ColumnFamilyModification-Create]: @ref google::cloud::bigtable::ColumnFamilyModification::Create()
 [ColumnFamilyModification-Update]: @ref google::cloud::bigtable::ColumnFamilyModification::Update()
 [ColumnFamilyModification-Drop]: @ref google::cloud::bigtable::ColumnFamilyModification::Drop()
