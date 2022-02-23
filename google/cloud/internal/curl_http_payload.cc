@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/http_payload.h"
+#include "google/cloud/internal/curl_http_payload.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/log.h"
 

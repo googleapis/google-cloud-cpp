@@ -26,8 +26,6 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CurlImpl;
-
 // Allows the payload and trailers of an HTTP response to be read.
 class HttpPayload {
  public:
@@ -39,26 +37,6 @@ class HttpPayload {
   // read the entire payload.
   // Returns number of bytes actually read into buffer from the payload.
   virtual StatusOr<std::size_t> Read(absl::Span<char> buffer) = 0;
-};
-
-// Implementation using libcurl.
-class CurlHttpPayload : public HttpPayload {
- public:
-  ~CurlHttpPayload() override = default;
-
-  CurlHttpPayload(CurlHttpPayload const&) = delete;
-  CurlHttpPayload(CurlHttpPayload&&) = default;
-  CurlHttpPayload& operator=(CurlHttpPayload const&) = delete;
-  CurlHttpPayload& operator=(CurlHttpPayload&&) = default;
-
-  StatusOr<std::size_t> Read(absl::Span<char> buffer) override;
-
- private:
-  friend class CurlRestResponse;
-  CurlHttpPayload(std::unique_ptr<CurlImpl> impl, Options options);
-
-  std::unique_ptr<CurlImpl> impl_;
-  Options options_;
 };
 
 // This function makes one or more HttpPayload::Read calls and writes all the

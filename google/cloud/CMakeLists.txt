@@ -633,12 +633,17 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/curl_handle.h
         internal/curl_handle_factory.cc
         internal/curl_handle_factory.h
+        internal/curl_http_payload.cc
+        internal/curl_http_payload.h
         internal/curl_impl.cc
         internal/curl_impl.h
         internal/curl_options.h
+        internal/curl_rest_client.cc
+        internal/curl_rest_client.h
+        internal/curl_rest_response.cc
+        internal/curl_rest_response.h
         internal/curl_wrappers.cc
         internal/curl_wrappers.h
-        internal/http_payload.cc
         internal/http_payload.h
         internal/make_jwt_assertion.cc
         internal/make_jwt_assertion.h
@@ -669,12 +674,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         internal/oauth2_service_account_credentials.h
         internal/openssl_util.cc
         internal/openssl_util.h
-        internal/rest_client.cc
         internal/rest_client.h
         internal/rest_options.h
         internal/rest_request.cc
         internal/rest_request.h
-        internal/rest_response.cc
         internal/rest_response.h
         internal/unified_rest_credentials.cc
         internal/unified_rest_credentials.h)
@@ -730,9 +733,11 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/binary_data_as_debug_string_test.cc
             internal/curl_handle_factory_test.cc
             internal/curl_handle_test.cc
+            internal/curl_http_payload_test.cc
             internal/curl_impl_test.cc
+            internal/curl_rest_client_test.cc
+            internal/curl_rest_response_test.cc
             internal/curl_wrappers_test.cc
-            internal/http_payload_test.cc
             internal/make_jwt_assertion_test.cc
             internal/oauth2_access_token_credentials_test.cc
             internal/oauth2_anonymous_credentials_test.cc
@@ -745,16 +750,14 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
             internal/oauth2_refreshing_credentials_wrapper_test.cc
             internal/oauth2_service_account_credentials_test.cc
             internal/openssl_util_test.cc
-            internal/rest_client_test.cc
             internal/rest_request_test.cc
-            internal/rest_response_test.cc
             internal/unified_rest_credentials_test.cc)
 
         # List the emulator integration tests, then setup the targets and
         # dependencies.
         set(google_cloud_cpp_rest_internal_emulator_integration_tests
             # cmake-format: sort
-            internal/rest_client_integration_test.cc)
+            internal/curl_rest_client_integration_test.cc)
 
         # List the production integration tests, then setup the targets and
         # dependencies.
