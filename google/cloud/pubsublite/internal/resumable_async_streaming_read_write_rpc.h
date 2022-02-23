@@ -125,7 +125,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   ResumableAsyncStreamingReadWriteRpcImpl(
       RetryPolicyFactory retry_factory,
       std::shared_ptr<BackoffPolicy const> backoff_policy,
-      std::shared_ptr<AsyncSleeper const> sleeper,
+      AsyncSleeper sleeper,
       AsyncStreamFactory<RequestType, ResponseType> stream_factory,
       StreamInitializer<RequestType, ResponseType> initializer)
       : retry_factory_(std::move(retry_factory)),
@@ -188,7 +188,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     return read_future.then(
         [this](future<absl::optional<ResponseType>> optional_response_future) {
-          return OnReadFutureFinish(std::move(optional_response_future));
+          return OnReadFutureFinish(optional_response_future.get());
         });
   }
 
@@ -213,13 +213,13 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     }
 
     return write_future.then([this](future<bool> write_fu) {
-      return OnWriteFutureFinish(std::move(write_fu));
+      return OnWriteFutureFinish(write_fu.get());
     });
   }
 
   future<void> Finish() override {
-    promise<void> retry_promise;
-    future<void> retry_promise_continuation = retry_promise.get_future();
+    promise<void> root_promise;
+    future<void> root_future = root_promise.get_future();
     {
       std::lock_guard<std::mutex> g{mu_};
       switch (stream_state_) {
@@ -227,8 +227,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           return make_ready_future();
         case State::kRetrying:
           stream_state_ = State::kShutdown;
-          retry_promise_continuation =
-              retry_promise_continuation.then(ChainFuture(
+          root_future =
+              root_future.then(ChainFuture(
                   retry_promise_->get_future().then([this](future<void>) {
                     std::lock_guard<std::mutex> g{mu_};
                     CompleteStreamLockHeld(Status());
@@ -236,26 +236,24 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           break;
         case State::kInitialized:
           stream_state_ = State::kShutdown;
-          future<void> root_future = make_ready_future();
           if (in_progress_read_) {
             root_future = root_future.then(
-                ChainFuture<void>(in_progress_read_->get_future()));
+                ChainFuture(in_progress_read_->get_future()));
           }
           if (in_progress_write_) {
             root_future = root_future.then(
-                ChainFuture<void>(in_progress_write_->get_future()));
+                ChainFuture(in_progress_write_->get_future()));
           }
           std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
               stream = std::move(stream_);
           CompleteStreamLockHeld(Status());
-          return root_future.then([stream](future<void>) {
-            return stream->Finish().then(
-                [](future<Status>) { return make_ready_future(); });
+          root_future = root_future.then([stream](future<void>) {
+            return future<void>(stream->Finish());
           });
       }
     }
-    retry_promise.set_value();
-    return retry_promise_continuation;
+    root_promise.set_value();
+    return root_future;
   }
 
  private:
@@ -265,14 +263,14 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   enum class State { kRetrying, kInitialized, kShutdown };
 
   future<absl::optional<ResponseType>> OnReadFutureFinish(
-      future<absl::optional<ResponseType>> optional_response_future) {
+      absl::optional<ResponseType> optional_response) {
     promise<void> in_progress_read;
     future<void> read_reinit_done;
-    auto optional_response = optional_response_future.get();
     bool shutdown;
 
     {
       std::lock_guard<std::mutex> g{mu_};
+      assert(in_progress_read_.has_value());
       in_progress_read = std::move(*in_progress_read_);
       in_progress_read_.reset();
       shutdown = stream_state_ == State::kShutdown;
@@ -300,14 +298,14 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     });
   }
 
-  future<bool> OnWriteFutureFinish(future<bool> write_fu) {
+  future<bool> OnWriteFutureFinish(bool write_response) {
     promise<void> in_progress_write;
     future<void> write_reinit_done;
-    bool write_response = write_fu.get();
     bool shutdown;
 
     {
       std::lock_guard<std::mutex> g{mu_};
+      assert(in_progress_write_.has_value());
       in_progress_write = std::move(*in_progress_write_);
       in_progress_write_.reset();
       shutdown = stream_state_ == State::kShutdown;
@@ -353,10 +351,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       if (in_progress_read_.has_value()) {
         assert(!in_progress_write_.has_value());
         root_future = root_future.then(
-            ChainFuture<void>(in_progress_read_->get_future()));
+            ChainFuture(in_progress_read_->get_future()));
       } else if (in_progress_write_.has_value()) {
         root_future = root_future.then(
-            ChainFuture<void>(in_progress_write_->get_future()));
+            ChainFuture(in_progress_write_->get_future()));
       }
 
       root_future.then([this](future<void>) { FinishOnStreamFail(); });
@@ -401,6 +399,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   void FinishRetryPromiseLockHeld() {
+    assert(retry_promise_.has_value());
     promise<void> retry_promise = std::move(*retry_promise_);
     retry_promise_.reset();
     mu_.unlock();
@@ -420,7 +419,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     }
 
     if (!retry_policy->IsExhausted() && retry_policy->OnFailure(status)) {
-      (*sleeper_)(backoff_policy->OnCompletion())
+      sleeper_(backoff_policy->OnCompletion())
           .then([this, retry_policy, backoff_policy](future<void>) {
             Initialize(retry_policy, backoff_policy);
           });
@@ -492,7 +491,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   RetryPolicyFactory retry_factory_;
   std::shared_ptr<BackoffPolicy const> const backoff_policy_prototype_;
-  std::shared_ptr<AsyncSleeper const> sleeper_;
+  AsyncSleeper const sleeper_;
   AsyncStreamFactory<RequestType, ResponseType> const stream_factory_;
   StreamInitializer<RequestType, ResponseType> const initializer_;
 
@@ -523,7 +522,7 @@ std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType>>
 MakeResumableAsyncStreamingReadWriteRpcImpl(
     RetryPolicyFactory retry_factory,
     std::shared_ptr<BackoffPolicy const> backoff_policy,
-    std::shared_ptr<AsyncSleeper const> sleeper,
+    AsyncSleeper sleeper,
     AsyncStreamFactory<RequestType, ResponseType> stream_factory,
     StreamInitializer<RequestType, ResponseType> initializer) {
   return absl::make_unique<
