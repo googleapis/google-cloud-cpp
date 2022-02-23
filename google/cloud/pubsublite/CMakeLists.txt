@@ -215,7 +215,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         testing/mock_retry_policy.h)
     target_link_libraries(
         pubsublite_testing
-        PUBLIC google-cloud-cpp::pubsublite google-cloud-cpp::grpc_utils
+        PUBLIC google_cloud_cpp_pubsublite google-cloud-cpp::grpc_utils
                google-cloud-cpp::common google-cloud-cpp::pubsublite_protos
                GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(pubsublite_testing)
