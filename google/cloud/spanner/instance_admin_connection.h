@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/options.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
 #include <map>
 #include <string>
@@ -155,6 +156,8 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("InstanceAdminConnection")
     std::vector<std::string> permissions;
   };
   //@}
+
+  virtual Options options() { return Options{}; }
 
   /// Return the metadata for the given instance.
   virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(

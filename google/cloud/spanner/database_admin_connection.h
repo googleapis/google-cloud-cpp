@@ -27,6 +27,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/options.h"
 #include "absl/types/optional.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
 #include <chrono>
@@ -239,6 +240,8 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminConnection")
     std::string filter;
   };
   //@}
+
+  virtual Options options() { return Options{}; }
 
   /// Define the interface for a google.spanner.v1.DatabaseAdmin.CreateDatabase
   /// RPC.

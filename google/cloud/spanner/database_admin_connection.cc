@@ -117,17 +117,19 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   // Note all the policies will be set to their default non-null values in the
   // `MakeDatabaseAdminConnection()` function below.
   explicit DatabaseAdminConnectionImpl(
-      std::shared_ptr<spanner_internal::DatabaseAdminStub> stub,
-      Options const& opts)
+      std::shared_ptr<spanner_internal::DatabaseAdminStub> stub, Options opts)
       : stub_(std::move(stub)),
-        retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
+        opts_(std::move(opts)),
+        retry_policy_prototype_(opts_.get<SpannerRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
-            opts.get<SpannerBackoffPolicyOption>()->clone()),
+            opts_.get<SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
-            opts.get<SpannerPollingPolicyOption>()->clone()),
-        background_threads_(internal::MakeBackgroundThreadsFactory(opts)()) {}
+            opts_.get<SpannerPollingPolicyOption>()->clone()),
+        background_threads_(internal::MakeBackgroundThreadsFactory(opts_)()) {}
 
   ~DatabaseAdminConnectionImpl() override = default;
+
+  Options options() override { return opts_; }
 
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(CreateDatabaseParams p) override {
@@ -593,6 +595,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
  private:
   std::shared_ptr<spanner_internal::DatabaseAdminStub> stub_;
+  Options opts_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
