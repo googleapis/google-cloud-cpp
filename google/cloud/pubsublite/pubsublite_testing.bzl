@@ -21,3 +21,6 @@ pubsublite_testing_hdrs = [
     "testing/mock_backoff_policy.h",
     "testing/mock_retry_policy.h",
 ]
+
+pubsublite_testing_srcs = [
+]

@@ -52,7 +52,7 @@ using StreamInitializer = std::function<future<StatusOr<
     std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>(
     std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>)>;
 
-using AsyncSleeper = std::function<future<void>(std::chrono::duration<double>)>;
+using AsyncSleeper = std::function<future<void>(std::chrono::milliseconds)>;
 
 using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 
@@ -113,7 +113,6 @@ class ResumableAsyncStreamingReadWriteRpc {
    * Finishes the streaming RPC.
    *
    * This will cause any outstanding `Read` or `Write` to fail.
-   *
    */
   virtual future<void> Finish() = 0;
 };
