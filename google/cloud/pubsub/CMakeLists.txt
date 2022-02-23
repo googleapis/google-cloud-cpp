@@ -407,19 +407,3 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
     COMPONENT google_cloud_cpp_development)
-
-# TODO(#5726) - generate pkg-config and CMake files for backwards compatibility
-set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_pubsub")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-               "pubsub_client.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
-configure_file("legacy.cmake.in" "pubsub_client-config.cmake" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/pubsub_client"
-    COMPONENT google_cloud_cpp_development)
-# TODO(#5726) - END

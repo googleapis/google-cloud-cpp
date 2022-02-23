@@ -111,7 +111,6 @@ expected_dirs+=(
   ./include/google/type
   ./include/grafeas
   ./include/grafeas/v1
-  ./lib64/cmake/bigtable_client
   ./lib64/cmake/google_cloud_cpp_bigtable
   ./lib64/cmake/google_cloud_cpp_common
   ./lib64/cmake/google_cloud_cpp_googleapis
@@ -120,10 +119,6 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_pubsub
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_spanner
-  ./lib64/cmake/googleapis
-  ./lib64/cmake/pubsub_client
-  ./lib64/cmake/spanner_client
-  ./lib64/cmake/storage_client
   ./lib64/pkgconfig
 )
 
@@ -165,15 +160,13 @@ while IFS= read -r -d '' f; do
 done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
 mapfile -t ctest_args < <(ctest::common_args)
-for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
-  out_dir="cmake-out/$(basename "${repo_root}")-out"
-  rm -f "${out_dir}/CMakeCache.txt"
-  io::log_h2 "Verifying CMake targets in repo root: ${repo_root}"
-  cmake --log-level WARNING -GNinja -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
-    -S "${repo_root}" -B "${out_dir}" -Wno-dev
-  cmake --build "${out_dir}"
-  env -C "${out_dir}" ctest "${ctest_args[@]}"
-done
+out_dir="cmake-out/verify_current_targets-out"
+rm -f "${out_dir}/CMakeCache.txt"
+io::log_h2 "Verifying CMake targets in repo root: ci/verify_current_targets"
+cmake --log-level WARNING -GNinja -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
+  -S ci/verify_current_targets -B "${out_dir}" -Wno-dev
+cmake --build "${out_dir}"
+env -C "${out_dir}" ctest "${ctest_args[@]}"
 
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
