@@ -20,6 +20,10 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+RefreshingCredentialsWrapper::RefreshingCredentialsWrapper(
+    CurrentTimeFn current_time_fn)
+    : current_time_fn_(std::move(current_time_fn)) {}
+
 bool RefreshingCredentialsWrapper::IsExpired(
     std::chrono::system_clock::time_point now) const {
   return now > (temporary_token_.expiration_time -
@@ -51,7 +55,7 @@ RefreshingCredentialsWrapper::AuthorizationHeader(
     temporary_token_ = *std::move(new_token);
     return temporary_token_.token;
   }
-  if (IsValid(std::chrono::system_clock::now())) return temporary_token_.token;
+  if (IsValid(current_time_fn_())) return temporary_token_.token;
   return new_token.status();
 }
 

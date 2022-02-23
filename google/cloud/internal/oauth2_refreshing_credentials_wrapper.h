@@ -40,6 +40,17 @@ class RefreshingCredentialsWrapper {
 
   using RefreshFunctor = absl::FunctionRef<
       StatusOr<RefreshingCredentialsWrapper::TemporaryToken>()>;
+  using CurrentTimeFn =
+      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
+
+  /**
+   * Creates an instance of RefreshingCredentialsWrapper.
+   *
+   * @param current_time_fn a dependency injection point to fetch the current
+   *     time. This should generally not be overridden except for testing.
+   */
+  explicit RefreshingCredentialsWrapper(
+      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
 
   /**
    * Returns an Authorization header obtained by invoking `refresh_fn`.
@@ -72,6 +83,7 @@ class RefreshingCredentialsWrapper {
   bool NeedsRefresh(std::chrono::system_clock::time_point now) const;
 
   mutable TemporaryToken temporary_token_;
+  CurrentTimeFn current_time_fn_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
