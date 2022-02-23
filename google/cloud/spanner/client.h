@@ -136,14 +136,14 @@ class Client {
             std::move(opts),
             spanner_internal::DefaultOptions(conn_->options()))) {}
 
-  //@{
-  /// Backwards compatibility for `ClientOptions`.
+  /// @name Backwards compatibility for `ClientOptions`.
+  ///@{
   explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
       : Client(std::move(conn), Options(opts)) {}
   explicit Client(std::shared_ptr<Connection> conn,
                   std::initializer_list<internal::NonConstructible>)
       : Client(std::move(conn)) {}
-  //@}
+  ///@}
 
   /// No default construction.
   Client() = delete;
@@ -338,8 +338,8 @@ class Client {
   RowStream ExecuteQuery(QueryPartition const& partition, Options opts = {});
   //@}
 
-  //@{
-  /// Backwards compatibility for `QueryOptions`.
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
   RowStream ExecuteQuery(SqlStatement statement, QueryOptions const& opts) {
     return ExecuteQuery(std::move(statement), Options(opts));
   }
@@ -374,7 +374,7 @@ class Client {
                          std::initializer_list<internal::NonConstructible>) {
     return ExecuteQuery(partition);
   }
-  //@}
+  ///@}
 
   //@{
   /**
@@ -426,8 +426,8 @@ class Client {
                                   SqlStatement statement, Options opts = {});
   //@}
 
-  //@{
-  /// Backwards compatibility for `QueryOptions`.
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
   ProfileQueryResult ProfileQuery(SqlStatement statement,
                                   QueryOptions const& opts) {
     return ProfileQuery(std::move(statement), Options(opts));
@@ -459,7 +459,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return ProfileQuery(std::move(transaction), std::move(statement));
   }
-  //@}
+  ///@}
 
   /**
    * Creates a set of partitions that can be used to execute a query
@@ -506,8 +506,8 @@ class Client {
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
                                  SqlStatement statement, Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `QueryOptions`.
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
                                  SqlStatement statement,
                                  QueryOptions const& opts) {
@@ -519,7 +519,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return ExecuteDml(std::move(transaction), std::move(statement));
   }
-  //@}
+  ///@}
 
   /**
    * Profiles a SQL DML statement.
@@ -545,8 +545,8 @@ class Client {
                                         SqlStatement statement,
                                         Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `QueryOptions`.
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
   StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
                                         SqlStatement statement,
                                         QueryOptions const& opts) {
@@ -558,7 +558,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return ProfileDml(std::move(transaction), std::move(statement));
   }
-  //@}
+  ///@}
 
   /**
    * Analyzes the execution plan of a SQL statement.
@@ -583,8 +583,8 @@ class Client {
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
                                      SqlStatement statement, Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `QueryOptions`.
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
                                      SqlStatement statement,
                                      QueryOptions const& opts) {
@@ -596,7 +596,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return AnalyzeSql(std::move(transaction), std::move(statement));
   }
-  //@}
+  ///@}
 
   /**
    * Executes a batch of SQL DML statements. This method allows many statements
@@ -679,8 +679,8 @@ class Client {
       std::unique_ptr<TransactionRerunPolicy> rerun_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       std::unique_ptr<TransactionRerunPolicy> rerun_policy,
@@ -696,7 +696,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy));
   }
-  //@}
+  ///@}
 
   /**
    * Commits a read-write transaction.
@@ -713,8 +713,8 @@ class Client {
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       CommitOptions const& commit_options) {
@@ -725,7 +725,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return Commit(mutator);
   }
-  //@}
+  ///@}
 
   /**
    * Commits the @p mutations, using the @p options, atomically in order.
@@ -738,8 +738,8 @@ class Client {
    */
   StatusOr<CommitResult> Commit(Mutations mutations, Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(Mutations mutations,
                                 CommitOptions const& commit_options) {
     return Commit(std::move(mutations), Options(commit_options));
@@ -748,7 +748,7 @@ class Client {
       Mutations mutations, std::initializer_list<internal::NonConstructible>) {
     return Commit(std::move(mutations));
   }
-  //@}
+  ///@}
 
   /**
    * Commits a read-write transaction.
@@ -778,8 +778,8 @@ class Client {
   StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
                                 Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
                                 CommitOptions const& commit_options) {
     return Commit(std::move(transaction), std::move(mutations),
@@ -790,7 +790,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return Commit(std::move(transaction), std::move(mutations));
   }
-  //@}
+  ///@}
 
   /**
    * Rolls back a read-write transaction, releasing any locks it holds.
@@ -833,8 +833,8 @@ class Client {
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement,
                                                        Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `QueryOptions`.
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
       SqlStatement statement, QueryOptions const& opts) {
     return ExecutePartitionedDml(std::move(statement), Options(opts));
@@ -844,7 +844,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return ExecutePartitionedDml(std::move(statement));
   }
-  //@}
+  ///@}
 
  private:
   std::shared_ptr<Connection> conn_;
