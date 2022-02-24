@@ -31,6 +31,7 @@ instrumented_patterns=(
   "/google/cloud/bigtable[/:]"
   "/google/cloud/examples[/:]"
   "/google/cloud/pubsub[/:]"
+  "/google/cloud/pubsublite[/:]"
   "/google/cloud/spanner[/:]"
   "/google/cloud/storage[/:]"
   "/generator[/:]"

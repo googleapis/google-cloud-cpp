@@ -95,6 +95,7 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/futures.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -115,6 +116,7 @@ add_library(
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
+    internal/resumable_async_streaming_read_write_rpc.h
     internal/stream_factory.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
@@ -207,6 +209,26 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
+    add_library(pubsublite_testing INTERFACE)
+    target_sources(
+        pubsublite_testing
+        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h)
+
+    target_link_libraries(
+        pubsublite_testing
+        INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
+                  GTest::gmock GTest::gtest)
+    target_include_directories(
+        pubsublite_testing
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(pubsublite_testing
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    create_bazel_config(pubsublite_testing YEAR "2022")
+
     set(pubsublite_unit_tests # cmake-format: sort
                               endpoint_test.cc internal/stream_factory_test.cc)
 
@@ -218,7 +240,8 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         google_cloud_cpp_add_executable(target "pubsublite" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing
+            PRIVATE pubsublite_testing
+                    google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_pubsublite
                     google_cloud_cpp_pubsublite_mocks
