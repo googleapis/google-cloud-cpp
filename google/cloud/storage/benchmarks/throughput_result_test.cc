@@ -31,7 +31,7 @@ MATCHER_P(
     "status field from PrintAsCsv is properly quoted and contains substr") {
   // The status field is the 10th value.
   std::size_t pos = 0;
-  for (int i = 0; i < 9; ++i) {
+  for (int i = 0; i < 10; ++i) {
     pos = arg.find(',', pos);
     if (pos == std::string::npos) {
       *result_listener << "Couldn't find status field: " << arg;
@@ -68,7 +68,7 @@ TEST(ThroughputResult, HeaderMatches) {
   auto const header = std::move(header_stream).str();
 
   auto const line = ToString(ThroughputResult{
-      kOpInsert, /*object_size=*/3 * kMiB,
+      kOpInsert, /*object_size=*/5 * kMiB, /*transfer_size=*/3 * kMiB,
       /*app_buffer_size=*/2 * kMiB, /*lib_buffer_size=*/4 * kMiB,
       /*crc_enabled=*/true, /*md5_enabled=*/false, ApiName::kApiGrpc,
       std::chrono::microseconds(234000), std::chrono::microseconds(345000),
@@ -86,6 +86,7 @@ TEST(ThroughputResult, HeaderMatches) {
   // We don't want to create a change detector test, but we can verify the basic
   // fields are formatted correctly.
   EXPECT_THAT(*line, HasSubstr(ToString(kOpInsert)));
+  EXPECT_THAT(*line, HasSubstr("," + std::to_string(5 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(3 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(2 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(4 * kMiB) + ","));

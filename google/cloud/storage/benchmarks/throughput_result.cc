@@ -39,14 +39,22 @@ std::string QuoteCsv(T const& element) {
 }  // namespace
 
 void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
-  os << ToString(r.op) << ',' << r.object_size << ',' << r.app_buffer_size
-     << ',' << r.lib_buffer_size << ',' << r.crc_enabled << ',' << r.md5_enabled
-     << ',' << ToString(r.api) << ',' << r.elapsed_time.count() << ','
-     << r.cpu_time.count() << ',' << QuoteCsv(r.status) << '\n';
+  os << ToString(r.op)                 // force clang to keep one field per-line
+     << ',' << r.object_size           //
+     << ',' << r.transfer_size         //
+     << ',' << r.app_buffer_size       //
+     << ',' << r.lib_buffer_size       //
+     << ',' << r.crc_enabled           //
+     << ',' << r.md5_enabled           //
+     << ',' << ToString(r.api)         //
+     << ',' << r.elapsed_time.count()  //
+     << ',' << r.cpu_time.count()      //
+     << ',' << QuoteCsv(r.status)      //
+     << '\n';
 }
 
 void PrintThroughputResultHeader(std::ostream& os) {
-  os << "Op,ObjectSize,AppBufferSize,LibBufferSize"
+  os << "Op,ObjectSize,TransferSize,AppBufferSize,LibBufferSize"
      << ",Crc32cEnabled,MD5Enabled,ApiName"
      << ",ElapsedTimeUs,CpuTimeUs,Status\n";
 }
