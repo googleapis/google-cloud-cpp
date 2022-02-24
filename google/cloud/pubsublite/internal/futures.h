@@ -36,7 +36,11 @@ struct ChainFutureImpl {
 /**
  * This is a templatized helper to chain futures together with an intended
  * internal return type of `T` irrespective of the type passed in of
- * `future<U>`.
+ * `future<U>`. Without this, the previous solution was to wrap a shared pointer
+ * around the future we wanted to chain (no generalized lambda capture in C++11)
+ * and capture that into the original future's continuation. This helper removes
+ * and encapsulates that complexity/effort by moving the future into a functor
+ * as a member variable and returning that upon invoking the continuation.
  */
 template <class T>
 ChainFutureImpl<T> ChainFuture(future<T> f) {

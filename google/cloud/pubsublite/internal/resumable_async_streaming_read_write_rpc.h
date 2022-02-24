@@ -59,6 +59,34 @@ using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 /**
  * The purpose of this class is to encapsulate the retry logic of a generic
  * bidirectional asynchronous RPC stream.
+ *
+ * Example (unrealistic) usage:
+ * ```
+ * std::string ExampleReadUsage() {
+ *   ResumableAsyncStreamingReadWriteRpc<Request, Response> resumable_stream;
+ *   auto start = resumable_stream.Start();
+ *   size_t num_attempts = 0;
+ *   while (num_attempts < 3) {
+ *     auto read_response = resumable_stream.Read().get();
+ *     if (!read_response) {
+ *       // the second conditional is redundant since the only way `Start` can
+ * // finish without a user calling `Finish` is if a retry loop finishes with a
+ * // permanent error (not ok) status.
+ *       if (start.is_ready() && !start.get().ok()) {
+ *         return "The read response optional was not engaged, and `Start`
+ * finished, so there had to be a permanent error in the retry loop";
+ *       }
+ *     } else {
+ *       return read_response->Stringify();
+ *     }
+ *     // we are ready to call `Read` again due to the object's internal retry
+ * mechanism.
+ *     ++num_attempts;
+ *   }
+ *   resumable_stream.Finish().get();
+ *   return "We finished the stream";
+ * }
+ * ```
  */
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc {
@@ -69,10 +97,12 @@ class ResumableAsyncStreamingReadWriteRpc {
    * Start the streaming RPC.
    *
    * The returned future will be returned with a status
-   * when this stream will not be resumed or when the user calls `Finish()`. In
-   * the case that there are no errors from `Start`ing the stream and on the
-   * latest `Read` and `Write` calls if present, this will return an ok
-   * `Status`.
+   * when this stream will not be resumed or when the user calls `Finish()`. If
+   * the stream fails and the retry loop terminates on permanent error, the
+   * `Status` returned will be the `Status` that the stream failed with. In the
+   * case that there are no errors from `Start`ing the stream and on the latest
+   * `Read` and `Write` calls if present, this will return an ok `Status` when
+   * the user calls `Finish`.
    */
   virtual future<Status> Start() = 0;
 
@@ -92,6 +122,13 @@ class ResumableAsyncStreamingReadWriteRpc {
    * If the `optional<>` is engaged, a successful `ResponseType` is
    * returned. If it is not engaged, the call failed, but the user may call
    * `Read` again unless `Start` had finished with a permanent error `Status`.
+   *
+   * If the `Read` call fails internally on the member stream object, then this
+   * class will continually try to reestablish another connection until
+   * successfully reestablishing the connection, permanent error, or the user
+   * calls `Finish`. A call to `Read` will finish only when a successful
+   * `Read` called is made internally on the member stream or the retry loop
+   * finishes if the class is currently retrying the connection.
    */
   virtual future<absl::optional<ResponseType>> Read() = 0;
 
@@ -110,13 +147,28 @@ class ResumableAsyncStreamingReadWriteRpc {
    * If `true` is returned, the call was successful. If `false` is returned,
    * the call failed, but the user may call `Write` again unless `Start` had
    * finished with a permanent error `Status`.
+   *
+   * If the `Write` call fails internally on the member stream object, then this
+   * class will continually try to reestablish another connection until
+   * successfully reestablishing the connection, permanent error, or the user
+   * calls `Finish`. A call to `Write` will finish only when a successful
+   * `Write` called is made internally on the member stream or the retry loop
+   * finishes if the class is currently retrying the connection.
    */
   virtual future<bool> Write(RequestType const&, grpc::WriteOptions) = 0;
 
   /**
    * Finishes the streaming RPC.
    *
-   * This will cause any outstanding `Read` or `Write` to fail.
+   * This will cause any outstanding `Read` or `Write` to fail. This may be
+   * called while a `Read` or `Write` of an object of this class is outstanding.
+   * Internally, the class will manage waiting on `Read` and `Write` calls on a
+   * gRPC stream before calling `Finish` as per
+   * `google::cloud::AsyncStreamingReadWriteRpc`. If the class is currently in a
+   * retry loop, this will terminate the retry loop and then finish the returned
+   * future. If the class has a present internal outstanding `Read` or `Write`,
+   * this call will finish the returned future only after the `Read` and/or
+   * `Write` finishes.
    */
   virtual future<void> Finish() = 0;
 };
