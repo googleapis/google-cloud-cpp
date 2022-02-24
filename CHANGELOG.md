@@ -108,7 +108,7 @@ The library has been expanded to include the following services:
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
-**BREAKING CHANGE:** The `bigtable::TableAdminClient` interface has changed
+**BREAKING CHANGE:** The `bigtable::AdminClient` interface has changed
 significantly. Any code that extends this class or calls its experimental public
 APIs (`reset()`, `Channel()`) will be broken. For the most part, this should
 only affect customers who mock this class in their tests. Code that calls
@@ -139,6 +139,10 @@ information on these new classes, see our [Architecture Design] document.
 
 Again, we apologize for making this breaking change, but we believe it is in the
 best long-term interest of our customers.
+
+**BREAKING CHANGE:** The `bigtable::InstanceAdminClient` class has been marked
+as `final`. It should not be extended for mocking. Customers should instead use
+`bigtable_admin_mocks::MockBigtableInstanceAdminConnection` for mocking.
 
 ### New Libraries
 

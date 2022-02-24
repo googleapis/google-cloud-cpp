@@ -19,34 +19,12 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
-
-class DefaultInstanceAdminClient : public InstanceAdminClient {
- public:
-  DefaultInstanceAdminClient(std::string project, Options options)
-      : project_(std::move(project)),
-        connection_(bigtable_admin::MakeBigtableInstanceAdminConnection(
-            std::move(options))) {}
-
-  std::string const& project() const override { return project_; }
-
- private:
-  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection()
-      override {
-    return connection_;
-  }
-
-  std::string project_;
-  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
-};
-
-}  // anonymous namespace
 
 std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
     std::string project, Options options) {
   options = internal::DefaultInstanceAdminOptions(std::move(options));
-  return std::make_shared<DefaultInstanceAdminClient>(std::move(project),
-                                                      std::move(options));
+  return std::shared_ptr<InstanceAdminClient>(
+      new InstanceAdminClient(std::move(project), std::move(options)));
 }
 
 std::shared_ptr<InstanceAdminClient> CreateDefaultInstanceAdminClient(

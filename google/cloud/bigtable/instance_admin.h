@@ -153,7 +153,7 @@ class InstanceAdmin {
    */
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
-      : InstanceAdmin(client->connection(), client->project()) {}
+      : InstanceAdmin(client->connection_, client->project()) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
@@ -182,7 +182,7 @@ class InstanceAdmin {
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client,
                          Policies&&... policies)
-      : connection_(client->connection()),
+      : connection_(client->connection_),
         project_id_(client->project()),
         project_name_(Project(project_id_).FullName()),
         retry_prototype_(
