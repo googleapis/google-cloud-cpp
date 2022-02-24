@@ -42,15 +42,6 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "bigtable_client",
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
-    tags = ["manual"],
-    deps = [
-        "//google/cloud/bigtable:bigtable_client_internal",
-    ],
-)
-
 load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hdrs", "google_cloud_cpp_bigtable_mocks_srcs")
 
 cc_library(

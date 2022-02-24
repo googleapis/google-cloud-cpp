@@ -33,15 +33,6 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "pubsub_client",
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
-    tags = ["manual"],
-    deps = [
-        "//google/cloud/pubsub:google_cloud_cpp_pubsub",
-    ],
-)
-
 load(":pubsub_client_testing.bzl", "pubsub_client_testing_hdrs", "pubsub_client_testing_srcs")
 
 cc_library(
@@ -72,15 +63,6 @@ cc_library(
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
-    ],
-)
-
-cc_library(
-    name = "pubsub_client_mocks",
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub_mocks instead.",
-    tags = ["manual"],
-    deps = [
-        "//google/cloud/pubsub:google_cloud_cpp_pubsub_mocks",
     ],
 )
 

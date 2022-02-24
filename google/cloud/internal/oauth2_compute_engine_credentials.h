@@ -28,6 +28,7 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /// A helper struct that contains service account metadata.
 struct ServiceAccountMetadata {
   std::set<std::string> scopes;

@@ -530,26 +530,26 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   // Please keep these in alphabetical order, that make it easier to verify we
   // have actually implemented all of them.
-  //@{
   /**
    * @name Get and set Bucket Access Control Lists.
    *
    * @see https://cloud.google.com/storage/docs/access-control/lists
    */
+  ///@{
   std::vector<BucketAccessControl> const& acl() const { return acl_; }
   std::vector<BucketAccessControl>& mutable_acl() { return acl_; }
   BucketMetadata& set_acl(std::vector<BucketAccessControl> acl) {
     acl_ = std::move(acl);
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Get and set billing configuration for the Bucket.
    *
    * @see https://cloud.google.com/storage/docs/requester-pays
    */
+  ///@{
   bool has_billing() const { return billing_.has_value(); }
   BucketBilling const& billing() const { return *billing_; }
   absl::optional<BucketBilling> const& billing_as_optional() const {
@@ -563,9 +563,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     billing_.reset();
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Get and set the default event based hold for the Bucket.
    *
@@ -583,14 +582,14 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * @see https://cloud.google.com/storage/docs/holding-objects for examples
    *    of using default event-based hold policy.
    */
+  ///@{
   bool default_event_based_hold() const { return default_event_based_hold_; }
   BucketMetadata& set_default_event_based_hold(bool v) {
     default_event_based_hold_ = v;
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Get and set CORS configuration for the Bucket.
    *
@@ -603,15 +602,15 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * @see https://cloud.google.com/storage/docs/configuring-cors for information
    *     on how to set and troubleshoot CORS settings.
    */
+  ///@{
   std::vector<CorsEntry> const& cors() const { return cors_; }
   std::vector<CorsEntry>& mutable_cors() { return cors_; }
   BucketMetadata& set_cors(std::vector<CorsEntry> cors) {
     cors_ = std::move(cors);
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Get and set the Default Object Access Control Lists.
    *
@@ -622,6 +621,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
    *     for information on how to set the default ACLs.
    */
+  ///@{
   std::vector<ObjectAccessControl> const& default_acl() const {
     return default_acl_;
   }
@@ -632,9 +632,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     default_acl_ = std::move(acl);
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Get and set the Default Object Access Control Lists.
    *
@@ -645,6 +644,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * https://cloud.google.com/storage/docs/encryption/customer-managed-keys
    *     for information on Customer-Managed Encryption Keys.
    */
+  ///@{
   bool has_encryption() const { return encryption_.has_value(); }
   BucketEncryption const& encryption() const { return *encryption_; }
   absl::optional<BucketEncryption> const& encryption_as_optional() const {
@@ -658,11 +658,10 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     encryption_.reset();
     return *this;
   }
-  //@}
+  ///@}
 
   using CommonMetadata::etag;
 
-  //@{
   /**
    * @name Get and set the IAM configuration.
    *
@@ -675,6 +674,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * [ubla-should-link]:
    * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
    */
+  ///@{
   bool has_iam_configuration() const { return iam_configuration_.has_value(); }
   BucketIamConfiguration const& iam_configuration() const {
     return *iam_configuration_;
@@ -691,19 +691,28 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     iam_configuration_.reset();
     return *this;
   }
-  //@}
+  ///@}
 
   using CommonMetadata::id;
   using CommonMetadata::kind;
 
-  //@{
   /// @name Accessors and modifiers to the `labels`.
+  ///@{
+
+  /// Returns `true` if the key is present in the Bucket's metadata labels.
   bool has_label(std::string const& key) const {
     return labels_.end() != labels_.find(key);
   }
+
+  /**
+   * Returns the value of @p key in the Bucket's metadata labels.
+   *
+   * It is undefined behavior to call `label(key)` if `has_label(key) == false`.
+   */
   std::string const& label(std::string const& key) const {
     return labels_.at(key);
   }
+
   /// Delete a label. This is a no-op if the key does not exist.
   BucketMetadata& delete_label(std::string const& key) {
     auto i = labels_.find(key);
@@ -725,17 +734,20 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     return *this;
   }
 
+  /// Returns all the Bucket's labels.
   std::map<std::string, std::string> const& labels() const { return labels_; }
-  std::map<std::string, std::string>& mutable_labels() { return labels_; }
-  //@}
 
-  //@{
+  /// Returns all the Bucket's labels.
+  std::map<std::string, std::string>& mutable_labels() { return labels_; }
+  ///@}
+
   /**
    * @name Accessors and modifiers for object lifecycle rules.
    *
    * @see https://cloud.google.com/storage/docs/managing-lifecycles for general
    *     information on object lifecycle rules.
    */
+  ///@{
   bool has_lifecycle() const { return lifecycle_.has_value(); }
   BucketLifecycle const& lifecycle() const { return *lifecycle_; }
   absl::optional<BucketLifecycle> const& lifecycle_as_optional() const {
@@ -749,7 +761,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     lifecycle_.reset();
     return *this;
   }
-  //@}
+  ///@}
 
   std::string const& location() const { return location_; }
   BucketMetadata& set_location(std::string v) {
@@ -759,8 +771,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   std::string const& location_type() const { return location_type_; }
 
-  //@{
   /// @name Accessors and modifiers for logging configuration.
+  ///@{
   bool has_logging() const { return logging_.has_value(); }
   BucketLogging const& logging() const { return *logging_; }
   absl::optional<BucketLogging> const& logging_as_optional() const {
@@ -774,15 +786,27 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     logging_.reset();
     return *this;
   }
-  //@}
+  ///@}
 
+  /// The bucket metageneration.
   using CommonMetadata::metageneration;
+
+  /// The bucket name.
   using CommonMetadata::name;
+
+  /**
+   * Changes the name.
+   *
+   * @note Bucket names can only be set during bucket creation. This modifier
+   *   is used to set the name when using a `BucketMetadata` object that changes
+   *   some other attribute.
+   */
   BucketMetadata& set_name(std::string v) {
     CommonMetadata::set_name(std::move(v));
     return *this;
   }
 
+  /// Returns true if the bucket `owner` attribute is present.
   using CommonMetadata::has_owner;
   using CommonMetadata::owner;
 
@@ -790,8 +814,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   using CommonMetadata::self_link;
 
-  //@{
   /// @name Accessors and modifiers for retention policy configuration.
+  ///@{
   bool has_retention_policy() const { return retention_policy_.has_value(); }
   BucketRetentionPolicy const& retention_policy() const {
     return *retention_policy_;
@@ -821,30 +845,34 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     retention_policy_.reset();
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
-  /**
-   * @name Accessors and modifiers for the Recovery Point Objective.
-   */
+  /// @name Accessors and modifiers for the Recovery Point Objective.
+  ///@{
   std::string const& rpo() const { return rpo_; }
   BucketMetadata& set_rpo(std::string v) {
     rpo_ = std::move(v);
     return *this;
   }
-  //@}
+  ///@}
 
+  /// @name Access and modify the default storage class attribute.
+  ///@{
   using CommonMetadata::storage_class;
   BucketMetadata& set_storage_class(std::string v) {
     CommonMetadata::set_storage_class(std::move(v));
     return *this;
   }
+  ///@}
 
+  /// Returns the bucket creation timestamp.
   using CommonMetadata::time_created;
+
+  /// Returns the timestamp for the last bucket metadata update.
   using CommonMetadata::updated;
 
-  //@{
   /// @name Accessors and modifiers for versioning configuration.
+  ///@{
   absl::optional<BucketVersioning> const& versioning() const {
     return versioning_;
   }
@@ -865,10 +893,10 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     versioning_ = std::move(v);
     return *this;
   }
-  //@}
+  ///@}
 
-  //@{
   /// @name Accessors and modifiers for website configuration.
+  ///@{
   bool has_website() const { return website_.has_value(); }
   BucketWebsite const& website() const { return *website_; }
   absl::optional<BucketWebsite> const& website_as_optional() const {
@@ -882,7 +910,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     website_.reset();
     return *this;
   }
-  //@}
+  ///@}
 
   friend bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs);
   friend bool operator!=(BucketMetadata const& lhs, BucketMetadata const& rhs) {

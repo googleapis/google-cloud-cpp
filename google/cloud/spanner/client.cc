@@ -97,65 +97,68 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
                                partition_options});
 }
 
-RowStream Client::ExecuteQuery(SqlStatement statement,
-                               QueryOptions const& opts) {
+RowStream Client::ExecuteQuery(SqlStatement statement, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteQuery({spanner_internal::MakeSingleUseTransaction(
                                   Transaction::ReadOnlyOptions()),
                               std::move(statement),
-                              OverlayQueryOptions(opts),
+                              QueryOptions(internal::CurrentOptions()),
                               {}});
 }
 
 RowStream Client::ExecuteQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement,
-    QueryOptions const& opts) {
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteQuery({spanner_internal::MakeSingleUseTransaction(
                                   std::move(transaction_options)),
                               std::move(statement),
-                              OverlayQueryOptions(opts),
+                              QueryOptions(internal::CurrentOptions()),
                               {}});
 }
 
 RowStream Client::ExecuteQuery(Transaction transaction, SqlStatement statement,
-                               QueryOptions const& opts) {
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteQuery({std::move(transaction),
                               std::move(statement),
-                              OverlayQueryOptions(opts),
+                              QueryOptions(internal::CurrentOptions()),
                               {}});
 }
 
-RowStream Client::ExecuteQuery(QueryPartition const& partition,
-                               QueryOptions const& opts) {
+RowStream Client::ExecuteQuery(QueryPartition const& partition, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   auto params = spanner_internal::MakeSqlParams(partition);
-  params.query_options = OverlayQueryOptions(opts);
+  params.query_options = QueryOptions(internal::CurrentOptions());
   return conn_->ExecuteQuery(std::move(params));
 }
 
-ProfileQueryResult Client::ProfileQuery(SqlStatement statement,
-                                        QueryOptions const& opts) {
+ProfileQueryResult Client::ProfileQuery(SqlStatement statement, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ProfileQuery({spanner_internal::MakeSingleUseTransaction(
                                   Transaction::ReadOnlyOptions()),
                               std::move(statement),
-                              OverlayQueryOptions(opts),
+                              QueryOptions(internal::CurrentOptions()),
                               {}});
 }
 
 ProfileQueryResult Client::ProfileQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement,
-    QueryOptions const& opts) {
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ProfileQuery({spanner_internal::MakeSingleUseTransaction(
                                   std::move(transaction_options)),
                               std::move(statement),
-                              OverlayQueryOptions(opts),
+                              QueryOptions(internal::CurrentOptions()),
                               {}});
 }
 
 ProfileQueryResult Client::ProfileQuery(Transaction transaction,
-                                        SqlStatement statement,
-                                        QueryOptions const& opts) {
+                                        SqlStatement statement, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ProfileQuery({std::move(transaction),
                               std::move(statement),
-                              OverlayQueryOptions(opts),
+                              QueryOptions(internal::CurrentOptions()),
                               {}});
 }
 
@@ -167,29 +170,31 @@ StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
 }
 
 StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,
-                                       SqlStatement statement,
-                                       QueryOptions const& opts) {
+                                       SqlStatement statement, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteDml({std::move(transaction),
                             std::move(statement),
-                            OverlayQueryOptions(opts),
+                            QueryOptions(internal::CurrentOptions()),
                             {}});
 }
 
 StatusOr<ProfileDmlResult> Client::ProfileDml(Transaction transaction,
                                               SqlStatement statement,
-                                              QueryOptions const& opts) {
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ProfileDml({std::move(transaction),
                             std::move(statement),
-                            OverlayQueryOptions(opts),
+                            QueryOptions(internal::CurrentOptions()),
                             {}});
 }
 
 StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
                                            SqlStatement statement,
-                                           QueryOptions const& opts) {
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->AnalyzeSql({std::move(transaction),
                             std::move(statement),
-                            OverlayQueryOptions(opts),
+                            QueryOptions(internal::CurrentOptions()),
                             {}});
 }
 
@@ -316,28 +321,10 @@ Status Client::Rollback(Transaction transaction, Options opts) {
 }
 
 StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
-    SqlStatement statement, QueryOptions const& opts) {
+    SqlStatement statement, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecutePartitionedDml(
-      {std::move(statement), OverlayQueryOptions(opts)});
-}
-
-// Returns a QueryOptions that has each attribute set according to
-// the hierarchy that options specified at the function call (i.e.,
-// `preferred`) are preferred, followed by options set at the Client
-// level (i.e., `opts_.query_options()`), followed by some environment
-// variables. If none are set, the attribute's optional will be unset
-// and nothing will be included in the proto sent to Spanner, in which
-// case the Database default will be used.
-QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
-  // GetEnv() is not super fast, so we look it up once and cache it.
-  static auto const* const kOptimizerVersionEnvValue =
-      new auto(google::cloud::internal::GetEnv("SPANNER_OPTIMIZER_VERSION"));
-  static auto const* const kOptimizerStatisticsPackageEnvValue = new auto(
-      google::cloud::internal::GetEnv("SPANNER_OPTIMIZER_STATISTICS_PACKAGE"));
-
-  return spanner_internal::OverlayQueryOptions(
-      preferred, query_opts_, *kOptimizerVersionEnvValue,
-      *kOptimizerStatisticsPackageEnvValue);
+      {std::move(statement), QueryOptions(internal::CurrentOptions())});
 }
 
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
@@ -384,57 +371,5 @@ std::shared_ptr<Connection> MakeConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
-
-namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-// Returns a QueryOptions that has each attribute set according to the
-// preferred/fallback/environment hierarchy.
-spanner::QueryOptions OverlayQueryOptions(
-    spanner::QueryOptions const& preferred,
-    spanner::QueryOptions const& fallback,
-    absl::optional<std::string> const& optimizer_version_env,
-    absl::optional<std::string> const& optimizer_statistics_package_env) {
-  spanner::QueryOptions opts;
-
-  // Choose the `optimizer_version` option.
-  if (preferred.optimizer_version().has_value()) {
-    opts.set_optimizer_version(preferred.optimizer_version());
-  } else if (fallback.optimizer_version().has_value()) {
-    opts.set_optimizer_version(fallback.optimizer_version());
-  } else if (optimizer_version_env.has_value()) {
-    opts.set_optimizer_version(*optimizer_version_env);
-  }
-
-  // Choose the `optimizer_statistics_package` option.
-  if (preferred.optimizer_statistics_package().has_value()) {
-    opts.set_optimizer_statistics_package(
-        preferred.optimizer_statistics_package());
-  } else if (fallback.optimizer_statistics_package().has_value()) {
-    opts.set_optimizer_statistics_package(
-        fallback.optimizer_statistics_package());
-  } else if (optimizer_statistics_package_env.has_value()) {
-    opts.set_optimizer_statistics_package(*optimizer_statistics_package_env);
-  }
-
-  // Choose the `request_priority` option.
-  if (preferred.request_priority().has_value()) {
-    opts.set_request_priority(preferred.request_priority());
-  } else if (fallback.request_priority().has_value()) {
-    opts.set_request_priority(fallback.request_priority());
-  }
-
-  // Choose the `request_tag` option.
-  if (preferred.request_tag().has_value()) {
-    opts.set_request_tag(preferred.request_tag());
-  } else if (fallback.request_tag().has_value()) {
-    opts.set_request_tag(fallback.request_tag());
-  }
-
-  return opts;
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

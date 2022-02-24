@@ -17,7 +17,9 @@
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/client_options.h"
+#include "google/cloud/bigtable/internal/admin_client_params.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/options.h"
 #include <memory>
 #include <string>
 
@@ -37,22 +39,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     configure `bigtable_admin::BigtableTableAdminClient`, instead of using
  *     this class to configure `bigtable::TableAdmin`.
  */
-class AdminClient {
+class AdminClient final {
  public:
-  virtual ~AdminClient() = default;
-
   /// The project id that this AdminClient works on.
-  virtual std::string const& project() const = 0;
+  std::string const& project() { return project_; };
 
  private:
   friend class TableAdmin;
+  friend std::shared_ptr<AdminClient> MakeAdminClient(std::string, Options);
 
-  virtual std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
-  connection() = 0;
+  AdminClient(std::string project, bigtable_internal::AdminClientParams params)
+      : project_(std::move(project)),
+        cq_(params.options.get<GrpcCompletionQueueOption>()),
+        background_threads_(std::move(params.background_threads)),
+        connection_(bigtable_admin::MakeBigtableTableAdminConnection(
+            std::move(params.options))) {}
 
-  virtual CompletionQueue cq() = 0;
-
-  virtual std::shared_ptr<BackgroundThreads> background_threads() = 0;
+  std::string project_;
+  CompletionQueue cq_;
+  std::shared_ptr<BackgroundThreads> background_threads_;
+  std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> connection_;
 };
 
 /// Create a new table admin client configured via @p options.

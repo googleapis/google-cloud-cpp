@@ -38,7 +38,6 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/non_constructible.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -102,18 +101,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @par Query Options
  *
  * Most operations that take an `SqlStatement` may also be modified with
- * `QueryOptions`. These options can be set at various levels, with more
+ * query `Options`. These options can be set at various levels, with more
  * specific levels taking precedence over broader ones. For example,
- * `QueryOptions` that are passed directly to `Client::ExecuteQuery()` will
+ * `Options` that are passed directly to `Client::ExecuteQuery()` will
  * take precedence over the `Client`-level defaults (if any), which will
  * themselves take precedence over any environment variables. The following
  * table shows the environment variables that may optionally be set and the
- * `QueryOptions` setting that they affect.
+ * query `Options` setting that they affect.
  *
- * Environment Variable                   | QueryOptions setting
+ * Environment Variable                   | Options setting
  * -------------------------------------- | --------------------
- * `SPANNER_OPTIMIZER_VERSION`            | `QueryOptions::optimizer_version()`
- * `SPANNER_OPTIMIZER_STATISTICS_PACKAGE` | `QueryOptions::optimizer_statistics_package()`
+ * `SPANNER_OPTIMIZER_VERSION`            | `QueryOptimizerVersionOption`
+ * `SPANNER_OPTIMIZER_STATISTICS_PACKAGE` | `QueryOptimizerStatisticsPackageOption`
  *
  * @see https://cloud.google.com/spanner/docs/reference/rest/v1/QueryOptions
  * @see http://cloud/spanner/docs/query-optimizer/manage-query-optimizer
@@ -137,14 +136,14 @@ class Client {
             std::move(opts),
             spanner_internal::DefaultOptions(conn_->options()))) {}
 
-  //@{
-  /// Backwards compatibility for `ClientOptions`.
+  /// @name Backwards compatibility for `ClientOptions`.
+  ///@{
   explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
       : Client(std::move(conn), Options(opts)) {}
   explicit Client(std::shared_ptr<Connection> conn,
                   std::initializer_list<internal::NonConstructible>)
       : Client(std::move(conn)) {}
-  //@}
+  ///@}
 
   /// No default construction.
   Client() = delete;
@@ -294,31 +293,31 @@ class Client {
    * @snippet samples.cc spanner-query-data-select-star
    *
    * @param statement The SQL statement to execute.
-   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    */
-  RowStream ExecuteQuery(SqlStatement statement, QueryOptions const& opts = {});
+  RowStream ExecuteQuery(SqlStatement statement, Options opts = {});
 
   /**
-   * @copydoc ExecuteQuery(SqlStatement, QueryOptions const&)
+   * @copydoc ExecuteQuery(SqlStatement, Options)
    *
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
   RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
-                         SqlStatement statement, QueryOptions const& opts = {});
+                         SqlStatement statement, Options opts = {});
 
   /**
-   * @copydoc ExecuteQuery(SqlStatement, QueryOptions const&)
+   * @copydoc ExecuteQuery(SqlStatement, Options)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
   RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
-                         QueryOptions const& opts = {});
+                         Options opts = {});
 
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
@@ -326,7 +325,7 @@ class Client {
    * documentation of that method for full details.
    *
    * @param partition A `QueryPartition`, obtained by calling `PartitionQuery`.
-   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
@@ -336,9 +335,46 @@ class Client {
    * @par Example
    * @snippet samples.cc execute-sql-query-partition
    */
-  RowStream ExecuteQuery(QueryPartition const& partition,
-                         QueryOptions const& opts = {});
+  RowStream ExecuteQuery(QueryPartition const& partition, Options opts = {});
   //@}
+
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
+  RowStream ExecuteQuery(SqlStatement statement, QueryOptions const& opts) {
+    return ExecuteQuery(std::move(statement), Options(opts));
+  }
+  RowStream ExecuteQuery(SqlStatement statement,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(std::move(statement));
+  }
+  RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
+                         SqlStatement statement, QueryOptions const& opts) {
+    return ExecuteQuery(std::move(transaction_options), std::move(statement),
+                        Options(opts));
+  }
+  RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
+                         SqlStatement statement,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(std::move(transaction_options), std::move(statement));
+  }
+  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
+                         QueryOptions const& opts) {
+    return ExecuteQuery(std::move(transaction), std::move(statement),
+                        Options(opts));
+  }
+  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(std::move(transaction), std::move(statement));
+  }
+  RowStream ExecuteQuery(QueryPartition const& partition,
+                         QueryOptions const& opts) {
+    return ExecuteQuery(partition, Options(opts));
+  }
+  RowStream ExecuteQuery(QueryPartition const& partition,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(partition);
+  }
+  ///@}
 
   //@{
   /**
@@ -359,7 +395,7 @@ class Client {
    *     statistics and `ExecutionPlan` are available.
    *
    * @param statement The SQL statement to execute.
-   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
@@ -369,28 +405,61 @@ class Client {
    * @par Example
    * @snippet samples.cc profile-query
    */
-  ProfileQueryResult ProfileQuery(SqlStatement statement,
-                                  QueryOptions const& opts = {});
+  ProfileQueryResult ProfileQuery(SqlStatement statement, Options opts = {});
 
   /**
-   * @copydoc ProfileQuery(SqlStatement, QueryOptions const&)
+   * @copydoc ProfileQuery(SqlStatement, Options)
    *
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
   ProfileQueryResult ProfileQuery(
       Transaction::SingleUseOptions transaction_options, SqlStatement statement,
-      QueryOptions const& opts = {});
+      Options opts = {});
 
   /**
-   * @copydoc ProfileQuery(SqlStatement, QueryOptions const&)
+   * @copydoc ProfileQuery(SqlStatement, Options)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
   ProfileQueryResult ProfileQuery(Transaction transaction,
-                                  SqlStatement statement,
-                                  QueryOptions const& opts = {});
+                                  SqlStatement statement, Options opts = {});
   //@}
+
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
+  ProfileQueryResult ProfileQuery(SqlStatement statement,
+                                  QueryOptions const& opts) {
+    return ProfileQuery(std::move(statement), Options(opts));
+  }
+  ProfileQueryResult ProfileQuery(
+      SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileQuery(std::move(statement));
+  }
+  ProfileQueryResult ProfileQuery(
+      Transaction::SingleUseOptions transaction_options, SqlStatement statement,
+      QueryOptions const& opts) {
+    return ProfileQuery(std::move(transaction_options), std::move(statement),
+                        Options(opts));
+  }
+  ProfileQueryResult ProfileQuery(
+      Transaction::SingleUseOptions transaction_options, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileQuery(std::move(transaction_options), std::move(statement));
+  }
+  ProfileQueryResult ProfileQuery(Transaction transaction,
+                                  SqlStatement statement,
+                                  QueryOptions const& opts) {
+    return ProfileQuery(std::move(transaction), std::move(statement),
+                        Options(opts));
+  }
+  ProfileQueryResult ProfileQuery(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileQuery(std::move(transaction), std::move(statement));
+  }
+  ///@}
 
   /**
    * Creates a set of partitions that can be used to execute a query
@@ -427,7 +496,7 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
-   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
@@ -435,8 +504,22 @@ class Client {
    * @snippet samples.cc execute-dml
    */
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
+                                 SqlStatement statement, Options opts = {});
+
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
+  StatusOr<DmlResult> ExecuteDml(Transaction transaction,
                                  SqlStatement statement,
-                                 QueryOptions const& opts = {});
+                                 QueryOptions const& opts) {
+    return ExecuteDml(std::move(transaction), std::move(statement),
+                      Options(opts));
+  }
+  StatusOr<DmlResult> ExecuteDml(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ExecuteDml(std::move(transaction), std::move(statement));
+  }
+  ///@}
 
   /**
    * Profiles a SQL DML statement.
@@ -451,7 +534,7 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
-   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
@@ -460,7 +543,22 @@ class Client {
    */
   StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
                                         SqlStatement statement,
-                                        QueryOptions const& opts = {});
+                                        Options opts = {});
+
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
+  StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
+                                        SqlStatement statement,
+                                        QueryOptions const& opts) {
+    return ProfileDml(std::move(transaction), std::move(statement),
+                      Options(opts));
+  }
+  StatusOr<ProfileDmlResult> ProfileDml(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileDml(std::move(transaction), std::move(statement));
+  }
+  ///@}
 
   /**
    * Analyzes the execution plan of a SQL statement.
@@ -475,7 +573,7 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
-   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
@@ -483,8 +581,22 @@ class Client {
    * @snippet samples.cc analyze-query
    */
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
+                                     SqlStatement statement, Options opts = {});
+
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
+  StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
                                      SqlStatement statement,
-                                     QueryOptions const& opts = {});
+                                     QueryOptions const& opts) {
+    return AnalyzeSql(std::move(transaction), std::move(statement),
+                      Options(opts));
+  }
+  StatusOr<ExecutionPlan> AnalyzeSql(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return AnalyzeSql(std::move(transaction), std::move(statement));
+  }
+  ///@}
 
   /**
    * Executes a batch of SQL DML statements. This method allows many statements
@@ -567,8 +679,8 @@ class Client {
       std::unique_ptr<TransactionRerunPolicy> rerun_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       std::unique_ptr<TransactionRerunPolicy> rerun_policy,
@@ -584,7 +696,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy));
   }
-  //@}
+  ///@}
 
   /**
    * Commits a read-write transaction.
@@ -601,8 +713,8 @@ class Client {
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       CommitOptions const& commit_options) {
@@ -613,7 +725,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return Commit(mutator);
   }
-  //@}
+  ///@}
 
   /**
    * Commits the @p mutations, using the @p options, atomically in order.
@@ -626,8 +738,8 @@ class Client {
    */
   StatusOr<CommitResult> Commit(Mutations mutations, Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(Mutations mutations,
                                 CommitOptions const& commit_options) {
     return Commit(std::move(mutations), Options(commit_options));
@@ -636,7 +748,7 @@ class Client {
       Mutations mutations, std::initializer_list<internal::NonConstructible>) {
     return Commit(std::move(mutations));
   }
-  //@}
+  ///@}
 
   /**
    * Commits a read-write transaction.
@@ -666,8 +778,8 @@ class Client {
   StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
                                 Options opts = {});
 
-  //@{
-  /// Backwards compatibility for `CommitOptions`.
+  /// @name Backwards compatibility for `CommitOptions`.
+  ///@{
   StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
                                 CommitOptions const& commit_options) {
     return Commit(std::move(transaction), std::move(mutations),
@@ -678,7 +790,7 @@ class Client {
       std::initializer_list<internal::NonConstructible>) {
     return Commit(std::move(transaction), std::move(mutations));
   }
-  //@}
+  ///@}
 
   /**
    * Rolls back a read-write transaction, releasing any locks it holds.
@@ -703,7 +815,7 @@ class Client {
    * @param statement the SQL statement to execute. Please see the
    *     [spanner documentation][dml-partitioned] for the restrictions on the
    *     SQL statements supported by this function.
-   * @param opts (optional) The `QueryOptions` to use for this call. If given,
+   * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
@@ -718,15 +830,25 @@ class Client {
    * https://cloud.google.com/spanner/docs/transactions#partitioned_dml_transactions
    * [dml-partitioned]: https://cloud.google.com/spanner/docs/dml-partitioned
    */
+  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement,
+                                                       Options opts = {});
+
+  /// @name Backwards compatibility for `QueryOptions`.
+  ///@{
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
-      SqlStatement statement, QueryOptions const& opts = {});
+      SqlStatement statement, QueryOptions const& opts) {
+    return ExecutePartitionedDml(std::move(statement), Options(opts));
+  }
+  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
+      SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ExecutePartitionedDml(std::move(statement));
+  }
+  ///@}
 
  private:
-  QueryOptions OverlayQueryOptions(QueryOptions const&);
-
   std::shared_ptr<Connection> conn_;
   Options opts_;
-  QueryOptions query_opts_{opts_};
 };
 
 /**
@@ -801,18 +923,6 @@ std::shared_ptr<Connection> MakeConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
-
-namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-spanner::QueryOptions OverlayQueryOptions(
-    spanner::QueryOptions const& preferred,
-    spanner::QueryOptions const& fallback,
-    absl::optional<std::string> const& optimizer_version_env,
-    absl::optional<std::string> const& optimizer_statistics_package_env);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

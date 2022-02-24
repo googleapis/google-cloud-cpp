@@ -150,9 +150,9 @@ class TableAdmin {
    */
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id)
-      : connection_(client->connection()),
-        cq_(client->cq()),
-        background_threads_(client->background_threads()),
+      : connection_(client->connection_),
+        cq_(client->cq_),
+        background_threads_(client->background_threads_),
         project_id_(client->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
@@ -195,9 +195,9 @@ class TableAdmin {
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   TableAdmin(std::shared_ptr<AdminClient> client, std::string instance_id,
              Policies&&... policies)
-      : connection_(client->connection()),
-        cq_(client->cq()),
-        background_threads_(client->background_threads()),
+      : connection_(client->connection_),
+        cq_(client->cq_),
+        background_threads_(client->background_threads_),
         project_id_(client->project()),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),

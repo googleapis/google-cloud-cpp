@@ -30,9 +30,6 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CurlHandleFactory;
-class CurlImpl;
-
 // Provides factory function to create a CurlRestClient that does not manage a
 // pool of connections.
 std::unique_ptr<RestClient> GetDefaultRestClient(std::string endpoint_address,
@@ -65,54 +62,6 @@ class RestClient {
   virtual StatusOr<std::unique_ptr<RestResponse>> Put(
       RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;
-};
-
-// RestClient implementation using libcurl.
-class CurlRestClient : public RestClient {
- public:
-  static std::string HostHeader(Options const& options,
-                                std::string const& default_endpoint);
-  ~CurlRestClient() override = default;
-
-  CurlRestClient(CurlRestClient const&) = delete;
-  CurlRestClient(CurlRestClient&&) = default;
-  CurlRestClient& operator=(CurlRestClient const&) = delete;
-  CurlRestClient& operator=(CurlRestClient&&) = default;
-
-  StatusOr<std::unique_ptr<RestResponse>> Delete(
-      RestRequest const& request) override;
-  StatusOr<std::unique_ptr<RestResponse>> Get(
-      RestRequest const& request) override;
-  StatusOr<std::unique_ptr<RestResponse>> Patch(
-      RestRequest const& request,
-      std::vector<absl::Span<char const>> const& payload) override;
-  StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest const& request,
-      std::vector<absl::Span<char const>> const& payload) override;
-  StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest request,
-      std::vector<std::pair<std::string, std::string>> const& form_data)
-      override;
-  StatusOr<std::unique_ptr<RestResponse>> Put(
-      RestRequest const& request,
-      std::vector<absl::Span<char const>> const& payload) override;
-
- private:
-  friend std::unique_ptr<RestClient> GetDefaultRestClient(
-      std::string endpoint_address, Options options);
-
-  friend class std::unique_ptr<RestClient> GetPooledRestClient(
-      std::string endpoint_address, Options options);
-
-  CurlRestClient(std::string endpoint_address,
-                 std::shared_ptr<CurlHandleFactory> factory, Options options);
-  StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(
-      RestRequest const& request);
-
-  std::string endpoint_address_;
-  std::shared_ptr<CurlHandleFactory> handle_factory_;
-  std::string x_goog_api_client_header_;
-  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

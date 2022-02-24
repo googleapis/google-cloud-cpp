@@ -110,6 +110,23 @@ TEST(QueryOptionsTest, FromOptionsFull) {
   EXPECT_EQ(*query_opts.request_tag(), "tag");
 }
 
+TEST(QueryOptionsTest, OptionsRoundTrip) {
+  auto const query_opts = QueryOptions{}
+                              .set_optimizer_version("1")
+                              .set_optimizer_statistics_package("latest")
+                              .set_request_priority(RequestPriority::kHigh)
+                              .set_request_tag("tag");
+  QueryOptions const rt_query_opts(Options{query_opts});
+  ASSERT_TRUE(rt_query_opts.optimizer_version());
+  EXPECT_EQ(*rt_query_opts.optimizer_version(), "1");
+  ASSERT_TRUE(rt_query_opts.optimizer_statistics_package());
+  EXPECT_EQ(*rt_query_opts.optimizer_statistics_package(), "latest");
+  ASSERT_TRUE(rt_query_opts.request_priority());
+  EXPECT_EQ(*rt_query_opts.request_priority(), RequestPriority::kHigh);
+  ASSERT_TRUE(rt_query_opts.request_tag());
+  EXPECT_EQ(*rt_query_opts.request_tag(), "tag");
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner

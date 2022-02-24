@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/http_payload.h"
+#include "google/cloud/internal/curl_http_payload.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

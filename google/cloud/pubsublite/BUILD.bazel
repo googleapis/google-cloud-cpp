@@ -44,6 +44,20 @@ cc_library(
     ],
 )
 
+load(":pubsublite_testing.bzl", "pubsublite_testing_hdrs", "pubsublite_testing_srcs")
+
+cc_library(
+    name = "pubsublite_testing",
+    srcs = pubsublite_testing_srcs,
+    hdrs = pubsublite_testing_hdrs,
+    visibility = ["//:__pkg__"],
+    deps = [
+        ":google_cloud_cpp_pubsublite",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+    ],
+)
+
 load(":pubsublite_unit_tests.bzl", "pubsublite_unit_tests")
 
 [
@@ -53,6 +67,7 @@ load(":pubsublite_unit_tests.bzl", "pubsublite_unit_tests")
         deps = [
             ":google_cloud_cpp_pubsublite",
             ":google_cloud_cpp_pubsublite_mocks",
+            ":pubsublite_testing",
             "//google/cloud:google_cloud_cpp_common",
             "//google/cloud/testing_util:google_cloud_cpp_testing",
             "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

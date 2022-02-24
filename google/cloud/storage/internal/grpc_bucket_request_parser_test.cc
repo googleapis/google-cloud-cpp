@@ -298,6 +298,82 @@ TEST(GrpcBucketRequestParser, NativeIamPolicy) {
   ASSERT_THAT(actual.bindings()[0].condition(), match_expr(b0.condition()));
 }
 
+TEST(GrpcBucketRequestParser, SetNativeBucketIamPolicyRequest) {
+  google::iam::v1::SetIamPolicyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        resource: "projects/_/buckets/test-bucket"
+        policy {
+          version: 3
+          bindings {
+            role: "role/test.only"
+            members: "test-1"
+            members: "test-2"
+            condition {
+              expression: "test-expression"
+              title: "test-title"
+              description: "test-description"
+              location: "test-location"
+            }
+          }
+          bindings { role: "role/another.test.only" members: "test-3" }
+          etag: "test-etag"
+        }
+      )pb",
+      &expected));
+
+  NativeIamBinding b0(
+      "role/test.only", {"test-1", "test-2"},
+      {"test-expression", "test-title", "test-description", "test-location"});
+  NativeIamBinding b1("role/another.test.only", {"test-3"});
+  NativeIamPolicy policy({b0, b1}, "test-etag", 3);
+
+  SetNativeBucketIamPolicyRequest req("test-bucket", policy);
+  req.set_multiple_options(UserProject("test-user-project"),
+                           QuotaUser("test-quota-user"),
+                           UserIp("test-user-ip"));
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+// TODO(#5929) - remove this test and `.inc` includes
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
+TEST(GrpcBucketRequestParser, SetBucketIamPolicyRequest) {
+  google::iam::v1::SetIamPolicyRequest expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        resource: "projects/_/buckets/test-bucket"
+        policy {
+          version: 1
+          bindings { role: "role/another.test.only" members: "test-3" }
+          bindings {
+            role: "role/test.only"
+            members: "test-1"
+            members: "test-2"
+          }
+          etag: "test-etag"
+        }
+      )pb",
+      &expected));
+
+  IamBinding b0("role/test.only", {"test-1", "test-2"});
+  IamBinding b1("role/another.test.only", {"test-3"});
+  // google::cloud::IamPolicy sorts the bindings alphabetically. This test is
+  // a little too aware of this fact. Since this feature is deprecated and
+  // (probably) going away soon, we avoid a more sophisticated test.
+  IamPolicy policy{1, IamBindings({b0, b1}), "test-etag"};
+
+  SetBucketIamPolicyRequest req("test-bucket", policy);
+  req.set_multiple_options(UserProject("test-user-project"),
+                           QuotaUser("test-quota-user"),
+                           UserIp("test-user-ip"));
+  auto const actual = GrpcBucketRequestParser::ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+#include "google/cloud/internal/diagnostics_pop.inc"
+
 TEST(GrpcBucketRequestParser, TestBucketIamPermissionsRequest) {
   google::iam::v1::TestIamPermissionsRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(

@@ -22,9 +22,10 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-template <class T>
+template <typename T>
 struct ChainFutureImpl {
-  template <class U>
+  template <typename U>
+  // Note: this drops any exceptions contained in `future<U>`
   future<T> operator()(future<U>) {
     return std::move(f);
   }
@@ -32,7 +33,18 @@ struct ChainFutureImpl {
   future<T> f;
 };
 
-template <class T>
+/**
+ * A helper to capture-by-move futures into a second future continuation.
+ *
+ * Given two futures `future<U> r` and `future<T> f` we often want to write:
+ * @code
+ * f.then([tmp = std::move(f)](future<T>) mutable { return std::move(tmp); }
+ * @encode
+ *
+ * Unfortunately we cannot, as the project needs to support C++11. This is
+ * a helper to avoid repetition of this pattern.
+ */
+template <typename T>
 ChainFutureImpl<T> ChainFuture(future<T> f) {
   return ChainFutureImpl<T>{std::move(f)};
 }

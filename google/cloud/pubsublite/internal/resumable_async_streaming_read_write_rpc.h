@@ -52,10 +52,50 @@ using StreamInitializer = std::function<future<StatusOr<
     std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>(
     std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>)>;
 
-using AsyncSleeper = std::function<future<void>(std::chrono::duration<double>)>;
+using AsyncSleeper = std::function<future<void>(std::chrono::milliseconds)>;
 
 using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 
+/**
+ * Defines the interface for resumable bidirectional streaming RPCs.
+ *
+ * Concrete instances of this class resume interrupted streaming RPCs after
+ * transient failures. On such failures the concrete implementations would
+ * typically create a new streaming RPC and call an asynchronous function to
+ * to initialize the stream.
+ *
+ * While resuming a streaming RPC is automatic, callers of `Read` and `Write`
+ * are notified when a new stream is created, as they may need to take action
+ * when starting on a new stream.
+ *
+ * Example (sort of unrealistic) usage:
+ * @code
+ * using Underlying = std::unique_ptr<StreamingReadWriteRpc<Req, Res>>;
+ *
+ * // Initializes a non-resumable stream, potentially making many
+ * // chained asynchronous calls.
+ * future<StatusOr<Underlying>> Initialize(Underlying to_init);
+ *
+ * Status Example() {
+ *   std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<Req, Res>> stream =
+ *      MakeResumableStream(&Initialize);
+ *   future<Status> final_status = stream->Start(); // 1
+ *   while (!final_status.is_ready()) {
+ *     if (!stream->Write(GetMessage1()).get()) continue;
+ *     if (!stream->Write(GetMessage2()).get()) continue;
+ *     auto response_1 = stream->Read().get();
+ *     if (!response_1.has_value()) continue;
+ *     ProcessResponse(*response_1);
+ *     auto response_2 = stream->Read().get();
+ *     if (!response_2.has_value()) continue;
+ *     ProcessResponse(*response_2);
+ *     resumable_stream.Shutdown().get();
+ *     return Status();
+ *   }
+ *   return final_status.get();
+ * }
+ * @endcode
+ */
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc {
  public:
@@ -64,11 +104,15 @@ class ResumableAsyncStreamingReadWriteRpc {
   /**
    * Start the streaming RPC.
    *
-   * The returned future will be returned with a status
-   * when this stream will not be resumed or when the user calls `Finish()`. In
-   * the case that there are no errors from `Start`ing the stream and on the
-   * latest `Read` and `Write` calls if present, this will return an ok
-   * `Status`.
+   * The future returned by this function is satisfied when the stream
+   * is successfully shut down (in which case in contains an ok status),
+   * or when the retry policies to resume the stream are exhausted. The
+   * latter includes the case where the stream fails with a permanent
+   * error.
+   *
+   * While the stream is usable immediately after this function returns,
+   * any `Read()` or `Write()` calls will fail until the stream is initialized
+   * successfully.
    */
   virtual future<Status> Start() = 0;
 
@@ -85,9 +129,15 @@ class ResumableAsyncStreamingReadWriteRpc {
    * for a single `Write()` request.  Each service and RPC specifies how to
    * discover if more responses will be forthcoming.
    *
-   * If the `optional<>` is engaged, a successful `ResponseType` is
-   * returned. If it is not engaged, the call failed, but the user may call
-   * `Read` again unless `Start` had finished with a permanent error `Status`.
+   * The future returned by `Read` will be satisfied when the `Read` call on the
+   * underlying stream successfully completes or when the internal retry loop
+   * (un)successfully completes if the underlying call to `Read` fails.
+   *
+   * If the future is satisfied with an engaged `optional<>`, it holds a value
+   * read from the current underlying GRPC stream. If the future is satisfied
+   * with `nullopt`, the underlying stream may have changed or a permanent error
+   * has happened. If the `Start` future is not satisfied, the user may call
+   * `Read` again to read from a new underlying stream.
    */
   virtual future<absl::optional<ResponseType>> Read() = 0;
 
@@ -103,19 +153,32 @@ class ResumableAsyncStreamingReadWriteRpc {
    * multiple `Write()` calls before performing or at least receiving a `Read()`
    * response.
    *
-   * If `true` is returned, the call was successful. If `false` is returned,
-   * the call failed, but the user may call `Write` again unless `Start` had
-   * finished with a permanent error `Status`.
+   * The future returned by `Write` will be satisfied when the `Write` call on
+   * the underlying stream successfully completes or when the internal retry
+   * loop (un)successfully completes if the underlying call to `Write` fails.
+   *
+   * If the future is satisfied with `true`, a successful `Write` call was made
+   * to the current underlying GRPC stream. If the future is satisfied with
+   * `false`, the underlying stream may have changed or a permanent error has
+   * happened. If the `Start` future is not satisfied, the user may call `Write`
+   * again to write the value to a new underlying stream.
    */
   virtual future<bool> Write(RequestType const&, grpc::WriteOptions) = 0;
 
   /**
    * Finishes the streaming RPC.
    *
-   * This will cause any outstanding `Read` or `Write` to fail.
-   *
+   * This will cause any outstanding `Read` or `Write` to fail. This may be
+   * called while a `Read` or `Write` of an object of this class is outstanding.
+   * Internally, the class will manage waiting on `Read` and `Write` calls on a
+   * gRPC stream before calling `Finish` on its underlying stream as per
+   * `google::cloud::AsyncStreamingReadWriteRpc`. If the class is currently in a
+   * retry loop, this will terminate the retry loop and then satisfy the
+   * returned future. If the class has a present internal outstanding `Read` or
+   * `Write`, this call will satisfy the returned future only after the internal
+   * `Read` and/or `Write` finish.
    */
-  virtual future<void> Finish() = 0;
+  virtual future<void> Shutdown() = 0;
 };
 
 template <typename RequestType, typename ResponseType>
@@ -134,7 +197,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         initializer_(std::move(initializer)) {}
 
   ~ResumableAsyncStreamingReadWriteRpcImpl() override {
-    future<void> shutdown = Finish();
+    future<void> shutdown = Shutdown();
     if (!shutdown.is_ready()) {
       GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
                           "goes out of scope.";
@@ -216,7 +279,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     });
   }
 
-  future<void> Finish() override {
+  future<void> Shutdown() override {
     promise<void> root_promise;
     future<void> root_future = root_promise.get_future();
     {

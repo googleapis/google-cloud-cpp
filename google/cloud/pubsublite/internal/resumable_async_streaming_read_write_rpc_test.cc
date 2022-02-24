@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
-#include "google/cloud/pubsublite/internal/mock_async_reader_writer.h"
-#include "google/cloud/pubsublite/internal/mock_backoff_policy.h"
-#include "google/cloud/pubsublite/internal/mock_retry_policy.h"
+#include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
+#include "google/cloud/pubsublite/testing/mock_backoff_policy.h"
+#include "google/cloud/pubsublite/testing/mock_retry_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -40,8 +40,8 @@ using ::testing::MockFunction;
 using ::testing::Return;
 using ::testing::StrictMock;
 
-using ::google::cloud::pubsublite_internal::MockBackoffPolicy;
-using ::google::cloud::pubsublite_internal::MockRetryPolicy;
+using ::google::cloud::pubsublite_testing::MockBackoffPolicy;
+using ::google::cloud::pubsublite_testing::MockRetryPolicy;
 
 using ms = std::chrono::milliseconds;
 const unsigned int kFutureWaitMs = 100;
@@ -65,8 +65,8 @@ bool operator==(FakeResponse const& lhs, FakeResponse const& rhs) {
 }
 
 using AsyncReaderWriter =
-    ::google::cloud::pubsublite_internal::MockAsyncReaderWriter<FakeRequest,
-                                                                FakeResponse>;
+    ::google::cloud::pubsublite_testing::MockAsyncReaderWriter<FakeRequest,
+                                                               FakeResponse>;
 
 using AsyncReadWriteStreamReturnType =
     std::unique_ptr<AsyncStreamingReadWriteRpc<FakeRequest, FakeResponse>>;
@@ -174,8 +174,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
 
   EXPECT_CALL(stream2_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
   EXPECT_THAT(status_future.get(), IsOk());
 }
 
@@ -223,8 +223,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(status_future.get(), kFailStatus);
   EXPECT_EQ(read.get(), absl::nullopt);
   EXPECT_EQ(write.get(), false);
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
@@ -272,8 +272,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(status_future.get(), kFailStatus);
   EXPECT_EQ(read.get(), absl::nullopt);
   EXPECT_EQ(write.get(), false);
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
 }
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
@@ -335,8 +335,8 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
 
   EXPECT_CALL(stream2_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
   EXPECT_THAT(status_future.get(), IsOk());
 }
 
@@ -393,8 +393,8 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
 
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -410,8 +410,8 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
 
   ASSERT_FALSE(
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message())
@@ -443,7 +443,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
-  auto finish_future = stream_->Finish();
+  auto finish_future = stream_->Shutdown();
 
   write_promise.set_value(true);
 
@@ -480,7 +480,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
           Return(ByMove(absl::make_unique<StrictMock<MockBackoffPolicy>>())));
   write_promise.set_value(false);
 
-  auto finish = stream_->Finish();
+  auto shutdown = stream_->Shutdown();
 
   // write shouldn't finish until retry
   // loop done
@@ -492,7 +492,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   finish_promise.set_value(kFailStatus);
   ASSERT_FALSE(write.get());
-  finish.get();
+  shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -531,7 +531,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   write_promise.set_value(false);
 
-  auto finish = stream_->Finish();
+  auto shutdown = stream_->Shutdown();
 
   // write shouldn't finish until retry
   // loop finish after sleep
@@ -542,7 +542,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   sleep_promise.set_value();
   ASSERT_FALSE(write.get());
-  finish.get();
+  shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -576,8 +576,8 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   write_promise.set_value(false);
 
   EXPECT_EQ(start.get(), kFailStatus);
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
 }
 
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
@@ -599,13 +599,13 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // error from retry loop or `Finish1
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
-  auto finish = stream_->Finish();
+  auto shutdown = stream_->Shutdown();
 
   // finish shouldn't finish until
   // write finishes
-  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   write_promise.set_value(true);
-  finish.get();
+  shutdown.get();
   ASSERT_FALSE(write.get());
   EXPECT_THAT(start.get(), IsOk());
 }
@@ -654,7 +654,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   write_promise.set_value(false);
 
-  auto finish = stream_->Finish();
+  auto shutdown = stream_->Shutdown();
 
   // write shouldn't finish until retry
   // loop finish after sleep
@@ -666,7 +666,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   initializer_promise.set_value(
       StatusOr<AsyncReadWriteStreamReturnType>(kFailStatus));
   ASSERT_FALSE(write.get());
-  finish.get();
+  shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -738,8 +738,8 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -810,8 +810,8 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -883,8 +883,8 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
 
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -935,10 +935,10 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // loop done
   EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
-  auto finish = stream_->Finish();
+  auto shutdown = stream_->Shutdown();
   // finish shouldn't finish until
   // retry loop done
-  EXPECT_EQ(finish.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
+  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   // start shouldn't finish until permanent
   // error from retry loop or `Finish`
@@ -947,7 +947,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   start_promise.set_value(true);
-  finish.get();
+  shutdown.get();
   ASSERT_FALSE(write.get());
   EXPECT_THAT(start.get(), IsOk());
 }
@@ -1000,8 +1000,8 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 
   ASSERT_FALSE(read.get().has_value());
   EXPECT_EQ(start.get(), kFailStatus);
-  auto finish = stream_->Finish();
-  finish.get();
+  auto shutdown = stream_->Shutdown();
+  shutdown.get();
 }
 
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
@@ -1059,7 +1059,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   ASSERT_FALSE(write.get());
   ASSERT_FALSE(read.get().has_value());
-  stream_->Finish().get();
+  stream_->Shutdown().get();
   EXPECT_THAT(start.get(), IsOk());
 }
 
@@ -1118,7 +1118,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   ASSERT_FALSE(read.get().has_value());
   ASSERT_FALSE(write.get());
-  stream_->Finish().get();
+  stream_->Shutdown().get();
   EXPECT_THAT(start.get(), IsOk());
 }
 

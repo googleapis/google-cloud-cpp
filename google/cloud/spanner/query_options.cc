@@ -36,6 +36,20 @@ QueryOptions::QueryOptions(Options const& opts) {
   }
 }
 
+QueryOptions::operator Options() const {
+  Options opts;
+  if (optimizer_version_) {
+    opts.set<QueryOptimizerVersionOption>(*optimizer_version_);
+  }
+  if (optimizer_statistics_package_) {
+    opts.set<QueryOptimizerStatisticsPackageOption>(
+        *optimizer_statistics_package_);
+  }
+  if (request_priority_) opts.set<RequestPriorityOption>(*request_priority_);
+  if (request_tag_) opts.set<RequestTagOption>(*request_tag_);
+  return opts;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud

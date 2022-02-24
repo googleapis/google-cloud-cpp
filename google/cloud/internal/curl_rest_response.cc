@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/rest_response.h"
+#include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/curl_http_payload.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/log.h"
 #include <nlohmann/json.hpp>

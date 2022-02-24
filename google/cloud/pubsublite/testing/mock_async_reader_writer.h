@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_MOCK_ASYNC_READER_WRITER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_MOCK_ASYNC_READER_WRITER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ASYNC_READER_WRITER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ASYNC_READER_WRITER_H
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/version.h"
@@ -22,11 +22,12 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace pubsublite_internal {
+namespace pubsublite_testing {
 
 template <typename RequestType, typename ResponseType>
 class MockAsyncReaderWriter
-    : public AsyncStreamingReadWriteRpc<RequestType, ResponseType> {
+    : public google::cloud::AsyncStreamingReadWriteRpc<RequestType,
+                                                       ResponseType> {
  public:
   MOCK_METHOD(future<absl::optional<ResponseType>>, Read, (), (override));
   MOCK_METHOD(future<bool>, Write, (RequestType const&, grpc::WriteOptions),
@@ -37,9 +38,9 @@ class MockAsyncReaderWriter
   MOCK_METHOD(future<bool>, Start, (), (override));
 };
 
-}  // namespace pubsublite_internal
+}  // namespace pubsublite_testing
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_MOCK_ASYNC_READER_WRITER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ASYNC_READER_WRITER_H

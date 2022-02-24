@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/curl_rest_client.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -20,6 +20,7 @@
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
@@ -50,7 +51,9 @@ Status MakeRequestWithPayload(
       concatenated_payload += std::string(p.begin(), p.end());
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
-    impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
+    if (!encoded_payload.empty()) {
+      impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
+    }
     return impl.MakeRequest(http_method,
                             {{encoded_payload.data(), encoded_payload.size()}});
   }
@@ -59,7 +62,9 @@ Status MakeRequestWithPayload(
   for (auto const& p : payload) {
     content_length += p.size();
   }
-  impl.SetHeader(absl::StrCat("content-length: ", content_length));
+  if (content_length > 0) {
+    impl.SetHeader(absl::StrCat("content-length: ", content_length));
+  }
   return impl.MakeRequest(http_method, payload);
 }
 

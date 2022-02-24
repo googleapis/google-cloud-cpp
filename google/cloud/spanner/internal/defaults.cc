@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/options.h"
@@ -57,6 +58,18 @@ Options DefaultOptions(Options opts) {
         std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::milliseconds(100), std::chrono::minutes(1),
             kBackoffScaling));
+  }
+  if (!opts.has<spanner::QueryOptimizerVersionOption>()) {
+    auto e = internal::GetEnv("SPANNER_OPTIMIZER_VERSION");
+    if (e && !e->empty()) {
+      opts.set<spanner::QueryOptimizerVersionOption>(*std::move(e));
+    }
+  }
+  if (!opts.has<spanner::QueryOptimizerStatisticsPackageOption>()) {
+    auto e = internal::GetEnv("SPANNER_OPTIMIZER_STATISTICS_PACKAGE");
+    if (e && !e->empty()) {
+      opts.set<spanner::QueryOptimizerStatisticsPackageOption>(*std::move(e));
+    }
   }
 
   // Sets Spanner-specific options from session_pool_options.h
