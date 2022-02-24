@@ -32,9 +32,13 @@ using ::testing::Not;
 
 TEST(RefreshingCredentialsWrapper, IsValid) {
   auto now = std::chrono::system_clock::now();
+  MockFunction<RefreshingCredentialsWrapper::CurrentTimeFn>
+      mock_current_time_fn;
+  EXPECT_CALL(mock_current_time_fn, Call()).WillOnce([&] { return now; });
+
+  RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
-  RefreshingCredentialsWrapper w;
   auto refresh_fn =
       [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
     RefreshingCredentialsWrapper::TemporaryToken token;
@@ -42,23 +46,26 @@ TEST(RefreshingCredentialsWrapper, IsValid) {
     token.expiration_time = now + minutes(60);
     return token;
   };
-
-  auto token = w.AuthorizationHeader(now, refresh_fn);
-  EXPECT_TRUE(w.IsValid(now));
+  auto token = w.AuthorizationHeader(refresh_fn);
+  EXPECT_TRUE(w.IsValid());
 }
 
 TEST(RefreshingCredentialsWrapper, IsNotValid) {
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
   RefreshingCredentialsWrapper w;
-  EXPECT_FALSE(w.IsValid(std::chrono::system_clock::now()));
+  EXPECT_FALSE(w.IsValid());
 }
 
 TEST(RefreshingCredentialsWrapper, RefreshTokenSuccess) {
   auto now = std::chrono::system_clock::now();
+  MockFunction<RefreshingCredentialsWrapper::CurrentTimeFn>
+      mock_current_time_fn;
+  EXPECT_CALL(mock_current_time_fn, Call()).WillOnce([&] { return now; });
+
+  RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
-  RefreshingCredentialsWrapper w;
 
   // Test that we only call the refresh_fn on the first call to
   // AuthorizationHeader.
@@ -73,43 +80,42 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenSuccess) {
             token.expiration_time = now + minutes(60);
             return token;
           });
-
-  auto token = w.AuthorizationHeader(now, mock_refresh_fn.AsStdFunction());
+  auto token = w.AuthorizationHeader(mock_refresh_fn.AsStdFunction());
   ASSERT_THAT(token, IsOk());
   EXPECT_THAT(*token, Eq(auth_token));
 
-  token = w.AuthorizationHeader(now, mock_refresh_fn.AsStdFunction());
+  token = w.AuthorizationHeader(mock_refresh_fn.AsStdFunction());
   ASSERT_THAT(token, IsOk());
   EXPECT_THAT(*token, Eq(auth_token));
 }
 
 TEST(RefreshingCredentialsWrapper, RefreshTokenFailure) {
-  auto now = std::chrono::system_clock::now();
-  MockFunction<RefreshingCredentialsWrapper::CurrentTimeFn>
-      mock_current_time_fn;
-  EXPECT_CALL(mock_current_time_fn, Call()).WillOnce([&] { return now; });
-
-  RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
   auto refresh_fn =
       [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
-
-  auto token = w.AuthorizationHeader(now, refresh_fn);
+  RefreshingCredentialsWrapper w;
+  auto token = w.AuthorizationHeader(refresh_fn);
   EXPECT_THAT(token, Not(IsOk()));
   EXPECT_THAT(token.status().code(), Eq(StatusCode::kInvalidArgument));
 }
 
 TEST(RefreshingCredentialsWrapper, RefreshTokenFailureValidToken) {
   auto now = std::chrono::system_clock::now();
+  auto expire_time = now + minutes(60);
+
   MockFunction<RefreshingCredentialsWrapper::CurrentTimeFn>
       mock_current_time_fn;
-  EXPECT_CALL(mock_current_time_fn, Call()).WillOnce([&] { return now; });
+  EXPECT_CALL(mock_current_time_fn, Call())
+      .WillOnce([&] {
+        return expire_time + GoogleOAuthAccessTokenExpirationSlack() +
+               seconds(10);
+      })
+      .WillOnce([&] { return now; });
 
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
   RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
-  auto expire_time = now + minutes(60);
   auto refresh_fn =
       [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
     RefreshingCredentialsWrapper::TemporaryToken token;
@@ -117,16 +123,13 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenFailureValidToken) {
     token.expiration_time = expire_time;
     return token;
   };
-
-  auto token = w.AuthorizationHeader(now, refresh_fn);
+  auto token = w.AuthorizationHeader(refresh_fn);
 
   auto failing_refresh_fn =
       [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
-  token = w.AuthorizationHeader(
-      expire_time + GoogleOAuthAccessTokenExpirationSlack() + seconds(10),
-      failing_refresh_fn);
+  token = w.AuthorizationHeader(failing_refresh_fn);
   ASSERT_THAT(token, IsOk());
   EXPECT_THAT(*token, Eq(auth_token));
 }
@@ -136,8 +139,8 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenFailureInvalidToken) {
   MockFunction<RefreshingCredentialsWrapper::CurrentTimeFn>
       mock_current_time_fn;
   auto expire_time = now + minutes(60);
-  EXPECT_CALL(mock_current_time_fn, Call()).WillOnce([&] {
-    return expire_time + minutes(60);
+  EXPECT_CALL(mock_current_time_fn, Call()).Times(2).WillRepeatedly([&] {
+    return expire_time + GoogleOAuthAccessTokenExpirationSlack() + seconds(10);
   });
 
   std::pair<std::string, std::string> const auth_token =
@@ -150,16 +153,13 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenFailureInvalidToken) {
     token.expiration_time = expire_time;
     return token;
   };
-
-  auto token = w.AuthorizationHeader(now, refresh_fn);
+  auto token = w.AuthorizationHeader(refresh_fn);
 
   auto failing_refresh_fn =
       [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
-  token = w.AuthorizationHeader(
-      expire_time + GoogleOAuthAccessTokenExpirationSlack() + seconds(10),
-      failing_refresh_fn);
+  token = w.AuthorizationHeader(failing_refresh_fn);
   EXPECT_THAT(token, Not(IsOk()));
   EXPECT_THAT(token.status().code(), Eq(StatusCode::kInvalidArgument));
 }

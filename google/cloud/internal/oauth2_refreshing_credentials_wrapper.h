@@ -59,13 +59,12 @@ class RefreshingCredentialsWrapper {
    * or may not be called.
    */
   StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
-      std::chrono::system_clock::time_point now,
       RefreshFunctor refresh_fn) const;
 
   /**
    * Returns whether the current access token should be considered valid.
    */
-  bool IsValid(std::chrono::system_clock::time_point now) const;
+  bool IsValid() const;
 
  private:
   /**
@@ -79,8 +78,8 @@ class RefreshingCredentialsWrapper {
    * may still return false. This helps prevent the case where an access token
    * expires between when it is obtained and when it is used.
    */
-  bool IsExpired(std::chrono::system_clock::time_point now) const;
-  bool NeedsRefresh(std::chrono::system_clock::time_point now) const;
+  bool IsExpired() const;
+  bool NeedsRefresh() const;
 
   mutable TemporaryToken temporary_token_;
   CurrentTimeFn current_time_fn_;

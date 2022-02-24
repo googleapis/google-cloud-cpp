@@ -103,8 +103,7 @@ AuthorizedUserCredentials::AuthorizedUserCredentials(
 StatusOr<std::pair<std::string, std::string>>
 AuthorizedUserCredentials::AuthorizationHeader() {
   std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader(current_time_fn_(),
-                                               [this] { return Refresh(); });
+  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
