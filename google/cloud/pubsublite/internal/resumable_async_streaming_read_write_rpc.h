@@ -68,16 +68,14 @@ using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
  *   size_t num_attempts = 0;
  *   while (num_attempts < 3) {
  *     auto read_response = resumable_stream.Read().get();
- *     if (!read_response) {
- *       // the second conditional is redundant since the only way `Start` can
- * // finish without a user calling `Finish` is if a retry loop finishes with a
- * // permanent error (not ok) status.
- *       if (start.is_ready() && !start.get().ok()) {
- *         return "The read response optional was not engaged, and `Start`
- * finished, so there had to be a permanent error in the retry loop";
- *       }
- *     } else {
- *       return read_response->Stringify();
+ *     if (read_response) return read_response->Stringify();
+ *     // the second conditional is redundant since the only way `Start` can
+ * // finish without a user calling `Finish` is if the internal retry loop
+ * // finishes with a permanent error (not ok) status.
+ *     if (start.is_ready() && !start.get().ok()) {
+ *       return "The read response optional was not engaged, and `Start`
+ * finished with a non-ok`Status`, so there had to be a permanent error in the
+ * retry loop";
  *     }
  *     // we are ready to call `Read` again due to the object's internal retry
  * mechanism.
@@ -123,11 +121,11 @@ class ResumableAsyncStreamingReadWriteRpc {
    * returned. If it is not engaged, the call failed, but the user may call
    * `Read` again unless `Start` had finished with a permanent error `Status`.
    *
-   * If the `Read` call fails internally on the member stream object, then this
-   * class will continually try to reestablish another connection until
-   * successfully reestablishing the connection, permanent error, or the user
-   * calls `Finish`. A call to `Read` will finish only when a successful
-   * `Read` called is made internally on the member stream or the retry loop
+   * If the `Read` call fails internally on the underlying member stream object,
+   * then this class will continually try to reestablish another connection
+   * until successfully reestablishing the connection, permanent error, or the
+   * user calls `Finish`. A call to `Read` will finish only when a successful
+   * `Read` call is made internally on the member stream or the retry loop
    * finishes if the class is currently retrying the connection.
    */
   virtual future<absl::optional<ResponseType>> Read() = 0;
@@ -148,12 +146,12 @@ class ResumableAsyncStreamingReadWriteRpc {
    * the call failed, but the user may call `Write` again unless `Start` had
    * finished with a permanent error `Status`.
    *
-   * If the `Write` call fails internally on the member stream object, then this
-   * class will continually try to reestablish another connection until
-   * successfully reestablishing the connection, permanent error, or the user
-   * calls `Finish`. A call to `Write` will finish only when a successful
-   * `Write` called is made internally on the member stream or the retry loop
-   * finishes if the class is currently retrying the connection.
+   * If the `Write` call fails internally on the underlying member stream
+   * object, then this class will continually try to reestablish another
+   * connection until successfully reestablishing the connection, permanent
+   * error, or the user calls `Finish`. A call to `Write` will finish only when
+   * a successful `Write` call is made internally on the member stream or the
+   * retry loop finishes if the class is currently retrying the connection.
    */
   virtual future<bool> Write(RequestType const&, grpc::WriteOptions) = 0;
 
@@ -167,8 +165,8 @@ class ResumableAsyncStreamingReadWriteRpc {
    * `google::cloud::AsyncStreamingReadWriteRpc`. If the class is currently in a
    * retry loop, this will terminate the retry loop and then finish the returned
    * future. If the class has a present internal outstanding `Read` or `Write`,
-   * this call will finish the returned future only after the `Read` and/or
-   * `Write` finishes.
+   * this call will finish the returned future only after the internal `Read`
+   * and/or `Write` finishes.
    */
   virtual future<void> Finish() = 0;
 };
