@@ -325,13 +325,13 @@ class StreamingPartitionedDmlResult {
 
 std::shared_ptr<spanner::RetryPolicy> const&
 ConnectionImpl::RetryPolicyPrototype() const {
-  // TODO(#7690): Base this on internal::CurrentOptions().
+  // TODO(#4528) TODO(#7690): Base this on internal::CurrentOptions().
   return opts_.get<spanner::SpannerRetryPolicyOption>();
 }
 
 std::shared_ptr<spanner::BackoffPolicy> const&
 ConnectionImpl::BackoffPolicyPrototype() const {
-  // TODO(#7690): Base this on internal::CurrentOptions().
+  // TODO(#4528) TODO(#7690): Base this on internal::CurrentOptions().
   return opts_.get<spanner::SpannerBackoffPolicyOption>();
 }
 

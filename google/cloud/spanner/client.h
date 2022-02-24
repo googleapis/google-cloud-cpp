@@ -181,7 +181,7 @@ class Client {
    *     not exist in the database; `Read` yields nothing for nonexistent rows.
    * @param columns The columns of `table` to be returned for each row matching
    *     this request.
-   * @param read_options `ReadOptions` used for this request.
+   * @param opts `Options` used for this request.
    *
    * @par Example
    * @snippet samples.cc read-data
@@ -190,8 +190,7 @@ class Client {
    *     column value can exceed 10 MiB.
    */
   RowStream Read(std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 ReadOptions read_options = {});
+                 std::vector<std::string> columns, Options opts = {});
 
   /**
    * @copydoc Read
@@ -201,8 +200,7 @@ class Client {
    */
   RowStream Read(Transaction::SingleUseOptions transaction_options,
                  std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 ReadOptions read_options = {});
+                 std::vector<std::string> columns, Options opts = {});
 
   /**
    * @copydoc Read
@@ -210,9 +208,49 @@ class Client {
    * @param transaction Execute this read as part of an existing transaction.
    */
   RowStream Read(Transaction transaction, std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 ReadOptions read_options = {});
+                 std::vector<std::string> columns, Options opts = {});
   //@}
+
+  /// @name Backwards compatibility for `ReadOptions`.
+  ///@{
+  RowStream Read(std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions const& read_options) {
+    return Read(std::move(table), std::move(keys), std::move(columns),
+                ToOptions(read_options));
+  }
+  RowStream Read(std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 std::initializer_list<internal::NonConstructible>) {
+    return Read(std::move(table), std::move(keys), std::move(columns));
+  }
+  RowStream Read(Transaction::SingleUseOptions transaction_options,
+                 std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions const& read_options) {
+    return Read(std::move(transaction_options), std::move(table),
+                std::move(keys), std::move(columns), ToOptions(read_options));
+  }
+  RowStream Read(Transaction::SingleUseOptions transaction_options,
+                 std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 std::initializer_list<internal::NonConstructible>) {
+    return Read(std::move(transaction_options), std::move(table),
+                std::move(keys), std::move(columns));
+  }
+  RowStream Read(Transaction transaction, std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions const& read_options) {
+    return Read(std::move(transaction), std::move(table), std::move(keys),
+                std::move(columns), ToOptions(read_options));
+  }
+  RowStream Read(Transaction transaction, std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 std::initializer_list<internal::NonConstructible>) {
+    return Read(std::move(transaction), std::move(table), std::move(keys),
+                std::move(columns));
+  }
+  ///@}
 
   /**
    * Reads rows from a subset of rows in a database. Requires a prior call
@@ -220,6 +258,7 @@ class Client {
    * documentation of that method for full details.
    *
    * @param partition A `ReadPartition`, obtained by calling `PartitionRead`.
+   * @param opts `Options` used for this request.
    *
    * @note No individual row in the `ReadResult` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
@@ -227,7 +266,7 @@ class Client {
    * @par Example
    * @snippet samples.cc read-read-partition
    */
-  RowStream Read(ReadPartition const& partition);
+  RowStream Read(ReadPartition const& partition, Options opts = {});
 
   /**
    * Creates a set of partitions that can be used to execute a read
@@ -252,8 +291,7 @@ class Client {
    *     not exist in the database; `Read` yields nothing for nonexistent rows.
    * @param columns The columns of `table` to be returned for each row matching
    *     this request.
-   * @param read_options `ReadOptions` used for this request.
-   * @param partition_options `PartitionOptions` used for this request.
+   * @param opts `Options` used for this request.
    *
    * @return A `StatusOr` containing a vector of `ReadPartition` or error
    *     status on failure.
@@ -263,8 +301,35 @@ class Client {
    */
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       Transaction transaction, std::string table, KeySet keys,
-      std::vector<std::string> columns, ReadOptions read_options = {},
-      PartitionOptions const& partition_options = PartitionOptions{});
+      std::vector<std::string> columns, Options opts = {});
+
+  /// @name Backwards compatibility for `ReadOptions` and `PartitionOptions`.
+  ///@{
+  StatusOr<std::vector<ReadPartition>> PartitionRead(
+      Transaction transaction, std::string table, KeySet keys,
+      std::vector<std::string> columns, ReadOptions const& read_options,
+      PartitionOptions const& partition_options) {
+    return PartitionRead(std::move(transaction), std::move(table),
+                         std::move(keys), std::move(columns),
+                         internal::MergeOptions(ToOptions(read_options),
+                                                ToOptions(partition_options)));
+  }
+  StatusOr<std::vector<ReadPartition>> PartitionRead(
+      Transaction transaction, std::string table, KeySet keys,
+      std::vector<std::string> columns,
+      std::initializer_list<internal::NonConstructible>,
+      std::initializer_list<internal::NonConstructible>) {
+    return PartitionRead(std::move(transaction), std::move(table),
+                         std::move(keys), std::move(columns));
+  }
+  StatusOr<std::vector<ReadPartition>> PartitionRead(
+      Transaction transaction, std::string table, KeySet keys,
+      std::vector<std::string> columns,
+      std::initializer_list<internal::NonConstructible>) {
+    return PartitionRead(std::move(transaction), std::move(table),
+                         std::move(keys), std::move(columns));
+  }
+  ///@}
 
   //@{
   /**
@@ -474,7 +539,7 @@ class Client {
    * @param transaction The transaction to execute the operation in.
    *     **Must** be a read-only snapshot transaction.
    * @param statement The SQL statement to execute.
-   * @param partition_options `PartitionOptions` used for this request.
+   * @param opts `Options` used for this request.
    *
    * @return A `StatusOr` containing a vector of `QueryPartition`s or error
    *     status on failure.
@@ -484,7 +549,22 @@ class Client {
    */
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       Transaction transaction, SqlStatement statement,
-      PartitionOptions const& partition_options = PartitionOptions{});
+      Options opts = Options{});
+
+  /// @name Backwards compatibility for `PartitionOptions`.
+  ///@{
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      Transaction transaction, SqlStatement statement,
+      PartitionOptions const& partition_options) {
+    return PartitionQuery(std::move(transaction), std::move(statement),
+                          ToOptions(partition_options));
+  }
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return PartitionQuery(std::move(transaction), std::move(statement));
+  }
+  ///@}
 
   /**
    * Executes a SQL DML statement.

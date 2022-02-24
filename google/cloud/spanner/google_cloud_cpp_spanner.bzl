@@ -172,6 +172,7 @@ google_cloud_cpp_spanner_srcs = [
     "partition_options.cc",
     "query_options.cc",
     "query_partition.cc",
+    "read_options.cc",
     "read_partition.cc",
     "results.cc",
     "row.cc",

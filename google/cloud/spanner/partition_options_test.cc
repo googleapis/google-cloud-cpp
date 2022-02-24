@@ -47,6 +47,15 @@ TEST(PartitionOptionsTest, Proto) {
   EXPECT_EQ(*po.max_partitions, proto.max_partitions());
 }
 
+TEST(PartitionOptionsTest, OptionsRoundTrip) {
+  for (auto const& po :
+       {PartitionOptions{absl::nullopt, absl::nullopt},
+        PartitionOptions{42, absl::nullopt},
+        PartitionOptions{absl::nullopt, 42}, PartitionOptions{32, 64}}) {
+    EXPECT_EQ(po, ToPartitionOptions(ToOptions(po)));
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner

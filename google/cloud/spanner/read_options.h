@@ -18,7 +18,9 @@
 #include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/cloud/options.h"
+#include "absl/types/optional.h"
+#include <cstdint>
 #include <string>
 
 namespace google {
@@ -29,9 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Options passed to `Client::Read` or `Client::PartitionRead`.
 struct ReadOptions {
   /**
-   * If non-empty, the name of an index on a database table. This index is used
-   * instead of the table primary key when interpreting the `KeySet`and sorting
-   * result rows.
+   * If non-empty, the name of an index on a database table. This index is
+   * used instead of the table primary key when interpreting the `KeySet`
+   * and sorting result rows.
    */
   std::string index_name;
 
@@ -61,6 +63,12 @@ inline bool operator==(ReadOptions const& lhs, ReadOptions const& rhs) {
 inline bool operator!=(ReadOptions const& lhs, ReadOptions const& rhs) {
   return !(lhs == rhs);
 }
+
+/// Converts `ReadOptions` to common `Options`.
+Options ToOptions(ReadOptions const&);
+
+/// Converts common `Options` to `ReadOptions`.
+ReadOptions ToReadOptions(Options const&);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
