@@ -208,15 +208,15 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
       new CurlRestResponse(options_, std::move(*impl)))};
 }
 
-std::unique_ptr<RestClient> GetDefaultRestClient(std::string endpoint_address,
-                                                 Options options) {
+std::unique_ptr<RestClient> MakeDefaultRestClient(std::string endpoint_address,
+                                                  Options options) {
   auto factory = GetDefaultCurlHandleFactory(options);
   return std::unique_ptr<RestClient>(new CurlRestClient(
       std::move(endpoint_address), std::move(factory), std::move(options)));
 }
 
-std::unique_ptr<RestClient> GetPooledRestClient(std::string endpoint_address,
-                                                Options options) {
+std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
+                                                 Options options) {
   std::size_t pool_size = kDefaultPooledCurlHandleFactorySize;
   if (options.has<ConnectionPoolSizeOption>()) {
     pool_size = options.get<ConnectionPoolSizeOption>();

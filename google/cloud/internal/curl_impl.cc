@@ -620,7 +620,7 @@ Status CurlImpl::MakeRequestImpl() {
   TRACE_STATE() << "url_ " << url_ << "\n";
   // Setting BUFFERSIZE is a request, not an order. libcurl can and will write
   // fewer bytes as it wishes.
-  handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultCurlWriteBufferSize);
+  handle_.SetOption(CURLOPT_BUFFERSIZE, spill_.size());
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());

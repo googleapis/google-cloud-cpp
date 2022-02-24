@@ -96,7 +96,7 @@ AuthorizedUserCredentials::AuthorizedUserCredentials(
       rest_client_(std::move(rest_client)) {
   if (!rest_client_) {
     rest_client_ =
-        rest_internal::GetDefaultRestClient(info_.token_uri, options_);
+        rest_internal::MakeDefaultRestClient(info_.token_uri, options_);
   }
 }
 

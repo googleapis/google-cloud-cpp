@@ -93,7 +93,7 @@ ComputeEngineCredentials::ComputeEngineCredentials(
       options_(std::move(options)) {
   if (!rest_client_) {
     options_.set<rest_internal::CurlFollowLocationOption>(true);
-    rest_client_ = rest_internal::GetDefaultRestClient(
+    rest_client_ = rest_internal::MakeDefaultRestClient(
         "http://" + google::cloud::internal::GceMetadataHostname(), options_);
   }
 }

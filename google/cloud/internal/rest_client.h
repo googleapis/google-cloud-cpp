@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Provides factory function to create a CurlRestClient that does not manage a
 // pool of connections.
-std::unique_ptr<RestClient> GetDefaultRestClient(std::string endpoint_address,
-                                                 Options options);
+std::unique_ptr<RestClient> MakeDefaultRestClient(std::string endpoint_address,
+                                                  Options options);
 
 // Provides factory function to create a CurlRestClient that manages a pool of
 // connections which are reused in order to minimize costs of setup and
 // teardown.
-std::unique_ptr<RestClient> GetPooledRestClient(std::string endpoint_address,
-                                                Options options);
+std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
+                                                 Options options);
 
 // Provides methods corresponding to HTTP verbs to make requests to RESTful
 // services.

@@ -40,7 +40,7 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
       rest_client_(std::move(rest_client)),
       options_(std::move(options)) {
   if (!rest_client_) {
-    rest_client_ = rest_internal::GetDefaultRestClient(endpoint_, options_);
+    rest_client_ = rest_internal::MakeDefaultRestClient(endpoint_, options_);
   }
 }
 
