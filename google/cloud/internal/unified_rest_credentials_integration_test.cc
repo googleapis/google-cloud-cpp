@@ -53,7 +53,7 @@ StatusOr<std::unique_ptr<RestResponse>> RetryRestRequest(
 
 void MakeRestRpcCall(StatusCode expected_status, Options options = {}) {
   std::string bigquery_endpoint = "https://bigquery.googleapis.com";
-  auto client = GetPooledRestClient(bigquery_endpoint, std::move(options));
+  auto client = MakePooledRestClient(bigquery_endpoint, std::move(options));
   RestRequest request;
   request.SetPath("bigquery/v2/projects/bigquery-public-data/datasets");
   request.AddQueryParameter({"maxResults", "10"});
@@ -74,7 +74,7 @@ void MakeRestRpcCall(StatusCode expected_status, Options options = {}) {
 
 TEST(UnifiedRestCredentialsIntegrationTest, InsecureCredentials) {
   std::string bigquery_endpoint = "https://bigquery.googleapis.com";
-  auto client = GetPooledRestClient(
+  auto client = MakePooledRestClient(
       bigquery_endpoint,
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
   RestRequest request;

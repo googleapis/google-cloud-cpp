@@ -65,10 +65,10 @@ class CurlRestClient : public RestClient {
       std::vector<absl::Span<char const>> const& payload) override;
 
  private:
-  friend std::unique_ptr<RestClient> GetDefaultRestClient(
+  friend std::unique_ptr<RestClient> MakeDefaultRestClient(
       std::string endpoint_address, Options options);
 
-  friend class std::unique_ptr<RestClient> GetPooledRestClient(
+  friend class std::unique_ptr<RestClient> MakePooledRestClient(
       std::string endpoint_address, Options options);
 
   CurlRestClient(std::string endpoint_address,

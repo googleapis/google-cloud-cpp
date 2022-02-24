@@ -37,10 +37,6 @@ extern "C" std::size_t CurlRequestWrite(char* ptr, size_t size, size_t nmemb,
 extern "C" std::size_t CurlRequestHeader(char* contents, std::size_t size,
                                          std::size_t nitems, void* userdata);
 
-// We get better performance using a slightly larger buffer (128KiB) than the
-// default buffer size set by libcurl (16KiB).
-static auto constexpr kDefaultCurlWriteBufferSize = 128 * 1024L;
-
 // This class encapsulates use of libcurl and manages all the necessary state
 // of a request and its associated response.
 class CurlImpl {
@@ -160,7 +156,7 @@ class CurlImpl {
   // fewer bytes read aborts the download. The application may have requested
   // fewer bytes in the call to `Read()`, so we need a place to store the
   // additional bytes.
-  std::array<char, kDefaultCurlWriteBufferSize> spill_;
+  std::array<char, 128 * 1024L> spill_;
   std::size_t spill_offset_;
 
   Options options_;
