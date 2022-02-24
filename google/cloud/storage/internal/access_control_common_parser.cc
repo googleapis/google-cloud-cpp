@@ -36,8 +36,7 @@ Status AccessControlCommonParser::FromJson(AccessControlCommon& result,
   result.self_link_ = json.value("selfLink", "");
   if (json.count("projectTeam") != 0) {
     auto tmp = json["projectTeam"];
-    if (tmp.is_null())
-      return Status{};
+    if (tmp.is_null()) return Status{};
     ProjectTeam p;
     p.project_number = tmp.value("projectNumber", "");
     p.team = tmp.value("team", "");
