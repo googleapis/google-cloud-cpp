@@ -37,16 +37,16 @@ TEST(AccessControlCommonParserTest, FromJson) {
   EXPECT_THAT(result.bucket(), Eq(bucket));
   EXPECT_THAT(result.role(), Eq(role));
   EXPECT_THAT(result.email(), Eq(email));
-  EXPECT_THAT(result.project_team(), Eq(ProjectTeam()));
+  EXPECT_FALSE(result.has_project_team());
 }
 
-TEST(AccessControlCommonParserTest, nullProjectTeamIsValid) {
+TEST(AccessControlCommonParserTest, NullProjectTeamIsValid) {
   nlohmann::json metadata{{"projectTeam", nullptr}};
   internal::AccessControlCommon result{};
   auto status = internal::AccessControlCommonParser::FromJson(result, metadata);
   ASSERT_STATUS_OK(status);
 
-  EXPECT_THAT(result.project_team(), Eq(ProjectTeam()));
+  EXPECT_FALSE(result.has_project_team());
 }
 
 }  // namespace
