@@ -139,7 +139,7 @@ class ResumableAsyncStreamingReadWriteRpc {
    * read from the current underlying GRPC stream. If the future is satisfied
    * with `nullopt`, the underlying stream may have changed or a permanent error
    * has happened. If the `Start` future is not satisfied, the user may call
-   * `Read` again to read from a new stream.
+   * `Read` again to read from a new underlying stream.
    */
   virtual future<absl::optional<ResponseType>> Read() = 0;
 
@@ -163,7 +163,7 @@ class ResumableAsyncStreamingReadWriteRpc {
    * to the current underlying GRPC stream. If the future is satisfied with
    * `false`, the underlying stream may have changed or a permanent error has
    * happened. If the `Start` future is not satisfied, the user may call `Write`
-   * again to write the value to a new stream.
+   * again to write the value to a new underlying stream.
    */
   virtual future<bool> Write(RequestType const&, grpc::WriteOptions) = 0;
 
