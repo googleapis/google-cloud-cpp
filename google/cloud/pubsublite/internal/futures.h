@@ -22,9 +22,9 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-template <class T>
+template <typename T>
 struct ChainFutureImpl {
-  template <class U>
+  template <typename U>
   // Note: this drops any exceptions contained in `future<U>`
   future<T> operator()(future<U>) {
     return std::move(f);
@@ -34,15 +34,17 @@ struct ChainFutureImpl {
 };
 
 /**
- * This is a templatized helper to chain futures together with an intended
- * internal return type of `T` irrespective of the type passed in of
- * `future<U>`. Without this, the previous solution was to wrap a shared pointer
- * around the future we wanted to chain (no generalized lambda capture in C++11)
- * and capture that into the original future's continuation. This helper removes
- * and encapsulates that complexity/effort by moving the future into a functor
- * as a member variable and returning that upon invoking the continuation.
+ * A helper to capture-by-move futures into a second future continuation.
+ *
+ * Given two futures `future<U> r` and `future<T> f` we often want to write:
+ * @code
+ * f.then([tmp = std::move(f)](future<T>) mutable { return std::move(tmp); }
+ * @encode
+ *
+ * Unfortunately we cannot, as the project needs to support C++11. This is
+ * a helper to avoid repetition of this pattern.
  */
-template <class T>
+template <typename T>
 ChainFutureImpl<T> ChainFuture(future<T> f) {
   return ChainFutureImpl<T>{std::move(f)};
 }

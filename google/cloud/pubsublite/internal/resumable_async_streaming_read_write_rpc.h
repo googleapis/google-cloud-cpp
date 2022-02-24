@@ -96,7 +96,6 @@ using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
  * }
  * @endcode
  */
-
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc {
  public:
@@ -115,7 +114,6 @@ class ResumableAsyncStreamingReadWriteRpc {
    * any `Read()` or `Write()` calls will fail until the stream is initialized
    * successfully.
    */
-
   virtual future<Status> Start() = 0;
 
   /**
