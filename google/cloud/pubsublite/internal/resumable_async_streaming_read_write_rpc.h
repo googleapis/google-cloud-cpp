@@ -409,11 +409,12 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
       future<void> root_future = root.get_future();
 
+      // at most one of these will be set
       if (in_progress_read_.has_value()) {
-        assert(!in_progress_write_.has_value());
         root_future =
             root_future.then(ChainFuture(in_progress_read_->get_future()));
-      } else if (in_progress_write_.has_value()) {
+      }
+      if (in_progress_write_.has_value()) {
         root_future =
             root_future.then(ChainFuture(in_progress_write_->get_future()));
       }
