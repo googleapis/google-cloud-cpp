@@ -16,9 +16,6 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-#include "google/cloud/storage/internal/grpc_client.h"
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/algorithm/container.h"
@@ -73,6 +70,7 @@ class UploadObject : public ThroughputExperiment {
       auto const usage = timer.Sample();
       return ThroughputResult{kOpInsert,
                               config.object_size,
+                              config.object_size,
                               config.app_buffer_size,
                               config.lib_buffer_size,
                               config.enable_crc32c,
@@ -99,6 +97,7 @@ class UploadObject : public ThroughputExperiment {
     auto const usage = timer.Sample();
 
     return ThroughputResult{kOpWrite,
+                            config.object_size,
                             config.object_size,
                             config.app_buffer_size,
                             config.lib_buffer_size,
@@ -143,12 +142,14 @@ class DownloadObject : public ThroughputExperiment {
         bucket_name, object_name,
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
         gcs::DisableMD5Hash(!config.enable_md5), api_selector);
-    for (std::uint64_t num_read = 0; reader.read(buffer.data(), buffer.size());
-         num_read += reader.gcount()) {
+    std::int64_t transfer_size = 0;
+    while (reader.read(buffer.data(), buffer.size())) {
+      transfer_size += reader.gcount();
     }
     auto const usage = timer.Sample();
     return ThroughputResult{config.op,
                             config.object_size,
+                            transfer_size,
                             config.app_buffer_size,
                             config.lib_buffer_size,
                             config.enable_crc32c,
@@ -229,6 +230,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     auto const usage = timer.Sample();
     return ThroughputResult{config.op,
                             config.object_size,
+                            config.object_size,
                             config.app_buffer_size,
                             config.lib_buffer_size,
                             config.enable_crc32c,
@@ -301,6 +303,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
 
     return ThroughputResult{config.op,
                             config.object_size,
+                            bytes_received,
                             config.app_buffer_size,
                             /*lib_buffer_size=*/0,
                             /*crc_enabled=*/false,

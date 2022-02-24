@@ -61,8 +61,10 @@ struct ThroughputResult {
   OpType op;
   /// The total size of the object involved in this experiment. Currently also
   /// represents the number of bytes transferred.
-  // TODO(#4349) - use a separate field to represent the bytes transferred
   std::int64_t object_size;
+  /// The size of the transfer. For uploads this is always equal to the object
+  /// size. For downloads this can be smaller than the object size.
+  std::int64_t transfer_size;
   /// The size of the application buffer (for .read() or .write() calls).
   std::size_t app_buffer_size;
   /// The size of the library buffers (if any).
