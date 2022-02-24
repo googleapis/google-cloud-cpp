@@ -86,8 +86,8 @@ StreamInitializer<FakeRequest, FakeResponse> InitializeInline() {
   };
 }
 
-std::function<future<void>(std::chrono::duration<double>)> ZeroSleep() {
-  return [](std::chrono::duration<double>) { return make_ready_future(); };
+std::function<future<void>(std::chrono::milliseconds)> ZeroSleep() {
+  return [](std::chrono::milliseconds) { return make_ready_future(); };
 }
 
 std::function<std::unique_ptr<MockRetryPolicy>()> ReturnUnusedRetryPolicy() {
@@ -105,8 +105,7 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
             sleeper_.AsStdFunction(), stream_factory_.AsStdFunction(),
             initializer_.AsStdFunction())} {}
 
-  StrictMock<MockFunction<future<void>(std::chrono::duration<double>)>>
-      sleeper_;
+  StrictMock<MockFunction<future<void>(std::chrono::milliseconds)>> sleeper_;
   StrictMock<MockFunction<AsyncReadWriteStreamReturnType()>> stream_factory_;
   StrictMock<MockFunction<std::unique_ptr<MockRetryPolicy>()>>
       retry_policy_factory_;
