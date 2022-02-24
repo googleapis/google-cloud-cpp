@@ -229,8 +229,11 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
                            INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     create_bazel_config(pubsublite_testing YEAR "2022")
 
-    set(pubsublite_unit_tests # cmake-format: sort
-                              endpoint_test.cc internal/stream_factory_test.cc)
+    set(pubsublite_unit_tests
+        # cmake-format: sort
+        endpoint_test.cc
+        internal/resumable_async_streaming_read_write_rpc_test.cc
+        internal/stream_factory_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"
                          YEAR "2021")

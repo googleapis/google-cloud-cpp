@@ -26,7 +26,8 @@ namespace pubsublite_testing {
 
 template <typename RequestType, typename ResponseType>
 class MockAsyncReaderWriter
-    : public AsyncStreamingReadWriteRpc<RequestType, ResponseType> {
+    : public google::cloud::AsyncStreamingReadWriteRpc<RequestType,
+                                                       ResponseType> {
  public:
   MOCK_METHOD(future<absl::optional<ResponseType>>, Read, (), (override));
   MOCK_METHOD(future<bool>, Write, (RequestType const&, grpc::WriteOptions),

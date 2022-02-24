@@ -24,7 +24,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_testing {
 
-class MockRetryPolicy : public RetryPolicy {
+class MockRetryPolicy : public google::cloud::internal::RetryPolicy {
  public:
   MOCK_METHOD(bool, OnFailure, (Status const&), (override));
   MOCK_METHOD(bool, IsExhausted, (), (const, override));
