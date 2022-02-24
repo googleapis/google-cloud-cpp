@@ -231,7 +231,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     return make_ready_future(absl::optional<ResponseType>());
   }
 
-  future<bool> Write(RequestType const& r, grpc::WriteOptions o) override {
+  future<bool> Write(RequestType const&, grpc::WriteOptions) override {
     return make_ready_future(false);
   }
 

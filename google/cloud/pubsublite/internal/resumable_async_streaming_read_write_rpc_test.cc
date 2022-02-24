@@ -332,13 +332,12 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 
   start_promise.set_value(false);
 
-EXPECT_CALL(stream2_ref, Finish)
+  EXPECT_CALL(stream2_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto shutdown = stream_->Shutdown();
 
   // `Shutdown` shouldn't finish until retry loop terminates
-  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)),
-            std::future_status::timeout);
+  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   start_promise1.set_value(true);
 
@@ -380,15 +379,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(std::chrono::milliseconds(7)));
 
   promise<void> sleep_promise;
-  EXPECT_CALL(sleeper_, Call).WillOnce(Return(ByMove(sleep_promise.get_future())));
+  EXPECT_CALL(sleeper_, Call)
+      .WillOnce(Return(ByMove(sleep_promise.get_future())));
 
   start_promise.set_value(false);
 
   auto shutdown = stream_->Shutdown();
 
   // `Shutdown` shouldn't finish until retry loop terminates
-  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)),
-            std::future_status::timeout);
+  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   sleep_promise.set_value();
 
@@ -439,15 +438,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
   promise<StatusOr<AsyncReadWriteStreamReturnType>> initializer_promise;
-  EXPECT_CALL(initializer_, Call).WillOnce(Return(ByMove(initializer_promise.get_future())));
+  EXPECT_CALL(initializer_, Call)
+      .WillOnce(Return(ByMove(initializer_promise.get_future())));
 
   start_promise.set_value(false);
 
   auto shutdown = stream_->Shutdown();
 
   // `Shutdown` shouldn't finish until retry loop terminates
-  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)),
-            std::future_status::timeout);
+  EXPECT_EQ(shutdown.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   initializer_promise.set_value(
       StatusOr<AsyncReadWriteStreamReturnType>(kFailStatus));
