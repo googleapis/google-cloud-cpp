@@ -348,6 +348,9 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata(
         "x-goog-user-project", options.get<UserProjectOption>());
   }
+  if (options.has<AuthorityOption>()) {
+    context.set_authority(options.get<AuthorityOption>());
+  }
 }
 )""");
 
