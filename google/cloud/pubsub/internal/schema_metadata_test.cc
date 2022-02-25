@@ -56,7 +56,7 @@ class SchemaMetadataTest : public ::testing::Test {
   static Options TestOptions(std::string const& user_project) {
     return user_project.empty()
                ? Options{}
-               : Options{}.set<UserProjectOption>("test-project");
+               : Options{}.set<UserProjectOption>(user_project);
   }
 
  private:
