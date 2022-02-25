@@ -264,7 +264,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           root_future = root_future.then(ChainFuture(
               retry_promise_->get_future().then([this](future<void>) {
                 std::unique_lock<std::mutex> lk{mu_};
-                CompleteUnsatisfiedOpsLockHeld(Status(), lk);
+                CompleteUnsatisfiedOps(Status(), lk);
               })));
           break;
         case State::kInitialized:
@@ -279,7 +279,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           }
           std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
               stream = std::move(stream_);
-          CompleteUnsatisfiedOpsLockHeld(Status(), lk);
+          CompleteUnsatisfiedOps(Status(), lk);
           root_future = root_future.then([stream](future<void>) {
             return future<void>(stream->Finish());
           });
@@ -288,7 +288,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     return root_future;
   }
 
-  void SetReadWriteFuturesLockHeld(std::unique_lock<std::mutex>& lk) {
+  void SetReadWriteFutures(std::unique_lock<std::mutex>& lk) {
     absl::optional<promise<void>> read_reinit_done;
     absl::optional<promise<void>> write_reinit_done;
 
@@ -303,15 +303,14 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     lk.lock();
   }
 
-  void CompleteUnsatisfiedOpsLockHeld(Status status,
-                                      std::unique_lock<std::mutex>& lk) {
-    SetReadWriteFuturesLockHeld(lk);
+  void CompleteUnsatisfiedOps(Status status, std::unique_lock<std::mutex>& lk) {
+    SetReadWriteFutures(lk);
     status_promise_.set_value(std::move(status));
   }
 
-  void FinishRetryPromiseLockHeld(std::unique_lock<std::mutex>& lk) {
+  void FinishRetryPromise(std::unique_lock<std::mutex>& lk) {
     assert(retry_promise_.has_value());
-    promise<void> retry_promise = std::move(*retry_promise_);
+    promise<void> retry_promise = std::move(retry_promise_.value());
     retry_promise_.reset();
     lk.unlock();
     retry_promise.set_value();
@@ -324,7 +323,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     {
       std::unique_lock<std::mutex> lk{mu_};
       if (stream_state_ == State::kShutdown) {
-        return FinishRetryPromiseLockHeld(lk);
+        return FinishRetryPromise(lk);
       }
       assert(stream_state_ == State::kRetrying);
     }
@@ -338,11 +337,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     }
 
     std::unique_lock<std::mutex> lk{mu_};
-    FinishRetryPromiseLockHeld(lk);
+    FinishRetryPromise(lk);
     if (stream_state_ == State::kShutdown) return;
     stream_state_ = State::kShutdown;
 
-    CompleteUnsatisfiedOpsLockHeld(status, lk);
+    CompleteUnsatisfiedOps(status, lk);
   }
 
   void OnInitialize(
@@ -364,28 +363,26 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         stream_ = std::move(**start_initialize_response);
         stream_state_ = State::kInitialized;
       }
-      FinishRetryPromiseLockHeld(lk);
-      SetReadWriteFuturesLockHeld(lk);
+      FinishRetryPromise(lk);
+      SetReadWriteFutures(lk);
     }
   }
 
   void Initialize(std::shared_ptr<RetryPolicy> retry_policy,
                   std::shared_ptr<BackoffPolicy> backoff_policy) {
     future<bool> start_future;
-    std::shared_ptr<UnderlyingStream> stream;
     {
       std::unique_lock<std::mutex> lk{mu_};
       if (stream_state_ == State::kShutdown) {
-        return FinishRetryPromiseLockHeld(lk);
+        return FinishRetryPromise(lk);
       }
-      stream = std::make_shared<UnderlyingStream>(stream_factory_());
-      start_future = (*stream)->Start();
     }
+    auto stream = std::make_shared<UnderlyingStream>(stream_factory_());
+    start_future = (*stream)->Start();
 
     auto start_future_result =
         start_future.then([this, stream](future<bool> start_future) {
           if (start_future.get()) return make_ready_future(Status());
-          std::lock_guard<std::mutex> lk{mu_};
           return (*stream)->Finish();
         });
 
@@ -396,7 +393,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
             return make_ready_future(
                 StatusOr<std::shared_ptr<UnderlyingStream>>(status));
           }
-          std::lock_guard<std::mutex> lk{mu_};
           return initializer_(stream);
         });
 
