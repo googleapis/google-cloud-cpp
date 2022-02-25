@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/future.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <system_error>
@@ -26,7 +27,15 @@ AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
     std::size_t thread_count)
     : pool_(thread_count == 0 ? 1 : thread_count) {
   std::generate_n(pool_.begin(), pool_.size(), [this] {
-    return std::thread([](CompletionQueue cq) { cq.Run(); }, cq_);
+    promise<void> started;
+    auto thread = std::thread(
+        [](CompletionQueue cq, promise<void>& started) {
+          started.set_value();
+          cq.Run();
+        },
+        cq_, std::ref(started));
+    started.get_future().wait();
+    return thread;
   });
 }
 
