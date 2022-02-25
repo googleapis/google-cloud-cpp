@@ -304,7 +304,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   void CompleteUnsatisfiedOps(Status status, std::unique_lock<std::mutex>& lk) {
     SetReadWriteFutures(lk);
+    lk.unlock();
     status_promise_.set_value(std::move(status));
+    lk.lock();
   }
 
   void FinishRetryPromise(std::unique_lock<std::mutex>& lk) {
