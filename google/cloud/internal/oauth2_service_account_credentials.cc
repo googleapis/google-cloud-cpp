@@ -185,8 +185,7 @@ ServiceAccountCredentials::ServiceAccountCredentials(
 StatusOr<std::pair<std::string, std::string>>
 ServiceAccountCredentials::AuthorizationHeader() {
   std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader(current_time_fn_(),
-                                               [this] { return Refresh(); });
+  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
 }
 
 StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
