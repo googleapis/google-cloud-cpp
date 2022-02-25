@@ -264,7 +264,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           root_future = root_future.then(ChainFuture(
               retry_promise_->get_future().then([this](future<void>) {
                 std::unique_lock<std::mutex> lk{mu_};
-                CompleteOutstandingOpsLockHeld(Status(), lk);
+                CompleteUnsatisfiedOpsLockHeld(Status(), lk);
               })));
           break;
         case State::kInitialized:
@@ -279,7 +279,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           }
           std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
               stream = std::move(stream_);
-          CompleteOutstandingOpsLockHeld(Status(), lk);
+          CompleteUnsatisfiedOpsLockHeld(Status(), lk);
           root_future = root_future.then([stream](future<void>) {
             return future<void>(stream->Finish());
           });
@@ -303,7 +303,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     lk.lock();
   }
 
-  void CompleteOutstandingOpsLockHeld(Status status,
+  void CompleteUnsatisfiedOpsLockHeld(Status status,
                                       std::unique_lock<std::mutex>& lk) {
     SetReadWriteFuturesLockHeld(lk);
     status_promise_.set_value(std::move(status));
@@ -342,7 +342,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     if (stream_state_ == State::kShutdown) return;
     stream_state_ = State::kShutdown;
 
-    CompleteOutstandingOpsLockHeld(status, lk);
+    CompleteUnsatisfiedOpsLockHeld(status, lk);
   }
 
   void OnInitialize(
