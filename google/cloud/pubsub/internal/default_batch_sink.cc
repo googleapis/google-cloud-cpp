@@ -22,17 +22,17 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DefaultBatchSink::DefaultBatchSink(std::shared_ptr<PublisherStub> stub,
-                                   CompletionQueue cq, Options const& opts)
-    : stub_(std::move(stub)),
-      cq_(std::move(cq)),
-      retry_policy_(opts.get<pubsub::RetryPolicyOption>()->clone()),
-      backoff_policy_(opts.get<pubsub::BackoffPolicyOption>()->clone()) {}
+                                   CompletionQueue cq, Options opts)
+    : stub_(std::move(stub)), cq_(std::move(cq)), options_(std::move(opts)) {}
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
+  internal::OptionsSpan span(options_);
+
   auto& stub = stub_;
   return internal::AsyncRetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(),
+      options_.get<pubsub::RetryPolicyOption>()->clone(),
+      options_.get<pubsub::BackoffPolicyOption>()->clone(),
       Idempotency::kIdempotent, cq_,
       [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
              google::pubsub::v1::PublishRequest const& request) {

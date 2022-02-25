@@ -68,19 +68,19 @@ class StreamingSubscriptionBatchSource
       CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
-      std::string client_id, Options const& opts,
+      std::string client_id, Options opts,
       AckBatchingConfig ack_batching_config = {})
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         stub_(std::move(stub)),
         subscription_full_name_(std::move(subscription_full_name)),
         client_id_(std::move(client_id)),
+        options_(std::move(opts)),
         max_outstanding_messages_(
-            opts.get<pubsub::MaxOutstandingMessagesOption>()),
-        max_outstanding_bytes_(opts.get<pubsub::MaxOutstandingBytesOption>()),
-        max_deadline_time_(opts.get<pubsub::MaxDeadlineTimeOption>()),
-        retry_policy_(opts.get<pubsub::RetryPolicyOption>()->clone()),
-        backoff_policy_(opts.get<pubsub::BackoffPolicyOption>()->clone()),
+            options_.get<pubsub::MaxOutstandingMessagesOption>()),
+        max_outstanding_bytes_(
+            options_.get<pubsub::MaxOutstandingBytesOption>()),
+        max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()),
         ack_batching_config_(std::move(ack_batching_config)) {}
 
   ~StreamingSubscriptionBatchSource() override = default;
@@ -153,11 +153,10 @@ class StreamingSubscriptionBatchSource
   std::shared_ptr<SubscriberStub> const stub_;
   std::string const subscription_full_name_;
   std::string const client_id_;
+  Options options_;
   std::int64_t const max_outstanding_messages_;
   std::int64_t const max_outstanding_bytes_;
   std::chrono::seconds const max_deadline_time_;
-  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
-  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
   AckBatchingConfig const ack_batching_config_;
 
   std::mutex mu_;

@@ -30,6 +30,10 @@ namespace {
 using ::google::cloud::pubsub::Schema;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::_;
+using ::testing::Contains;
+using ::testing::Not;
+using ::testing::Pair;
 
 class SchemaMetadataTest : public ::testing::Test {
  protected:
@@ -37,6 +41,22 @@ class SchemaMetadataTest : public ::testing::Test {
                           std::string const& method) {
     return validate_metadata_fixture_.IsContextMDValid(
         context, method, google::cloud::internal::ApiClientHeader());
+  }
+
+  void ValidateNoUserProject(grpc::ClientContext& context) {
+    auto md = validate_metadata_fixture_.GetMetadata(context);
+    EXPECT_THAT(md, Not(Contains(Pair("x-goog-user-project", _))));
+  }
+
+  void ValidateTestUserProject(grpc::ClientContext& context) {
+    auto md = validate_metadata_fixture_.GetMetadata(context);
+    EXPECT_THAT(md, Contains(Pair("x-goog-user-project", "test-project")));
+  }
+
+  static Options TestOptions(std::string const& user_project) {
+    return user_project.empty()
+               ? Options{}
+               : Options{}.set<UserProjectOption>("test-project");
   }
 
  private:
@@ -52,13 +72,27 @@ TEST_F(SchemaMetadataTest, CreateSchema) {
                         context, "google.pubsub.v1.SchemaService.CreateSchema"),
                     IsOk());
         return make_status_or(google::pubsub::v1::Schema{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::CreateSchemaRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::Schema{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::CreateSchemaRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::Schema{});
       });
+
   SchemaMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::CreateSchemaRequest request;
-  request.set_parent("projects/test-project");
-  auto status = stub.CreateSchema(context, request);
-  EXPECT_THAT(status, IsOk());
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::CreateSchemaRequest request;
+    request.set_parent("projects/test-project");
+    auto status = stub.CreateSchema(context, request);
+    EXPECT_THAT(status, IsOk());
+  }
 }
 
 TEST_F(SchemaMetadataTest, GetSchema) {
@@ -70,13 +104,27 @@ TEST_F(SchemaMetadataTest, GetSchema) {
                         context, "google.pubsub.v1.SchemaService.GetSchema"),
                     IsOk());
         return make_status_or(google::pubsub::v1::Schema{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::GetSchemaRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::Schema{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::GetSchemaRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::Schema{});
       });
+
   SchemaMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::GetSchemaRequest request;
-  request.set_name(Schema("test-project", "test-schema").FullName());
-  auto status = stub.GetSchema(context, request);
-  EXPECT_THAT(status, IsOk());
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::GetSchemaRequest request;
+    request.set_name(Schema("test-project", "test-schema").FullName());
+    auto status = stub.GetSchema(context, request);
+    EXPECT_THAT(status, IsOk());
+  }
 }
 
 TEST_F(SchemaMetadataTest, ListSchemas) {
@@ -88,13 +136,27 @@ TEST_F(SchemaMetadataTest, ListSchemas) {
                         context, "google.pubsub.v1.SchemaService.ListSchemas"),
                     IsOk());
         return make_status_or(google::pubsub::v1::ListSchemasResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListSchemasRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::ListSchemasResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListSchemasRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::ListSchemasResponse{});
       });
+
   SchemaMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::ListSchemasRequest request;
-  request.set_parent("projects/test-project");
-  auto status = stub.ListSchemas(context, request);
-  EXPECT_THAT(status, IsOk());
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::ListSchemasRequest request;
+    request.set_parent("projects/test-project");
+    auto status = stub.ListSchemas(context, request);
+    EXPECT_THAT(status, IsOk());
+  }
 }
 
 TEST_F(SchemaMetadataTest, DeleteSchema) {
@@ -106,13 +168,27 @@ TEST_F(SchemaMetadataTest, DeleteSchema) {
                         context, "google.pubsub.v1.SchemaService.DeleteSchema"),
                     IsOk());
         return Status{};
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DeleteSchemaRequest const&) {
+        ValidateNoUserProject(context);
+        return Status{};
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DeleteSchemaRequest const&) {
+        ValidateTestUserProject(context);
+        return Status{};
       });
+
   SchemaMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::DeleteSchemaRequest request;
-  request.set_name(Schema("test-project", "test-schema").FullName());
-  auto status = stub.DeleteSchema(context, request);
-  EXPECT_THAT(status, IsOk());
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::DeleteSchemaRequest request;
+    request.set_name(Schema("test-project", "test-schema").FullName());
+    auto status = stub.DeleteSchema(context, request);
+    EXPECT_THAT(status, IsOk());
+  }
 }
 
 TEST_F(SchemaMetadataTest, ValidateSchema) {
@@ -125,13 +201,27 @@ TEST_F(SchemaMetadataTest, ValidateSchema) {
                              "google.pubsub.v1.SchemaService.ValidateSchema"),
             IsOk());
         return make_status_or(google::pubsub::v1::ValidateSchemaResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ValidateSchemaRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::ValidateSchemaResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ValidateSchemaRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::ValidateSchemaResponse{});
       });
+
   SchemaMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::ValidateSchemaRequest request;
-  request.set_parent("projects/test-project");
-  auto status = stub.ValidateSchema(context, request);
-  EXPECT_THAT(status, IsOk());
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::ValidateSchemaRequest request;
+    request.set_parent("projects/test-project");
+    auto status = stub.ValidateSchema(context, request);
+    EXPECT_THAT(status, IsOk());
+  }
 }
 
 TEST_F(SchemaMetadataTest, ValidateMessage) {
@@ -144,13 +234,27 @@ TEST_F(SchemaMetadataTest, ValidateMessage) {
                              "google.pubsub.v1.SchemaService.ValidateMessage"),
             IsOk());
         return make_status_or(google::pubsub::v1::ValidateMessageResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ValidateMessageRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::ValidateMessageResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ValidateMessageRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::ValidateMessageResponse{});
       });
+
   SchemaMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::ValidateMessageRequest request;
-  request.set_parent("projects/test-project");
-  auto status = stub.ValidateMessage(context, request);
-  EXPECT_THAT(status, IsOk());
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::ValidateMessageRequest request;
+    request.set_parent("projects/test-project");
+    auto status = stub.ValidateMessage(context, request);
+    EXPECT_THAT(status, IsOk());
+  }
 }
 
 }  // namespace

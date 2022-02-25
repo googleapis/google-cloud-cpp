@@ -29,6 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::_;
+using ::testing::Contains;
+using ::testing::Not;
+using ::testing::Pair;
 
 class PublisherMetadataTest : public ::testing::Test {
  protected:
@@ -36,6 +40,22 @@ class PublisherMetadataTest : public ::testing::Test {
                           std::string const& method) {
     return validate_metadata_fixture_.IsContextMDValid(
         context, method, google::cloud::internal::ApiClientHeader());
+  }
+
+  void ValidateNoUserProject(grpc::ClientContext& context) {
+    auto md = validate_metadata_fixture_.GetMetadata(context);
+    EXPECT_THAT(md, Not(Contains(Pair("x-goog-user-project", _))));
+  }
+
+  void ValidateTestUserProject(grpc::ClientContext& context) {
+    auto md = validate_metadata_fixture_.GetMetadata(context);
+    EXPECT_THAT(md, Contains(Pair("x-goog-user-project", "test-project")));
+  }
+
+  static Options TestOptions(std::string const& user_project) {
+    return user_project.empty()
+               ? Options{}
+               : Options{}.set<UserProjectOption>("test-project");
   }
 
  private:
@@ -50,14 +70,27 @@ TEST_F(PublisherMetadataTest, CreateTopic) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.pubsub.v1.Publisher.CreateTopic"));
         return make_status_or(google::pubsub::v1::Topic{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::Topic const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::Topic{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::Topic const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::Topic{});
       });
 
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::Topic topic;
-  topic.set_name(pubsub::Topic("test-project", "test-topic").FullName());
-  auto status = stub.CreateTopic(context, topic);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::Topic topic;
+    topic.set_name(pubsub::Topic("test-project", "test-topic").FullName());
+    auto status = stub.CreateTopic(context, topic);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, GetTopic) {
@@ -68,13 +101,27 @@ TEST_F(PublisherMetadataTest, GetTopic) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context, "google.pubsub.v1.Publisher.GetTopic"));
         return make_status_or(google::pubsub::v1::Topic{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::GetTopicRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::Topic{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::GetTopicRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::Topic{});
       });
+
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::GetTopicRequest request;
-  request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
-  auto status = stub.GetTopic(context, request);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::GetTopicRequest request;
+    request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
+    auto status = stub.GetTopic(context, request);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, UpdateTopic) {
@@ -85,14 +132,28 @@ TEST_F(PublisherMetadataTest, UpdateTopic) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.pubsub.v1.Publisher.UpdateTopic"));
         return make_status_or(google::pubsub::v1::Topic{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::UpdateTopicRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::Topic{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::UpdateTopicRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::Topic{});
       });
+
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::UpdateTopicRequest request;
-  request.mutable_topic()->set_name(
-      pubsub::Topic("test-project", "test-topic").FullName());
-  auto status = stub.UpdateTopic(context, request);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::UpdateTopicRequest request;
+    request.mutable_topic()->set_name(
+        pubsub::Topic("test-project", "test-topic").FullName());
+    auto status = stub.UpdateTopic(context, request);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, ListTopics) {
@@ -103,13 +164,27 @@ TEST_F(PublisherMetadataTest, ListTopics) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context, "google.pubsub.v1.Publisher.ListTopics"));
         return make_status_or(google::pubsub::v1::ListTopicsResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListTopicsRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::ListTopicsResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListTopicsRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::ListTopicsResponse{});
       });
+
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::ListTopicsRequest request;
-  request.set_project("projects/test-project");
-  auto status = stub.ListTopics(context, request);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::ListTopicsRequest request;
+    request.set_project("projects/test-project");
+    auto status = stub.ListTopics(context, request);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, DeleteTopic) {
@@ -120,13 +195,27 @@ TEST_F(PublisherMetadataTest, DeleteTopic) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.pubsub.v1.Publisher.DeleteTopic"));
         return Status{};
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DeleteTopicRequest const&) {
+        ValidateNoUserProject(context);
+        return Status{};
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DeleteTopicRequest const&) {
+        ValidateTestUserProject(context);
+        return Status{};
       });
+
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::DeleteTopicRequest request;
-  request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
-  auto status = stub.DeleteTopic(context, request);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::DeleteTopicRequest request;
+    request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
+    auto status = stub.DeleteTopic(context, request);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, DetachSubscription) {
@@ -137,14 +226,28 @@ TEST_F(PublisherMetadataTest, DetachSubscription) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.pubsub.v1.Publisher.DetachSubscription"));
         return make_status_or(google::pubsub::v1::DetachSubscriptionResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DetachSubscriptionRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::DetachSubscriptionResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::DetachSubscriptionRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::DetachSubscriptionResponse{});
       });
+
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::DetachSubscriptionRequest request;
-  request.set_subscription(
-      pubsub::Subscription("test-project", "test-subscription").FullName());
-  auto status = stub.DetachSubscription(context, request);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::DetachSubscriptionRequest request;
+    request.set_subscription(
+        pubsub::Subscription("test-project", "test-subscription").FullName());
+    auto status = stub.DetachSubscription(context, request);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, ListTopicSubscriptions) {
@@ -157,13 +260,31 @@ TEST_F(PublisherMetadataTest, ListTopicSubscriptions) {
                 context, "google.pubsub.v1.Publisher.ListTopicSubscriptions"));
             return make_status_or(
                 google::pubsub::v1::ListTopicSubscriptionsResponse{});
+          })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::ListTopicSubscriptionsRequest const&) {
+            ValidateNoUserProject(context);
+            return make_status_or(
+                google::pubsub::v1::ListTopicSubscriptionsResponse{});
+          })
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::pubsub::v1::ListTopicSubscriptionsRequest const&) {
+            ValidateTestUserProject(context);
+            return make_status_or(
+                google::pubsub::v1::ListTopicSubscriptionsResponse{});
           });
+
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::ListTopicSubscriptionsRequest request;
-  request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
-  auto status = stub.ListTopicSubscriptions(context, request);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::ListTopicSubscriptionsRequest request;
+    request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
+    auto status = stub.ListTopicSubscriptions(context, request);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, ListTopicSnapshots) {
@@ -174,13 +295,27 @@ TEST_F(PublisherMetadataTest, ListTopicSnapshots) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.pubsub.v1.Publisher.ListTopicSnapshots"));
         return make_status_or(google::pubsub::v1::ListTopicSnapshotsResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListTopicSnapshotsRequest const&) {
+        ValidateNoUserProject(context);
+        return make_status_or(google::pubsub::v1::ListTopicSnapshotsResponse{});
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::pubsub::v1::ListTopicSnapshotsRequest const&) {
+        ValidateTestUserProject(context);
+        return make_status_or(google::pubsub::v1::ListTopicSnapshotsResponse{});
       });
+
   PublisherMetadata stub(mock);
-  grpc::ClientContext context;
-  google::pubsub::v1::ListTopicSnapshotsRequest request;
-  request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
-  auto status = stub.ListTopicSnapshots(context, request);
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    grpc::ClientContext context;
+    google::pubsub::v1::ListTopicSnapshotsRequest request;
+    request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
+    auto status = stub.ListTopicSnapshots(context, request);
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 TEST_F(PublisherMetadataTest, AsyncPublish) {
@@ -193,15 +328,33 @@ TEST_F(PublisherMetadataTest, AsyncPublish) {
             IsContextMDValid(*context, "google.pubsub.v1.Publisher.Publish"));
         return make_ready_future(
             make_status_or(google::pubsub::v1::PublishResponse{}));
+      })
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       google::pubsub::v1::PublishRequest const&) {
+        ValidateNoUserProject(*context);
+        return make_ready_future(
+            make_status_or(google::pubsub::v1::PublishResponse{}));
+      })
+      .WillOnce([this](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext> context,
+                       google::pubsub::v1::PublishRequest const&) {
+        ValidateTestUserProject(*context);
+        return make_ready_future(
+            make_status_or(google::pubsub::v1::PublishResponse{}));
       });
+
   PublisherMetadata stub(mock);
-  google::cloud::CompletionQueue cq;
-  google::pubsub::v1::PublishRequest request;
-  request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
-  auto status =
-      stub.AsyncPublish(cq, absl::make_unique<grpc::ClientContext>(), request)
-          .get();
-  EXPECT_STATUS_OK(status);
+  for (auto const* user_project : {"", "", "test-project"}) {
+    internal::OptionsSpan span(TestOptions(user_project));
+    google::cloud::CompletionQueue cq;
+    google::pubsub::v1::PublishRequest request;
+    request.set_topic(pubsub::Topic("test-project", "test-topic").FullName());
+    auto status =
+        stub.AsyncPublish(cq, absl::make_unique<grpc::ClientContext>(), request)
+            .get();
+    EXPECT_STATUS_OK(status);
+  }
 }
 
 }  // namespace
