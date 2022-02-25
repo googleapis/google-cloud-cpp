@@ -37,17 +37,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     configure `bigtable_admin::BigtableInstanceAdminClient`, instead of using
  *     this class to configure `bigtable::InstanceAdmin`.
  */
-class InstanceAdminClient {
+class InstanceAdminClient final {
  public:
   virtual ~InstanceAdminClient() = default;
 
   /// The project id that this AdminClient works on.
-  virtual std::string const& project() const = 0;
+  virtual std::string const& project() { return project_; }
 
  private:
   friend class InstanceAdmin;
-  virtual std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
-  connection() = 0;
+  friend std::shared_ptr<InstanceAdminClient> MakeInstanceAdminClient(
+      std::string, Options);
+
+  InstanceAdminClient(std::string project, Options options)
+      : project_(std::move(project)),
+        connection_(bigtable_admin::MakeBigtableInstanceAdminConnection(
+            std::move(options))) {}
+
+  std::string project_;
+  std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
 };
 
 /// Create a new instance admin client configured via @p options.
