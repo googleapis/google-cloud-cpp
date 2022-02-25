@@ -189,7 +189,7 @@ struct RequestTagOption {
 /**
  * Option for `google::cloud::Options` to set the name of an index on a
  * database table. This index is used instead of the table primary key when
- * interpreting the `KeySet`and sorting result rows.
+ * interpreting the `KeySet` and sorting result rows.
  */
 struct ReadIndexNameOption {
   using Type = std::string;
@@ -197,7 +197,8 @@ struct ReadIndexNameOption {
 
 /**
  * Option for `google::cloud::Options` to set a limit on the number of rows
- * to yield from `Client::Read()`.
+ * to yield from `Client::Read()`. There is no limit when the option is unset,
+ * or when it is set to 0.
  */
 struct ReadRowLimitOption {
   using Type = std::int64_t;

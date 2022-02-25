@@ -317,14 +317,6 @@ class Client {
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       Transaction transaction, std::string table, KeySet keys,
       std::vector<std::string> columns,
-      std::initializer_list<internal::NonConstructible>,
-      std::initializer_list<internal::NonConstructible>) {
-    return PartitionRead(std::move(transaction), std::move(table),
-                         std::move(keys), std::move(columns));
-  }
-  StatusOr<std::vector<ReadPartition>> PartitionRead(
-      Transaction transaction, std::string table, KeySet keys,
-      std::vector<std::string> columns,
       std::initializer_list<internal::NonConstructible>) {
     return PartitionRead(std::move(transaction), std::move(table),
                          std::move(keys), std::move(columns));
