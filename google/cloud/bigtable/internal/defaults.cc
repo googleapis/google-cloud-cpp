@@ -164,6 +164,9 @@ Options DefaultDataOptions(Options opts) {
   if (user_project && !user_project->empty()) {
     opts.set<UserProjectOption>(*std::move(user_project));
   }
+  if (!opts.has<AuthorityOption>()) {
+    opts.set<AuthorityOption>("bigtable.googleapis.com");
+  }
   opts = DefaultOptions(std::move(opts));
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
 }
