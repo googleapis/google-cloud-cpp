@@ -155,30 +155,6 @@ TEST(OptionsTest, DefaultTableAdminOptions) {
   EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
 }
 
-TEST(OptionsTest, InstanceAdminUserProjectOption) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
-  auto options = DefaultInstanceAdminOptions(
-      Options{}.set<UserProjectOption>("test-project"));
-  EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
-
-  env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
-  options = DefaultInstanceAdminOptions(
-      Options{}.set<UserProjectOption>("test-project"));
-  EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
-}
-
-TEST(OptionsTest, TableAdminUserProjectOption) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
-  auto options = DefaultTableAdminOptions(
-      Options{}.set<UserProjectOption>("test-project"));
-  EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
-
-  env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
-  options = DefaultTableAdminOptions(
-      Options{}.set<UserProjectOption>("test-project"));
-  EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
-}
-
 TEST(OptionsTest, DataUserProjectOption) {
   auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
   auto options =
