@@ -29,11 +29,14 @@ void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
 
   StartWriteTimer();
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
-    StartStream(retry_policy_->clone(), backoff_policy_->clone());
+    StartStream(options_.get<pubsub::RetryPolicyOption>()->clone(),
+                options_.get<pubsub::BackoffPolicyOption>()->clone());
   });
 }
 
 void StreamingSubscriptionBatchSource::Shutdown() {
+  internal::OptionsSpan span(options_);
+
   std::unique_lock<std::mutex> lk(mu_);
   if (shutdown_ || !stream_) return;
   shutdown_ = true;
@@ -41,6 +44,8 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 }
 
 void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
+  internal::OptionsSpan span(options_);
+
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
@@ -49,6 +54,8 @@ void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
 }
 
 void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
+  internal::OptionsSpan span(options_);
+
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
@@ -59,6 +66,8 @@ void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
 
 void StreamingSubscriptionBatchSource::BulkNack(
     std::vector<std::string> ack_ids) {
+  internal::OptionsSpan span(options_);
+
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   for (auto& a : ack_ids) *request.add_ack_ids() = std::move(a);
@@ -79,7 +88,9 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
 void StreamingSubscriptionBatchSource::StartStream(
     std::shared_ptr<pubsub::RetryPolicy> retry_policy,
     std::shared_ptr<pubsub::BackoffPolicy> backoff_policy) {
-  // Starting a stream is a 4 step process.
+  internal::OptionsSpan span(options_);
+
+  // Starting a stream is a 4-step process.
   // 1. Create a new SubscriberStub::AsyncPullStream object.
   // 2. Call Start() on it, which is asynchronous, which might fail, but rarely
   //    does
@@ -303,7 +314,8 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
   if (shutdown_manager_->FinishedOperation("stream")) return;
   lk.unlock();
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
-    StartStream(retry_policy_->clone(), backoff_policy_->clone());
+    StartStream(options_.get<pubsub::RetryPolicyOption>()->clone(),
+                options_.get<pubsub::BackoffPolicyOption>()->clone());
   });
 }
 

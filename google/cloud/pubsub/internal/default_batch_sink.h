@@ -32,10 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DefaultBatchSink : public BatchSink {
  public:
   static std::shared_ptr<DefaultBatchSink> Create(
-      std::shared_ptr<PublisherStub> stub, CompletionQueue cq,
-      Options const& opts) {
+      std::shared_ptr<PublisherStub> stub, CompletionQueue cq, Options opts) {
     return std::shared_ptr<DefaultBatchSink>(
-        new DefaultBatchSink(std::move(stub), std::move(cq), opts));
+        new DefaultBatchSink(std::move(stub), std::move(cq), std::move(opts)));
   }
 
   ~DefaultBatchSink() override = default;
@@ -47,12 +46,11 @@ class DefaultBatchSink : public BatchSink {
 
  private:
   DefaultBatchSink(std::shared_ptr<PublisherStub> stub, CompletionQueue cq,
-                   Options const& opts);
+                   Options opts);
 
   std::shared_ptr<PublisherStub> stub_;
   CompletionQueue cq_;
-  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
-  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
