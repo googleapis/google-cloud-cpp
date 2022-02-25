@@ -381,7 +381,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     start_future = (*stream)->Start();
 
     auto start_future_result =
-        start_future.then([this, stream](future<bool> start_future) {
+        start_future.then([stream](future<bool> start_future) {
           if (start_future.get()) return make_ready_future(Status());
           return (*stream)->Finish();
         });
