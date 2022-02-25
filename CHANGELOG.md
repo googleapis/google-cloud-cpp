@@ -141,8 +141,8 @@ Again, we apologize for making this breaking change, but we believe it is in the
 best long-term interest of our customers.
 
 **BREAKING CHANGE:** The `bigtable::InstanceAdminClient` class has been marked
-as `final`. It should not be extended for mocking. Customers should instead use
-`bigtable_admin_mocks::MockBigtableInstanceAdminConnection` for mocking.
+as `final`. After the changes in [v1.36.0](#v1360---2022-02), there is no need
+or reason to be extending this class.
 
 ### New Libraries
 
