@@ -161,6 +161,9 @@ void CloudTasksMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
+  if (options.has<AuthorityOption>()) {
+    context.set_authority(options.get<AuthorityOption>());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

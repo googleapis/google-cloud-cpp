@@ -31,7 +31,9 @@ int main(int argc, char* argv[]) try {
   if (!endpoint) throw std::runtime_error(endpoint.status().message());
   auto client =
       pubsublite::AdminServiceClient(pubsublite::MakeAdminServiceConnection(
-          gc::Options{}.set<gc::EndpointOption>(*endpoint)));
+          gc::Options{}
+              .set<gc::EndpointOption>(*endpoint)
+              .set<gc::AuthorityOption>(*endpoint)));
   auto const parent =
       std::string{"projects/"} + argv[1] + "/locations/" + zone_id;
   for (auto const& topic : client.ListTopics(parent)) {
