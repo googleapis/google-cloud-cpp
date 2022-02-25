@@ -80,10 +80,25 @@ struct UserProjectOption {
 };
 
 /**
+ * Configure the "authority" attribute.
+ *
+ * For gRPC requests this is the `authority()` field in the
+ * `grpc::ClientContext`. This configures the :authority pseudo-header in the
+ * HTTP/2 request.
+ *     https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2.3
+ *
+ * For REST-based services using HTTP/1.1 or HTTP/1.0 this is the `Host` header.
+ */
+struct AuthorityOption {
+  using Type = std::string;
+};
+
+/**
  * A list of all the common options.
  */
-using CommonOptionList = OptionList<EndpointOption, UserAgentProductsOption,
-                                    TracingComponentsOption, UserProjectOption>;
+using CommonOptionList =
+    OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
+               UserProjectOption, AuthorityOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

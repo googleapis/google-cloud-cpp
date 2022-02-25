@@ -37,8 +37,11 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
     } else {
-      opts.set<EndpointOption>(std::move(default_endpoint));
+      opts.set<EndpointOption>(default_endpoint);
     }
+  }
+  if (!opts.has<AuthorityOption>()) {
+    opts.set<AuthorityOption>(std::move(default_endpoint));
   }
   auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
   if (e && !e->empty()) opts.set<UserProjectOption>(*std::move(e));
