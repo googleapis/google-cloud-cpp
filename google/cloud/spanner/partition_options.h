@@ -17,8 +17,10 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/options.h"
 #include "absl/types/optional.h"
 #include <google/spanner/v1/spanner.pb.h>
+#include <cstdint>
 
 namespace google {
 namespace cloud {
@@ -62,6 +64,12 @@ inline bool operator==(PartitionOptions const& a, PartitionOptions const& b) {
 inline bool operator!=(PartitionOptions const& a, PartitionOptions const& b) {
   return !(a == b);
 }
+
+/// Converts `PartitionOptions` to common `Options`.
+Options ToOptions(PartitionOptions const&);
+
+/// Converts common `Options` to `PartitionOptions`.
+PartitionOptions ToPartitionOptions(Options const&);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
