@@ -48,10 +48,9 @@ using AsyncStreamFactory = std::function<
  * from AsyncStreamFactory.
  */
 template <typename RequestType, typename ResponseType>
-using StreamInitializer = std::function<future<StatusOr<std::shared_ptr<
-    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>>(
-    std::shared_ptr<std::unique_ptr<
-        AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>)>;
+using StreamInitializer = std::function<future<StatusOr<
+    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>>>(
+    std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>)>;
 
 using AsyncSleeper = std::function<future<void>(std::chrono::milliseconds)>;
 
@@ -344,23 +343,21 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     CompleteUnsatisfiedOps(status, lk);
   }
 
-  void OnInitialize(
-      StatusOr<std::shared_ptr<UnderlyingStream>> start_initialize_response,
-      std::shared_ptr<UnderlyingStream> stream,
-      std::shared_ptr<RetryPolicy> retry_policy,
-      std::shared_ptr<BackoffPolicy> backoff_policy) {
+  void OnInitialize(StatusOr<UnderlyingStream> start_initialize_response,
+                    std::shared_ptr<RetryPolicy> retry_policy,
+                    std::shared_ptr<BackoffPolicy> backoff_policy) {
     if (!start_initialize_response.ok()) {
       AttemptRetry(std::move(start_initialize_response.status()), retry_policy,
                    backoff_policy);
       return;
     }
-
+    auto stream = std::move(*start_initialize_response);
     {
       std::unique_lock<std::mutex> lk{mu_};
       if (stream_state_ == State::kShutdown) {
-        (*stream)->Finish().then([](future<Status>) {});
+        stream->Finish().then([](future<Status>) {});
       } else {
-        stream_ = std::move(**start_initialize_response);
+        stream_ = std::move(stream);
         stream_state_ = State::kInitialized;
       }
       FinishRetryPromise(lk);
@@ -377,7 +374,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         return FinishRetryPromise(lk);
       }
     }
-    auto stream = std::make_shared<UnderlyingStream>(stream_factory_());
+    std::shared_ptr<UnderlyingStream> stream =
+        std::make_shared<UnderlyingStream>(stream_factory_());
     start_future = (*stream)->Start();
 
     auto start_future_result =
@@ -390,18 +388,15 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         start_future_result.then([this, stream](future<Status> future_status) {
           Status status = future_status.get();
           if (!status.ok()) {
-            return make_ready_future(
-                StatusOr<std::shared_ptr<UnderlyingStream>>(status));
+            return make_ready_future(StatusOr<UnderlyingStream>(status));
           }
-          return initializer_(stream);
+          return initializer_(std::move(*stream));
         });
 
     initializer_future.then(
-        [this, stream, retry_policy,
-         backoff_policy](future<StatusOr<std::shared_ptr<UnderlyingStream>>>
-                             initialize_future) {
-          OnInitialize(initialize_future.get(), stream, retry_policy,
-                       backoff_policy);
+        [this, retry_policy,
+         backoff_policy](future<StatusOr<UnderlyingStream>> initialize_future) {
+          OnInitialize(initialize_future.get(), retry_policy, backoff_policy);
         });
   }
 
