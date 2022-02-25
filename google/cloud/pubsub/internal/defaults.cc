@@ -18,6 +18,8 @@
 #include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
 #include <chrono>
@@ -39,25 +41,12 @@ std::size_t DefaultThreadCount() {
 }
 
 Options DefaultCommonOptions(Options opts) {
-  auto emulator = internal::GetEnv("PUBSUB_EMULATOR_HOST");
-  if (emulator.has_value()) {
-    opts.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
-        grpc::InsecureChannelCredentials());
-  }
-  if (!opts.has<EndpointOption>()) {
-    opts.set<EndpointOption>("pubsub.googleapis.com");
-  }
-  if (!opts.has<GrpcCredentialOption>()) {
-    opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
+  opts = internal::PopulateCommonOptions(
+      std::move(opts), "", "PUBSUB_EMULATOR_HOST", "pubsub.googleapis.com");
+  opts = internal::PopulateGrpcOptions(std::move(opts), "PUBSUB_EMULATOR_HOST");
+
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(static_cast<int>(DefaultThreadCount()));
-  }
-  if (!opts.has<TracingComponentsOption>()) {
-    opts.set<TracingComponentsOption>(internal::DefaultTracingComponents());
-  }
-  if (!opts.has<GrpcTracingOptionsOption>()) {
-    opts.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
   }
   if (!opts.has<pubsub::RetryPolicyOption>()) {
     opts.set<pubsub::RetryPolicyOption>(
@@ -76,10 +65,6 @@ Options DefaultCommonOptions(Options opts) {
   // Enforce Constraints
   auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
   num_channels = (std::max)(num_channels, 1);
-
-  // Inserts our user-agent string at the front.
-  auto& products = opts.lookup<UserAgentProductsOption>();
-  products.insert(products.begin(), internal::UserAgentPrefix());
 
   return opts;
 }
