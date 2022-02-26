@@ -24,7 +24,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_testing {
 
-class MockBackoffPolicy : public BackoffPolicy {
+class MockBackoffPolicy : public google::cloud::internal::BackoffPolicy {
  public:
   MOCK_METHOD(std::unique_ptr<BackoffPolicy>, clone, (), (const override));
   MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
