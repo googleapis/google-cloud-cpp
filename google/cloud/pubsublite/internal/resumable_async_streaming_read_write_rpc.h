@@ -369,35 +369,35 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   void Initialize(std::shared_ptr<RetryPolicy> retry_policy,
                   std::shared_ptr<BackoffPolicy> backoff_policy) {
-    future<bool> start_future;
     {
       std::unique_lock<std::mutex> lk{mu_};
       if (stream_state_ == State::kShutdown) {
         return FinishRetryPromise(lk);
       }
     }
+
+    // Since we maintain `stream_` as a `std::unique_ptr<>` as explained below,
+    // we have to maintain the potential stream, `stream`, as only a
+    // `std::unique_ptr<>` as well. We need to support C++11, so to enable the
+    // following lambdas access to `stream`, we temporarily wrap the
+    // `std::unique_ptr<>` by a `std::shared_ptr<>`.
     std::shared_ptr<UnderlyingStream> stream =
         std::make_shared<UnderlyingStream>(stream_factory_());
-    start_future = (*stream)->Start();
-
-    auto start_future_result =
-        start_future.then([stream](future<bool> start_future) {
+    (*stream)
+        ->Start()
+        .then([stream](future<bool> start_future) {
           if (start_future.get()) return make_ready_future(Status());
           return (*stream)->Finish();
-        });
-
-    auto initializer_future =
-        start_future_result.then([this, stream](future<Status> future_status) {
+        })
+        .then([this, stream](future<Status> future_status) {
           Status status = future_status.get();
           if (!status.ok()) {
             return make_ready_future(StatusOr<UnderlyingStream>(status));
           }
           return initializer_(std::move(*stream));
-        });
-
-    initializer_future.then(
-        [this, retry_policy,
-         backoff_policy](future<StatusOr<UnderlyingStream>> initialize_future) {
+        })
+        .then([this, retry_policy, backoff_policy](
+                  future<StatusOr<UnderlyingStream>> initialize_future) {
           OnInitialize(initialize_future.get(), retry_policy, backoff_policy);
         });
   }
@@ -410,6 +410,12 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   std::mutex mu_;
 
+  // We maintain `stream_` as a `std::unique_ptr<>` so that we ensure that we
+  // are the sole owner of the stream. This is important to ensure that we
+  // maintain the constraints of the stream's API, ex. we have knowledge of all
+  // outstanding operations of `stream_`. A `std::shared_ptr<>` would allow the
+  // stream to be leaked through `initializer_`, preventing us from having that
+  // certainty.
   std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
       stream_;                             // ABSL_GUARDED_BY(mu_)
   State stream_state_ = State::kRetrying;  // ABSL_GUARDED_BY(mu_)
