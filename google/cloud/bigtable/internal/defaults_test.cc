@@ -167,6 +167,15 @@ TEST(OptionsTest, DataUserProjectOption) {
   EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
 }
 
+TEST(OptionsTest, DataAuthorityOption) {
+  auto options = DefaultDataOptions(Options{});
+  EXPECT_EQ(options.get<AuthorityOption>(), "bigtable.googleapis.com");
+
+  options = DefaultDataOptions(
+      Options{}.set<AuthorityOption>("custom-endpoint.googleapis.com"));
+  EXPECT_EQ(options.get<AuthorityOption>(), "custom-endpoint.googleapis.com");
+}
+
 TEST(EndpointEnvTest, EmulatorEnvOnly) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
 
