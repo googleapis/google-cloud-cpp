@@ -41,3 +41,7 @@ RUN pip3 install cmake_format==0.6.8
 RUN pip3 install black==19.3b0
 
 RUN cargo install typos-cli --version 1.3.9 --root /usr/local
+
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64" && \
+    chmod +x /usr/bin/bazelisk && \
+    ln -s /usr/bin/bazelisk /usr/bin/bazel
