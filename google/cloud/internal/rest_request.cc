@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_request.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/strings/strip.h"
 #include <cctype>
 
 namespace google {
@@ -35,6 +37,13 @@ RestRequest::RestRequest(std::string path, HttpHeaders headers,
 
 RestRequest& RestRequest::SetPath(std::string path) & {
   path_ = std::move(path);
+  return *this;
+}
+
+RestRequest& RestRequest::AppendPath(std::string path) & {
+  if (path_.empty()) return SetPath(std::move(path));
+  path_ = absl::StrCat(absl::StripSuffix(path_, "/"), "/",
+                       absl::StripPrefix(std::move(path), "/"));
   return *this;
 }
 
