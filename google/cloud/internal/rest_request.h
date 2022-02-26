@@ -51,6 +51,11 @@ class RestRequest {
     return std::move(SetPath(std::move(path)));
   }
 
+  RestRequest& AppendPath(std::string path) &;
+  inline RestRequest&& AppendPath(std::string path) && {
+    return std::move(AppendPath(std::move(path)));
+  }
+
   // Adding a header/value pair that already exists results in the new value
   // appended to the list of values for the existing header.
   RestRequest& AddHeader(std::string header, std::string value) &;
