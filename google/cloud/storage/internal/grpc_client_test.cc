@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -27,11 +28,14 @@ namespace internal {
 namespace {
 
 namespace v2 = ::google::storage::v2;
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
+
+auto constexpr kAuthority = "storage.googleapis.com";
 
 class GrpcClientTest : public ::testing::Test {
  protected:
@@ -60,6 +64,7 @@ TEST_F(GrpcClientTest, QueryResumableUpload) {
   EXPECT_CALL(*mock, QueryWriteStatus)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::QueryWriteStatusRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -83,6 +88,7 @@ TEST_F(GrpcClientTest, CreateBucket) {
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::storage::v2::CreateBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -105,6 +111,7 @@ TEST_F(GrpcClientTest, GetBucket) {
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([this](grpc::ClientContext& context,
                        google::storage::v2::GetBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -126,6 +133,7 @@ TEST_F(GrpcClientTest, DeleteBucket) {
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::storage::v2::DeleteBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -146,6 +154,7 @@ TEST_F(GrpcClientTest, ListBuckets) {
   EXPECT_CALL(*mock, ListBuckets)
       .WillOnce([this](grpc::ClientContext& context,
                        google::storage::v2::ListBucketsRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -167,6 +176,7 @@ TEST_F(GrpcClientTest, LockBucketRetentionPolicy) {
       .WillOnce(
           [this](grpc::ClientContext& context,
                  google::storage::v2::LockBucketRetentionPolicyRequest const&) {
+            EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
                         UnorderedElementsAre(
@@ -188,6 +198,7 @@ TEST_F(GrpcClientTest, UpdateBucket) {
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::storage::v2::UpdateBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -209,6 +220,7 @@ TEST_F(GrpcClientTest, PatchBucket) {
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::storage::v2::UpdateBucketRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -230,6 +242,7 @@ TEST_F(GrpcClientTest, GetBucketIamPolicy) {
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -250,6 +263,7 @@ TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -270,6 +284,7 @@ TEST_F(GrpcClientTest, SetBucketIamPolicy) {
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -292,6 +307,7 @@ TEST_F(GrpcClientTest, SetNativeBucketIamPolicy) {
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -314,6 +330,7 @@ TEST_F(GrpcClientTest, TestBucketIamPermissions) {
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::iam::v1::TestIamPermissionsRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -364,6 +381,7 @@ TEST_F(GrpcClientTest, CopyObject) {
   EXPECT_CALL(*mock, RewriteObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::RewriteObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -392,6 +410,7 @@ TEST_F(GrpcClientTest, CopyObjectTooLarge) {
   EXPECT_CALL(*mock, RewriteObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::RewriteObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -423,6 +442,7 @@ TEST_F(GrpcClientTest, GetObjectMetadata) {
   EXPECT_CALL(*mock, GetObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -466,6 +486,7 @@ TEST_F(GrpcClientTest, ListObjects) {
   EXPECT_CALL(*mock, ListObjects)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ListObjectsRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -487,6 +508,7 @@ TEST_F(GrpcClientTest, DeleteObject) {
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::storage::v2::DeleteObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -509,6 +531,7 @@ TEST_F(GrpcClientTest, UpdateObject) {
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::storage::v2::UpdateObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -535,6 +558,7 @@ TEST_F(GrpcClientTest, PatchObject) {
   EXPECT_CALL(*mock, UpdateObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::UpdateObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -559,6 +583,7 @@ TEST_F(GrpcClientTest, ComposeObject) {
   EXPECT_CALL(*mock, ComposeObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ComposeObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -581,6 +606,7 @@ TEST_F(GrpcClientTest, RewriteObject) {
   EXPECT_CALL(*mock, RewriteObject)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::RewriteObjectRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -609,6 +635,7 @@ TEST_F(GrpcClientTest, CreateResumableSession) {
   EXPECT_CALL(*mock, StartResumableWrite)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::StartResumableWriteRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
@@ -634,6 +661,7 @@ TEST_F(GrpcClientTest, GetServiceAccount) {
   EXPECT_CALL(*mock, GetServiceAccount)
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetServiceAccountRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
