@@ -42,13 +42,8 @@ RestRequest& RestRequest::SetPath(std::string path) & {
 
 RestRequest& RestRequest::AppendPath(std::string path) & {
   if (path_.empty()) return SetPath(std::move(path));
-  if (path_.back() != '/' && path.front() != '/') {
-    path_ = absl::StrCat(path_, "/", path);
-  } else if (path_.back() == '/' && path.front() == '/') {
-    path_ = absl::StrCat(path_, absl::StripPrefix(path, "/"));
-  } else {
-    path_ = absl::StrCat(path_, path);
-  }
+  path_ = absl::StrCat(absl::StripSuffix(path_, "/"), "/",
+                       absl::StripPrefix(std::move(path), "/"));
   return *this;
 }
 
