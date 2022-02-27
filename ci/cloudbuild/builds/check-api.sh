@@ -24,9 +24,9 @@ export CXX=g++
 mapfile -t cmake_args < <(cmake::common_args)
 
 mapfile -t feature_list < <(bazelisk --batch query \
-    --noshow_progress --noshow_loading_progress \
-    'kind(cc_library, //:all) except filter("experimental|mocks", kind(cc_library, //:all))' | \
-    sed -e 's;//:;;')
+  --noshow_progress --noshow_loading_progress \
+  'kind(cc_library, //:all) except filter("experimental|mocks", kind(cc_library, //:all))' |
+  sed -e 's;//:;;')
 enabled="$(printf ";%s" "${feature_list[@]}")"
 echo "${enabled:1}"
 
