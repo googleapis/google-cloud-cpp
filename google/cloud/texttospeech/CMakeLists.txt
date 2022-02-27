@@ -18,7 +18,7 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Text-to-Speech API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF
     "A C++ Client Library for the Cloud Text-to-Speech API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "texttospeech_internal"
                             "texttospeech_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)

@@ -1,14 +1,10 @@
 # Network Management API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Network Management API][cloud-service-docs]. Provides a collection of network
 performance monitoring and diagnostic capabilities.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

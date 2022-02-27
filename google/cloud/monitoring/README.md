@@ -1,7 +1,5 @@
 # Cloud Monitoring API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Monitoring API][cloud-service-docs], a service to manage your Cloud
 Monitoring data and configurations. This library is used to interact with the
@@ -9,9 +7,7 @@ Cloud Monitoring API directly. If you are looking to instrument your application
 for Cloud Monitoring, we recommend using
 [OpenTelemetry](https://opentelemetry.io) or a similar framework.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

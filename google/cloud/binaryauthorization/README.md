@@ -1,14 +1,10 @@
 # Binary Authorization API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Binary Authorization API][cloud-service-docs]. Binary Authorization is a system
 providing policy control for images deployed to Kubernetes Engine clusters.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

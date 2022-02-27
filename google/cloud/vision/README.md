@@ -1,16 +1,12 @@
 # Cloud Vision API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Vision API][cloud-service-docs]. Integrate Google Vision
 features, including image labeling, face, logo, and landmark detection, optical
 character recognition (OCR), and detection of explicit content, into
 applications.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Game Services API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Game Services API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "gameservices_internal"
                             "gameservices_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)

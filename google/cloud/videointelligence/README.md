@@ -1,15 +1,11 @@
 # Cloud Video Intelligence API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Video Intelligence API][cloud-service], a service to detect objects,
 explicit content, and scene changes in videos. It also specifies the region for
 annotation and transcribes speech to text.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

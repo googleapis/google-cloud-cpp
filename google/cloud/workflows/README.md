@@ -1,14 +1,10 @@
 # Workflow Executions API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Workflows API][cloud-service-docs], a service to orchestrate and automate
 Google Cloud and HTTP-based API services with serverless workflows.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

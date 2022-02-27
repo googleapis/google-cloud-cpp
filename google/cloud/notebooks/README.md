@@ -1,15 +1,11 @@
 # Notebooks API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Notebooks API][cloud-service-docs]. Use this API to programmatically manage
 notebooks in Google Cloud. Learn more about notebooks at the
 [Vertex AI Workbench] site.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

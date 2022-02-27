@@ -1,15 +1,11 @@
 # Cloud Asset API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Asset API][cloud-service-docs], a metadata inventory service that allows
 you to view, monitor, and analyze all your GCP and Anthos assets across projects
 and services.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

@@ -8,7 +8,7 @@ Service API is a highly-available, scalable service that enables you to simplify
 and automate the management of private certificate authorities (CAs) while
 staying in control of your private keys.
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]

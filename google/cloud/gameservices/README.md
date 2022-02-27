@@ -1,14 +1,10 @@
 # Game Services API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Game Services API][cloud-service-docs], a service to deploy and manage
 infrastructure for global multiplayer gaming experiences.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

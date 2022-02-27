@@ -1,15 +1,11 @@
 # Cloud Channel API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the [Cloud Channel
 API][cloud-service-docs], a service that enables Google Cloud partners to have
 a single unified resale platform and APIs across all of Google Cloud including
 GCP, Workspace, Maps and Chrome.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

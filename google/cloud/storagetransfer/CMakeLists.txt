@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Storage Transfer API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Storage Transfer API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "storagetransfer_internal"
                             "storagetransfer_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
