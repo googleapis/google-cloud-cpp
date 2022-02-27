@@ -25,7 +25,6 @@ set -euo pipefail
   echo '```'
   sed -n '/<!-- inject-quickstart-end -->/,$p' "README.md"
 ) >"README.md.tmp"
-mv "README.md.tmp" "README.md"
 
 (
   mapfile -t libraries < <(bazelisk --batch query \
@@ -33,12 +32,13 @@ mv "README.md.tmp" "README.md"
     'kind(cc_library, //:all) except filter("experimental|mocks", kind(cc_library, //:all))' |
     sed -e 's;//:;;' |
     LC_ALL=C sort)
-  sed '/<!-- inject-GA-libraries-start -->/q' "README.md"
+  sed '/<!-- inject-GA-libraries-start -->/q' "README.md.tmp"
   for library in "${libraries[@]}"; do
     description="$(sed -n '1 s/# \(.*\) C++ Client Library/\1/p' "google/cloud/${library}/README.md")"
     printf '* [%s](google/cloud/%s/README.md) [[quickstart]](google/cloud/%s/quickstart/README.md)\n' \
       "${description}" "${library}" "${library}"
   done
-  sed -n '/<!-- inject-GA-libraries-end -->/,$p' "README.md"
-) >"README.md.tmp"
-mv "README.md.tmp" "README.md"
+  sed -n '/<!-- inject-GA-libraries-end -->/,$p' "README.md.tmp"
+) >"README.md"
+
+rm README.md.tmp
