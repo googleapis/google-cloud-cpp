@@ -150,8 +150,8 @@ All the `spanner::Client` operations now take optional `google::cloud::Options`
 arguments, replacing the existing `ClientOptions`, `CommitOptions`,
 `PartitionOptions`, `QueryOptions`, and `ReadOptions` arguments, or adding
 options to operations that previously had none. Users should migrate to these
-new overloads (although no deprecation schedule for the old interfaces has been
-announced).
+new overloads. (Note that the old `spanner::*Options` types have not been
+deprecated as they are still used in the `spanner::Connection` interface.)
 
 ### New Libraries
 
