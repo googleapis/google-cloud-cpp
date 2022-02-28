@@ -101,38 +101,42 @@ class CurlClientTest : public ::testing::Test,
 TEST(CurlClientStandaloneFunctions, HostHeader) {
   struct Test {
     std::string endpoint;
+    std::string authority;
     std::string service;
     std::string expected;
   } cases[] = {
-      {"https://storage.googleapis.com", "storage",
+      {"https://storage.googleapis.com", "", "storage",
        "Host: storage.googleapis.com"},
-      {"https://storage.googleapis.com:443", "storage",
+      {"https://storage.googleapis.com", "auth", "storage", "Host: auth"},
+      {"https://storage.googleapis.com:443", "", "storage",
        "Host: storage.googleapis.com"},
-      {"https://restricted.googleapis.com", "storage",
+      {"https://restricted.googleapis.com", "", "storage",
        "Host: storage.googleapis.com"},
-      {"https://private.googleapis.com", "storage",
+      {"https://private.googleapis.com", "", "storage",
        "Host: storage.googleapis.com"},
-      {"https://restricted.googleapis.com", "iamcredentials",
+      {"https://restricted.googleapis.com", "", "iamcredentials",
        "Host: iamcredentials.googleapis.com"},
-      {"https://private.googleapis.com", "iamcredentials",
+      {"https://private.googleapis.com", "", "iamcredentials",
        "Host: iamcredentials.googleapis.com"},
-      {"http://localhost:8080", "", ""},
-      {"http://[::1]", "", ""},
-      {"http://[::1]/", "", ""},
-      {"http://[::1]/foo/bar", "", ""},
-      {"http://[::1]:8080/", "", ""},
-      {"http://[::1]:8080/foo/bar", "", ""},
-      {"http://localhost:8080", "", ""},
-      {"https://storage-download.127.0.0.1.nip.io/xmlapi/", "", ""},
-      {"https://gcs.127.0.0.1.nip.io/storage/v1/", "", ""},
-      {"https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/", "", ""},
-      {"https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/", "", ""},
+      {"http://localhost:8080", "", "", ""},
+      {"http://localhost:8080", "auth", "", "Host: auth"},
+      {"http://[::1]", "", "", ""},
+      {"http://[::1]/", "", "", ""},
+      {"http://[::1]/foo/bar", "", "", ""},
+      {"http://[::1]:8080/", "", "", ""},
+      {"http://[::1]:8080/foo/bar", "", "", ""},
+      {"http://localhost:8080", "", "", ""},
+      {"https://storage-download.127.0.0.1.nip.io/xmlapi/", "", "", ""},
+      {"https://gcs.127.0.0.1.nip.io/storage/v1/", "", "", ""},
+      {"https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/", "", "", ""},
+      {"https://gcs.127.0.0.1.nip.io:4443/upload/storage/v1/", "", "", ""},
   };
 
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing for " + test.endpoint + ", " + test.service);
-    auto const actual = HostHeader(
-        Options{}.set<RestEndpointOption>(test.endpoint), test.service.c_str());
+    auto options = Options{}.set<RestEndpointOption>(test.endpoint);
+    if (!test.authority.empty()) options.set<AuthorityOption>(test.authority);
+    auto const actual = HostHeader(options, test.service.c_str());
     EXPECT_EQ(test.expected, actual);
   }
 }

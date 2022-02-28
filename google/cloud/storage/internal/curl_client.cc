@@ -110,9 +110,11 @@ std::string HostHeader(Options const& options, char const* service) {
   // header based on the URL. In most cases this is the correct value. The main
   // exception are applications using `VPC-SC`:
   //     https://cloud.google.com/vpc/docs/configure-private-google-access
-  // In those cases the application would target an URL like
+  // In those cases the application would target a URL like
   // `https://restricted.googleapis.com`, or `https://private.googleapis.com`,
   // or their own proxy, and need to provide the target's service host.
+  auto const& auth = options.get<AuthorityOption>();
+  if (!auth.empty()) return absl::StrCat("Host: ", auth);
   auto const& endpoint = options.get<RestEndpointOption>();
   if (absl::StrContains(endpoint, "googleapis.com")) {
     return absl::StrCat("Host: ", service, ".googleapis.com");
