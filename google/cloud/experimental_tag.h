@@ -24,7 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * An argument type to indicate experimental functions.
  *
- * Functions that receive this type as an argument are experimental, they are
+ * Functions that receive this type as an argument are experimental. They are
  * subject to change (including removal) without notice.
  */
 struct ExperimentalTag {};
