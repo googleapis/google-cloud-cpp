@@ -324,9 +324,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     ReadWriteRetryFailedStream();
 
-    return read_reinit_done.then([](future<void>) {
-      return make_ready_future(absl::optional<ResponseType>());
-    });
+    return read_reinit_done.then(
+        [](future<void>) { return absl::optional<ResponseType>(); });
   }
 
   future<bool> OnWriteFutureFinish(bool write_response) {
