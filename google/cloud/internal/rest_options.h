@@ -26,8 +26,13 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Configure the UserIp query parameter.
-/// For use with GPC services that manage quota per ip address.
+/**
+ * Configure the UserIp query parameter.
+ *
+ * This can be used to separate quota usage by source IP address.
+ *
+ * @deprecated prefer using `google::cloud::QuotaUser`.
+ */
 struct UserIpOption {
   using Type = std::string;
 };
