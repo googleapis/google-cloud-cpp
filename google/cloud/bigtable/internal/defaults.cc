@@ -89,11 +89,6 @@ Options DefaultOptions(Options opts) {
     opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
   }
 
-  auto user_project = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-  if (user_project && !user_project->empty()) {
-    opts.set<UserProjectOption>(*std::move(user_project));
-  }
-
   if (!opts.has<DataEndpointOption>()) {
     opts.set<DataEndpointOption>("bigtable.googleapis.com");
   }
@@ -164,6 +159,14 @@ Options DefaultOptions(Options opts) {
 }
 
 Options DefaultDataOptions(Options opts) {
+  using ::google::cloud::internal::GetEnv;
+  auto user_project = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
+  if (user_project && !user_project->empty()) {
+    opts.set<UserProjectOption>(*std::move(user_project));
+  }
+  if (!opts.has<AuthorityOption>()) {
+    opts.set<AuthorityOption>("bigtable.googleapis.com");
+  }
   opts = DefaultOptions(std::move(opts));
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
 }

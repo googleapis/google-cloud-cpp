@@ -173,11 +173,11 @@ ServiceAccountCredentials::ServiceAccountCredentials(
       options_(std::move(options)) {
   if (!rest_client_) {
     if (options_.has<ServiceAccountCredentialsTokenUriOption>()) {
-      rest_client_ = rest_internal::GetDefaultRestClient(
+      rest_client_ = rest_internal::MakeDefaultRestClient(
           options_.get<ServiceAccountCredentialsTokenUriOption>(), options_);
     } else {
       rest_client_ =
-          rest_internal::GetDefaultRestClient(info_.token_uri, options_);
+          rest_internal::MakeDefaultRestClient(info_.token_uri, options_);
     }
   }
 }
@@ -185,8 +185,7 @@ ServiceAccountCredentials::ServiceAccountCredentials(
 StatusOr<std::pair<std::string, std::string>>
 ServiceAccountCredentials::AuthorizationHeader() {
   std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader(current_time_fn_(),
-                                               [this] { return Refresh(); });
+  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
 }
 
 StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(

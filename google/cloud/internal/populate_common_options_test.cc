@@ -37,6 +37,7 @@ TEST(PopulateCommonOptions, Simple) {
   auto actual =
       PopulateCommonOptions(Options{}, {}, {}, "default.googleapis.com");
   EXPECT_TRUE(actual.has<EndpointOption>());
+  EXPECT_TRUE(actual.has<AuthorityOption>());
   EXPECT_TRUE(actual.has<UserAgentProductsOption>());
   EXPECT_THAT(actual.get<UserAgentProductsOption>(),
               Contains(UserAgentPrefix()));
@@ -82,6 +83,7 @@ TEST(PopulateCommonOptions, Endpoint) {
     auto actual =
         PopulateCommonOptions(test.initial, "DEFAULT", "EMULATOR", "default");
     EXPECT_EQ(actual.get<EndpointOption>(), test.expected);
+    EXPECT_EQ(actual.get<AuthorityOption>(), "default");
   }
 }
 
@@ -110,6 +112,17 @@ TEST(PopulateCommonOptions, UserProject) {
   ScopedEnvironment unset("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
   auto actual = PopulateCommonOptions(Options{}, {}, {}, "default");
   EXPECT_FALSE(actual.has<UserProjectOption>());
+}
+
+TEST(PopulateCommonOptions, OverrideAuthorityOption) {
+  // Unset all the relevant environment variables
+  ScopedEnvironment user("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  auto actual = PopulateCommonOptions(
+      Options{}.set<AuthorityOption>("custom-authority.googleapis.com"), {}, {},
+      "default.googleapis.com");
+  EXPECT_EQ(actual.get<EndpointOption>(), "default.googleapis.com");
+  EXPECT_EQ(actual.get<AuthorityOption>(), "custom-authority.googleapis.com");
 }
 
 TEST(PopulateCommonOptions, DefaultTracingComponentsNoEnvironment) {

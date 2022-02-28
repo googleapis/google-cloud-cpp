@@ -40,6 +40,17 @@ class RefreshingCredentialsWrapper {
 
   using RefreshFunctor = absl::FunctionRef<
       StatusOr<RefreshingCredentialsWrapper::TemporaryToken>()>;
+  using CurrentTimeFn =
+      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
+
+  /**
+   * Creates an instance of RefreshingCredentialsWrapper.
+   *
+   * @param current_time_fn a dependency injection point to fetch the current
+   *     time. This should generally not be overridden except for testing.
+   */
+  explicit RefreshingCredentialsWrapper(
+      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
 
   /**
    * Returns an Authorization header obtained by invoking `refresh_fn`.
@@ -48,13 +59,12 @@ class RefreshingCredentialsWrapper {
    * or may not be called.
    */
   StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
-      std::chrono::system_clock::time_point now,
       RefreshFunctor refresh_fn) const;
 
   /**
    * Returns whether the current access token should be considered valid.
    */
-  bool IsValid(std::chrono::system_clock::time_point now) const;
+  bool IsValid() const;
 
  private:
   /**
@@ -68,10 +78,11 @@ class RefreshingCredentialsWrapper {
    * may still return false. This helps prevent the case where an access token
    * expires between when it is obtained and when it is used.
    */
-  bool IsExpired(std::chrono::system_clock::time_point now) const;
-  bool NeedsRefresh(std::chrono::system_clock::time_point now) const;
+  bool IsExpired() const;
+  bool NeedsRefresh() const;
 
   mutable TemporaryToken temporary_token_;
+  CurrentTimeFn current_time_fn_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

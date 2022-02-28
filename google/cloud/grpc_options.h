@@ -126,6 +126,7 @@ struct GrpcCompletionQueueOption {
 
 using BackgroundThreadsFactory =
     std::function<std::unique_ptr<BackgroundThreads>()>;
+
 /**
  * Changes the `BackgroundThreadsFactory`.
  *

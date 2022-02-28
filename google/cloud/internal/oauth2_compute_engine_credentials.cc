@@ -93,7 +93,7 @@ ComputeEngineCredentials::ComputeEngineCredentials(
       options_(std::move(options)) {
   if (!rest_client_) {
     options_.set<rest_internal::CurlFollowLocationOption>(true);
-    rest_client_ = rest_internal::GetDefaultRestClient(
+    rest_client_ = rest_internal::MakeDefaultRestClient(
         "http://" + google::cloud::internal::GceMetadataHostname(), options_);
   }
 }
@@ -101,8 +101,7 @@ ComputeEngineCredentials::ComputeEngineCredentials(
 StatusOr<std::pair<std::string, std::string>>
 ComputeEngineCredentials::AuthorizationHeader() {
   std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader(current_time_fn_(),
-                                               [this] { return Refresh(); });
+  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
 }
 
 std::string ComputeEngineCredentials::AccountEmail() const {

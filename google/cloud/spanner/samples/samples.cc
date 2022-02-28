@@ -2170,10 +2170,11 @@ void UsePartitionQuery(google::cloud::spanner::Client client) {
 void ReadDataWithIndex(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
-  spanner::ReadOptions read_options;
-  read_options.index_name = "AlbumsByAlbumTitle";
-  auto rows = client.Read("Albums", google::cloud::spanner::KeySet::All(),
-                          {"AlbumId", "AlbumTitle"}, read_options);
+  auto rows =
+      client.Read("Albums", google::cloud::spanner::KeySet::All(),
+                  {"AlbumId", "AlbumTitle"},
+                  google::cloud::Options{}.set<spanner::ReadIndexNameOption>(
+                      "AlbumsByAlbumTitle"));
   using RowType = std::tuple<std::int64_t, std::string>;
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
@@ -2308,11 +2309,11 @@ void QueryWithQueryOptions(google::cloud::spanner::Client client) {
 void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
-  spanner::ReadOptions read_options;
-  read_options.index_name = "AlbumsByAlbumTitle2";
   auto rows =
       client.Read("Albums", google::cloud::spanner::KeySet::All(),
-                  {"AlbumId", "AlbumTitle", "MarketingBudget"}, read_options);
+                  {"AlbumId", "AlbumTitle", "MarketingBudget"},
+                  google::cloud::Options{}.set<spanner::ReadIndexNameOption>(
+                      "AlbumsByAlbumTitle2"));
   using RowType =
       std::tuple<std::int64_t, std::string, absl::optional<std::int64_t>>;
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {

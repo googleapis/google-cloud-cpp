@@ -167,6 +167,7 @@ add_library(
     query_options.h
     query_partition.cc
     query_partition.h
+    read_options.cc
     read_options.h
     read_partition.cc
     read_partition.h

@@ -13,9 +13,38 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/partition_options.h"
+#include "google/cloud/spanner/options.h"
 
 namespace google {
 namespace cloud {
+namespace spanner {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+Options ToOptions(PartitionOptions const& po) {
+  Options opts;
+  if (po.partition_size_bytes) {
+    opts.set<PartitionSizeOption>(*po.partition_size_bytes);
+  }
+  if (po.max_partitions) {
+    opts.set<PartitionsMaximumOption>(*po.max_partitions);
+  }
+  return opts;
+}
+
+PartitionOptions ToPartitionOptions(Options const& opts) {
+  PartitionOptions po;
+  if (opts.has<PartitionSizeOption>()) {
+    po.partition_size_bytes = opts.get<PartitionSizeOption>();
+  }
+  if (opts.has<PartitionsMaximumOption>()) {
+    po.max_partitions = opts.get<PartitionsMaximumOption>();
+  }
+  return po;
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner
+
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

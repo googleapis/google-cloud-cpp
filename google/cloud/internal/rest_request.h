@@ -42,37 +42,40 @@ class RestRequest {
   RestRequest(std::string path, HttpParameters parameters);
   RestRequest(std::string path, HttpHeaders headers, HttpParameters parameters);
 
-  inline std::string const& path() const { return path_; }
-  inline HttpHeaders const& headers() const { return headers_; }
-  inline HttpParameters const& parameters() const { return parameters_; }
+  std::string const& path() const { return path_; }
+  HttpHeaders const& headers() const { return headers_; }
+  HttpParameters const& parameters() const { return parameters_; }
 
   RestRequest& SetPath(std::string path) &;
-  inline RestRequest&& SetPath(std::string path) && {
+  RestRequest&& SetPath(std::string path) && {
     return std::move(SetPath(std::move(path)));
+  }
+
+  RestRequest& AppendPath(std::string path) &;
+  RestRequest&& AppendPath(std::string path) && {
+    return std::move(AppendPath(std::move(path)));
   }
 
   // Adding a header/value pair that already exists results in the new value
   // appended to the list of values for the existing header.
   RestRequest& AddHeader(std::string header, std::string value) &;
-  inline RestRequest&& AddHeader(std::string header, std::string value) && {
+  RestRequest&& AddHeader(std::string header, std::string value) && {
     return std::move(AddHeader(std::move(header), std::move(value)));
   }
   RestRequest& AddHeader(std::pair<std::string, std::string> header) &;
-  inline RestRequest&& AddHeader(
-      std::pair<std::string, std::string> header) && {
+  RestRequest&& AddHeader(std::pair<std::string, std::string> header) && {
     return std::move(AddHeader(std::move(header)));
   }
 
   // Adding a duplicate param and or value results in both the new and original
   // pairs stored in order of addition.
   RestRequest& AddQueryParameter(std::string parameter, std::string value) &;
-  inline RestRequest&& AddQueryParameter(std::string parameter,
-                                         std::string value) && {
+  RestRequest&& AddQueryParameter(std::string parameter, std::string value) && {
     return std::move(AddQueryParameter(std::move(parameter), std::move(value)));
   }
   RestRequest& AddQueryParameter(
       std::pair<std::string, std::string> parameter) &;
-  inline RestRequest&& AddQueryParameter(
+  RestRequest&& AddQueryParameter(
       std::pair<std::string, std::string> parameter) && {
     return std::move(AddQueryParameter(std::move(parameter)));
   }

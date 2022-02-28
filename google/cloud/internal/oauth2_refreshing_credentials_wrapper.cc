@@ -20,28 +20,28 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-bool RefreshingCredentialsWrapper::IsExpired(
-    std::chrono::system_clock::time_point now) const {
-  return now > (temporary_token_.expiration_time -
-                GoogleOAuthAccessTokenExpirationSlack());
+RefreshingCredentialsWrapper::RefreshingCredentialsWrapper(
+    CurrentTimeFn current_time_fn)
+    : current_time_fn_(std::move(current_time_fn)) {}
+
+bool RefreshingCredentialsWrapper::IsExpired() const {
+  return current_time_fn_() > (temporary_token_.expiration_time -
+                               GoogleOAuthAccessTokenExpirationSlack());
 }
 
-bool RefreshingCredentialsWrapper::IsValid(
-    std::chrono::system_clock::time_point now) const {
+bool RefreshingCredentialsWrapper::IsValid() const {
   return !temporary_token_.token.second.empty() &&
-         now <= temporary_token_.expiration_time;
+         current_time_fn_() <= temporary_token_.expiration_time;
 }
 
-bool RefreshingCredentialsWrapper::NeedsRefresh(
-    std::chrono::system_clock::time_point now) const {
-  return temporary_token_.token.second.empty() || IsExpired(now);
+bool RefreshingCredentialsWrapper::NeedsRefresh() const {
+  return temporary_token_.token.second.empty() || IsExpired();
 }
 
 StatusOr<std::pair<std::string, std::string>>
 RefreshingCredentialsWrapper::AuthorizationHeader(
-    std::chrono::system_clock::time_point now,
     RefreshFunctor refresh_fn) const {
-  if (!NeedsRefresh(now)) return temporary_token_.token;
+  if (!NeedsRefresh()) return temporary_token_.token;
 
   // If successful refreshing token, return it. Otherwise, return the current
   // token if it still has time left on it. If no valid token can be returned,
@@ -51,7 +51,7 @@ RefreshingCredentialsWrapper::AuthorizationHeader(
     temporary_token_ = *std::move(new_token);
     return temporary_token_.token;
   }
-  if (IsValid(std::chrono::system_clock::now())) return temporary_token_.token;
+  if (IsValid()) return temporary_token_.token;
   return new_token.status();
 }
 

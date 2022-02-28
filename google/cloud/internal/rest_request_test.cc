@@ -98,6 +98,17 @@ TEST_F(RestRequestTest, RvalueBuilder) {
               Eq(std::make_pair(std::string("param2"), std::string("value2"))));
 }
 
+TEST_F(RestRequestTest, AppendPath) {
+  auto request = RestRequest().AppendPath("able");
+  EXPECT_THAT(request.path(), Eq("able"));
+  request.AppendPath("baker");
+  EXPECT_THAT(request.path(), Eq("able/baker"));
+  request.AppendPath("/charlie");
+  EXPECT_THAT(request.path(), Eq("able/baker/charlie"));
+  request.AppendPath("delta/").AppendPath("/echo");
+  EXPECT_THAT(request.path(), Eq("able/baker/charlie/delta/echo"));
+}
+
 TEST_F(RestRequestTest, GetHeaderNotFound) {
   RestRequest request("foo/bar", headers_);
   auto result = request.GetHeader("NotFound");

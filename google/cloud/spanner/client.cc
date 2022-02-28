@@ -45,56 +45,57 @@ absl::optional<typename OptionType::Type> OptOpt(Options const& opts) {
 }  // namespace
 
 RowStream Client::Read(std::string table, KeySet keys,
-                       std::vector<std::string> columns,
-                       ReadOptions read_options) {
+                       std::vector<std::string> columns, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           Transaction::ReadOnlyOptions()),
                       std::move(table),
                       std::move(keys),
                       std::move(columns),
-                      std::move(read_options),
+                      ToReadOptions(internal::CurrentOptions()),
                       {}});
 }
 
 RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
                        std::string table, KeySet keys,
-                       std::vector<std::string> columns,
-                       ReadOptions read_options) {
+                       std::vector<std::string> columns, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->Read({spanner_internal::MakeSingleUseTransaction(
                           std::move(transaction_options)),
                       std::move(table),
                       std::move(keys),
                       std::move(columns),
-                      std::move(read_options),
+                      ToReadOptions(internal::CurrentOptions()),
                       {}});
 }
 
 RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
-                       std::vector<std::string> columns,
-                       ReadOptions read_options) {
+                       std::vector<std::string> columns, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->Read({std::move(transaction),
                       std::move(table),
                       std::move(keys),
                       std::move(columns),
-                      std::move(read_options),
+                      ToReadOptions(internal::CurrentOptions()),
                       {}});
 }
 
-RowStream Client::Read(ReadPartition const& read_partition) {
+RowStream Client::Read(ReadPartition const& read_partition, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->Read(spanner_internal::MakeReadParams(read_partition));
 }
 
 StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
     Transaction transaction, std::string table, KeySet keys,
-    std::vector<std::string> columns, ReadOptions read_options,
-    PartitionOptions const& partition_options) {
+    std::vector<std::string> columns, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->PartitionRead({{std::move(transaction),
                                 std::move(table),
                                 std::move(keys),
                                 std::move(columns),
-                                std::move(read_options),
+                                ToReadOptions(internal::CurrentOptions()),
                                 {}},
-                               partition_options});
+                               ToPartitionOptions(internal::CurrentOptions())});
 }
 
 RowStream Client::ExecuteQuery(SqlStatement statement, Options opts) {
@@ -163,10 +164,11 @@ ProfileQueryResult Client::ProfileQuery(Transaction transaction,
 }
 
 StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
-    Transaction transaction, SqlStatement statement,
-    PartitionOptions const& partition_options) {
+    Transaction transaction, SqlStatement statement, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->PartitionQuery(
-      {std::move(transaction), std::move(statement), partition_options});
+      {std::move(transaction), std::move(statement),
+       ToPartitionOptions(internal::CurrentOptions())});
 }
 
 StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,
