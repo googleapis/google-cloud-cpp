@@ -238,9 +238,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         case State::kRetrying:
           assert(!read_reinit_done_.has_value());
           read_reinit_done_.emplace();
-          return read_reinit_done_->get_future().then([](future<void>) {
-            return make_ready_future(absl::optional<ResponseType>());
-          });
+          return read_reinit_done_->get_future().then(
+              [](future<void>) { return absl::optional<ResponseType>(); });
         case State::kInitialized:
           read_future = stream_->Read();
           assert(!in_progress_read_.has_value());
@@ -266,7 +265,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           assert(!write_reinit_done_.has_value());
           write_reinit_done_.emplace();
           return write_reinit_done_->get_future().then(
-              [](future<void>) { return make_ready_future(false); });
+              [](future<void>) { return false; });
         case State::kInitialized:
           write_future = stream_->Write(r, o);
           assert(!in_progress_write_.has_value());
@@ -356,8 +355,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     ReadWriteRetryFailedStream();
 
-    return write_reinit_done.then(
-        [](future<void>) { return make_ready_future(false); });
+    return write_reinit_done.then([](future<void>) { return false; });
   }
 
   void ReadWriteRetryFailedStream() {
