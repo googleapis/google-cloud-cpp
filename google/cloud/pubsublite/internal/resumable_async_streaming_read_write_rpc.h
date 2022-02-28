@@ -228,13 +228,54 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   future<absl::optional<ResponseType>> Read() override {
-    // TODO(18suresha) implement
-    return make_ready_future(absl::optional<ResponseType>());
+    future<absl::optional<ResponseType>> read_future;
+
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      switch (stream_state_) {
+        case State::kShutdown:
+          return make_ready_future(absl::optional<ResponseType>());
+        case State::kRetrying:
+          assert(!read_reinit_done_.has_value());
+          read_reinit_done_.emplace();
+          return read_reinit_done_->get_future().then(
+              [](future<void>) { return absl::optional<ResponseType>(); });
+        case State::kInitialized:
+          read_future = stream_->Read();
+          assert(!in_progress_read_.has_value());
+          in_progress_read_.emplace();
+      }
+    }
+
+    return read_future.then(
+        [this](future<absl::optional<ResponseType>> optional_response_future) {
+          return OnReadFutureFinish(optional_response_future.get());
+        });
   }
 
-  future<bool> Write(RequestType const&, grpc::WriteOptions) override {
-    // TODO(18suresha) implement
-    return make_ready_future(false);
+  future<bool> Write(RequestType const& r, grpc::WriteOptions o) override {
+    future<bool> write_future;
+
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      switch (stream_state_) {
+        case State::kShutdown:
+          return make_ready_future(false);
+        case State::kRetrying:
+          assert(!write_reinit_done_.has_value());
+          write_reinit_done_.emplace();
+          return write_reinit_done_->get_future().then(
+              [](future<void>) { return false; });
+        case State::kInitialized:
+          write_future = stream_->Write(r, o);
+          assert(!in_progress_write_.has_value());
+          in_progress_write_.emplace();
+      }
+    }
+
+    return write_future.then([this](future<bool> write_fu) {
+      return OnWriteFutureFinish(write_fu.get());
+    });
   }
 
   future<void> Shutdown() override {
@@ -251,6 +292,121 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>;
 
   enum class State { kRetrying, kInitialized, kShutdown };
+
+  future<absl::optional<ResponseType>> OnReadFutureFinish(
+      absl::optional<ResponseType> optional_response) {
+    promise<void> in_progress_read(null_promise_t{});
+    future<void> read_reinit_done;
+    bool shutdown;
+
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      assert(in_progress_read_.has_value());
+      in_progress_read = std::move(*in_progress_read_);
+      in_progress_read_.reset();
+      shutdown = stream_state_ == State::kShutdown;
+      if (!optional_response.has_value() && !shutdown) {
+        assert(!read_reinit_done_.has_value());
+        read_reinit_done_.emplace();
+        read_reinit_done = read_reinit_done_->get_future();
+      }
+    }
+
+    in_progress_read.set_value();
+
+    if (shutdown) {
+      return make_ready_future(absl::optional<ResponseType>());
+    }
+
+    if (optional_response.has_value()) {
+      return make_ready_future(std::move(optional_response));
+    }
+
+    ReadWriteRetryFailedStream();
+
+    return read_reinit_done.then(
+        [](future<void>) { return absl::optional<ResponseType>(); });
+  }
+
+  future<bool> OnWriteFutureFinish(bool write_response) {
+    promise<void> in_progress_write(null_promise_t{});
+    future<void> write_reinit_done;
+    bool shutdown;
+
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      assert(in_progress_write_.has_value());
+      in_progress_write = std::move(*in_progress_write_);
+      in_progress_write_.reset();
+      shutdown = stream_state_ == State::kShutdown;
+      if (!write_response && !shutdown) {
+        assert(!write_reinit_done_.has_value());
+        write_reinit_done_.emplace();
+        write_reinit_done = write_reinit_done_->get_future();
+      }
+    }
+
+    in_progress_write.set_value();
+
+    if (shutdown) return make_ready_future(false);
+
+    if (write_response) return make_ready_future(true);
+
+    ReadWriteRetryFailedStream();
+
+    return write_reinit_done.then([](future<void>) { return false; });
+  }
+
+  void ReadWriteRetryFailedStream() {
+    promise<void> root;
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      if (stream_state_ != State::kInitialized) return;
+
+      stream_state_ = State::kRetrying;
+      assert(!retry_promise_.has_value());
+      retry_promise_.emplace();
+
+      // Assuming that a `Read` fails:
+      // If an outstanding operation is present, we can't enter the retry
+      // loop, so we defer it until the outstanding `Write` finishes at
+      // which point we can enter the retry loop. Since we will return
+      // `reinit_done_`, we guarantee that another operation of the same type
+      // is not called while we're waiting for the outstanding operation to
+      // finish and the retry loop to finish afterward.
+
+      future<void> root_future = root.get_future();
+
+      // at most one of these will be set
+      if (in_progress_read_.has_value()) {
+        root_future =
+            root_future.then(ChainFuture(in_progress_read_->get_future()));
+      }
+      if (in_progress_write_.has_value()) {
+        root_future =
+            root_future.then(ChainFuture(in_progress_write_->get_future()));
+      }
+
+      root_future.then([this](future<void>) { FinishOnStreamFail(); });
+    }
+
+    root.set_value();
+  }
+
+  void FinishOnStreamFail() {
+    future<Status> fail_finish;
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      fail_finish = stream_->Finish();
+    }
+    fail_finish.then([this](future<Status> finish_status) {
+      // retry policy refactor
+      auto retry_policy = retry_factory_();
+      auto backoff_policy = backoff_policy_prototype_->clone();
+      AttemptRetry(finish_status.get(), std::move(retry_policy),
+                   std::move(backoff_policy));
+    });
+  }
 
   future<void> ConfigureShutdownOrder(future<void> root_future) {
     std::unique_lock<std::mutex> lk{mu_};
