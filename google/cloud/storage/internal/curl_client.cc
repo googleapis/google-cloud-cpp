@@ -113,7 +113,7 @@ std::string HostHeader(Options const& options, char const* service) {
   // In those cases the application would target a URL like
   // `https://restricted.googleapis.com`, or `https://private.googleapis.com`,
   // or their own proxy, and need to provide the target's service host.
-  auto auth = options.get<AuthorityOption>();
+  auto const& auth = options.get<AuthorityOption>();
   if (!auth.empty()) return absl::StrCat("Host: ", auth);
   auto const& endpoint = options.get<RestEndpointOption>();
   if (absl::StrContains(endpoint, "googleapis.com")) {
