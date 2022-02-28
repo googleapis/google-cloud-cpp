@@ -26,7 +26,7 @@
   generated automatically from the service definitions. The new APIs can be
   found in the [`google/cloud/spanner/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner/admin)
   tree and within the `google::cloud::spanner_admin` namespace. Starting with
-  the v1.32.0 release, and depending on your compiler settings, using these
+  the v1.32.0 release, and depending on your compiler settings, using the old
   classes/functions may elicit a deprecation warning. See
   [#7356](https://github.com/googleapis/google-cloud-cpp/issues/7356) for more
   details.
@@ -143,6 +143,15 @@ best long-term interest of our customers.
 **BREAKING CHANGE:** The `bigtable::InstanceAdminClient` class has been marked
 as `final`. After the changes in [v1.36.0](#v1360---2022-02), there is no need
 or reason to be extending this class.
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+All the `spanner::Client` operations now take optional `google::cloud::Options`
+arguments, replacing the existing `ClientOptions`, `CommitOptions`,
+`PartitionOptions`, `QueryOptions`, and `ReadOptions` arguments, or adding
+options to operations that previously had none. Users should migrate to these
+new overloads (although no deprecation schedule for the old interfaces has been
+announced).
 
 ### New Libraries
 
