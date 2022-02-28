@@ -21,6 +21,12 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * An argument type to indicate experimental functions.
+ *
+ * Functions that receive this type as an argument are experimental, they are
+ * subject to change (including removal) without notice.
+ */
 struct ExperimentalTag {};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
