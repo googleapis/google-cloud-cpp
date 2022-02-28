@@ -136,10 +136,10 @@ GoldenKitchenSinkClient::DoNothing(google::protobuf::Empty const& request, Optio
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::AppendRowsRequest,
     google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkClient::AsyncAppendRows(Options opts) {
+GoldenKitchenSinkClient::AsyncAppendRows(ExperimentalTag tag, Options opts) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncAppendRows();
+  return connection_->AsyncAppendRows(std::move(tag));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

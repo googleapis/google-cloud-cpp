@@ -78,7 +78,7 @@ class GoldenKitchenSinkConnectionImpl
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows() override;
+  AsyncAppendRows(ExperimentalTag) override;
 
  private:
   std::unique_ptr<golden::GoldenKitchenSinkRetryPolicy> retry_policy() {

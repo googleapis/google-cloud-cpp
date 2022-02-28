@@ -83,7 +83,7 @@ GoldenKitchenSinkConnection::DoNothing(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::AppendRowsRequest,
     google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkConnection::AsyncAppendRows() {
+GoldenKitchenSinkConnection::AsyncAppendRows(ExperimentalTag) {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::test::admin::database::v1::AppendRowsRequest,

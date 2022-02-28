@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CLIENT_H
 
 #include "google/cloud/logging/logging_service_v2_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -354,7 +355,7 @@ class LoggingServiceV2Client {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries(Options opts = {});
+  AsyncTailLogEntries(ExperimentalTag, Options opts = {});
 
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;

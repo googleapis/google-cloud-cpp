@@ -24,7 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::AppendRowsRequest,
     google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkConnectionImpl::AsyncAppendRows() {
+GoldenKitchenSinkConnectionImpl::AsyncAppendRows(ExperimentalTag) {
   return stub_->AsyncAppendRows(
       background_->cq(), absl::make_unique<grpc::ClientContext>());
 }

@@ -318,7 +318,7 @@ TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
         .set<UserAgentProductsOption>({"override-me"});
   });
 
-  EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([] {
+  EXPECT_CALL(*mock, AsyncAppendRows).WillOnce([](ExperimentalTag) {
     auto const& current = internal::CurrentOptions();
     EXPECT_TRUE(current.has<EndpointOption>());
     EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
@@ -358,6 +358,7 @@ TEST(GoldenKitchenSinkClientTest, AsyncAppendRows) {
                            .set<EndpointOption>("test-endpoint")
                            .set<UserAgentProductsOption>({"override-me-too"}));
   auto stream = client.AsyncAppendRows(
+      ExperimentalTag{},
       Options{}.set<UserAgentProductsOption>({"test-only/1.0"}));
   ASSERT_TRUE(stream->Start().get());
   AppendRowsRequest request;

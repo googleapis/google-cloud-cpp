@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_KITCHEN_SINK_CLIENT_H
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -363,7 +364,7 @@ class GoldenKitchenSinkClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::AppendRowsRequest,
       google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(Options opts = {});
+  AsyncAppendRows(ExperimentalTag, Options opts = {});
 
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;

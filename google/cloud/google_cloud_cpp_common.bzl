@@ -20,6 +20,7 @@ google_cloud_cpp_common_hdrs = [
     "backoff_policy.h",
     "common_options.h",
     "credentials.h",
+    "experimental_tag.h",
     "future.h",
     "future_generic.h",
     "future_void.h",

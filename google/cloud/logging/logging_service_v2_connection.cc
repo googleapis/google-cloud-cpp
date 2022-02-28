@@ -71,7 +71,7 @@ StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
-LoggingServiceV2Connection::AsyncTailLogEntries() {
+LoggingServiceV2Connection::AsyncTailLogEntries(ExperimentalTag) {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::logging::v2::TailLogEntriesRequest,

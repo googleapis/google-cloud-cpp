@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CLIENT_H
 
 #include "google/cloud/speech/speech_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -182,7 +183,7 @@ class SpeechClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>
-  AsyncStreamingRecognize(Options opts = {});
+  AsyncStreamingRecognize(ExperimentalTag, Options opts = {});
 
  private:
   std::shared_ptr<SpeechConnection> connection_;

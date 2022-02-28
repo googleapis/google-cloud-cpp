@@ -23,6 +23,7 @@
 #include "google/cloud/speech/internal/speech_stub.h"
 #include "google/cloud/speech/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
@@ -65,7 +66,7 @@ class SpeechConnection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>
-  AsyncStreamingRecognize();
+      AsyncStreamingRecognize(ExperimentalTag);
 };
 
 std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
