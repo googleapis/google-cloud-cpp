@@ -325,26 +325,40 @@ class StreamingPartitionedDmlResult {
 
 std::shared_ptr<spanner::RetryPolicy> const&
 ConnectionImpl::RetryPolicyPrototype() const {
-  // TODO(#4528) TODO(#7690): Base this on internal::CurrentOptions().
+  // TODO(#4528): Support per-operation defaults for retry policies.
+  auto const& options = internal::CurrentOptions();
+  if (options.has<spanner::SpannerRetryPolicyOption>()) {
+    return options.get<spanner::SpannerRetryPolicyOption>();
+  }
   return opts_.get<spanner::SpannerRetryPolicyOption>();
 }
 
 std::shared_ptr<spanner::BackoffPolicy> const&
 ConnectionImpl::BackoffPolicyPrototype() const {
-  // TODO(#4528) TODO(#7690): Base this on internal::CurrentOptions().
+  // TODO(#4528): Support per-operation defaults for backoff policies.
+  auto const& options = internal::CurrentOptions();
+  if (options.has<spanner::SpannerBackoffPolicyOption>()) {
+    return options.get<spanner::SpannerBackoffPolicyOption>();
+  }
   return opts_.get<spanner::SpannerBackoffPolicyOption>();
 }
 
 bool ConnectionImpl::RpcStreamTracingEnabled() const {
-  // TODO(#7690): Base this on internal::CurrentOptions() if we want to
-  // allow per-operation options to influence "rpc-streams" tracing.
-  return internal::Contains(opts_.get<TracingComponentsOption>(),
-                            "rpc-streams");
+  std::string const rpc_streams = "rpc-streams";
+  auto const& options = internal::CurrentOptions();
+  auto const& tracing_components = options.get<TracingComponentsOption>();
+  if (!internal::Contains(tracing_components, rpc_streams)) {
+    auto const& tracing_components = opts_.get<TracingComponentsOption>();
+    if (!internal::Contains(tracing_components, rpc_streams)) return false;
+  }
+  return true;
 }
 
 TracingOptions const& ConnectionImpl::RpcTracingOptions() const {
-  // TODO(#7690): Base this on internal::CurrentOptions() if we want to
-  // allow per-operation options to influence "rpc-streams" tracing.
+  auto const& options = internal::CurrentOptions();
+  if (options.has<GrpcTracingOptionsOption>()) {
+    return options.get<GrpcTracingOptionsOption>();
+  }
   return opts_.get<GrpcTracingOptionsOption>();
 }
 
