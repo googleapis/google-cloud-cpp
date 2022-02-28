@@ -296,7 +296,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   future<absl::optional<ResponseType>> OnReadFutureFinish(
       absl::optional<ResponseType> optional_response) {
-    promise<void> in_progress_read;
+    promise<void> in_progress_read(null_promise_t{});
     future<void> read_reinit_done;
     bool shutdown;
 
@@ -331,7 +331,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   future<bool> OnWriteFutureFinish(bool write_response) {
-    promise<void> in_progress_write;
+    promise<void> in_progress_write(null_promise_t{});
     future<void> write_reinit_done;
     bool shutdown;
 
