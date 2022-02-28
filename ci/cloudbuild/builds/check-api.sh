@@ -63,7 +63,7 @@ feature_list+=(
   "common"
   "grpc_utils"
 )
-mapfile -t libraries < <(for f in "${feature_list[@]}"; do echo "google_cloud_cpp_${f}"; done)
+mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${feature_list[@]}")
 
 # Run the dump_abi function for each library in parallel since its slow.
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \
@@ -88,7 +88,7 @@ for lib in "${libraries[@]}"; do
     # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
     report="cmake-out/compat_reports/${lib}/expected_to_actual/src_compat_report.html"
     if ! abi-compliance-checker \
-      -skip-internal-symbols "(8internal|17bigquery_internal|12iam_internal|15pubsub_internal|16spanner_internal)\d" \
+      -skip-internal-symbols "(8internal|_internal)\d" \
       -report-path "${report}" \
       -src -l "${lib}" \
       -old "cmake-out/${expected_dump_file}" \
