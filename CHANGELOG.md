@@ -177,6 +177,75 @@ releasing them early in case they elicit some feedback that requires changes.
 
 </details>
 
+We are happy to announce that the following GA libraries.  We expect these
+libraries to have a stable API, to offer the full functionality of the
+GA version of service they wrap, and are ready for production use.
+
+<details>
+<summary> Expand to see the full list of new GA libraries...</summary>
+<br>
+
+* [Access Approval](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/accessapproval/README.md)
+* [Access Context Manager](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/accesscontextmanager/README.md)
+* [Anthos GKE API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gkehub/README.md)
+* [API Gateway](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/apigateway/README.md)
+* [App Engine Admin API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/appengine/README.md)
+* [Artifact Registry](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/artifactregistry/README.md)
+* [Assured Workloads](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/assuredworkloads/README.md)
+* [AutoML](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/automl/README.md)
+* [Binary Authorization](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/binaryauthorization/README.md)
+* [Certificate Authority Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/privateca/README.md)
+* [Channel Services](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/channel/README.md)
+* [Cloud Asset Inventory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/asset/README.md)
+* [Cloud Billing](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/billing/README.md)
+* [Cloud Build](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/cloudbuild/README.md)
+* [Cloud Composer](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/composer/README.md)
+* [Cloud Data Loss Prevention (DLP)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dlp/README.md)
+* [Cloud Debugger](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/debugger/README.md)
+* [Cloud Functions](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/functions/README.md)
+* [Cloud Intrusion Detection System (IDS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/ids/README.md)
+* [Cloud IoT](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iot/README.md)
+* [Cloud Key Management Service (KMS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/kms/README.md)
+* [Cloud Scheduler](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/scheduler/README.md)
+* [Cloud Shell](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/shell/README.md)
+* [Cloud TPU](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tpu/README.md)
+* [Cloud Trace](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/trace/README.md)
+* [Cloud Translation](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/translate/README.md)
+* [Cloud Vision](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vision/README.md)
+* [Compute Engine OS Config](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/osconfig/README.md)
+* [Compute Engine OS Login](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/oslogin/README.md)
+* [Connectivity Tests](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/networkmanagement/README.md)
+* [Container Analysis](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/containeranalysis/README.md)
+* [Database Migration Service (DMS)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datamigration/README.md)
+* [Eventarc](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/eventarc/README.md)
+* [Filestore](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/filestore/README.md)
+* [Game Servers](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gameservices/README.md)
+* [Google Kubernetes Engine (GKE)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/container/README.md)
+* [Identity-Aware Proxy (IAP)](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iap/README.md)
+* [Memorystore for Memcached](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/memcache/README.md)
+* [Memorystore for Redis](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/redis/README.md)
+* [Migrate for Compute Engine](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vmmigration/README.md)
+* [Organization Policy Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/orgpolicy/README.md)
+* [Policy Troubleshooter](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/policytroubleshooter/README.md)
+* [Recommender](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/recommender/README.md)
+* [Resource Manager](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/resourcemanager/README.md)
+* [Retail](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/retail/README.md)
+* [Security Command Center](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/securitycenter/README.md)
+* [Serverless VPC Access](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vpcaccess/README.md)
+* [Service Control](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicecontrol/README.md)
+* [Service Directory](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicedirectory/README.md)
+* [Service Management](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicemanagement/README.md)
+* [Service Usage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/serviceusage/README.md)
+* [Storage Transfer Service](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storagetransfer/README.md)
+* [Talent Solution](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/talent/README.md)
+* [Text-to-Speech](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/texttospeech/README.md)
+* [Vertex AI Workbench](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/notebooks/README.md)
+* [Video Intelligence API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/videointelligence/README.md)
+* [Web Risk](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/webrisk/README.md)
+* [Web Security Scanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/websecurityscanner/README.md)
+* [Workflows](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/workflows/README.md)
+</details>
+
 ## v1.36.0 - 2022-02
 
 ### Bazel support

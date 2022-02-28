@@ -1,14 +1,10 @@
 # Serverless VPC Access API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Serverless VPC Access API][cloud-service-docs], a service to manage VPC access
 connectors.
 
-This library is **experimental**. Its APIS are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

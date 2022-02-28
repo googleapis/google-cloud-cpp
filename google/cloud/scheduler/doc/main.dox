@@ -6,7 +6,7 @@ An idiomatic C++ client library for
 [Cloud Scheduler](https://cloud.google.com/scheduler/), a service that
 creates and manages jobs run on a regular recurring schedule.
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The

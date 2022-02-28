@@ -1,14 +1,10 @@
 # Web Security Scanner API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for
 [Web Security Scanner][cloud-service-docs], a service that scans your
 Compute and App Engine apps for common web vulnerabilities.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

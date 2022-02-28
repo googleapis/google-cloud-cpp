@@ -24,7 +24,7 @@ endif ()
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Channel API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Channel API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "channel_internal" "channel_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)

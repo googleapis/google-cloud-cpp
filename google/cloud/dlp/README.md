@@ -1,16 +1,12 @@
 # Cloud Data Loss Prevention (DLP) API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Data Loss Prevention (DLP) API][cloud-service-docs], a service that
 provides methods for detection, risk analysis, and de-identification of
 privacy-sensitive fragments in text, images, and Google Cloud Platform storage
 repositories.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

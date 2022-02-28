@@ -1,14 +1,10 @@
 # Organization Policy API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Organization Policy API][cloud-service-docs]. Allows users to configure
 governance rules on their GCP resources across the Cloud Resource Hierarchy.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

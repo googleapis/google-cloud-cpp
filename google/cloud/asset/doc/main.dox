@@ -6,7 +6,7 @@ An idiomatic C++ client library for the [Cloud Asset API][cloud-service-docs],
 a metadata inventory service that allows you to view, monitor, and analyze
 all your GCP and Anthos assets across projects and services.
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]

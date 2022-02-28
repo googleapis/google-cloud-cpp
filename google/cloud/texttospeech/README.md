@@ -1,14 +1,10 @@
 # Cloud Text-to-Speech API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Text-to-Speech API][cloud-service-docs], a service to synthesize
 natural-sounding speech by applying powerful neural network models.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

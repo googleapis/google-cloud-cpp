@@ -5,7 +5,7 @@ This directory contains an idiomatic C++ client library for interacting with
 managed, scalable, relational database service for regional and global
 application data.
 
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](http://semver.org/).
 
 ## Supported Platforms

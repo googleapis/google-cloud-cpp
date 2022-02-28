@@ -3,7 +3,7 @@
 This directory contains an idiomatic C++ client library for interacting with
 [Cloud BigQuery](https://cloud.google.com/bigquery/).
 
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

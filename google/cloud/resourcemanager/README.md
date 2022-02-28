@@ -1,14 +1,10 @@
 # Cloud Resource Manager API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for
 [Resource Manager][cloud-product], a GCP product to hierarchically manage
 resources by project, folder, and organization.
 
-This library is **experimental**. Its APIS are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

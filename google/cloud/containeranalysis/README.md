@@ -1,15 +1,11 @@
 # Container Analysis API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Container Analysis API][cloud-service-docs], an implementation of the
 [Grafeas API](https://grafeas.io), which stores, and enables querying and
 retrieval of critical metadata about all of your software artifacts.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

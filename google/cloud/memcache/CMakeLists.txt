@@ -18,7 +18,7 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Memorystore for Memcached API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF
     "A C++ Client Library for the Cloud Memorystore for Memcached API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "memcache_internal" "memcache_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)

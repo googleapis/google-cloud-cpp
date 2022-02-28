@@ -8,7 +8,7 @@ scenarios including serving website content, storing data for archival and
 disaster recovery, or distributing large data objects to users via direct
 download.
 
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](http://semver.org/).
 
 ## Supported Platforms

@@ -1,14 +1,10 @@
 # Service Usage API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Service Usage API][cloud-service], an infrastructure service of Google
 Cloud that lets you list and manage APIs and Services in your Cloud projects.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

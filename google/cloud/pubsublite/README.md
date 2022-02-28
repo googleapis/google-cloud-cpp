@@ -1,15 +1,11 @@
 # Cloud Pub/Sub Lite C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for
 [Cloud Pub/Sub Lite][cloud-service-root], a high-volume
 messaging service built for very low cost of operation by offering zonal storage
 and pre-provisioned capacity.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms
