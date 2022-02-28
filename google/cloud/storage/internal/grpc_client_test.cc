@@ -351,6 +351,7 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject)
       .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(

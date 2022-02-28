@@ -32,7 +32,21 @@ struct UserIpOption {
   using Type = std::string;
 };
 
-/// Configure the REST endpoint for the GCS client library.
+/**
+ * Configure the REST endpoint for the GCS client library.
+ *
+ * This endpoint must include the URL scheme (`http` or `https`) and `authority`
+ * (host and port) used to access the GCS service, for example:
+ *    https://storage.googleapis.com
+ * When using emulators or testbench it can be of the form:
+ *    http://localhost:8080/my-gcs-emulator-path
+ *
+ * @note The `Host` header is based on the `authority` component of the URL.
+ *   Applications can override this default value using
+ *   `google::cloud::AuthorityOption`
+ *
+ * @see https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URLs_and_URNs
+ */
 struct RestEndpointOption {
   using Type = std::string;
 };
