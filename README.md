@@ -28,14 +28,16 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+<!-- inject-GA-libraries-start -->
 * [Google Cloud BigQuery](google/cloud/bigquery/README.md) [[quickstart]](google/cloud/bigquery/quickstart/README.md)
 * [Google Cloud Bigtable](google/cloud/bigtable/README.md) [[quickstart]](google/cloud/bigtable/quickstart/README.md)
 * [Google Cloud IAM](google/cloud/iam/README.md) [[quickstart]](google/cloud/iam/quickstart/README.md)
-* [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md)
+* [Secret Manager API](google/cloud/secretmanager/README.md) [[quickstart]](google/cloud/secretmanager/quickstart/README.md)
+* [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Storage](google/cloud/storage/README.md) [[quickstart]](google/cloud/storage/quickstart/README.md)
-* [Secret Manager API](google/cloud/secretmanager/README.md) [[quickstart]](google/cloud/secretmanager/README.md)
-* [Cloud Tasks API](google/cloud/tasks/README.md) [[quickstart]](google/cloud/tasks/README.md)
+* [Cloud Tasks API](google/cloud/tasks/README.md) [[quickstart]](google/cloud/tasks/quickstart/README.md)
+<!-- inject-GA-libraries-end -->
 
 See each library's `README.md` file for more information about:
 
@@ -98,17 +100,11 @@ intended to help you get up and running in a matter of minutes. This
 how to use the library, along with minimal build files for common build
 systems, such as CMake and Bazel.
 
-* [Google Cloud BigQuery Quickstart](google/cloud/bigquery/quickstart/README.md)
-* [Google Cloud Bigtable Quickstart](google/cloud/bigtable/quickstart/README.md)
-* [Google Cloud IAM Quickstart](google/cloud/iam/quickstart/README.md)
-* [Google Cloud Spanner Quickstart](google/cloud/spanner/quickstart/README.md)
-* [Google Cloud Pub/Sub Quickstart](google/cloud/pubsub/quickstart/README.md)
-* [Google Cloud Storage Quickstart](google/cloud/storage/quickstart/README.md)
-
 As an example, the following code snippet, taken from [Google Cloud
 Storage](google/cloud/storage/README.md), should give you a taste of what it's
 like to use one of these C++ libraries.
 
+<!-- inject-quickstart-start -->
 ```cc
 #include "google/cloud/storage/client.h"
 #include <iostream>
@@ -151,6 +147,7 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 ```
+<!-- inject-quickstart-end -->
 
 ## Support
 
