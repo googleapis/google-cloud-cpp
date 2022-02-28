@@ -28,7 +28,7 @@ mapfile -t feature_list < <(bazelisk --batch query \
   'kind(cc_library, //:all) except filter("experimental|mocks", kind(cc_library, //:all))' |
   sed -e 's;//:;;')
 enabled="$(printf ";%s" "${feature_list[@]}")"
-echo "${enabled:1}"
+enabled="${enabled:1}"
 
 INSTALL_PREFIX=/var/tmp/google-cloud-cpp
 # abi-dumper wants us to use -Og, but that causes bogus warnings about
