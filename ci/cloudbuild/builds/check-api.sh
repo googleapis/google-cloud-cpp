@@ -23,6 +23,13 @@ export CC=gcc
 export CXX=g++
 mapfile -t cmake_args < <(cmake::common_args)
 
+mapfile -t feature_list < <(bazelisk --batch query \
+  --noshow_progress --noshow_loading_progress \
+  'kind(cc_library, //:all) except filter("experimental|mocks", kind(cc_library, //:all))' |
+  sed -e 's;//:;;')
+enabled="$(printf ";%s" "${feature_list[@]}")"
+echo "${enabled:1}"
+
 INSTALL_PREFIX=/var/tmp/google-cloud-cpp
 # abi-dumper wants us to use -Og, but that causes bogus warnings about
 # uninitialized values with GCC, so we disable that warning with
@@ -33,6 +40,7 @@ cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_BUILD_TYPE=Debug \
+  -DGOOGLE_CLOUD_CPP_ENABLE="${enabled}" \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
 cmake --build cmake-out
 cmake --install cmake-out
@@ -51,16 +59,11 @@ function dump_abi() {
 }
 export -f dump_abi # enables this function to be called from a subshell
 
-libraries=(
-  "google_cloud_cpp_bigquery"
-  "google_cloud_cpp_bigtable"
-  "google_cloud_cpp_common"
-  "google_cloud_cpp_grpc_utils"
-  "google_cloud_cpp_iam"
-  "google_cloud_cpp_spanner"
-  "google_cloud_cpp_storage"
-  "google_cloud_cpp_pubsub"
+feature_list+=(
+  "common"
+  "grpc_utils"
 )
+mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${feature_list[@]}")
 
 # Run the dump_abi function for each library in parallel since its slow.
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \
@@ -85,7 +88,7 @@ for lib in "${libraries[@]}"; do
     # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
     report="cmake-out/compat_reports/${lib}/expected_to_actual/src_compat_report.html"
     if ! abi-compliance-checker \
-      -skip-internal-symbols "(8internal|17bigquery_internal|12iam_internal|15pubsub_internal|16spanner_internal)\d" \
+      -skip-internal-symbols "(8internal|_internal)\d" \
       -report-path "${report}" \
       -src -l "${lib}" \
       -old "cmake-out/${expected_dump_file}" \
