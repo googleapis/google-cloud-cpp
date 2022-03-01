@@ -23,7 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
-LoggingServiceV2ConnectionImpl::AsyncTailLogEntries() {
+LoggingServiceV2ConnectionImpl::AsyncTailLogEntries(ExperimentalTag) {
   // TODO(#7796) - add resume loop
   return stub_->AsyncTailLogEntries(background_->cq(),
                                     absl::make_unique<grpc::ClientContext>());

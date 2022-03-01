@@ -309,7 +309,7 @@ TEST(GoldenKitchenSinkConnectionTest, AppendRowsError) {
         Status{StatusCode::kUnavailable, "try-again"});
   });
   auto conn = CreateTestingConnection(std::move(mock));
-  auto stream = conn->AsyncAppendRows();
+  auto stream = conn->AsyncAppendRows(ExperimentalTag{});
   ASSERT_FALSE(stream->Start().get());
   auto status = stream->Finish().get();
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable, "try-again"));

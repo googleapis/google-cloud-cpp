@@ -51,6 +51,7 @@ add_library(
     common_options.h
     credentials.cc
     credentials.h
+    experimental_tag.h
     future.h
     future_generic.h
     future_void.h

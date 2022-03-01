@@ -44,7 +44,7 @@ class MockSpeechConnection : public speech::SpeechConnection {
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::cloud::speech::v1::StreamingRecognizeRequest,
                    google::cloud::speech::v1::StreamingRecognizeResponse>>),
-              AsyncStreamingRecognize, (), (override));
+              AsyncStreamingRecognize, (ExperimentalTag), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

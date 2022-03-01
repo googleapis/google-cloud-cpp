@@ -61,7 +61,7 @@ class SpeechConnectionImpl : public speech::SpeechConnection {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>
-  AsyncStreamingRecognize() override;
+      AsyncStreamingRecognize(ExperimentalTag) override;
 
  private:
   std::unique_ptr<speech::SpeechRetryPolicy> retry_policy() {

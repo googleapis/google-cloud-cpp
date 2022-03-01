@@ -70,7 +70,7 @@ class LoggingServiceV2ConnectionImpl
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries() override;
+      AsyncTailLogEntries(ExperimentalTag) override;
 
  private:
   std::unique_ptr<logging::LoggingServiceV2RetryPolicy> retry_policy() {

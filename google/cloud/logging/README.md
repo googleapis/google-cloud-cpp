@@ -7,7 +7,7 @@ This directory contains an idiomatic C++ client library for interacting with
 a service for real-time log management and analysis at scale.
 
 <!-- TODO(#7796) - delay GA until we implement TailLogEntries()'s retry loop -->
-
+<!-- GA delayed until (at least) 2022-03-31 -->
 This library is **experimental**. Its APIs are subject to change without notice.
 
 Please note that the Google Cloud C++ client libraries do **not** follow

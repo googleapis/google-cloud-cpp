@@ -71,10 +71,12 @@ Status ClientGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("connection_header_path"), "google/cloud/future.h",
-                       "google/cloud/options.h",
-                       "google/cloud/polling_policy.h",
-                       "google/cloud/status_or.h", "google/cloud/version.h"});
+  HeaderLocalIncludes(
+      {vars("connection_header_path"),
+       HasBidirStreamingMethod() ? "google/cloud/experimental_tag.h" : "",
+       "google/cloud/future.h", "google/cloud/options.h",
+       "google/cloud/polling_policy.h", "google/cloud/status_or.h",
+       "google/cloud/version.h"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
   }
@@ -121,7 +123,7 @@ Status ClientGenerator::GenerateHeader() {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(Options opts = {});
+  Async$method_name$(ExperimentalTag, Options opts = {});
 )""");
       continue;
     }
@@ -358,10 +360,10 @@ Status ClientGenerator::GenerateCc() {
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
-$client_class_name$::Async$method_name$(Options opts) {
+$client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(opts), options_));
-  return connection_->Async$method_name$();
+  return connection_->Async$method_name$(std::move(tag));
 }
 )""");
       continue;
