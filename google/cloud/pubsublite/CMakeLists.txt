@@ -96,6 +96,7 @@ add_library(
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
     internal/futures.h
+    internal/lifecycle_interface.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -106,6 +107,8 @@ add_library(
     internal/partition_assignment_stub.h
     internal/partition_assignment_stub_factory.cc
     internal/partition_assignment_stub_factory.h
+    internal/partition_publisher.h
+    internal/publisher.h
     internal/publisher_auth_decorator.cc
     internal/publisher_auth_decorator.h
     internal/publisher_logging_decorator.cc
