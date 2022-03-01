@@ -105,6 +105,7 @@ The library has been expanded to include the following services:
 * [BigQuery Connection API](https://cloud.google.com/bigquery/docs/connections-api-intro)
 * [BigQuery Data Transfer Service](https://cloud.google.com/bigquery-transfer)
 * [BigQuery Reservations](https://cloud.google.com/bigquery/docs/reservations-intro)
+* [BigQuery Storage Write API](https://cloud.google.com/bigquery/docs/write-api)
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
