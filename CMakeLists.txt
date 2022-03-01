@@ -300,9 +300,9 @@ function (google_cloud_cpp_enable_features)
                 add_subdirectory(google/cloud/storage)
             endif ()
         else ()
-            if (NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/google/cloud/${feature}"
+            if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}"
                 OR NOT EXISTS
-                   "${CMAKE_SOURCE_DIR}/google/cloud/${feature}/CMakeLists.txt")
+                   "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/CMakeLists.txt")
                 message(
                     WARNING
                         "${feature} is not a valid feature in google-cloud-cpp, ignored"
@@ -312,7 +312,7 @@ function (google_cloud_cpp_enable_features)
             add_subdirectory(google/cloud/${feature})
             if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
                 AND IS_DIRECTORY
-                    "${CMAKE_SOURCE_DIR}/google/cloud/${feature}/samples")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/samples")
                 add_subdirectory(google/cloud/${feature}/samples)
             endif ()
             # Older libraries used examples/ to host their examples. The
@@ -320,7 +320,7 @@ function (google_cloud_cpp_enable_features)
             # references these files explicitly.
             if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
                 AND IS_DIRECTORY
-                    "${CMAKE_SOURCE_DIR}/google/cloud/${feature}/examples")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/examples")
                 add_subdirectory(google/cloud/${feature}/examples)
             endif ()
         endif ()
