@@ -66,7 +66,9 @@ namespace. For status on this see
 https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
 
-## v1.37.0 - TBD
+## v1.38.0 - TBD
+
+## v1.37.0 - 2022-03
 
 **BREAKING CHANGES**
 
@@ -145,6 +147,25 @@ best long-term interest of our customers.
 as `final`. After the changes in [v1.36.0](#v1360---2022-02), there is no need
 or reason to be extending this class.
 
+**OTHER CHANGES**:
+
+* feat(bigtable): better support for PSC and VPC-SC ([#8458](https://github.com/googleapis/google-cloud-cpp/pull/8458))
+* fix(bigtable): ReadRows retries from the `last_scanned_row_key` ([#8423](https://github.com/googleapis/google-cloud-cpp/pull/8423))
+* feat(bigtable): support x-goog-user-project ([#8324](https://github.com/googleapis/google-cloud-cpp/pull/8324))
+
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+* docs(iam): added comments on private_key_data ([#8204](https://github.com/googleapis/google-cloud-cpp/pull/8204))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* feat(pubsub): support `AuthorityOption` ([#8460](https://github.com/googleapis/google-cloud-cpp/pull/8460))
+* feat(pubsub): support x-goog-user-project ([#8456](https://github.com/googleapis/google-cloud-cpp/pull/8456))
+* feat(pubsub): per-call Options for SubscriptionAdminClient ([#8414](https://github.com/googleapis/google-cloud-cpp/pull/8414))
+* feat(pubsub): per-call options in TopicAdminClient ([#8411](https://github.com/googleapis/google-cloud-cpp/pull/8411))
+* feat(pubsub): per-call options in SchemaAdminClient ([#8406](https://github.com/googleapis/google-cloud-cpp/pull/8406))
+* doc(pubsub): add region tag for subscription with filter ([#8326](https://github.com/googleapis/google-cloud-cpp/pull/8326))
+
 ### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
 
 All the `spanner::Client` operations now take optional `google::cloud::Options`
@@ -154,11 +175,40 @@ options to operations that previously had none. Users should migrate to these
 new overloads. (Note that the old `spanner::*Options` types have not been
 deprecated as they are still used in the `spanner::Connection` interface.)
 
+**OTHER CHANGES**:
+
+* feat(spanner): use prevailing Options in ConnectionImpl ([#8466](https://github.com/googleapis/google-cloud-cpp/pull/8466))
+* feat(spanner): convert ReadOptions/PartitionOptions to Options ([#8448](https://github.com/googleapis/google-cloud-cpp/pull/8448))
+* fix(spanner): instantiate OptionsSpan objects in legacy admin calls ([#8440](https://github.com/googleapis/google-cloud-cpp/pull/8440))
+* feat(spanner): convert QueryOptions to Options in main client API ([#8430](https://github.com/googleapis/google-cloud-cpp/pull/8430))
+* fix(spanner): add Options save/restore to PartialResultSetSource ([#8355](https://github.com/googleapis/google-cloud-cpp/pull/8355))
+* feat(spanner): support x-goog-user-project ([#8316](https://github.com/googleapis/google-cloud-cpp/pull/8316))
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* feat(storage): support AuthorityOption ([#8462](https://github.com/googleapis/google-cloud-cpp/pull/8462))
+* fix(storage): json["projectTeam"] might be present but null ([#8446](https://github.com/googleapis/google-cloud-cpp/pull/8446))
+* doc(storage): improve `{Bucket,Object}Metadata` docs ([#8434](https://github.com/googleapis/google-cloud-cpp/pull/8434))
+* fix(storage): ignored fields in lifecycle patches ([#8389](https://github.com/googleapis/google-cloud-cpp/pull/8389))
+* doc(storage): show how to configure endpoints ([#8354](https://github.com/googleapis/google-cloud-cpp/pull/8354))
+* doc(storage): UserIp option is deprecated ([#8468](https://github.com/googleapis/google-cloud-cpp/pull/8468))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* feat(generator): all bidir streams are experimental ([#8471](https://github.com/googleapis/google-cloud-cpp/pull/8471))
+* feat: better support for PSC and VPC-SC ([#8453](https://github.com/googleapis/google-cloud-cpp/pull/8453))
+* fix: wait until AutomaticallyCreatedBackgroundThreads start ([#8452](https://github.com/googleapis/google-cloud-cpp/pull/8452))
+* fix: restore Options over deletion of StreamRange<T>::reader_ ([#8403](https://github.com/googleapis/google-cloud-cpp/pull/8403))
+* feat(common): converting constructors for future ([#8329](https://github.com/googleapis/google-cloud-cpp/pull/8329))
+* fix: add Options save/restore to StreamRange<T> and cancellations ([#8256](https://github.com/googleapis/google-cloud-cpp/pull/8256))
+* feat(generator): support parameters named "options" ([#8283](https://github.com/googleapis/google-cloud-cpp/pull/8283))
+* feat(generator): support `x-goog-user-project` ([#8245](https://github.com/googleapis/google-cloud-cpp/pull/8245))
+* fix: correct uses of `target_compatible_with` ([#8257](https://github.com/googleapis/google-cloud-cpp/pull/8257))
+* fix(generator): Connection base-class operations should fail ([#8236](https://github.com/googleapis/google-cloud-cpp/pull/8236))
+
 ### New Libraries
 
-<!-- TODO: update library count with next release -->
-
-We are introducing client libraries for more (TBD) GCP services. While we do not
+We are introducing client libraries for 9 more GCP services. While we do not
 anticipate any API changes to these libraries before declaring them GA, we are
 releasing them early in case they elicit some feedback that requires changes.
 
