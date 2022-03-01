@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ALARM_REGISTRY_INTERFACE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ALARM_REGISTRY_INTERFACE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_INTERFACE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_INTERFACE_H
 
 #include "google/cloud/version.h"
-#include "google/cloud/internal/base_interface.h"
+#include "google/cloud/pubsublite/internal/base_interface.h"
 #include "absl/time/time.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
+namespace pubsublite_internal {
 
 class AlarmRegistryInterface : public BaseInterface {
  public:
@@ -36,9 +36,9 @@ class AlarmRegistryInterface : public BaseInterface {
       absl::Duration period, std::function<void()> on_alarm) = 0;
 };
 
-}  // namespace internal
+}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ALARM_REGISTRY_INTERFACE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_INTERFACE_H

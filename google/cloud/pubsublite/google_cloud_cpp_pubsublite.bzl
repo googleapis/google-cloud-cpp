@@ -30,6 +30,8 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/admin_retry_traits.h",
     "internal/admin_stub.h",
     "internal/admin_stub_factory.h",
+    "internal/alarm_registry_interface.h",
+    "internal/base_interface.h",
     "internal/cursor_auth_decorator.h",
     "internal/cursor_logging_decorator.h",
     "internal/cursor_metadata_decorator.h",

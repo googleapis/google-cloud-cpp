@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BASE_INTERFACE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BASE_INTERFACE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_BASE_INTERFACE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_BASE_INTERFACE_H
 
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
+namespace pubsublite_internal {
 
 // A non-copyable, non-movable base interface. Using this as a base class for
 // your interface reduces its boilerplate, while complying with the style guide
@@ -38,9 +38,9 @@ class BaseInterface {
   BaseInterface& operator=(BaseInterface&&) = delete;
 };
 
-}  // namespace internal
+}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_BASE_INTERFACE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_BASE_INTERFACE_H

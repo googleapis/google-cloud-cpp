@@ -64,7 +64,6 @@ add_library(
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
     internal/absl_str_replace_quiet.h
-    internal/alarm_registry_interface.h
     internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
@@ -73,7 +72,6 @@ add_library(
     internal/backoff_policy.h
     internal/base64_transforms.cc
     internal/base64_transforms.h
-    internal/base_interface.h
     internal/big_endian.h
     internal/build_info.h
     internal/compiler_info.cc

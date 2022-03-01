@@ -85,6 +85,8 @@ add_library(
     internal/admin_stub.h
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
+    internal/alarm_registry_interface.h
+    internal/base_interface.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc

@@ -15,14 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
 
-#include "google/cloud/internal/base_interface.h"
+#include "google/cloud/pubsublite/internal/base_interface.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class LifecycleInterface : public google::cloud::internal::BaseInterface {
+class LifecycleInterface : public BaseInterface {
  public:
   virtual future<Status> Start() = 0;
 

@@ -22,7 +22,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class PartitionPublisherImpl : public Publisher {
+class PartitionPublisherImpl : public Publisher<Cursor> {
 };
 
 
