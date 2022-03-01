@@ -66,7 +66,9 @@ namespace. For status on this see
 https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
 
-## v1.37.0 - TBD
+## v1.38.0 - TBD
+
+## v1.37.0 - 2022-03
 
 **BREAKING CHANGES**
 
@@ -145,6 +147,32 @@ best long-term interest of our customers.
 as `final`. After the changes in [v1.36.0](#v1360---2022-02), there is no need
 or reason to be extending this class.
 
+**OTHER CHANGES**:
+
+* feat(bigtable): better support for PSC and VPC-SC ([#8458](https://github.com/googleapis/google-cloud-cpp/pull/8458))
+* refactor(bigtable)!: mark InstanceAdminClient as final ([#8449](https://github.com/googleapis/google-cloud-cpp/pull/8449))
+* fix(bigtable): use the appropriate type alias for AsyncRowReader::last_read_row_key_ ([#8437](https://github.com/googleapis/google-cloud-cpp/pull/8437))
+* docs(bigtable): cleanup admin documentation ([#8436](https://github.com/googleapis/google-cloud-cpp/pull/8436))
+* fix(bigtable): ReadRows retries from the `last_scanned_row_key` ([#8423](https://github.com/googleapis/google-cloud-cpp/pull/8423))
+* refactor(bigtable)!: modernize TableAdmin ([#8383](https://github.com/googleapis/google-cloud-cpp/pull/8383))
+* feat(bigtable): support x-goog-user-project ([#8324](https://github.com/googleapis/google-cloud-cpp/pull/8324))
+
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+* docs(iam): added comments on private_key_data ([#8204](https://github.com/googleapis/google-cloud-cpp/pull/8204))
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* feat(pubsub): support `AuthorityOption` ([#8460](https://github.com/googleapis/google-cloud-cpp/pull/8460))
+* feat(pubsub): support x-goog-user-project ([#8456](https://github.com/googleapis/google-cloud-cpp/pull/8456))
+* feat(pubsub): per-call Options for SubscriptionAdminClient ([#8414](https://github.com/googleapis/google-cloud-cpp/pull/8414))
+* feat(pubsub): per-call options in TopicAdminClient ([#8411](https://github.com/googleapis/google-cloud-cpp/pull/8411))
+* fix(pubsub): restore MakeSchemaAdminConnection overload ([#8412](https://github.com/googleapis/google-cloud-cpp/pull/8412))
+* feat(pubsub): per-call options in SchemaAdminClient ([#8406](https://github.com/googleapis/google-cloud-cpp/pull/8406))
+* doc(pubsub): add region tag for subscription with filter ([#8326](https://github.com/googleapis/google-cloud-cpp/pull/8326))
+* feat(pubsublite): resumable async streaming read write rpc ([#8233](https://github.com/googleapis/google-cloud-cpp/pull/8233))
+* feat(pubsublite): resumable async read write rpc stream boilerplate ([#8441](https://github.com/googleapis/google-cloud-cpp/pull/8441))
+
 ### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
 
 All the `spanner::Client` operations now take optional `google::cloud::Options`
@@ -154,11 +182,58 @@ options to operations that previously had none. Users should migrate to these
 new overloads. (Note that the old `spanner::*Options` types have not been
 deprecated as they are still used in the `spanner::Connection` interface.)
 
+**OTHER CHANGES**:
+
+* feat(spanner): use prevailing Options in ConnectionImpl ([#8466](https://github.com/googleapis/google-cloud-cpp/pull/8466))
+* feat(spanner): convert ReadOptions/PartitionOptions to Options ([#8448](https://github.com/googleapis/google-cloud-cpp/pull/8448))
+* fix(spanner): instantiate OptionsSpan objects in legacy admin calls ([#8440](https://github.com/googleapis/google-cloud-cpp/pull/8440))
+* feat(spanner): convert QueryOptions to Options in main client API ([#8430](https://github.com/googleapis/google-cloud-cpp/pull/8430))
+* fix(spanner): add Options save/restore to PartialResultSetSource ([#8355](https://github.com/googleapis/google-cloud-cpp/pull/8355))
+* feat(spanner): implement x-goog-user-project, part 2 ([#8332](https://github.com/googleapis/google-cloud-cpp/pull/8332))
+* feat(spanner): support x-goog-user-project ([#8316](https://github.com/googleapis/google-cloud-cpp/pull/8316))
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+* feat(storage): support AuthorityOption ([#8462](https://github.com/googleapis/google-cloud-cpp/pull/8462))
+* fix(storage): json["projectTeam"] might be present but null ([#8446](https://github.com/googleapis/google-cloud-cpp/pull/8446))
+* feat(GCS+gRPC): implement `SetBucketIamPolicy()` ([#8431](https://github.com/googleapis/google-cloud-cpp/pull/8431))
+* doc(storage): improve `{Bucket,Object}Metadata` docs ([#8434](https://github.com/googleapis/google-cloud-cpp/pull/8434))
+* feat(GCS+gRPC): implement `TestBucketIamPermissions()` ([#8427](https://github.com/googleapis/google-cloud-cpp/pull/8427))
+* feat(GCS+gRPC): implement `LockBucketRetentionPolicy()` ([#8428](https://github.com/googleapis/google-cloud-cpp/pull/8428))
+* feat(GCS+gRPC): implement `GetNativeBucketIamPolicy()` ([#8420](https://github.com/googleapis/google-cloud-cpp/pull/8420))
+* feat(GCS+gRPC): implement `UpdateBucket()` ([#8416](https://github.com/googleapis/google-cloud-cpp/pull/8416))
+* feat(GCS+grpc): implement `ListBuckets()` ([#8415](https://github.com/googleapis/google-cloud-cpp/pull/8415))
+* feat(GCS+gRPC): implement `PatchBucket()` ([#8394](https://github.com/googleapis/google-cloud-cpp/pull/8394))
+* fix(storage): ignored fields in lifecycle patches ([#8389](https://github.com/googleapis/google-cloud-cpp/pull/8389))
+* fix(GCS+gRPC): ignored fields in BucketMetadata parsing ([#8390](https://github.com/googleapis/google-cloud-cpp/pull/8390))
+* feat(GCS+gRPC): implement `DeleteBucket()` ([#8375](https://github.com/googleapis/google-cloud-cpp/pull/8375))
+* feat(GCS+gRPC): implement `CreateBucket()` ([#8372](https://github.com/googleapis/google-cloud-cpp/pull/8372))
+* doc(storage): show how to configure endpoints ([#8354](https://github.com/googleapis/google-cloud-cpp/pull/8354))
+* feat(GCS+gRPC): implement `UpdateObject()` ([#8278](https://github.com/googleapis/google-cloud-cpp/pull/8278))
+* feat(GCS+gRPC): implement `ComposeObject()` ([#8209](https://github.com/googleapis/google-cloud-cpp/pull/8209))
+* doc(storage): UserIp option is deprecated ([#8468](https://github.com/googleapis/google-cloud-cpp/pull/8468))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* feat(generator): all bidir streams are experimental ([#8471](https://github.com/googleapis/google-cloud-cpp/pull/8471))
+* doc: update GA library list  ([#8467](https://github.com/googleapis/google-cloud-cpp/pull/8467))
+* feat: better support for PSC and VPC-SC ([#8453](https://github.com/googleapis/google-cloud-cpp/pull/8453))
+* fix: wait until AutomaticallyCreatedBackgroundThreads start ([#8452](https://github.com/googleapis/google-cloud-cpp/pull/8452))
+* fix(oauth2): compute engine credential query ([#8421](https://github.com/googleapis/google-cloud-cpp/pull/8421))
+* fix: restore Options over deletion of StreamRange<T>::reader_ ([#8403](https://github.com/googleapis/google-cloud-cpp/pull/8403))
+* feat(common): ddd converting constructors for future ([#8329](https://github.com/googleapis/google-cloud-cpp/pull/8329))
+* fix(rest): formating headers ([#8391](https://github.com/googleapis/google-cloud-cpp/pull/8391))
+* fix: add Options save/restore to StreamRange<T> and cancellations ([#8256](https://github.com/googleapis/google-cloud-cpp/pull/8256))
+* feat(generator): support parameters named "options" ([#8283](https://github.com/googleapis/google-cloud-cpp/pull/8283))
+* feat(generator): support `x-goog-user-project` ([#8245](https://github.com/googleapis/google-cloud-cpp/pull/8245))
+* fix(rest): correct detection of all headers received ([#8268](https://github.com/googleapis/google-cloud-cpp/pull/8268))
+* fix: correct uses of `target_compatible_with` ([#8257](https://github.com/googleapis/google-cloud-cpp/pull/8257))
+* fix(oauth2): use correct expiration slack value ([#8255](https://github.com/googleapis/google-cloud-cpp/pull/8255))
+* fix(generator): Connection base-class operations should fail ([#8236](https://github.com/googleapis/google-cloud-cpp/pull/8236))
+
 ### New Libraries
 
-<!-- TODO: update library count with next release -->
-
-We are introducing client libraries for more (TBD) GCP services. While we do not
+We are introducing client libraries for 9 more GCP services. While we do not
 anticipate any API changes to these libraries before declaring them GA, we are
 releasing them early in case they elicit some feedback that requires changes.
 
