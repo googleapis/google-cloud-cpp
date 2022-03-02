@@ -16,7 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_H
 
 #include "google/cloud/pubsublite/internal/lifecycle_interface.h"
-#include <google/cloud/pubsublite/v1/common.proto.h>
+#include "google/cloud/future.h"
+#include "google/cloud/status_or.h"
+#include <google/cloud/pubsublite/v1/common.pb.h>
 
 namespace google {
 namespace cloud {
@@ -26,12 +28,12 @@ namespace pubsublite_internal {
 template <class PublishReturnType>
 class Publisher : public LifecycleInterface {
  public:
-  virtual future<StatusOr<PublishReturnType>> Publish(PubSubMessage m) = 0;
+  virtual future<StatusOr<PublishReturnType>> Publish(
+      google::cloud::pubsublite::v1::PubSubMessage m) = 0;
 
   // Same semantics as Cloud Pub/Sub Publisher flush
   virtual void Flush() = 0;
 };
-
 
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

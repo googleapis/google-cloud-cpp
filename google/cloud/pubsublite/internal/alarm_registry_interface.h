@@ -15,9 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_INTERFACE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_INTERFACE_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/pubsublite/internal/base_interface.h"
+#include "google/cloud/version.h"
 #include "absl/time/time.h"
+#include <functional>
+#include <memory>
 
 namespace google {
 namespace cloud {

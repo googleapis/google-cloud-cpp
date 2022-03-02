@@ -12,23 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_BATCHING_SETTINGS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_BATCHING_SETTINGS_H
 
-#include "google/cloud/pubsublite/internal/base_interface.h"
-#include "google/cloud/future.h"
-#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class LifecycleInterface : public BaseInterface {
+class BatchingSettings {
  public:
-  virtual future<Status> Start() = 0;
+  BatchingSettings(size_t byte_limit, size_t message_limit)
+      : byte_limit_{byte_limit}, message_limit_{message_limit} {}
 
-  virtual future<void> Shutdown() = 0;
+  BatchingSettings(const BatchingSettings&) = default;
+  BatchingSettings& operator=(const BatchingSettings&) = default;
+  BatchingSettings(BatchingSettings&&) = default;
+  BatchingSettings& operator=(BatchingSettings&&) = default;
+
+  size_t GetByteLimit() const { return byte_limit_; }
+  size_t GetMessageLimit() const { return message_limit_; }
+
+ private:
+  size_t byte_limit_;
+  size_t message_limit_;
 };
 
 }  // namespace pubsublite_internal
@@ -36,4 +45,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_BATCHING_SETTINGS_H
