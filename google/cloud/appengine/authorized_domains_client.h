@@ -95,12 +95,12 @@ class AuthorizedDomainsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::AuthorizedDomain,google/appengine/v1/domain.proto#L32}
+  /// @googleapis_link{google::appengine::v1::AuthorizedDomain,google/appengine/v1/domain.proto#L30}
   ///
   /// [google.appengine.v1.ListAuthorizedDomainsRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L631}
   /// [google.appengine.v1.AuthorizedDomain]:
-  /// @googleapis_reference_link{google/appengine/v1/domain.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/domain.proto#L30}
   ///
   StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
       google::appengine::v1::ListAuthorizedDomainsRequest request,

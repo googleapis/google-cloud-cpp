@@ -143,6 +143,45 @@ Status DefaultOsConfigServiceStub::DeletePatchDeployment(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+DefaultOsConfigServiceStub::UpdatePatchDeployment(
+    grpc::ClientContext& client_context,
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
+  google::cloud::osconfig::v1::PatchDeployment response;
+  auto status =
+      grpc_stub_->UpdatePatchDeployment(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+DefaultOsConfigServiceStub::PausePatchDeployment(
+    grpc::ClientContext& client_context,
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
+  google::cloud::osconfig::v1::PatchDeployment response;
+  auto status =
+      grpc_stub_->PausePatchDeployment(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+DefaultOsConfigServiceStub::ResumePatchDeployment(
+    grpc::ClientContext& client_context,
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
+  google::cloud::osconfig::v1::PatchDeployment response;
+  auto status =
+      grpc_stub_->ResumePatchDeployment(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
 }  // namespace cloud

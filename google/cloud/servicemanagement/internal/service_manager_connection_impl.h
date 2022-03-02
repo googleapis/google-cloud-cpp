@@ -108,15 +108,6 @@ class ServiceManagerConnectionImpl
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request) override;
 
-  future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-  EnableService(google::api::servicemanagement::v1::EnableServiceRequest const&
-                    request) override;
-
-  future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-  DisableService(
-      google::api::servicemanagement::v1::DisableServiceRequest const& request)
-      override;
-
  private:
   std::unique_ptr<servicemanagement::ServiceManagerRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

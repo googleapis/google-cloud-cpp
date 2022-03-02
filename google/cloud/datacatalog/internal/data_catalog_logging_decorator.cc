@@ -181,6 +181,32 @@ DataCatalogLogging::ListEntries(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogLogging::ModifyEntryOverview(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+                 request) {
+        return child_->ModifyEntryOverview(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogLogging::ModifyEntryContacts(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+                 request) {
+        return child_->ModifyEntryContacts(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogLogging::CreateTagTemplate(
     grpc::ClientContext& context,
@@ -344,6 +370,31 @@ DataCatalogLogging::ListTags(
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ListTagsRequest const& request) {
         return child_->ListTags(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogLogging::StarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+        return child_->StarEntry(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogLogging::UnstarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+        return child_->UnstarEntry(context, request);
       },
       context, request, __func__, tracing_options_);
 }

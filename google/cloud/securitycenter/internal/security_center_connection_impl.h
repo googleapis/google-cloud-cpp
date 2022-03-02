@@ -82,6 +82,10 @@ class SecurityCenterConnectionImpl
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request) override;
 
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+          request) override;
+
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
@@ -181,6 +185,25 @@ class SecurityCenterConnectionImpl
   UpdateSecurityMarks(
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
           request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  CreateBigQueryExport(
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+          request) override;
+
+  Status DeleteBigQueryExport(
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  UpdateBigQueryExport(
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+          request) override;
+
+  StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
+  ListBigQueryExports(
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest request)
+      override;
 
  private:
   std::unique_ptr<securitycenter::SecurityCenterRetryPolicy> retry_policy() {

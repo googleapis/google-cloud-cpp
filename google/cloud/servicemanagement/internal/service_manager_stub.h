@@ -115,18 +115,6 @@ class ServiceManagerStub {
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncEnableService(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::api::servicemanagement::v1::EnableServiceRequest const&
-          request) = 0;
-
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDisableService(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::api::servicemanagement::v1::DisableServiceRequest const&
-          request) = 0;
-
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -220,18 +208,6 @@ class DefaultServiceManagerStub : public ServiceManagerStub {
       grpc::ClientContext& client_context,
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request) override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncEnableService(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::api::servicemanagement::v1::EnableServiceRequest const& request)
-      override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncDisableService(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::api::servicemanagement::v1::DisableServiceRequest const& request)
-      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

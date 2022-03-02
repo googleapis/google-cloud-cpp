@@ -192,6 +192,22 @@ Status SecurityCenterClient::DeleteNotificationConfig(
   return connection_->DeleteNotificationConfig(request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::GetBigQueryExport(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::GetBigQueryExportRequest request;
+  request.set_name(name);
+  return connection_->GetBigQueryExport(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::GetBigQueryExport(
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBigQueryExport(request);
+}
+
 StatusOr<google::iam::v1::Policy> SecurityCenterClient::GetIamPolicy(
     std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -630,6 +646,81 @@ SecurityCenterClient::UpdateSecurityMarks(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSecurityMarks(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::CreateBigQueryExport(
+    std::string const& parent,
+    google::cloud::securitycenter::v1::BigQueryExport const& big_query_export,
+    std::string const& big_query_export_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::CreateBigQueryExportRequest request;
+  request.set_parent(parent);
+  *request.mutable_big_query_export() = big_query_export;
+  request.set_big_query_export_id(big_query_export_id);
+  return connection_->CreateBigQueryExport(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::CreateBigQueryExport(
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBigQueryExport(request);
+}
+
+Status SecurityCenterClient::DeleteBigQueryExport(std::string const& name,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::DeleteBigQueryExportRequest request;
+  request.set_name(name);
+  return connection_->DeleteBigQueryExport(request);
+}
+
+Status SecurityCenterClient::DeleteBigQueryExport(
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBigQueryExport(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::UpdateBigQueryExport(
+    google::cloud::securitycenter::v1::BigQueryExport const& big_query_export,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::UpdateBigQueryExportRequest request;
+  *request.mutable_big_query_export() = big_query_export;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBigQueryExport(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::UpdateBigQueryExport(
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBigQueryExport(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::ListBigQueryExports(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::ListBigQueryExportsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBigQueryExports(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterClient::ListBigQueryExports(
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBigQueryExports(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

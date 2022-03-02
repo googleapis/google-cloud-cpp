@@ -111,6 +111,33 @@ Status OsConfigServiceAuth::DeletePatchDeployment(
   return child_->DeletePatchDeployment(context, request);
 }
 
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::UpdatePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePatchDeployment(context, request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::PausePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PausePatchDeployment(context, request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::ResumePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResumePatchDeployment(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
 }  // namespace cloud

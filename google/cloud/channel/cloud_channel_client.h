@@ -474,12 +474,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::TransferableSku,google/cloud/channel/v1/entitlements.proto#L214}
+  /// @googleapis_link{google::cloud::channel::v1::TransferableSku,google/cloud/channel/v1/entitlements.proto#L215}
   ///
   /// [google.cloud.channel.v1.ListTransferableSkusRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1159}
   /// [google.cloud.channel.v1.TransferableSku]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L214}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L215}
   ///
   StreamRange<google::cloud::channel::v1::TransferableSku> ListTransferableSkus(
       google::cloud::channel::v1::ListTransferableSkusRequest request,

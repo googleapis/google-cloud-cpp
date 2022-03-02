@@ -88,6 +88,16 @@ class DataCatalogConnection {
   virtual StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
       google::cloud::datacatalog::v1::ListEntriesRequest request);
 
+  virtual StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+  ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::Contacts>
+  ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+          request);
+
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
   CreateTagTemplate(
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request);
@@ -137,6 +147,13 @@ class DataCatalogConnection {
 
   virtual StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const& request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+  UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request);
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);

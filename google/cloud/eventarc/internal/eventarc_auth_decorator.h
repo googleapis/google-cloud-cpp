@@ -65,6 +65,55 @@ class EventarcAuth : public EventarcStub {
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
       override;
 
+  StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::GetChannelRequest const& request) override;
+
+  StatusOr<google::cloud::eventarc::v1::ListChannelsResponse> ListChannels(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::ListChannelsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::eventarc::v1::CreateChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateChannel(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannel(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
+  ListChannelConnections(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateChannelConnection(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteChannelConnection(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

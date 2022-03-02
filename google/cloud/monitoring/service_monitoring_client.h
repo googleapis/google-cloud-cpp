@@ -103,12 +103,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.CreateServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StatusOr<google::monitoring::v3::Service> CreateService(
       std::string const& parent, google::monitoring::v3::Service const& service,
@@ -122,12 +122,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.CreateServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StatusOr<google::monitoring::v3::Service> CreateService(
       google::monitoring::v3::CreateServiceRequest const& request,
@@ -141,12 +141,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.GetServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StatusOr<google::monitoring::v3::Service> GetService(std::string const& name,
                                                        Options opts = {});
@@ -159,12 +159,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.GetServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StatusOr<google::monitoring::v3::Service> GetService(
       google::monitoring::v3::GetServiceRequest const& request,
@@ -182,12 +182,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.ListServicesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StreamRange<google::monitoring::v3::Service> ListServices(
       std::string const& parent, Options opts = {});
@@ -200,12 +200,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.ListServicesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StreamRange<google::monitoring::v3::Service> ListServices(
       google::monitoring::v3::ListServicesRequest request, Options opts = {});
@@ -218,12 +218,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.UpdateServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StatusOr<google::monitoring::v3::Service> UpdateService(
       google::monitoring::v3::Service const& service, Options opts = {});
@@ -236,12 +236,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L38}
+  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
   /// [google.monitoring.v3.UpdateServiceRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L38}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
   StatusOr<google::monitoring::v3::Service> UpdateService(
       google::monitoring::v3::UpdateServiceRequest const& request,
@@ -289,12 +289,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
@@ -311,12 +311,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
@@ -332,12 +332,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(std::string const& name, Options opts = {});
@@ -350,12 +350,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(
@@ -373,12 +373,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
   ListServiceLevelObjectives(std::string const& parent, Options opts = {});
@@ -391,12 +391,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
   ListServiceLevelObjectives(
@@ -412,12 +412,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
@@ -433,12 +433,12 @@ class ServiceMonitoringServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L185}
+  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
   /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L185}
+  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(

@@ -88,42 +88,42 @@ class LoggingServiceV2Client {
   //@}
 
   ///
-  /// Deletes all the log entries in a log. The log reappears if it receives new
-  /// entries. Log entries written shortly before the delete operation might not
-  /// be deleted. Entries received after the delete operation with a timestamp
-  /// before the operation will be deleted.
+  /// Deletes all the log entries in a log for the _Default Log Bucket. The log
+  /// reappears if it receives new entries. Log entries written shortly before
+  /// the delete operation might not be deleted. Entries received after the
+  /// delete operation with a timestamp before the operation will be deleted.
   ///
   /// @param log_name  Required. The resource name of the log to delete:
-  ///      "projects/[PROJECT_ID]/logs/[LOG_ID]"
-  ///      "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
-  ///      "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]"
-  ///      "folders/[FOLDER_ID]/logs/[LOG_ID]"
+  ///  * `projects/[PROJECT_ID]/logs/[LOG_ID]`
+  ///  * `organizations/[ORGANIZATION_ID]/logs/[LOG_ID]`
+  ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]`
+  ///  * `folders/[FOLDER_ID]/logs/[LOG_ID]`
   ///  `[LOG_ID]` must be URL-encoded. For example,
   ///  `"projects/my-project-id/logs/syslog"`,
-  ///  `"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"`.
+  ///  `"organizations/123/logs/cloudaudit.googleapis.com%2Factivity"`.
   ///  For more information about log names, see
   ///  [LogEntry][google.logging.v2.LogEntry].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L137}
   ///
   Status DeleteLog(std::string const& log_name, Options opts = {});
 
   ///
-  /// Deletes all the log entries in a log. The log reappears if it receives new
-  /// entries. Log entries written shortly before the delete operation might not
-  /// be deleted. Entries received after the delete operation with a timestamp
-  /// before the operation will be deleted.
+  /// Deletes all the log entries in a log for the _Default Log Bucket. The log
+  /// reappears if it receives new entries. Log entries written shortly before
+  /// the delete operation might not be deleted. Entries received after the
+  /// delete operation with a timestamp before the operation will be deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L140}
+  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L137}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L140}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L137}
   ///
   Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
                    Options opts = {});
@@ -140,13 +140,13 @@ class LoggingServiceV2Client {
   /// @param log_name  Optional. A default log resource name that is assigned to
   /// all log entries
   ///  in `entries` that do not specify a value for `log_name`:
-  ///      "projects/[PROJECT_ID]/logs/[LOG_ID]"
-  ///      "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
-  ///      "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]"
-  ///      "folders/[FOLDER_ID]/logs/[LOG_ID]"
+  ///  * `projects/[PROJECT_ID]/logs/[LOG_ID]`
+  ///  * `organizations/[ORGANIZATION_ID]/logs/[LOG_ID]`
+  ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]`
+  ///  * `folders/[FOLDER_ID]/logs/[LOG_ID]`
   ///  `[LOG_ID]` must be URL-encoded. For example:
   ///      "projects/my-project-id/logs/syslog"
-  ///      "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"
+  ///      "organizations/123/logs/cloudaudit.googleapis.com%2Factivity"
   ///  The permission `logging.logEntries.create` is needed on each project,
   ///  organization, billing account, or folder that is receiving new log
   ///  entries, whether the resource is specified in `logName` or in an
@@ -176,24 +176,24 @@ class LoggingServiceV2Client {
   ///  entries that did not supply their own values, the entries earlier in the
   ///  list will sort before the entries later in the list. See the
   ///  `entries.list` method. Log entries with timestamps that are more than the
-  ///  [logs retention period](https://cloud.google.com/logging/quota-policy) in
+  ///  [logs retention period](https://cloud.google.com/logging/quotas) in
   ///  the past or more than 24 hours in the future will not be available when
   ///  calling `entries.list`. However, those log entries can still be [exported
   ///  with
   ///  LogSinks](https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
   ///  To improve throughput and to avoid exceeding the
-  ///  [quota limit](https://cloud.google.com/logging/quota-policy) for calls to
+  ///  [quota limit](https://cloud.google.com/logging/quotas) for calls to
   ///  `entries.write`, you should try to include several log entries in this
   ///  list, rather than calling this method for each individual log entry.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L241}
   ///
   /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L162}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L160}
   /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L243}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L241}
   ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       std::string const& log_name,
@@ -212,16 +212,16 @@ class LoggingServiceV2Client {
   /// folders)
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L162}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L160}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L243}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L241}
   ///
   /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L162}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L160}
   /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L243}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L241}
   ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request,
@@ -236,15 +236,15 @@ class LoggingServiceV2Client {
   /// @param resource_names  Required. Names of one or more parent resources
   /// from which to
   ///  retrieve log entries:
-  ///      "projects/[PROJECT_ID]"
-  ///      "organizations/[ORGANIZATION_ID]"
-  ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
-  ///      "folders/[FOLDER_ID]"
-  ///  May alternatively be one or more views
-  ///    projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
-  ///    organization/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
-  ///    billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
-  ///    folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+  ///  *  `projects/[PROJECT_ID]`
+  ///  *  `organizations/[ORGANIZATION_ID]`
+  ///  *  `billingAccounts/[BILLING_ACCOUNT_ID]`
+  ///  *  `folders/[FOLDER_ID]`
+  ///  May alternatively be one or more views:
+  ///   * `projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]`
+  ///   * `organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]`
+  ///   * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]`
+  ///   * `folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]`
   ///  Projects listed in the `project_ids` field are added to this list.
   /// @param filter  Optional. A filter that chooses which log entries to
   /// return.  See [Advanced
@@ -265,12 +265,12 @@ class LoggingServiceV2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
+  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L38}
   ///
   /// [google.logging.v2.ListLogEntriesRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L257}
   /// [google.logging.v2.LogEntry]:
-  /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L42}
+  /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       std::vector<std::string> const& resource_names, std::string const& filter,
@@ -287,12 +287,12 @@ class LoggingServiceV2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L42}
+  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L38}
   ///
   /// [google.logging.v2.ListLogEntriesRequest]:
   /// @googleapis_reference_link{google/logging/v2/logging.proto#L257}
   /// [google.logging.v2.LogEntry]:
-  /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L42}
+  /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       google::logging::v2::ListLogEntriesRequest request, Options opts = {});
@@ -301,14 +301,14 @@ class LoggingServiceV2Client {
   /// Lists the descriptors for monitored resource types used by Logging.
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L331}
+  /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L332}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
   /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L331}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L332}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   ///
@@ -322,16 +322,16 @@ class LoggingServiceV2Client {
   /// Only logs that have entries are listed.
   ///
   /// @param parent  Required. The resource name that owns the logs:
-  ///      "projects/[PROJECT_ID]"
-  ///      "organizations/[ORGANIZATION_ID]"
-  ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
-  ///      "folders/[FOLDER_ID]"
+  ///  *  `projects/[PROJECT_ID]`
+  ///  *  `organizations/[ORGANIZATION_ID]`
+  ///  *  `billingAccounts/[BILLING_ACCOUNT_ID]`
+  ///  *  `folders/[FOLDER_ID]`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L357}
   ///
   StreamRange<std::string> ListLogs(std::string const& parent,
                                     Options opts = {});
@@ -341,13 +341,13 @@ class LoggingServiceV2Client {
   /// Only logs that have entries are listed.
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L356}
+  /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L357}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L356}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L357}
   ///
   StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request, Options opts = {});

@@ -87,14 +87,6 @@ class ServiceManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GenerateConfigReport(
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request) = 0;
-
-  virtual google::cloud::Idempotency EnableService(
-      google::api::servicemanagement::v1::EnableServiceRequest const&
-          request) = 0;
-
-  virtual google::cloud::Idempotency DisableService(
-      google::api::servicemanagement::v1::DisableServiceRequest const&
-          request) = 0;
 };
 
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>

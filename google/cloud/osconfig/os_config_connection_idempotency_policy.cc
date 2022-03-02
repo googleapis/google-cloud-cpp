@@ -90,6 +90,24 @@ class DefaultOsConfigServiceConnectionIdempotencyPolicy
       override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency UpdatePatchDeployment(
+      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency PausePatchDeployment(
+      google::cloud::osconfig::v1::PausePatchDeploymentRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ResumePatchDeployment(
+      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

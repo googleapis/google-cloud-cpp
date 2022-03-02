@@ -126,6 +126,22 @@ DataCatalogMetadata::ListEntries(
   return child_->ListEntries(context, request);
 }
 
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogMetadata::ModifyEntryOverview(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->ModifyEntryOverview(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogMetadata::ModifyEntryContacts(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->ModifyEntryContacts(context, request);
+}
+
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogMetadata::CreateTagTemplate(
     grpc::ClientContext& context,
@@ -228,6 +244,22 @@ DataCatalogMetadata::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListTags(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogMetadata::StarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->StarEntry(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogMetadata::UnstarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->UnstarEntry(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogMetadata::SetIamPolicy(

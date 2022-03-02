@@ -132,6 +132,24 @@ DataCatalogAuth::ListEntries(
   return child_->ListEntries(context, request);
 }
 
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogAuth::ModifyEntryOverview(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ModifyEntryOverview(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogAuth::ModifyEntryContacts(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ModifyEntryContacts(context, request);
+}
+
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogAuth::CreateTagTemplate(
     grpc::ClientContext& context,
@@ -247,6 +265,24 @@ DataCatalogAuth::ListTags(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTags(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogAuth::StarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StarEntry(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogAuth::UnstarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UnstarEntry(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogAuth::SetIamPolicy(

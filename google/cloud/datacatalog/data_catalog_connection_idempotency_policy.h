@@ -77,6 +77,14 @@ class DataCatalogConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListEntries(
       google::cloud::datacatalog::v1::ListEntriesRequest request) = 0;
 
+  virtual google::cloud::Idempotency ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency CreateTagTemplate(
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const&
           request) = 0;
@@ -123,6 +131,12 @@ class DataCatalogConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request) = 0;
+
+  virtual google::cloud::Idempotency StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request) = 0;
 
   virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) = 0;

@@ -123,16 +123,16 @@ class CompletionServiceClient {
   /// cloud sales if you are interested in using Retail Search.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L239}
+  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L384}
+  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L383}
   ///
   /// [google.cloud.retail.v2.ImportCompletionDataRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L239}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L238}
   /// [google.cloud.retail.v2.ImportCompletionDataResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L384}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L383}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(

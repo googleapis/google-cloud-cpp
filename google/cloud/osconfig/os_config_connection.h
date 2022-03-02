@@ -82,6 +82,18 @@ class OsConfigServiceConnection {
 
   virtual Status DeletePatchDeployment(
       google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request);
+
+  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+  UpdatePatchDeployment(
+      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request);
+
+  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+  PausePatchDeployment(
+      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request);
+
+  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+  ResumePatchDeployment(
+      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request);
 };
 
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(

@@ -68,6 +68,43 @@ class EventarcConnectionImpl : public eventarc::EventarcConnection {
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
       override;
 
+  StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      google::cloud::eventarc::v1::GetChannelRequest const& request) override;
+
+  StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
+      google::cloud::eventarc::v1::ListChannelsRequest request) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      google::cloud::eventarc::v1::CreateChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request)
+      override;
+
+  StreamRange<google::cloud::eventarc::v1::ChannelConnection>
+  ListChannelConnections(
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  CreateChannelConnection(
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  DeleteChannelConnection(
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request) override;
+
  private:
   std::unique_ptr<eventarc::EventarcRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

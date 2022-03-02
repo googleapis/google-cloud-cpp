@@ -92,12 +92,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.ListVersionsRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L344}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   StreamRange<google::appengine::v1::Version> ListVersions(
       google::appengine::v1::ListVersionsRequest request, Options opts = {});
@@ -112,12 +112,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.GetVersionRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L369}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   StatusOr<google::appengine::v1::Version> GetVersion(
       google::appengine::v1::GetVersionRequest const& request,
@@ -131,12 +131,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.CreateVersionRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L379}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   future<StatusOr<google::appengine::v1::Version>> CreateVersion(
       google::appengine::v1::CreateVersionRequest const& request,
@@ -185,12 +185,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.UpdateVersionRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L389}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request,
@@ -204,12 +204,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
+  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L30}
   ///
   /// [google.appengine.v1.DeleteVersionRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L416}
   /// [google.appengine.v1.OperationMetadataV1]:
-  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
       google::appengine::v1::DeleteVersionRequest const& request,

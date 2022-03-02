@@ -148,6 +148,21 @@ Status SecurityCenterConnectionImpl::DeleteNotificationConfig(
       request, __func__);
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterConnectionImpl::GetBigQueryExport(
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetBigQueryExport(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+                 request) {
+        return stub_->GetBigQueryExport(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::iam::v1::Policy> SecurityCenterConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(
@@ -622,6 +637,87 @@ SecurityCenterConnectionImpl::UpdateSecurityMarks(
           google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
               request) { return stub_->UpdateSecurityMarks(context, request); },
       request, __func__);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterConnectionImpl::CreateBigQueryExport(
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateBigQueryExport(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+              request) {
+        return stub_->CreateBigQueryExport(context, request);
+      },
+      request, __func__);
+}
+
+Status SecurityCenterConnectionImpl::DeleteBigQueryExport(
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteBigQueryExport(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+              request) {
+        return stub_->DeleteBigQueryExport(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterConnectionImpl::UpdateBigQueryExport(
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateBigQueryExport(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+              request) {
+        return stub_->UpdateBigQueryExport(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterConnectionImpl::ListBigQueryExports(
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest request) {
+  request.clear_page_token();
+  auto stub = stub_;
+  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
+      retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListBigQueryExports(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::BigQueryExport>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::securitycenter::v1::
+                       ListBigQueryExportsRequest const& request) {
+              return stub->ListBigQueryExports(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::securitycenter::v1::ListBigQueryExportsResponse r) {
+        std::vector<google::cloud::securitycenter::v1::BigQueryExport> result(
+            r.big_query_exports().size());
+        auto& messages = *r.mutable_big_query_exports();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

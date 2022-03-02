@@ -112,21 +112,6 @@ class MockServiceManagerConnection
       (google::api::servicemanagement::v1::GenerateConfigReportRequest const&
            request),
       (override));
-
-  MOCK_METHOD(
-      future<
-          StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>,
-      EnableService,
-      (google::api::servicemanagement::v1::EnableServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<
-          StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>,
-      DisableService,
-      (google::api::servicemanagement::v1::DisableServiceRequest const&
-           request),
-      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

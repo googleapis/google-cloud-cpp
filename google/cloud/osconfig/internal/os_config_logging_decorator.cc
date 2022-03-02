@@ -150,6 +150,45 @@ Status OsConfigServiceLogging::DeletePatchDeployment(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceLogging::UpdatePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
+                 request) {
+        return child_->UpdatePatchDeployment(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceLogging::PausePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::osconfig::v1::PausePatchDeploymentRequest const&
+                 request) {
+        return child_->PausePatchDeployment(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceLogging::ResumePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
+                 request) {
+        return child_->ResumePatchDeployment(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
 }  // namespace cloud

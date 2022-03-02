@@ -114,12 +114,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.CreateCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L364}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
@@ -137,12 +137,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.CreateCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L364}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
@@ -159,12 +159,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.GetCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L419}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
       std::string const& name, Options opts = {});
@@ -177,12 +177,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.GetCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L419}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
       google::cloud::security::privateca::v1::GetCertificateRequest const&
@@ -199,12 +199,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.ListCertificatesRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L430}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StreamRange<google::cloud::security::privateca::v1::Certificate>
   ListCertificates(std::string const& parent, Options opts = {});
@@ -217,12 +217,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.ListCertificatesRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L430}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StreamRange<google::cloud::security::privateca::v1::Certificate>
   ListCertificates(
@@ -239,12 +239,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L480}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   RevokeCertificate(std::string const& name, Options opts = {});
@@ -257,12 +257,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L480}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   RevokeCertificate(
@@ -283,12 +283,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L511}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   UpdateCertificate(
@@ -305,12 +305,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L511}
   /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L495}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L498}
   ///
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   UpdateCertificate(
@@ -819,12 +819,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L828}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
       std::string const& parent,
@@ -839,12 +839,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L828}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
@@ -861,12 +861,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L863}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
@@ -880,12 +880,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L863}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
@@ -901,12 +901,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.GetCaPoolRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L957}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
       std::string const& name, Options opts = {});
@@ -919,12 +919,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.GetCaPoolRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L957}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
       google::cloud::security::privateca::v1::GetCaPoolRequest const& request,
@@ -940,12 +940,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L969}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
       std::string const& parent, Options opts = {});
@@ -958,12 +958,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L969}
   /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L243}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L246}
   ///
   StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
       google::cloud::security::privateca::v1::ListCaPoolsRequest request,
@@ -1069,12 +1069,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1016}
   /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
   GetCertificateRevocationList(std::string const& name, Options opts = {});
@@ -1088,12 +1088,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1016}
   /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
   GetCertificateRevocationList(
@@ -1113,12 +1113,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1029}
   /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
   ListCertificateRevocationLists(std::string const& parent, Options opts = {});
@@ -1132,12 +1132,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1029}
   /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
   ListCertificateRevocationLists(
@@ -1157,12 +1157,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1076}
   /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>
@@ -1180,12 +1180,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1076}
   /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L424}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L427}
   ///
   future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>
@@ -1212,12 +1212,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1101}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   CreateCertificateTemplate(
@@ -1236,12 +1236,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1101}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   CreateCertificateTemplate(google::cloud::security::privateca::v1::
@@ -1302,12 +1302,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1165}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
   GetCertificateTemplate(std::string const& name, Options opts = {});
@@ -1321,12 +1321,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1165}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
   GetCertificateTemplate(google::cloud::security::privateca::v1::
@@ -1344,12 +1344,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1178}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
   ListCertificateTemplates(std::string const& parent, Options opts = {});
@@ -1363,12 +1363,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1178}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
   ListCertificateTemplates(
@@ -1388,12 +1388,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1225}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   UpdateCertificateTemplate(
@@ -1410,12 +1410,12 @@ class CertificateAuthorityServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1225}
   /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L590}
+  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L593}
   ///
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   UpdateCertificateTemplate(google::cloud::security::privateca::v1::
