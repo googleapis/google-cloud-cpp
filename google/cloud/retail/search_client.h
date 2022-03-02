@@ -96,16 +96,16 @@ class SearchServiceClient {
   /// cloud sales if you are interested in using Retail Search.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::SearchRequest,google/cloud/retail/v2/search_service.proto#L64}
+  /// @googleapis_link{google::cloud::retail::v2::SearchRequest,google/cloud/retail/v2/search_service.proto#L62}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L588}
+  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L586}
   ///
   /// [google.cloud.retail.v2.SearchRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L64}
+  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L62}
   /// [google.cloud.retail.v2.SearchResponse.SearchResult]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L588}
+  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L586}
   ///
   StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
       google::cloud::retail::v2::SearchRequest request, Options opts = {});

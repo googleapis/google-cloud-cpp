@@ -97,12 +97,12 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.ListCatalogsRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L126}
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
   StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
       std::string const& parent, Options opts = {});
@@ -116,12 +116,12 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.ListCatalogsRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L126}
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
   StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
       google::cloud::retail::v2::ListCatalogsRequest request,
@@ -144,12 +144,12 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.UpdateCatalogRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L177}
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
       google::cloud::retail::v2::Catalog const& catalog,
@@ -163,12 +163,12 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.UpdateCatalogRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L177}
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
       google::cloud::retail::v2::UpdateCatalogRequest const& request,

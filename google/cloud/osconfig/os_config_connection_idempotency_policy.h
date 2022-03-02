@@ -68,6 +68,18 @@ class OsConfigServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeletePatchDeployment(
       google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&
           request) = 0;
+
+  virtual google::cloud::Idempotency UpdatePatchDeployment(
+      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency PausePatchDeployment(
+      google::cloud::osconfig::v1::PausePatchDeploymentRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ResumePatchDeployment(
+      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy>

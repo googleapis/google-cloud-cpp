@@ -52,6 +52,36 @@ class EventarcConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteTrigger(
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetChannel(
+      google::cloud::eventarc::v1::GetChannelRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency ListChannels(
+      google::cloud::eventarc::v1::ListChannelsRequest request) = 0;
+
+  virtual google::cloud::Idempotency CreateChannel(
+      google::cloud::eventarc::v1::CreateChannelRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency UpdateChannel(
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency DeleteChannel(
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetChannelConnection(
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListChannelConnections(
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest request) = 0;
+
+  virtual google::cloud::Idempotency CreateChannelConnection(
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeleteChannelConnection(
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>

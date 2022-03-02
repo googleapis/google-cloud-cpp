@@ -205,44 +205,6 @@ ServiceManagerAuth::GenerateConfigReport(
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ServiceManagerAuth::AsyncEnableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::EnableServiceRequest const& request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncEnableService(cq, *std::move(context), request);
-      });
-}
-
-future<StatusOr<google::longrunning::Operation>>
-ServiceManagerAuth::AsyncDisableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::DisableServiceRequest const& request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncDisableService(cq, *std::move(context), request);
-      });
-}
-
-future<StatusOr<google::longrunning::Operation>>
 ServiceManagerAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

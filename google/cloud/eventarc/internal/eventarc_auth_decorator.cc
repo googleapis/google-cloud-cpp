@@ -104,6 +104,140 @@ EventarcAuth::AsyncDeleteTrigger(
       });
 }
 
+StatusOr<google::cloud::eventarc::v1::Channel> EventarcAuth::GetChannel(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetChannel(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
+EventarcAuth::ListChannels(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListChannelsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListChannels(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncCreateChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateChannel(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncUpdateChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateChannel(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncDeleteChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteChannel(cq, *std::move(context), request);
+      });
+}
+
+StatusOr<google::cloud::eventarc::v1::ChannelConnection>
+EventarcAuth::GetChannelConnection(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetChannelConnection(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
+EventarcAuth::ListChannelConnections(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListChannelConnections(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncCreateChannelConnection(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateChannelConnection(cq, *std::move(context),
+                                                   request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncDeleteChannelConnection(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteChannelConnection(cq, *std::move(context),
+                                                   request);
+      });
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

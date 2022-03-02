@@ -103,6 +103,18 @@ class DefaultDataCatalogConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency CreateTagTemplate(
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const&)
       override {
@@ -174,6 +186,16 @@ class DefaultDataCatalogConnectionIdempotencyPolicy
   Idempotency ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest) override {
     return Idempotency::kIdempotent;
+  }
+
+  Idempotency StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const&) override {
+    return Idempotency::kNonIdempotent;
   }
 
   Idempotency SetIamPolicy(

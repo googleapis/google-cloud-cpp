@@ -96,6 +96,16 @@ class DataCatalogAuth : public DataCatalogStub {
       google::cloud::datacatalog::v1::ListEntriesRequest const& request)
       override;
 
+  StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request)
+      override;
+
+  StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request)
+      override;
+
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request)
@@ -160,6 +170,15 @@ class DataCatalogAuth : public DataCatalogStub {
   StatusOr<google::cloud::datacatalog::v1::ListTagsResponse> ListTags(
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,

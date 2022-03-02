@@ -66,6 +66,10 @@ class SecurityCenterConnectionIdempotencyPolicy {
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency GetBigQueryExport(
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
@@ -149,6 +153,22 @@ class SecurityCenterConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateSecurityMarks(
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency CreateBigQueryExport(
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeleteBigQueryExport(
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateBigQueryExport(
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListBigQueryExports(
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest
           request) = 0;
 };
 

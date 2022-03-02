@@ -68,6 +68,13 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.38.0 - TBD
 
+### [Service Management API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicemanagement/README.md)
+
+* The `DisableService()` and `EnableService()` RPCs are now retired.  These RPCs
+  were deprecated and non-functional at the time this client library was
+  generated.  We do not expect this will actually break any existing code.
+  Nevertheless, we apologize for any confusion.
+
 ## v1.37.0 - 2022-03
 
 **BREAKING CHANGES**

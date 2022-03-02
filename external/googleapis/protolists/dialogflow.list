@@ -3,7 +3,9 @@
 @com_google_googleapis//google/cloud/dialogflow/v2:audio_config.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:context.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:conversation.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:conversation_dataset.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:conversation_event.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:conversation_model.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:conversation_profile.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:document.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:entity_type.proto

@@ -150,24 +150,6 @@ ServiceManagerMetadata::GenerateConfigReport(
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ServiceManagerMetadata::AsyncEnableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::EnableServiceRequest const& request) {
-  SetMetadata(*context, {});
-  return child_->AsyncEnableService(cq, std::move(context), request);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-ServiceManagerMetadata::AsyncDisableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::DisableServiceRequest const& request) {
-  SetMetadata(*context, {});
-  return child_->AsyncDisableService(cq, std::move(context), request);
-}
-
-future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

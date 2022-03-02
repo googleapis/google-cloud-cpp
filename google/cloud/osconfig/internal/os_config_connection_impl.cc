@@ -223,6 +223,48 @@ Status OsConfigServiceConnectionImpl::DeletePatchDeployment(
       request, __func__);
 }
 
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnectionImpl::UpdatePatchDeployment(
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdatePatchDeployment(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
+                 request) {
+        return stub_->UpdatePatchDeployment(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnectionImpl::PausePatchDeployment(
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PausePatchDeployment(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::osconfig::v1::PausePatchDeploymentRequest const&
+                 request) {
+        return stub_->PausePatchDeployment(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnectionImpl::ResumePatchDeployment(
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ResumePatchDeployment(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
+                 request) {
+        return stub_->ResumePatchDeployment(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
 }  // namespace cloud

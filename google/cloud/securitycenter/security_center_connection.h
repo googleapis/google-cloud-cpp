@@ -85,6 +85,11 @@ class SecurityCenterConnection {
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request);
 
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  GetBigQueryExport(
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+          request);
+
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
 
@@ -179,6 +184,24 @@ class SecurityCenterConnection {
   UpdateSecurityMarks(
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
           request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  CreateBigQueryExport(
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+          request);
+
+  virtual Status DeleteBigQueryExport(
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  UpdateBigQueryExport(
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
+  ListBigQueryExports(
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest request);
 };
 
 std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(

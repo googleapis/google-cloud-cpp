@@ -103,6 +103,16 @@ Status SecurityCenterAuth::DeleteNotificationConfig(
   return child_->DeleteNotificationConfig(context, request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterAuth::GetBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBigQueryExport(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> SecurityCenterAuth::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -333,6 +343,45 @@ SecurityCenterAuth::UpdateSecurityMarks(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSecurityMarks(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterAuth::CreateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBigQueryExport(context, request);
+}
+
+Status SecurityCenterAuth::DeleteBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBigQueryExport(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterAuth::UpdateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBigQueryExport(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
+SecurityCenterAuth::ListBigQueryExports(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBigQueryExports(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -95,6 +95,129 @@ DefaultEventarcStub::AsyncDeleteTrigger(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::eventarc::v1::Channel> DefaultEventarcStub::GetChannel(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::GetChannelRequest const& request) {
+  google::cloud::eventarc::v1::Channel response;
+  auto status = grpc_stub_->GetChannel(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
+DefaultEventarcStub::ListChannels(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::ListChannelsRequest const& request) {
+  google::cloud::eventarc::v1::ListChannelsResponse response;
+  auto status = grpc_stub_->ListChannels(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncCreateChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::CreateChannelRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncUpdateChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::UpdateChannelRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncDeleteChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteChannel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::eventarc::v1::ChannelConnection>
+DefaultEventarcStub::GetChannelConnection(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
+  google::cloud::eventarc::v1::ChannelConnection response;
+  auto status =
+      grpc_stub_->GetChannelConnection(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
+DefaultEventarcStub::ListChannelConnections(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
+  google::cloud::eventarc::v1::ListChannelConnectionsResponse response;
+  auto status =
+      grpc_stub_->ListChannelConnections(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncCreateChannelConnection(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateChannelConnection(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncDeleteChannelConnection(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteChannelConnection(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEventarcStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

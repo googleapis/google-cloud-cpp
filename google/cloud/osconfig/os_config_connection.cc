@@ -93,6 +93,24 @@ Status OsConfigServiceConnection::DeletePatchDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnection::UpdatePatchDeployment(
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnection::PausePatchDeployment(
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnection::ResumePatchDeployment(
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

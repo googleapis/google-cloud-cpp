@@ -93,12 +93,12 @@ class DomainMappingsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.ListDomainMappingsRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L784}
   /// [google.appengine.v1.DomainMapping]:
-  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
   StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
       google::appengine::v1::ListDomainMappingsRequest request,
@@ -112,12 +112,12 @@ class DomainMappingsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.GetDomainMappingRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L805}
   /// [google.appengine.v1.DomainMapping]:
-  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
   StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
       google::appengine::v1::GetDomainMappingRequest const& request,
@@ -133,12 +133,12 @@ class DomainMappingsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.CreateDomainMappingRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L812}
   /// [google.appengine.v1.DomainMapping]:
-  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
   future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
       google::appengine::v1::CreateDomainMappingRequest const& request,
@@ -155,12 +155,12 @@ class DomainMappingsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
   /// [google.appengine.v1.UpdateDomainMappingRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L843}
   /// [google.appengine.v1.DomainMapping]:
-  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L30}
+  /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
   ///
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request,
@@ -176,12 +176,12 @@ class DomainMappingsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
+  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L30}
   ///
   /// [google.appengine.v1.DeleteDomainMappingRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L857}
   /// [google.appengine.v1.OperationMetadataV1]:
-  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteDomainMapping(

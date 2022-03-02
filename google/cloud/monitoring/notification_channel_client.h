@@ -111,7 +111,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
   /// [google.monitoring.v3.ListNotificationChannelDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L164}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L163}
   /// [google.monitoring.v3.NotificationChannelDescriptor]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
   ///
@@ -124,14 +124,14 @@ class NotificationChannelServiceClient {
   /// makes it possible for new channel types to be dynamically added.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::ListNotificationChannelDescriptorsRequest,google/monitoring/v3/notification_service.proto#L164}
+  /// @googleapis_link{google::monitoring::v3::ListNotificationChannelDescriptorsRequest,google/monitoring/v3/notification_service.proto#L163}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
   /// [google.monitoring.v3.ListNotificationChannelDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L164}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L163}
   /// [google.monitoring.v3.NotificationChannelDescriptor]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
   ///
@@ -153,7 +153,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
   /// [google.monitoring.v3.GetNotificationChannelDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L208}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L207}
   /// [google.monitoring.v3.NotificationChannelDescriptor]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
   ///
@@ -165,14 +165,14 @@ class NotificationChannelServiceClient {
   /// are expected / permitted for a notification channel of the given type.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelDescriptorRequest,google/monitoring/v3/notification_service.proto#L208}
+  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelDescriptorRequest,google/monitoring/v3/notification_service.proto#L207}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannelDescriptor,google/monitoring/v3/notification.proto#L37}
   ///
   /// [google.monitoring.v3.GetNotificationChannelDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L208}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L207}
   /// [google.monitoring.v3.NotificationChannelDescriptor]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
   ///
@@ -201,7 +201,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.ListNotificationChannelsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L243}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L242}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -212,14 +212,14 @@ class NotificationChannelServiceClient {
   /// Lists the notification channels that have been created for the project.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::ListNotificationChannelsRequest,google/monitoring/v3/notification_service.proto#L243}
+  /// @googleapis_link{google::monitoring::v3::ListNotificationChannelsRequest,google/monitoring/v3/notification_service.proto#L242}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.ListNotificationChannelsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L243}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L242}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -244,7 +244,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.GetNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L305}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L304}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -259,14 +259,14 @@ class NotificationChannelServiceClient {
   /// that was supplied in the call to the create method.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L305}
+  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L304}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.GetNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L305}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L304}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -295,7 +295,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.CreateNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L221}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L220}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -310,14 +310,14 @@ class NotificationChannelServiceClient {
   /// endpoint such as an email address, SMS number, or PagerDuty service.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::CreateNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L221}
+  /// @googleapis_link{google::monitoring::v3::CreateNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L220}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.CreateNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L221}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L220}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -342,7 +342,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.UpdateNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L318}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L317}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -357,14 +357,14 @@ class NotificationChannelServiceClient {
   /// remain unchanged.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::UpdateNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L318}
+  /// @googleapis_link{google::monitoring::v3::UpdateNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L317}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.UpdateNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L318}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L317}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -388,7 +388,7 @@ class NotificationChannelServiceClient {
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L330}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L329}
   ///
   Status DeleteNotificationChannel(std::string const& name, bool force,
                                    Options opts = {});
@@ -397,12 +397,12 @@ class NotificationChannelServiceClient {
   /// Deletes a notification channel.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::DeleteNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L330}
+  /// @googleapis_link{google::monitoring::v3::DeleteNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L329}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L330}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L329}
   ///
   Status DeleteNotificationChannel(
       google::monitoring::v3::DeleteNotificationChannelRequest const& request,
@@ -418,7 +418,7 @@ class NotificationChannelServiceClient {
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L349}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L348}
   ///
   Status SendNotificationChannelVerificationCode(std::string const& name,
                                                  Options opts = {});
@@ -428,12 +428,12 @@ class NotificationChannelServiceClient {
   /// can then be supplied in `VerifyNotificationChannel` to verify the channel.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::SendNotificationChannelVerificationCodeRequest,google/monitoring/v3/notification_service.proto#L349}
+  /// @googleapis_link{google::monitoring::v3::SendNotificationChannelVerificationCodeRequest,google/monitoring/v3/notification_service.proto#L348}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L349}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L348}
   ///
   Status SendNotificationChannelVerificationCode(
       google::monitoring::v3::
@@ -470,12 +470,12 @@ class NotificationChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeResponse,google/monitoring/v3/notification_service.proto#L384}
+  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeResponse,google/monitoring/v3/notification_service.proto#L383}
   ///
   /// [google.monitoring.v3.GetNotificationChannelVerificationCodeRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L360}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L359}
   /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L384}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L383}
   ///
   StatusOr<
       google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
@@ -506,16 +506,16 @@ class NotificationChannelServiceClient {
   /// 64 encoded string that has a longer expiration time.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeRequest,google/monitoring/v3/notification_service.proto#L360}
+  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeRequest,google/monitoring/v3/notification_service.proto#L359}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeResponse,google/monitoring/v3/notification_service.proto#L384}
+  /// @googleapis_link{google::monitoring::v3::GetNotificationChannelVerificationCodeResponse,google/monitoring/v3/notification_service.proto#L383}
   ///
   /// [google.monitoring.v3.GetNotificationChannelVerificationCodeRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L360}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L359}
   /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L384}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L383}
   ///
   StatusOr<
       google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
@@ -544,7 +544,7 @@ class NotificationChannelServiceClient {
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.VerifyNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L398}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L397}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
@@ -558,14 +558,14 @@ class NotificationChannelServiceClient {
   /// `SendNotificationChannelVerificationCode`.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::VerifyNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L398}
+  /// @googleapis_link{google::monitoring::v3::VerifyNotificationChannelRequest,google/monitoring/v3/notification_service.proto#L397}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
   /// [google.monitoring.v3.VerifyNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L398}
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L397}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
   ///
