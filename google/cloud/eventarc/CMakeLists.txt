@@ -39,6 +39,8 @@ google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_eventarc_protos
     # cmake-format: sort
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/publishing/v1/publisher.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/channel.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/channel_connection.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/eventarc.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/trigger.proto
     PROTO_PATH_DIRECTORIES

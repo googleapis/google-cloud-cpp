@@ -38,6 +38,7 @@ include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_kms_protos
     # cmake-format: sort
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/kms/v1/ekm_service.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/kms/v1/resources.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/kms/v1/service.proto
     PROTO_PATH_DIRECTORIES
