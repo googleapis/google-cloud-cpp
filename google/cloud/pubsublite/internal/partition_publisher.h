@@ -144,6 +144,7 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
     batches.clear();
   }
 
+  // TODO(18suresha) make batching cleaner/less redundant across other functions
   void Rebatch(bool process_in_flight) {
     std::lock_guard<std::mutex> g{mu_};
     deque<MessageWithFuture> unbatched_messages_with_futures;
