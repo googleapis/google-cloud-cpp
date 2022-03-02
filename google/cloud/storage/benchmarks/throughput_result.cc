@@ -15,6 +15,7 @@
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include <algorithm>
 #include <sstream>
 #include <string>
 
@@ -36,27 +37,35 @@ std::string QuoteCsv(T const& element) {
   return absl::StrCat(R"(")", absl::StrReplaceAll(result, {{R"(")", R"("")"}}),
                       R"(")");
 }
+
+std::string CleanupCsv(std::string v) {
+  std::replace(v.begin(), v.end(), ',', ';');
+  return v;
+}
+
 }  // namespace
 
 void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
-  os << ToString(r.op)                 // force clang to keep one field per-line
+  os << ToString(r.library)            // clang-format hack
+     << ',' << ToString(r.transport)   //
+     << ',' << ToString(r.op)          //
      << ',' << r.object_size           //
      << ',' << r.transfer_size         //
      << ',' << r.app_buffer_size       //
      << ',' << r.lib_buffer_size       //
      << ',' << r.crc_enabled           //
      << ',' << r.md5_enabled           //
-     << ',' << ToString(r.api)         //
      << ',' << r.elapsed_time.count()  //
      << ',' << r.cpu_time.count()      //
+     << ',' << CleanupCsv(r.peer)      //
      << ',' << QuoteCsv(r.status)      //
      << '\n';
 }
 
 void PrintThroughputResultHeader(std::ostream& os) {
-  os << "Op,ObjectSize,TransferSize,AppBufferSize,LibBufferSize"
-     << ",Crc32cEnabled,MD5Enabled,ApiName"
-     << ",ElapsedTimeUs,CpuTimeUs,Status\n";
+  os << "Library,Transport,Op,ObjectSize,TransferSize,AppBufferSize"
+     << ",LibBufferSize,Crc32cEnabled,MD5Enabled"
+     << ",ElapsedTimeUs,CpuTimeUs,Peer,Status\n";
 }
 
 char const* ToString(OpType op) {

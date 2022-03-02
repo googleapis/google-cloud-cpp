@@ -110,6 +110,47 @@ StatusOr<ApiName> ParseApiName(std::string const& val) {
   return Status{StatusCode::kInvalidArgument, "unknown ApiName " + val};
 }
 
+StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val) {
+  for (auto v : {ExperimentLibrary::kRaw, ExperimentLibrary::kCppClient}) {
+    if (val == ToString(v)) return v;
+  }
+  return Status{StatusCode::kInvalidArgument,
+                "unknown ExperimentLibrary " + val};
+}
+
+StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val) {
+  for (auto v : {ExperimentTransport::kDirectPath, ExperimentTransport::kGrpc,
+                 ExperimentTransport::kJson, ExperimentTransport::kXml}) {
+    if (val == ToString(v)) return v;
+  }
+  return Status{StatusCode::kInvalidArgument,
+                "unknown ExperimentTransport " + val};
+}
+
+std::string ToString(ExperimentLibrary v) {
+  switch (v) {
+    case ExperimentLibrary::kCppClient:
+      return "CppClient";
+    case ExperimentLibrary::kRaw:
+      return "Raw";
+  }
+  return "";
+}
+
+std::string ToString(ExperimentTransport v) {
+  switch (v) {
+    case ExperimentTransport::kDirectPath:
+      return "DirectPath";
+    case ExperimentTransport::kGrpc:
+      return "Grpc";
+    case ExperimentTransport::kJson:
+      return "Json";
+    case ExperimentTransport::kXml:
+      return "Xml";
+  }
+  return "";
+}
+
 std::string RandomBucketPrefix() { return "cloud-cpp-testing-bm"; }
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {

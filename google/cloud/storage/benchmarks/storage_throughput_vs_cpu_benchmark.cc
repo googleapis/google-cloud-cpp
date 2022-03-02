@@ -29,8 +29,10 @@
 
 namespace {
 namespace gcs = ::google::cloud::storage;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
-using gcs_bm::ApiName;
+using gcs_bm::ExperimentLibrary;
+using gcs_bm::ExperimentTransport;
 using gcs_bm::ThroughputOptions;
 using gcs_bm::ThroughputResult;
 
@@ -104,15 +106,12 @@ this program.
 using TestResults = std::vector<ThroughputResult>;
 
 TestResults RunThread(ThroughputOptions const& ThroughputOptions,
-                      gcs::Client rest_client, gcs::Client grpc_client,
                       std::string const& bucket_name, int thread_id);
 void PrintResults(TestResults const& results);
 
 google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
-
-using ::google::cloud::storage_experimental::DefaultGrpcClient;
 
 int main(int argc, char* argv[]) {
   google::cloud::StatusOr<ThroughputOptions> options = ParseArgs(argc, argv);
@@ -123,12 +122,7 @@ int main(int argc, char* argv[]) {
 
   auto client_options =
       google::cloud::Options{}.set<gcs::ProjectIdOption>(options->project_id);
-  auto rest_client = gcs::Client(client_options);
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  auto grpc_client = DefaultGrpcClient(client_options);
-#else
-  auto grpc_client = rest_client;
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  auto client = gcs::Client(client_options);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
@@ -139,8 +133,11 @@ int main(int argc, char* argv[]) {
                  [](char c) { return c == '\n' ? ';' : c; });
 
   struct Formatter {
-    void operator()(std::string* out, ApiName api) const {
-      out->append(gcs_bm::ToString(api));
+    void operator()(std::string* out, ExperimentLibrary v) const {
+      out->append(gcs_bm::ToString(v));
+    }
+    void operator()(std::string* out, ExperimentTransport v) const {
+      out->append(gcs_bm::ToString(v));
     }
     void operator()(std::string* out, bool b) const {
       out->append(b ? "true" : "false");
@@ -179,8 +176,10 @@ int main(int argc, char* argv[]) {
             << options->read_quantum / gcs_bm::kKiB
             << "\n# Minimum Sample Count: " << options->minimum_sample_count
             << "\n# Maximum Sample Count: " << options->maximum_sample_count
-            << "\n# Enabled APIs: "
-            << absl::StrJoin(options->enabled_apis, ",", Formatter{})
+            << "\n# Enabled Libs: "
+            << absl::StrJoin(options->libs, ",", Formatter{})
+            << "\n# Enabled Transports: "
+            << absl::StrJoin(options->transports, ",", Formatter{})
             << "\n# Enabled CRC32C: "
             << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
             << "\n# Enabled MD5: "
@@ -189,14 +188,14 @@ int main(int argc, char* argv[]) {
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
-  auto meta = rest_client.CreateBucket(
-      bucket_name,
-      gcs::BucketMetadata()
-          .set_storage_class(gcs::storage_class::Standard())
-          .set_location(options->region),
-      gcs::PredefinedAcl::ProjectPrivate(),
-      gcs::PredefinedDefaultObjectAcl::ProjectPrivate(),
-      gcs::Projection("full"));
+  auto meta =
+      client.CreateBucket(bucket_name,
+                          gcs::BucketMetadata()
+                              .set_storage_class(gcs::storage_class::Standard())
+                              .set_location(options->region),
+                          gcs::PredefinedAcl::ProjectPrivate(),
+                          gcs::PredefinedDefaultObjectAcl::ProjectPrivate(),
+                          gcs::Projection("full"));
   if (!meta) {
     std::cerr << "Error creating bucket: " << meta.status() << "\n";
     return 1;
@@ -205,15 +204,15 @@ int main(int argc, char* argv[]) {
   gcs_bm::PrintThroughputResultHeader(std::cout);
   std::vector<std::future<TestResults>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
-    tasks.emplace_back(std::async(std::launch::async, RunThread, *options,
-                                  rest_client, grpc_client, bucket_name, i));
+    tasks.emplace_back(
+        std::async(std::launch::async, RunThread, *options, bucket_name, i));
   }
   for (auto& f : tasks) {
     PrintResults(f.get());
   }
 
-  gcs_bm::DeleteAllObjects(rest_client, bucket_name, options->thread_count);
-  auto status = rest_client.DeleteBucket(bucket_name);
+  gcs_bm::DeleteAllObjects(client, bucket_name, options->thread_count);
+  auto status = client.DeleteBucket(bucket_name);
   if (!status.ok()) {
     std::cerr << "# Error deleting bucket, status=" << status << "\n";
     return 1;
@@ -232,9 +231,28 @@ void PrintResults(TestResults const& results) {
   std::cout << std::flush;
 }
 
-TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
-                      gcs::Client grpc_client, std::string const& bucket_name,
-                      int thread_id) {
+gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
+  return [=](ExperimentTransport t) {
+    auto opts =
+        google::cloud::Options{}.set<gcs::ProjectIdOption>(options.project_id);
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+    using ::google::cloud::storage_experimental::DefaultGrpcClient;
+    if (t == ExperimentTransport::kDirectPath) {
+      return DefaultGrpcClient(
+          opts.set<gcs_ex::GrpcPluginOption>("media")
+              .set<google::cloud::EndpointOption>(
+                  "google-c2p-experimental:///storage.googleapis.com"));
+    }
+    if (t == ExperimentTransport::kGrpc) {
+      return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("none"));
+    }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+    return gcs::Client(opts);
+  };
+}
+
+TestResults RunThread(ThroughputOptions const& options,
+                      std::string const& bucket_name, int thread_id) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
@@ -247,16 +265,17 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
   auto const upload_buffer_size = client_options->upload_buffer_size();
   auto const download_buffer_size = client_options->download_buffer_size();
 
-  auto uploaders =
-      gcs_bm::CreateUploadExperiments(options, rest_client, grpc_client, {});
+  auto provider = MakeProvider(options);
+
+  auto uploaders = gcs_bm::CreateUploadExperiments(options, provider);
   if (uploaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
     std::cout << "# None of the APIs configured are available\n";
     return {};
   }
-  auto downloaders = gcs_bm::CreateDownloadExperiments(
-      options, rest_client, std::move(grpc_client), {}, thread_id);
+  auto downloaders =
+      gcs_bm::CreateDownloadExperiments(options, provider, thread_id);
   if (downloaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
@@ -284,9 +303,6 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
       0, options.enabled_crc32c.size() - 1);
   std::bernoulli_distribution use_insert;
 
-  std::uniform_int_distribution<std::size_t> api_generator(
-      0, options.enabled_apis.size() - 1);
-
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
   TestResults results;
@@ -302,7 +318,6 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
     auto read_size = options.read_quantum * read_size_generator(generator);
     bool const enable_crc = options.enabled_crc32c[crc32c_generator(generator)];
     bool const enable_md5 = options.enabled_md5[md5_generator(generator)];
-    auto const api = options.enabled_apis[api_generator(generator)];
 
     auto& uploader = uploaders[uploader_generator(generator)];
     auto upload_result =
@@ -315,8 +330,7 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
 
     if (!status.ok()) {
       if (options.thread_count == 1) {
-        std::cout << "# status=" << status << ", api=" << gcs_bm::ToString(api)
-                  << "\n";
+        std::cout << "# status=" << status << "\n";
       }
       continue;
     }
@@ -334,8 +348,8 @@ TestResults RunThread(ThroughputOptions const& options, gcs::Client rest_client,
       PrintResults(results);
       results.clear();
     }
-
-    (void)rest_client.DeleteObject(bucket_name, object_name);
+    auto client = provider(ExperimentTransport::kJson);
+    (void)client.DeleteObject(bucket_name, object_name);
   }
   return results;
 }
