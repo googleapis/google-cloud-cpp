@@ -58,7 +58,7 @@ class PartitionPublisherImpl
     google::cloud::pubsublite::v1::PubSubMessage message;
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
   };
-  
+
   void Rebatch(bool process_in_flight);
 
   void WriteBatches();
@@ -96,12 +96,12 @@ class PartitionPublisherImpl
   std::deque<std::deque<MessageWithFuture>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>
-      in_flight_batches_;  // ABSL_GUARDED_BY(mu_)
-  bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
-  bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
+      in_flight_batches_;      // ABSL_GUARDED_BY(mu_)
+  bool writing_ = false;       // ABSL_GUARDED_BY(mu_)
+  bool shutdown_ = false;      // ABSL_GUARDED_BY(mu_)
+  bool invalid_read_ = false;  // ABSL_GUARDED_BY(mu_)
 
-  std::unique_ptr<AlarmRegistryInterface::CancelToken>
-      cancel_token_;
+  std::unique_ptr<AlarmRegistryInterface::CancelToken> cancel_token_;
 };
 
 }  // namespace pubsublite_internal

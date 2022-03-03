@@ -65,6 +65,10 @@ future<Status> PartitionPublisherImpl::Start() {
                         .then([this](future<Status> start_status) {
                           {
                             std::lock_guard<std::mutex> g{mu_};
+                            if (invalid_read_) {
+                              return Status(StatusCode::kAborted,
+                                            "Invalid `Read` response");
+                            }
                             if (shutdown_) return start_status.get();
                             shutdown_ = true;
                           }
@@ -166,6 +170,12 @@ void PartitionPublisherImpl::Read() {
                          optional_response_future) {
           auto optional_response = optional_response_future.get();
           if (!optional_response) Read();
+          if (optional_response->has_initial_response()) {
+            Shutdown();
+            std::lock_guard<std::mutex> g{mu_};
+            invalid_read_ = true;
+            return;
+          }
           std::deque<MessageWithFuture> batch;
           {
             std::lock_guard<std::mutex> g{mu_};
@@ -308,7 +318,7 @@ future<StatusOr<UnderlyingStream>> PartitionPublisherImpl::Initializer(
 
   return (*shared_stream)
       ->Write(publish_request, grpc::WriteOptions())
-      .then([this, shared_stream, return_finish_status,
+      .then([shared_stream, return_finish_status,
              check_read](future<bool> write_response) {
         if (!write_response.get()) {
           return return_finish_status();
