@@ -101,8 +101,7 @@ class PartitionPublisherImpl
   bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
   bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
 
-  // by semantics of AlarmRegistryInterface, CancelToken isn't accessed
-  __attribute__((unused)) std::unique_ptr<AlarmRegistryInterface::CancelToken>
+  std::unique_ptr<AlarmRegistryInterface::CancelToken>
       cancel_token_;
 };
 

@@ -21,9 +21,7 @@ namespace pubsublite_internal {
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
-using google::cloud::pubsublite::v1::InitialPublishResponse;
 using google::cloud::pubsublite::v1::MessagePublishRequest;
-using google::cloud::pubsublite::v1::MessagePublishResponse;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
