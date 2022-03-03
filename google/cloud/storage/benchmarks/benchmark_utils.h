@@ -60,9 +60,6 @@ enum class ApiName {
   kApiJson,
   kApiXml,
   kApiGrpc,
-  kApiRawJson,
-  kApiRawXml,
-  kApiRawGrpc,
 };
 char const* ToString(ApiName api);
 

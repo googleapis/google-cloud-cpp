@@ -88,8 +88,6 @@ TEST(AggregateUploadThroughputOptions, Validate) {
   EXPECT_FALSE(ParseAggregateUploadThroughputOptions(
       {"self-test", "--bucket-name=b", "--iteration-count=-1"}, ""));
   EXPECT_FALSE(ParseAggregateUploadThroughputOptions(
-      {"self-test", "--bucket-name=b", "--api=GRPC-RAW"}, ""));
-  EXPECT_FALSE(ParseAggregateUploadThroughputOptions(
       {"self-test", "--bucket-name=b", "--grpc-channel-count=-1"}, ""));
   EXPECT_FALSE(ParseAggregateUploadThroughputOptions(
       {"self-test", "--bucket-name=b", "--minimum-object-size=4MiB",
