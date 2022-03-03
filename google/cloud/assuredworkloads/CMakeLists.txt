@@ -82,13 +82,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_assuredworkloads)
 set_target_properties(
     google_cloud_cpp_assuredworkloads
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-assuredworkloads
+    PROPERTIES EXPORT_NAME google-cloud-cpp::assuredworkloads
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_assuredworkloads
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-assuredworkloads ALIAS
+add_library(google-cloud-cpp::assuredworkloads ALIAS
             google_cloud_cpp_assuredworkloads)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -108,12 +108,11 @@ add_library(google_cloud_cpp_assuredworkloads_mocks INTERFACE)
 target_sources(google_cloud_cpp_assuredworkloads_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_assuredworkloads_mocks
-    INTERFACE google-cloud-cpp::experimental-assuredworkloads GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::assuredworkloads GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_assuredworkloads_mocks
-    PROPERTIES EXPORT_NAME
-               google-cloud-cpp::experimental-assuredworkloads_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::assuredworkloads_mocks)
 target_include_directories(
     google_cloud_cpp_assuredworkloads_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -125,9 +124,8 @@ target_compile_options(google_cloud_cpp_assuredworkloads_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(assuredworkloads_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        assuredworkloads_quickstart
-        PRIVATE google-cloud-cpp::experimental-assuredworkloads)
+    target_link_libraries(assuredworkloads_quickstart
+                          PRIVATE google-cloud-cpp::assuredworkloads)
     google_cloud_cpp_add_common_options(assuredworkloads_quickstart)
     add_test(
         NAME assuredworkloads_quickstart

@@ -73,14 +73,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_orgpolicy)
 set_target_properties(
     google_cloud_cpp_orgpolicy
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-orgpolicy
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::orgpolicy VERSION
+                                                       "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_orgpolicy
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-orgpolicy ALIAS
-            google_cloud_cpp_orgpolicy)
+add_library(google-cloud-cpp::orgpolicy ALIAS google_cloud_cpp_orgpolicy)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -99,11 +98,10 @@ add_library(google_cloud_cpp_orgpolicy_mocks INTERFACE)
 target_sources(google_cloud_cpp_orgpolicy_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_orgpolicy_mocks
-    INTERFACE google-cloud-cpp::experimental-orgpolicy GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_orgpolicy_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-orgpolicy_mocks)
+    INTERFACE google-cloud-cpp::orgpolicy GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_orgpolicy_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::orgpolicy_mocks)
 target_include_directories(
     google_cloud_cpp_orgpolicy_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -115,7 +113,7 @@ target_compile_options(google_cloud_cpp_orgpolicy_mocks
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(orgpolicy_quickstart "quickstart/quickstart.cc")
     target_link_libraries(orgpolicy_quickstart
-                          PRIVATE google-cloud-cpp::experimental-orgpolicy)
+                          PRIVATE google-cloud-cpp::orgpolicy)
     google_cloud_cpp_add_common_options(orgpolicy_quickstart)
     add_test(
         NAME orgpolicy_quickstart

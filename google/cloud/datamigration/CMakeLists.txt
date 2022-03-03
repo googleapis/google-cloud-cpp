@@ -74,13 +74,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_datamigration)
 set_target_properties(
     google_cloud_cpp_datamigration
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-datamigration
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::datamigration VERSION
+                                                           "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_datamigration
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-datamigration ALIAS
+add_library(google-cloud-cpp::datamigration ALIAS
             google_cloud_cpp_datamigration)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -100,11 +100,11 @@ add_library(google_cloud_cpp_datamigration_mocks INTERFACE)
 target_sources(google_cloud_cpp_datamigration_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_datamigration_mocks
-    INTERFACE google-cloud-cpp::experimental-datamigration GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::datamigration GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_datamigration_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-datamigration_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::datamigration_mocks)
 target_include_directories(
     google_cloud_cpp_datamigration_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -117,7 +117,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(datamigration_quickstart "quickstart/quickstart.cc")
     target_link_libraries(datamigration_quickstart
-                          PRIVATE google-cloud-cpp::experimental-datamigration)
+                          PRIVATE google-cloud-cpp::datamigration)
     google_cloud_cpp_add_common_options(datamigration_quickstart)
     add_test(
         NAME datamigration_quickstart

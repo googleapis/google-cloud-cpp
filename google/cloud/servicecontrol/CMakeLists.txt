@@ -78,13 +78,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_servicecontrol)
 set_target_properties(
     google_cloud_cpp_servicecontrol
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-servicecontrol
+    PROPERTIES EXPORT_NAME google-cloud-cpp::servicecontrol
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_servicecontrol
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-servicecontrol ALIAS
+add_library(google-cloud-cpp::servicecontrol ALIAS
             google_cloud_cpp_servicecontrol)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -104,11 +104,11 @@ add_library(google_cloud_cpp_servicecontrol_mocks INTERFACE)
 target_sources(google_cloud_cpp_servicecontrol_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_servicecontrol_mocks
-    INTERFACE google-cloud-cpp::experimental-servicecontrol GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::servicecontrol GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_servicecontrol_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-servicecontrol_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::servicecontrol_mocks)
 target_include_directories(
     google_cloud_cpp_servicecontrol_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -121,7 +121,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(servicecontrol_quickstart "quickstart/quickstart.cc")
     target_link_libraries(servicecontrol_quickstart
-                          PRIVATE google-cloud-cpp::experimental-servicecontrol)
+                          PRIVATE google-cloud-cpp::servicecontrol)
     google_cloud_cpp_add_common_options(servicecontrol_quickstart)
     add_test(
         NAME servicecontrol_quickstart

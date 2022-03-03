@@ -75,13 +75,12 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_iot)
 set_target_properties(
     google_cloud_cpp_iot
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-iot
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::iot VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_iot
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-iot ALIAS google_cloud_cpp_iot)
+add_library(google-cloud-cpp::iot ALIAS google_cloud_cpp_iot)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -100,11 +99,9 @@ add_library(google_cloud_cpp_iot_mocks INTERFACE)
 target_sources(google_cloud_cpp_iot_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_iot_mocks
-    INTERFACE google-cloud-cpp::experimental-iot GTest::gmock_main GTest::gmock
-              GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_iot_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-iot_mocks)
+    INTERFACE google-cloud-cpp::iot GTest::gmock_main GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_iot_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::iot_mocks)
 target_include_directories(
     google_cloud_cpp_iot_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -116,8 +113,7 @@ target_compile_options(google_cloud_cpp_iot_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(iot_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(iot_quickstart
-                          PRIVATE google-cloud-cpp::experimental-iot)
+    target_link_libraries(iot_quickstart PRIVATE google-cloud-cpp::iot)
     google_cloud_cpp_add_common_options(iot_quickstart)
     add_test(
         NAME iot_quickstart

@@ -88,13 +88,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_talent)
 set_target_properties(
     google_cloud_cpp_talent
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-talent
+    PROPERTIES EXPORT_NAME google-cloud-cpp::talent
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_talent
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-talent ALIAS google_cloud_cpp_talent)
+add_library(google-cloud-cpp::talent ALIAS google_cloud_cpp_talent)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -113,11 +113,10 @@ add_library(google_cloud_cpp_talent_mocks INTERFACE)
 target_sources(google_cloud_cpp_talent_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_talent_mocks
-    INTERFACE google-cloud-cpp::experimental-talent GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_talent_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-talent_mocks)
+    INTERFACE google-cloud-cpp::talent GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_talent_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::talent_mocks)
 target_include_directories(
     google_cloud_cpp_talent_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -129,8 +128,7 @@ target_compile_options(google_cloud_cpp_talent_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(talent_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(talent_quickstart
-                          PRIVATE google-cloud-cpp::experimental-talent)
+    target_link_libraries(talent_quickstart PRIVATE google-cloud-cpp::talent)
     google_cloud_cpp_add_common_options(talent_quickstart)
     add_test(
         NAME talent_quickstart

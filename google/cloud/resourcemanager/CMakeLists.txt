@@ -84,13 +84,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_resourcemanager)
 set_target_properties(
     google_cloud_cpp_resourcemanager
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-resourcemanager
+    PROPERTIES EXPORT_NAME google-cloud-cpp::resourcemanager
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_resourcemanager
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-resourcemanager ALIAS
+add_library(google-cloud-cpp::resourcemanager ALIAS
             google_cloud_cpp_resourcemanager)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -110,11 +110,11 @@ add_library(google_cloud_cpp_resourcemanager_mocks INTERFACE)
 target_sources(google_cloud_cpp_resourcemanager_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_resourcemanager_mocks
-    INTERFACE google-cloud-cpp::experimental-resourcemanager GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::resourcemanager GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_resourcemanager_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-resourcemanager_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::resourcemanager_mocks)
 target_include_directories(
     google_cloud_cpp_resourcemanager_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -126,9 +126,8 @@ target_compile_options(google_cloud_cpp_resourcemanager_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(resourcemanager_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        resourcemanager_quickstart
-        PRIVATE google-cloud-cpp::experimental-resourcemanager)
+    target_link_libraries(resourcemanager_quickstart
+                          PRIVATE google-cloud-cpp::resourcemanager)
     google_cloud_cpp_add_common_options(resourcemanager_quickstart)
     add_test(
         NAME resourcemanager_quickstart
