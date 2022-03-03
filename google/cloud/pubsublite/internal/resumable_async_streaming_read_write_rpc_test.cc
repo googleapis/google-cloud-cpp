@@ -166,6 +166,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   EXPECT_EQ(status_future.wait_for(ms(kFutureWaitMs)),
             std::future_status::timeout);
 
+  EXPECT_CALL(stream2_ref, Cancel);
   EXPECT_CALL(stream2_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto shutdown = stream_->Shutdown();
@@ -336,6 +337,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
   EXPECT_EQ(status_future.wait_for(ms(kFutureWaitMs)),
             std::future_status::timeout);
 
+  EXPECT_CALL(stream2_ref, Cancel);
   EXPECT_CALL(stream2_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto shutdown = stream_->Shutdown();
@@ -638,6 +640,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
   // permanent error or `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
+  EXPECT_CALL(first_stream_ref_, Cancel);
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto shutdown = stream_->Shutdown();
@@ -655,6 +658,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // permanent error of `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
+  EXPECT_CALL(first_stream_ref_, Cancel);
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto shutdown = stream_->Shutdown();
@@ -688,6 +692,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // permanent error or `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
+  EXPECT_CALL(first_stream_ref_, Cancel);
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto finish_future = stream_->Shutdown();
@@ -789,6 +794,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   auto write =
       stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
 
+  EXPECT_CALL(first_stream_ref_, Cancel);
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
 
@@ -873,6 +879,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // error from retry loop or `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
+  EXPECT_CALL(second_stream_ref, Cancel);
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto shutdown = stream_->Shutdown();
@@ -945,6 +952,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // error from retry loop or `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
+  EXPECT_CALL(second_stream_ref, Cancel);
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   auto shutdown = stream_->Shutdown();
@@ -1017,6 +1025,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   // error from retry loop or `Finish`
   EXPECT_EQ(start.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
+  EXPECT_CALL(second_stream_ref, Cancel);
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
 
@@ -1128,6 +1137,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   start_promise.set_value(true);
 
+  EXPECT_CALL(second_stream_ref, Cancel);
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   ASSERT_FALSE(write.get());
@@ -1187,6 +1197,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   start_promise.set_value(true);
 
+  EXPECT_CALL(second_stream_ref, Cancel);
   EXPECT_CALL(second_stream_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(Status()))));
   ASSERT_FALSE(read.get().has_value());

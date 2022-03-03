@@ -423,6 +423,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         break;
       case State::kInitialized:
         stream_state_ = State::kShutdown;
+        stream_->Cancel();
         if (in_progress_read_) {
           root_future =
               root_future.then(ChainFuture(in_progress_read_->get_future()));
