@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
-#include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
 #include "google/cloud/pubsublite/testing/mock_backoff_policy.h"
 #include "google/cloud/pubsublite/testing/mock_retry_policy.h"

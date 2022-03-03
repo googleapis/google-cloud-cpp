@@ -62,10 +62,7 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
                               std::lock_guard<std::mutex> g{mu_};
                               if (shutdown_) return start_status.get();
                               shutdown_ = true;
-                              {
-                                // destroy cancel token
-                                auto cancel_token = std::move(cancel_token_);
-                              }
+                              DestroyCancelToken();
                             }
                             Status status = start_status.get();
                             SatisfyOutstandingMessages(status);
@@ -81,6 +78,7 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
     future<StatusOr<Cursor>> message_future;
     {
       std::lock_guard<std::mutex> g{mu_};
+      if (shutdown_) return make_ready_future(StatusOr<Cursor>(Status()));
       promise<StatusOr<Cursor>> message_promise;
       message_future = message_promise.get_future();
       unbatched_messages_with_futures_.emplace_back(
@@ -90,12 +88,12 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
   }
 
   void Flush() override {
-    Rebatch(false);
     {
       std::lock_guard<std::mutex> g{mu_};
-      if (writing_) return;
+      if (writing_ || shutdown_) return;
       writing_ = true;
     }
+    Rebatch(false);
     WriteBatches();
   }
 
@@ -106,10 +104,7 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
       std::lock_guard<std::mutex> g{mu_};
       if (shutdown_) return make_ready_future();
       shutdown_ = true;
-      {
-        // destroy cancel token
-        auto cancel_token = std::move(cancel_token_);
-      }
+      DestroyCancelToken();
       root_future = root_future.then(ChainFuture(resumable_stream_->Shutdown()))
                         .then([this](future<void>) {
                           SatisfyOutstandingMessages(Status());
@@ -207,7 +202,11 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
       root_future
           .then(ChainFuture(resumable_stream_->Write(std::move(publish_request),
                                                      grpc::WriteOptions())))
-          .then([this](future<bool>) { WriteBatches(); });
+          .then([this](future<bool> write_response) {
+            if (write_response.get()) WriteBatches();
+            std::lock_guard<std::mutex> g{mu_};
+            writing_ = false;
+          });
     }
     root.set_value();
   }
@@ -223,15 +222,23 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
                            optional_response_future) {
             auto optional_response = optional_response_future.get();
             if (!optional_response) Read();
-            MessagePublishResponse response = std::move(*optional_response);
             Batch batch;
             {
               std::lock_guard<std::mutex> g{mu_};
               if (shutdown_) return;
-              batch = std::move(in_flight_batches_.front());
-              in_flight_batches_.pop_front();
+              // unlikely order of events
+              // if we have `Read()` (pending) -> `Write()` (completes
+              // successfully) -> `Write()` (fails) -> previous `Read`
+              // successfully completes -> `initializer_` grabs locks and
+              // rebatches and unlocks -> below `Read` continuation grabs lock
+              // and tries to satisfy future in nonexistent first element of
+              // `in_flight_batches_`
+              if (!in_flight_batches_.empty()) {
+                batch = std::move(in_flight_batches_.front());
+                in_flight_batches_.pop_front();
+              }
             }
-            size_t offset = response.start_cursor().offset();
+            size_t offset = optional_response->start_cursor().offset();
             for (auto& message_with_future : batch) {
               Cursor c;
               c.set_offset(offset);
@@ -253,19 +260,24 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
           messages_with_futures.push_back(std::move(message_with_future));
         }
       }
+      in_flight_batches_.clear();
       for (auto& batch : batches_) {
         for (auto& message_with_future : batch) {
           messages_with_futures.push_back(std::move(message_with_future));
         }
       }
+      batches_.clear();
       for (auto& message_with_future : unbatched_messages_with_futures_) {
         messages_with_futures.push_back(std::move(message_with_future));
       }
+      unbatched_messages_with_futures_.clear();
     }
     for (auto& message_with_future : messages_with_futures) {
       message_with_future.message_promise.set_value(StatusOr<Cursor>(status));
     }
   }
+
+  void DestroyCancelToken() { auto cancel_token = std::move(cancel_token_); }
 
   // When initializer is called, no outstanding Read() or Write() futures will
   // succeed.
