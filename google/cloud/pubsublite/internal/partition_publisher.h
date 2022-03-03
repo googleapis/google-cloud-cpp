@@ -42,6 +42,8 @@ class PartitionPublisherImpl
       google::cloud::pubsublite::v1::InitialPublishRequest const&,
       std::unique_ptr<AlarmRegistryInterface>, size_t);
 
+  ~PartitionPublisherImpl() override;
+
   future<Status> Start() override;
 
   future<StatusOr<google::cloud::pubsublite::v1::Cursor>> Publish(
@@ -57,10 +59,6 @@ class PartitionPublisherImpl
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
   };
 
-  static void FlattenAndMoveBatch(
-      std::deque<std::deque<MessageWithFuture>>& batches,
-      std::deque<MessageWithFuture>& unbatched_messages_with_futures);
-
   // TODO(18suresha) make batching cleaner/less redundant across other functions
   void Rebatch(bool process_in_flight);
 
@@ -68,9 +66,12 @@ class PartitionPublisherImpl
 
   void Read();
 
-  void SatisfyOutstandingMessages(Status const& status);
+  std::deque<MessageWithFuture> UnbatchAllLockHeld(bool process_in_flight);
 
-  void DestroyCancelToken();
+  static std::deque<std::deque<MessageWithFuture>> CreateBatches(
+      std::deque<MessageWithFuture> messages, BatchingSettings const& settings);
+
+  void SatisfyOutstandingMessages(Status const& status);
 
   future<StatusOr<std::unique_ptr<AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
@@ -99,8 +100,10 @@ class PartitionPublisherImpl
       in_flight_batches_;  // ABSL_GUARDED_BY(mu_)
   bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
   bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
-  std::unique_ptr<AlarmRegistryInterface::CancelToken>
-      cancel_token_;  // ABSL_GUARDED_BY(mu_)
+
+  // by semantics of AlarmRegistryInterface, CancelToken isn't accessed
+  __attribute__((unused)) std::unique_ptr<AlarmRegistryInterface::CancelToken>
+      cancel_token_;
 };
 
 }  // namespace pubsublite_internal

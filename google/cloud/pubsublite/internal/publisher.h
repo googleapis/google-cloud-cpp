@@ -31,7 +31,17 @@ class Publisher : public LifecycleInterface {
   virtual future<StatusOr<ReturnT>> Publish(
       google::cloud::pubsublite::v1::PubSubMessage m) = 0;
 
-  // Same semantics as Cloud Pub/Sub Publisher flush
+  /**
+   * Forcibly publishes any batched messages.
+   *
+   * As applications can configure a `Publisher` to buffer messages, it is
+   * sometimes useful to flush them before any of the normal criteria to send
+   * the RPCs is met.
+   *
+   * @note This function does not return any status or error codes, the
+   *     application can use the `future<StatusOr<std::string>>` returned in
+   *     each `Publish()` call to find out what the results are.
+   */
   virtual void Flush() = 0;
 };
 
