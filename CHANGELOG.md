@@ -66,7 +66,9 @@ namespace. For status on this see
 https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
 
-## v1.38.0 - TBD
+## v1.39.0 - TBD
+
+## v1.38.0 - 2022-03
 
 ### [Service Management API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicemanagement/README.md)
 
@@ -83,6 +85,12 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   stable, the library is incomplete. We are still working on the APIs to publish
   and receive messages.  We apologize for any confusion or inconvenience this
   caused.
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+* fix(pubsublite)!: revert GA declaration ([#8497](https://github.com/googleapis/google-cloud-cpp/pull/8497))
+* fix: no `experimental-` prefix for GA targets ([#8496](https://github.com/googleapis/google-cloud-cpp/pull/8496))
+* fix(container): missing CMake dependency ([#8492](https://github.com/googleapis/google-cloud-cpp/pull/8492))
 
 ## v1.37.0 - 2022-03
 
