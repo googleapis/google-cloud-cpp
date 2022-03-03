@@ -61,26 +61,31 @@ future<Status> PartitionPublisherImpl::Start() {
   future<Status> return_future;
   {
     std::lock_guard<std::mutex> g{mu_};
-    return_future = root_future.then(ChainFuture(resumable_stream_->Start()))
-                        .then([this](future<Status> start_status) {
-                          {
-                            std::lock_guard<std::mutex> g{mu_};
-                            if (invalid_read_) {
-                              return Status(StatusCode::kAborted,
-                                            "Invalid `Read` response");
-                            }
-                            if (shutdown_) return start_status.get();
-                            shutdown_ = true;
-                          }
-                          cancel_token_ = nullptr;
-                          Status status = start_status.get();
-                          SatisfyOutstandingMessages(status);
-                          return status;
-                        });
+    root_future.then(ChainFuture(resumable_stream_->Start()))
+        .then([this](future<Status> start_status) {
+          bool has_shutdown = true;
+          promise<Status> start_promise{null_promise_t{}};
+          {
+            std::lock_guard<std::mutex> g{mu_};
+            if (!start_future_) return;
+            if (!shutdown_) {
+              has_shutdown = false;
+              shutdown_ = true;
+            }
+            start_promise = std::move(*start_future_);
+            start_future_.reset();
+          }
+          Status status = start_status.get();
+          start_promise.set_value(status);
+          if (!has_shutdown) {
+            cancel_token_ = nullptr;
+            SatisfyOutstandingMessages(status);
+          }
+        });
   }
   root.set_value();
   Read();
-  return return_future;
+  return start_future_->get_future();
 }
 
 future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
@@ -171,11 +176,14 @@ void PartitionPublisherImpl::Read() {
           auto optional_response = optional_response_future.get();
           if (!optional_response) Read();
           if (optional_response->has_initial_response()) {
+            promise<Status> start_future{null_promise_t{}};
             {
               std::lock_guard<std::mutex> g{mu_};
-              invalid_read_ = true;
+              start_future = std::move(*start_future_);
+              start_future_.reset();
             }
-            Shutdown();
+            start_future.set_value(
+                Status(StatusCode::kAborted, "Invalid `Read` response"));
             return;
           }
           std::deque<MessageWithFuture> batch;

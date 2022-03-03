@@ -96,10 +96,10 @@ class PartitionPublisherImpl
   std::deque<std::deque<MessageWithFuture>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>
-      in_flight_batches_;      // ABSL_GUARDED_BY(mu_)
-  bool writing_ = false;       // ABSL_GUARDED_BY(mu_)
-  bool shutdown_ = false;      // ABSL_GUARDED_BY(mu_)
-  bool invalid_read_ = false;  // ABSL_GUARDED_BY(mu_)
+      in_flight_batches_;                         // ABSL_GUARDED_BY(mu_)
+  bool writing_ = false;                          // ABSL_GUARDED_BY(mu_)
+  bool shutdown_ = false;                         // ABSL_GUARDED_BY(mu_)
+  absl::optional<promise<Status>> start_future_;  // ABSL_GUARDED_BY(mu_)
 
   std::unique_ptr<AlarmRegistryInterface::CancelToken> cancel_token_;
 };
