@@ -58,8 +58,7 @@ class PartitionPublisherImpl
     google::cloud::pubsublite::v1::PubSubMessage message;
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
   };
-
-  // TODO(18suresha) make batching cleaner/less redundant across other functions
+  
   void Rebatch(bool process_in_flight);
 
   void WriteBatches();
