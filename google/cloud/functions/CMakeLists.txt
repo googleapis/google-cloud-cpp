@@ -77,14 +77,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_functions)
 set_target_properties(
     google_cloud_cpp_functions
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-functions
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::functions VERSION
+                                                       "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_functions
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-functions ALIAS
-            google_cloud_cpp_functions)
+add_library(google-cloud-cpp::functions ALIAS google_cloud_cpp_functions)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -103,11 +102,10 @@ add_library(google_cloud_cpp_functions_mocks INTERFACE)
 target_sources(google_cloud_cpp_functions_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_functions_mocks
-    INTERFACE google-cloud-cpp::experimental-functions GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_functions_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-functions_mocks)
+    INTERFACE google-cloud-cpp::functions GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_functions_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::functions_mocks)
 target_include_directories(
     google_cloud_cpp_functions_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -120,7 +118,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(functions_quickstart "quickstart/quickstart.cc")
     target_link_libraries(functions_quickstart
-                          PRIVATE google-cloud-cpp::experimental-functions)
+                          PRIVATE google-cloud-cpp::functions)
     google_cloud_cpp_add_common_options(functions_quickstart)
     add_test(
         NAME functions_quickstart

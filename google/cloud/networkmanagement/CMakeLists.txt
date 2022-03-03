@@ -74,13 +74,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_networkmanagement)
 set_target_properties(
     google_cloud_cpp_networkmanagement
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-networkmanagement
+    PROPERTIES EXPORT_NAME google-cloud-cpp::networkmanagement
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_networkmanagement
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-networkmanagement ALIAS
+add_library(google-cloud-cpp::networkmanagement ALIAS
             google_cloud_cpp_networkmanagement)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -100,12 +100,11 @@ add_library(google_cloud_cpp_networkmanagement_mocks INTERFACE)
 target_sources(google_cloud_cpp_networkmanagement_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_networkmanagement_mocks
-    INTERFACE google-cloud-cpp::experimental-networkmanagement
-              GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::networkmanagement GTest::gmock_main
+              GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_networkmanagement_mocks
-    PROPERTIES EXPORT_NAME
-               google-cloud-cpp::experimental-networkmanagement_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::networkmanagement_mocks)
 target_include_directories(
     google_cloud_cpp_networkmanagement_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -117,9 +116,8 @@ target_compile_options(google_cloud_cpp_networkmanagement_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(networkmanagement_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        networkmanagement_quickstart
-        PRIVATE google-cloud-cpp::experimental-networkmanagement)
+    target_link_libraries(networkmanagement_quickstart
+                          PRIVATE google-cloud-cpp::networkmanagement)
     google_cloud_cpp_add_common_options(networkmanagement_quickstart)
     add_test(
         NAME networkmanagement_quickstart

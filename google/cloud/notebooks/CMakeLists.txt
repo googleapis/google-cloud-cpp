@@ -80,14 +80,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_notebooks)
 set_target_properties(
     google_cloud_cpp_notebooks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-notebooks
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::notebooks VERSION
+                                                       "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_notebooks
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-notebooks ALIAS
-            google_cloud_cpp_notebooks)
+add_library(google-cloud-cpp::notebooks ALIAS google_cloud_cpp_notebooks)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -106,11 +105,10 @@ add_library(google_cloud_cpp_notebooks_mocks INTERFACE)
 target_sources(google_cloud_cpp_notebooks_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_notebooks_mocks
-    INTERFACE google-cloud-cpp::experimental-notebooks GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_notebooks_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-notebooks_mocks)
+    INTERFACE google-cloud-cpp::notebooks GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_notebooks_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::notebooks_mocks)
 target_include_directories(
     google_cloud_cpp_notebooks_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -123,7 +121,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(notebooks_quickstart "quickstart/quickstart.cc")
     target_link_libraries(notebooks_quickstart
-                          PRIVATE google-cloud-cpp::experimental-notebooks)
+                          PRIVATE google-cloud-cpp::notebooks)
     google_cloud_cpp_add_common_options(notebooks_quickstart)
     add_test(
         NAME notebooks_quickstart

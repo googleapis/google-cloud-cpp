@@ -73,13 +73,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_policytroubleshooter)
 set_target_properties(
     google_cloud_cpp_policytroubleshooter
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-policytroubleshooter
+    PROPERTIES EXPORT_NAME google-cloud-cpp::policytroubleshooter
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_policytroubleshooter
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-policytroubleshooter ALIAS
+add_library(google-cloud-cpp::policytroubleshooter ALIAS
             google_cloud_cpp_policytroubleshooter)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -100,12 +100,11 @@ target_sources(google_cloud_cpp_policytroubleshooter_mocks
                INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_policytroubleshooter_mocks
-    INTERFACE google-cloud-cpp::experimental-policytroubleshooter
-              GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::policytroubleshooter GTest::gmock_main
+              GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_policytroubleshooter_mocks
-    PROPERTIES EXPORT_NAME
-               google-cloud-cpp::experimental-policytroubleshooter_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::policytroubleshooter_mocks)
 target_include_directories(
     google_cloud_cpp_policytroubleshooter_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

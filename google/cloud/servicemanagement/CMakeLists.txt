@@ -94,13 +94,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_servicemanagement)
 set_target_properties(
     google_cloud_cpp_servicemanagement
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-servicemanagement
+    PROPERTIES EXPORT_NAME google-cloud-cpp::servicemanagement
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_servicemanagement
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-servicemanagement ALIAS
+add_library(google-cloud-cpp::servicemanagement ALIAS
             google_cloud_cpp_servicemanagement)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -120,12 +120,11 @@ add_library(google_cloud_cpp_servicemanagement_mocks INTERFACE)
 target_sources(google_cloud_cpp_servicemanagement_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_servicemanagement_mocks
-    INTERFACE google-cloud-cpp::experimental-servicemanagement
-              GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::servicemanagement GTest::gmock_main
+              GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_servicemanagement_mocks
-    PROPERTIES EXPORT_NAME
-               google-cloud-cpp::experimental-servicemanagement_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::servicemanagement_mocks)
 target_include_directories(
     google_cloud_cpp_servicemanagement_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -137,9 +136,8 @@ target_compile_options(google_cloud_cpp_servicemanagement_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(servicemanagement_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        servicemanagement_quickstart
-        PRIVATE google-cloud-cpp::experimental-servicemanagement)
+    target_link_libraries(servicemanagement_quickstart
+                          PRIVATE google-cloud-cpp::servicemanagement)
     google_cloud_cpp_add_common_options(servicemanagement_quickstart)
     add_test(
         NAME servicemanagement_quickstart

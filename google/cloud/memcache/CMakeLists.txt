@@ -73,14 +73,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_memcache)
 set_target_properties(
     google_cloud_cpp_memcache
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-memcache
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::memcache VERSION
+                                                      "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_memcache
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-memcache ALIAS
-            google_cloud_cpp_memcache)
+add_library(google-cloud-cpp::memcache ALIAS google_cloud_cpp_memcache)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -99,11 +98,10 @@ add_library(google_cloud_cpp_memcache_mocks INTERFACE)
 target_sources(google_cloud_cpp_memcache_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_memcache_mocks
-    INTERFACE google-cloud-cpp::experimental-memcache GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_memcache_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-memcache_mocks)
+    INTERFACE google-cloud-cpp::memcache GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_memcache_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::memcache_mocks)
 target_include_directories(
     google_cloud_cpp_memcache_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -116,7 +114,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(memcache_quickstart "quickstart/quickstart.cc")
     target_link_libraries(memcache_quickstart
-                          PRIVATE google-cloud-cpp::experimental-memcache)
+                          PRIVATE google-cloud-cpp::memcache)
     google_cloud_cpp_add_common_options(memcache_quickstart)
     add_test(
         NAME memcache_quickstart

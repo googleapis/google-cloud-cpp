@@ -20,3 +20,7 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_servicecontrol-targets.cmake")
+
+if (NOT TARGET google-cloud-cpp::experimental-servicecontrol)
+    add_library(google-cloud-cpp::experimental-servicecontrol ALIAS google-cloud-cpp::servicecontrol)
+endif ()

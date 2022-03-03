@@ -75,13 +75,12 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_dlp)
 set_target_properties(
     google_cloud_cpp_dlp
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-dlp
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::dlp VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_dlp
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-dlp ALIAS google_cloud_cpp_dlp)
+add_library(google-cloud-cpp::dlp ALIAS google_cloud_cpp_dlp)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -100,11 +99,9 @@ add_library(google_cloud_cpp_dlp_mocks INTERFACE)
 target_sources(google_cloud_cpp_dlp_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_dlp_mocks
-    INTERFACE google-cloud-cpp::experimental-dlp GTest::gmock_main GTest::gmock
-              GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_dlp_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-dlp_mocks)
+    INTERFACE google-cloud-cpp::dlp GTest::gmock_main GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_dlp_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::dlp_mocks)
 target_include_directories(
     google_cloud_cpp_dlp_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -115,8 +112,7 @@ target_compile_options(google_cloud_cpp_dlp_mocks
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(dlp_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(dlp_quickstart
-                          PRIVATE google-cloud-cpp::experimental-dlp)
+    target_link_libraries(dlp_quickstart PRIVATE google-cloud-cpp::dlp)
     google_cloud_cpp_add_common_options(dlp_quickstart)
     add_test(
         NAME dlp_quickstart

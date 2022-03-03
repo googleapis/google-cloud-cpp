@@ -73,14 +73,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_debugger)
 set_target_properties(
     google_cloud_cpp_debugger
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-debugger
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::debugger VERSION
+                                                      "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_debugger
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-debugger ALIAS
-            google_cloud_cpp_debugger)
+add_library(google-cloud-cpp::debugger ALIAS google_cloud_cpp_debugger)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -99,11 +98,10 @@ add_library(google_cloud_cpp_debugger_mocks INTERFACE)
 target_sources(google_cloud_cpp_debugger_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_debugger_mocks
-    INTERFACE google-cloud-cpp::experimental-debugger GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_debugger_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-debugger_mocks)
+    INTERFACE google-cloud-cpp::debugger GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_debugger_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::debugger_mocks)
 target_include_directories(
     google_cloud_cpp_debugger_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -116,7 +114,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(debugger_quickstart "quickstart/quickstart.cc")
     target_link_libraries(debugger_quickstart
-                          PRIVATE google-cloud-cpp::experimental-debugger)
+                          PRIVATE google-cloud-cpp::debugger)
     google_cloud_cpp_add_common_options(debugger_quickstart)
     add_test(
         NAME debugger_quickstart

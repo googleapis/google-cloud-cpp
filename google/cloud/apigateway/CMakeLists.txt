@@ -73,14 +73,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_apigateway)
 set_target_properties(
     google_cloud_cpp_apigateway
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-apigateway
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::apigateway VERSION
+                                                        "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_apigateway
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-apigateway ALIAS
-            google_cloud_cpp_apigateway)
+add_library(google-cloud-cpp::apigateway ALIAS google_cloud_cpp_apigateway)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -99,11 +98,10 @@ add_library(google_cloud_cpp_apigateway_mocks INTERFACE)
 target_sources(google_cloud_cpp_apigateway_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_apigateway_mocks
-    INTERFACE google-cloud-cpp::experimental-apigateway GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_apigateway_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-apigateway_mocks)
+    INTERFACE google-cloud-cpp::apigateway GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_apigateway_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::apigateway_mocks)
 target_include_directories(
     google_cloud_cpp_apigateway_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -116,7 +114,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(apigateway_quickstart "quickstart/quickstart.cc")
     target_link_libraries(apigateway_quickstart
-                          PRIVATE google-cloud-cpp::experimental-apigateway)
+                          PRIVATE google-cloud-cpp::apigateway)
     google_cloud_cpp_add_common_options(apigateway_quickstart)
     add_test(
         NAME apigateway_quickstart

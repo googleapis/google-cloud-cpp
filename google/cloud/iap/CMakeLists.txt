@@ -74,13 +74,12 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_iap)
 set_target_properties(
     google_cloud_cpp_iap
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-iap
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::iap VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_iap
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-iap ALIAS google_cloud_cpp_iap)
+add_library(google-cloud-cpp::iap ALIAS google_cloud_cpp_iap)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -99,11 +98,9 @@ add_library(google_cloud_cpp_iap_mocks INTERFACE)
 target_sources(google_cloud_cpp_iap_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_iap_mocks
-    INTERFACE google-cloud-cpp::experimental-iap GTest::gmock_main GTest::gmock
-              GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_iap_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-iap_mocks)
+    INTERFACE google-cloud-cpp::iap GTest::gmock_main GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_iap_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::iap_mocks)
 target_include_directories(
     google_cloud_cpp_iap_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -115,8 +112,7 @@ target_compile_options(google_cloud_cpp_iap_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(iap_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(iap_quickstart
-                          PRIVATE google-cloud-cpp::experimental-iap)
+    target_link_libraries(iap_quickstart PRIVATE google-cloud-cpp::iap)
     google_cloud_cpp_add_common_options(iap_quickstart)
     add_test(
         NAME iap_quickstart
