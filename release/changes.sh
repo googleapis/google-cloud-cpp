@@ -48,7 +48,7 @@ function filter_messages() {
       continue
     fi
     # Likely uninteresting changes.
-    if grep -qP "^(ci|chore|test|testing|cleanup|refactor)\b" <<<"${message}"; then
+    if grep -qP "^(ci|chore|test|testing|cleanup|refactor|impl)\b" <<<"${message}"; then
       continue
     fi
     echo "${message}"
