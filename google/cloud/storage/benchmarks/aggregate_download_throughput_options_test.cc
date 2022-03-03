@@ -93,8 +93,6 @@ TEST(AggregateDownloadThroughputOptions, Validate) {
   EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--repeats-per-iteration=-1"}, ""));
   EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
-      {"self-test", "--bucket-name=b", "--api=GRPC-RAW"}, ""));
-  EXPECT_FALSE(ParseAggregateDownloadThroughputOptions(
       {"self-test", "--bucket-name=b", "--grpc-channel-count=-1"}, ""));
 }
 

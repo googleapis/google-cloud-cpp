@@ -86,25 +86,12 @@ char const* ToString(ApiName api) {
       return "XML";
     case ApiName::kApiGrpc:
       return "GRPC";
-    case ApiName::kApiRawJson:
-      return "JSON-RAW";
-    case ApiName::kApiRawXml:
-      return "XML-RAW";
-    case ApiName::kApiRawGrpc:
-      return "GRPC-RAW";
   }
   return "";
 }
 
 StatusOr<ApiName> ParseApiName(std::string const& val) {
-  for (auto a : {
-           ApiName::kApiJson,
-           ApiName::kApiXml,
-           ApiName::kApiGrpc,
-           ApiName::kApiRawJson,
-           ApiName::kApiRawXml,
-           ApiName::kApiRawGrpc,
-       }) {
+  for (auto a : {ApiName::kApiJson, ApiName::kApiXml, ApiName::kApiGrpc}) {
     if (val == ToString(a)) return a;
   }
   return Status{StatusCode::kInvalidArgument, "unknown ApiName " + val};

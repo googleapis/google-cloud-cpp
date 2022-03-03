@@ -147,17 +147,6 @@ ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
        << "), check your --grpc-channel-count option\n";
     return make_status(os);
   }
-  auto const valid_apis =
-      std::set<ApiName>{ApiName::kApiGrpc, ApiName::kApiJson, ApiName::kApiXml};
-  if (valid_apis.find(options.api) == valid_apis.end()) {
-    std::ostringstream os;
-    os << "Unsupported API " << ToString(options.api) << "\n"
-       << "Choose from "
-       << absl::StrJoin(valid_apis, ", ", [](std::string* out, ApiName api) {
-            *out += ToString(api);
-          });
-    return make_status(os);
-  }
 
   return options;
 }
