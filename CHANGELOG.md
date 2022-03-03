@@ -75,6 +75,15 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   generated.  We do not expect this will actually break any existing code.
   Nevertheless, we apologize for any confusion.
 
+### [Pub/Sub Lite](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsublite/README.md)
+
+**BREAKING CHANGES**
+
+* We mistakenly declared GA for this library. Though the current public APIs are
+  stable, the library is incomplete. We are still working on the APIs to publish
+  and receive messages.  We apologize for any confusion or inconvenience this 
+  caused.
+
 ## v1.37.0 - 2022-03
 
 **BREAKING CHANGES**

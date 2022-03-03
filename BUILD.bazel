@@ -33,6 +33,8 @@ EXPERIMENTAL_LIBRARIES = [
     "profiler",
     "resourcesettings",
     "speech",
+    # This is WIP, it needs a number of hand-crafted APIs.
+    "pubsublite",
 ]
 
 TRANSITION_LIBRARIES = [
@@ -71,7 +73,6 @@ TRANSITION_LIBRARIES = [
     "oslogin",
     "policytroubleshooter",
     "privateca",
-    "pubsublite",
     "recommender",
     "redis",
     "resourcemanager",
