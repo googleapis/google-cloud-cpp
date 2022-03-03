@@ -246,6 +246,8 @@ gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
     if (t == ExperimentTransport::kGrpc) {
       return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("none"));
     }
+#else
+    (void)t;  // disable unused parameter warning
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     return gcs::Client(opts);
   };
