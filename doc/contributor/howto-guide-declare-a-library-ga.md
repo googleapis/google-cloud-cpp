@@ -2,41 +2,46 @@
 
 This document describes the steps required to promote a `google-cloud-cpp`
 library to GA. The document is intended for contributors to the
-`google-cloud-cpp` libraries. It assumes you are familiar with the build systems used in these libraries, and that you
-are familiar with existing libraries.
+`google-cloud-cpp` libraries. It assumes you are familiar with the build systems
+used in these libraries, and that you are familiar with existing libraries.
 
-This document applies to both hand-crafted and generated libraries, but mostly it will be using generated libraries as
-examples.
+This document applies to both hand-crafted and generated libraries, but mostly
+it will be using generated libraries as examples.
 
 ## Overview
 
-Declaring a library "GA" is largely a matter of updating the documentation and the target names to indicate that the
-library is no longer experimental. You typically need to take three steps, with an intermediate release before the last
-step:
+Declaring a library "GA" is largely a matter of updating the documentation and
+the target names to indicate that the library is no longer experimental. You
+typically need to take three steps, with an intermediate release before the
+last step:
 
-- Update the README files and Doxygen reference pages to indicate the library is now GA.
+- Update the README files and Doxygen reference pages to indicate the library is
+  now GA.
 - Add new targets and rules for the library without the `experimental-` prefix.
 - Remove the targets and rules with the `experimental-` prefix.
 
 ## Pre-requisites
 
-Before we can declare a library GA we need to ensure it is of sufficient quality. We largely follow the internal
-guidelines at (go/client-quality). For a generated library there are 3 critical checks:
+Before we can declare a library GA we need to ensure it is of sufficient
+quality. We largely follow the internal guidelines at (go/client-quality).
+For a generated library there are 3 critical checks:
 
-- The server API is GA: this can be non-trivial if you are developing a library while the service is still in private
-  and/or public preview.
-- The server functionality is fully exposed in the client surface: this can be non-trivial if the service uses streaming
-  RPCs, as the generator does not fully support those at the moment.
-- 28 days have elapsed since the pre-release of the major version: this means you need to wait 28 days after the latest
-  release which included your library.
+- The server API is GA: this can be non-trivial if you are developing a library
+  while the service is still in private and/or public preview.
+- The server functionality is fully exposed in the client surface: this can be
+  non-trivial if the service uses streaming RPCs, as the generator does not
+  fully support those at the moment.
+- 28 days have elapsed since the pre-release of the major version: this means
+  you need to wait 28 days after the latest release which included your library.
 
-In addition, we (the Cloud C++ team) require a simple `quickstart.cc` for each library. This program is typically
-created when the library is generated.
+In addition, we (the Cloud C++ team) require a simple `quickstart.cc` for each
+library.  This program is typically created when the library is generated.
 
 ### `BUILD.bazel`
 
 Update the top-level `BUILD.bazel` file. Move the library from
-`EXPERIMENTAL_LIBRARIES` to `TRANSITION_LIBRARIES`. Do this first as it helps automate the following steps.
+`EXPERIMENTAL_LIBRARIES` to `TRANSITION_LIBRARIES`. Do this first as it helps
+automate the following steps.
 
 ```shell
 mapfile -t ga < <(bazel --batch query \
