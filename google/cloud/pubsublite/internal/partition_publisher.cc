@@ -171,9 +171,11 @@ void PartitionPublisherImpl::Read() {
           auto optional_response = optional_response_future.get();
           if (!optional_response) Read();
           if (optional_response->has_initial_response()) {
+            {
+              std::lock_guard<std::mutex> g{mu_};
+              invalid_read_ = true;
+            }
             Shutdown();
-            std::lock_guard<std::mutex> g{mu_};
-            invalid_read_ = true;
             return;
           }
           std::deque<MessageWithFuture> batch;
