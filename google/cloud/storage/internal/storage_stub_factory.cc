@@ -31,49 +31,12 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-auto constexpr kDirectPathConfig = R"json({
-    "loadBalancingConfig": [{
-      "grpclb": {
-        "childPolicy": [{
-          "pick_first": {}
-        }]
-      }
-    }]
-  })json";
-
 std::shared_ptr<grpc::Channel> CreateGrpcChannel(
     google::cloud::internal::GrpcAuthenticationStrategy& auth,
     Options const& options, int channel_id) {
   grpc::ChannelArguments args;
-  auto const& config = options.get<storage_experimental::GrpcPluginOption>();
-  if (config.empty() || config == "default" || config == "none") {
-    // Just configure for the regular path.
-    args.SetInt("grpc.channel_id", channel_id);
-    return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
-  }
-  std::set<absl::string_view> settings = absl::StrSplit(config, ',');
-  auto const dp = settings.count("dp") != 0 || settings.count("alts") != 0;
-  if (dp || settings.count("pick-first-lb") != 0) {
-    args.SetServiceConfigJSON(kDirectPathConfig);
-  }
-  if (dp || settings.count("enable-dns-srv-queries") != 0) {
-    args.SetInt("grpc.dns_enable_srv_queries", 1);
-  }
-  if (settings.count("disable-dns-srv-queries") != 0) {
-    args.SetInt("grpc.dns_enable_srv_queries", 0);
-  }
-  if (settings.count("exclusive") != 0) {
-    args.SetInt("grpc.channel_id", channel_id);
-  }
-  if (settings.count("alts") != 0) {
-    grpc::experimental::AltsCredentialsOptions alts_opts;
-    return grpc::CreateCustomChannel(
-        options.get<EndpointOption>(),
-        grpc::CompositeChannelCredentials(
-            grpc::experimental::AltsCredentials(alts_opts),
-            grpc::GoogleComputeEngineCredentials()),
-        std::move(args));
-  }
+  // Just configure for the regular path.
+  args.SetInt("grpc.channel_id", channel_id);
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
