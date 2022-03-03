@@ -120,7 +120,7 @@ class InstanceAdminClient {
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L418}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -131,14 +131,14 @@ class InstanceAdminClient {
   /// Lists the supported instance configurations for a given project.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415}
+  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstanceConfigsRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L418}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L415}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L418}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -159,7 +159,7 @@ class InstanceAdminClient {
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L449}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L452}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -170,14 +170,14 @@ class InstanceAdminClient {
   /// Gets information about a particular instance configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L449}
+  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceConfigRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L452}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L449}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L452}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L304}
   ///
@@ -199,7 +199,7 @@ class InstanceAdminClient {
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L502}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -210,14 +210,14 @@ class InstanceAdminClient {
   /// Lists all instances in the given project.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499}
+  /// @googleapis_link{google::spanner::admin::instance::v1::ListInstancesRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L502}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L499}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L502}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -237,7 +237,7 @@ class InstanceAdminClient {
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L461}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L464}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -248,14 +248,14 @@ class InstanceAdminClient {
   /// Gets information about a particular instance.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L461}
+  /// @googleapis_link{google::spanner::admin::instance::v1::GetInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L464}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L461}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L464}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -315,7 +315,7 @@ class InstanceAdminClient {
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L478}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L481}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -361,14 +361,14 @@ class InstanceAdminClient {
   /// [Instance][google.spanner.admin.instance.v1.Instance], if successful.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::CreateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L478}
+  /// @googleapis_link{google::spanner::admin::instance::v1::CreateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L481}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L478}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L481}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -436,7 +436,7 @@ class InstanceAdminClient {
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L552}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L555}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -488,14 +488,14 @@ class InstanceAdminClient {
   /// resource [name][google.spanner.admin.instance.v1.Instance.name].
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::UpdateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L552}
+  /// @googleapis_link{google::spanner::admin::instance::v1::UpdateInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L555}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
   /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L552}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L555}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L328}
   ///
@@ -525,7 +525,7 @@ class InstanceAdminClient {
   ///     backoff policies.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L568}
   ///
   Status DeleteInstance(std::string const& name, Options opts = {});
 
@@ -543,12 +543,12 @@ class InstanceAdminClient {
   ///     is permanently deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::spanner::admin::instance::v1::DeleteInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
+  /// @googleapis_link{google::spanner::admin::instance::v1::DeleteInstanceRequest,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L568}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L565}
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L568}
   ///
   Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&

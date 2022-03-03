@@ -21,3 +21,7 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_binaryauthorization-targets.cmake")
+
+if (NOT TARGET google-cloud-cpp::experimental-binaryauthorization)
+    add_library(google-cloud-cpp::experimental-binaryauthorization ALIAS google-cloud-cpp::binaryauthorization)
+endif ()

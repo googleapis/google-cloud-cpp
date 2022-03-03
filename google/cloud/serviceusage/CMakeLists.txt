@@ -81,14 +81,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_serviceusage)
 set_target_properties(
     google_cloud_cpp_serviceusage
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-serviceusage
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::serviceusage VERSION
+                                                          "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_serviceusage
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-serviceusage ALIAS
-            google_cloud_cpp_serviceusage)
+add_library(google-cloud-cpp::serviceusage ALIAS google_cloud_cpp_serviceusage)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -107,11 +106,11 @@ add_library(google_cloud_cpp_serviceusage_mocks INTERFACE)
 target_sources(google_cloud_cpp_serviceusage_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_serviceusage_mocks
-    INTERFACE google-cloud-cpp::experimental-serviceusage GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::serviceusage GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_serviceusage_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-serviceusage_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::serviceusage_mocks)
 target_include_directories(
     google_cloud_cpp_serviceusage_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -124,7 +123,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(serviceusage_quickstart "quickstart/quickstart.cc")
     target_link_libraries(serviceusage_quickstart
-                          PRIVATE google-cloud-cpp::experimental-serviceusage)
+                          PRIVATE google-cloud-cpp::serviceusage)
     google_cloud_cpp_add_common_options(serviceusage_quickstart)
     add_test(
         NAME serviceusage_quickstart

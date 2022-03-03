@@ -79,13 +79,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_vision)
 set_target_properties(
     google_cloud_cpp_vision
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-vision
+    PROPERTIES EXPORT_NAME google-cloud-cpp::vision
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_vision
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-vision ALIAS google_cloud_cpp_vision)
+add_library(google-cloud-cpp::vision ALIAS google_cloud_cpp_vision)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -104,11 +104,10 @@ add_library(google_cloud_cpp_vision_mocks INTERFACE)
 target_sources(google_cloud_cpp_vision_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_vision_mocks
-    INTERFACE google-cloud-cpp::experimental-vision GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_vision_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-vision_mocks)
+    INTERFACE google-cloud-cpp::vision GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_vision_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::vision_mocks)
 target_include_directories(
     google_cloud_cpp_vision_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -119,8 +118,7 @@ target_compile_options(google_cloud_cpp_vision_mocks
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(vision_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(vision_quickstart
-                          PRIVATE google-cloud-cpp::experimental-vision)
+    target_link_libraries(vision_quickstart PRIVATE google-cloud-cpp::vision)
     google_cloud_cpp_add_common_options(vision_quickstart)
     add_test(
         NAME vision_quickstart

@@ -39,6 +39,8 @@ google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_eventarc_protos
     # cmake-format: sort
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/publishing/v1/publisher.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/channel.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/channel_connection.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/eventarc.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/eventarc/v1/trigger.proto
     PROTO_PATH_DIRECTORIES
@@ -74,14 +76,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_eventarc)
 set_target_properties(
     google_cloud_cpp_eventarc
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-eventarc
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::eventarc VERSION
+                                                      "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_eventarc
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-eventarc ALIAS
-            google_cloud_cpp_eventarc)
+add_library(google-cloud-cpp::eventarc ALIAS google_cloud_cpp_eventarc)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -100,11 +101,10 @@ add_library(google_cloud_cpp_eventarc_mocks INTERFACE)
 target_sources(google_cloud_cpp_eventarc_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_eventarc_mocks
-    INTERFACE google-cloud-cpp::experimental-eventarc GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_eventarc_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-eventarc_mocks)
+    INTERFACE google-cloud-cpp::eventarc GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_eventarc_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::eventarc_mocks)
 target_include_directories(
     google_cloud_cpp_eventarc_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -117,7 +117,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(eventarc_quickstart "quickstart/quickstart.cc")
     target_link_libraries(eventarc_quickstart
-                          PRIVATE google-cloud-cpp::experimental-eventarc)
+                          PRIVATE google-cloud-cpp::eventarc)
     google_cloud_cpp_add_common_options(eventarc_quickstart)
     add_test(
         NAME eventarc_quickstart

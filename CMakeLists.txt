@@ -25,7 +25,7 @@ if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
 endif ()
 project(
     google-cloud-cpp
-    VERSION 1.37.0
+    VERSION 1.38.0
     LANGUAGES CXX C)
 
 # Allow applications to override the CMAKE_CXX_STANDARD, but if not set use 11.

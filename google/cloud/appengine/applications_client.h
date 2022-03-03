@@ -93,12 +93,12 @@ class ApplicationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
+  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.GetApplicationRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L113}
   /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///
   StatusOr<google::appengine::v1::Application> GetApplication(
       google::appengine::v1::GetApplicationRequest const& request,
@@ -122,12 +122,12 @@ class ApplicationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
+  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.CreateApplicationRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L119}
   /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       google::appengine::v1::CreateApplicationRequest const& request,
@@ -147,12 +147,12 @@ class ApplicationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
+  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.UpdateApplicationRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L125}
   /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request,
@@ -176,12 +176,12 @@ class ApplicationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L32}
+  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
   /// [google.appengine.v1.RepairApplicationRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L137}
   /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
   ///
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request,

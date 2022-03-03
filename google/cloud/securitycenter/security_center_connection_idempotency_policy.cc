@@ -83,6 +83,12 @@ class DefaultSecurityCenterConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency GetBigQueryExport(
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
   Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
@@ -211,6 +217,29 @@ class DefaultSecurityCenterConnectionIdempotencyPolicy
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&)
       override {
     return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency CreateBigQueryExport(
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteBigQueryExport(
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateBigQueryExport(
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ListBigQueryExports(
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest) override {
+    return Idempotency::kIdempotent;
   }
 };
 }  // namespace

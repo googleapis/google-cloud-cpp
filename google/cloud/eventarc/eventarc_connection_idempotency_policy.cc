@@ -65,6 +65,54 @@ class DefaultEventarcConnectionIdempotencyPolicy
       google::cloud::eventarc::v1::DeleteTriggerRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency GetChannel(
+      google::cloud::eventarc::v1::GetChannelRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListChannels(
+      google::cloud::eventarc::v1::ListChannelsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency CreateChannel(
+      google::cloud::eventarc::v1::CreateChannelRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateChannel(
+      google::cloud::eventarc::v1::UpdateChannelRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteChannel(
+      google::cloud::eventarc::v1::DeleteChannelRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetChannelConnection(
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListChannelConnections(
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency CreateChannelConnection(
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteChannelConnection(
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 

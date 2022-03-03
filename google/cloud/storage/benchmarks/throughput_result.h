@@ -57,6 +57,10 @@ enum OpType {
  * etc.) as well as its results: status, CPU time, and elapsed time.
  */
 struct ThroughputResult {
+  /// The library used in this experiment
+  ExperimentLibrary library;
+  /// The transport used in this experiment
+  ExperimentTransport transport;
   /// The type of operation in this experiment.
   OpType op;
   /// The total size of the object involved in this experiment. Currently also
@@ -73,8 +77,6 @@ struct ThroughputResult {
   bool crc_enabled;
   /// True if the MD5 hashes are enabled in this experiment.
   bool md5_enabled;
-  /// The API, protocol, or library used in this experiment.
-  ApiName api;
   /// The total time used to complete the experiment.
   std::chrono::microseconds elapsed_time;
   /// The amount of CPU time (as reported by getrusage(2)) consumed in the
@@ -83,6 +85,8 @@ struct ThroughputResult {
   /// The result of the operation. The analysis may need to discard failed
   /// uploads or downloads.
   google::cloud::Status status;
+  /// The peer used during the transfer
+  std::string peer;
 };
 
 /// Print @p r as a CSV line.

@@ -87,6 +87,18 @@ class DataCatalogStub {
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ListEntriesRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+  ModifyEntryOverview(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::datacatalog::v1::Contacts>
+  ModifyEntryContacts(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
   CreateTagTemplate(
       grpc::ClientContext& context,
@@ -152,6 +164,15 @@ class DataCatalogStub {
   virtual StatusOr<google::cloud::datacatalog::v1::ListTagsResponse> ListTags(
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::StarEntryRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+  UnstarEntry(
+      grpc::ClientContext& context,
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
@@ -233,6 +254,16 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       google::cloud::datacatalog::v1::ListEntriesRequest const& request)
       override;
 
+  StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
+      grpc::ClientContext& client_context,
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request)
+      override;
+
+  StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
+      grpc::ClientContext& client_context,
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request)
+      override;
+
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
       grpc::ClientContext& client_context,
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request)
@@ -297,6 +328,15 @@ class DefaultDataCatalogStub : public DataCatalogStub {
   StatusOr<google::cloud::datacatalog::v1::ListTagsResponse> ListTags(
       grpc::ClientContext& client_context,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      grpc::ClientContext& client_context,
+      google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
+      grpc::ClientContext& client_context,
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& client_context,

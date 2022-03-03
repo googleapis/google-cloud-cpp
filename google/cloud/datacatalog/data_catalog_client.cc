@@ -256,6 +256,22 @@ DataCatalogClient::ListEntries(
   return connection_->ListEntries(std::move(request));
 }
 
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogClient::ModifyEntryOverview(
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyEntryOverview(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogClient::ModifyEntryContacts(
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyEntryContacts(request);
+}
+
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogClient::CreateTagTemplate(
     std::string const& parent, std::string const& tag_template_id,
@@ -520,6 +536,38 @@ StreamRange<google::cloud::datacatalog::v1::Tag> DataCatalogClient::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTags(std::move(request));
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogClient::StarEntry(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datacatalog::v1::StarEntryRequest request;
+  request.set_name(name);
+  return connection_->StarEntry(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogClient::StarEntry(
+    google::cloud::datacatalog::v1::StarEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StarEntry(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogClient::UnstarEntry(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datacatalog::v1::UnstarEntryRequest request;
+  request.set_name(name);
+  return connection_->UnstarEntry(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogClient::UnstarEntry(
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnstarEntry(request);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(

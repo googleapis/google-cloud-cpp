@@ -95,12 +95,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L34}
+  /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L33}
   ///
   /// [google.appengine.v1.ListInstancesRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L423}
   /// [google.appengine.v1.Instance]:
-  /// @googleapis_reference_link{google/appengine/v1/instance.proto#L34}
+  /// @googleapis_reference_link{google/appengine/v1/instance.proto#L33}
   ///
   StreamRange<google::appengine::v1::Instance> ListInstances(
       google::appengine::v1::ListInstancesRequest request, Options opts = {});
@@ -113,12 +113,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L34}
+  /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L33}
   ///
   /// [google.appengine.v1.GetInstanceRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L445}
   /// [google.appengine.v1.Instance]:
-  /// @googleapis_reference_link{google/appengine/v1/instance.proto#L34}
+  /// @googleapis_reference_link{google/appengine/v1/instance.proto#L33}
   ///
   StatusOr<google::appengine::v1::Instance> GetInstance(
       google::appengine::v1::GetInstanceRequest const& request,
@@ -146,12 +146,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
+  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L30}
   ///
   /// [google.appengine.v1.DeleteInstanceRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L452}
   /// [google.appengine.v1.OperationMetadataV1]:
-  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
       google::appengine::v1::DeleteInstanceRequest const& request,
@@ -172,12 +172,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L34}
+  /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L33}
   ///
   /// [google.appengine.v1.DebugInstanceRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L459}
   /// [google.appengine.v1.Instance]:
-  /// @googleapis_reference_link{google/appengine/v1/instance.proto#L34}
+  /// @googleapis_reference_link{google/appengine/v1/instance.proto#L33}
   ///
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
       google::appengine::v1::DebugInstanceRequest const& request,

@@ -106,6 +106,31 @@ Status OsConfigServiceMetadata::DeletePatchDeployment(
   return child_->DeletePatchDeployment(context, request);
 }
 
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceMetadata::UpdatePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
+  SetMetadata(context,
+              "patch_deployment.name=" + request.patch_deployment().name());
+  return child_->UpdatePatchDeployment(context, request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceMetadata::PausePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->PausePatchDeployment(context, request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceMetadata::ResumePatchDeployment(
+    grpc::ClientContext& context,
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->ResumePatchDeployment(context, request);
+}
+
 void OsConfigServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

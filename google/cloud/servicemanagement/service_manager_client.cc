@@ -264,44 +264,6 @@ ServiceManagerClient::GenerateConfigReport(
   return connection_->GenerateConfigReport(request);
 }
 
-future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-ServiceManagerClient::EnableService(std::string const& service_name,
-                                    std::string const& consumer_id,
-                                    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::api::servicemanagement::v1::EnableServiceRequest request;
-  request.set_service_name(service_name);
-  request.set_consumer_id(consumer_id);
-  return connection_->EnableService(request);
-}
-
-future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-ServiceManagerClient::EnableService(
-    google::api::servicemanagement::v1::EnableServiceRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableService(request);
-}
-
-future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-ServiceManagerClient::DisableService(std::string const& service_name,
-                                     std::string const& consumer_id,
-                                     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::api::servicemanagement::v1::DisableServiceRequest request;
-  request.set_service_name(service_name);
-  request.set_consumer_id(consumer_id);
-  return connection_->DisableService(request);
-}
-
-future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-ServiceManagerClient::DisableService(
-    google::api::servicemanagement::v1::DisableServiceRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableService(request);
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement
 }  // namespace cloud

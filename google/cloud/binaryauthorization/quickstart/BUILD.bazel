@@ -20,6 +20,6 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:experimental-binaryauthorization",
+        "@com_github_googleapis_google_cloud_cpp//:binaryauthorization",
     ],
 )

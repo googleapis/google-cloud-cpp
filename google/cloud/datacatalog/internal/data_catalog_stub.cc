@@ -175,6 +175,32 @@ DefaultDataCatalogStub::ListEntries(
   return response;
 }
 
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DefaultDataCatalogStub::ModifyEntryOverview(
+    grpc::ClientContext& client_context,
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+  google::cloud::datacatalog::v1::EntryOverview response;
+  auto status =
+      grpc_stub_->ModifyEntryOverview(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DefaultDataCatalogStub::ModifyEntryContacts(
+    grpc::ClientContext& client_context,
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+  google::cloud::datacatalog::v1::Contacts response;
+  auto status =
+      grpc_stub_->ModifyEntryContacts(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DefaultDataCatalogStub::CreateTagTemplate(
     grpc::ClientContext& client_context,
@@ -333,6 +359,30 @@ DefaultDataCatalogStub::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest const& request) {
   google::cloud::datacatalog::v1::ListTagsResponse response;
   auto status = grpc_stub_->ListTags(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DefaultDataCatalogStub::StarEntry(
+    grpc::ClientContext& client_context,
+    google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+  google::cloud::datacatalog::v1::StarEntryResponse response;
+  auto status = grpc_stub_->StarEntry(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DefaultDataCatalogStub::UnstarEntry(
+    grpc::ClientContext& client_context,
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+  google::cloud::datacatalog::v1::UnstarEntryResponse response;
+  auto status = grpc_stub_->UnstarEntry(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

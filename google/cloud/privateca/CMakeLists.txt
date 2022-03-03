@@ -75,14 +75,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_privateca)
 set_target_properties(
     google_cloud_cpp_privateca
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-privateca
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::privateca VERSION
+                                                       "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_privateca
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-privateca ALIAS
-            google_cloud_cpp_privateca)
+add_library(google-cloud-cpp::privateca ALIAS google_cloud_cpp_privateca)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -101,11 +100,10 @@ add_library(google_cloud_cpp_privateca_mocks INTERFACE)
 target_sources(google_cloud_cpp_privateca_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_privateca_mocks
-    INTERFACE google-cloud-cpp::experimental-privateca GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_privateca_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-privateca_mocks)
+    INTERFACE google-cloud-cpp::privateca GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_privateca_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::privateca_mocks)
 target_include_directories(
     google_cloud_cpp_privateca_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -118,7 +116,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(privateca_quickstart "quickstart/quickstart.cc")
     target_link_libraries(privateca_quickstart
-                          PRIVATE google-cloud-cpp::experimental-privateca)
+                          PRIVATE google-cloud-cpp::privateca)
     google_cloud_cpp_add_common_options(privateca_quickstart)
     add_test(
         NAME privateca_quickstart

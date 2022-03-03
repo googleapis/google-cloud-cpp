@@ -125,22 +125,6 @@ ServiceManagerConnection::GenerateConfigReport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-ServiceManagerConnection::EnableService(
-    google::api::servicemanagement::v1::EnableServiceRequest const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
-future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-ServiceManagerConnection::DisableService(
-    google::api::servicemanagement::v1::DisableServiceRequest const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
 std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

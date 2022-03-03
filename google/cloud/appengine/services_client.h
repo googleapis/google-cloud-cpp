@@ -91,12 +91,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L37}
+  /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L36}
   ///
   /// [google.appengine.v1.ListServicesRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L189}
   /// [google.appengine.v1.Service]:
-  /// @googleapis_reference_link{google/appengine/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/appengine/v1/service.proto#L36}
   ///
   StreamRange<google::appengine::v1::Service> ListServices(
       google::appengine::v1::ListServicesRequest request, Options opts = {});
@@ -109,12 +109,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L37}
+  /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L36}
   ///
   /// [google.appengine.v1.GetServiceRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L210}
   /// [google.appengine.v1.Service]:
-  /// @googleapis_reference_link{google/appengine/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/appengine/v1/service.proto#L36}
   ///
   StatusOr<google::appengine::v1::Service> GetService(
       google::appengine::v1::GetServiceRequest const& request,
@@ -128,12 +128,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L37}
+  /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L36}
   ///
   /// [google.appengine.v1.UpdateServiceRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L216}
   /// [google.appengine.v1.Service]:
-  /// @googleapis_reference_link{google/appengine/v1/service.proto#L37}
+  /// @googleapis_reference_link{google/appengine/v1/service.proto#L36}
   ///
   future<StatusOr<google::appengine::v1::Service>> UpdateService(
       google::appengine::v1::UpdateServiceRequest const& request,
@@ -147,12 +147,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
+  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L30}
   ///
   /// [google.appengine.v1.DeleteServiceRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L243}
   /// [google.appengine.v1.OperationMetadataV1]:
-  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
       google::appengine::v1::DeleteServiceRequest const& request,

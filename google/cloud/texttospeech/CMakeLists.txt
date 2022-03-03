@@ -66,14 +66,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_texttospeech)
 set_target_properties(
     google_cloud_cpp_texttospeech
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-texttospeech
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech VERSION
+                                                          "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_texttospeech
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-texttospeech ALIAS
-            google_cloud_cpp_texttospeech)
+add_library(google-cloud-cpp::texttospeech ALIAS google_cloud_cpp_texttospeech)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -92,11 +91,11 @@ add_library(google_cloud_cpp_texttospeech_mocks INTERFACE)
 target_sources(google_cloud_cpp_texttospeech_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_texttospeech_mocks
-    INTERFACE google-cloud-cpp::experimental-texttospeech GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::texttospeech GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_texttospeech_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-texttospeech_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech_mocks)
 target_include_directories(
     google_cloud_cpp_texttospeech_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -108,7 +107,7 @@ target_compile_options(google_cloud_cpp_texttospeech_mocks
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(texttospeech_quickstart "quickstart/quickstart.cc")
     target_link_libraries(texttospeech_quickstart
-                          PRIVATE google-cloud-cpp::experimental-texttospeech)
+                          PRIVATE google-cloud-cpp::texttospeech)
     google_cloud_cpp_add_common_options(texttospeech_quickstart)
     add_test(
         NAME texttospeech_quickstart

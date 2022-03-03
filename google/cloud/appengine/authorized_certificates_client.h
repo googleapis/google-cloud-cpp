@@ -96,12 +96,12 @@ class AuthorizedCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
   /// [google.appengine.v1.ListAuthorizedCertificatesRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L652}
   /// [google.appengine.v1.AuthorizedCertificate]:
-  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
   ///
   StreamRange<google::appengine::v1::AuthorizedCertificate>
   ListAuthorizedCertificates(
@@ -116,12 +116,12 @@ class AuthorizedCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
   /// [google.appengine.v1.GetAuthorizedCertificateRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L743}
   /// [google.appengine.v1.AuthorizedCertificate]:
-  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
   ///
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   GetAuthorizedCertificate(
@@ -136,12 +136,12 @@ class AuthorizedCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
   /// [google.appengine.v1.CreateAuthorizedCertificateRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L753}
   /// [google.appengine.v1.AuthorizedCertificate]:
-  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
   ///
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   CreateAuthorizedCertificate(
@@ -160,12 +160,12 @@ class AuthorizedCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
   /// [google.appengine.v1.UpdateAuthorizedCertificateRequest]:
   /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L762}
   /// [google.appengine.v1.AuthorizedCertificate]:
-  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L33}
+  /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
   ///
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   UpdateAuthorizedCertificate(

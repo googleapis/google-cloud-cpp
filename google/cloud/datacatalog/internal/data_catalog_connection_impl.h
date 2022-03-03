@@ -92,6 +92,14 @@ class DataCatalogConnectionImpl : public datacatalog::DataCatalogConnection {
   StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
       google::cloud::datacatalog::v1::ListEntriesRequest request) override;
 
+  StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request)
+      override;
+
+  StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request)
+      override;
+
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
       google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request)
       override;
@@ -143,6 +151,13 @@ class DataCatalogConnectionImpl : public datacatalog::DataCatalogConnection {
 
   StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request) override;

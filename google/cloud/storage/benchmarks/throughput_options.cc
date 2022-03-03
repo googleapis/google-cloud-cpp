@@ -108,16 +108,28 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.maximum_sample_count = std::stoi(val);
        }},
-      {"--enabled-apis", "enable a subset of the APIs for the test",
+      {"--enabled-libs", "enable more libraries (e.g. Raw, CppClient)",
        [&options](std::string const& val) {
-         options.enabled_apis.clear();
-         std::set<ApiName> apis;  // avoid duplicates
+         options.libs.clear();              //
+         std::set<ExperimentLibrary> libs;  // avoid duplicates
          for (auto const& token : absl::StrSplit(val, ',')) {
-           auto api = ParseApiName(std::string{token});
-           if (!api) return;
-           apis.insert(*api);
+           auto lib = ParseExperimentLibrary(std::string{token});
+           if (!lib) return;
+           libs.insert(*lib);
          }
-         options.enabled_apis = {apis.begin(), apis.end()};
+         options.libs = {libs.begin(), libs.end()};
+       }},
+      {"--enabled-transports",
+       "enable a subset of the transports (DirectPath, Grpc, Json, Xml)",
+       [&options](std::string const& val) {
+         options.transports.clear();
+         std::set<ExperimentTransport> transports;  // avoid duplicates
+         for (auto const& token : absl::StrSplit(val, ',')) {
+           auto transport = ParseExperimentTransport(std::string{token});
+           if (!transport) return;
+           transports.insert(*transport);
+         }
+         options.transports = {transports.begin(), transports.end()};
        }},
       {"--enabled-crc32c", "run with CRC32C enabled, disabled, or both",
        [&options, &parse_checksums](std::string const& val) {
@@ -221,9 +233,15 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
 )""";
   }
 
-  if (options.enabled_apis.empty()) {
+  if (options.libs.empty()) {
     std::ostringstream os;
-    os << "No APIs configured for benchmark.";
+    os << "No libraries configured for benchmark. Maybe an invalid name?";
+    return make_status(os);
+  }
+
+  if (options.transports.empty()) {
+    std::ostringstream os;
+    os << "No transports configured for benchmark. Maybe an invalid name?";
     return make_status(os);
   }
 

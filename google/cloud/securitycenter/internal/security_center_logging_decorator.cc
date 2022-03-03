@@ -123,6 +123,20 @@ Status SecurityCenterLogging::DeleteNotificationConfig(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterLogging::GetBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+                 request) {
+        return child_->GetBigQueryExport(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::iam::v1::Policy> SecurityCenterLogging::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -420,6 +434,65 @@ SecurityCenterLogging::UpdateSecurityMarks(
           google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
               request) {
         return child_->UpdateSecurityMarks(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterLogging::CreateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+              request) {
+        return child_->CreateBigQueryExport(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status SecurityCenterLogging::DeleteBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+              request) {
+        return child_->DeleteBigQueryExport(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterLogging::UpdateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+              request) {
+        return child_->UpdateBigQueryExport(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
+SecurityCenterLogging::ListBigQueryExports(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+              request) {
+        return child_->ListBigQueryExports(context, request);
       },
       context, request, __func__, tracing_options_);
 }

@@ -98,12 +98,12 @@ class AgentEndpointServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L86}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L79}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L74}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L67}
   /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L86}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L79}
   ///
   StreamRange<google::cloud::osconfig::agentendpoint::v1::
                   ReceiveTaskNotificationResponse>
@@ -114,16 +114,16 @@ class AgentEndpointServiceClient {
   /// Stream established by client to receive Task notifications.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L74}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L67}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L86}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L79}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L74}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L67}
   /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L86}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L79}
   ///
   StreamRange<google::cloud::osconfig::agentendpoint::v1::
                   ReceiveTaskNotificationResponse>
@@ -141,12 +141,12 @@ class AgentEndpointServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L97}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L92}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L89}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L84}
   /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L97}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L92}
   ///
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
   StartNextTask(std::string const& instance_id_token, Options opts = {});
@@ -155,16 +155,16 @@ class AgentEndpointServiceClient {
   /// Signals the start of a task execution and returns the task info.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L89}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L84}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L97}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L92}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L89}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L84}
   /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L97}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L92}
   ///
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
   StartNextTask(
@@ -189,12 +189,12 @@ class AgentEndpointServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L131}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L104}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L99}
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L131}
   ///
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
@@ -207,16 +207,16 @@ class AgentEndpointServiceClient {
   /// Signals an intermediary progress checkpoint in task execution.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L104}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L99}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L131}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L104}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L99}
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L131}
   ///
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
@@ -244,12 +244,12 @@ class AgentEndpointServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L177}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L172}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L142}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L137}
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L177}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L172}
   ///
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
@@ -263,16 +263,16 @@ class AgentEndpointServiceClient {
   /// next task.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L142}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L137}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L177}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L172}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L142}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L137}
   /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L177}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L172}
   ///
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
@@ -296,12 +296,12 @@ class AgentEndpointServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L212}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L209}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L180}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L177}
   /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L212}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L209}
   ///
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
   RegisterAgent(std::string const& instance_id_token,
@@ -313,16 +313,16 @@ class AgentEndpointServiceClient {
   /// Registers the agent running on the VM.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L180}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L177}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L212}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L209}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L180}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L177}
   /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L212}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L209}
   ///
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
   RegisterAgent(
@@ -338,22 +338,22 @@ class AgentEndpointServiceClient {
   ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
   /// @param inventory_checksum  Required. This is a client created checksum
-  /// that should be generated based
-  ///  on the contents of the reported inventory.  This will be used by the
-  ///  service to determine if it has the latest version of inventory.
+  /// that should be generated based on the
+  ///  contents of the reported inventory.  This will be used by the service to
+  ///  determine if it has the latest version of inventory.
   /// @param inventory  Optional. This is the details of the inventory.  Should
-  /// only be provided if
-  ///  the inventory has changed since the last report, or if instructed by the
+  /// only be provided if the
+  ///  inventory has changed since the last report, or if instructed by the
   ///  service to provide full inventory.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L233}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L232}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L215}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L214}
   /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L233}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L232}
   ///
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
   ReportInventory(
@@ -366,16 +366,16 @@ class AgentEndpointServiceClient {
   /// Reports the VMs current inventory.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L215}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L214}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L233}
+  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L232}
   ///
   /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L215}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L214}
   /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L233}
+  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L232}
   ///
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
   ReportInventory(

@@ -68,6 +68,39 @@ class EventarcConnection {
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      google::cloud::eventarc::v1::GetChannelRequest const& request);
+
+  virtual StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
+      google::cloud::eventarc::v1::ListChannelsRequest request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      google::cloud::eventarc::v1::CreateChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::ChannelConnection>
+  GetChannelConnection(
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request);
+
+  virtual StreamRange<google::cloud::eventarc::v1::ChannelConnection>
+  ListChannelConnections(
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  CreateChannelConnection(
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  DeleteChannelConnection(
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request);
 };
 
 std::shared_ptr<EventarcConnection> MakeEventarcConnection(

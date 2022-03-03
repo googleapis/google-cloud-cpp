@@ -91,16 +91,16 @@ class QueryServiceClient {
   /// require a Workspace.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::QueryTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L476}
+  /// @googleapis_link{google::monitoring::v3::QueryTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L474}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::TimeSeriesData,google/monitoring/v3/metric.proto#L135}
+  /// @googleapis_link{google::monitoring::v3::TimeSeriesData,google/monitoring/v3/metric.proto#L133}
   ///
   /// [google.monitoring.v3.QueryTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L476}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L474}
   /// [google.monitoring.v3.TimeSeriesData]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L135}
+  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L133}
   ///
   StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
       google::monitoring::v3::QueryTimeSeriesRequest request,

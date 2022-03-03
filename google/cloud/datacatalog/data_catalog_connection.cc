@@ -109,6 +109,18 @@ StreamRange<google::cloud::datacatalog::v1::Entry>
       StreamRange<google::cloud::datacatalog::v1::Entry>>();
 }
 
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogConnection::ModifyEntryOverview(
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogConnection::ModifyEntryContacts(
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogConnection::CreateTagTemplate(
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const&) {
@@ -183,6 +195,18 @@ StreamRange<google::cloud::datacatalog::v1::Tag>
             ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Tag>>();
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogConnection::StarEntry(
+    google::cloud::datacatalog::v1::StarEntryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogConnection::UnstarEntry(
+    google::cloud::datacatalog::v1::UnstarEntryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogConnection::SetIamPolicy(

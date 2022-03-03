@@ -116,18 +116,6 @@ class DefaultServiceManagerConnectionIdempotencyPolicy
       override {
     return Idempotency::kNonIdempotent;
   }
-
-  Idempotency EnableService(
-      google::api::servicemanagement::v1::EnableServiceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DisableService(
-      google::api::servicemanagement::v1::DisableServiceRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
 };
 }  // namespace
 

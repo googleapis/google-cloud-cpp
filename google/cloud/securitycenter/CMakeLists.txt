@@ -39,11 +39,14 @@ include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_securitycenter_protos
     # cmake-format: sort
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/access.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/asset.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/bigquery_export.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/external_system.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/finding.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/folder.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/indicator.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/mitre_attack.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/mute_config.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/notification_config.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/securitycenter/v1/notification_message.proto
@@ -91,13 +94,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_securitycenter)
 set_target_properties(
     google_cloud_cpp_securitycenter
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-securitycenter
+    PROPERTIES EXPORT_NAME google-cloud-cpp::securitycenter
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_securitycenter
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-securitycenter ALIAS
+add_library(google-cloud-cpp::securitycenter ALIAS
             google_cloud_cpp_securitycenter)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -117,11 +120,11 @@ add_library(google_cloud_cpp_securitycenter_mocks INTERFACE)
 target_sources(google_cloud_cpp_securitycenter_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_securitycenter_mocks
-    INTERFACE google-cloud-cpp::experimental-securitycenter GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::securitycenter GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_securitycenter_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-securitycenter_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::securitycenter_mocks)
 target_include_directories(
     google_cloud_cpp_securitycenter_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -134,7 +137,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(securitycenter_quickstart "quickstart/quickstart.cc")
     target_link_libraries(securitycenter_quickstart
-                          PRIVATE google-cloud-cpp::experimental-securitycenter)
+                          PRIVATE google-cloud-cpp::securitycenter)
     google_cloud_cpp_add_common_options(securitycenter_quickstart)
     add_test(
         NAME securitycenter_quickstart

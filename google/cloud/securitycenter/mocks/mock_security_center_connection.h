@@ -73,6 +73,13 @@ class MockSecurityCenterConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::securitycenter::v1::BigQueryExport>,
+      GetBigQueryExport,
+      (google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+           request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));
@@ -210,6 +217,32 @@ class MockSecurityCenterConnection
       UpdateSecurityMarks,
       (google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securitycenter::v1::BigQueryExport>,
+      CreateBigQueryExport,
+      (google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteBigQueryExport,
+      (google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::securitycenter::v1::BigQueryExport>,
+      UpdateBigQueryExport,
+      (google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::securitycenter::v1::BigQueryExport>,
+      ListBigQueryExports,
+      (google::cloud::securitycenter::v1::ListBigQueryExportsRequest request),
       (override));
 };
 

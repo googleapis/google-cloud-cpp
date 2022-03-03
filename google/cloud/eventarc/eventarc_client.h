@@ -95,7 +95,7 @@ class EventarcClient {
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.GetTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L98}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L195}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -106,14 +106,14 @@ class EventarcClient {
   /// Get a single trigger.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::eventarc::v1::GetTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L98}
+  /// @googleapis_link{google::cloud::eventarc::v1::GetTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L195}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.GetTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L98}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L195}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -131,7 +131,7 @@ class EventarcClient {
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.ListTriggersRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L109}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L206}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -142,14 +142,14 @@ class EventarcClient {
   /// List triggers.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::eventarc::v1::ListTriggersRequest,google/cloud/eventarc/v1/eventarc.proto#L109}
+  /// @googleapis_link{google::cloud::eventarc::v1::ListTriggersRequest,google/cloud/eventarc/v1/eventarc.proto#L206}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.ListTriggersRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L109}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L206}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -171,7 +171,7 @@ class EventarcClient {
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.CreateTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L150}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L247}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -184,14 +184,14 @@ class EventarcClient {
   /// Create a new trigger in a particular project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::eventarc::v1::CreateTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L150}
+  /// @googleapis_link{google::cloud::eventarc::v1::CreateTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L247}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.CreateTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L150}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L247}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -204,8 +204,8 @@ class EventarcClient {
   ///
   /// @param trigger  The trigger to be updated.
   /// @param update_mask  The fields to be updated; only fields explicitly
-  /// provided will be updated.
-  ///  If no field mask is provided, all provided fields in the request will be
+  /// provided are updated.
+  ///  If no field mask is provided, all provided fields in the request are
   ///  updated. To update all fields, provide a field mask of "*".
   /// @param allow_missing  If set to true, and the trigger is not found, a new
   /// trigger will be
@@ -216,7 +216,7 @@ class EventarcClient {
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.UpdateTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L171}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L268}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -229,14 +229,14 @@ class EventarcClient {
   /// Update a single trigger.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::eventarc::v1::UpdateTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L171}
+  /// @googleapis_link{google::cloud::eventarc::v1::UpdateTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L268}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.UpdateTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L171}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L268}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -257,7 +257,7 @@ class EventarcClient {
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.DeleteTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L190}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L287}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
@@ -268,19 +268,367 @@ class EventarcClient {
   /// Delete a single trigger.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::eventarc::v1::DeleteTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L190}
+  /// @googleapis_link{google::cloud::eventarc::v1::DeleteTriggerRequest,google/cloud/eventarc/v1/eventarc.proto#L287}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   /// [google.cloud.eventarc.v1.DeleteTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L190}
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L287}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L42}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Get a single Channel.
+  ///
+  /// @param name  Required. The name of the channel to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.GetChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L310}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Get a single Channel.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::GetChannelRequest,google/cloud/eventarc/v1/eventarc.proto#L310}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.GetChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L310}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      google::cloud::eventarc::v1::GetChannelRequest const& request,
+      Options opts = {});
+
+  ///
+  /// List channels.
+  ///
+  /// @param parent  Required. The parent collection to list channels on.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L321}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
+      std::string const& parent, Options opts = {});
+
+  ///
+  /// List channels.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::ListChannelsRequest,google/cloud/eventarc/v1/eventarc.proto#L321}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L321}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
+      google::cloud::eventarc::v1::ListChannelsRequest request,
+      Options opts = {});
+
+  ///
+  /// Create a new channel in a particular project and location.
+  ///
+  /// @param parent  Required. The parent collection in which to add this
+  /// channel.
+  /// @param channel  Required. The channel to create.
+  /// @param channel_id  Required. The user-provided ID to be assigned to the
+  /// channel.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      std::string const& parent,
+      google::cloud::eventarc::v1::Channel const& channel,
+      std::string const& channel_id, Options opts = {});
+
+  ///
+  /// Create a new channel in a particular project and location.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::CreateChannelRequest,google/cloud/eventarc/v1/eventarc.proto#L362}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      google::cloud::eventarc::v1::CreateChannelRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Update a single channel.
+  ///
+  /// @param channel  The channel to be updated.
+  /// @param update_mask  The fields to be updated; only fields explicitly
+  /// provided are updated.
+  ///  If no field mask is provided, all provided fields in the request are
+  ///  updated. To update all fields, provide a field mask of "*".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L383}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::Channel const& channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// Update a single channel.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::UpdateChannelRequest,google/cloud/eventarc/v1/eventarc.proto#L383}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L383}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Delete a single channel.
+  ///
+  /// @param name  Required. The name of the channel to be deleted.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L398}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Delete a single channel.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::DeleteChannelRequest,google/cloud/eventarc/v1/eventarc.proto#L398}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L398}
+  /// [google.cloud.eventarc.v1.Channel]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Get a single ChannelConnection.
+  ///
+  /// @param name  Required. The name of the channel connection to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L413}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Get a single ChannelConnection.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::GetChannelConnectionRequest,google/cloud/eventarc/v1/eventarc.proto#L413}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L413}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request,
+      Options opts = {});
+
+  ///
+  /// List channel connections.
+  ///
+  /// @param parent  Required. The parent collection from which to list channel
+  /// connections.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L424}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  StreamRange<google::cloud::eventarc::v1::ChannelConnection>
+  ListChannelConnections(std::string const& parent, Options opts = {});
+
+  ///
+  /// List channel connections.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::ListChannelConnectionsRequest,google/cloud/eventarc/v1/eventarc.proto#L424}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L424}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  StreamRange<google::cloud::eventarc::v1::ChannelConnection>
+  ListChannelConnections(
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest request,
+      Options opts = {});
+
+  ///
+  /// Create a new ChannelConnection in a particular project and location.
+  ///
+  /// @param parent  Required. The parent collection in which to add this
+  /// channel connection.
+  /// @param channel_connection  Required. Channel connection to create.
+  /// @param channel_connection_id  Required. The user-provided ID to be
+  /// assigned to the channel connection.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L461}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  CreateChannelConnection(
+      std::string const& parent,
+      google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
+      std::string const& channel_connection_id, Options opts = {});
+
+  ///
+  /// Create a new ChannelConnection in a particular project and location.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::CreateChannelConnectionRequest,google/cloud/eventarc/v1/eventarc.proto#L461}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L461}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  CreateChannelConnection(
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Delete a single ChannelConnection.
+  ///
+  /// @param name  Required. The name of the channel connection to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L478}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  DeleteChannelConnection(std::string const& name, Options opts = {});
+
+  ///
+  /// Delete a single ChannelConnection.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::eventarc::v1::DeleteChannelConnectionRequest,google/cloud/eventarc/v1/eventarc.proto#L478}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L478}
+  /// [google.cloud.eventarc.v1.ChannelConnection]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L36}
+  ///
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  DeleteChannelConnection(
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request,
       Options opts = {});
 
  private:

@@ -73,14 +73,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_scheduler)
 set_target_properties(
     google_cloud_cpp_scheduler
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-scheduler
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::scheduler VERSION
+                                                       "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_scheduler
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-scheduler ALIAS
-            google_cloud_cpp_scheduler)
+add_library(google-cloud-cpp::scheduler ALIAS google_cloud_cpp_scheduler)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -99,11 +98,10 @@ add_library(google_cloud_cpp_scheduler_mocks INTERFACE)
 target_sources(google_cloud_cpp_scheduler_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_scheduler_mocks
-    INTERFACE google-cloud-cpp::experimental-scheduler GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_scheduler_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-scheduler_mocks)
+    INTERFACE google-cloud-cpp::scheduler GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_scheduler_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::scheduler_mocks)
 target_include_directories(
     google_cloud_cpp_scheduler_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -116,7 +114,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(scheduler_quickstart "quickstart/quickstart.cc")
     target_link_libraries(scheduler_quickstart
-                          PRIVATE google-cloud-cpp::experimental-scheduler)
+                          PRIVATE google-cloud-cpp::scheduler)
     google_cloud_cpp_add_common_options(scheduler_quickstart)
     add_test(
         NAME scheduler_quickstart

@@ -95,12 +95,12 @@ class UserEventServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::UserEvent,google/cloud/retail/v2/user_event.proto#L37}
+  /// @googleapis_link{google::cloud::retail::v2::UserEvent,google/cloud/retail/v2/user_event.proto#L36}
   ///
   /// [google.cloud.retail.v2.WriteUserEventRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L118}
   /// [google.cloud.retail.v2.UserEvent]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event.proto#L37}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event.proto#L36}
   ///
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       google::cloud::retail::v2::WriteUserEventRequest const& request,
@@ -136,16 +136,16 @@ class UserEventServiceClient {
   /// command first.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsRequest,google/cloud/retail/v2/purge_config.proto#L36}
+  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsRequest,google/cloud/retail/v2/purge_config.proto#L35}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsResponse,google/cloud/retail/v2/purge_config.proto#L76}
+  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsResponse,google/cloud/retail/v2/purge_config.proto#L75}
   ///
   /// [google.cloud.retail.v2.PurgeUserEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L36}
+  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L35}
   /// [google.cloud.retail.v2.PurgeUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L76}
+  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L75}
   ///
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
   PurgeUserEvents(
@@ -162,16 +162,16 @@ class UserEventServiceClient {
   /// Operation.metadata is of type ImportMetadata.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L222}
+  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L221}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L357}
+  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L356}
   ///
   /// [google.cloud.retail.v2.ImportUserEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L222}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L221}
   /// [google.cloud.retail.v2.ImportUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L357}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L356}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(

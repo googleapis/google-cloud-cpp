@@ -113,16 +113,6 @@ class ServiceManagerConnection {
   GenerateConfigReport(
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request);
-
-  virtual future<
-      StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-  EnableService(
-      google::api::servicemanagement::v1::EnableServiceRequest const& request);
-
-  virtual future<
-      StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-  DisableService(
-      google::api::servicemanagement::v1::DisableServiceRequest const& request);
 };
 
 std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(

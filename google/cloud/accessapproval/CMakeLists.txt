@@ -49,7 +49,8 @@ target_link_libraries(
            google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos)
+           google-cloud-cpp::api_http_protos
+           google-cloud-cpp::api_resource_protos)
 
 file(
     GLOB source_files
@@ -69,13 +70,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_accessapproval)
 set_target_properties(
     google_cloud_cpp_accessapproval
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-accessapproval
+    PROPERTIES EXPORT_NAME google-cloud-cpp::accessapproval
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_accessapproval
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-accessapproval ALIAS
+add_library(google-cloud-cpp::accessapproval ALIAS
             google_cloud_cpp_accessapproval)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -95,11 +96,11 @@ add_library(google_cloud_cpp_accessapproval_mocks INTERFACE)
 target_sources(google_cloud_cpp_accessapproval_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_accessapproval_mocks
-    INTERFACE google-cloud-cpp::experimental-accessapproval GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::accessapproval GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_accessapproval_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-accessapproval_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::accessapproval_mocks)
 target_include_directories(
     google_cloud_cpp_accessapproval_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -111,7 +112,7 @@ target_compile_options(google_cloud_cpp_accessapproval_mocks
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(accessapproval_quickstart "quickstart/quickstart.cc")
     target_link_libraries(accessapproval_quickstart
-                          PRIVATE google-cloud-cpp::experimental-accessapproval)
+                          PRIVATE google-cloud-cpp::accessapproval)
     google_cloud_cpp_add_common_options(accessapproval_quickstart)
     add_test(
         NAME accessapproval_quickstart

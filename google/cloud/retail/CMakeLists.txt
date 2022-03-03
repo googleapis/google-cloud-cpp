@@ -85,13 +85,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_retail)
 set_target_properties(
     google_cloud_cpp_retail
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-retail
+    PROPERTIES EXPORT_NAME google-cloud-cpp::retail
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_retail
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-retail ALIAS google_cloud_cpp_retail)
+add_library(google-cloud-cpp::retail ALIAS google_cloud_cpp_retail)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -110,11 +110,10 @@ add_library(google_cloud_cpp_retail_mocks INTERFACE)
 target_sources(google_cloud_cpp_retail_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_retail_mocks
-    INTERFACE google-cloud-cpp::experimental-retail GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_retail_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-retail_mocks)
+    INTERFACE google-cloud-cpp::retail GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_retail_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::retail_mocks)
 target_include_directories(
     google_cloud_cpp_retail_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -125,8 +124,7 @@ target_compile_options(google_cloud_cpp_retail_mocks
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(retail_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(retail_quickstart
-                          PRIVATE google-cloud-cpp::experimental-retail)
+    target_link_libraries(retail_quickstart PRIVATE google-cloud-cpp::retail)
     google_cloud_cpp_add_common_options(retail_quickstart)
     add_test(
         NAME retail_quickstart

@@ -76,6 +76,12 @@ Status SecurityCenterConnection::DeleteNotificationConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterConnection::GetBigQueryExport(
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::iam::v1::Policy> SecurityCenterConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -237,6 +243,31 @@ StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
 SecurityCenterConnection::UpdateSecurityMarks(
     google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterConnection::CreateBigQueryExport(
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status SecurityCenterConnection::DeleteBigQueryExport(
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterConnection::UpdateBigQueryExport(
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
+    SecurityCenterConnection::ListBigQueryExports(
+        google::cloud::securitycenter::v1::
+            ListBigQueryExportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::BigQueryExport>>();
 }
 
 std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
