@@ -43,7 +43,7 @@ class PartitionPublisherImpl : public Publisher<Cursor> {
           MessagePublishRequest, MessagePublishResponse>>(
           StreamInitializer<MessagePublishRequest, MessagePublishResponse>)>
           resumable_stream_factory,
-      BatchingSettings const batching_settings,
+      BatchingSettings const& batching_settings,
       std::unique_ptr<AlarmRegistryInterface> alarm, size_t alarm_period_ms)
       : batching_settings_{batching_settings},
         resumable_stream_{resumable_stream_factory(initializer_)},
