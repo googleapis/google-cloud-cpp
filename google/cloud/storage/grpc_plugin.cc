@@ -15,27 +15,19 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
-#include "google/cloud/internal/getenv.h"
 
 namespace google {
 namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace {
-absl::optional<std::string> GrpcConfig() {
-  return google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG");
-}
-}  // namespace
-
 google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   opts = google::cloud::storage::internal::DefaultOptionsGrpc(std::move(opts));
-  auto config = GrpcConfig();
-  if (config.value_or("none") == "none") {
+  auto config = opts.get<GrpcPluginOption>();
+  if (config == "none" || config.empty()) {
     return google::cloud::storage::Client(std::move(opts));
   }
-  if (config.value_or("") == "metadata") {
+  if (config == "metadata") {
     return storage::internal::ClientImplDetails::CreateClient(
         storage::internal::GrpcClient::Create(opts));
   }

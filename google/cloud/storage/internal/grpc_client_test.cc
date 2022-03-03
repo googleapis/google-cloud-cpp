@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -29,6 +31,8 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::internal::CurrentOptions;
+using ::google::cloud::storage_experimental::GrpcPluginOption;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Pair;
@@ -57,6 +61,24 @@ std::shared_ptr<GrpcClient> CreateTestClient(
   return GrpcClient::CreateMock(
       std::move(stub),
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
+}
+
+TEST_F(GrpcClientTest, DefaultOptionsGrpcNoEnv) {
+  auto grpc_config =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
+  auto opts = DefaultOptionsGrpc();
+  EXPECT_EQ(opts.get<GrpcPluginOption>(), "none");
+  opts = DefaultOptionsGrpc(Options{}.set<GrpcPluginOption>("configured"));
+  EXPECT_EQ(opts.get<GrpcPluginOption>(), "configured");
+}
+
+TEST_F(GrpcClientTest, DefaultOptionsGrpcWithEnv) {
+  auto grpc_config =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "env");
+  auto opts = DefaultOptionsGrpc();
+  EXPECT_EQ(opts.get<GrpcPluginOption>(), "env");
+  opts = DefaultOptionsGrpc(Options{}.set<GrpcPluginOption>("configured"));
+  EXPECT_EQ(opts.get<GrpcPluginOption>(), "configured");
 }
 
 TEST_F(GrpcClientTest, QueryResumableUpload) {
