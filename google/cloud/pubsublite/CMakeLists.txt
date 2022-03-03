@@ -110,6 +110,7 @@ add_library(
     internal/partition_assignment_stub.h
     internal/partition_assignment_stub_factory.cc
     internal/partition_assignment_stub_factory.h
+    internal/partition_publisher.cc
     internal/partition_publisher.h
     internal/publisher.h
     internal/publisher_auth_decorator.cc

@@ -95,6 +95,7 @@ google_cloud_cpp_pubsublite_srcs = [
     "internal/partition_assignment_metadata_decorator.cc",
     "internal/partition_assignment_stub.cc",
     "internal/partition_assignment_stub_factory.cc",
+    "internal/partition_publisher.cc",
     "internal/publisher_auth_decorator.cc",
     "internal/publisher_logging_decorator.cc",
     "internal/publisher_metadata_decorator.cc",

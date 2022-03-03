@@ -25,10 +25,10 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-template <class PublishReturnType>
+template <class ReturnT>
 class Publisher : public LifecycleInterface {
  public:
-  virtual future<StatusOr<PublishReturnType>> Publish(
+  virtual future<StatusOr<ReturnT>> Publish(
       google::cloud::pubsublite::v1::PubSubMessage m) = 0;
 
   // Same semantics as Cloud Pub/Sub Publisher flush
