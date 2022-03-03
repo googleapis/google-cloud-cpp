@@ -121,7 +121,6 @@ future<void> PartitionPublisherImpl::Shutdown() {
   return root_future;
 }
 
-// TODO(18suresha) make batching cleaner/less redundant across other functions
 void PartitionPublisherImpl::Rebatch(bool process_in_flight) {
   std::lock_guard<std::mutex> g{mu_};
   unsent_batches_ =
