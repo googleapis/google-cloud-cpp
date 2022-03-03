@@ -81,7 +81,7 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 * We mistakenly declared GA for this library. Though the current public APIs are
   stable, the library is incomplete. We are still working on the APIs to publish
-  and receive messages.  We apologize for any confusion or inconvenience this 
+  and receive messages.  We apologize for any confusion or inconvenience this
   caused.
 
 ## v1.37.0 - 2022-03
