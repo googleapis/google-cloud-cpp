@@ -387,7 +387,7 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--duration=1s",
           "--minimum-sample-count=4",
           "--maximum-sample-count=10",
-          "--enabled-apis=JSON,XML",
+          "--enabled-transports=Json,Xml",
           "--enabled-crc32c=enabled",
           "--enabled-md5=disabled",
       },
