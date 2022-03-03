@@ -41,12 +41,13 @@ struct ThroughputOptions {
   std::size_t read_quantum = 1 * kMiB;
   std::int32_t minimum_sample_count = 0;
   std::int32_t maximum_sample_count = std::numeric_limits<std::int32_t>::max();
-  std::vector<ApiName> enabled_apis = {
-      ApiName::kApiJson,
-      ApiName::kApiXml,
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-      ApiName::kApiGrpc,
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  std::vector<ExperimentLibrary> libs = {
+      ExperimentLibrary::kCppClient,
+  };
+  std::vector<ExperimentTransport> transports = {
+      ExperimentTransport::kGrpc,
+      ExperimentTransport::kJson,
+      ExperimentTransport::kXml,
   };
   std::vector<bool> enabled_crc32c = {false, true};
   std::vector<bool> enabled_md5 = {false, true};

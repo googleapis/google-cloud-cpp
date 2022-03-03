@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_EXPERIMENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_EXPERIMENT_H
 
+#include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/benchmarks/throughput_result.h"
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -51,14 +53,14 @@ class ThroughputExperiment {
                                ThroughputExperimentConfig const& config) = 0;
 };
 
+using ClientProvider =
+    std::function<google::cloud::storage::Client(ExperimentTransport)>;
+
 /**
  * Create the list of upload experiments based on the @p options.
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
-    ThroughputOptions const& options,
-    google::cloud::storage::Client rest_client,
-    google::cloud::storage::Client grpc_client,
-    google::cloud::Options const& client_options);
+    ThroughputOptions const& options, ClientProvider provider);
 
 /**
  * Create the list of download experiments based on the @p options.
@@ -67,10 +69,7 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
  * they depend on the upload experiment to create the objects to be downloaded.
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
-    ThroughputOptions const& options,
-    google::cloud::storage::Client rest_client,
-    google::cloud::storage::Client grpc_client,
-    google::cloud::Options const& client_options, int thread_id);
+    ThroughputOptions const& options, ClientProvider provider, int thread_id);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud

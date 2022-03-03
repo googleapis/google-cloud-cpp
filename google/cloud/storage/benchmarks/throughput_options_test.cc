@@ -43,7 +43,8 @@ TEST(ThroughputOptions, Basic) {
       "--duration=1s",
       "--minimum-sample-count=1",
       "--maximum-sample-count=2",
-      "--enabled-apis=JSON,GRPC,XML",
+      "--enabled-libs=Raw,CppClient",
+      "--enabled-transports=DirectPath,Grpc,Json,Xml",
       "--enabled-crc32c=enabled",
       "--enabled-md5=disabled",
       "--client-per-thread=false",
@@ -63,9 +64,13 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ(1, options->duration.count());
   EXPECT_EQ(1, options->minimum_sample_count);
   EXPECT_EQ(2, options->maximum_sample_count);
-  EXPECT_THAT(options->enabled_apis,
-              UnorderedElementsAre(ApiName::kApiGrpc, ApiName::kApiXml,
-                                   ApiName::kApiJson));
+  EXPECT_THAT(options->libs,
+              UnorderedElementsAre(ExperimentLibrary::kRaw,
+                                   ExperimentLibrary::kCppClient));
+  EXPECT_THAT(options->transports,
+              UnorderedElementsAre(
+                  ExperimentTransport::kDirectPath, ExperimentTransport::kGrpc,
+                  ExperimentTransport::kJson, ExperimentTransport::kXml));
   EXPECT_THAT(options->enabled_crc32c, ElementsAre(true));
   EXPECT_THAT(options->enabled_md5, ElementsAre(false));
 }
@@ -109,16 +114,28 @@ TEST(ThroughputOptions, MD5) {
   EXPECT_THAT(options->enabled_md5, UnorderedElementsAre(false, true));
 }
 
-TEST(ThroughputOptions, Apis) {
+TEST(ThroughputOptions, Libraries) {
   EXPECT_FALSE(
-      ParseThroughputOptions({"self-test", "--region=r", "--enabled-apis="}));
+      ParseThroughputOptions({"self-test", "--region=r", "--enabled-libs="}));
   EXPECT_FALSE(ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-apis=JSON,XML,INVALID"}));
+      {"self-test", "--region=r", "--enabled-libs=CppClient,Raw,INVALID"}));
   auto options = ParseThroughputOptions(
-      {"self-test", "--region=r", "--enabled-apis=JSON,XML,GRPC"});
-  EXPECT_THAT(options->enabled_apis,
-              UnorderedElementsAre(ApiName::kApiJson, ApiName::kApiXml,
-                                   ApiName::kApiGrpc));
+      {"self-test", "--region=r", "--enabled-libs=CppClient,Raw"});
+  EXPECT_THAT(options->libs, UnorderedElementsAre(ExperimentLibrary::kCppClient,
+                                                  ExperimentLibrary::kRaw));
+}
+
+TEST(ThroughputOptions, Transports) {
+  EXPECT_FALSE(ParseThroughputOptions(
+      {"self-test", "--region=r", "--enabled-transports="}));
+  EXPECT_FALSE(ParseThroughputOptions(
+      {"self-test", "--region=r", "--enabled-transports=Grpc,INVALID"}));
+  auto options = ParseThroughputOptions(
+      {"self-test", "--region=r", "--enabled-transports=Grpc,Json,DirectPath"});
+  EXPECT_THAT(options->transports,
+              UnorderedElementsAre(ExperimentTransport::kGrpc,
+                                   ExperimentTransport::kDirectPath,
+                                   ExperimentTransport::kJson));
 }
 
 TEST(ThroughputOptions, Validate) {

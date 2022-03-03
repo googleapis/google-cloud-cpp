@@ -18,20 +18,29 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
 namespace {
 
+using ::testing::EndsWith;
 using ::testing::HasSubstr;
 
 MATCHER_P(
     HasQuotedStatus, substr,
     "status field from PrintAsCsv is properly quoted and contains substr") {
+  static auto count = [] {
+    std::ostringstream os;
+    PrintThroughputResultHeader(os);
+    auto const h = std::move(os).str();
+    return std::count(h.begin(), h.end(), ',');
+  }();
+
   // The status field is the 10th value.
   std::size_t pos = 0;
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i != count; ++i) {
     pos = arg.find(',', pos);
     if (pos == std::string::npos) {
       *result_listener << "Couldn't find status field: " << arg;
@@ -68,11 +77,12 @@ TEST(ThroughputResult, HeaderMatches) {
   auto const header = std::move(header_stream).str();
 
   auto const line = ToString(ThroughputResult{
-      kOpInsert, /*object_size=*/5 * kMiB, /*transfer_size=*/3 * kMiB,
+      ExperimentLibrary::kCppClient, ExperimentTransport::kGrpc, kOpInsert,
+      /*object_size=*/5 * kMiB, /*transfer_size=*/3 * kMiB,
       /*app_buffer_size=*/2 * kMiB, /*lib_buffer_size=*/4 * kMiB,
-      /*crc_enabled=*/true, /*md5_enabled=*/false, ApiName::kApiGrpc,
+      /*crc_enabled=*/true, /*md5_enabled=*/false,
       std::chrono::microseconds(234000), std::chrono::microseconds(345000),
-      Status{StatusCode::kOutOfRange, "OOR-status-message"}});
+      Status{StatusCode::kOutOfRange, "OOR-status-message"}, "peer"});
   ASSERT_STATUS_OK(line);
   ASSERT_FALSE(header.empty());
   ASSERT_FALSE(line->empty());
@@ -82,9 +92,12 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_EQ(header_fields, line_fields);
   EXPECT_EQ(line->back(), '\n');
   EXPECT_EQ(header.back(), '\n');
+  EXPECT_THAT(header, EndsWith(",Status\n"));
 
   // We don't want to create a change detector test, but we can verify the basic
   // fields are formatted correctly.
+  EXPECT_THAT(*line, HasSubstr(ToString(ExperimentLibrary::kCppClient)));
+  EXPECT_THAT(*line, HasSubstr(ToString(ExperimentTransport::kGrpc)));
   EXPECT_THAT(*line, HasSubstr(ToString(kOpInsert)));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(5 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(3 * kMiB) + ","));
@@ -92,11 +105,11 @@ TEST(ThroughputResult, HeaderMatches) {
   EXPECT_THAT(*line, HasSubstr("," + std::to_string(4 * kMiB) + ","));
   EXPECT_THAT(*line, HasSubstr(",1,"));  // crc_enabled==true
   EXPECT_THAT(*line, HasSubstr(",0,"));  // md5_enabled==false
-  EXPECT_THAT(*line, HasSubstr(ToString(ApiName::kApiGrpc)));
   EXPECT_THAT(*line, HasSubstr(",234000,"));
   EXPECT_THAT(*line, HasSubstr(",345000,"));
   EXPECT_THAT(*line, HasSubstr(StatusCodeToString(StatusCode::kOutOfRange)));
   EXPECT_THAT(*line, HasSubstr("OOR-status-message"));
+  EXPECT_THAT(*line, HasSubstr("peer"));
 }
 
 TEST(ThroughputResult, QuoteCsv) {

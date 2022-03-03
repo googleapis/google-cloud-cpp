@@ -68,6 +68,36 @@ char const* ToString(ApiName api);
 
 StatusOr<ApiName> ParseApiName(std::string const& val);
 
+// We want to compare the following alternatives.
+//
+// - Raw (no C++ client library) JSON Download
+// - Raw XML Download
+// - Raw gRPC Download
+// - Raw gRPC+DirectPath Download
+// - JSON Download
+// - XML Download
+// - gRPC Download
+// - gRPC+DirectPath Download
+// - JSON Upload
+// - gRPC Upload
+// - gRPC+DirectPath Upload
+//
+// We will model this with 3 dimensions for each experiment:
+// - Direction: Upload vs. Download
+// - Library: Raw vs. Client library
+// - Transport: XML vs. JSON vs. gRPC vs. gRPC+DirectPath
+//
+// Some combinations are simply not implemented and ignored when building the
+// set of experiments.
+enum class ExperimentLibrary { kRaw, kCppClient };
+enum class ExperimentTransport { kDirectPath, kGrpc, kJson, kXml };
+
+StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val);
+StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val);
+
+std::string ToString(ExperimentLibrary v);
+std::string ToString(ExperimentTransport v);
+
 std::string RandomBucketPrefix();
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
