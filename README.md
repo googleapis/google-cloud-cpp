@@ -68,7 +68,6 @@ This repository contains idiomatic C++ client libraries for the following
 * [Policy Troubleshooter API](google/cloud/policytroubleshooter/README.md) [[quickstart]](google/cloud/policytroubleshooter/quickstart/README.md)
 * [Certificate Authority API](google/cloud/privateca/README.md) [[quickstart]](google/cloud/privateca/quickstart/README.md)
 * [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md)
-* [Cloud Pub/Sub Lite](google/cloud/pubsublite/README.md) [[quickstart]](google/cloud/pubsublite/quickstart/README.md)
 * [Recommender](google/cloud/recommender/README.md) [[quickstart]](google/cloud/recommender/quickstart/README.md)
 * [Google Cloud Memorystore for Redis API](google/cloud/redis/README.md) [[quickstart]](google/cloud/redis/quickstart/README.md)
 * [Cloud Resource Manager API](google/cloud/resourcemanager/README.md) [[quickstart]](google/cloud/resourcemanager/quickstart/README.md)
