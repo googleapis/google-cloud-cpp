@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsublite/internal/base_interface.h"
 #include "google/cloud/version.h"
-#include "absl/time/time.h"
+#include <chrono>
 #include <functional>
 #include <memory>
 
@@ -35,7 +35,7 @@ class AlarmRegistryInterface : public BaseInterface {
   // Register an alarm to run with a given period.  It is guaranteed not to run
   // inline.
   virtual std::unique_ptr<CancelToken> RegisterAlarm(
-      absl::Duration period, std::function<void()> on_alarm) = 0;
+      std::chrono::milliseconds period, std::function<void()> on_alarm) = 0;
 };
 
 }  // namespace pubsublite_internal

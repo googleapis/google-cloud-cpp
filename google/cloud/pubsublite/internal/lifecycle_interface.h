@@ -36,7 +36,7 @@ class LifecycleInterface : public BaseInterface {
    * error.
    *
    * While the stream is usable immediately after this function returns,
-   * any `Read()` or `Write()` calls will fail until the stream is initialized
+   * any outstanding futures will fail until the stream is initialized
    * successfully.
    */
   virtual future<Status> Start() = 0;
@@ -44,15 +44,15 @@ class LifecycleInterface : public BaseInterface {
   /**
    * Finishes the streaming RPC.
    *
-   * This will cause any outstanding `Read` or `Write` to fail. This may be
-   * called while a `Read` or `Write` of an object of this class is outstanding.
-   * Internally, the class will manage waiting on `Read` and `Write` calls on a
+   * This will cause any outstanding outstanding futures to fail. This may be
+   * called while an operation of an object of this class is outstanding.
+   * Internally, the class will manage waiting on futures on a
    * gRPC stream before calling `Finish` on its underlying stream as per
    * `google::cloud::AsyncStreamingReadWriteRpc`. If the class is currently in a
    * retry loop, this will terminate the retry loop and then satisfy the
-   * returned future. If the class has a present internal outstanding `Read` or
-   * `Write`, this call will satisfy the returned future only after the internal
-   * `Read` and/or `Write` finish.
+   * returned future. If the class has a present internal outstanding future,
+   * this call will satisfy the returned future only after the internal
+   * operation(s) finish.
    */
   virtual future<void> Shutdown() = 0;
 };

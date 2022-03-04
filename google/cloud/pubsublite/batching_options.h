@@ -17,6 +17,7 @@
 
 #include "google/cloud/version.h"
 #include <algorithm>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -28,14 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class BatchingOptions {
  public:
-  BatchingOptions() = delete;
-
-  BatchingOptions(size_t max_batch_messages, size_t max_batch_bytes,
-                  size_t alarm_period)
-      : max_batch_messages_{max_batch_messages},
-        max_batch_bytes_{max_batch_bytes},
-        alarm_period_{alarm_period} {}
-
   size_t maximum_batch_message_count() const { return max_batch_messages_; }
 
   /**
@@ -59,20 +52,22 @@ class BatchingOptions {
    *    library truncates the argument to 3.5 * 1024 * 1024 if invalid.
    */
   void set_maximum_batch_bytes(size_t v) {
-    max_batch_bytes_ = std::min<size_t>(v, 1048576);
+    max_batch_bytes_ = std::min<size_t>(v, 1024 * 1024 * 7 / 2);
   }
 
-  size_t alarm_period_ms() const { return alarm_period_; }
+  std::chrono::milliseconds alarm_period_ms() const { return alarm_period_ms_; }
 
   /**
    * Set the frequency of when `PublishRequest`s should be sent.
    */
-  void set_alarm_period_ms(size_t v) { alarm_period_ = v; }
+  void set_alarm_period_ms(std::chrono::milliseconds v) {
+    alarm_period_ms_ = v;
+  }
 
  private:
-  size_t max_batch_messages_;
-  size_t max_batch_bytes_;
-  size_t alarm_period_;
+  size_t max_batch_messages_{1000};
+  size_t max_batch_bytes_{1024 * 1024 * 7 / 2};
+  std::chrono::milliseconds alarm_period_ms_{10};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

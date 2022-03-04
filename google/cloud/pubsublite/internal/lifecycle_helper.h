@@ -29,25 +29,25 @@ class LifecycleHelper {
  public:
   template <class... LifecycleT>
   explicit LifecycleHelper(LifecycleT&... dependencies)
-      : dependencies_({static_cast<std::reference_wrapper<LifecycleInterface>>(
-            std::ref(dependencies))...}) {}
+      : dependencies_{
+            {std::ref(static_cast<LifecycleInterface&>(dependencies))...}} {}
 
   future<Status> Start() {
-    future<void> root_future = make_ready_future();
     for (LifecycleInterface& dependency : dependencies_) {
-      root_future = root_future.then(ChainFuture<void>(
-          dependency.Start().then([this](future<Status> status_future) {
-            Status s = status_future.get();
-            if (!s.ok()) Abort(std::move(s));
-          })));
+      dependency.Start().then([this](future<Status> status_future) {
+        Status s = status_future.get();
+        if (!s.ok()) Abort(std::move(s));
+      });
     }
-    {
-      std::lock_guard<std::mutex> g{mu_};
-      return status_promise_->get_future();
-    }
+    std::lock_guard<std::mutex> g{mu_};
+    return status_promise_->get_future();
   }
 
+  /**
+   * @note Can be safely called more than once.
+   */
   void Abort(Status s) {
+    assert(!s.ok());
     promise<Status> start_promise{null_promise_t{}};
     {
       std::lock_guard<std::mutex> g{mu_};
@@ -59,6 +59,11 @@ class LifecycleHelper {
     start_promise.set_value(std::move(s));
   }
 
+  /**
+   *
+   * @return a `Status` of `kOk` if and only if the current lifecycle is in the
+   * running phase
+   */
   Status status() {
     std::lock_guard<std::mutex> g{mu_};
     return final_status_;

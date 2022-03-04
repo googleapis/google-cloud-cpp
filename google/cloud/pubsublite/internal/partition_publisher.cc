@@ -46,7 +46,7 @@ PartitionPublisherImpl::PartitionPublisherImpl(
           &PartitionPublisherImpl::Initializer, this, std::placeholders::_1))},
       lifecycle_helper_{absl::make_unique<LifecycleHelper>(*resumable_stream_)},
       cancel_token_{alarm_registry.RegisterAlarm(
-          absl::Milliseconds(batching_options_.alarm_period_ms()),
+          batching_options_.alarm_period_ms(),
           std::bind(&PartitionPublisherImpl::Flush, this))} {}
 
 PartitionPublisherImpl::~PartitionPublisherImpl() {
