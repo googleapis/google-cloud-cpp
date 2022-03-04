@@ -150,29 +150,25 @@ int main(int argc, char* argv[]) {
             << "\n# Region: " << options->region
             << "\n# Duration: " << options->duration.count() << "s"
             << "\n# Thread Count: " << options->thread_count
-            << "\n# Min Object Size: " << options->minimum_object_size
-            << "\n# Max Object Size: " << options->maximum_object_size
-            << "\n# Min Write Size: " << options->minimum_write_size
-            << "\n# Max Write Size: " << options->maximum_write_size
-            << "\n# Write Quantum: " << options->write_quantum
-            << "\n# Min Read Size: " << options->minimum_read_size
-            << "\n# Max Read Size: " << options->maximum_read_size
-            << "\n# Read Quantum: " << options->read_quantum
-            << "\n# Min Object Size (MiB): "
-            << options->minimum_object_size / gcs_bm::kMiB
-            << "\n# Max Object Size (MiB): "
+            << "\n# Object Size Range: [" << options->minimum_object_size << ","
+            << options->maximum_object_size << "]\n# Write Size Range: ["
+            << options->minimum_write_size << "," << options->maximum_write_size
+            << "]\n# Write Quantum: " << options->write_quantum
+            << "\n# Min Read Size Range: [" << options->minimum_read_size << ","
+            << options->maximum_read_size
+            << "]\n# Read Quantum: " << options->read_quantum
+            << "\n# Object Size Range (MiB): ["
+            << options->minimum_object_size / gcs_bm::kMiB << ","
             << options->maximum_object_size / gcs_bm::kMiB
-            << "\n# Min Write Size (KiB): "
-            << options->minimum_write_size / gcs_bm::kKiB
-            << "\n# Max Write Size (KiB): "
+            << "]\n# Write Size Range (KiB): ["
+            << options->minimum_write_size / gcs_bm::kKiB << ","
             << options->maximum_write_size / gcs_bm::kKiB
-            << "\n# Write Quantum (KiB): "
+            << "]\n# Write Quantum (KiB): "
             << options->write_quantum / gcs_bm::kKiB
-            << "\n# Min Read Size (KiB): "
-            << options->minimum_read_size / gcs_bm::kKiB
-            << "\n# Max Read Size (KiB): "
+            << "\n# Min Read Size Range (KiB): ["
+            << options->minimum_read_size / gcs_bm::kKiB << ","
             << options->maximum_read_size / gcs_bm::kKiB
-            << "\n# Read Quantum (KiB): "
+            << "]\n# Read Quantum (KiB): "
             << options->read_quantum / gcs_bm::kKiB
             << "\n# Minimum Sample Count: " << options->minimum_sample_count
             << "\n# Maximum Sample Count: " << options->maximum_sample_count
@@ -184,6 +180,9 @@ int main(int argc, char* argv[]) {
             << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
             << "\n# Enabled MD5: "
             << absl::StrJoin(options->enabled_md5, ",", Formatter{})
+            << "\n# REST Endpoint: " << options->rest_endpoint
+            << "\n# Grpc Endpoint: " << options->grpc_endpoint
+            << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
             << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
@@ -238,18 +237,20 @@ gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
     if (t == ExperimentTransport::kDirectPath) {
-      return DefaultGrpcClient(
-          opts.set<gcs_ex::GrpcPluginOption>("media")
-              .set<google::cloud::EndpointOption>(
-                  "google-c2p-experimental:///storage.googleapis.com"));
+      return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("media")
+                                   .set<google::cloud::EndpointOption>(
+                                       options.direct_path_endpoint));
     }
     if (t == ExperimentTransport::kGrpc) {
-      return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("none"));
+      return DefaultGrpcClient(
+          opts.set<gcs_ex::GrpcPluginOption>("media")
+              .set<google::cloud::EndpointOption>(options.grpc_endpoint));
     }
 #else
     (void)t;  // disable unused parameter warning
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    return gcs::Client(opts);
+    return gcs::Client(
+        opts.set<gcs::RestEndpointOption>(options.rest_endpoint));
   };
 }
 
