@@ -62,8 +62,6 @@ class PartitionPublisherImpl
 
   void AppendBatchesLockHeld();
 
-  void Rebatch();
-
   void WriteBatches();
 
   void Read();
@@ -93,9 +91,9 @@ class PartitionPublisherImpl
   std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>> const
-      resumable_stream_;                               // ABSL_GUARDED_BY(mu_)
-  std::unique_ptr<LifecycleHelper> lifecycle_helper_;  // ABSL_GUARDED_BY(mu_)
-  std::deque<MessageWithFuture> unbatched_messages_;   // ABSL_GUARDED_BY(mu_)
+      resumable_stream_;  // ABSL_GUARDED_BY(mu_)
+  std::unique_ptr<LifecycleHelper> lifecycle_helper_;
+  std::deque<MessageWithFuture> unbatched_messages_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>

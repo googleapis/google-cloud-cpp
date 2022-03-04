@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class BatchingOptions {
  public:
-  size_t maximum_batch_message_count() const { return max_batch_messages_; }
+  int64_t maximum_batch_message_count() const { return max_batch_messages_; }
 
   /**
    * Set the maximum number of messages in a batch.
@@ -38,11 +38,11 @@ class BatchingOptions {
    *    sets limits on the size of a batch (1,000 messages)
    *    The library truncates the argument to 1,000 if invalid.
    */
-  void set_maximum_batch_message_count(size_t v) {
-    max_batch_messages_ = std::min<size_t>(v, 1000);
+  void set_maximum_batch_message_count(int64_t v) {
+    max_batch_messages_ = std::min<int64_t>(v, 1000);
   }
 
-  size_t maximum_batch_bytes() const { return max_batch_bytes_; }
+  int64_t maximum_batch_bytes() const { return max_batch_bytes_; }
 
   /**
    * Set the maximum size for the messages in a batch.
@@ -51,8 +51,8 @@ class BatchingOptions {
    *    sets limits on the size of a batch (3.5MiB). The
    *    library truncates the argument to 3.5 * 1024 * 1024 if invalid.
    */
-  void set_maximum_batch_bytes(size_t v) {
-    max_batch_bytes_ = std::min<size_t>(v, 1024 * 1024 * 7 / 2);
+  void set_maximum_batch_bytes(int64_t v) {
+    max_batch_bytes_ = std::min<int64_t>(v, 1024 * 1024 * 7 / 2);
   }
 
   std::chrono::milliseconds alarm_period() const { return alarm_period_; }
@@ -63,8 +63,8 @@ class BatchingOptions {
   void set_alarm_period(std::chrono::milliseconds v) { alarm_period_ = v; }
 
  private:
-  size_t max_batch_messages_{1000};
-  size_t max_batch_bytes_{1024 * 1024 * 7 / 2};
+  int64_t max_batch_messages_{1000};
+  int64_t max_batch_bytes_{1024 * 1024 * 7 / 2};
   std::chrono::milliseconds alarm_period_{10};
 };
 

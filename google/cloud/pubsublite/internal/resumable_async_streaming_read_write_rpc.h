@@ -249,11 +249,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   future<void> Shutdown() override {
-    promise<void> root_promise;
+    AsyncRoot root_promise;
     future<void> root_future =
         ConfigureShutdownOrder(root_promise.get_future());
-
-    root_promise.set_value();
     return root_future;
   }
 
@@ -328,7 +326,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   void ReadWriteRetryFailedStream() {
-    promise<void> root;
+    AsyncRoot root;
     {
       std::lock_guard<std::mutex> g{mu_};
       if (stream_state_ != State::kInitialized) return;
@@ -359,8 +357,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
       root_future.then([this](future<void>) { FinishOnStreamFail(); });
     }
-
-    root.set_value();
   }
 
   void FinishOnStreamFail() {

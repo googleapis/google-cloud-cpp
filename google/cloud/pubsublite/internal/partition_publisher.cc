@@ -14,14 +14,12 @@
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-using google::cloud::internal::DebugString;
 using google::cloud::pubsublite::BatchingOptions;
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
@@ -70,7 +68,7 @@ future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
     return make_ready_future(
         StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
   }
-  MessageWithFuture unbatched{std::move(m)};
+  MessageWithFuture unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
   unbatched_messages_.emplace_back(std::move(unbatched));
@@ -80,9 +78,10 @@ future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
 void PartitionPublisherImpl::Flush() {
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (writing_ || !lifecycle_helper_->status().ok()) return;
-    writing_ = true;
+    if (!lifecycle_helper_->status().ok()) return;
     AppendBatchesLockHeld();
+    if (writing_) return;
+    writing_ = true;
   }
   WriteBatches();
 }
@@ -111,8 +110,7 @@ void PartitionPublisherImpl::WriteBatches() {
     }
 
     root.get_future()
-        .then(ChainFuture(resumable_stream_->Write(std::move(publish_request),
-                                                   grpc::WriteOptions())))
+        .then(ChainFuture(resumable_stream_->Write(std::move(publish_request))))
         .then([this](future<bool> write_response) {
           if (write_response.get()) WriteBatches();
           std::lock_guard<std::mutex> g{mu_};
@@ -126,40 +124,37 @@ void PartitionPublisherImpl::Read() {
   {
     std::lock_guard<std::mutex> g{mu_};
     if (!lifecycle_helper_->status().ok()) return;
-    root.get_future().then(ChainFuture(resumable_stream_->Read()))
+    root.get_future()
+        .then(ChainFuture(resumable_stream_->Read()))
         .then([this](future<absl::optional<PublishResponse>>
                          optional_response_future) {
           auto optional_response = optional_response_future.get();
+          // optional not engaged implies that the retry loop has finished
           if (!optional_response) return Read();
           if (!optional_response->has_message_response()) {
             // if we don't receive a `MessagePublishResponse` and/or receive an
             // `InitialPublishResponse`, we abort because this should not be the
             // case once we start `Read`ing
-            std::lock_guard<std::mutex> g{mu_};
             lifecycle_helper_->Abort(
                 Status(StatusCode::kAborted,
                        absl::StrCat("Invalid `Read` response: ",
-                                    DebugString(std::move(*optional_response),
-                                                TracingOptions()))));
+                                    optional_response->DebugString())));
             return;
           }
           std::deque<MessageWithFuture> batch;
           {
             std::lock_guard<std::mutex> g{mu_};
             if (!lifecycle_helper_->status().ok()) return;
-            // unlikely order of events
-            // if we have `Read()` (pending) -> `Write()` (completes
-            // successfully) -> `Write()` (fails) -> previous `Read`
-            // successfully completes -> `initializer_` grabs locks and
-            // rebatches and unlocks -> below `Read` continuation grabs lock
-            // and tries to satisfy future in nonexistent first element of
-            // `in_flight_batches_`
             if (!in_flight_batches_.empty()) {
-              batch = std::move(in_flight_batches_.front());
-              in_flight_batches_.pop_front();
+              return lifecycle_helper_->Abort(
+                  Status(StatusCode::kFailedPrecondition,
+                         "Server sent message response when no batches were "
+                         "outstanding."));
             }
+            batch = std::move(in_flight_batches_.front());
+            in_flight_batches_.pop_front();
           }
-          size_t offset =
+          int64_t offset =
               optional_response->message_response().start_cursor().offset();
           for (auto& message_with_future : batch) {
             Cursor c;
@@ -172,8 +167,8 @@ void PartitionPublisherImpl::Read() {
   }
 }
 
-std::deque<PartitionPublisherImpl::MessageWithFuture>
-PartitionPublisherImpl::UnbatchAllLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
+auto PartitionPublisherImpl::UnbatchAllLockHeld()
+    -> std::deque<MessageWithFuture> {  // ABSL_LOCKS_REQUIRED(mu_)
   std::deque<MessageWithFuture> to_return;
   for (auto& batch : in_flight_batches_) {
     for (auto& message : batch) {
@@ -208,10 +203,10 @@ PartitionPublisherImpl::CreateBatches(std::deque<MessageWithFuture> messages,
                                       BatchingOptions const& options) {
   std::deque<std::deque<MessageWithFuture>> batches;
   std::deque<MessageWithFuture> current_batch;
-  size_t current_byte_size = 0;
-  size_t current_messages = 0;
+  int64_t current_byte_size = 0;
+  int64_t current_messages = 0;
   for (auto& message_with_future : messages) {
-    size_t message_size = message_with_future.message.ByteSizeLong();
+    int64_t message_size = message_with_future.message.ByteSizeLong();
     if (current_messages + 1 > options.maximum_batch_message_count() ||
         current_byte_size + message_size > options.maximum_batch_bytes()) {
       if (!current_batch.empty()) {
@@ -237,55 +232,37 @@ void PartitionPublisherImpl::SatisfyOutstandingMessages() {
     messages_with_futures = UnbatchAllLockHeld();
   }
   for (auto& message_with_future : messages_with_futures) {
-    message_with_future.message_promise.set_value(StatusOr<Cursor>(
-        Status(StatusCode::kAborted, "Resumable stream finished.")));
+    message_with_future.message_promise.set_value(
+        StatusOr<Cursor>(lifecycle_helper_->status()));
   }
 }
 
 future<StatusOr<UnderlyingStream>> PartitionPublisherImpl::Initializer(
     UnderlyingStream stream) {
-  // When initializer is called, no outstanding Read() or Write()
-  // futures will succeed.
+  // By the time initializer is called, no outstanding Read() or Write()
+  // futures will be outstanding.
   std::shared_ptr<UnderlyingStream> shared_stream =
       std::make_shared<UnderlyingStream>(std::move(stream));
   PublishRequest publish_request;
   *publish_request.mutable_initial_request() = initial_publish_request_;
-  auto return_finish_status = [shared_stream]() {
-    return (*shared_stream)
-        ->Finish()
-        .then([shared_stream](future<Status> status) {
-          return StatusOr<UnderlyingStream>(status.get());
-        });
-  };
-
-  auto check_read = [this, shared_stream, return_finish_status]() {
-    return (*shared_stream)
-        ->Read()
-        .then([this, shared_stream, return_finish_status](
-                  future<absl::optional<PublishResponse>> response_future) {
-          auto optional_response = response_future.get();
-          if (!(optional_response &&
-                optional_response->has_initial_response())) {
-            return return_finish_status();
-          }
-          {
-            std::lock_guard<std::mutex> g{mu_};
-            unsent_batches_ =
-                CreateBatches(UnbatchAllLockHeld(), batching_options_);
-          }
-          return make_ready_future(
-              StatusOr<UnderlyingStream>(std::move(*shared_stream)));
-        });
-  };
-
   return (*shared_stream)
       ->Write(publish_request, grpc::WriteOptions())
-      .then([shared_stream, return_finish_status,
-             check_read](future<bool> write_response) {
-        if (!write_response.get()) {
-          return return_finish_status();
+      .then([=](future<bool> write_response) {
+        if (!write_response.get())
+          return make_ready_future(absl::optional<PublishResponse>());
+        return (*shared_stream)->Read();
+      })
+      .then([=](future<absl::optional<PublishResponse>> read_response) {
+        auto optional_response = read_response.get();
+        if (optional_response && optional_response->has_initial_response()) {
+          return make_ready_future(Status());
         }
-        return check_read();
+        return (*shared_stream)->Finish();
+      })
+      .then([=](future<Status> status_future) -> StatusOr<UnderlyingStream> {
+        Status status = status_future.get();
+        if (!status.ok()) return status;
+        return std::move(*shared_stream);
       });
 }
 
