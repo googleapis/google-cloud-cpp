@@ -39,6 +39,7 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/cursor_stub.h",
     "internal/cursor_stub_factory.h",
     "internal/futures.h",
+    "internal/lifecycle_helper.h",
     "internal/lifecycle_interface.h",
     "internal/partition_assignment_auth_decorator.h",
     "internal/partition_assignment_logging_decorator.h",

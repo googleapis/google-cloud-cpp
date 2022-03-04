@@ -13,12 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/log_wrapper.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+using google::cloud::internal::DebugString;
 using google::cloud::pubsublite::BatchingOptions;
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
@@ -28,8 +31,7 @@ using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
 using UnderlyingStream = std::unique_ptr<
-    AsyncStreamingReadWriteRpc<google::cloud::pubsublite::v1::PublishRequest,
-                               google::cloud::pubsublite::v1::PublishResponse>>;
+    AsyncStreamingReadWriteRpc<PublishRequest, PublishResponse>>;
 
 PartitionPublisherImpl::PartitionPublisherImpl(
     absl::FunctionRef<std::unique_ptr<
@@ -42,6 +44,7 @@ PartitionPublisherImpl::PartitionPublisherImpl(
       initial_publish_request_{std::move(ipr)},
       resumable_stream_{resumable_stream_factory(std::bind(
           &PartitionPublisherImpl::Initializer, this, std::placeholders::_1))},
+      lifecycle_helper_{absl::make_unique<LifecycleHelper>(*resumable_stream_)},
       cancel_token_{alarm_registry.RegisterAlarm(
           absl::Milliseconds(batching_options_.alarm_period_ms()),
           std::bind(&PartitionPublisherImpl::OnAlarm, this))} {}
@@ -57,33 +60,15 @@ PartitionPublisherImpl::~PartitionPublisherImpl() {
 }
 
 future<Status> PartitionPublisherImpl::Start() {
-  promise<void> root;
-  future<void> root_future = root.get_future();
-  future<Status> return_future;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    root_future.then(ChainFuture(resumable_stream_->Start()))
-        .then([this](future<Status> start_status) {
-          promise<Status> start_promise{null_promise_t{}};
-          {
-            std::lock_guard<std::mutex> g{mu_};
-            if (!start_future_) return;
-            start_promise = std::move(*start_future_);
-            start_future_.reset();
-          }
-          start_promise.set_value(start_status.get());
-        });
-  }
-  root.set_value();
-  Read();
-  return start_future_->get_future();
+  std::lock_guard<std::mutex> g{mu_};
+  return lifecycle_helper_->Start();
 }
 
 future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
   future<StatusOr<Cursor>> message_future;
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (shutdown_)
+    if (!lifecycle_helper_->status().ok())
       return make_ready_future(
           StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
     promise<StatusOr<Cursor>> message_promise;
@@ -97,7 +82,7 @@ future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
 void PartitionPublisherImpl::Flush() {
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (writing_ || shutdown_) return;
+    if (writing_ || !lifecycle_helper_->status().ok()) return;
     writing_ = true;
     AppendBatchesLockHeld();
   }
@@ -105,19 +90,9 @@ void PartitionPublisherImpl::Flush() {
 }
 
 future<void> PartitionPublisherImpl::Shutdown() {
-  promise<void> root;
-  future<void> root_future = root.get_future();
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    if (shutdown_) return make_ready_future();
-    shutdown_ = true;
-    root_future =
-        root_future.then(ChainFuture(resumable_stream_->Shutdown()))
-            .then([this](future<void>) { SatisfyOutstandingMessages(); });
-  }
   cancel_token_ = nullptr;
-  root.set_value();
-  return root_future;
+  return lifecycle_helper_->Shutdown().then(
+      [this](future<void>) { SatisfyOutstandingMessages(); });
 }
 
 void PartitionPublisherImpl::Rebatch() {
@@ -130,7 +105,7 @@ void PartitionPublisherImpl::WriteBatches() {
   future<void> root_future = root.get_future();
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (unsent_batches_.empty() || shutdown_) {
+    if (unsent_batches_.empty() || !lifecycle_helper_->status().ok()) {
       writing_ = false;
       return;
     }
@@ -160,30 +135,28 @@ void PartitionPublisherImpl::Read() {
   future<void> root_future = root.get_future();
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (shutdown_) return;
+    if (!lifecycle_helper_->status().ok()) return;
     root_future.then(ChainFuture(resumable_stream_->Read()))
         .then([this](future<absl::optional<PublishResponse>>
                          optional_response_future) {
           auto optional_response = optional_response_future.get();
           if (!optional_response) return Read();
           if (!optional_response->has_message_response()) {
-            promise<Status> start_future{null_promise_t{}};
-            {
-              std::lock_guard<std::mutex> g{mu_};
-              start_future = std::move(*start_future_);
-              start_future_.reset();
-            }
             // if we don't receive a `MessagePublishResponse` and/or receive an
             // `InitialPublishResponse`, we abort because this should not be the
             // case once we start `Read`ing
-            start_future.set_value(
-                Status(StatusCode::kAborted, "Invalid `Read` response"));
+            std::lock_guard<std::mutex> g{mu_};
+            lifecycle_helper_->Abort(
+                Status(StatusCode::kAborted,
+                       absl::StrCat("Invalid `Read` response: ",
+                                    DebugString(std::move(*optional_response),
+                                                TracingOptions()))));
             return;
           }
           std::deque<MessageWithFuture> batch;
           {
             std::lock_guard<std::mutex> g{mu_};
-            if (shutdown_) return;
+            if (!lifecycle_helper_->status().ok()) return;
             // unlikely order of events
             // if we have `Read()` (pending) -> `Write()` (completes
             // successfully) -> `Write()` (fails) -> previous `Read`

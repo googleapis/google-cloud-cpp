@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsublite/batching_options.h"
 #include "google/cloud/pubsublite/internal/alarm_registry_interface.h"
+#include "google/cloud/pubsublite/internal/lifecycle_helper.h"
 #include "google/cloud/pubsublite/internal/publisher.h"
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "absl/functional/function_ref.h"
@@ -94,15 +95,14 @@ class PartitionPublisherImpl
   std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>> const
-      resumable_stream_;                              // ABSL_GUARDED_BY(mu_)
-  std::deque<MessageWithFuture> unbatched_messages_;  // ABSL_GUARDED_BY(mu_)
+      resumable_stream_;                               // ABSL_GUARDED_BY(mu_)
+  std::unique_ptr<LifecycleHelper> lifecycle_helper_;  // ABSL_GUARDED_BY(mu_)
+  std::deque<MessageWithFuture> unbatched_messages_;   // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>
-      in_flight_batches_;                         // ABSL_GUARDED_BY(mu_)
-  bool writing_ = false;                          // ABSL_GUARDED_BY(mu_)
-  bool shutdown_ = false;                         // ABSL_GUARDED_BY(mu_)
-  absl::optional<promise<Status>> start_future_;  // ABSL_GUARDED_BY(mu_)
+      in_flight_batches_;  // ABSL_GUARDED_BY(mu_)
+  bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
 
   std::unique_ptr<AlarmRegistryInterface::CancelToken> cancel_token_;
 };

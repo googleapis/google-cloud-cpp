@@ -99,6 +99,7 @@ add_library(
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
     internal/futures.h
+    internal/lifecycle_helper.h
     internal/lifecycle_interface.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
