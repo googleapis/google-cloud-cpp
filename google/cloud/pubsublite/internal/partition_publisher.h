@@ -71,7 +71,7 @@ class PartitionPublisherImpl
 
   static std::deque<std::deque<MessageWithFuture>> CreateBatches(
       std::deque<MessageWithFuture> messages,
-      google::cloud::pubsublite::BatchingOptions const& settings);
+      google::cloud::pubsublite::BatchingOptions const& options);
 
   void SatisfyOutstandingMessages();
 
