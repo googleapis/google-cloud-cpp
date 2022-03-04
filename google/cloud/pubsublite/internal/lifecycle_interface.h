@@ -27,30 +27,29 @@ namespace pubsublite_internal {
 class LifecycleInterface : public BaseInterface {
  public:
   /**
-   * Start the streaming RPC.
+   * Starts the lifecycle of the object.
    *
-   * The future returned by this function is satisfied when the stream
-   * is successfully shut down (in which case in contains an ok status),
-   * or when the retry policies to resume the stream are exhausted. The
-   * latter includes the case where the stream fails with a permanent
-   * error.
+   * The future returned by this function is satisfied when the object
+   * encounters an error during one of its operations or when `Shutdown` is
+   * called on it. The value the future is satisfied with details what happened
+   * to the object, i.e., `Shutdown` was called, encountered a permanent error,
+   * etc.
    *
-   * While the stream is usable immediately after this function returns,
-   * any outstanding futures will fail until the stream is initialized
-   * successfully.
+   * Must be called before any other method and may only be called once.
    */
   virtual future<Status> Start() = 0;
 
   /**
-   * Finishes the streaming RPC.
+   * This causes the object to reach its shutdown state if not already in it.
    *
    * This will cause any outstanding futures to fail. This may be
-   * called while an operation of an object of this class is outstanding.
-   * Internally, the class will manage waiting on futures of any dependencies.
-   * If the class has a present internal outstanding future, this call will
-   * satisfy the returned future only after the internal operation(s) finish.
+   * called while an asynchronous operation of an object of this class is
+   * outstanding. Internally, the class will manage waiting on futures of any
+   * dependencies. If the class has a present internal outstanding future, this
+   * call will satisfy the returned future only after the internal operation(s)
+   * finish.
    *
-   * Must be called before destroying this object.
+   * Must be called before destroying this object and may only be called once.
    */
   virtual future<void> Shutdown() = 0;
 };

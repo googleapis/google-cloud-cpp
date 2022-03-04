@@ -66,7 +66,7 @@ future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
     return make_ready_future(
         StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
   }
-  MessageWithFuture unbatched{std::move(m)};
+  MessageWithFuture unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
   std::lock_guard<std::mutex> g{mu_};
