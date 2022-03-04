@@ -327,36 +327,34 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
   void ReadWriteRetryFailedStream() {
     AsyncRoot root;
-    {
-      std::lock_guard<std::mutex> g{mu_};
-      if (stream_state_ != State::kInitialized) return;
+    std::lock_guard<std::mutex> g{mu_};
+    if (stream_state_ != State::kInitialized) return;
 
-      stream_state_ = State::kRetrying;
-      assert(!retry_promise_.has_value());
-      retry_promise_.emplace();
+    stream_state_ = State::kRetrying;
+    assert(!retry_promise_.has_value());
+    retry_promise_.emplace();
 
-      // Assuming that a `Read` fails:
-      // If an outstanding operation is present, we can't enter the retry
-      // loop, so we defer it until the outstanding `Write` finishes at
-      // which point we can enter the retry loop. Since we will return
-      // `reinit_done_`, we guarantee that another operation of the same type
-      // is not called while we're waiting for the outstanding operation to
-      // finish and the retry loop to finish afterward.
+    // Assuming that a `Read` fails:
+    // If an outstanding operation is present, we can't enter the retry
+    // loop, so we defer it until the outstanding `Write` finishes at
+    // which point we can enter the retry loop. Since we will return
+    // `reinit_done_`, we guarantee that another operation of the same type
+    // is not called while we're waiting for the outstanding operation to
+    // finish and the retry loop to finish afterward.
 
-      future<void> root_future = root.get_future();
+    future<void> root_future = root.get_future();
 
-      // at most one of these will be set
-      if (in_progress_read_.has_value()) {
-        root_future =
-            root_future.then(ChainFuture(in_progress_read_->get_future()));
-      }
-      if (in_progress_write_.has_value()) {
-        root_future =
-            root_future.then(ChainFuture(in_progress_write_->get_future()));
-      }
-
-      root_future.then([this](future<void>) { FinishOnStreamFail(); });
+    // at most one of these will be set
+    if (in_progress_read_.has_value()) {
+      root_future =
+          root_future.then(ChainFuture(in_progress_read_->get_future()));
     }
+    if (in_progress_write_.has_value()) {
+      root_future =
+          root_future.then(ChainFuture(in_progress_write_->get_future()));
+    }
+
+    root_future.then([this](future<void>) { FinishOnStreamFail(); });
   }
 
   void FinishOnStreamFail() {

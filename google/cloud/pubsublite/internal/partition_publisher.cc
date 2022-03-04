@@ -93,77 +93,73 @@ future<void> PartitionPublisherImpl::Shutdown() {
 
 void PartitionPublisherImpl::WriteBatches() {
   AsyncRoot root;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    if (unsent_batches_.empty() || !lifecycle_helper_->status().ok()) {
-      writing_ = false;
-      return;
-    }
-    in_flight_batches_.push_back(std::move(unsent_batches_.front()));
-    unsent_batches_.pop_front();
-    PublishRequest publish_request;
-    MessagePublishRequest& message_publish_request =
-        *publish_request.mutable_message_publish_request();
-    for (auto& message_with_future : in_flight_batches_.back()) {
-      *message_publish_request.add_messages() = message_with_future.message;
-    }
-
-    root.get_future()
-        .then(ChainFuture(resumable_stream_->Write(std::move(publish_request))))
-        .then([this](future<bool> write_response) {
-          if (write_response.get()) WriteBatches();
-          std::lock_guard<std::mutex> g{mu_};
-          writing_ = false;
-        });
+  std::lock_guard<std::mutex> g{mu_};
+  if (unsent_batches_.empty() || !lifecycle_helper_->status().ok()) {
+    writing_ = false;
+    return;
   }
+  in_flight_batches_.push_back(std::move(unsent_batches_.front()));
+  unsent_batches_.pop_front();
+  PublishRequest publish_request;
+  MessagePublishRequest& message_publish_request =
+      *publish_request.mutable_message_publish_request();
+  for (auto& message_with_future : in_flight_batches_.back()) {
+    *message_publish_request.add_messages() = message_with_future.message;
+  }
+
+  root.get_future()
+      .then(ChainFuture(resumable_stream_->Write(std::move(publish_request))))
+      .then([this](future<bool> write_response) {
+        if (write_response.get()) WriteBatches();
+        std::lock_guard<std::mutex> g{mu_};
+        writing_ = false;
+      });
 }
 
 void PartitionPublisherImpl::Read() {
   AsyncRoot root;
   if (!lifecycle_helper_->status().ok()) return;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    root.get_future()
-        .then(ChainFuture(resumable_stream_->Read()))
-        .then([this](future<absl::optional<PublishResponse>>
-                         optional_response_future) {
-          auto optional_response = optional_response_future.get();
-          // optional not engaged implies that the retry loop has finished
-          if (!optional_response) return Read();
-          if (!optional_response->has_message_response()) {
-            // if we don't receive a `MessagePublishResponse` and/or receive an
-            // `InitialPublishResponse`, we abort because this should not be the
-            // case once we start `Read`ing
-            lifecycle_helper_->Abort(
-                Status(StatusCode::kAborted,
-                       absl::StrCat("Invalid `Read` response: ",
-                                    optional_response->DebugString())));
-            return;
+  std::lock_guard<std::mutex> g{mu_};
+  root.get_future()
+      .then(ChainFuture(resumable_stream_->Read()))
+      .then([this](future<absl::optional<PublishResponse>>
+                       optional_response_future) {
+        auto optional_response = optional_response_future.get();
+        // optional not engaged implies that the retry loop has finished
+        if (!optional_response) return Read();
+        if (!optional_response->has_message_response()) {
+          // if we don't receive a `MessagePublishResponse` and/or receive an
+          // `InitialPublishResponse`, we abort because this should not be the
+          // case once we start `Read`ing
+          lifecycle_helper_->Abort(
+              Status(StatusCode::kAborted,
+                     absl::StrCat("Invalid `Read` response: ",
+                                  optional_response->DebugString())));
+          return;
+        }
+        if (!lifecycle_helper_->status().ok()) return;
+        std::deque<MessageWithFuture> batch;
+        {
+          std::lock_guard<std::mutex> g{mu_};
+          if (!in_flight_batches_.empty()) {
+            return lifecycle_helper_->Abort(
+                Status(StatusCode::kFailedPrecondition,
+                       "Server sent message response when no batches were "
+                       "outstanding."));
           }
-          if (!lifecycle_helper_->status().ok()) return;
-          std::deque<MessageWithFuture> batch;
-          {
-            std::lock_guard<std::mutex> g{mu_};
-            if (!in_flight_batches_.empty()) {
-              return lifecycle_helper_->Abort(
-                  Status(StatusCode::kFailedPrecondition,
-                         "Server sent message response when no batches were "
-                         "outstanding."));
-            }
-            batch = std::move(in_flight_batches_.front());
-            in_flight_batches_.pop_front();
-          }
-          int64_t offset =
-              optional_response->message_response().start_cursor().offset();
-          for (auto& message_with_future : batch) {
-            Cursor c;
-            c.set_offset(offset);
-            ++offset;
-            message_with_future.message_promise.set_value(std::move(c));
-          }
-          Read();
-        });
-  }
+          batch = std::move(in_flight_batches_.front());
+          in_flight_batches_.pop_front();
+        }
+        int64_t offset =
+            optional_response->message_response().start_cursor().offset();
+        for (auto& message_with_future : batch) {
+          Cursor c;
+          c.set_offset(offset);
+          ++offset;
+          message_with_future.message_promise.set_value(std::move(c));
+        }
+        Read();
+      });
 }
 
 auto PartitionPublisherImpl::UnbatchAllLockHeld()
