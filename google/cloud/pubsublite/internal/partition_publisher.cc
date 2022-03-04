@@ -141,7 +141,7 @@ void PartitionPublisherImpl::Read() {
         std::deque<MessageWithFuture> batch;
         {
           std::lock_guard<std::mutex> g{mu_};
-          if (!in_flight_batches_.empty()) {
+          if (in_flight_batches_.empty()) {
             return lifecycle_helper_->Abort(
                 Status(StatusCode::kFailedPrecondition,
                        "Server sent message response when no batches were "
