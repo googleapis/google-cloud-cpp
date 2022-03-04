@@ -95,11 +95,6 @@ future<void> PartitionPublisherImpl::Shutdown() {
       [this](future<void>) { SatisfyOutstandingMessages(); });
 }
 
-void PartitionPublisherImpl::Rebatch() {
-  std::lock_guard<std::mutex> g{mu_};
-  unsent_batches_ = CreateBatches(UnbatchAllLockHeld(), batching_options_);
-}
-
 void PartitionPublisherImpl::WriteBatches() {
   promise<void> root;
   future<void> root_future = root.get_future();
@@ -279,7 +274,11 @@ future<StatusOr<UnderlyingStream>> PartitionPublisherImpl::Initializer(
                 optional_response->has_initial_response())) {
             return return_finish_status();
           }
-          Rebatch();
+          {
+            std::lock_guard<std::mutex> g{mu_};
+            unsent_batches_ =
+                CreateBatches(UnbatchAllLockHeld(), batching_options_);
+          }
           return make_ready_future(
               StatusOr<UnderlyingStream>(std::move(*shared_stream)));
         });

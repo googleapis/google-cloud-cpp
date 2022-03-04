@@ -18,6 +18,7 @@
 #include "google/cloud/pubsublite/internal/futures.h"
 #include "google/cloud/pubsublite/internal/lifecycle_interface.h"
 #include <mutex>
+#include <vector>
 
 namespace google {
 namespace cloud {
