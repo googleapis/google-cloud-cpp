@@ -269,25 +269,10 @@ PartitionPublisherImpl::CreateBatches(std::deque<MessageWithFuture> messages,
 }
 
 void PartitionPublisherImpl::SatisfyOutstandingMessages() {
-  std::vector<MessageWithFuture> messages_with_futures;
+  std::deque<MessageWithFuture> messages_with_futures;
   {
     std::lock_guard<std::mutex> g{mu_};
-    for (auto& batch : in_flight_batches_) {
-      for (auto& message_with_future : batch) {
-        messages_with_futures.push_back(std::move(message_with_future));
-      }
-    }
-    in_flight_batches_.clear();
-    for (auto& batch : unsent_batches_) {
-      for (auto& message_with_future : batch) {
-        messages_with_futures.push_back(std::move(message_with_future));
-      }
-    }
-    unsent_batches_.clear();
-    for (auto& message_with_future : unbatched_messages_) {
-      messages_with_futures.push_back(std::move(message_with_future));
-    }
-    unbatched_messages_.clear();
+    messages_with_futures = UnbatchAllLockHeld();
   }
   for (auto& message_with_future : messages_with_futures) {
     message_with_future.message_promise.set_value(StatusOr<Cursor>(
