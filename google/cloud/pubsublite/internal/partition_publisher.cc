@@ -58,12 +58,10 @@ PartitionPublisherImpl::~PartitionPublisherImpl() {
 }
 
 future<Status> PartitionPublisherImpl::Start() {
-  std::lock_guard<std::mutex> g{mu_};
   return lifecycle_helper_->Start();
 }
 
 future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
-  std::lock_guard<std::mutex> g{mu_};
   if (!lifecycle_helper_->status().ok()) {
     return make_ready_future(
         StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
@@ -71,14 +69,15 @@ future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
   MessageWithFuture unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
+  std::lock_guard<std::mutex> g{mu_};
   unbatched_messages_.emplace_back(std::move(unbatched));
   return message_future;
 }
 
 void PartitionPublisherImpl::Flush() {
+  if (!lifecycle_helper_->status().ok()) return;
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (!lifecycle_helper_->status().ok()) return;
     AppendBatchesLockHeld();
     if (writing_) return;
     writing_ = true;
@@ -121,9 +120,9 @@ void PartitionPublisherImpl::WriteBatches() {
 
 void PartitionPublisherImpl::Read() {
   AsyncRoot root;
+  if (!lifecycle_helper_->status().ok()) return;
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (!lifecycle_helper_->status().ok()) return;
     root.get_future()
         .then(ChainFuture(resumable_stream_->Read()))
         .then([this](future<absl::optional<PublishResponse>>
@@ -141,10 +140,10 @@ void PartitionPublisherImpl::Read() {
                                     optional_response->DebugString())));
             return;
           }
+          if (!lifecycle_helper_->status().ok()) return;
           std::deque<MessageWithFuture> batch;
           {
             std::lock_guard<std::mutex> g{mu_};
-            if (!lifecycle_helper_->status().ok()) return;
             if (!in_flight_batches_.empty()) {
               return lifecycle_helper_->Abort(
                   Status(StatusCode::kFailedPrecondition,
