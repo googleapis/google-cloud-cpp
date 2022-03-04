@@ -147,7 +147,7 @@ class ResumableAsyncStreamingReadWriteRpc : public LifecycleInterface {
    * happened. If the `Start` future is not satisfied, the user may call `Write`
    * again to write the value to a new underlying stream.
    */
-  virtual future<bool> Write(RequestType const&, grpc::WriteOptions) = 0;
+  virtual future<bool> Write(RequestType const&) = 0;
 };
 
 template <typename RequestType, typename ResponseType>
@@ -223,7 +223,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         });
   }
 
-  future<bool> Write(RequestType const& r, grpc::WriteOptions o) override {
+  future<bool> Write(RequestType const& r) override {
     future<bool> write_future;
 
     {
@@ -237,7 +237,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           return write_reinit_done_->get_future().then(
               [](future<void>) { return false; });
         case State::kInitialized:
-          write_future = stream_->Write(r, o);
+          write_future = stream_->Write(r, grpc::WriteOptions());
           assert(!in_progress_write_.has_value());
           in_progress_write_.emplace();
       }

@@ -65,17 +65,15 @@ future<Status> PartitionPublisherImpl::Start() {
 }
 
 future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
-  future<StatusOr<Cursor>> message_future;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    if (!lifecycle_helper_->status().ok())
-      return make_ready_future(
-          StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
-    promise<StatusOr<Cursor>> message_promise;
-    message_future = message_promise.get_future();
-    unbatched_messages_.emplace_back(
-        MessageWithFuture{std::move(m), std::move(message_promise)});
+  std::lock_guard<std::mutex> g{mu_};
+  if (!lifecycle_helper_->status().ok()) {
+    return make_ready_future(
+        StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
   }
+  MessageWithFuture unbatched{std::move(m)};
+  future<StatusOr<Cursor>> message_future =
+      unbatched.message_promise.get_future();
+  unbatched_messages_.emplace_back(std::move(unbatched));
   return message_future;
 }
 
@@ -96,8 +94,7 @@ future<void> PartitionPublisherImpl::Shutdown() {
 }
 
 void PartitionPublisherImpl::WriteBatches() {
-  promise<void> root;
-  future<void> root_future = root.get_future();
+  AsyncRoot root;
   {
     std::lock_guard<std::mutex> g{mu_};
     if (unsent_batches_.empty() || !lifecycle_helper_->status().ok()) {
@@ -113,7 +110,7 @@ void PartitionPublisherImpl::WriteBatches() {
       *message_publish_request.add_messages() = message_with_future.message;
     }
 
-    root_future
+    root.get_future()
         .then(ChainFuture(resumable_stream_->Write(std::move(publish_request),
                                                    grpc::WriteOptions())))
         .then([this](future<bool> write_response) {
@@ -122,16 +119,14 @@ void PartitionPublisherImpl::WriteBatches() {
           writing_ = false;
         });
   }
-  root.set_value();
 }
 
 void PartitionPublisherImpl::Read() {
-  promise<void> root;
-  future<void> root_future = root.get_future();
+  AsyncRoot root;
   {
     std::lock_guard<std::mutex> g{mu_};
     if (!lifecycle_helper_->status().ok()) return;
-    root_future.then(ChainFuture(resumable_stream_->Read()))
+    root.get_future().then(ChainFuture(resumable_stream_->Read()))
         .then([this](future<absl::optional<PublishResponse>>
                          optional_response_future) {
           auto optional_response = optional_response_future.get();
@@ -175,7 +170,6 @@ void PartitionPublisherImpl::Read() {
           Read();
         });
   }
-  root.set_value();
 }
 
 std::deque<PartitionPublisherImpl::MessageWithFuture>

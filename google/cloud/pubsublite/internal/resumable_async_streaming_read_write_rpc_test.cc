@@ -619,7 +619,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest, BasicReadWriteGood) {
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
   ASSERT_TRUE(
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message())
+      stream_->Write(kBasicRequest)
           .get());
 
   EXPECT_CALL(first_stream_ref_, Read)
@@ -665,7 +665,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   shutdown.get();
 
   ASSERT_FALSE(
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message())
+      stream_->Write(kBasicRequest)
           .get());
   ASSERT_FALSE(stream_->Read().get().has_value());
   EXPECT_THAT(start.get(), IsOk());
@@ -682,7 +682,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
 
   EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise.get_future())));
@@ -722,7 +722,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
 
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(finish_promise.get_future())));
@@ -759,7 +759,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
 
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
@@ -792,7 +792,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
 
   EXPECT_CALL(first_stream_ref_, Cancel);
   EXPECT_CALL(first_stream_ref_, Finish)
@@ -826,7 +826,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
   ASSERT_TRUE(
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message())
+      stream_->Write(kBasicRequest)
           .get());
 
   promise<absl::optional<FakeResponse>> read_promise;
@@ -905,7 +905,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(false))));
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
 
   // write shouldn't finish until retry
   // loop done
@@ -945,7 +945,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(second_stream_ref, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
   write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
   ASSERT_TRUE(write.get());
 
   // start shouldn't finish until permanent
@@ -974,7 +974,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
 
   EXPECT_CALL(first_stream_ref_, Read)
       .WillOnce(
@@ -1100,7 +1100,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Write(kBasicRequest, _))
       .WillOnce(Return(ByMove(write_promise.get_future())));
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
 
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
@@ -1193,7 +1193,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_EQ(read.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
 
   auto write =
-      stream_->Write(kBasicRequest, grpc::WriteOptions().set_last_message());
+      stream_->Write(kBasicRequest);
   EXPECT_EQ(write.wait_for(ms(kFutureWaitMs)), std::future_status::timeout);
   start_promise.set_value(true);
 

@@ -49,6 +49,27 @@ ChainFutureImpl<T> ChainFuture(future<T> f) {
   return ChainFutureImpl<T>{std::move(f)};
 }
 
+// A RAII helper for ensuring continuations don't run while a mutex is held.
+//
+// Usable like:
+//
+// AsyncRoot root;
+// std::lock_guard<std::mutex> g{mu_};
+// // `then` continuations will not run while the mutex is held.
+// return root.get_future().then([this](future<void>){
+//     std::lock_guard<std::mutex> g{mu_};
+//     DoThing();
+// }).then(...);
+class AsyncRoot {
+ public:
+  ~AsyncRoot() { root_.set_value(); }
+  // Call at most once.
+  future<void> get_future() { return root_.get_future(); }
+
+ private:
+  promise<void> root_;
+};
+
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
