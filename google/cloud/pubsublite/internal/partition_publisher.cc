@@ -42,7 +42,7 @@ PartitionPublisherImpl::PartitionPublisherImpl(
       initial_publish_request_{std::move(ipr)},
       resumable_stream_{resumable_stream_factory(std::bind(
           &PartitionPublisherImpl::Initializer, this, std::placeholders::_1))},
-      lifecycle_helper_{absl::make_unique<LifecycleHelper>(*resumable_stream_)},
+      lifecycle_helper_{*resumable_stream_},
       cancel_token_{alarm_registry.RegisterAlarm(
           batching_options_.alarm_period(),
           std::bind(&PartitionPublisherImpl::Flush, this))} {}
@@ -58,15 +58,15 @@ PartitionPublisherImpl::~PartitionPublisherImpl() {
 }
 
 future<Status> PartitionPublisherImpl::Start() {
-  return lifecycle_helper_->Start();
+  return lifecycle_helper_.Start();
 }
 
 future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
-  if (!lifecycle_helper_->status().ok()) {
+  if (!lifecycle_helper_.status().ok()) {
     return make_ready_future(
         StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
   }
-  MessageWithFuture unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
+  MessageWithFuture unbatched{std::move(m)};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
   std::lock_guard<std::mutex> g{mu_};
@@ -75,7 +75,7 @@ future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
 }
 
 void PartitionPublisherImpl::Flush() {
-  if (!lifecycle_helper_->status().ok()) return;
+  if (!lifecycle_helper_.status().ok()) return;
   {
     std::lock_guard<std::mutex> g{mu_};
     AppendBatchesLockHeld();
@@ -87,14 +87,14 @@ void PartitionPublisherImpl::Flush() {
 
 future<void> PartitionPublisherImpl::Shutdown() {
   cancel_token_ = nullptr;
-  return lifecycle_helper_->Shutdown().then(
+  return lifecycle_helper_.Shutdown().then(
       [this](future<void>) { SatisfyOutstandingMessages(); });
 }
 
 void PartitionPublisherImpl::WriteBatches() {
   AsyncRoot root;
   std::lock_guard<std::mutex> g{mu_};
-  if (unsent_batches_.empty() || !lifecycle_helper_->status().ok()) {
+  if (unsent_batches_.empty() || !lifecycle_helper_.status().ok()) {
     writing_ = false;
     return;
   }
@@ -118,7 +118,7 @@ void PartitionPublisherImpl::WriteBatches() {
 
 void PartitionPublisherImpl::Read() {
   AsyncRoot root;
-  if (!lifecycle_helper_->status().ok()) return;
+  if (!lifecycle_helper_.status().ok()) return;
   std::lock_guard<std::mutex> g{mu_};
   root.get_future()
       .then(ChainFuture(resumable_stream_->Read()))
@@ -131,18 +131,18 @@ void PartitionPublisherImpl::Read() {
           // if we don't receive a `MessagePublishResponse` and/or receive an
           // `InitialPublishResponse`, we abort because this should not be the
           // case once we start `Read`ing
-          lifecycle_helper_->Abort(
+          lifecycle_helper_.Abort(
               Status(StatusCode::kAborted,
                      absl::StrCat("Invalid `Read` response: ",
                                   optional_response->DebugString())));
           return;
         }
-        if (!lifecycle_helper_->status().ok()) return;
+        if (!lifecycle_helper_.status().ok()) return;
         std::deque<MessageWithFuture> batch;
         {
           std::lock_guard<std::mutex> g{mu_};
           if (in_flight_batches_.empty()) {
-            return lifecycle_helper_->Abort(
+            return lifecycle_helper_.Abort(
                 Status(StatusCode::kFailedPrecondition,
                        "Server sent message response when no batches were "
                        "outstanding."));
@@ -228,7 +228,7 @@ void PartitionPublisherImpl::SatisfyOutstandingMessages() {
   }
   for (auto& message_with_future : messages_with_futures) {
     message_with_future.message_promise.set_value(
-        StatusOr<Cursor>(lifecycle_helper_->status()));
+        StatusOr<Cursor>(lifecycle_helper_.status()));
   }
 }
 

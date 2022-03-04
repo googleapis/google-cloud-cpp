@@ -44,15 +44,13 @@ class LifecycleInterface : public BaseInterface {
   /**
    * Finishes the streaming RPC.
    *
-   * This will cause any outstanding outstanding futures to fail. This may be
+   * This will cause any outstanding futures to fail. This may be
    * called while an operation of an object of this class is outstanding.
-   * Internally, the class will manage waiting on futures on a
-   * gRPC stream before calling `Finish` on its underlying stream as per
-   * `google::cloud::AsyncStreamingReadWriteRpc`. If the class is currently in a
-   * retry loop, this will terminate the retry loop and then satisfy the
-   * returned future. If the class has a present internal outstanding future,
-   * this call will satisfy the returned future only after the internal
-   * operation(s) finish.
+   * Internally, the class will manage waiting on futures of any dependencies.
+   * If the class has a present internal outstanding future, this call will
+   * satisfy the returned future only after the internal operation(s) finish.
+   *
+   * Must be called before destroying this object.
    */
   virtual future<void> Shutdown() = 0;
 };
