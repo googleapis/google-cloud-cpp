@@ -55,19 +55,17 @@ class BatchingOptions {
     max_batch_bytes_ = std::min<size_t>(v, 1024 * 1024 * 7 / 2);
   }
 
-  std::chrono::milliseconds alarm_period_ms() const { return alarm_period_ms_; }
+  std::chrono::milliseconds alarm_period() const { return alarm_period_; }
 
   /**
    * Set the frequency of when `PublishRequest`s should be sent.
    */
-  void set_alarm_period_ms(std::chrono::milliseconds v) {
-    alarm_period_ms_ = v;
-  }
+  void set_alarm_period(std::chrono::milliseconds v) { alarm_period_ = v; }
 
  private:
   size_t max_batch_messages_{1000};
   size_t max_batch_bytes_{1024 * 1024 * 7 / 2};
-  std::chrono::milliseconds alarm_period_ms_{10};
+  std::chrono::milliseconds alarm_period_{10};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
