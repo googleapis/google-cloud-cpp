@@ -137,7 +137,7 @@ void PartitionPublisherImpl::Read() {
                                   optional_response->DebugString())));
           return;
         }
-        if (!lifecycle_helper_.status().ok()) return;
+
         std::deque<MessageWithFuture> batch;
         {
           std::lock_guard<std::mutex> g{mu_};
