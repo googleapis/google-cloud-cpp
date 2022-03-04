@@ -84,8 +84,6 @@ class PartitionPublisherImpl
                   google::cloud::pubsublite::v1::PublishResponse>>
                   stream);
 
-  void OnAlarm();
-
   google::cloud::pubsublite::BatchingOptions const batching_options_;
   google::cloud::pubsublite::v1::InitialPublishRequest const
       initial_publish_request_;

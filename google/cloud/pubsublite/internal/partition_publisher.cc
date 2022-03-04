@@ -47,7 +47,7 @@ PartitionPublisherImpl::PartitionPublisherImpl(
       lifecycle_helper_{absl::make_unique<LifecycleHelper>(*resumable_stream_)},
       cancel_token_{alarm_registry.RegisterAlarm(
           absl::Milliseconds(batching_options_.alarm_period_ms()),
-          std::bind(&PartitionPublisherImpl::OnAlarm, this))} {}
+          std::bind(&PartitionPublisherImpl::Flush, this))} {}
 
 PartitionPublisherImpl::~PartitionPublisherImpl() {
   future<void> shutdown = Shutdown();
@@ -293,16 +293,6 @@ future<StatusOr<UnderlyingStream>> PartitionPublisherImpl::Initializer(
         }
         return check_read();
       });
-}
-
-void PartitionPublisherImpl::OnAlarm() {
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    if (writing_) return;
-    writing_ = true;
-    AppendBatchesLockHeld();
-  }
-  WriteBatches();
 }
 
 }  // namespace pubsublite_internal
