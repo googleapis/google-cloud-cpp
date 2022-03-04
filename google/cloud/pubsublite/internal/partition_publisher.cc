@@ -71,8 +71,7 @@ future<Status> PartitionPublisherImpl::Start() {
             start_promise = std::move(*start_future_);
             start_future_.reset();
           }
-          Status status = start_status.get();
-          start_promise.set_value(status);
+          start_promise.set_value(start_status.get());
         });
   }
   root.set_value();

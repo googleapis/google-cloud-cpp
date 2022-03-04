@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_PUBLISHER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_PUBLISHER_H
 
-#include "google/cloud/pubsublite/internal/alarm_registry_interface.h"
 #include "google/cloud/pubsublite/batching_options.h"
+#include "google/cloud/pubsublite/internal/alarm_registry_interface.h"
 #include "google/cloud/pubsublite/internal/publisher.h"
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "absl/functional/function_ref.h"
@@ -39,7 +39,7 @@ class PartitionPublisherImpl
           StreamInitializer<google::cloud::pubsublite::v1::PublishRequest,
                             google::cloud::pubsublite::v1::PublishResponse>)>,
       google::cloud::pubsublite::BatchingOptions,
-      google::cloud::pubsublite::v1::InitialPublishRequest ,
+      google::cloud::pubsublite::v1::InitialPublishRequest,
       AlarmRegistryInterface&);
 
   ~PartitionPublisherImpl() override;
@@ -70,7 +70,8 @@ class PartitionPublisherImpl
   std::deque<MessageWithFuture> UnbatchAllLockHeld();
 
   static std::deque<std::deque<MessageWithFuture>> CreateBatches(
-      std::deque<MessageWithFuture> messages, google::cloud::pubsublite::BatchingOptions const& settings);
+      std::deque<MessageWithFuture> messages,
+      google::cloud::pubsublite::BatchingOptions const& settings);
 
   void SatisfyOutstandingMessages();
 
@@ -93,7 +94,7 @@ class PartitionPublisherImpl
   std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>> const
-      resumable_stream_;  // ABSL_GUARDED_BY(mu_)
+      resumable_stream_;                              // ABSL_GUARDED_BY(mu_)
   std::deque<MessageWithFuture> unbatched_messages_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
