@@ -100,6 +100,8 @@ using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc : public LifecycleInterface {
  public:
+  virtual ~ResumableAsyncStreamingReadWriteRpc() = default;
+
   /**
    * Read one response from the streaming RPC.
    *
@@ -147,7 +149,7 @@ class ResumableAsyncStreamingReadWriteRpc : public LifecycleInterface {
    * happened. If the `Start` future is not satisfied, the user may call `Write`
    * again to write the value to a new underlying stream.
    */
-  virtual future<bool> Write(RequestType const&) = 0;
+  virtual future<bool> Write(RequestType const&, grpc::WriteOptions) = 0;
 };
 
 template <typename RequestType, typename ResponseType>
@@ -168,9 +170,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   ~ResumableAsyncStreamingReadWriteRpcImpl() override {
     future<void> shutdown = Shutdown();
     if (!shutdown.is_ready()) {
-      GCP_LOG(WARNING)
-          << "`Shutdown` must be called and finished before object "
-             "goes out of scope.";
+      GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
+                          "goes out of scope.";
       assert(false);
     }
     shutdown.get();
@@ -236,7 +237,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         });
   }
 
-  future<bool> Write(RequestType const& r) override {
+  future<bool> Write(RequestType const& r, grpc::WriteOptions o) override {
     future<bool> write_future;
 
     {
@@ -250,7 +251,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
           return write_reinit_done_->get_future().then(
               [](future<void>) { return false; });
         case State::kInitialized:
-          write_future = stream_->Write(r, grpc::WriteOptions());
+          write_future = stream_->Write(r, o);
           assert(!in_progress_write_.has_value());
           in_progress_write_.emplace();
       }
@@ -275,9 +276,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
    * `Read` and/or `Write` finish.
    */
   future<void> Shutdown() override {
-    AsyncRoot root_promise;
+    promise<void> root_promise;
     future<void> root_future =
         ConfigureShutdownOrder(root_promise.get_future());
+
+    root_promise.set_value();
     return root_future;
   }
 
@@ -352,35 +355,39 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   void ReadWriteRetryFailedStream() {
-    AsyncRoot root;
-    std::lock_guard<std::mutex> g{mu_};
-    if (stream_state_ != State::kInitialized) return;
+    promise<void> root;
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      if (stream_state_ != State::kInitialized) return;
 
-    stream_state_ = State::kRetrying;
-    assert(!retry_promise_.has_value());
-    retry_promise_.emplace();
+      stream_state_ = State::kRetrying;
+      assert(!retry_promise_.has_value());
+      retry_promise_.emplace();
 
-    // Assuming that a `Read` fails:
-    // If an outstanding operation is present, we can't enter the retry
-    // loop, so we defer it until the outstanding `Write` finishes at
-    // which point we can enter the retry loop. Since we will return
-    // `reinit_done_`, we guarantee that another operation of the same type
-    // is not called while we're waiting for the outstanding operation to
-    // finish and the retry loop to finish afterward.
+      // Assuming that a `Read` fails:
+      // If an outstanding operation is present, we can't enter the retry
+      // loop, so we defer it until the outstanding `Write` finishes at
+      // which point we can enter the retry loop. Since we will return
+      // `reinit_done_`, we guarantee that another operation of the same type
+      // is not called while we're waiting for the outstanding operation to
+      // finish and the retry loop to finish afterward.
 
-    future<void> root_future = root.get_future();
+      future<void> root_future = root.get_future();
 
-    // at most one of these will be set
-    if (in_progress_read_.has_value()) {
-      root_future =
-          root_future.then(ChainFuture(in_progress_read_->get_future()));
+      // at most one of these will be set
+      if (in_progress_read_.has_value()) {
+        root_future =
+            root_future.then(ChainFuture(in_progress_read_->get_future()));
+      }
+      if (in_progress_write_.has_value()) {
+        root_future =
+            root_future.then(ChainFuture(in_progress_write_->get_future()));
+      }
+
+      root_future.then([this](future<void>) { FinishOnStreamFail(); });
     }
-    if (in_progress_write_.has_value()) {
-      root_future =
-          root_future.then(ChainFuture(in_progress_write_->get_future()));
-    }
 
-    root_future.then([this](future<void>) { FinishOnStreamFail(); });
+    root.set_value();
   }
 
   void FinishOnStreamFail() {
