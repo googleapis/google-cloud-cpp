@@ -100,7 +100,7 @@ using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
 template <typename RequestType, typename ResponseType>
 class ResumableAsyncStreamingReadWriteRpc : public LifecycleInterface {
  public:
-  virtual ~ResumableAsyncStreamingReadWriteRpc() = default;
+  ~ResumableAsyncStreamingReadWriteRpc() override = default;
 
   /**
    * Read one response from the streaming RPC.
