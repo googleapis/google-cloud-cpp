@@ -32,6 +32,8 @@ namespace pubsublite_internal {
 
 class PartitionPublisherImpl
     : public Publisher<google::cloud::pubsublite::v1::Cursor> {
+  friend class PartitionPublisherBatchingTest;
+
  public:
   explicit PartitionPublisherImpl(
       absl::FunctionRef<std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<

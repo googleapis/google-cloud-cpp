@@ -31,7 +31,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
-namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::_;
@@ -80,6 +79,115 @@ PublishResponse GetInitializerPublishResponse() {
   return publish_response;
 }
 
+class PartitionPublisherBatchingTest : public ::testing::Test {
+ protected:
+  PartitionPublisherBatchingTest() = default;
+
+  static std::deque<
+      std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>>
+  TestCreateBatches(
+      std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>> messages,
+      google::cloud::pubsublite::BatchingOptions const& options) {
+    std::deque<PartitionPublisherImpl::MessageWithFuture> message_with_futures;
+    for (auto& message_with_future : messages) {
+      message_with_futures.emplace_back(
+          PartitionPublisherImpl::MessageWithFuture{
+              std::move(message_with_future.first),
+              std::move(message_with_future.second)});
+    }
+    auto batches = PartitionPublisherImpl::CreateBatches(
+        std::move(message_with_futures), std::move(options));
+    std::deque<std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>>
+        ret_batches;
+    for (auto& batch : batches) {
+      std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
+          message_batch;
+      for (auto& message_with_future : batch) {
+        message_batch.emplace_back(
+            std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
+                std::move(message_with_future.message),
+                std::move(message_with_future.message_promise)});
+      }
+      ret_batches.push_back(std::move(message_batch));
+    }
+    return ret_batches;
+  }
+};
+
+// batching logic
+TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
+  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
+      message_with_futures;
+  std::deque<PubSubMessage> messages;
+  for (unsigned int i = 0; i < 10; ++i) {
+    PubSubMessage message;
+    *message.mutable_key() = "key";
+    *message.mutable_data() = std::to_string(i);
+    promise<StatusOr<Cursor>> message_promise;
+    message_promise.get_future().then(
+        [i](future<StatusOr<Cursor>> status_future) {
+          auto status = status_future.get();
+          EXPECT_FALSE(status.ok());
+          EXPECT_EQ(status.status(),
+                    Status(StatusCode::kUnavailable, std::to_string(i)));
+        });
+    message_with_futures.emplace_back(
+        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
+            message, std::move(message_promise)});
+    messages.push_back(std::move(message));
+  }
+  BatchingOptions options;
+  options.set_maximum_batch_message_count(1);
+
+  auto batches =
+      TestCreateBatches(std::move(message_with_futures), std::move(options));
+  EXPECT_EQ(batches.size(), messages.size());
+  for (unsigned int i = 0; i < messages.size(); ++i) {
+    auto& batch = batches[i];
+    EXPECT_EQ(batch.size(), 1);
+    EXPECT_THAT(batch[0].first, IsProtoEqual(messages[i]));
+    batch[0].second.set_value(
+        StatusOr<Cursor>{Status(StatusCode::kUnavailable, std::to_string(i))});
+  }
+}
+
+TEST_F(PartitionPublisherBatchingTest,
+       SingleMessageBatchMessageSizeRestriction) {
+  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
+      message_with_futures;
+  std::deque<PubSubMessage> messages;
+  for (unsigned int i = 0; i < 10; ++i) {
+    PubSubMessage message;
+    *message.mutable_key() = "key";
+    *message.mutable_data() = std::to_string(i);
+    promise<StatusOr<Cursor>> message_promise;
+    message_promise.get_future().then(
+        [i](future<StatusOr<Cursor>> status_future) {
+          auto status = status_future.get();
+          EXPECT_FALSE(status.ok());
+          EXPECT_EQ(status.status(),
+                    Status(StatusCode::kUnavailable, std::to_string(i)));
+        });
+    message_with_futures.emplace_back(
+        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
+            message, std::move(message_promise)});
+    messages.push_back(std::move(message));
+  }
+  BatchingOptions options;
+  options.set_maximum_batch_bytes(messages[0].ByteSizeLong());
+
+  auto batches =
+      TestCreateBatches(std::move(message_with_futures), std::move(options));
+  EXPECT_EQ(batches.size(), messages.size());
+  for (unsigned int i = 0; i < messages.size(); ++i) {
+    auto& batch = batches[i];
+    EXPECT_EQ(batch.size(), 1);
+    EXPECT_THAT(batch[0].first, IsProtoEqual(messages[i]));
+    batch[0].second.set_value(
+        StatusOr<Cursor>{Status(StatusCode::kUnavailable, std::to_string(i))});
+  }
+}
+
 class PartitionPublisherTest : public ::testing::Test {
  protected:
   PartitionPublisherTest() {
@@ -111,6 +219,7 @@ class PartitionPublisherTest : public ::testing::Test {
   std::unique_ptr<Publisher<Cursor>> publisher_;
 };
 
+// asynchronous operations
 TEST_F(PartitionPublisherTest, SinglePublishGood) {
   InSequence seq;
 
@@ -1162,7 +1271,6 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
             Status(StatusCode::kInternal, "Permanent Error"));
 }
 
-}  // namespace
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
