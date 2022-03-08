@@ -58,7 +58,9 @@ PartitionPublisherImpl::~PartitionPublisherImpl() {
 }
 
 future<Status> PartitionPublisherImpl::Start() {
-  return lifecycle_helper_.Start();
+  auto start_return = lifecycle_helper_.Start();
+  Read();
+  return start_return;
 }
 
 future<StatusOr<Cursor>> PartitionPublisherImpl::Publish(PubSubMessage m) {
