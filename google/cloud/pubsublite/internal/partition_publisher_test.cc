@@ -856,6 +856,59 @@ TEST_F(PartitionPublisherTest, InitializerReadFailureThenGood) {
             Status(StatusCode::kAborted, "`Shutdown` called"));
 }
 
+TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(*resumable_stream_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  future<StatusOr<Cursor>> publish_future =
+      publisher_->Publish(PubSubMessage::default_instance());
+
+  PublishRequest publish_request;
+  *publish_request.mutable_message_publish_request()->add_messages() =
+      PubSubMessage::default_instance();
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  leaked_alarm_();
+
+  start_promise.set_value(Status(StatusCode::kInternal, "Permanent Error"));
+  read_promise.set_value(absl::optional<PublishResponse>());
+
+  // shouldn't do anything b/c lifecycle ended
+  publisher_->Flush();
+
+  EXPECT_CALL(*alarm_token_, Destroy);
+  EXPECT_CALL(*resumable_stream_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  publisher_->Shutdown().get();
+
+  auto individual_message_publish_response = publish_future.get();
+  EXPECT_FALSE(individual_message_publish_response);
+  EXPECT_EQ(individual_message_publish_response.status(),
+            Status(StatusCode::kInternal, "Permanent Error"));
+}
+
 }  // namespace
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
