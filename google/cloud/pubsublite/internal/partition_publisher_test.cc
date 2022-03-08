@@ -20,9 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -35,13 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 namespace {
 
-using google::cloud::testing_util::AsyncSequencer;
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::InSequence;
-using ::testing::MockFunction;
 using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::WithArg;
@@ -51,7 +46,6 @@ using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
 using google::cloud::pubsublite::v1::InitialPublishResponse;
 using google::cloud::pubsublite::v1::MessagePublishRequest;
-using google::cloud::pubsublite::v1::MessagePublishResponse;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
