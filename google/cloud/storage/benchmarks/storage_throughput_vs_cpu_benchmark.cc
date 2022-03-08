@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
             << options->maximum_object_size << "]\n# Write Size Range: ["
             << options->minimum_write_size << "," << options->maximum_write_size
             << "]\n# Write Quantum: " << options->write_quantum
-            << "\n# Min Read Size Range: [" << options->minimum_read_size << ","
+            << "\n# Read Size Range: [" << options->minimum_read_size << ","
             << options->maximum_read_size
             << "]\n# Read Quantum: " << options->read_quantum
             << "\n# Object Size Range (MiB): ["
@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
             << options->maximum_write_size / gcs_bm::kKiB
             << "]\n# Write Quantum (KiB): "
             << options->write_quantum / gcs_bm::kKiB
-            << "\n# Min Read Size Range (KiB): ["
+            << "\n# Read Size Range (KiB): ["
             << options->minimum_read_size / gcs_bm::kKiB << ","
             << options->maximum_read_size / gcs_bm::kKiB
             << "]\n# Read Quantum (KiB): "
