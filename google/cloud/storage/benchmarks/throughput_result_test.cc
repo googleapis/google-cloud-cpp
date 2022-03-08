@@ -73,6 +73,7 @@ TEST(ThroughputResult, HeaderMatches) {
 
   auto const line = ToString(ThroughputResult{
       ExperimentLibrary::kCppClient, ExperimentTransport::kGrpc, kOpInsert,
+      std::chrono::system_clock::now(),
       /*object_size=*/5 * kMiB, /*transfer_size=*/3 * kMiB,
       /*app_buffer_size=*/2 * kMiB, /*lib_buffer_size=*/4 * kMiB,
       /*crc_enabled=*/true, /*md5_enabled=*/false,

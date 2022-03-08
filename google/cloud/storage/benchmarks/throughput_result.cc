@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/throughput_result.h"
+#include "absl/time/time.h"
 #include <algorithm>
 #include <sstream>
 #include <string>
@@ -33,9 +34,14 @@ std::string CleanupCsv(std::string v) {
 }  // namespace
 
 void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
+  auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
+  auto const start =
+      absl::FormatTime(kFormat, absl::FromChrono(r.start), absl::UTCTimeZone());
+
   os << ToString(r.library)                    // clang-format hack
      << ',' << ToString(r.transport)           //
      << ',' << ToString(r.op)                  //
+     << ',' << start                           //
      << ',' << r.object_size                   //
      << ',' << r.transfer_size                 //
      << ',' << r.app_buffer_size               //
@@ -51,7 +57,7 @@ void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
 }
 
 void PrintThroughputResultHeader(std::ostream& os) {
-  os << "Library,Transport,Op,ObjectSize,TransferSize,AppBufferSize"
+  os << "Library,Transport,Op,Start,ObjectSize,TransferSize,AppBufferSize"
      << ",LibBufferSize,Crc32cEnabled,MD5Enabled"
      << ",ElapsedTimeUs,CpuTimeUs,Peer,StatusCode,Status\n";
 }
