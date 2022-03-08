@@ -49,11 +49,6 @@ MATCHER_P(
     ++pos;
   }
   std::string status = arg.substr(pos);
-  if (!status.empty() && status.back() == '\n') status.pop_back();
-  if (status.size() < 2 || status.front() != '"' || status.back() != '"') {
-    *result_listener << "Missing opening or closing quote: " << status;
-    return false;
-  }
   if (status.find(substr) == std::string::npos) {
     *result_listener << "Didn't find " << substr << " in " << status;
     return false;
@@ -118,30 +113,30 @@ TEST(ThroughputResult, QuoteCsv) {
   result.status = Status{StatusCode::kInternal, R"(message "with quotes")"};
   auto line = ToString(result);
   ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus(R"(message ""with quotes"")"));
+  EXPECT_THAT(*line, HasQuotedStatus(R"(message "with quotes")"));
 
   result.status = Status{StatusCode::kInternal, R"(message, with comma)"};
   line = ToString(result);
   ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus(R"(message, with comma)"));
+  EXPECT_THAT(*line, HasQuotedStatus(R"(message; with comma)"));
 
   result.status = Status{StatusCode::kInternal, "message\nwith newline"};
   line = ToString(result);
   ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus("message\nwith newline"));
+  EXPECT_THAT(*line, HasQuotedStatus("message;with newline"));
 
   result.status = Status{StatusCode::kInternal, "message\r\nwith CRLF"};
   line = ToString(result);
   ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus("message\r\nwith CRLF"));
+  EXPECT_THAT(*line, HasQuotedStatus("message;;with CRLF"));
 
   result.status =
       Status{StatusCode::kInternal, R"("message, "with quotes", commas,)"
                                     "\r\nand CRLF"};
   line = ToString(result);
   ASSERT_STATUS_OK(line);
-  EXPECT_THAT(*line, HasQuotedStatus(R"(message, ""with quotes"", commas,)"
-                                     "\r\nand CRLF"));
+  EXPECT_THAT(*line, HasQuotedStatus(R"(message; "with quotes"; commas;)"
+                                     ";;and CRLF"));
 }
 
 }  // namespace

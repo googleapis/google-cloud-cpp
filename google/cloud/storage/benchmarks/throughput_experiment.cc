@@ -156,7 +156,8 @@ class DownloadObject : public ThroughputExperiment {
         gcs::DisableCrc32cChecksum(!config.enable_crc32c),
         gcs::DisableMD5Hash(!config.enable_md5), api_selector);
     std::int64_t transfer_size = 0;
-    while (reader.read(buffer.data(), buffer.size())) {
+    while (!reader.eof() && !reader.bad()) {
+      reader.read(buffer.data(), buffer.size());
       transfer_size += reader.gcount();
     }
     auto const usage = timer.Sample();
