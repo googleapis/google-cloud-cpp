@@ -68,6 +68,7 @@ class UploadObject : public ThroughputExperiment {
     // ObjectInsert()
     if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
         prefer_insert_) {
+      auto const start = std::chrono::system_clock::now();
       auto timer = Timer::PerThread();
       std::string data =
           random_data_.substr(0, static_cast<std::size_t>(config.object_size));
@@ -79,6 +80,7 @@ class UploadObject : public ThroughputExperiment {
       return ThroughputResult{ExperimentLibrary::kCppClient,
                               transport_,
                               kOpInsert,
+                              start,
                               config.object_size,
                               config.object_size,
                               config.app_buffer_size,
@@ -90,6 +92,7 @@ class UploadObject : public ThroughputExperiment {
                               object_metadata.status(),
                               "[insert-no-peer]"};
     }
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     auto writer = client_.WriteObject(
         bucket_name, object_name,
@@ -109,6 +112,7 @@ class UploadObject : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
                             kOpWrite,
+                            start,
                             config.object_size,
                             config.object_size,
                             config.app_buffer_size,
@@ -150,6 +154,7 @@ class DownloadObject : public ThroughputExperiment {
 
     std::vector<char> buffer(config.app_buffer_size);
 
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     auto reader = client_.ReadObject(
         bucket_name, object_name,
@@ -164,6 +169,7 @@ class DownloadObject : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
                             config.op,
+                            start,
                             config.object_size,
                             transfer_size,
                             config.app_buffer_size,
@@ -208,6 +214,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     auto header = creds_->AuthorizationHeader();
     if (!header) return {};
 
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     struct curl_slist* slist1 = nullptr;
     slist1 = curl_slist_append(slist1, header->c_str());
@@ -255,6 +262,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kRaw,
                             ExperimentTransport::kXml,
                             config.op,
+                            start,
                             config.object_size,
                             config.object_size,
                             config.app_buffer_size,
@@ -298,6 +306,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     google::storage::v2::ReadObjectRequest request;
     request.set_bucket(bucket_name);
@@ -318,6 +327,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kRaw,
                             transport_,
                             config.op,
+                            start,
                             config.object_size,
                             bytes_received,
                             config.app_buffer_size,
