@@ -395,7 +395,7 @@ TEST_F(PartitionPublisherTest, InFlightBatchUnsentBatchUnsentMessageThenRetry) {
 
   promise<bool> write_promise;
   EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
-      .WillOnce(Return(ByMove(make_ready_future(write_promise.get_future()))));
+      .WillOnce(Return(ByMove(write_promise.get_future())));
 
   leaked_alarm_();
 
@@ -459,6 +459,92 @@ TEST_F(PartitionPublisherTest, InFlightBatchUnsentBatchUnsentMessageThenRetry) {
   publisher_->Shutdown().get();
   read_promise1.set_value(absl::optional<PublishResponse>());
   start_promise.set_value(Status());
+  EXPECT_EQ(publisher_start_future.get(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+}
+
+TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(*resumable_stream_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  std::vector<PubSubMessage> individual_publish_messages;
+  for (unsigned int i = 0; i < 11; ++i) {
+    PubSubMessage message;
+    *message.mutable_key() = "key";
+    *message.mutable_data() = std::to_string(i);
+    individual_publish_messages.push_back(std::move(message));
+  }
+
+  std::vector<future<StatusOr<Cursor>>> publish_message_futures;
+  for (unsigned int i = 0; i < 10; ++i) {
+    publish_message_futures.push_back(
+        publisher_->Publish(individual_publish_messages[i]));
+  }
+
+  PublishRequest publish_request;
+  for (unsigned int i = 0; i < 5; ++i) {
+    *publish_request.mutable_message_publish_request()->add_messages() =
+        individual_publish_messages[i];
+  }
+
+  promise<bool> write_promise;
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(write_promise.get_future())));
+
+  leaked_alarm_();
+
+  publish_message_futures.push_back(
+      publisher_->Publish(individual_publish_messages[10]));
+
+  underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  write_promise.set_value(false);
+
+  EXPECT_CALL(*alarm_token_, Destroy);
+  EXPECT_CALL(*resumable_stream_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  auto shutdown_future = publisher_->Shutdown();
+  start_promise.set_value(Status());
+  read_promise.set_value(absl::optional<PublishResponse>());
+  shutdown_future.get();
+
+  for (unsigned int i = 0; i < individual_publish_messages.size(); ++i) {
+    auto individual_message_publish_response = publish_message_futures[i].get();
+    EXPECT_FALSE(individual_message_publish_response);
+    EXPECT_EQ(individual_message_publish_response.status(),
+              Status(StatusCode::kAborted, "`Shutdown` called"));
+  }
+
+  // shouldn't do anything b/c shutdown
+  publisher_->Flush();
   EXPECT_EQ(publisher_start_future.get(),
             Status(StatusCode::kAborted, "`Shutdown` called"));
 }
