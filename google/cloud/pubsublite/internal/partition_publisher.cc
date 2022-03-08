@@ -244,8 +244,9 @@ future<StatusOr<UnderlyingStream>> PartitionPublisherImpl::Initializer(
   return (*shared_stream)
       ->Write(publish_request, grpc::WriteOptions())
       .then([shared_stream](future<bool> write_response) {
-        if (!write_response.get())
+        if (!write_response.get()) {
           return make_ready_future(absl::optional<PublishResponse>());
+        }
         return (*shared_stream)->Read();
       })
       .then([shared_stream](

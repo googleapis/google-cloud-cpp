@@ -65,7 +65,7 @@ class BatchingOptions {
  private:
   int64_t max_batch_messages_{1000};
   int64_t max_batch_bytes_{1024 * 1024 * 7 / 2};
-  std::chrono::milliseconds alarm_period_{10};
+  std::chrono::milliseconds alarm_period_{50};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

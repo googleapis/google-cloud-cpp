@@ -32,8 +32,6 @@ namespace pubsublite_internal {
 
 class PartitionPublisherImpl
     : public Publisher<google::cloud::pubsublite::v1::Cursor> {
-  friend class PartitionPublisherBatchingTest;
-
  public:
   explicit PartitionPublisherImpl(
       absl::FunctionRef<std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
@@ -103,6 +101,8 @@ class PartitionPublisherImpl
   bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
 
   std::unique_ptr<AlarmRegistryInterface::CancelToken> cancel_token_;
+
+  friend class PartitionPublisherBatchingTest;
 };
 
 }  // namespace pubsublite_internal

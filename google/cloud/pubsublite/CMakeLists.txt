@@ -221,7 +221,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     target_sources(
         pubsublite_testing
         INTERFACE
-            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm_registry.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm_token.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
