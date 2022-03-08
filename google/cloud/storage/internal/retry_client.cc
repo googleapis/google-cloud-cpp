@@ -93,6 +93,13 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
 }
 }  // namespace
 
+std::shared_ptr<RetryClient> RetryClient::Create(
+    std::shared_ptr<RawClient> client, Options const& options) {
+  // Cannot use `std::make_shared<>` because the constructor is private.
+  return std::shared_ptr<RetryClient>(
+      new RetryClient(std::move(client), options));
+}
+
 RetryClient::RetryClient(std::shared_ptr<RawClient> client,
                          Options const& options)
     : client_(std::move(client)),

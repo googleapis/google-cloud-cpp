@@ -79,7 +79,7 @@ Options BasicTestPolicies() {
 /// @test No failures scenario.
 TEST(RetryObjectReadSourceTest, NoFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
@@ -97,7 +97,7 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
 /// @test Permanent failure when creating the raw source
 TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
@@ -111,7 +111,7 @@ TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
 /// @test Transient failures exhaust retry policy when creating the raw source
 TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
@@ -127,7 +127,7 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
 /// @test Recovery from a transient failures when creating the raw source
 TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
@@ -148,7 +148,7 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
 TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto* raw_source = new MockObjectReadSource;
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
@@ -176,10 +176,10 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
     ++num_backoff_policy_called;
     return std::chrono::milliseconds(0);
   });
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      BasicTestPolicies().set<BackoffPolicyOption>(
-          backoff_policy_mock.clone()));
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client),
+                          BasicTestPolicies().set<BackoffPolicyOption>(
+                              backoff_policy_mock.clone()));
 
   EXPECT_EQ(0, num_backoff_policy_called);
 
@@ -235,7 +235,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 /// @test Check that retry policy is shared between reads and resetting session
 TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
@@ -264,7 +264,7 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
 /// @test `ReadLast` behaviour after a transient failure
 TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
@@ -296,7 +296,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
 /// @test The generation is captured such that we resume from the same version
 TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)

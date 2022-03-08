@@ -49,7 +49,7 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
   if (enable_logging) {
     client = std::make_shared<internal::LoggingClient>(std::move(client));
   }
-  return std::make_shared<internal::RetryClient>(std::move(client), opts);
+  return internal::RetryClient::Create(std::move(client), opts);
 }
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(

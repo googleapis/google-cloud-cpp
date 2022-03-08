@@ -53,9 +53,10 @@ Options BasicTestPolicies() {
 
 /// @test Verify that non-idempotent operations return on the first failure.
 TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
-                     BasicTestPolicies().set<IdempotencyPolicyOption>(
-                         StrictIdempotencyPolicy().clone()));
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock_),
+                          BasicTestPolicies().set<IdempotencyPolicyOption>(
+                              StrictIdempotencyPolicy().clone()));
 
   EXPECT_CALL(*mock_, DeleteObject)
       .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
@@ -63,47 +64,47 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
   // Use a delete operation because this is idempotent only if the it has
   // the IfGenerationMatch() and/or Generation() option set.
   StatusOr<EmptyResponse> result =
-      client.DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
+      client->DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
   EXPECT_THAT(result, StatusIs(TransientError().code()));
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST_F(RetryClientTest, PermanentErrorHandling) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
-                     BasicTestPolicies());
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock_),
+                                    BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock_, GetObjectMetadata)
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Return(StatusOr<ObjectMetadata>(PermanentError())));
 
-  StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
+  StatusOr<ObjectMetadata> result = client->GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
   EXPECT_THAT(result, StatusIs(PermanentError().code()));
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST_F(RetryClientTest, TooManyTransientsHandling) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
-                     BasicTestPolicies());
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock_),
+                                    BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
   EXPECT_CALL(*mock_, GetObjectMetadata)
       .WillRepeatedly(Return(StatusOr<ObjectMetadata>(TransientError())));
 
-  StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
+  StatusOr<ObjectMetadata> result = client->GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
   EXPECT_THAT(result, StatusIs(TransientError().code()));
 }
 
 /// @test Verify that the retry loop works with exhausted retry policy.
 TEST_F(RetryClientTest, ExpiredRetryPolicy) {
-  RetryClient client(
+  auto client = RetryClient::Create(
       std::shared_ptr<internal::RawClient>(mock_),
       BasicTestPolicies().set<RetryPolicyOption>(
           LimitedTimeRetryPolicy{std::chrono::milliseconds(0)}.clone()));
 
-  StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
+  StatusOr<ObjectMetadata> result = client->GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
   ASSERT_FALSE(result);
   EXPECT_THAT(
