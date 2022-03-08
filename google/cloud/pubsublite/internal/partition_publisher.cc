@@ -243,19 +243,21 @@ future<StatusOr<UnderlyingStream>> PartitionPublisherImpl::Initializer(
   *publish_request.mutable_initial_request() = initial_publish_request_;
   return (*shared_stream)
       ->Write(publish_request, grpc::WriteOptions())
-      .then([=](future<bool> write_response) {
+      .then([shared_stream](future<bool> write_response) {
         if (!write_response.get())
           return make_ready_future(absl::optional<PublishResponse>());
         return (*shared_stream)->Read();
       })
-      .then([=](future<absl::optional<PublishResponse>> read_response) {
+      .then([shared_stream](
+                future<absl::optional<PublishResponse>> read_response) {
         auto optional_response = read_response.get();
         if (optional_response && optional_response->has_initial_response()) {
           return make_ready_future(Status());
         }
         return (*shared_stream)->Finish();
       })
-      .then([=](future<Status> status_future) -> StatusOr<UnderlyingStream> {
+      .then([this, shared_stream](
+                future<Status> status_future) -> StatusOr<UnderlyingStream> {
         Status status = status_future.get();
         if (!status.ok()) return status;
         std::lock_guard<std::mutex> g{mu_};
