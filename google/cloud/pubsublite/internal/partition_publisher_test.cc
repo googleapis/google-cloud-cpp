@@ -216,7 +216,7 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
 
   auto batches =
       TestCreateBatches(std::move(message_with_futures), std::move(options));
-  EXPECT_EQ(batches.size(), ceil(messages.size() / 3.0));
+  EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
   for (unsigned int i = 0; i < batches.size(); ++i) {
     auto& batch = batches[i];
     if (i < batches.size() - 1) {
@@ -262,7 +262,7 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
 
   auto batches =
       TestCreateBatches(std::move(message_with_futures), std::move(options));
-  EXPECT_EQ(batches.size(), ceil(messages.size() / 3.0));
+  EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
   for (unsigned int i = 0; i < batches.size(); ++i) {
     auto& batch = batches[i];
     EXPECT_EQ(batch.size(), 3);
