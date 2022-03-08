@@ -458,6 +458,268 @@ TEST_F(PartitionPublisherTest, InFlightBatchUnsentBatchUnsentMessageThenRetry) {
             Status(StatusCode::kAborted, "`Shutdown` called"));
 }
 
+TEST_F(PartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(*resumable_stream_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  std::vector<PubSubMessage> individual_publish_messages;
+  for (unsigned int i = 0; i < 11; ++i) {
+    PubSubMessage message;
+    *message.mutable_key() = "key";
+    *message.mutable_data() = std::to_string(i);
+    individual_publish_messages.push_back(std::move(message));
+  }
+
+  std::vector<future<StatusOr<Cursor>>> publish_message_futures;
+  for (unsigned int i = 0; i < 10; ++i) {
+    publish_message_futures.push_back(
+        publisher_->Publish(individual_publish_messages[i]));
+  }
+
+  PublishRequest publish_request;
+  for (unsigned int i = 0; i < 5; ++i) {
+    *publish_request.mutable_message_publish_request()->add_messages() =
+        individual_publish_messages[i];
+  }
+
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  publish_request = PublishRequest();
+  for (unsigned int i = 5; i < 10; ++i) {
+    *publish_request.mutable_message_publish_request()->add_messages() =
+        individual_publish_messages[i];
+  }
+  promise<bool> write_promise;
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(write_promise.get_future())));
+
+  leaked_alarm_();
+
+  publish_message_futures.push_back(
+      publisher_->Publish(individual_publish_messages[10]));
+
+  underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  write_promise.set_value(false);
+
+  promise<absl::optional<PublishResponse>> read_promise1;
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(Return(ByMove(read_promise1.get_future())));
+  read_promise.set_value(absl::optional<PublishResponse>());
+
+  for (unsigned int i = 0; i < individual_publish_messages.size();) {
+    PublishRequest publish_request1;
+    unsigned int orig_i = i;
+    for (; i < orig_i + 5 && i < individual_publish_messages.size(); ++i) {
+      *publish_request1.mutable_message_publish_request()->add_messages() =
+          individual_publish_messages[i];
+    }
+    EXPECT_CALL(*resumable_stream_,
+                Write(IsProtoEqual(std::move(publish_request1))))
+        .WillOnce(Return(ByMove(make_ready_future(true))));
+  }
+
+  leaked_alarm_();
+
+  for (unsigned int i = 0; i < individual_publish_messages.size(); i += 5) {
+    PublishResponse publish_response1;
+    publish_response1.mutable_message_response()
+        ->mutable_start_cursor()
+        ->set_offset(i);
+    auto temp_read_promise = std::move(read_promise1);
+    read_promise1 = promise<absl::optional<PublishResponse>>{};
+    EXPECT_CALL(*resumable_stream_, Read)
+        .WillOnce(Return(ByMove(read_promise1.get_future())));
+    temp_read_promise.set_value(std::move(publish_response1));
+  }
+
+  for (unsigned int i = 0; i < individual_publish_messages.size(); ++i) {
+    auto individual_message_publish_response = publish_message_futures[i].get();
+    EXPECT_TRUE(individual_message_publish_response);
+    EXPECT_EQ(individual_message_publish_response->offset(), i);
+  }
+
+  // shouldn't do anything b/c no messages left
+  publisher_->Flush();
+
+  EXPECT_CALL(*alarm_token_, Destroy);
+  EXPECT_CALL(*resumable_stream_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  publisher_->Shutdown().get();
+  read_promise1.set_value(absl::optional<PublishResponse>());
+  start_promise.set_value(Status());
+  EXPECT_EQ(publisher_start_future.get(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+}
+
+TEST_F(PartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(*resumable_stream_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  std::vector<PubSubMessage> individual_publish_messages;
+  for (unsigned int i = 0; i < 11; ++i) {
+    PubSubMessage message;
+    *message.mutable_key() = "key";
+    *message.mutable_data() = std::to_string(i);
+    individual_publish_messages.push_back(std::move(message));
+  }
+
+  std::vector<future<StatusOr<Cursor>>> publish_message_futures;
+  for (unsigned int i = 0; i < 10; ++i) {
+    publish_message_futures.push_back(
+        publisher_->Publish(individual_publish_messages[i]));
+  }
+
+  PublishRequest publish_request;
+  for (unsigned int i = 0; i < 5; ++i) {
+    *publish_request.mutable_message_publish_request()->add_messages() =
+        individual_publish_messages[i];
+  }
+
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  publish_request = PublishRequest();
+  for (unsigned int i = 5; i < 10; ++i) {
+    *publish_request.mutable_message_publish_request()->add_messages() =
+        individual_publish_messages[i];
+  }
+  promise<bool> write_promise;
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(write_promise.get_future())));
+
+  PublishResponse publish_response;
+  publish_response.mutable_message_response()
+      ->mutable_start_cursor()
+      ->set_offset(0);
+  promise<absl::optional<PublishResponse>> read_promise1;
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(Return(ByMove(read_promise1.get_future())));
+
+  leaked_alarm_();
+  read_promise.set_value(std::move(publish_response));
+
+  publish_message_futures.push_back(
+      publisher_->Publish(individual_publish_messages[10]));
+
+  for (unsigned int i = 0; i < 5; ++i) {
+    auto individual_message_publish_response = publish_message_futures[i].get();
+    EXPECT_TRUE(individual_message_publish_response);
+    EXPECT_EQ(individual_message_publish_response->offset(), i);
+  }
+
+  underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  write_promise.set_value(false);
+
+  auto temp_promise = std::move(read_promise1);
+  read_promise1 = promise<absl::optional<PublishResponse>>{};
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(Return(ByMove(read_promise1.get_future())));
+  temp_promise.set_value(absl::optional<PublishResponse>());
+
+  for (unsigned int i = 5; i < individual_publish_messages.size();) {
+    PublishRequest publish_request1;
+    unsigned int orig_i = i;
+    for (; i < orig_i + 5 && i < individual_publish_messages.size(); ++i) {
+      *publish_request1.mutable_message_publish_request()->add_messages() =
+          individual_publish_messages[i];
+    }
+    EXPECT_CALL(*resumable_stream_,
+                Write(IsProtoEqual(std::move(publish_request1))))
+        .WillOnce(Return(ByMove(make_ready_future(true))));
+  }
+
+  leaked_alarm_();
+
+  for (unsigned int i = 5; i < individual_publish_messages.size(); i += 5) {
+    PublishResponse publish_response1;
+    publish_response1.mutable_message_response()
+        ->mutable_start_cursor()
+        ->set_offset(i);
+    auto temp_read_promise = std::move(read_promise1);
+    read_promise1 = promise<absl::optional<PublishResponse>>{};
+    EXPECT_CALL(*resumable_stream_, Read)
+        .WillOnce(Return(ByMove(read_promise1.get_future())));
+    temp_read_promise.set_value(std::move(publish_response1));
+  }
+
+  for (unsigned int i = 5; i < individual_publish_messages.size(); ++i) {
+    auto individual_message_publish_response = publish_message_futures[i].get();
+    EXPECT_TRUE(individual_message_publish_response);
+    EXPECT_EQ(individual_message_publish_response->offset(), i);
+  }
+
+  // shouldn't do anything b/c no messages left
+  publisher_->Flush();
+
+  EXPECT_CALL(*alarm_token_, Destroy);
+  EXPECT_CALL(*resumable_stream_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  publisher_->Shutdown().get();
+  read_promise1.set_value(absl::optional<PublishResponse>());
+  start_promise.set_value(Status());
+  EXPECT_EQ(publisher_start_future.get(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+}
+
 TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   InSequence seq;
 
