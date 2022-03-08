@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/throughput_result.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include <algorithm>
 #include <sstream>
 #include <string>
@@ -24,48 +22,38 @@ namespace cloud {
 namespace storage_benchmarks {
 
 namespace {
-template <typename T>
-std::string QuoteCsv(T const& element) {
-  std::ostringstream os;
-  os << element;
-  std::string result = os.str();
-  if (result.find_first_of("\",\r\n") == std::string::npos) {
-    return result;
-  }
-
-  // Enclose the string in double quotes, and escape other double quotes.
-  return absl::StrCat(R"(")", absl::StrReplaceAll(result, {{R"(")", R"("")"}}),
-                      R"(")");
-}
 
 std::string CleanupCsv(std::string v) {
   std::replace(v.begin(), v.end(), ',', ';');
+  std::replace(v.begin(), v.end(), '\n', ';');
+  std::replace(v.begin(), v.end(), '\r', ';');
   return v;
 }
 
 }  // namespace
 
 void PrintAsCsv(std::ostream& os, ThroughputResult const& r) {
-  os << ToString(r.library)            // clang-format hack
-     << ',' << ToString(r.transport)   //
-     << ',' << ToString(r.op)          //
-     << ',' << r.object_size           //
-     << ',' << r.transfer_size         //
-     << ',' << r.app_buffer_size       //
-     << ',' << r.lib_buffer_size       //
-     << ',' << r.crc_enabled           //
-     << ',' << r.md5_enabled           //
-     << ',' << r.elapsed_time.count()  //
-     << ',' << r.cpu_time.count()      //
-     << ',' << CleanupCsv(r.peer)      //
-     << ',' << QuoteCsv(r.status)      //
+  os << ToString(r.library)                    // clang-format hack
+     << ',' << ToString(r.transport)           //
+     << ',' << ToString(r.op)                  //
+     << ',' << r.object_size                   //
+     << ',' << r.transfer_size                 //
+     << ',' << r.app_buffer_size               //
+     << ',' << r.lib_buffer_size               //
+     << ',' << r.crc_enabled                   //
+     << ',' << r.md5_enabled                   //
+     << ',' << r.elapsed_time.count()          //
+     << ',' << r.cpu_time.count()              //
+     << ',' << CleanupCsv(r.peer)              //
+     << ',' << r.status.code()                 //
+     << ',' << CleanupCsv(r.status.message())  //
      << '\n';
 }
 
 void PrintThroughputResultHeader(std::ostream& os) {
   os << "Library,Transport,Op,ObjectSize,TransferSize,AppBufferSize"
      << ",LibBufferSize,Crc32cEnabled,MD5Enabled"
-     << ",ElapsedTimeUs,CpuTimeUs,Peer,Status\n";
+     << ",ElapsedTimeUs,CpuTimeUs,Peer,StatusCode,Status\n";
 }
 
 char const* ToString(OpType op) {
