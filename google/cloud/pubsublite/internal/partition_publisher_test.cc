@@ -18,6 +18,7 @@
 #include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
 #include "google/cloud/pubsublite/testing/mock_resumable_async_reader_writer_stream.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -497,36 +498,10 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   }
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
-  for (unsigned int i = 0; i < 10; ++i) {
+  for (unsigned int i = 0; i < 11; ++i) {
     publish_message_futures.push_back(
         publisher_->Publish(individual_publish_messages[i]));
   }
-
-  PublishRequest publish_request;
-  for (unsigned int i = 0; i < 5; ++i) {
-    *publish_request.mutable_message_publish_request()->add_messages() =
-        individual_publish_messages[i];
-  }
-
-  promise<bool> write_promise;
-  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
-      .WillOnce(Return(ByMove(write_promise.get_future())));
-
-  leaked_alarm_();
-
-  publish_message_futures.push_back(
-      publisher_->Publish(individual_publish_messages[10]));
-
-  underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
-      .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
-      .WillOnce(Return(ByMove(make_ready_future(
-          absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
-
-  write_promise.set_value(false);
 
   EXPECT_CALL(*alarm_token_, Destroy);
   EXPECT_CALL(*resumable_stream_, Shutdown)
@@ -547,6 +522,125 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   publisher_->Flush();
   EXPECT_EQ(publisher_start_future.get(),
             Status(StatusCode::kAborted, "`Shutdown` called"));
+}
+
+TEST_F(PartitionPublisherTest, InvalidReadResponse) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(*resumable_stream_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  future<StatusOr<Cursor>> publish_future =
+      publisher_->Publish(PubSubMessage::default_instance());
+
+  PublishRequest publish_request;
+  *publish_request.mutable_message_publish_request()->add_messages() =
+      PubSubMessage::default_instance();
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  leaked_alarm_();
+
+  read_promise.set_value(absl::make_optional(GetInitializerPublishResponse()));
+
+  EXPECT_EQ(
+      publisher_start_future.get(),
+      Status(StatusCode::kAborted,
+             absl::StrCat("Invalid `Read` response: ",
+                          GetInitializerPublishResponse().DebugString())));
+
+  // shouldn't do anything b/c lifecycle ended
+  publisher_->Flush();
+
+  EXPECT_CALL(*alarm_token_, Destroy);
+  EXPECT_CALL(*resumable_stream_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  publisher_->Shutdown().get();
+  start_promise.set_value(Status());
+
+  auto individual_message_publish_response = publish_future.get();
+  EXPECT_FALSE(individual_message_publish_response);
+  EXPECT_EQ(
+      individual_message_publish_response.status(),
+      Status(StatusCode::kAborted,
+             absl::StrCat("Invalid `Read` response: ",
+                          GetInitializerPublishResponse().DebugString())));
+}
+
+TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(*resumable_stream_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  future<StatusOr<Cursor>> publish_future =
+      publisher_->Publish(PubSubMessage::default_instance());
+
+  PublishResponse publish_response1;
+  publish_response1.mutable_message_response()
+      ->mutable_start_cursor()
+      ->set_offset(0);
+  promise<absl::optional<PublishResponse>> read_promise1;
+  read_promise.set_value(std::move(publish_response1));
+
+  EXPECT_EQ(publisher_start_future.get(),
+            Status(StatusCode::kFailedPrecondition,
+                   "Server sent message response when no batches were "
+                   "outstanding."));
+
+  // shouldn't do anything b/c lifecycle ended
+  publisher_->Flush();
+
+  EXPECT_CALL(*alarm_token_, Destroy);
+  EXPECT_CALL(*resumable_stream_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  publisher_->Shutdown().get();
+  start_promise.set_value(Status());
+
+  auto individual_message_publish_response = publish_future.get();
+  EXPECT_FALSE(individual_message_publish_response);
+  EXPECT_EQ(individual_message_publish_response.status(),
+            Status(StatusCode::kFailedPrecondition,
+                   "Server sent message response when no batches were "
+                   "outstanding."));
 }
 
 }  // namespace
