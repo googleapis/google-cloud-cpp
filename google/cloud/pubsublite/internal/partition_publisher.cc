@@ -108,11 +108,10 @@ void PartitionPublisherImpl::WriteBatches() {
   for (auto& message_with_future : in_flight_batches_.back()) {
     *message_publish_request.add_messages() = message_with_future.message;
   }
-
   root.get_future()
       .then(ChainFuture(resumable_stream_->Write(std::move(publish_request))))
       .then([this](future<bool> write_response) {
-        if (write_response.get()) WriteBatches();
+        if (write_response.get()) return WriteBatches();
         std::lock_guard<std::mutex> g{mu_};
         writing_ = false;
       });
@@ -259,6 +258,9 @@ future<StatusOr<UnderlyingStream>> PartitionPublisherImpl::Initializer(
       .then([=](future<Status> status_future) -> StatusOr<UnderlyingStream> {
         Status status = status_future.get();
         if (!status.ok()) return status;
+        std::lock_guard<std::mutex> g{mu_};
+        unsent_batches_ =
+            CreateBatches(UnbatchAllLockHeld(), batching_options_);
         return std::move(*shared_stream);
       });
 }
