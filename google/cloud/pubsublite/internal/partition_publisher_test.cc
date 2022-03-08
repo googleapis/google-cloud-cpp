@@ -93,14 +93,11 @@ class PartitionPublisherTest : public ::testing::Test {
     options.set_maximum_batch_message_count(5);
 
     publisher_ = absl::make_unique<PartitionPublisherImpl>(
-        absl::FunctionRef<std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
-            PublishRequest, PublishResponse>>(
-            StreamInitializer<PublishRequest, PublishResponse>)>(
-            [&](StreamInitializer<PublishRequest, PublishResponse> const&
-                    initializer) {
-              initializer_ = std::move(initializer);
-              return absl::WrapUnique(resumable_stream_);
-            }),
+        [&](StreamInitializer<PublishRequest, PublishResponse> const&
+                initializer) {
+          initializer_ = std::move(initializer);
+          return absl::WrapUnique(resumable_stream_);
+        },
         std::move(options), InitialPublishRequest::default_instance(), alarm_);
   }
 
