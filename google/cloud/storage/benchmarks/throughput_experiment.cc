@@ -68,6 +68,7 @@ class UploadObject : public ThroughputExperiment {
     // ObjectInsert()
     if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
         prefer_insert_) {
+      auto const start = std::chrono::system_clock::now();
       auto timer = Timer::PerThread();
       std::string data =
           random_data_.substr(0, static_cast<std::size_t>(config.object_size));
@@ -79,6 +80,7 @@ class UploadObject : public ThroughputExperiment {
       return ThroughputResult{ExperimentLibrary::kCppClient,
                               transport_,
                               kOpInsert,
+                              start,
                               config.object_size,
                               config.object_size,
                               config.app_buffer_size,
@@ -90,6 +92,7 @@ class UploadObject : public ThroughputExperiment {
                               object_metadata.status(),
                               "[insert-no-peer]"};
     }
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     auto writer = client_.WriteObject(
         bucket_name, object_name,
@@ -109,6 +112,7 @@ class UploadObject : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
                             kOpWrite,
+                            start,
                             config.object_size,
                             config.object_size,
                             config.app_buffer_size,
@@ -150,6 +154,7 @@ class DownloadObject : public ThroughputExperiment {
 
     std::vector<char> buffer(config.app_buffer_size);
 
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     auto reader = client_.ReadObject(
         bucket_name, object_name,
@@ -164,6 +169,7 @@ class DownloadObject : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kCppClient,
                             transport_,
                             config.op,
+                            start,
                             config.object_size,
                             transfer_size,
                             config.app_buffer_size,
@@ -194,8 +200,10 @@ extern "C" std::size_t OnHeader(char*, std::size_t size, std::size_t nitems,
 
 class DownloadObjectLibcurl : public ThroughputExperiment {
  public:
-  explicit DownloadObjectLibcurl(ExperimentTransport transport)
-      : creds_(
+  explicit DownloadObjectLibcurl(ThroughputOptions const& options,
+                                 ExperimentTransport transport)
+      : endpoint_(options.rest_endpoint),
+        creds_(
             google::cloud::storage::oauth2::GoogleDefaultCredentials().value()),
         transport_(transport) {}
   ~DownloadObjectLibcurl() override = default;
@@ -206,6 +214,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     auto header = creds_->AuthorizationHeader();
     if (!header) return {};
 
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     struct curl_slist* slist1 = nullptr;
     slist1 = curl_slist_append(slist1, header->c_str());
@@ -214,11 +223,11 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     curl_easy_setopt(hnd, CURLOPT_BUFFERSIZE, 102400L);
     std::string url;
     if (transport_ == ExperimentTransport::kXml) {
-      url = "https://storage.googleapis.com/" + bucket_name + "/" + object_name;
+      url = endpoint_ + "/" + bucket_name + "/" + object_name;
     } else {
       // For this benchmark it is not necessary to URL escape the object name.
-      url = "https://storage.googleapis.com/storage/v1/b/" + bucket_name +
-            "/o/" + object_name + "?alt=media";
+      url = endpoint_ + "/storage/v1/b/" + bucket_name + "/o/" + object_name +
+            "?alt=media";
     }
     curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
     curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
@@ -253,6 +262,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kRaw,
                             ExperimentTransport::kXml,
                             config.op,
+                            start,
                             config.object_size,
                             config.object_size,
                             config.app_buffer_size,
@@ -266,33 +276,37 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   }
 
  private:
+  std::string endpoint_;
   std::shared_ptr<google::cloud::storage::oauth2::Credentials> creds_;
   ExperimentTransport transport_;
 };
 
 std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(
-    int thread_id, ExperimentTransport transport) {
+    ThroughputOptions const& options, int thread_id,
+    ExperimentTransport transport) {
   grpc::ChannelArguments args;
   args.SetInt("grpc.channel_id", thread_id);
   if (transport == ExperimentTransport::kGrpc) {
-    return grpc::CreateCustomChannel("storage.googleapis.com",
+    return grpc::CreateCustomChannel(options.grpc_endpoint,
                                      grpc::GoogleDefaultCredentials(), args);
   }
-  return grpc::CreateCustomChannel("xds-c2p://storage.googleapis.com",
+  return grpc::CreateCustomChannel(options.direct_path_endpoint,
                                    grpc::GoogleDefaultCredentials(), args);
 }
 
 class DownloadObjectRawGrpc : public ThroughputExperiment {
  public:
-  explicit DownloadObjectRawGrpc(int thread_id, ExperimentTransport transport)
+  explicit DownloadObjectRawGrpc(ThroughputOptions const& options,
+                                 int thread_id, ExperimentTransport transport)
       : stub_(google::storage::v2::Storage::NewStub(
-            CreateGcsChannel(thread_id, transport))),
+            CreateGcsChannel(options, thread_id, transport))),
         transport_(transport) {}
   ~DownloadObjectRawGrpc() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     google::storage::v2::ReadObjectRequest request;
     request.set_bucket(bucket_name);
@@ -313,6 +327,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     return ThroughputResult{ExperimentLibrary::kRaw,
                             transport_,
                             config.op,
+                            start,
                             config.object_size,
                             bytes_received,
                             config.app_buffer_size,
@@ -378,10 +393,10 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
     }
     for (auto t : options.transports) {
       if (t == ExperimentTransport::kJson || t == ExperimentTransport::kXml) {
-        result.push_back(absl::make_unique<DownloadObjectLibcurl>(t));
+        result.push_back(absl::make_unique<DownloadObjectLibcurl>(options, t));
       } else {
         result.push_back(
-            absl::make_unique<DownloadObjectRawGrpc>(thread_id, t));
+            absl::make_unique<DownloadObjectRawGrpc>(options, thread_id, t));
       }
     }
   }

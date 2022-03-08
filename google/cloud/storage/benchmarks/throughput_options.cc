@@ -139,6 +139,15 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options, &parse_checksums](std::string const& val) {
          options.enabled_md5 = parse_checksums(val);
        }},
+      {"--rest-endpoint", "sets the endpoint for REST-based benchmarks",
+       [&options](std::string const& val) { options.rest_endpoint = val; }},
+      {"--grpc-endpoint", "sets the endpoint for gRPC-based benchmarks",
+       [&options](std::string const& val) { options.grpc_endpoint = val; }},
+      {"--direct-path-endpoint",
+       "sets the endpoint for gRPC+DirectPath-based benchmarks",
+       [&options](std::string const& val) {
+         options.direct_path_endpoint = val;
+       }},
   };
   auto usage = BuildUsage(desc, argv[0]);
 

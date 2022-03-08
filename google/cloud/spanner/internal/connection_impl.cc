@@ -428,39 +428,39 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     return MakeStatusOnlyResult<spanner::RowStream>(std::move(prepare_status));
   }
 
-  spanner_proto::ReadRequest request;
-  request.set_session(session->session_name());
-  *request.mutable_transaction() = *s;
-  request.set_table(std::move(params.table));
-  request.set_index(std::move(params.read_options.index_name));
+  auto request = std::make_shared<spanner_proto::ReadRequest>();
+  request->set_session(session->session_name());
+  *request->mutable_transaction() = *s;
+  request->set_table(std::move(params.table));
+  request->set_index(std::move(params.read_options.index_name));
   for (auto&& column : params.columns) {
-    request.add_columns(std::move(column));
+    request->add_columns(std::move(column));
   }
-  *request.mutable_key_set() = ToProto(std::move(params.keys));
-  request.set_limit(params.read_options.limit);
+  *request->mutable_key_set() = ToProto(std::move(params.keys));
+  request->set_limit(params.read_options.limit);
   if (params.partition_token) {
-    request.set_partition_token(*std::move(params.partition_token));
+    request->set_partition_token(*std::move(params.partition_token));
   }
-  request.mutable_request_options()->set_priority(
+  request->mutable_request_options()->set_priority(
       ProtoRequestPriority(params.read_options.request_priority));
   if (params.read_options.request_tag.has_value()) {
-    request.mutable_request_options()->set_request_tag(
+    request->mutable_request_options()->set_request_tag(
         *std::move(params.read_options.request_tag));
   }
-  request.mutable_request_options()->set_transaction_tag(transaction_tag);
+  request->mutable_request_options()->set_transaction_tag(transaction_tag);
 
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
   auto stub = session_pool_->GetStub(*session);
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
-  auto factory = [stub, &request, tracing_enabled,
+  auto factory = [stub, request, tracing_enabled,
                   tracing_options](std::string const& resume_token) mutable {
-    request.set_resume_token(resume_token);
+    request->set_resume_token(resume_token);
     auto context = absl::make_unique<grpc::ClientContext>();
     std::unique_ptr<PartialResultSetReader> reader =
         absl::make_unique<DefaultPartialResultSetReader>(
-            std::move(context), stub->StreamingRead(*context, request));
+            std::move(context), stub->StreamingRead(*context, *request));
     if (tracing_enabled) {
       reader = absl::make_unique<LoggingResultSetReader>(std::move(reader),
                                                          tracing_options);
@@ -482,11 +482,11 @@ spanner::RowStream ConnectionImpl::ReadImpl(
         s->set_id(metadata->transaction().id());
       } else {
         auto begin = BeginTransaction(session, s->begin(),
-                                      request.request_options().request_tag(),
+                                      request->request_options().request_tag(),
                                       transaction_tag, __func__);
         if (begin.ok()) {
           s->set_id(begin->id());
-          *request.mutable_transaction() = *s;
+          *request->mutable_transaction() = *s;
           continue;
         }
         s = begin.status();  // invalidate the transaction

@@ -48,6 +48,9 @@ TEST(ThroughputOptions, Basic) {
       "--enabled-crc32c=enabled",
       "--enabled-md5=disabled",
       "--client-per-thread=false",
+      "--rest-endpoint=test-only-rest",
+      "--grpc-endpoint=test-only-grpc",
+      "--direct-path-endpoint=test-only-direct-path",
   });
   ASSERT_STATUS_OK(options);
   EXPECT_EQ("test-project", options->project_id);
@@ -73,6 +76,9 @@ TEST(ThroughputOptions, Basic) {
                   ExperimentTransport::kJson, ExperimentTransport::kXml));
   EXPECT_THAT(options->enabled_crc32c, ElementsAre(true));
   EXPECT_THAT(options->enabled_md5, ElementsAre(false));
+  EXPECT_EQ("test-only-rest", options->rest_endpoint);
+  EXPECT_EQ("test-only-grpc", options->grpc_endpoint);
+  EXPECT_EQ("test-only-direct-path", options->direct_path_endpoint);
 }
 
 TEST(ThroughputOptions, Description) {

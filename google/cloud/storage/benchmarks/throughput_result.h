@@ -63,6 +63,8 @@ struct ThroughputResult {
   ExperimentTransport transport;
   /// The type of operation in this experiment.
   OpType op;
+  /// The start time for this result.
+  std::chrono::system_clock::time_point start;
   /// The total size of the object involved in this experiment. Currently also
   /// represents the number of bytes transferred.
   std::int64_t object_size;

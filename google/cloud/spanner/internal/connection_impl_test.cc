@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
+#include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -269,9 +270,11 @@ class MockGrpcReader
 };
 
 // Creates a MockGrpcReader that yields the specified `PartialResultSet`
-// `responses` (which can be given in proto or text format) in sequence.
+// `responses` (which can be given in proto or text format) in sequence,
+// and then yields the specified `status` (default OK).
 std::unique_ptr<MockGrpcReader> MakeReader(
-    std::vector<spanner_proto::PartialResultSet> responses) {
+    std::vector<spanner_proto::PartialResultSet> responses,
+    grpc::Status status = grpc::Status()) {
   auto reader = absl::make_unique<MockGrpcReader>();
   Sequence s;
   for (auto& response : responses) {
@@ -280,12 +283,15 @@ std::unique_ptr<MockGrpcReader> MakeReader(
         .WillOnce(DoAll(SetArgPointee<0>(std::move(response)), Return(true)));
   }
   EXPECT_CALL(*reader, Read).InSequence(s).WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).InSequence(s).WillOnce(Return(grpc::Status()));
+  EXPECT_CALL(*reader, Finish())
+      .InSequence(s)
+      .WillOnce(Return(std::move(status)));
   return reader;
 }
 
 std::unique_ptr<MockGrpcReader> MakeReader(
-    std::vector<std::string> const& responses) {
+    std::vector<std::string> const& responses,
+    grpc::Status status = grpc::Status()) {
   std::vector<spanner_proto::PartialResultSet> response_protos;
   response_protos.resize(responses.size());
   for (std::size_t i = 0; i < responses.size(); ++i) {
@@ -293,15 +299,14 @@ std::unique_ptr<MockGrpcReader> MakeReader(
       ADD_FAILURE() << "Failed to parse proto " << responses[i];
     }
   }
-  return MakeReader(std::move(response_protos));
+  return MakeReader(std::move(response_protos), std::move(status));
 }
 
-// Creates a MockGrpcReader that fails and yields the specified `status`.
-std::unique_ptr<MockGrpcReader> MakeFailingReader(grpc::Status status) {
-  auto reader = absl::make_unique<MockGrpcReader>();
-  EXPECT_CALL(*reader, Read).WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(std::move(status)));
-  return reader;
+std::unique_ptr<MockGrpcReader> MakeReader(
+    std::initializer_list<internal::NonConstructible>,
+    grpc::Status status = grpc::Status()) {
+  return MakeReader(std::vector<spanner_proto::PartialResultSet>{},
+                    std::move(status));
 }
 
 TEST(ConnectionImplTest, ReadGetSessionFailure) {
@@ -337,7 +342,7 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
   grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
                              "uh-oh in GrpcReader::Finish");
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(MakeFailingReader(finish_status))));
+      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
@@ -360,29 +365,36 @@ TEST(ConnectionImplTest, ReadSuccess) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
 
   grpc::Status retry_status(grpc::StatusCode::UNAVAILABLE, "try-again");
-  auto constexpr kText = R"pb(
-    metadata: {
-      row_type: {
-        fields: {
-          name: "UserId",
-          type: { code: INT64 }
+  std::vector<std::string> responses = {
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
         }
-        fields: {
-          name: "UserName",
-          type: { code: STRING }
-        }
-      }
-    }
-    values: { string_value: "12" }
-    values: { string_value: "Steve" }
-    values: { string_value: "42" }
-    values: { string_value: "Ann" }
-  )pb";
+        resume_token: "test-token-0"
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+      )pb",
+      R"pb(
+        resume_token: "test-token-1"
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+      )pb",
+  };
   EXPECT_CALL(*mock,
               StreamingRead(
                   _, HasPriority(spanner_proto::RequestOptions::PRIORITY_LOW)))
-      .WillOnce(Return(ByMove(MakeFailingReader(retry_status))))
-      .WillOnce(Return(ByMove(MakeReader({kText}))));
+      .WillOnce(Return(ByMove(MakeReader({}, retry_status))))
+      .WillOnce(Return(ByMove(MakeReader({responses[0]}, retry_status))))
+      .WillOnce(Return(ByMove(MakeReader({responses[1]}))));
 
   spanner::ReadOptions read_options;
   read_options.request_priority = spanner::RequestPriority::kLow;
@@ -416,7 +428,7 @@ TEST(ConnectionImplTest, ReadPermanentFailure) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(
-          MakeFailingReader({grpc::StatusCode::PERMISSION_DENIED, "uh-oh"}))));
+          MakeReader({}, {grpc::StatusCode::PERMISSION_DENIED, "uh-oh"}))));
 
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
@@ -441,7 +453,7 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
       .WillRepeatedly([](Unused, Unused) {
-        return MakeFailingReader({grpc::StatusCode::UNAVAILABLE, "try-again"});
+        return MakeReader({}, {grpc::StatusCode::UNAVAILABLE, "try-again"});
       });
 
   auto rows = conn->Read(
@@ -482,7 +494,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   grpc::Status grpc_status(grpc::StatusCode::UNAVAILABLE, "uh-oh");
-  auto failing_reader = MakeFailingReader(grpc_status);
+  auto failing_reader = MakeReader({}, grpc_status);
   auto constexpr kText = R"pb(
     metadata: {
       transaction: { id: "ABCDEF00" }
@@ -544,7 +556,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
   grpc::Status grpc_status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
-  auto failing_reader = MakeFailingReader(grpc_status);
+  auto failing_reader = MakeReader({}, grpc_status);
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -611,8 +623,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   auto conn = MakeLimitedRetryConnection(db, mock);
 
   grpc::Status grpc_status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
-  auto reader1 = MakeFailingReader(grpc_status);
-  auto reader2 = MakeFailingReader(grpc_status);
+  auto reader1 = MakeReader({}, grpc_status);
+  auto reader2 = MakeReader({}, grpc_status);
   // n.b. these calls are explicitly sequenced because using the scoped
   // `InSequence` object causes gMock to get confused by the reader calls.
   Sequence s;
@@ -669,8 +681,8 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(
-          Return(ByMove(MakeFailingReader({grpc::StatusCode::PERMISSION_DENIED,
-                                           "uh-oh in GrpcReader::Finish"}))));
+          Return(ByMove(MakeReader({}, {grpc::StatusCode::PERMISSION_DENIED,
+                                        "uh-oh in GrpcReader::Finish"}))));
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
@@ -1255,7 +1267,7 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
   grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
                              "uh-oh in GrpcReader::Finish");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeFailingReader(finish_status))));
+      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
@@ -1699,8 +1711,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   EXPECT_CALL(*mock, ExecuteStreamingSql(
                          _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
       .WillOnce(Return(
-          ByMove(MakeFailingReader({grpc::StatusCode::UNAVAILABLE,
-                                    "try-again in ExecutePartitionedDml"}))))
+          ByMove(MakeReader({}, {grpc::StatusCode::UNAVAILABLE,
+                                 "try-again in ExecutePartitionedDml"}))))
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto result = conn->ExecutePartitionedDml(
@@ -1742,8 +1754,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
   // A `kInternal` status can be treated as transient based on the message.
   // This tests that other `kInternal` errors are treated as permanent.
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeFailingReader(
-          {grpc::StatusCode::INTERNAL, "permanent failure"}))));
+      .WillOnce(Return(ByMove(
+          MakeReader({}, {grpc::StatusCode::INTERNAL, "permanent failure"}))));
   auto result = conn->ExecutePartitionedDml(
       {spanner::SqlStatement("delete * from table")});
   EXPECT_THAT(result,
@@ -1767,8 +1779,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
       .WillRepeatedly([](Unused, Unused) {
-        return MakeFailingReader({grpc::StatusCode::UNAVAILABLE,
-                                  "try-again in ExecutePartitionedDml"});
+        return MakeReader({}, {grpc::StatusCode::UNAVAILABLE,
+                               "try-again in ExecutePartitionedDml"});
       });
 
   auto result = conn->ExecutePartitionedDml(
@@ -1798,11 +1810,12 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
   // the gRPC connection has been closed (which these do), they are treated as
   // transient failures.
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeFailingReader(
-          {grpc::StatusCode::INTERNAL,
-           "Received unexpected EOS on DATA frame from server"}))))
-      .WillOnce(Return(ByMove(MakeFailingReader(
-          {grpc::StatusCode::INTERNAL, "HTTP/2 error code: INTERNAL_ERROR"}))))
+      .WillOnce(Return(ByMove(MakeReader(
+          {}, {grpc::StatusCode::INTERNAL,
+               "Received unexpected EOS on DATA frame from server"}))))
+      .WillOnce(
+          Return(ByMove(MakeReader({}, {grpc::StatusCode::INTERNAL,
+                                        "HTTP/2 error code: INTERNAL_ERROR"}))))
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto result = conn->ExecutePartitionedDml(
@@ -2660,7 +2673,7 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(MakeFailingReader(finish_status))));
+      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -2699,7 +2712,7 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeFailingReader(finish_status))));
+      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
@@ -2718,7 +2731,7 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   grpc::Status finish_status(grpc::StatusCode::NOT_FOUND, "Session not found");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce(Return(ByMove(MakeFailingReader(finish_status))));
+      .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = spanner::MakeReadWriteTransaction();
