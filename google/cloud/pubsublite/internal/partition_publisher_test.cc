@@ -643,6 +643,74 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
                    "outstanding."));
 }
 
+TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(*resumable_stream_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(absl::WrapUnique(underlying_stream));
+
+  future<StatusOr<Cursor>> publish_future =
+      publisher_->Publish(PubSubMessage::default_instance());
+
+  PublishRequest publish_request;
+  *publish_request.mutable_message_publish_request()->add_messages() =
+      PubSubMessage::default_instance();
+  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  leaked_alarm_();
+
+  PublishResponse publish_response1;
+  publish_response1.mutable_message_response()
+      ->mutable_start_cursor()
+      ->set_offset(0);
+  promise<absl::optional<PublishResponse>> read_promise1;
+  EXPECT_CALL(*resumable_stream_, Read)
+      .WillOnce(Return(ByMove(read_promise1.get_future())));
+  read_promise.set_value(std::move(publish_response1));
+
+  auto individual_message_publish_response = publish_future.get();
+  EXPECT_TRUE(individual_message_publish_response);
+  EXPECT_EQ(individual_message_publish_response->offset(), 0);
+
+  // shouldn't do anything b/c no messages left
+  publisher_->Flush();
+
+  EXPECT_CALL(*alarm_token_, Destroy);
+  EXPECT_CALL(*resumable_stream_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  publisher_->Shutdown().get();
+  read_promise1.set_value(absl::optional<PublishResponse>());
+  start_promise.set_value(Status());
+  EXPECT_EQ(publisher_start_future.get(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+
+  publish_future = publisher_->Publish(PubSubMessage::default_instance());
+  auto invalid_publish_response = publish_future.get();
+  EXPECT_FALSE(invalid_publish_response.ok());
+  EXPECT_EQ(invalid_publish_response.status(),
+            Status(StatusCode::kAborted, "Already shut down."));
+}
+
 }  // namespace
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
