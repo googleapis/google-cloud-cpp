@@ -188,6 +188,94 @@ TEST_F(PartitionPublisherBatchingTest,
   }
 }
 
+TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
+  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
+      message_with_futures;
+  std::deque<PubSubMessage> messages;
+  for (unsigned int i = 0; i < 10; ++i) {
+    PubSubMessage message;
+    *message.mutable_key() = "key";
+    *message.mutable_data() = std::to_string(i);
+    promise<StatusOr<Cursor>> message_promise;
+    message_promise.get_future().then(
+        [i](future<StatusOr<Cursor>> status_future) {
+          auto status = status_future.get();
+          EXPECT_FALSE(status.ok());
+          EXPECT_EQ(status.status(),
+                    Status(StatusCode::kUnavailable,
+                           absl::StrCat("batch:", std::to_string(i / 3),
+                                        "offset:", std::to_string(i))));
+        });
+    message_with_futures.emplace_back(
+        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
+            message, std::move(message_promise)});
+    messages.push_back(std::move(message));
+  }
+  BatchingOptions options;
+  options.set_maximum_batch_message_count(3);
+
+  auto batches =
+      TestCreateBatches(std::move(message_with_futures), std::move(options));
+  EXPECT_EQ(batches.size(), ceil(messages.size() / 3.0));
+  for (unsigned int i = 0; i < batches.size(); ++i) {
+    auto& batch = batches[i];
+    if (i < batches.size() - 1) {
+      EXPECT_EQ(batch.size(), 3);
+    } else {
+      EXPECT_EQ(batch.size(), messages.size() % 3);
+    }
+    for (unsigned int j = 0; j < batch.size(); ++j) {
+      EXPECT_THAT(batch[j].first, IsProtoEqual(messages[i * 3 + j]));
+      batch[j].second.set_value(StatusOr<Cursor>{
+          Status(StatusCode::kUnavailable,
+                 absl::StrCat("batch:", std::to_string(i),
+                              "offset:", std::to_string(i * 3 + j)))});
+    }
+  }
+}
+
+TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
+  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
+      message_with_futures;
+  std::deque<PubSubMessage> messages;
+  for (unsigned int i = 0; i < 9; ++i) {
+    PubSubMessage message;
+    *message.mutable_key() = "key";
+    *message.mutable_data() = std::to_string(i);
+    promise<StatusOr<Cursor>> message_promise;
+    message_promise.get_future().then(
+        [i](future<StatusOr<Cursor>> status_future) {
+          auto status = status_future.get();
+          EXPECT_FALSE(status.ok());
+          EXPECT_EQ(status.status(),
+                    Status(StatusCode::kUnavailable,
+                           absl::StrCat("batch:", std::to_string(i / 3),
+                                        "offset:", std::to_string(i))));
+        });
+    message_with_futures.emplace_back(
+        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
+            message, std::move(message_promise)});
+    messages.push_back(std::move(message));
+  }
+  BatchingOptions options;
+  options.set_maximum_batch_bytes(messages[0].ByteSizeLong() * 3);
+
+  auto batches =
+      TestCreateBatches(std::move(message_with_futures), std::move(options));
+  EXPECT_EQ(batches.size(), ceil(messages.size() / 3.0));
+  for (unsigned int i = 0; i < batches.size(); ++i) {
+    auto& batch = batches[i];
+    EXPECT_EQ(batch.size(), 3);
+    for (unsigned int j = 0; j < batch.size(); ++j) {
+      EXPECT_THAT(batch[j].first, IsProtoEqual(messages[i * 3 + j]));
+      batch[j].second.set_value(StatusOr<Cursor>{
+          Status(StatusCode::kUnavailable,
+                 absl::StrCat("batch:", std::to_string(i),
+                              "offset:", std::to_string(i * 3 + j)))});
+    }
+  }
+}
+
 class PartitionPublisherTest : public ::testing::Test {
  protected:
   PartitionPublisherTest() {
