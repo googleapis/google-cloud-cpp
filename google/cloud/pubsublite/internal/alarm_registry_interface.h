@@ -25,16 +25,16 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class AlarmRegistryInterface {
+class AlarmRegistry {
  protected:
-  AlarmRegistryInterface() = default;
+  AlarmRegistry() = default;
 
  public:
-  virtual ~AlarmRegistryInterface() = default;
-  AlarmRegistryInterface(const AlarmRegistryInterface&) = delete;
-  AlarmRegistryInterface& operator=(const AlarmRegistryInterface&) = delete;
-  AlarmRegistryInterface(AlarmRegistryInterface&&) = delete;
-  AlarmRegistryInterface& operator=(AlarmRegistryInterface&&) = delete;
+  virtual ~AlarmRegistry() = default;
+  AlarmRegistry(const AlarmRegistry&) = delete;
+  AlarmRegistry& operator=(const AlarmRegistry&) = delete;
+  AlarmRegistry(AlarmRegistry&&) = delete;
+  AlarmRegistry& operator=(AlarmRegistry&&) = delete;
   // When CancelToken is destroyed, the alarm will not be running and will never
   // run again.
   class CancelToken {
@@ -45,7 +45,7 @@ class AlarmRegistryInterface {
     virtual ~CancelToken() = default;
     CancelToken(const CancelToken&) = delete;
     CancelToken& operator=(const CancelToken&) = delete;
-    CancelToken(AlarmRegistryInterface&&) = delete;
+    CancelToken(AlarmRegistry&&) = delete;
     CancelToken& operator=(CancelToken&&) = delete;
   };
 

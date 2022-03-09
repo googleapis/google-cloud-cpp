@@ -18,7 +18,6 @@
 
 pubsublite_testing_hdrs = [
     "testing/mock_alarm_registry.h",
-    "testing/mock_alarm_token.h",
     "testing/mock_async_reader_writer.h",
     "testing/mock_backoff_policy.h",
     "testing/mock_resumable_async_reader_writer_stream.h",

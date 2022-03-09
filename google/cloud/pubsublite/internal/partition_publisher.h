@@ -30,20 +30,19 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class PartitionPublisherImpl
+class PartitionPublisher
     : public Publisher<google::cloud::pubsublite::v1::Cursor> {
  public:
-  explicit PartitionPublisherImpl(
+  explicit PartitionPublisher(
       absl::FunctionRef<std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
           google::cloud::pubsublite::v1::PublishRequest,
           google::cloud::pubsublite::v1::PublishResponse>>(
           StreamInitializer<google::cloud::pubsublite::v1::PublishRequest,
                             google::cloud::pubsublite::v1::PublishResponse>)>,
       google::cloud::pubsublite::BatchingOptions,
-      google::cloud::pubsublite::v1::InitialPublishRequest,
-      AlarmRegistryInterface&);
+      google::cloud::pubsublite::v1::InitialPublishRequest, AlarmRegistry&);
 
-  ~PartitionPublisherImpl() override;
+  ~PartitionPublisher() override;
 
   future<Status> Start() override;
 
@@ -100,7 +99,7 @@ class PartitionPublisherImpl
       in_flight_batches_;  // ABSL_GUARDED_BY(mu_)
   bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
 
-  std::unique_ptr<AlarmRegistryInterface::CancelToken> cancel_token_;
+  std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 
   friend class PartitionPublisherBatchingTest;
 };
