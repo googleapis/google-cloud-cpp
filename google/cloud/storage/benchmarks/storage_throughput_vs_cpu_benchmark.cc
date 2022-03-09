@@ -201,6 +201,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  // Serialize output to `std::cout`.
   std::mutex mu;
   auto handler = [&mu](gcs_bm::ThroughputResult const& result) {
     std::lock_guard<std::mutex> lk(mu);
