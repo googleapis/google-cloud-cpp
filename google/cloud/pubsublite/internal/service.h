@@ -68,10 +68,6 @@ class Service {
    * finish.
    *
    * Must be called before destroying this object and may only be called once.
-   * No other method may be called on this object afterward.
-   *
-   * @note The above restriction applies to all additional member functions
-   * present in derived classes, if any.
    */
   virtual future<void> Shutdown() = 0;
 };
