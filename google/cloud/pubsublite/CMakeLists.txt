@@ -85,7 +85,6 @@ add_library(
     internal/admin_stub.h
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
-    internal/base_interface.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc
@@ -97,7 +96,6 @@ add_library(
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
     internal/futures.h
-    internal/lifecycle_interface.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -119,6 +117,7 @@ add_library(
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
     internal/resumable_async_streaming_read_write_rpc.h
+    internal/service.h
     internal/stream_factory.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
