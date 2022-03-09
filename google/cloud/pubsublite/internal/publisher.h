@@ -39,7 +39,7 @@ class Publisher : public Service {
    * the RPCs is met.
    *
    * @note This function does not return any status or error codes, the
-   *     application can use the `future<StatusOr<std::string>>` returned in
+   *     application can use the `future<StatusOr<ReturnT>>` returned in
    *     each `Publish()` call to find out what the results are.
    */
   virtual void Flush() = 0;
