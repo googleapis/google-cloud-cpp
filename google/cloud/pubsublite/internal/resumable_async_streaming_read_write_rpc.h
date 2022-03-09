@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_RESUMABLE_ASYNC_STREAMING_READ_WRITE_RPC_H
 
 #include "google/cloud/pubsublite/internal/futures.h"
+#include "google/cloud/pubsublite/internal/service.h"
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -97,24 +98,9 @@ using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
  * @endcode
  */
 template <typename RequestType, typename ResponseType>
-class ResumableAsyncStreamingReadWriteRpc {
+class ResumableAsyncStreamingReadWriteRpc : public Service {
  public:
-  virtual ~ResumableAsyncStreamingReadWriteRpc() = default;
-
-  /**
-   * Start the streaming RPC.
-   *
-   * The future returned by this function is satisfied when the stream
-   * is successfully shut down (in which case in contains an ok status),
-   * or when the retry policies to resume the stream are exhausted. The
-   * latter includes the case where the stream fails with a permanent
-   * error.
-   *
-   * While the stream is usable immediately after this function returns,
-   * any `Read()` or `Write()` calls will fail until the stream is initialized
-   * successfully.
-   */
-  virtual future<Status> Start() = 0;
+  ~ResumableAsyncStreamingReadWriteRpc() override = default;
 
   /**
    * Read one response from the streaming RPC.
@@ -164,21 +150,6 @@ class ResumableAsyncStreamingReadWriteRpc {
    * again to write the value to a new underlying stream.
    */
   virtual future<bool> Write(RequestType const&) = 0;
-
-  /**
-   * Finishes the streaming RPC.
-   *
-   * This will cause any outstanding `Read` or `Write` to fail. This may be
-   * called while a `Read` or `Write` of an object of this class is outstanding.
-   * Internally, the class will manage waiting on `Read` and `Write` calls on a
-   * gRPC stream before calling `Finish` on its underlying stream as per
-   * `google::cloud::AsyncStreamingReadWriteRpc`. If the class is currently in a
-   * retry loop, this will terminate the retry loop and then satisfy the
-   * returned future. If the class has a present internal outstanding `Read` or
-   * `Write`, this call will satisfy the returned future only after the internal
-   * `Read` and/or `Write` finish.
-   */
-  virtual future<void> Shutdown() = 0;
 };
 
 template <typename RequestType, typename ResponseType>
@@ -213,6 +184,19 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       ResumableAsyncStreamingReadWriteRpc<RequestType, ResponseType>&&) =
       delete;
 
+  /**
+   * Start the streaming RPC.
+   *
+   * The future returned by this function is satisfied when the stream
+   * is successfully shut down (in which case in contains an ok status),
+   * or when the retry policies to resume the stream are exhausted. The
+   * latter includes the case where the stream fails with a permanent
+   * error.
+   *
+   * While the stream is usable immediately after this function returns,
+   * any `Read()` or `Write()` calls will fail until the stream is initialized
+   * successfully.
+   */
   future<Status> Start() override {
     future<Status> status_future;
     {
@@ -278,6 +262,19 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     });
   }
 
+  /**
+   * Finishes the streaming RPC.
+   *
+   * This will cause any outstanding `Read` or `Write` to fail. This may be
+   * called while a `Read` or `Write` of an object of this class is outstanding.
+   * Internally, the class will manage waiting on `Read` and `Write` calls on a
+   * gRPC stream before calling `Finish` on its underlying stream as per
+   * `google::cloud::AsyncStreamingReadWriteRpc`. If the class is currently in a
+   * retry loop, this will terminate the retry loop and then satisfy the
+   * returned future. If the class has a present internal outstanding `Read` or
+   * `Write`, this call will satisfy the returned future only after the internal
+   * `Read` and/or `Write` finish.
+   */
   future<void> Shutdown() override {
     AsyncRoot root_promise;
     future<void> root_future =
