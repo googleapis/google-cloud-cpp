@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_RESUMABLE_ASYNC_STREAMING_READ_WRITE_RPC_H
 
 #include "google/cloud/pubsublite/internal/futures.h"
-#include "google/cloud/pubsublite/internal/lifecycle_interface.h"
+#include "google/cloud/pubsublite/internal/service.h"
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -98,8 +98,10 @@ using RetryPolicyFactory = std::function<std::unique_ptr<RetryPolicy>()>;
  * @endcode
  */
 template <typename RequestType, typename ResponseType>
-class ResumableAsyncStreamingReadWriteRpc : public LifecycleInterface {
+class ResumableAsyncStreamingReadWriteRpc : public Service {
  public:
+  ~ResumableAsyncStreamingReadWriteRpc() override = default;
+
   /**
    * Read one response from the streaming RPC.
    *
@@ -168,9 +170,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   ~ResumableAsyncStreamingReadWriteRpcImpl() override {
     future<void> shutdown = Shutdown();
     if (!shutdown.is_ready()) {
-      GCP_LOG(WARNING)
-          << "`Shutdown` must be called and finished before object "
-             "goes out of scope.";
+      GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
+                          "goes out of scope.";
       assert(false);
     }
     shutdown.get();

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_H
 
-#include "google/cloud/pubsublite/internal/lifecycle_interface.h"
+#include "google/cloud/pubsublite/internal/service.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/pubsublite/v1/common.pb.h>
@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 template <class ReturnT>
-class Publisher : public LifecycleInterface {
+class Publisher : public Service {
  public:
   virtual future<StatusOr<ReturnT>> Publish(
       google::cloud::pubsublite::v1::PubSubMessage m) = 0;
@@ -39,7 +39,7 @@ class Publisher : public LifecycleInterface {
    * the RPCs is met.
    *
    * @note This function does not return any status or error codes, the
-   *     application can use the `future<StatusOr<std::string>>` returned in
+   *     application can use the `future<StatusOr<ReturnT>>` returned in
    *     each `Publish()` call to find out what the results are.
    */
   virtual void Flush() = 0;

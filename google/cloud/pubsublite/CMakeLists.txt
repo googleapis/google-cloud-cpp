@@ -90,7 +90,6 @@ add_library(
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
     internal/alarm_registry_interface.h
-    internal/base_interface.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc
@@ -102,8 +101,6 @@ add_library(
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
     internal/futures.h
-    internal/lifecycle_helper.h
-    internal/lifecycle_interface.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -128,6 +125,8 @@ add_library(
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
     internal/resumable_async_streaming_read_write_rpc.h
+    internal/service.h
+    internal/service_composite.h
     internal/stream_factory.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
@@ -230,7 +229,6 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         pubsublite_testing
         INTERFACE
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm_registry.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm_token.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_resumable_async_reader_writer_stream.h

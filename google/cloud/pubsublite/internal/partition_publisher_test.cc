@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/pubsublite/testing/mock_alarm_registry.h"
-#include "google/cloud/pubsublite/testing/mock_alarm_token.h"
 #include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
 #include "google/cloud/pubsublite/testing/mock_resumable_async_reader_writer_stream.h"
 #include "google/cloud/future.h"
@@ -50,9 +49,9 @@ using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
 using ::google::cloud::pubsublite_testing::MockAlarmRegistry;
+using ::google::cloud::pubsublite_testing::MockAlarmRegistryCancelToken;
 using ::google::cloud::pubsublite_testing::MockAsyncReaderWriter;
 using ::google::cloud::pubsublite_testing::MockResumableAsyncReaderWriter;
-using ::google::cloud::pubsublite_testing::MockToken;
 
 using AsyncReaderWriter =
     MockAsyncReaderWriter<PublishRequest, PublishResponse>;
@@ -88,14 +87,13 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
   TestCreateBatches(
       std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>> messages,
       google::cloud::pubsublite::BatchingOptions const& options) {
-    std::deque<PartitionPublisherImpl::MessageWithFuture> message_with_futures;
+    std::deque<PartitionPublisher::MessageWithFuture> message_with_futures;
     for (auto& message_with_future : messages) {
-      message_with_futures.emplace_back(
-          PartitionPublisherImpl::MessageWithFuture{
-              std::move(message_with_future.first),
-              std::move(message_with_future.second)});
+      message_with_futures.emplace_back(PartitionPublisher::MessageWithFuture{
+          std::move(message_with_future.first),
+          std::move(message_with_future.second)});
     }
-    auto batches = PartitionPublisherImpl::CreateBatches(
+    auto batches = PartitionPublisher::CreateBatches(
         std::move(message_with_futures), std::move(options));
     std::deque<std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>>
         ret_batches;
@@ -289,7 +287,7 @@ class PartitionPublisherTest : public ::testing::Test {
     options.set_maximum_batch_message_count(batch_boundary_);
     options.set_alarm_period(kAlarmDuration);
 
-    publisher_ = absl::make_unique<PartitionPublisherImpl>(
+    publisher_ = absl::make_unique<PartitionPublisher>(
         [&](StreamInitializer<PublishRequest, PublishResponse> const&
                 initializer) {
           initializer_ = std::move(initializer);
@@ -300,7 +298,8 @@ class PartitionPublisherTest : public ::testing::Test {
 
   unsigned int batch_boundary_ = 5;
   StreamInitializer<PublishRequest, PublishResponse> initializer_;
-  MockToken* alarm_token_ = new StrictMock<MockToken>;
+  MockAlarmRegistryCancelToken* alarm_token_ =
+      new StrictMock<MockAlarmRegistryCancelToken>;
   MockAlarmRegistry alarm_;
   std::function<void()> leaked_alarm_;
   MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>*

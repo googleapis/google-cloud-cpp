@@ -24,10 +24,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_testing {
 
 class MockAlarmRegistry
-    : public google::cloud::pubsublite_internal::AlarmRegistryInterface {
+    : public google::cloud::pubsublite_internal::AlarmRegistry {
  public:
   MOCK_METHOD(std::unique_ptr<CancelToken>, RegisterAlarm,
               (std::chrono::milliseconds, std::function<void()>), (override));
+};
+
+class MockAlarmRegistryCancelToken
+    : public google::cloud::pubsublite_internal::AlarmRegistry::CancelToken {
+ public:
+  ~MockAlarmRegistryCancelToken() override { Destroy(); }
+  MOCK_METHOD(void, Destroy, (), ());
 };
 
 }  // namespace pubsublite_testing

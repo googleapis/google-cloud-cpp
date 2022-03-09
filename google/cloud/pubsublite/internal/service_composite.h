@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_HELPER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_HELPER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SERVICE_COMPOSITE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SERVICE_COMPOSITE_H
 
 #include "google/cloud/pubsublite/internal/futures.h"
-#include "google/cloud/pubsublite/internal/lifecycle_interface.h"
+#include "google/cloud/pubsublite/internal/service.h"
 #include <mutex>
 #include <vector>
 
@@ -25,15 +25,14 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class LifecycleHelper {
+class ServiceComposite {
  public:
-  template <class... LifecycleT>
-  explicit LifecycleHelper(LifecycleT&... dependencies)
-      : dependencies_{
-            {std::ref(static_cast<LifecycleInterface&>(dependencies))...}} {}
+  template <class... ServiceT>
+  explicit ServiceComposite(ServiceT&... dependencies)
+      : dependencies_{{std::ref(static_cast<Service&>(dependencies))...}} {}
 
   future<Status> Start() {
-    for (LifecycleInterface& dependency : dependencies_) {
+    for (Service& dependency : dependencies_) {
       dependency.Start().then([this](future<Status> status_future) {
         Status s = status_future.get();
         if (!s.ok()) Abort(std::move(s));
@@ -84,7 +83,7 @@ class LifecycleHelper {
   }
 
  private:
-  const std::vector<std::reference_wrapper<LifecycleInterface>> dependencies_;
+  const std::vector<std::reference_wrapper<Service>> dependencies_;
   std::mutex mu_;
 
   bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
@@ -98,4 +97,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_HELPER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SERVICE_COMPOSITE_H
