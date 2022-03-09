@@ -53,7 +53,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   ~PartialResultSetResume() override = default;
 
   void TryCancel() override;
-  absl::optional<google::spanner::v1::PartialResultSet> Read() override;
+  absl::optional<PartialResultSet> Read() override;
   Status Finish() override;
 
  private:
