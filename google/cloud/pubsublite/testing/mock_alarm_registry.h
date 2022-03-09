@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ALARM_REGISTRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ALARM_REGISTRY_H
 
+#include "google/cloud/pubsublite/internal/alarm_registry.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 

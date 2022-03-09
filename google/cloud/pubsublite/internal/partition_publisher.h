@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_PUBLISHER_H
 
 #include "google/cloud/pubsublite/batching_options.h"
-#include "google/cloud/pubsublite/internal/alarm_registry_interface.h"
+#include "google/cloud/pubsublite/internal/alarm_registry.h"
 #include "google/cloud/pubsublite/internal/publisher.h"
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/pubsublite/internal/service_composite.h"
