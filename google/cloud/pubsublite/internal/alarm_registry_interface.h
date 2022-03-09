@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_INTERFACE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_INTERFACE_H
 
-#include "google/cloud/pubsublite/internal/base_interface.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <functional>
@@ -26,11 +25,29 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class AlarmRegistryInterface : public BaseInterface {
+class AlarmRegistryInterface {
+ protected:
+  AlarmRegistryInterface() = default;
+
  public:
+  virtual ~AlarmRegistryInterface() = default;
+  AlarmRegistryInterface(const AlarmRegistryInterface&) = delete;
+  AlarmRegistryInterface& operator=(const AlarmRegistryInterface&) = delete;
+  AlarmRegistryInterface(AlarmRegistryInterface&&) = delete;
+  AlarmRegistryInterface& operator=(AlarmRegistryInterface&&) = delete;
   // When CancelToken is destroyed, the alarm will not be running and will never
   // run again.
-  class CancelToken : public BaseInterface {};
+  class CancelToken {
+   protected:
+    CancelToken() = default;
+
+   public:
+    virtual ~CancelToken() = default;
+    CancelToken(const CancelToken&) = delete;
+    CancelToken& operator=(const CancelToken&) = delete;
+    CancelToken(AlarmRegistryInterface&&) = delete;
+    CancelToken& operator=(CancelToken&&) = delete;
+  };
 
   // Register an alarm to run with a given period.  It is guaranteed not to run
   // inline.

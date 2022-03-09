@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SERVICE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SERVICE_H
 
-#include "google/cloud/pubsublite/internal/base_interface.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 
@@ -24,8 +23,23 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-class LifecycleInterface : public BaseInterface {
+/**
+ * A `Service` object is one that has a `Start` method that must be called
+ * exactly once in order for other functionality of the object to be invoked and
+ * a `Shutdown` method that must be called exactly once when the object's
+ * functionality is no longer needed/before destruction.
+ */
+class Service {
+ protected:
+  Service() = default;
+
  public:
+  virtual ~Service() = default;
+  Service(const Service&) = delete;
+  Service& operator=(const Service&) = delete;
+  Service(Service&&) = delete;
+  Service& operator=(Service&&) = delete;
+
   /**
    * Starts the lifecycle of the object.
    *
@@ -59,4 +73,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_LIFECYCLE_INTERFACE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SERVICE_H

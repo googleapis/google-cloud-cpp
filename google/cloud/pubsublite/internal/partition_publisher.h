@@ -17,9 +17,9 @@
 
 #include "google/cloud/pubsublite/batching_options.h"
 #include "google/cloud/pubsublite/internal/alarm_registry_interface.h"
-#include "google/cloud/pubsublite/internal/lifecycle_helper.h"
 #include "google/cloud/pubsublite/internal/publisher.h"
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
+#include "google/cloud/pubsublite/internal/service_composite.h"
 #include "absl/functional/function_ref.h"
 #include <google/cloud/pubsublite/v1/publisher.pb.h>
 #include <deque>
@@ -92,7 +92,7 @@ class PartitionPublisherImpl
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>> const
       resumable_stream_;  // ABSL_GUARDED_BY(mu_)
-  LifecycleHelper lifecycle_helper_;
+  ServiceComposite service_composite_;
   std::deque<MessageWithFuture> unbatched_messages_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithFuture>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
