@@ -23,6 +23,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include <functional>
 #include <future>
 #include <set>
 #include <sstream>
@@ -103,11 +104,11 @@ A helper script in this directory can generate pretty graphs from the output of
 this program.
 )""";
 
-using TestResults = std::vector<ThroughputResult>;
+using ResultHandler = std::function<void(gcs_bm::ThroughputResult)>;
 
-TestResults RunThread(ThroughputOptions const& ThroughputOptions,
-                      std::string const& bucket_name, int thread_id);
-void PrintResults(TestResults const& results);
+void RunThread(ThroughputOptions const& ThroughputOptions,
+               std::string const& bucket_name, int thread_id,
+               ResultHandler const& handler);
 
 google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]);
 
@@ -150,29 +151,25 @@ int main(int argc, char* argv[]) {
             << "\n# Region: " << options->region
             << "\n# Duration: " << options->duration.count() << "s"
             << "\n# Thread Count: " << options->thread_count
-            << "\n# Min Object Size: " << options->minimum_object_size
-            << "\n# Max Object Size: " << options->maximum_object_size
-            << "\n# Min Write Size: " << options->minimum_write_size
-            << "\n# Max Write Size: " << options->maximum_write_size
-            << "\n# Write Quantum: " << options->write_quantum
-            << "\n# Min Read Size: " << options->minimum_read_size
-            << "\n# Max Read Size: " << options->maximum_read_size
-            << "\n# Read Quantum: " << options->read_quantum
-            << "\n# Min Object Size (MiB): "
-            << options->minimum_object_size / gcs_bm::kMiB
-            << "\n# Max Object Size (MiB): "
+            << "\n# Object Size Range: [" << options->minimum_object_size << ","
+            << options->maximum_object_size << "]\n# Write Size Range: ["
+            << options->minimum_write_size << "," << options->maximum_write_size
+            << "]\n# Write Quantum: " << options->write_quantum
+            << "\n# Read Size Range: [" << options->minimum_read_size << ","
+            << options->maximum_read_size
+            << "]\n# Read Quantum: " << options->read_quantum
+            << "\n# Object Size Range (MiB): ["
+            << options->minimum_object_size / gcs_bm::kMiB << ","
             << options->maximum_object_size / gcs_bm::kMiB
-            << "\n# Min Write Size (KiB): "
-            << options->minimum_write_size / gcs_bm::kKiB
-            << "\n# Max Write Size (KiB): "
+            << "]\n# Write Size Range (KiB): ["
+            << options->minimum_write_size / gcs_bm::kKiB << ","
             << options->maximum_write_size / gcs_bm::kKiB
-            << "\n# Write Quantum (KiB): "
+            << "]\n# Write Quantum (KiB): "
             << options->write_quantum / gcs_bm::kKiB
-            << "\n# Min Read Size (KiB): "
-            << options->minimum_read_size / gcs_bm::kKiB
-            << "\n# Max Read Size (KiB): "
+            << "\n# Read Size Range (KiB): ["
+            << options->minimum_read_size / gcs_bm::kKiB << ","
             << options->maximum_read_size / gcs_bm::kKiB
-            << "\n# Read Quantum (KiB): "
+            << "]\n# Read Quantum (KiB): "
             << options->read_quantum / gcs_bm::kKiB
             << "\n# Minimum Sample Count: " << options->minimum_sample_count
             << "\n# Maximum Sample Count: " << options->maximum_sample_count
@@ -184,6 +181,9 @@ int main(int argc, char* argv[]) {
             << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
             << "\n# Enabled MD5: "
             << absl::StrJoin(options->enabled_md5, ",", Formatter{})
+            << "\n# REST Endpoint: " << options->rest_endpoint
+            << "\n# Grpc Endpoint: " << options->grpc_endpoint
+            << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
             << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
@@ -201,15 +201,20 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  // Serialize output to `std::cout`.
+  std::mutex mu;
+  auto handler = [&mu](gcs_bm::ThroughputResult const& result) {
+    std::lock_guard<std::mutex> lk(mu);
+    gcs_bm::PrintAsCsv(std::cout, result);
+  };
+
   gcs_bm::PrintThroughputResultHeader(std::cout);
-  std::vector<std::future<TestResults>> tasks;
+  std::vector<std::future<void>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
-    tasks.emplace_back(
-        std::async(std::launch::async, RunThread, *options, bucket_name, i));
+    tasks.emplace_back(std::async(std::launch::async, RunThread, *options,
+                                  bucket_name, i, handler));
   }
-  for (auto& f : tasks) {
-    PrintResults(f.get());
-  }
+  for (auto& f : tasks) f.get();
 
   gcs_bm::DeleteAllObjects(client, bucket_name, options->thread_count);
   auto status = client.DeleteBucket(bucket_name);
@@ -224,13 +229,6 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-void PrintResults(TestResults const& results) {
-  for (auto const& r : results) {
-    gcs_bm::PrintAsCsv(std::cout, r);
-  }
-  std::cout << std::flush;
-}
-
 gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
   return [=](ExperimentTransport t) {
     auto opts =
@@ -238,23 +236,25 @@ gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
     if (t == ExperimentTransport::kDirectPath) {
-      return DefaultGrpcClient(
-          opts.set<gcs_ex::GrpcPluginOption>("media")
-              .set<google::cloud::EndpointOption>(
-                  "google-c2p-experimental:///storage.googleapis.com"));
+      return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("media")
+                                   .set<google::cloud::EndpointOption>(
+                                       options.direct_path_endpoint));
     }
     if (t == ExperimentTransport::kGrpc) {
-      return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("none"));
+      return DefaultGrpcClient(
+          opts.set<gcs_ex::GrpcPluginOption>("media")
+              .set<google::cloud::EndpointOption>(options.grpc_endpoint));
     }
 #else
     (void)t;  // disable unused parameter warning
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    return gcs::Client(opts);
+    return gcs::Client(
+        opts.set<gcs::RestEndpointOption>(options.rest_endpoint));
   };
 }
 
-TestResults RunThread(ThroughputOptions const& options,
-                      std::string const& bucket_name, int thread_id) {
+void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
+               int thread_id, ResultHandler const& handler) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
@@ -262,7 +262,7 @@ TestResults RunThread(ThroughputOptions const& options,
   if (!client_options) {
     std::cout << "# Could not create ClientOptions, status="
               << client_options.status() << "\n";
-    return {};
+    return;
   }
   auto const upload_buffer_size = client_options->upload_buffer_size();
   auto const download_buffer_size = client_options->download_buffer_size();
@@ -274,7 +274,7 @@ TestResults RunThread(ThroughputOptions const& options,
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
     std::cout << "# None of the APIs configured are available\n";
-    return {};
+    return;
   }
   auto downloaders =
       gcs_bm::CreateDownloadExperiments(options, provider, thread_id);
@@ -282,7 +282,7 @@ TestResults RunThread(ThroughputOptions const& options,
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
     std::cout << "# None of the APIs configured are available\n";
-    return {};
+    return;
   }
 
   std::uniform_int_distribution<std::size_t> uploader_generator(
@@ -307,8 +307,6 @@ TestResults RunThread(ThroughputOptions const& options,
 
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
-  TestResults results;
-
   std::int32_t iteration_count = 0;
   for (auto start = std::chrono::steady_clock::now();
        iteration_count < options.maximum_sample_count &&
@@ -328,7 +326,7 @@ TestResults RunThread(ThroughputOptions const& options,
                           gcs_bm::kOpWrite, object_size, write_size,
                           upload_buffer_size, enable_crc, enable_md5});
     auto status = upload_result.status;
-    results.emplace_back(std::move(upload_result));
+    handler(std::move(upload_result));
 
     if (!status.ok()) {
       if (options.thread_count == 1) {
@@ -339,21 +337,15 @@ TestResults RunThread(ThroughputOptions const& options,
 
     auto& downloader = downloaders[downloader_generator(generator)];
     for (auto op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {
-      results.emplace_back(downloader->Run(
+      handler(downloader->Run(
           bucket_name, object_name,
           gcs_bm::ThroughputExperimentConfig{op, object_size, read_size,
                                              download_buffer_size, enable_crc,
                                              enable_md5}));
     }
-    if (options.thread_count == 1) {
-      // Immediately print the results, this makes it easier to debug problems.
-      PrintResults(results);
-      results.clear();
-    }
     auto client = provider(ExperimentTransport::kJson);
     (void)client.DeleteObject(bucket_name, object_name);
   }
-  return results;
 }
 
 google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
