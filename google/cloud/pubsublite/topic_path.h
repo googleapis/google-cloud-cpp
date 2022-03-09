@@ -15,10 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_PATH_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_PATH_H
 
-#include "google/cloud/version.h"
-#include "google/cloud/pubsublite/project_id_or_number.h"
 #include "google/cloud/pubsublite/cloud_region_or_zone.h"
+#include "google/cloud/pubsublite/project_id_or_number.h"
 #include "google/cloud/pubsublite/topic_name.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/version.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -27,14 +29,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TopicPath {
  public:
-  explicit TopicPath(ProjectIdOrNumber project, CloudRegionOrZone location, TopicName name) : re{std::move(region)}gion_ {}
+  explicit TopicPath(ProjectIdOrNumber project, CloudRegionOrZone location,
+                     TopicName name)
+      : project_{std::move(project)},
+        location_{std::move(location)},
+        name_{std::move(name)} {}
 
-  std::string const& GetRegion() const { return region_; }
+  ProjectIdOrNumber const& GetProject() const { return project_; }
+
+  CloudRegionOrZone const& GetLocation() const { return location_; }
+
+  TopicName const& GetName() const { return name_; }
+
+  std::string ToString() const {
+    return absl::StrCat("projects/", project_.ToString(), "/locations/",
+                        location_.ToString(), "/topics/", name_.GetName());
+  }
 
  private:
   ProjectIdOrNumber project_;
   CloudRegionOrZone location_;
-  TopicName name_
+  TopicName name_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

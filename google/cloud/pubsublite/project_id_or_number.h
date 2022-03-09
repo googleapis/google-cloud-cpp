@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PROJECT_ID_OR_NUMBER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PROJECT_ID_OR_NUMBER_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/pubsublite/project_id.h"
 #include "google/cloud/pubsublite/project_number.h"
+#include "google/cloud/version.h"
 #include "absl/types/variant.h"
 
 namespace google {
@@ -27,17 +27,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ProjectIdOrNumber {
  public:
-  explicit ProjectIdOrNumber(ProjectId project_id) : value_{std::move(project_id)} {}
+  explicit ProjectIdOrNumber(ProjectId project_id)
+      : value_{std::move(project_id)} {}
 
-  explicit ProjectIdOrNumber(ProjectNumber project_number) : value_{std::move(project_number)} {}
+  explicit ProjectIdOrNumber(ProjectNumber project_number)
+      : value_{std::move(project_number)} {}
 
-  bool HasProjectId() const { return absl::holds_alternative<ProjectId>(value_); }
+  bool HasProjectId() const {
+    return absl::holds_alternative<ProjectId>(value_);
+  }
 
-  bool HasProjectNumber() const { return absl::holds_alternative<ProjectNumber>(value_); }
+  bool HasProjectNumber() const {
+    return absl::holds_alternative<ProjectNumber>(value_);
+  }
 
   ProjectId const& GetProjectId() const { return absl::get<ProjectId>(value_); }
 
-  ProjectNumber const& GetProjectNumber() const { return absl::get<ProjectNumber>(value_); }
+  ProjectNumber const& GetProjectNumber() const {
+    return absl::get<ProjectNumber>(value_);
+  }
+
+  std::string ToString() const {
+    if (HasProjectId()) {
+      return absl::get<ProjectId>(value_).GetId();
+    }
+    return std::to_string(absl::get<ProjectNumber>(value_).GetNumber());
+  }
 
  private:
   absl::variant<ProjectId, ProjectNumber> const value_;

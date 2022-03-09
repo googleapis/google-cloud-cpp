@@ -15,9 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_OR_ZONE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_OR_ZONE_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/pubsublite/cloud_region.h"
 #include "google/cloud/pubsublite/cloud_zone.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/version.h"
 #include "absl/types/variant.h"
 
 namespace google {
@@ -31,13 +32,28 @@ class CloudRegionOrZone {
 
   explicit CloudRegionOrZone(CloudZone zone) : value_{std::move(zone)} {}
 
-  bool HasCloudRegion() const { return absl::holds_alternative<CloudRegion>(value_); }
+  bool HasCloudRegion() const {
+    return absl::holds_alternative<CloudRegion>(value_);
+  }
 
-  bool HasCloudZone() const { return absl::holds_alternative<CloudZone>(value_); }
+  bool HasCloudZone() const {
+    return absl::holds_alternative<CloudZone>(value_);
+  }
 
-  CloudRegion const& GetRegion() const { return absl::get<CloudRegion>(value_); }
+  CloudRegion const& GetRegion() const {
+    return absl::get<CloudRegion>(value_);
+  }
 
   CloudZone const& GetZone() const { return absl::get<CloudZone>(value_); }
+
+  std::string ToString() const {
+    if (HasCloudRegion()) {
+      return absl::get<CloudRegion>(value_).GetRegion();
+    }
+    CloudZone cloud_zone = absl::get<CloudZone>(value_);
+    return absl::StrCat(cloud_zone.GetRegion().GetRegion(), "-",
+                        std::string(1, cloud_zone.GetZoneId()));
+  }
 
  private:
   absl::variant<CloudRegion, CloudZone> const value_;

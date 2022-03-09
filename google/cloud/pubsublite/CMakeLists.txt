@@ -155,8 +155,10 @@ add_library(
     internal/topic_stats_stub_factory.cc
     internal/topic_stats_stub_factory.h
     project_id.h
+    project_id_or_number.h
     project_number.h
     topic_name.h
+    topic_path.h
     topic_stats_client.cc
     topic_stats_client.h
     topic_stats_connection.cc
