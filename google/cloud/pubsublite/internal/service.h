@@ -27,7 +27,7 @@ namespace pubsublite_internal {
  * A `Service` object is one that has a `Start` method that must be called
  * exactly once in order for other functionality of the object to be invoked and
  * a `Shutdown` method that must be called exactly once when the object's
- * functionality is no longer needed.
+ * functionality is no longer needed/before destruction.
  */
 class Service {
  protected:
