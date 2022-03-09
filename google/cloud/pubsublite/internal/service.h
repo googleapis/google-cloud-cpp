@@ -24,10 +24,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 /**
- * A `Service` object is one that has a `Start` method that must be called
- * exactly once in order for other functionality of the object to be invoked and
- * a `Shutdown` method that must be called exactly once when the object's
- * functionality is no longer needed/before destruction.
+ * A `Service` is anything that can start, run for a while, possibly have other
+ * operations invoked on it, possibly with an error, and then can shutdown.
+ *
+ * Examples include resumable streaming RPCs of different types, and
+ * compositions of these streaming RPCs.
  */
 class Service {
  protected:
@@ -50,6 +51,9 @@ class Service {
    * etc.
    *
    * Must be called before any other method and may only be called once.
+   *
+   * @note The above restriction applies to all additional member functions
+   * present in derived classes, if any.
    */
   virtual future<Status> Start() = 0;
 
