@@ -45,6 +45,14 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
     return spanner::Row();
   }
 
+  // TODO(#8523): This assumes that we can yield a row as soon as we have
+  // all of its columns, which would not be the case if we (1) want to be
+  // able to resume interrupted streams, and (2) do not yet have a resume
+  // token that is "past" the row. That is, we should not yield a row that
+  // might be replayed. Given that we want to support resumption, for now
+  // we assume we always have a resume token that is "past" any completed
+  // row, but that needs to be verified.
+
   while (buffer_.empty() || buffer_.size() < columns_->size()) {
     auto status = ReadFromStream();
     if (!status.ok()) {
