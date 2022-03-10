@@ -151,7 +151,7 @@ void PartitionPublisher::Read() {
           batch = std::move(in_flight_batches_.front());
           in_flight_batches_.pop_front();
         }
-        int64_t offset =
+        std::int64_t offset =
             optional_response->message_response().start_cursor().offset();
         for (auto& message_with_future : batch) {
           Cursor c;
@@ -198,10 +198,10 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithFuture> messages,
                                   BatchingOptions const& options) {
   std::deque<std::deque<MessageWithFuture>> batches;
   std::deque<MessageWithFuture> current_batch;
-  int64_t current_byte_size = 0;
-  int64_t current_messages = 0;
+  std::int64_t current_byte_size = 0;
+  std::int64_t current_messages = 0;
   for (auto& message_with_future : messages) {
-    int64_t message_size = message_with_future.message.ByteSizeLong();
+    std::int64_t message_size = message_with_future.message.ByteSizeLong();
     if (current_messages + 1 > options.maximum_batch_message_count() ||
         current_byte_size + message_size > options.maximum_batch_bytes()) {
       if (!current_batch.empty()) {

@@ -26,16 +26,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MessageMetadata {
  public:
-  MessageMetadata(int64_t partition,
+  MessageMetadata(std::int64_t partition,
                   google::cloud::pubsublite::v1::Cursor cursor)
       : partition_{partition}, cursor_{std::move(cursor)} {}
 
-  int64_t GetPartition() const { return partition_; }
+  std::int64_t GetPartition() const { return partition_; }
 
   google::cloud::pubsublite::v1::Cursor GetCursor() const { return cursor_; }
 
  private:
-  int64_t const partition_;
+  std::int64_t const partition_;
   google::cloud::pubsublite::v1::Cursor cursor_;
 };
 

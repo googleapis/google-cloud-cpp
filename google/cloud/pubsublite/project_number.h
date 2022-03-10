@@ -24,12 +24,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ProjectNumber {
  public:
-  explicit ProjectNumber(int64_t number) : number_{number} {}
+  explicit ProjectNumber(std::int64_t number) : number_{number} {}
 
-  int64_t GetNumber() const { return number_; }
+  std::int64_t GetNumber() const { return number_; }
 
  private:
-  int64_t const number_;
+  std::int64_t const number_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
