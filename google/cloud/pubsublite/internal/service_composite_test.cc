@@ -54,6 +54,7 @@ TEST(ServiceTest, SingleDependencyGood) {
   // if already set
   EXPECT_EQ(service_composite.status(),
             Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_EQ(service_composite_start.get(), Status());
 }
 
 TEST(ServiceTest, SingleDependencyStartFailed) {
@@ -72,6 +73,8 @@ TEST(ServiceTest, SingleDependencyStartFailed) {
   // Abort call can safely be called more than once and not change final status
   // if already set
   EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "uh oh"));
+  EXPECT_EQ(service_composite_start.get(),
+            Status(StatusCode::kAborted, "uh oh"));
 }
 
 TEST(ServiceTest, SingleDependencyStartFinishedOk) {
@@ -90,6 +93,7 @@ TEST(ServiceTest, SingleDependencyStartFinishedOk) {
   service_composite.Shutdown();
   EXPECT_EQ(service_composite.status(),
             Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_EQ(service_composite_start.get(), Status());
 }
 
 TEST(ServiceTest, SingleDependencyShutdownTwice) {
@@ -110,6 +114,7 @@ TEST(ServiceTest, SingleDependencyShutdownTwice) {
   // if already set
   EXPECT_EQ(service_composite.status(),
             Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_EQ(service_composite_start.get(), Status());
   // shouldn't do anything
   service_composite.Shutdown();
 }
@@ -147,6 +152,8 @@ TEST(ServiceTest, MultipleDependencyGood) {
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise1.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise2.set_value(Status(StatusCode::kOk, "test ok"));
+
+  EXPECT_EQ(service_composite_start.get(), Status());
 }
 
 TEST(ServiceTest, MultipleDependencySingleStartFailed) {
@@ -185,6 +192,9 @@ TEST(ServiceTest, MultipleDependencySingleStartFailed) {
 
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise2.set_value(Status(StatusCode::kOk, "test ok"));
+
+  EXPECT_EQ(service_composite_start.get(),
+            Status(StatusCode::kAborted, "oops"));
 }
 
 TEST(ServiceTest, AddSingleDependencyToEmptyObjectGood) {
@@ -208,6 +218,8 @@ TEST(ServiceTest, AddSingleDependencyToEmptyObjectGood) {
   // if already set
   EXPECT_EQ(service_composite.status(),
             Status(StatusCode::kAborted, "`Shutdown` called"));
+
+  EXPECT_EQ(service_composite_start.get(), Status());
 }
 
 TEST(ServiceTest, AddSingleDependencyToEmptyObjectStartFailed) {
@@ -227,6 +239,9 @@ TEST(ServiceTest, AddSingleDependencyToEmptyObjectStartFailed) {
 
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
+
+  EXPECT_EQ(service_composite_start.get(),
+            Status(StatusCode::kAborted, "oh no"));
 }
 
 TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectGood) {
@@ -253,6 +268,8 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectGood) {
             Status(StatusCode::kAborted, "`Shutdown` called"));
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise1.set_value(Status(StatusCode::kOk, "test ok"));
+
+  EXPECT_EQ(service_composite_start.get(), Status());
 }
 
 TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectStartFailed) {
@@ -279,6 +296,9 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectStartFailed) {
   EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
+
+  EXPECT_EQ(service_composite_start.get(),
+            Status(StatusCode::kAborted, "not ok"));
 }
 
 TEST(ServiceTest, AddDependencyAfterShutdown) {
@@ -319,6 +339,9 @@ TEST(ServiceTest, AddDependencyAfterStartFailedBeforeShutdown) {
   EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
   status_promise1.set_value(Status());
+
+  EXPECT_EQ(service_composite_start.get(),
+            Status(StatusCode::kAborted, "abort"));
 }
 
 }  // namespace

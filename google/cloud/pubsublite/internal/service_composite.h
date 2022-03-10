@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsublite/internal/futures.h"
 #include "google/cloud/pubsublite/internal/service.h"
+#include "google/cloud/log.h"
 #include <mutex>
 #include <vector>
 
@@ -33,6 +34,17 @@ class ServiceComposite : public Service {
   explicit ServiceComposite(ServiceT*... dependencies)
       : dependencies_{dependencies...} {}
 
+  ~ServiceComposite() override {
+    future<void> shutdown = Shutdown();
+    if (!shutdown.is_ready()) {
+      GCP_LOG(WARNING)
+          << "`Shutdown` must be called and finished before object "
+             "goes out of scope if `Start` was called.";
+      assert(false);
+    }
+    shutdown.get();
+  }
+
   future<Status> Start() override {
     future<Status> start_future;
     std::vector<future<Status>> dependency_futures;
@@ -43,6 +55,7 @@ class ServiceComposite : public Service {
         dependency_futures.push_back(dependency->Start());
       }
       start_future = status_promise_->get_future();
+      shutdown_ = false;
     }
 
     for (auto& dependency_future : dependency_futures) {
@@ -130,7 +143,7 @@ class ServiceComposite : public Service {
   std::mutex mu_;
 
   std::vector<Service*> dependencies_;  // ABSL_GUARDED_BY(mu_)
-  bool shutdown_ = false;               // ABSL_GUARDED_BY(mu_)
+  bool shutdown_ = true;                // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<Status>> status_promise_{
       promise<Status>{}};  // ABSL_GUARDED_BY(mu_)
   Status final_status_;    // ABSL_GUARDED_BY(mu_)
