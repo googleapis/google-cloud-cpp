@@ -105,12 +105,17 @@ class ServiceComposite : public Service {
   }
 
   future<void> Shutdown() override {
+    absl::optional<promise<Status>> status_promise;
     {
       std::lock_guard<std::mutex> g{mu_};
       if (shutdown_) return make_ready_future();
       shutdown_ = true;
+      status_promise_.swap(status_promise);
+      if (final_status_.ok())
+        final_status_ = Status{StatusCode::kAborted, "`Shutdown` called"};
     }
-    Abort(Status{StatusCode::kAborted, "`Shutdown` called"});
+    if (status_promise) status_promise->set_value(Status());
+
     AsyncRoot root;
     future<void> root_future = root.get_future();
 
