@@ -56,6 +56,7 @@ class ServiceComposite : public Service {
       }
       start_future = status_promise_->get_future();
       shutdown_ = false;
+      status_ = Status{};
     }
 
     for (auto& dependency_future : dependency_futures) {
@@ -102,7 +103,7 @@ class ServiceComposite : public Service {
       if (!status_promise_) return;
       start_promise = std::move(*status_promise_);
       status_promise_.reset();
-      final_status_ = s;
+      status_ = s;
     }
     start_promise.set_value(std::move(s));
   }
@@ -114,7 +115,7 @@ class ServiceComposite : public Service {
    */
   Status status() {
     std::lock_guard<std::mutex> g{mu_};
-    return final_status_;
+    return status_;
   }
 
   future<void> Shutdown() override {
@@ -124,8 +125,8 @@ class ServiceComposite : public Service {
       if (shutdown_) return make_ready_future();
       shutdown_ = true;
       status_promise_.swap(status_promise);
-      if (final_status_.ok())
-        final_status_ = Status{StatusCode::kAborted, "`Shutdown` called"};
+      if (status_.ok())
+        status_ = Status{StatusCode::kAborted, "`Shutdown` called"};
     }
     if (status_promise) status_promise->set_value(Status());
 
@@ -146,7 +147,8 @@ class ServiceComposite : public Service {
   bool shutdown_ = true;                // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<Status>> status_promise_{
       promise<Status>{}};  // ABSL_GUARDED_BY(mu_)
-  Status final_status_;    // ABSL_GUARDED_BY(mu_)
+  Status status_ = Status{StatusCode::kFailedPrecondition,
+                          "`Start` not called"};  // ABSL_GUARDED_BY(mu_)
 };
 
 }  // namespace pubsublite_internal
