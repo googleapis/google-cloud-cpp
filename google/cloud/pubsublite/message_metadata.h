@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_MESSAGE_METADATA_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_MESSAGE_METADATA_H
 
-#include "google/cloud/pubsublite/cloud_region.h"
 #include "google/cloud/version.h"
+#include <google/cloud/pubsublite/v1/publisher.pb.h>
 #include <utility>
 
 namespace google {
@@ -24,18 +24,19 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudZone {
+class MessageMetadata {
  public:
-  explicit CloudZone(CloudRegion region, char zone_id)
-      : region_{std::move(region)}, zone_id_{zone_id} {}
+  MessageMetadata(int64_t partition,
+                  google::cloud::pubsublite::v1::Cursor cursor)
+      : partition_{partition}, cursor_{std::move(cursor)} {}
 
-  CloudRegion const& GetCloudRegion() const { return region_; }
+  int64_t GetPartition() const { return partition_; }
 
-  char GetZoneId() const { return zone_id_; };
+  google::cloud::pubsublite::v1::Cursor GetCursor() const { return cursor_; }
 
  private:
-  CloudRegion const region_;
-  char const zone_id_;
+  int64_t const partition_;
+  google::cloud::pubsublite::v1::Cursor cursor_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -43,4 +44,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_MESSAGE_METADATA_H

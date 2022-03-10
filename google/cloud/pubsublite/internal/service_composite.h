@@ -32,14 +32,38 @@ class ServiceComposite {
       : dependencies_{{std::ref(static_cast<Service&>(dependencies))...}} {}
 
   future<Status> Start() {
-    for (Service& dependency : dependencies_) {
-      dependency.Start().then([this](future<Status> status_future) {
+    future<Status> start_future;
+    std::vector<future<Status>> dependency_futures;
+
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      for (Service& dependency : dependencies_) {
+        dependency_futures.push_back(dependency.Start());
+      }
+      start_future = status_promise_->get_future();
+    }
+
+    for (auto& dependency_future : dependency_futures) {
+      dependency_future.then([this](future<Status> status_future) {
         Status s = status_future.get();
         if (!s.ok()) Abort(std::move(s));
       });
     }
-    std::lock_guard<std::mutex> g{mu_};
-    return status_promise_->get_future();
+
+    return start_future;
+  }
+
+  void AddServiceObject(Service& dependency) {
+    future<Status> start_future;
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      dependencies_.emplace_back(dependency);
+      start_future = dependency.Start();
+    }
+    start_future.then([this](future<Status> status_future) {
+      Status s = status_future.get();
+      if (!s.ok()) Abort(std::move(s));
+    });
   }
 
   /**
@@ -75,7 +99,10 @@ class ServiceComposite {
       shutdown_ = true;
     }
     Abort(Status{StatusCode::kAborted, "`Shutdown` called"});
-    future<void> root_future = make_ready_future();
+    AsyncRoot root;
+    future<void> root_future = root.get_future();
+
+    std::lock_guard<std::mutex> g{mu_};
     for (const auto& dependency : dependencies_) {
       root_future = root_future.then(ChainFuture(dependency.get().Shutdown()));
     }
@@ -83,9 +110,10 @@ class ServiceComposite {
   }
 
  private:
-  const std::vector<std::reference_wrapper<Service>> dependencies_;
   std::mutex mu_;
 
+  std::vector<std::reference_wrapper<Service>>
+      dependencies_;       // ABSL_GUARDED_BY(mu_)
   bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<Status>> status_promise_{
       promise<Status>{}};  // ABSL_GUARDED_BY(mu_)

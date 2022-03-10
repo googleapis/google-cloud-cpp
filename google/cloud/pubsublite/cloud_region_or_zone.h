@@ -40,18 +40,18 @@ class CloudRegionOrZone {
     return absl::holds_alternative<CloudZone>(value_);
   }
 
-  CloudRegion const& GetRegion() const {
+  CloudRegion const& GetCloudRegion() const {
     return absl::get<CloudRegion>(value_);
   }
 
-  CloudZone const& GetZone() const { return absl::get<CloudZone>(value_); }
+  CloudZone const& GetCloudZone() const { return absl::get<CloudZone>(value_); }
 
   std::string ToString() const {
     if (HasCloudRegion()) {
       return absl::get<CloudRegion>(value_).GetRegion();
     }
     CloudZone cloud_zone = absl::get<CloudZone>(value_);
-    return absl::StrCat(cloud_zone.GetRegion().GetRegion(), "-",
+    return absl::StrCat(cloud_zone.GetCloudRegion().GetRegion(), "-",
                         std::string(1, cloud_zone.GetZoneId()));
   }
 

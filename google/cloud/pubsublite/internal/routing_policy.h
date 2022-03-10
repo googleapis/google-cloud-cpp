@@ -12,35 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ROUTING_POLICY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ROUTING_POLICY_H
 
-#include "google/cloud/pubsublite/cloud_region.h"
 #include "google/cloud/version.h"
-#include <utility>
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
-class CloudZone {
+class RoutingPolicy {
  public:
-  explicit CloudZone(CloudRegion region, char zone_id)
-      : region_{std::move(region)}, zone_id_{zone_id} {}
-
-  CloudRegion const& GetCloudRegion() const { return region_; }
-
-  char GetZoneId() const { return zone_id_; };
-
- private:
-  CloudRegion const region_;
-  char const zone_id_;
+  virtual std::int64_t RouteWithoutKey() = 0;
+  virtual std::int64_t Route(std::string message_key) = 0;
 };
 
+}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ROUTING_POLICY_H
