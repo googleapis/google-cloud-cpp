@@ -72,6 +72,7 @@ using ::testing::DoAll;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
+using ::testing::IsEmpty;
 using ::testing::NiceMock;
 using ::testing::Not;
 using ::testing::Property;
@@ -379,22 +380,62 @@ TEST(ConnectionImplTest, ReadSuccess) {
             }
           }
         }
-        resume_token: "test-token-0"
         values: { string_value: "12" }
         values: { string_value: "Steve" }
+        values: { string_value: "4" }
+        chunked_value: true
+        resume_token: "restart-row-2"
       )pb",
       R"pb(
-        resume_token: "test-token-1"
         values: { string_value: "42" }
-        values: { string_value: "Ann" }
+        values: { string_value: "A" }
+        chunked_value: true
+      )pb",
+      R"pb(
+        values: { string_value: "nn" }
+        resume_token: "end-of-stream"
       )pb",
   };
   EXPECT_CALL(*mock,
               StreamingRead(
                   _, HasPriority(spanner_proto::RequestOptions::PRIORITY_LOW)))
-      .WillOnce(Return(ByMove(MakeReader({}, retry_status))))
-      .WillOnce(Return(ByMove(MakeReader({responses[0]}, retry_status))))
-      .WillOnce(Return(ByMove(MakeReader({responses[1]}))));
+      .WillOnce(
+          [&retry_status](grpc::ClientContext&,
+                          google::spanner::v1::ReadRequest const& request) {
+            // The beginning of the row stream, but immediately fail.
+            EXPECT_THAT(request.resume_token(), IsEmpty());
+            return MakeReader({}, retry_status);
+          })
+      .WillOnce([&responses, &retry_status](
+                    grpc::ClientContext&,
+                    google::spanner::v1::ReadRequest const& request) {
+        // Restart from the beginning, but return the first row and part of
+        // the second before failing again.
+        EXPECT_THAT(request.resume_token(), IsEmpty());
+        return MakeReader({responses[0]}, retry_status);
+      })
+      .WillOnce([&responses, &retry_status](
+                    grpc::ClientContext&,
+                    google::spanner::v1::ReadRequest const& request) {
+        // Restart from the second row, but only return part of it before
+        // failing once more.
+        EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
+        return MakeReader({responses[1]}, retry_status);
+      })
+      .WillOnce([&responses, &retry_status](
+                    grpc::ClientContext&,
+                    google::spanner::v1::ReadRequest const& request) {
+        // Restart from the second row, but now deliver it all in two chunks
+        // before failing for the last time.
+        EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
+        return MakeReader({responses[1], responses[2]}, retry_status);
+      })
+      .WillOnce([](grpc::ClientContext&,
+                   google::spanner::v1::ReadRequest const& request) {
+        // Finally, restart from the end, and signal end of stream.
+        EXPECT_THAT(request.resume_token(), Eq("end-of-stream"));
+        return MakeReader({});
+      });
 
   spanner::ReadOptions read_options;
   read_options.request_priority = spanner::RequestPriority::kLow;

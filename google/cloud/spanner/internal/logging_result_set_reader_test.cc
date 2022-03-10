@@ -51,14 +51,13 @@ TEST_F(LoggingResultSetReaderTest, Read) {
       .WillOnce([] {
         spanner_proto::PartialResultSet result;
         result.set_resume_token("test-token");
-        return result;
+        return PartialResultSet{std::move(result), false};
       })
-      .WillOnce(
-          [] { return absl::optional<spanner_proto::PartialResultSet>{}; });
+      .WillOnce([] { return absl::optional<PartialResultSet>{}; });
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   auto result = reader.Read();
   ASSERT_TRUE(result.has_value());
-  EXPECT_EQ("test-token", result->resume_token());
+  EXPECT_EQ("test-token", result->result.resume_token());
 
   auto log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));

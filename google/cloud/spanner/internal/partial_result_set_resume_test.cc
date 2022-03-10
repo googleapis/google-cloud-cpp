@@ -41,7 +41,12 @@ using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-using ReadReturn = absl::optional<spanner_proto::PartialResultSet>;
+absl::optional<PartialResultSet> ReadReturn(
+    spanner_proto::PartialResultSet response) {
+  return PartialResultSet{std::move(response), false};
+}
+
+absl::optional<PartialResultSet> ReadReturn() { return {}; }
 
 struct MockFactory {
   MOCK_METHOD(std::unique_ptr<PartialResultSetReader>, MakeReader,
@@ -85,7 +90,7 @@ TEST(PartialResultSetResume, Success) {
         auto mock = absl::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read())
             .WillOnce([&response] { return ReadReturn(response); })
-            .WillOnce(Return(ReadReturn{}));
+            .WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
         return mock;
       });
@@ -96,7 +101,7 @@ TEST(PartialResultSetResume, Success) {
   auto reader = MakeTestResume(factory, Idempotency::kIdempotent);
   auto v = reader->Read();
   ASSERT_TRUE(v.has_value());
-  EXPECT_THAT(*v, IsProtoEqual(response));
+  EXPECT_THAT(v->result, IsProtoEqual(response));
   v = reader->Read();
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
@@ -135,7 +140,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
         auto mock = absl::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read())
             .WillOnce([&r0] { return ReadReturn(r0); })
-            .WillOnce(Return(ReadReturn{}));
+            .WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-0")));
         return mock;
@@ -145,7 +150,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
         auto mock = absl::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read())
             .WillOnce([&r1] { return ReadReturn(r1); })
-            .WillOnce(Return(ReadReturn{}));
+            .WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-1")));
         return mock;
@@ -153,7 +158,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
       .WillOnce([](std::string const& token) {
         EXPECT_EQ("test-token-1", token);
         auto mock = absl::make_unique<MockPartialResultSetReader>();
-        EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn{}));
+        EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
         return mock;
       });
@@ -164,10 +169,10 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
   auto reader = MakeTestResume(factory, Idempotency::kIdempotent);
   auto v = reader->Read();
   ASSERT_TRUE(v.has_value());
-  EXPECT_THAT(*v, IsProtoEqual(r0));
+  EXPECT_THAT(v->result, IsProtoEqual(r0));
   v = reader->Read();
   ASSERT_TRUE(v.has_value());
-  EXPECT_THAT(*v, IsProtoEqual(r1));
+  EXPECT_THAT(v->result, IsProtoEqual(r1));
   v = reader->Read();
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
@@ -199,7 +204,7 @@ TEST(PartialResultSetResume, PermanentError) {
         auto mock = absl::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read())
             .WillOnce([&r0] { return ReadReturn(r0); })
-            .WillOnce(Return(ReadReturn{}));
+            .WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-0")));
         return mock;
@@ -207,7 +212,7 @@ TEST(PartialResultSetResume, PermanentError) {
       .WillOnce([](std::string const& token) {
         EXPECT_EQ("test-token-0", token);
         auto mock = absl::make_unique<MockPartialResultSetReader>();
-        EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn{}));
+        EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh-1")));
         return mock;
@@ -219,7 +224,7 @@ TEST(PartialResultSetResume, PermanentError) {
   auto reader = MakeTestResume(factory, Idempotency::kIdempotent);
   auto v = reader->Read();
   ASSERT_TRUE(v.has_value());
-  EXPECT_THAT(*v, IsProtoEqual(r0));
+  EXPECT_THAT(v->result, IsProtoEqual(r0));
   v = reader->Read();
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
@@ -251,7 +256,7 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
         auto mock = absl::make_unique<MockPartialResultSetReader>();
         EXPECT_CALL(*mock, Read())
             .WillOnce([&r0] { return ReadReturn(r0); })
-            .WillOnce(Return(ReadReturn{}));
+            .WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-0")));
         return mock;
@@ -263,7 +268,7 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
   auto reader = MakeTestResume(factory, Idempotency::kNonIdempotent);
   auto v = reader->Read();
   ASSERT_TRUE(v.has_value());
-  EXPECT_THAT(*v, IsProtoEqual(r0));
+  EXPECT_THAT(v->result, IsProtoEqual(r0));
   v = reader->Read();
   ASSERT_FALSE(v.has_value());
   auto status = reader->Finish();
@@ -278,7 +283,7 @@ TEST(PartialResultSetResume, TooManyTransients) {
       .WillRepeatedly([](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = absl::make_unique<MockPartialResultSetReader>();
-        EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn{}));
+        EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn()));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-N")));
         return mock;

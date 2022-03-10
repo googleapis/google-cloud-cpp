@@ -22,13 +22,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void PartialResultSetResume::TryCancel() { child_->TryCancel(); }
 
-absl::optional<google::spanner::v1::PartialResultSet>
-PartialResultSetResume::Read() {
+absl::optional<PartialResultSet> PartialResultSetResume::Read() {
+  bool resumption = false;
   do {
-    absl::optional<google::spanner::v1::PartialResultSet> result =
-        child_->Read();
+    absl::optional<PartialResultSet> result = child_->Read();
     if (result) {
-      last_resume_token_ = result->resume_token();
+      // If the resume_token is empty then this PartialResultSet does not
+      // contain enough data for PartialResultSetSource to be able to yield
+      // a new row, so we should leave last_resume_token_ as is---ready to
+      // re-request this undelivered chunk should a following Read() fail.
+      if (!result->result.resume_token().empty()) {
+        last_resume_token_ = result->result.resume_token();
+      }
+      // Let the caller know if we recreated the PartialResultSetReader using
+      // last_resume_token_ so that they might discard any pending row-assembly
+      // state as that data will also be in this new result.
+      result->resumption = resumption;
       return result;
     }
     auto status = Finish();
@@ -38,6 +47,7 @@ PartialResultSetResume::Read() {
       return {};
     }
     std::this_thread::sleep_for(backoff_policy_prototype_->OnCompletion());
+    resumption = true;
     last_status_.reset();
     child_ = factory_(last_resume_token_);
   } while (!retry_policy_prototype_->IsExhausted());
