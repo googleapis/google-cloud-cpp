@@ -25,11 +25,6 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-/**
- * `ServiceComposite` wraps the lifetimes of one or more `Service`s into a
- * single `Service` object. This enables a user to manage the lifetimes of
- * several dependencies through a single object.
- */
 class ServiceComposite : public Service {
  public:
   template <class... ServiceT>
@@ -37,14 +32,47 @@ class ServiceComposite : public Service {
       : dependencies_{{std::ref(static_cast<Service&>(dependencies))...}} {}
 
   future<Status> Start() override {
-    for (Service& dependency : dependencies_) {
-      dependency.Start().then([this](future<Status> status_future) {
+    future<Status> start_future;
+    std::vector<future<Status>> dependency_futures;
+
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      for (Service& dependency : dependencies_) {
+        dependency_futures.push_back(dependency.Start());
+      }
+      start_future = status_promise_->get_future();
+    }
+
+    for (auto& dependency_future : dependency_futures) {
+      dependency_future.then([this](future<Status> status_future) {
         Status s = status_future.get();
         if (!s.ok()) Abort(std::move(s));
       });
     }
-    std::lock_guard<std::mutex> g{mu_};
-    return status_promise_->get_future();
+
+    return start_future;
+  }
+
+  /**
+   * This will add a `Service` dependency for the current object to manage. It
+   * is only added if the current object hasn't been `Shutdown` yet.
+   * @param dependency
+   */
+  void AddServiceObject(Service& dependency) {
+    future<Status> start_future;
+    {
+      // under lock to guarantee atomicity of being added to `dependencies_` and
+      // `Start` being called so `Start` called on dependency if and only if
+      // `Shutdown` will be called on dependency
+      std::lock_guard<std::mutex> g{mu_};
+      if (shutdown_) return;
+      dependencies_.emplace_back(dependency);
+      start_future = dependency.Start();
+    }
+    start_future.then([this](future<Status> status_future) {
+      Status s = status_future.get();
+      if (!s.ok()) Abort(std::move(s));
+    });
   }
 
   /**
@@ -80,17 +108,21 @@ class ServiceComposite : public Service {
       shutdown_ = true;
     }
     Abort(Status{StatusCode::kAborted, "`Shutdown` called"});
-    future<void> root_future = make_ready_future();
-    for (auto const& dependency : dependencies_) {
+    AsyncRoot root;
+    future<void> root_future = root.get_future();
+
+    std::lock_guard<std::mutex> g{mu_};
+    for (const auto& dependency : dependencies_) {
       root_future = root_future.then(ChainFuture(dependency.get().Shutdown()));
     }
     return root_future;
   }
 
  private:
-  std::vector<std::reference_wrapper<Service>> const dependencies_;
   std::mutex mu_;
 
+  std::vector<std::reference_wrapper<Service>>
+      dependencies_;       // ABSL_GUARDED_BY(mu_)
   bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<Status>> status_promise_{
       promise<Status>{}};  // ABSL_GUARDED_BY(mu_)

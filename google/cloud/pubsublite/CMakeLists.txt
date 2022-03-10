@@ -216,7 +216,8 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         pubsublite_testing
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
                   ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
-                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_service.h)
 
     target_link_libraries(
         pubsublite_testing

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/service_composite.h"
+#include "google/cloud/pubsublite/testing/mock_service.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <vector>
@@ -26,17 +27,14 @@ namespace {
 using ::testing::ByMove;
 using ::testing::InSequence;
 using ::testing::Return;
+using ::testing::StrictMock;
 
-class MockService : public Service {
- public:
-  MOCK_METHOD(future<Status>, Start, (), (override));
-  MOCK_METHOD(future<void>, Shutdown, (), (override));
-};
+using ::google::cloud::pubsublite_testing::MockService;
 
 TEST(ServiceTest, SingleDependencyGood) {
   InSequence seq;
 
-  MockService service;
+  StrictMock<MockService> service;
   promise<Status> status_promise;
   ServiceComposite service_composite{service};
   EXPECT_CALL(service, Start)
@@ -56,7 +54,7 @@ TEST(ServiceTest, SingleDependencyGood) {
 TEST(ServiceTest, SingleDependencyStartFailed) {
   InSequence seq;
 
-  MockService service;
+  StrictMock<MockService> service;
   promise<Status> status_promise;
   ServiceComposite service_composite{service};
   EXPECT_CALL(service, Start)
@@ -74,7 +72,7 @@ TEST(ServiceTest, SingleDependencyStartFailed) {
 TEST(ServiceTest, SingleDependencyStartFinishedOk) {
   InSequence seq;
 
-  MockService service;
+  StrictMock<MockService> service;
   promise<Status> status_promise;
   ServiceComposite service_composite{service};
   EXPECT_CALL(service, Start)
@@ -92,7 +90,7 @@ TEST(ServiceTest, SingleDependencyStartFinishedOk) {
 TEST(ServiceTest, SingleDependencyShutdownTwice) {
   InSequence seq;
 
-  MockService service;
+  StrictMock<MockService> service;
   promise<Status> status_promise;
   ServiceComposite service_composite{service};
   EXPECT_CALL(service, Start)
@@ -114,9 +112,9 @@ TEST(ServiceTest, SingleDependencyShutdownTwice) {
 TEST(ServiceTest, MultipleDependencyGood) {
   InSequence seq;
 
-  MockService service;
-  MockService service1;
-  MockService service2;
+  StrictMock<MockService> service;
+  StrictMock<MockService> service1;
+  StrictMock<MockService> service2;
 
   promise<Status> status_promise;
   promise<Status> status_promise1;
@@ -144,19 +142,14 @@ TEST(ServiceTest, MultipleDependencyGood) {
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise1.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise2.set_value(Status(StatusCode::kOk, "test ok"));
-
-  // Abort call can safely be called more than once and not change final status
-  // if already set
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
 }
 
 TEST(ServiceTest, MultipleDependencySingleStartFailed) {
   InSequence seq;
 
-  MockService service;
-  MockService service1;
-  MockService service2;
+  StrictMock<MockService> service;
+  StrictMock<MockService> service1;
+  StrictMock<MockService> service2;
 
   promise<Status> status_promise;
   promise<Status> status_promise1;
@@ -187,10 +180,120 @@ TEST(ServiceTest, MultipleDependencySingleStartFailed) {
 
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   status_promise2.set_value(Status(StatusCode::kOk, "test ok"));
+}
 
-  // Abort call can safely be called more than once and should not change final
-  // status if already set
-  EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "oops"));
+TEST(ServiceTest, AddSingleDependencyToEmptyObjectGood) {
+  InSequence seq;
+
+  ServiceComposite service_composite{};
+  future<Status> service_composite_start = service_composite.Start();
+
+  StrictMock<MockService> service;
+  promise<Status> status_promise;
+  EXPECT_CALL(service, Start)
+      .WillOnce(Return(ByMove(status_promise.get_future())));
+  service_composite.AddServiceObject(service);
+
+  EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  service_composite.Shutdown();
+  EXPECT_EQ(service_composite.status(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+  status_promise.set_value(Status(StatusCode::kOk, "test ok"));
+  // Abort call can safely be called more than once and not change final status
+  // if already set
+  EXPECT_EQ(service_composite.status(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+}
+
+TEST(ServiceTest, AddSingleDependencyToEmptyObjectStartFailed) {
+  InSequence seq;
+
+  ServiceComposite service_composite{};
+  future<Status> service_composite_start = service_composite.Start();
+
+  StrictMock<MockService> service;
+  promise<Status> status_promise;
+  EXPECT_CALL(service, Start)
+      .WillOnce(Return(ByMove(status_promise.get_future())));
+  service_composite.AddServiceObject(service);
+
+  status_promise.set_value(Status(StatusCode::kAborted, "oh no"));
+  EXPECT_EQ(service_composite.status(),
+            Status(StatusCode::kAborted, "oh no"));
+
+  EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  service_composite.Shutdown();
+}
+
+TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectGood) {
+  InSequence seq;
+
+  StrictMock<MockService> service;
+  promise<Status> status_promise;
+  ServiceComposite service_composite{service};
+
+  EXPECT_CALL(service, Start)
+      .WillOnce(Return(ByMove(status_promise.get_future())));
+  future<Status> service_composite_start = service_composite.Start();
+
+  StrictMock<MockService> service1;
+  promise<Status> status_promise1;
+  EXPECT_CALL(service1, Start)
+      .WillOnce(Return(ByMove(status_promise1.get_future())));
+  service_composite.AddServiceObject(service1);
+
+  EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  service_composite.Shutdown();
+  EXPECT_EQ(service_composite.status(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+  status_promise.set_value(Status(StatusCode::kOk, "test ok"));
+  status_promise1.set_value(Status(StatusCode::kOk, "test ok"));
+}
+
+TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectStartFailed) {
+  InSequence seq;
+
+  StrictMock<MockService> service;
+  promise<Status> status_promise;
+  ServiceComposite service_composite{service};
+
+  EXPECT_CALL(service, Start)
+      .WillOnce(Return(ByMove(status_promise.get_future())));
+  future<Status> service_composite_start = service_composite.Start();
+
+  StrictMock<MockService> service1;
+  promise<Status> status_promise1;
+  EXPECT_CALL(service1, Start)
+      .WillOnce(Return(ByMove(status_promise1.get_future())));
+  service_composite.AddServiceObject(service1);
+
+  status_promise1.set_value(Status(StatusCode::kAborted, "not ok"));
+  EXPECT_EQ(service_composite.status(),
+            Status(StatusCode::kAborted, "not ok"));
+
+  EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  service_composite.Shutdown();
+  status_promise.set_value(Status(StatusCode::kOk, "test ok"));
+}
+
+TEST(ServiceTest, AddDependencyAfterShutdown) {
+  InSequence seq;
+
+  StrictMock<MockService> service;
+  promise<Status> status_promise;
+  ServiceComposite service_composite{service};
+  EXPECT_CALL(service, Start)
+      .WillOnce(Return(ByMove(status_promise.get_future())));
+  future<Status> service_composite_start = service_composite.Start();
+  EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  service_composite.Shutdown();
+  EXPECT_EQ(service_composite.status(),
+            Status(StatusCode::kAborted, "`Shutdown` called"));
+  status_promise.set_value(Status(StatusCode::kOk, "test ok"));
+  StrictMock<MockService> service1;
+  service_composite.AddServiceObject(service1);
 }
 
 }  // namespace
