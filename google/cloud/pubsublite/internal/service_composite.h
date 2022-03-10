@@ -57,7 +57,8 @@ class ServiceComposite : public Service {
 
   /**
    * This will add a `Service` dependency for the current object to manage. It
-   * is only added if the current object hasn't been `Shutdown` yet.
+   * is only added if the current object hasn't been `Shutdown` yet. May only be
+   * called after `Start`.
    * @param dependency
    */
   void AddServiceObject(Service* dependency) {
