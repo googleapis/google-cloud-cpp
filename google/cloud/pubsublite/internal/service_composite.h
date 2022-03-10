@@ -28,8 +28,8 @@ namespace pubsublite_internal {
 class ServiceComposite : public Service {
  public:
   template <class... ServiceT>
-  explicit ServiceComposite(ServiceT&... dependencies)
-      : dependencies_{{std::ref(static_cast<Service&>(dependencies))...}} {}
+  explicit ServiceComposite(ServiceT*... dependencies)
+      : dependencies_{dependencies...} {}
 
   future<Status> Start() override {
     future<Status> start_future;
@@ -37,8 +37,8 @@ class ServiceComposite : public Service {
 
     {
       std::lock_guard<std::mutex> g{mu_};
-      for (Service& dependency : dependencies_) {
-        dependency_futures.push_back(dependency.Start());
+      for (Service* dependency : dependencies_) {
+        dependency_futures.push_back(dependency->Start());
       }
       start_future = status_promise_->get_future();
     }
@@ -58,7 +58,7 @@ class ServiceComposite : public Service {
    * is only added if the current object hasn't been `Shutdown` yet.
    * @param dependency
    */
-  void AddServiceObject(Service& dependency) {
+  void AddServiceObject(Service* dependency) {
     future<Status> start_future;
     {
       // under lock to guarantee atomicity of being added to `dependencies_` and
@@ -66,8 +66,8 @@ class ServiceComposite : public Service {
       // `Shutdown` will be called on dependency
       std::lock_guard<std::mutex> g{mu_};
       if (shutdown_) return;
-      dependencies_.emplace_back(dependency);
-      start_future = dependency.Start();
+      dependencies_.push_back(dependency);
+      start_future = dependency->Start();
     }
     start_future.then([this](future<Status> status_future) {
       Status s = status_future.get();
@@ -112,8 +112,8 @@ class ServiceComposite : public Service {
     future<void> root_future = root.get_future();
 
     std::lock_guard<std::mutex> g{mu_};
-    for (const auto& dependency : dependencies_) {
-      root_future = root_future.then(ChainFuture(dependency.get().Shutdown()));
+    for (auto* const dependency : dependencies_) {
+      root_future = root_future.then(ChainFuture(dependency->Shutdown()));
     }
     return root_future;
   }
@@ -121,9 +121,8 @@ class ServiceComposite : public Service {
  private:
   std::mutex mu_;
 
-  std::vector<std::reference_wrapper<Service>>
-      dependencies_;       // ABSL_GUARDED_BY(mu_)
-  bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
+  std::vector<Service*> dependencies_;  // ABSL_GUARDED_BY(mu_)
+  bool shutdown_ = false;               // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<Status>> status_promise_{
       promise<Status>{}};  // ABSL_GUARDED_BY(mu_)
   Status final_status_;    // ABSL_GUARDED_BY(mu_)

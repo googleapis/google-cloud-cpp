@@ -36,7 +36,7 @@ TEST(ServiceTest, SingleDependencyGood) {
 
   StrictMock<MockService> service;
   promise<Status> status_promise;
-  ServiceComposite service_composite{service};
+  ServiceComposite service_composite{&service};
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
   future<Status> service_composite_start = service_composite.Start();
@@ -56,7 +56,7 @@ TEST(ServiceTest, SingleDependencyStartFailed) {
 
   StrictMock<MockService> service;
   promise<Status> status_promise;
-  ServiceComposite service_composite{service};
+  ServiceComposite service_composite{&service};
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
   future<Status> service_composite_start = service_composite.Start();
@@ -74,7 +74,7 @@ TEST(ServiceTest, SingleDependencyStartFinishedOk) {
 
   StrictMock<MockService> service;
   promise<Status> status_promise;
-  ServiceComposite service_composite{service};
+  ServiceComposite service_composite{&service};
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
   future<Status> service_composite_start = service_composite.Start();
@@ -92,7 +92,7 @@ TEST(ServiceTest, SingleDependencyShutdownTwice) {
 
   StrictMock<MockService> service;
   promise<Status> status_promise;
-  ServiceComposite service_composite{service};
+  ServiceComposite service_composite{&service};
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
   future<Status> service_composite_start = service_composite.Start();
@@ -120,7 +120,7 @@ TEST(ServiceTest, MultipleDependencyGood) {
   promise<Status> status_promise1;
   promise<Status> status_promise2;
 
-  ServiceComposite service_composite{service, service1, service2};
+  ServiceComposite service_composite{&service, &service1, &service2};
 
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
@@ -155,7 +155,7 @@ TEST(ServiceTest, MultipleDependencySingleStartFailed) {
   promise<Status> status_promise1;
   promise<Status> status_promise2;
 
-  ServiceComposite service_composite{service, service1, service2};
+  ServiceComposite service_composite{&service, &service1, &service2};
 
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
@@ -192,7 +192,7 @@ TEST(ServiceTest, AddSingleDependencyToEmptyObjectGood) {
   promise<Status> status_promise;
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
-  service_composite.AddServiceObject(service);
+  service_composite.AddServiceObject(&service);
 
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
@@ -215,7 +215,7 @@ TEST(ServiceTest, AddSingleDependencyToEmptyObjectStartFailed) {
   promise<Status> status_promise;
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
-  service_composite.AddServiceObject(service);
+  service_composite.AddServiceObject(&service);
 
   status_promise.set_value(Status(StatusCode::kAborted, "oh no"));
   EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "oh no"));
@@ -229,7 +229,7 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectGood) {
 
   StrictMock<MockService> service;
   promise<Status> status_promise;
-  ServiceComposite service_composite{service};
+  ServiceComposite service_composite{&service};
 
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
@@ -239,7 +239,7 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectGood) {
   promise<Status> status_promise1;
   EXPECT_CALL(service1, Start)
       .WillOnce(Return(ByMove(status_promise1.get_future())));
-  service_composite.AddServiceObject(service1);
+  service_composite.AddServiceObject(&service1);
 
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
@@ -255,7 +255,7 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectStartFailed) {
 
   StrictMock<MockService> service;
   promise<Status> status_promise;
-  ServiceComposite service_composite{service};
+  ServiceComposite service_composite{&service};
 
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
@@ -265,7 +265,7 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectStartFailed) {
   promise<Status> status_promise1;
   EXPECT_CALL(service1, Start)
       .WillOnce(Return(ByMove(status_promise1.get_future())));
-  service_composite.AddServiceObject(service1);
+  service_composite.AddServiceObject(&service1);
 
   status_promise1.set_value(Status(StatusCode::kAborted, "not ok"));
   EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "not ok"));
@@ -281,7 +281,7 @@ TEST(ServiceTest, AddDependencyAfterShutdown) {
 
   StrictMock<MockService> service;
   promise<Status> status_promise;
-  ServiceComposite service_composite{service};
+  ServiceComposite service_composite{&service};
   EXPECT_CALL(service, Start)
       .WillOnce(Return(ByMove(status_promise.get_future())));
   future<Status> service_composite_start = service_composite.Start();
@@ -291,7 +291,29 @@ TEST(ServiceTest, AddDependencyAfterShutdown) {
             Status(StatusCode::kAborted, "`Shutdown` called"));
   status_promise.set_value(Status(StatusCode::kOk, "test ok"));
   StrictMock<MockService> service1;
-  service_composite.AddServiceObject(service1);
+  service_composite.AddServiceObject(&service1);
+}
+
+TEST(ServiceTest, AddDependencyAfterStartFailedBeforeShutdown) {
+  InSequence seq;
+
+  StrictMock<MockService> service;
+  promise<Status> status_promise;
+  ServiceComposite service_composite{&service};
+  EXPECT_CALL(service, Start)
+      .WillOnce(Return(ByMove(status_promise.get_future())));
+  future<Status> service_composite_start = service_composite.Start();
+  status_promise.set_value(Status(StatusCode::kAborted, "abort"));
+  EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "abort"));
+  StrictMock<MockService> service1;
+  promise<Status> status_promise1;
+  EXPECT_CALL(service1, Start)
+      .WillOnce(Return(ByMove(status_promise1.get_future())));
+  service_composite.AddServiceObject(&service1);
+  EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
+  service_composite.Shutdown();
+  status_promise1.set_value(Status());
 }
 
 }  // namespace
