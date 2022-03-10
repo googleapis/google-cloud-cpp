@@ -68,7 +68,6 @@ add_library(
     admin_connection_idempotency_policy.cc
     admin_connection_idempotency_policy.h
     admin_options.h
-    batching_options.h
     endpoint.cc
     endpoint.h
     internal/admin_auth_decorator.cc
@@ -87,6 +86,7 @@ add_library(
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
     internal/alarm_registry.h
+    internal/batching_options.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc

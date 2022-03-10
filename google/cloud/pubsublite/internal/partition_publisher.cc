@@ -21,7 +21,6 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-using google::cloud::pubsublite::BatchingOptions;
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
 using google::cloud::pubsublite::v1::MessagePublishRequest;

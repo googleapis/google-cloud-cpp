@@ -39,7 +39,6 @@ using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::WithArg;
 
-using google::cloud::pubsublite::BatchingOptions;
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
 using google::cloud::pubsublite::v1::InitialPublishResponse;
@@ -86,7 +85,7 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
       std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>>
   TestCreateBatches(
       std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>> messages,
-      google::cloud::pubsublite::BatchingOptions const& options) {
+      BatchingOptions const& options) {
     std::deque<PartitionPublisher::MessageWithFuture> message_with_futures;
     for (auto& message_with_future : messages) {
       message_with_futures.emplace_back(PartitionPublisher::MessageWithFuture{

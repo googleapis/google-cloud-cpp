@@ -21,7 +21,7 @@ google_cloud_cpp_pubsublite_hdrs = [
     "admin_connection.h",
     "admin_connection_idempotency_policy.h",
     "admin_options.h",
-    "batching_options.h",
+    "internal/batching_options.h",
     "endpoint.h",
     "internal/admin_auth_decorator.h",
     "internal/admin_connection_impl.h",
