@@ -39,6 +39,9 @@ which should give you a taste of the Artifact Registry API C++ client library AP
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_ENDPOINT=...` changes the default endpoint
+  (artifactregistry.googleapis.com) used by `ArtifactRegistryConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

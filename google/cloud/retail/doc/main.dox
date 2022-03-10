@@ -40,6 +40,24 @@ which should give you a taste of the Retail API C++ client library API.
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT=...` changes the default endpoint
+  (retail.googleapis.com) used by `CatalogServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_COMPLETION_SERVICE_ENDPOINT=...` changes the default endpoint
+  (retail.googleapis.com) used by `CompletionServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_RETAIL_PREDICTION_SERVICE_ENDPOINT=...` changes the default endpoint
+  (retail.googleapis.com) used by `PredictionServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_PRODUCT_SERVICE_ENDPOINT=...` changes the default endpoint
+  (retail.googleapis.com) used by `ProductServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_SEARCH_SERVICE_ENDPOINT=...` changes the default endpoint
+  (retail.googleapis.com) used by `SearchServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_ENDPOINT=...` changes the default endpoint
+  (retail.googleapis.com) used by `UserEventServiceConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,
