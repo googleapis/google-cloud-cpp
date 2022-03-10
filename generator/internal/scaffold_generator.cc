@@ -140,9 +140,6 @@ std::map<std::string, std::string> ScaffoldVars(
                        [](std::string const& x) { return x.empty(); });
   vars["proto_deps"] = absl::StrJoin(deps.begin(), end, "\n    ");
 
-  vars["cpp_files"] = "# EDIT HERE: add list of C++ files\n";
-  vars["mock_files"] = "# EDIT HERE: add list of mock headers\n";
-
   return vars;
 }
 

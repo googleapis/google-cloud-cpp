@@ -47,9 +47,7 @@ which should give you a taste of the Access Approval API C++ client library API.
   the program's console.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
-  `Client::ProfileQuery()`. This can produce a lot of output, so use with
-  caution!
+  gRPC calls. This can produce a lot of output, so use with caution!
 
 - `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
   including whether messages will be output on multiple lines, or whether
