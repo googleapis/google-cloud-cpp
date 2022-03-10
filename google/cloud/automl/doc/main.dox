@@ -39,6 +39,12 @@ which should give you a taste of the Cloud AutoML API C++ client library API.
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_AUTO_ML_ENDPOINT=...` changes the default endpoint
+  (automl.googleapis.com) used by `AutoMlConnection`.
+
+- `GOOGLE_CLOUD_CPP_AUTOML_PREDICTION_SERVICE_ENDPOINT=...` changes the default endpoint
+  (automl.googleapis.com) used by `PredictionServiceConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

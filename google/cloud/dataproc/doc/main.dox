@@ -41,6 +41,21 @@ which should give you a taste of the Cloud Dataproc API C++ client library API.
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT=...` changes the default endpoint
+  (dataproc.googleapis.com) used by `AutoscalingPolicyServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_ENDPOINT=...` changes the default endpoint
+  (dataproc.googleapis.com) used by `BatchControllerConnection`.
+
+- `GOOGLE_CLOUD_CPP_CLUSTER_CONTROLLER_ENDPOINT=...` changes the default endpoint
+  (dataproc.googleapis.com) used by `ClusterControllerConnection`.
+
+- `GOOGLE_CLOUD_CPP_JOB_CONTROLLER_ENDPOINT=...` changes the default endpoint
+  (dataproc.googleapis.com) used by `JobControllerConnection`.
+
+- `GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT=...` changes the default endpoint
+  (dataproc.googleapis.com) used by `WorkflowTemplateServiceConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

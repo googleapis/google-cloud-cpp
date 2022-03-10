@@ -39,6 +39,12 @@ which should give you a taste of the OS Config API C++ client library API.
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_AGENT_ENDPOINT_SERVICE_ENDPOINT=...` changes the default endpoint
+  (osconfig.googleapis.com) used by `AgentEndpointServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_OS_CONFIG_SERVICE_ENDPOINT=...` changes the default endpoint
+  (osconfig.googleapis.com) used by `OsConfigServiceConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,
