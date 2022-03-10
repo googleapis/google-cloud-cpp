@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -28,13 +29,9 @@ using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
-using UnderlyingStream = std::unique_ptr<
-    AsyncStreamingReadWriteRpc<PublishRequest, PublishResponse>>;
-
 PartitionPublisher::PartitionPublisher(
-    absl::FunctionRef<std::unique_ptr<
-        ResumableAsyncStreamingReadWriteRpc<PublishRequest, PublishResponse>>(
-        StreamInitializer<PublishRequest, PublishResponse>)>
+    absl::FunctionRef<
+        ResumableStream(StreamInitializer<PublishRequest, PublishResponse>)>
         resumable_stream_factory,
     BatchingOptions batching_options, InitialPublishRequest ipr,
     AlarmRegistry& alarm_registry)
@@ -151,7 +148,7 @@ void PartitionPublisher::Read() {
           batch = std::move(in_flight_batches_.front());
           in_flight_batches_.pop_front();
         }
-        int64_t offset =
+        std::int64_t offset =
             optional_response->message_response().start_cursor().offset();
         for (auto& message_with_future : batch) {
           Cursor c;
@@ -163,8 +160,8 @@ void PartitionPublisher::Read() {
       });
 }
 
-auto PartitionPublisher::UnbatchAllLockHeld()
-    -> std::deque<MessageWithFuture> {  // ABSL_LOCKS_REQUIRED(mu_)
+std::deque<PartitionPublisher::MessageWithFuture>
+PartitionPublisher::UnbatchAllLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
   std::deque<MessageWithFuture> to_return;
   for (auto& batch : in_flight_batches_) {
     for (auto& message : batch) {
@@ -198,10 +195,10 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithFuture> messages,
                                   BatchingOptions const& options) {
   std::deque<std::deque<MessageWithFuture>> batches;
   std::deque<MessageWithFuture> current_batch;
-  int64_t current_byte_size = 0;
-  int64_t current_messages = 0;
+  std::int64_t current_byte_size = 0;
+  std::int64_t current_messages = 0;
   for (auto& message_with_future : messages) {
-    int64_t message_size = message_with_future.message.ByteSizeLong();
+    std::int64_t message_size = message_with_future.message.ByteSizeLong();
     if (current_messages + 1 > options.maximum_batch_message_count() ||
         current_byte_size + message_size > options.maximum_batch_bytes()) {
       if (!current_batch.empty()) {
@@ -232,8 +229,8 @@ void PartitionPublisher::SatisfyOutstandingMessages() {
   }
 }
 
-future<StatusOr<UnderlyingStream>> PartitionPublisher::Initializer(
-    UnderlyingStream stream) {
+future<StatusOr<PartitionPublisher::UnderlyingStream>>
+PartitionPublisher::Initializer(UnderlyingStream stream) {
   // By the time initializer is called, no outstanding Read() or Write()
   // futures will be outstanding.
   std::shared_ptr<UnderlyingStream> shared_stream =

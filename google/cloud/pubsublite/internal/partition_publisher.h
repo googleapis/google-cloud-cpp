@@ -32,11 +32,14 @@ namespace pubsublite_internal {
 
 class PartitionPublisher
     : public Publisher<google::cloud::pubsublite::v1::Cursor> {
+ private:
+  using ResumableStream = std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
+      google::cloud::pubsublite::v1::PublishRequest,
+      google::cloud::pubsublite::v1::PublishResponse>>;
+
  public:
   explicit PartitionPublisher(
-      absl::FunctionRef<std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
-          google::cloud::pubsublite::v1::PublishRequest,
-          google::cloud::pubsublite::v1::PublishResponse>>(
+      absl::FunctionRef<ResumableStream(
           StreamInitializer<google::cloud::pubsublite::v1::PublishRequest,
                             google::cloud::pubsublite::v1::PublishResponse>)>,
       google::cloud::pubsublite::BatchingOptions,
@@ -54,6 +57,10 @@ class PartitionPublisher
   future<void> Shutdown() override;
 
  private:
+  using UnderlyingStream = std::unique_ptr<AsyncStreamingReadWriteRpc<
+      google::cloud::pubsublite::v1::PublishRequest,
+      google::cloud::pubsublite::v1::PublishResponse>>;
+
   struct MessageWithFuture {
     google::cloud::pubsublite::v1::PubSubMessage message;
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
@@ -73,13 +80,7 @@ class PartitionPublisher
 
   void SatisfyOutstandingMessages();
 
-  future<StatusOr<std::unique_ptr<AsyncStreamingReadWriteRpc<
-      google::cloud::pubsublite::v1::PublishRequest,
-      google::cloud::pubsublite::v1::PublishResponse>>>>
-  Initializer(std::unique_ptr<AsyncStreamingReadWriteRpc<
-                  google::cloud::pubsublite::v1::PublishRequest,
-                  google::cloud::pubsublite::v1::PublishResponse>>
-                  stream);
+  future<StatusOr<UnderlyingStream>> Initializer(UnderlyingStream stream);
 
   google::cloud::pubsublite::BatchingOptions const batching_options_;
   google::cloud::pubsublite::v1::InitialPublishRequest const

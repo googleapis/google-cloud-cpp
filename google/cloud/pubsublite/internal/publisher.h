@@ -25,6 +25,10 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+/**
+ * A generic publisher interface. Example implementations include single
+ * partition and multipartition publishers.
+ */
 template <class ReturnT>
 class Publisher : public Service {
  public:

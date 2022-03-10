@@ -25,14 +25,18 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+/**
+ * An `AlarmRegistry` allows the user to run a function at their own defined
+ * time rate.
+ */
 class AlarmRegistry {
  protected:
   AlarmRegistry() = default;
 
  public:
   virtual ~AlarmRegistry() = default;
-  AlarmRegistry(const AlarmRegistry&) = delete;
-  AlarmRegistry& operator=(const AlarmRegistry&) = delete;
+  AlarmRegistry(AlarmRegistry const&) = delete;
+  AlarmRegistry& operator=(AlarmRegistry const&) = delete;
   AlarmRegistry(AlarmRegistry&&) = delete;
   AlarmRegistry& operator=(AlarmRegistry&&) = delete;
   // When CancelToken is destroyed, the alarm will not be running and will never
@@ -43,8 +47,8 @@ class AlarmRegistry {
 
    public:
     virtual ~CancelToken() = default;
-    CancelToken(const CancelToken&) = delete;
-    CancelToken& operator=(const CancelToken&) = delete;
+    CancelToken(CancelToken const&) = delete;
+    CancelToken& operator=(CancelToken const&) = delete;
     CancelToken(AlarmRegistry&&) = delete;
     CancelToken& operator=(CancelToken&&) = delete;
   };

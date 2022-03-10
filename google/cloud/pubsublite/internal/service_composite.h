@@ -25,6 +25,11 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+/**
+ * `ServiceComposite` wraps the lifetimes of one or more `Service`s into a
+ * single object. This enables a user to manage the lifetimes of several
+ * dependencies through a single object.
+ */
 class ServiceComposite {
  public:
   template <class... ServiceT>
@@ -76,14 +81,14 @@ class ServiceComposite {
     }
     Abort(Status{StatusCode::kAborted, "`Shutdown` called"});
     future<void> root_future = make_ready_future();
-    for (const auto& dependency : dependencies_) {
+    for (auto const& dependency : dependencies_) {
       root_future = root_future.then(ChainFuture(dependency.get().Shutdown()));
     }
     return root_future;
   }
 
  private:
-  const std::vector<std::reference_wrapper<Service>> dependencies_;
+  std::vector<std::reference_wrapper<Service>> const dependencies_;
   std::mutex mu_;
 
   bool shutdown_ = false;  // ABSL_GUARDED_BY(mu_)
