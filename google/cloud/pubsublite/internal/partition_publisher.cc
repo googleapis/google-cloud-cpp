@@ -23,7 +23,6 @@ namespace pubsublite_internal {
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
-using google::cloud::pubsublite::v1::MessagePublishRequest;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
@@ -59,58 +58,19 @@ future<Status> PartitionPublisher::Start() {
   return start_return;
 }
 
-future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
-  if (!service_composite_.status().ok()) {
-    return make_ready_future(
-        StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
-  }
-  MessageWithFuture unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
-  future<StatusOr<Cursor>> message_future =
-      unbatched.message_promise.get_future();
-  std::lock_guard<std::mutex> g{mu_};
-  unbatched_messages_.emplace_back(std::move(unbatched));
-  return message_future;
+future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage) {
+  // TODO(18suresha) implement
+  return make_ready_future(StatusOr<Cursor>{Status{}});
 }
 
 void PartitionPublisher::Flush() {
-  if (!service_composite_.status().ok()) return;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    AppendBatchesLockHeld();
-    if (writing_) return;
-    writing_ = true;
-  }
-  WriteBatches();
+  // TODO(18suresha) implement
 }
 
 future<void> PartitionPublisher::Shutdown() {
   cancel_token_ = nullptr;
   return service_composite_.Shutdown().then(
       [this](future<void>) { SatisfyOutstandingMessages(); });
-}
-
-void PartitionPublisher::WriteBatches() {
-  AsyncRoot root;
-  std::lock_guard<std::mutex> g{mu_};
-  if (unsent_batches_.empty() || !service_composite_.status().ok()) {
-    writing_ = false;
-    return;
-  }
-  in_flight_batches_.push_back(std::move(unsent_batches_.front()));
-  unsent_batches_.pop_front();
-  PublishRequest publish_request;
-  MessagePublishRequest& message_publish_request =
-      *publish_request.mutable_message_publish_request();
-  for (auto& message_with_future : in_flight_batches_.back()) {
-    *message_publish_request.add_messages() = message_with_future.message;
-  }
-  root.get_future()
-      .then(ChainFuture(resumable_stream_->Write(std::move(publish_request))))
-      .then([this](future<bool> write_response) {
-        if (write_response.get()) return WriteBatches();
-        std::lock_guard<std::mutex> g{mu_};
-        writing_ = false;
-      });
 }
 
 void PartitionPublisher::Read() {
@@ -179,14 +139,6 @@ PartitionPublisher::UnbatchAllLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
   }
   unbatched_messages_.clear();
   return to_return;
-}
-
-void PartitionPublisher::AppendBatchesLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
-  for (auto& batch :
-       CreateBatches(std::move(unbatched_messages_), batching_options_)) {
-    unsent_batches_.push_back(std::move(batch));
-  }
-  unbatched_messages_.clear();
 }
 
 std::deque<std::deque<PartitionPublisher::MessageWithFuture>>
