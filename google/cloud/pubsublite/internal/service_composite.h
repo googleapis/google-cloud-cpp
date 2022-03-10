@@ -27,8 +27,8 @@ namespace pubsublite_internal {
 
 /**
  * `ServiceComposite` wraps the lifetimes of one or more `Service`s into a
- * single object. This enables a user to manage the lifetimes of several
- * dependencies through a single object.
+ * single `Service` object. This enables a user to manage the lifetimes of
+ * several dependencies through a single object.
  */
 class ServiceComposite : public Service {
  public:
