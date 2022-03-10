@@ -185,7 +185,7 @@ TEST(ServiceTest, MultipleDependencySingleStartFailed) {
 TEST(ServiceTest, AddSingleDependencyToEmptyObjectGood) {
   InSequence seq;
 
-  ServiceComposite service_composite{};
+  ServiceComposite service_composite;
   future<Status> service_composite_start = service_composite.Start();
 
   StrictMock<MockService> service;
@@ -208,7 +208,7 @@ TEST(ServiceTest, AddSingleDependencyToEmptyObjectGood) {
 TEST(ServiceTest, AddSingleDependencyToEmptyObjectStartFailed) {
   InSequence seq;
 
-  ServiceComposite service_composite{};
+  ServiceComposite service_composite;
   future<Status> service_composite_start = service_composite.Start();
 
   StrictMock<MockService> service;

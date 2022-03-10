@@ -27,6 +27,8 @@ namespace pubsublite_internal {
 
 class ServiceComposite : public Service {
  public:
+  ServiceComposite() = default;
+
   template <class... ServiceT>
   explicit ServiceComposite(ServiceT*... dependencies)
       : dependencies_{dependencies...} {}
@@ -37,7 +39,7 @@ class ServiceComposite : public Service {
 
     {
       std::lock_guard<std::mutex> g{mu_};
-      for (Service* dependency : dependencies_) {
+      for (auto* dependency : dependencies_) {
         dependency_futures.push_back(dependency->Start());
       }
       start_future = status_promise_->get_future();
@@ -112,7 +114,7 @@ class ServiceComposite : public Service {
     future<void> root_future = root.get_future();
 
     std::lock_guard<std::mutex> g{mu_};
-    for (auto* const dependency : dependencies_) {
+    for (auto* dependency : dependencies_) {
       root_future = root_future.then(ChainFuture(dependency->Shutdown()));
     }
     return root_future;
