@@ -31,6 +31,13 @@ using ::testing::StrictMock;
 
 using ::google::cloud::pubsublite_testing::MockService;
 
+TEST(ServiceTest, SingleDependencyNoStartDestructorGood) {
+  StrictMock<MockService> service;
+  ServiceComposite service_composite{&service};
+  EXPECT_EQ(service_composite.status(),
+            Status(StatusCode::kFailedPrecondition, "Not `Start`ed"));
+}
+
 TEST(ServiceTest, SingleDependencyGood) {
   InSequence seq;
 

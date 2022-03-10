@@ -170,8 +170,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   ~ResumableAsyncStreamingReadWriteRpcImpl() override {
     future<void> shutdown = Shutdown();
     if (!shutdown.is_ready()) {
-      GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
-                          "goes out of scope.";
+      GCP_LOG(WARNING)
+          << "`Shutdown` must be called and finished before object "
+             "goes out of scope if `Start` was called.";
       assert(false);
     }
     shutdown.get();
