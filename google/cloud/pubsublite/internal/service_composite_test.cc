@@ -218,8 +218,7 @@ TEST(ServiceTest, AddSingleDependencyToEmptyObjectStartFailed) {
   service_composite.AddServiceObject(service);
 
   status_promise.set_value(Status(StatusCode::kAborted, "oh no"));
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "oh no"));
+  EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "oh no"));
 
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   service_composite.Shutdown();
@@ -269,8 +268,7 @@ TEST(ServiceTest, AddSingleDependencyToNonEmptyObjectStartFailed) {
   service_composite.AddServiceObject(service1);
 
   status_promise1.set_value(Status(StatusCode::kAborted, "not ok"));
-  EXPECT_EQ(service_composite.status(),
-            Status(StatusCode::kAborted, "not ok"));
+  EXPECT_EQ(service_composite.status(), Status(StatusCode::kAborted, "not ok"));
 
   EXPECT_CALL(service, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(service1, Shutdown).WillOnce(Return(ByMove(make_ready_future())));
