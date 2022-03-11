@@ -43,7 +43,6 @@ struct SafeGrpcRetry {
   static inline bool IsTransientFailure(Status const& status) {
     auto const code = status.code();
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
-           code == StatusCode::kDeadlineExceeded ||
            google::cloud::internal::IsTransientInternalError(status);
   }
   static inline bool IsPermanentFailure(Status const& status) {
