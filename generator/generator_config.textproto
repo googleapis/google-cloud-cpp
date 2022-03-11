@@ -104,7 +104,7 @@ service {
   initial_copyright_year: "2021"
   omitted_services: ["BigQueryWrite"]
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -150,7 +150,7 @@ service {
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
   emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
+  retryable_status_codes: ["kUnavailable", "kAborted"]
 }
 
 service {
@@ -160,7 +160,7 @@ service {
   omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
+  retryable_status_codes: ["kUnavailable", "kAborted"]
 }
 
 # Billing
@@ -433,7 +433,7 @@ service {
   product_path: "google/cloud/iam"
   initial_copyright_year: "2020"
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -442,7 +442,7 @@ service {
   initial_copyright_year: "2021"
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Identity-Aware Proxy (IAP)
@@ -852,7 +852,7 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -862,7 +862,7 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Speech
