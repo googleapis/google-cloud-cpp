@@ -32,7 +32,6 @@ struct BigtableTableAdminRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
            status.code() != StatusCode::kAborted &&
-           status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kUnavailable;
   }
 };
