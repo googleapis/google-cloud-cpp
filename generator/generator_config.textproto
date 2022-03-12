@@ -19,7 +19,7 @@ service {
   service_proto_path: "google/cloud/accessapproval/v1/accessapproval.proto"
   product_path: "google/cloud/accessapproval"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Access Context Manager
@@ -77,7 +77,7 @@ service {
   service_proto_path: "google/cloud/assuredworkloads/v1/assuredworkloads.proto"
   product_path: "google/cloud/assuredworkloads"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Auto ML
@@ -86,7 +86,7 @@ service {
   additional_proto_files: ["google/cloud/automl/v1/operations.proto"]
   product_path: "google/cloud/automl"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -104,7 +104,7 @@ service {
   initial_copyright_year: "2021"
   omitted_services: ["BigQueryWrite"]
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -150,7 +150,7 @@ service {
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
   emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
+  retryable_status_codes: ["kUnavailable", "kAborted"]
 }
 
 service {
@@ -160,7 +160,7 @@ service {
   omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kAborted"]
+  retryable_status_codes: ["kUnavailable", "kAborted"]
 }
 
 # Billing
@@ -168,21 +168,21 @@ service {
   service_proto_path: "google/cloud/billing/v1/cloud_billing.proto"
   product_path: "google/cloud/billing"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/billing/v1/cloud_catalog.proto"
   product_path: "google/cloud/billing"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/billing/budgets/v1/budget_service.proto"
   product_path: "google/cloud/billing"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Binary Authorization
@@ -190,7 +190,7 @@ service {
   service_proto_path: "google/cloud/binaryauthorization/v1/service.proto"
   product_path: "google/cloud/binaryauthorization"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Certificate Authority
@@ -198,7 +198,7 @@ service {
   service_proto_path: "google/cloud/security/privateca/v1/service.proto"
   product_path: "google/cloud/privateca"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable", "kUnknown"]
+  retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
 # Cloud Build
@@ -206,7 +206,7 @@ service {
   service_proto_path: "google/devtools/cloudbuild/v1/cloudbuild.proto"
   product_path: "google/cloud/cloudbuild"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Cloud Channel
@@ -223,14 +223,14 @@ service {
   service_proto_path: "google/devtools/clouddebugger/v2/controller.proto"
   product_path: "google/cloud/debugger"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/devtools/clouddebugger/v2/debugger.proto"
   product_path: "google/cloud/debugger"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Composer
@@ -262,7 +262,7 @@ service {
   service_proto_path: "google/container/v1/cluster_service.proto"
   product_path: "google/cloud/container"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Container Analysis
@@ -347,7 +347,7 @@ service {
   service_proto_path: "google/privacy/dlp/v2/dlp.proto"
   product_path: "google/cloud/dlp"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Document AI
@@ -387,21 +387,13 @@ service {
   additional_proto_files: ["google/cloud/functions/v1/operations.proto"]
   product_path: "google/cloud/functions"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Game Services
 service {
   service_proto_path: "google/cloud/gaming/v1/game_server_clusters_service.proto"
   product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-# GKE Hub
-service {
-  service_proto_path: "google/cloud/gkehub/v1/service.proto"
-  product_path: "google/cloud/gkehub"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -427,13 +419,21 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# GKE Hub
+service {
+  service_proto_path: "google/cloud/gkehub/v1/service.proto"
+  product_path: "google/cloud/gkehub"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
   product_path: "google/cloud/iam"
   initial_copyright_year: "2020"
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -442,7 +442,7 @@ service {
   initial_copyright_year: "2021"
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Identity-Aware Proxy (IAP)
@@ -458,7 +458,7 @@ service {
   service_proto_path: "google/cloud/policytroubleshooter/v1/checker.proto"
   product_path: "google/cloud/policytroubleshooter"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # IDS (Cloud Intrusion Detection System)
@@ -474,7 +474,7 @@ service {
   service_proto_path: "google/cloud/iot/v1/device_manager.proto"
   product_path: "google/cloud/iot"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # KMS
@@ -482,7 +482,7 @@ service {
   service_proto_path: "google/cloud/kms/v1/service.proto"
   product_path: "google/cloud/kms"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -505,7 +505,7 @@ service {
   service_proto_path: "google/logging/v2/logging.proto"
   product_path: "google/cloud/logging"
   initial_copyright_year: "2021"
-  retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
 # Managed Microsoft Active Directory (Managed Microsoft AD or Managed Identities)
@@ -610,7 +610,7 @@ service {
   service_proto_path: "google/cloud/orgpolicy/v2/orgpolicy.proto"
   product_path: "google/cloud/orgpolicy"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # OS Config
@@ -633,7 +633,7 @@ service {
   service_proto_path: "google/cloud/oslogin/v1/oslogin.proto"
   product_path: "google/cloud/oslogin"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Cloud Profiler
@@ -649,7 +649,7 @@ service {
   service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2021"
-  retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
 service {
@@ -680,7 +680,7 @@ service {
   service_proto_path: "google/cloud/pubsublite/v1/topic_stats.proto"
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
 # Recommender
@@ -688,7 +688,7 @@ service {
   service_proto_path: "google/cloud/recommender/v1/recommender_service.proto"
   product_path: "google/cloud/recommender"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Redis
@@ -734,14 +734,14 @@ service {
   service_proto_path: "google/cloud/retail/v2/catalog_service.proto"
   product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/retail/v2/completion_service.proto"
   product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -749,28 +749,28 @@ service {
   product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_RETAIL_PREDICTION_SERVICE_ENDPOINT"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/retail/v2/product_service.proto"
   product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/retail/v2/search_service.proto"
   product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/retail/v2/user_event_service.proto"
   product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Scheduler
@@ -778,7 +778,7 @@ service {
   service_proto_path: "google/cloud/scheduler/v1/cloudscheduler.proto"
   product_path: "google/cloud/scheduler"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Secret Manager
@@ -786,7 +786,7 @@ service {
   service_proto_path: "google/cloud/secretmanager/v1/service.proto"
   product_path: "google/cloud/secretmanager"
   initial_copyright_year: "2021"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Security Center
@@ -794,7 +794,7 @@ service {
   service_proto_path: "google/cloud/securitycenter/v1/securitycenter_service.proto"
   product_path: "google/cloud/securitycenter"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Service Control
@@ -859,7 +859,7 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -869,7 +869,7 @@ service {
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT"
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Speech
@@ -914,14 +914,14 @@ service {
   service_proto_path: "google/cloud/talent/v4/company_service.proto"
   product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/talent/v4/completion_service.proto"
   product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
@@ -935,14 +935,14 @@ service {
   service_proto_path: "google/cloud/talent/v4/job_service.proto"
   product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/talent/v4/tenant_service.proto"
   product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Tasks
@@ -950,7 +950,7 @@ service {
   service_proto_path: "google/cloud/tasks/v2/cloudtasks.proto"
   product_path: "google/cloud/tasks"
   initial_copyright_year: "2021"
-  retryable_status_codes: ["kInternal", "kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
 # Text-to-Speech
@@ -958,7 +958,7 @@ service {
   service_proto_path: "google/cloud/texttospeech/v1/cloud_tts.proto"
   product_path: "google/cloud/texttospeech"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # TPU
@@ -982,7 +982,7 @@ service {
   service_proto_path: "google/cloud/translate/v3/translation_service.proto"
   product_path: "google/cloud/translate"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Video Intelligence
@@ -990,7 +990,7 @@ service {
   service_proto_path: "google/cloud/videointelligence/v1/video_intelligence.proto"
   product_path: "google/cloud/videointelligence"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Vision
@@ -998,14 +998,14 @@ service {
   service_proto_path: "google/cloud/vision/v1/image_annotator.proto"
   product_path: "google/cloud/vision"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/vision/v1/product_search_service.proto"
   product_path: "google/cloud/vision"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # VM Migration
@@ -1029,7 +1029,7 @@ service {
   service_proto_path: "google/cloud/webrisk/v1/webrisk.proto"
   product_path: "google/cloud/webrisk"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Web Security Scanner
@@ -1037,7 +1037,7 @@ service {
   service_proto_path: "google/cloud/websecurityscanner/v1/web_security_scanner.proto"
   product_path: "google/cloud/websecurityscanner"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Workflows
@@ -1045,12 +1045,12 @@ service {
   service_proto_path: "google/cloud/workflows/v1/workflows.proto"
   product_path: "google/cloud/workflows"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/workflows/executions/v1/executions.proto"
   product_path: "google/cloud/workflows"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
+  retryable_status_codes: ["kUnavailable"]
 }
