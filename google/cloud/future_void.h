@@ -210,14 +210,6 @@ inline future<void> make_ready_future() {
   return p.get_future();
 }
 
-namespace internal {
-
-inline std::shared_ptr<future_shared_state_base>
-CoroutineSupport::get_shared_state(future<void>& f) {
-  return static_cast<future_base<void>&>(f).shared_state();
-}
-
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -846,15 +846,6 @@ future_shared_state<void>::make_continuation(
   return result;
 }
 
-struct CoroutineSupport {
-  static std::shared_ptr<future_shared_state_base> get_shared_state(
-      future<void>& f);
-
-  template <typename T>
-  static std::shared_ptr<future_shared_state_base> get_shared_state(
-      future<T>& f);
-};
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

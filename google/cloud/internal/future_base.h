@@ -206,6 +206,14 @@ class promise_base {  // NOLINT(readability-identifier-naming)
   std::shared_ptr<shared_state_type> shared_state_;
 };
 
+struct CoroutineSupport {
+  template <typename T>
+  static std::shared_ptr<future_shared_state_base> get_shared_state(
+      future<T>& f) {
+    return static_cast<future_base<T>&>(f).shared_state();
+  }
+};
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

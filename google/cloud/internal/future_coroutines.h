@@ -23,7 +23,7 @@
 #include <coroutine>
 #include <memory>
 
-/// Specialize `std::coroutine_traits` for `google::cloud_future<T>`.
+/// Specialize `std::coroutine_traits` for `google::cloud::future<T>`.
 template <typename T, typename... Args>
 requires(!std::is_void_v<T> && !std::is_reference_v<T>) /**/
     struct std::coroutine_traits<google::cloud::future<T>, Args...> {
@@ -55,7 +55,7 @@ requires(!std::is_void_v<T> && !std::is_reference_v<T>) /**/
   };
 };
 
-/// Specialize `std::coroutine_traits` for `google::cloud_future<void>`.
+/// Specialize `std::coroutine_traits` for `google::cloud::future<void>`.
 template <typename... Args>
 struct std::coroutine_traits<google::cloud::future<void>, Args...> {
   struct promise_type {

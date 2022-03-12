@@ -224,15 +224,6 @@ inline future<typename internal::make_ready_return<T>::type> make_ready_future(
   return p.get_future();
 }
 
-namespace internal {
-
-template <typename T>
-std::shared_ptr<future_shared_state_base> CoroutineSupport::get_shared_state(
-    future<T>& f) {
-  return static_cast<future_base<T>&>(f).shared_state();
-}
-
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
