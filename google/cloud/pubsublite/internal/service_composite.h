@@ -112,6 +112,10 @@ class ServiceComposite : public Service {
    *
    * @return a `Status` of `kOk` if and only if the current lifecycle is in the
    * running phase
+   *
+   * @note There are only three ways this can return a non-`kOk` status, i.e.,
+   * `Start` has not been called yet, an error occurred in one of the underlying
+   * `Start` calls, or the user called `Shutdown`.
    */
   Status status() {
     std::lock_guard<std::mutex> g{mu_};
