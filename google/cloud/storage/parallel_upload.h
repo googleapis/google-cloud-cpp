@@ -365,8 +365,12 @@ class ParallelUploadFileShard {
   std::shared_ptr<ParallelUploadStateImpl> state_;
   ObjectWriteStream ostream_;
   std::string file_name_;
-  std::uintmax_t offset_in_file_;
-  std::uintmax_t left_to_upload_;
+  // GCS only supports objects up to 5TiB, that fits comfortably in a
+  // `std::int64_t`, allows for any expected growth on that limit (not that we
+  // anticipate any), and plays nicer with the types in the standard C++
+  // library.
+  std::int64_t offset_in_file_;
+  std::int64_t left_to_upload_;
   std::size_t upload_buffer_size_;
   std::string resumable_session_id_;
 };
