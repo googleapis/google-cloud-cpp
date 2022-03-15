@@ -52,8 +52,6 @@ function cmake::common_args() {
   local args
   args=(
     -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)"
-    # By default, we build with the oldest C++ standard that we support.
-    -DCMAKE_CXX_STANDARD=11
   )
   args+=(-GNinja -S . -B cmake-out)
   printf "%s\n" "${args[@]}"
