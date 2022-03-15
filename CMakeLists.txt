@@ -19,6 +19,15 @@ cmake_minimum_required(VERSION 3.5)
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 
+# Enable support for SelectMSVCRuntime
+if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
+    cmake_policy(SET CMP0091 NEW)
+endif ()
+project(
+    google-cloud-cpp
+    VERSION 1.39.0
+    LANGUAGES CXX C)
+
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
     # AppleClang defaults to C++98, so we bump it to C++11.
     message(
@@ -33,15 +42,6 @@ if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
     )
     set(CMAKE_CXX_STANDARD 11)
 endif ()
-
-# Enable support for SelectMSVCRuntime
-if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
-    cmake_policy(SET CMP0091 NEW)
-endif ()
-project(
-    google-cloud-cpp
-    VERSION 1.39.0
-    LANGUAGES CXX C)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
