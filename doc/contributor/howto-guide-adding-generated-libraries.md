@@ -183,6 +183,9 @@ were written by a robot:
 The Cloud documentation links (`cloud.google.com/*/docs/*`) in these files are
 not always valid. Find the correct urls and update the links.
 
+Also, be sure to document each service's endpoint environment variable in
+`doc/main.dox`
+
 ## Update the root files
 
 Manually edit the following files:

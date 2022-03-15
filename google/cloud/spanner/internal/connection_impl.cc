@@ -50,11 +50,11 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   void TryCancel() override { context_->TryCancel(); }
 
-  absl::optional<google::spanner::v1::PartialResultSet> Read() override {
+  absl::optional<PartialResultSet> Read() override {
     google::spanner::v1::PartialResultSet result;
     bool success = reader_->Read(&result);
     if (!success) return {};
-    return result;
+    return PartialResultSet{std::move(result), false};
   }
 
   Status Finish() override {

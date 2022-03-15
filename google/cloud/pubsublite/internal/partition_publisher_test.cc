@@ -343,8 +343,7 @@ TEST_F(PartitionPublisherTest, InitializerWriteFailureThenGood) {
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
-  EXPECT_EQ(publisher_start_future.get(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_EQ(publisher_start_future.get(), Status());
 }
 
 TEST_F(PartitionPublisherTest, InitializerReadFailureThenGood) {
@@ -389,8 +388,7 @@ TEST_F(PartitionPublisherTest, InitializerReadFailureThenGood) {
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
-  EXPECT_EQ(publisher_start_future.get(),
-            Status(StatusCode::kAborted, "`Shutdown` called"));
+  EXPECT_EQ(publisher_start_future.get(), Status());
 }
 
 TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {

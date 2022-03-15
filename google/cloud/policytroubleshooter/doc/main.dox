@@ -40,6 +40,9 @@ which should give you a taste of the Policy Troubleshooter API C++ client librar
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_IAM_CHECKER_ENDPOINT=...` changes the default endpoint
+  (policytroubleshooter.googleapis.com) used by `IamCheckerConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

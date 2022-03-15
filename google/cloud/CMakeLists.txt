@@ -89,6 +89,7 @@ add_library(
     internal/format_time_point.cc
     internal/format_time_point.h
     internal/future_base.h
+    internal/future_coroutines.h
     internal/future_fwd.h
     internal/future_impl.cc
     internal/future_impl.h
@@ -204,6 +205,7 @@ if (BUILD_TESTING)
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
         common_options_test.cc
+        future_coroutines_test.cc
         future_generic_test.cc
         future_generic_then_test.cc
         future_void_test.cc

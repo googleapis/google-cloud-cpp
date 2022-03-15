@@ -117,6 +117,8 @@ class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
   ResumableAsyncReadWriteStream stream_;
 };
 
+TEST_F(ResumableAsyncReadWriteStreamingRpcTest, NoStartDestructorGood) {}
+
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   InSequence seq;
 

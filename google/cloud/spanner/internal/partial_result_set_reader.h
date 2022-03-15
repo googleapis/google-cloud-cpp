@@ -28,6 +28,17 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * The result of a successful `PartialResultSetReader::Read()`, which may
+ * be the next partial result of a stream, or a resumption of an interrupted
+ * stream from the last "resume token". In the latter case, the caller should
+ * discard any pending row-assembly state as that data will be replayed.
+ */
+struct PartialResultSet {
+  google::spanner::v1::PartialResultSet result;
+  bool resumption;
+};
+
+/**
  * Wrap `grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>`.
  *
  * This defines an interface to handle a streaming RPC returning a sequence of
@@ -40,7 +51,7 @@ class PartialResultSetReader {
  public:
   virtual ~PartialResultSetReader() = default;
   virtual void TryCancel() = 0;
-  virtual absl::optional<google::spanner::v1::PartialResultSet> Read() = 0;
+  virtual absl::optional<PartialResultSet> Read() = 0;
   virtual Status Finish() = 0;
 };
 

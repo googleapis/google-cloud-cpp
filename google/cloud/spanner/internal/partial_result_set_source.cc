@@ -45,6 +45,14 @@ StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
     return spanner::Row();
   }
 
+  // TODO(#8523): This assumes that we can yield a row as soon as we have
+  // all of its columns, which would not be the case if we (1) want to be
+  // able to resume interrupted streams, and (2) do not yet have a resume
+  // token that is "past" the row. That is, we should not yield a row that
+  // might be replayed. Given that we want to support resumption, for now
+  // we assume we always have a resume token that is "past" any completed
+  // row, but that needs to be verified.
+
   while (buffer_.empty() || buffer_.size() < columns_->size()) {
     auto status = ReadFromStream();
     if (!status.ok()) {
@@ -105,12 +113,12 @@ Status PartialResultSetSource::ReadFromStream() {
     return reader_->Finish();
   }
 
-  if (result_set->has_metadata()) {
+  if (result_set->result.has_metadata()) {
     // If we got metadata more than once, log it, but use the first one.
     if (metadata_) {
       GCP_LOG(WARNING) << "Unexpectedly received two sets of metadata";
     } else {
-      metadata_ = std::move(*result_set->mutable_metadata());
+      metadata_ = std::move(*result_set->result.mutable_metadata());
       // Copies the column names into a shared_ptr that will be shared with
       // every Row object returned from NextRow().
       columns_ = std::make_shared<std::vector<std::string>>();
@@ -120,15 +128,23 @@ Status PartialResultSetSource::ReadFromStream() {
     }
   }
 
-  if (result_set->has_stats()) {
+  if (result_set->result.has_stats()) {
     // If we got stats more than once, log it, but use the last one.
     if (stats_) {
       GCP_LOG(WARNING) << "Unexpectedly received two sets of stats";
     }
-    stats_ = std::move(*result_set->mutable_stats());
+    stats_ = std::move(*result_set->result.mutable_stats());
   }
 
-  auto& new_values = *result_set->mutable_values();
+  // If reader_->Read() resulted in a new PartialResultSetReader (i.e., it
+  // used the last resume_token to resume an interrupted stream), then we
+  // must clear the buffered partial-row data as it will be replayed.
+  if (result_set->resumption) {
+    buffer_.clear();
+    chunk_ = {};
+  }
+
+  auto& new_values = *result_set->result.mutable_values();
 
   // Merge values if necessary, as described in:
   // https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#google.spanner.v1.PartialResultSet
@@ -163,7 +179,7 @@ Status PartialResultSetSource::ReadFromStream() {
     chunk_ = {};
   }
 
-  if (result_set->chunked_value()) {
+  if (result_set->result.chunked_value()) {
     if (new_values.empty()) {
       return Status(StatusCode::kInternal,
                     "PartialResultSet had chunked_value "

@@ -450,6 +450,7 @@ if (BUILD_TESTING)
         PUBLIC absl::memory
                google-cloud-cpp::experimental-storage-grpc
                google-cloud-cpp::storage
+               google_cloud_cpp_testing
                nlohmann_json::nlohmann_json
                GTest::gmock_main
                GTest::gmock
