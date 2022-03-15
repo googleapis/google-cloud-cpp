@@ -88,10 +88,14 @@ ctest_args=(
 
 # Cannot use `env -C` as the version of env on macOS does not support that flag
 io::log_h2 "Running minimal quickstart programs"
-(
-  cd "${BINARY_DIR}"
-  ctest "${ctest_args[@]}" -R "(storage_quickstart|pubsub_quickstart)"
-)
+if [ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+  (
+    cd "${BINARY_DIR}"
+    ctest "${ctest_args[@]}" -R "(storage_quickstart|pubsub_quickstart)"
+  )
+else
+  io::log_yellow "No ${GOOGLE_APPLICATION_CREDENTIALS}. Skipping quickstarts."
+fi
 
 io::log_h2 "ccache stats"
 ccache --show-stats
