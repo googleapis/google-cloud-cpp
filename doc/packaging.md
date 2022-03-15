@@ -1564,7 +1564,7 @@ cmake --build cmake-out --target install
 <br>
 
 First install Xcode to get all the needed development tools. These instructions
-also use Homebrew (https://brew.sh/) to install the needed third-party
+also use [Homebrew](https://brew.sh/) to install the needed third-party
 dependencies.
 
 If you don't already have Xcode installed:
@@ -1589,7 +1589,7 @@ In this example, we install the [storage][storage-link] and
 cmake -S . -B cmake-out \
   -GNinja \
   -DGOOGLE_CLOUD_CPP_ENABLE="storage;spanner" \
-  -DCMAKE_CXX_STANDARD=17 \
+  -DCMAKE_CXX_STANDARD=11 \
   -DCMAKE_BUILD_TYPE=release \
   -DBUILD_TESTING=OFF \
   -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@1.1)" \
