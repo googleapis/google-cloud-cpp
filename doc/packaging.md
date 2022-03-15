@@ -1598,9 +1598,6 @@ cmake --build cmake-out
 cmake --build cmake-out --target install
 ```
 
-NOTE: The above explicitly uses OpenSSL 1.1, because OpenSSL 3.x deprecated a
-bunch of APIs and our libraries do not yet compile with OpenSSL 3.x.
-
 [storage-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage#readme
 [spanner-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner#readme
 
