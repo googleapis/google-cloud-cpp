@@ -63,7 +63,7 @@ function spanner_emulator::start() {
   # to kill the emulator at the end using that command.
   readonly SPANNER_EMULATOR_CMD="${CLOUD_SDK_LOCATION}/bin/cloud_spanner_emulator/emulator_main"
   if [[ ! -x "${SPANNER_EMULATOR_CMD}" ]]; then
-    echo 1>&2 "The spanner emulator does not seem to be installed, aborting"
+    echo 1>&2 "The Cloud Spanner emulator does not seem to be installed, aborting"
     return 1
   fi
 
@@ -75,7 +75,8 @@ function spanner_emulator::start() {
 
   emulator_port="$(spanner_emulator::internal::read_emulator_port emulator.log)"
   if [[ "${emulator_port}" = "0" ]]; then
-    echo "Cannot determine Cloud Spanner emulator port." >&2
+    io::log_red "Cannot determine Cloud Spanner emulator port." >&2
+    cat emulator.log >&2
     spanner_emulator::kill
     return 1
   fi
