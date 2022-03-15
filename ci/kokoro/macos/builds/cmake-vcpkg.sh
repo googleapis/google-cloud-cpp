@@ -30,10 +30,10 @@ io::log_h2 "Using CMake version"
 cmake --version
 
 io::log_h2 "Update or install dependencies"
-brew list --versions openssl || brew install openssl
-brew list --versions ccache || brew install ccache
-brew list --versions cmake || brew install cmake
-brew list --versions ninja || brew install ninja
+brew list --versions openssl || ci/retry-command.sh 3 120 brew install openssl
+brew list --versions ccache || ci/retry-command.sh 3 120 brew install ccache
+brew list --versions cmake || ci/retry-command.sh 3 120 brew install cmake
+brew list --versions ninja || ci/retry-command.sh 3 120 brew install ninja
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
