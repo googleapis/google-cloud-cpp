@@ -213,7 +213,7 @@ brew install cmake ninja
 brew install abseil protobuf grpc nlohmann-json crc32c openssl@1.1
 ```
 
-Now configure, build, and install the google-cloud-cpp libraries that you need.
+Now configure, build, and install the `google-cloud-cpp` libraries that you need.
 In this example, we install the [storage][storage-link] and
 [spanner][spanner-link] libraries.
 ```bash
