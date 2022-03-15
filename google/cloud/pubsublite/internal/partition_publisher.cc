@@ -53,9 +53,8 @@ PartitionPublisher::~PartitionPublisher() {
 }
 
 future<Status> PartitionPublisher::Start() {
-  auto start_return = service_composite_.Start();
-  Read();
-  return start_return;
+  return service_composite_.Start();
+  // TODO(18suresha) call and implement `Read`
 }
 
 future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage) {
@@ -71,52 +70,6 @@ future<void> PartitionPublisher::Shutdown() {
   cancel_token_ = nullptr;
   return service_composite_.Shutdown().then(
       [this](future<void>) { SatisfyOutstandingMessages(); });
-}
-
-void PartitionPublisher::Read() {
-  AsyncRoot root;
-  if (!service_composite_.status().ok()) return;
-  std::lock_guard<std::mutex> g{mu_};
-  root.get_future()
-      .then(ChainFuture(resumable_stream_->Read()))
-      .then([this](future<absl::optional<PublishResponse>>
-                       optional_response_future) {
-        auto optional_response = optional_response_future.get();
-        // optional not engaged implies that the retry loop has finished
-        if (!optional_response) return Read();
-        if (!optional_response->has_message_response()) {
-          // if we don't receive a `MessagePublishResponse` and/or receive an
-          // `InitialPublishResponse`, we abort because this should not be the
-          // case once we start `Read`ing
-          service_composite_.Abort(
-              Status(StatusCode::kAborted,
-                     absl::StrCat("Invalid `Read` response: ",
-                                  optional_response->DebugString())));
-          return;
-        }
-
-        std::deque<MessageWithFuture> batch;
-        {
-          std::lock_guard<std::mutex> g{mu_};
-          if (in_flight_batches_.empty()) {
-            return service_composite_.Abort(
-                Status(StatusCode::kFailedPrecondition,
-                       "Server sent message response when no batches were "
-                       "outstanding."));
-          }
-          batch = std::move(in_flight_batches_.front());
-          in_flight_batches_.pop_front();
-        }
-        std::int64_t offset =
-            optional_response->message_response().start_cursor().offset();
-        for (auto& message_with_future : batch) {
-          Cursor c;
-          c.set_offset(offset);
-          ++offset;
-          message_with_future.message_promise.set_value(std::move(c));
-        }
-        Read();
-      });
 }
 
 std::deque<PartitionPublisher::MessageWithFuture>

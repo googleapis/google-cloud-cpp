@@ -66,8 +66,6 @@ class PartitionPublisher
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
   };
 
-  void Read();
-
   std::deque<MessageWithFuture> UnbatchAllLockHeld();
 
   static std::deque<std::deque<MessageWithFuture>> CreateBatches(
