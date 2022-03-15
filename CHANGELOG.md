@@ -70,13 +70,14 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 **BREAKING CHANGES**
 
-* In this release our CMake build no longer sets `CMAKE_CXX_STANDARD` to `11`
-  when it was unspecified by the caller on Linux and Windows. Instead, we leave
-  it unset, relying on the compiler's default C++ language standard. On macOS,
-  we continue to default `CMAKE_CXX_STANDARD=11`, since the compiler's default
-  of C++98 is too old. To get the previous behavior, use
-  `cmake -DCMAKE_CXX_STANDARD=11 ...`. For more details, see:
-  https://github.com/googleapis/google-cloud-cpp/issues/6767.
+* Starting with this release Linux and Windows builds based on CMake
+  no longer set `CMAKE_CXX_STANDARD` to `11`.  We rely on the compiler's
+  default C++ language standard. Note that all the compilers we support default
+  to C++14.
+  * On macOS the default is C++98, as `google-cloud-cpp` requires C++ >= 11, we continue
+    to set `CMAKE_CXX_STANDARD` on that platform.
+  * This only changes the default C++ version, we continue to test and support C++11.
+  * For more details, see [#6767](https://github.com/googleapis/google-cloud-cpp/issues/6767).
 
 ### [KMS](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/kms/README.md)
 
