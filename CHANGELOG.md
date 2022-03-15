@@ -68,6 +68,17 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.39.0 - TBD
 
+**BREAKING CHANGES**
+
+* Starting with this release Linux and Windows builds based on CMake
+  no longer set `CMAKE_CXX_STANDARD` to `11`.  We rely on the compiler's
+  default C++ language standard. Note that all the compilers we support default
+  to C++14.
+  * On macOS the default is C++98, as `google-cloud-cpp` requires C++ >= 11, we continue
+    to set `CMAKE_CXX_STANDARD` on that platform.
+  * This only changes the default C++ version, we continue to test and support C++11.
+  * For more details, see [#6767](https://github.com/googleapis/google-cloud-cpp/issues/6767).
+
 ### [KMS](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/kms/README.md)
 
 The library has been expanded to include the following services:
