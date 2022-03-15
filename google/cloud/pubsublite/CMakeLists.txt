@@ -118,6 +118,7 @@ add_library(
     internal/publisher_stub_factory.h
     internal/resumable_async_streaming_read_write_rpc.h
     internal/service.h
+    internal/service_composite.h
     internal/stream_factory.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
@@ -215,7 +216,8 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         pubsublite_testing
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
                   ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
-                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_service.h)
 
     target_link_libraries(
         pubsublite_testing
@@ -234,6 +236,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         # cmake-format: sort
         endpoint_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
+        internal/service_composite_test.cc
         internal/stream_factory_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"

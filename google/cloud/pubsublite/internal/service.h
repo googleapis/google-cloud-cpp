@@ -67,7 +67,8 @@ class Service {
    * call will satisfy the returned future only after the internal operation(s)
    * finish.
    *
-   * Must be called before destroying this object and may only be called once.
+   * Must be called before destroying this object if `Start` was called and may
+   * only be called once.
    */
   virtual future<void> Shutdown() = 0;
 };
