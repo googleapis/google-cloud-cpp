@@ -35,8 +35,10 @@ PartitionPublisher::PartitionPublisher(
     AlarmRegistry& alarm_registry)
     : batching_options_{std::move(batching_options)},
       initial_publish_request_{std::move(ipr)},
-      resumable_stream_{resumable_stream_factory(std::bind(
-          &PartitionPublisher::Initializer, this, std::placeholders::_1))},
+      // TODO(18suresha) implement `Initializer`
+      resumable_stream_{resumable_stream_factory([](UnderlyingStream stream) {
+        return make_ready_future(StatusOr<UnderlyingStream>(std::move(stream)));
+      })},
       service_composite_{resumable_stream_.get()},
       cancel_token_{alarm_registry.RegisterAlarm(
           batching_options_.alarm_period(),
@@ -131,41 +133,6 @@ void PartitionPublisher::SatisfyOutstandingMessages() {
     message_with_future.message_promise.set_value(
         StatusOr<Cursor>(service_composite_.status()));
   }
-}
-
-future<StatusOr<PartitionPublisher::UnderlyingStream>>
-PartitionPublisher::Initializer(UnderlyingStream stream) {
-  // By the time initializer is called, no outstanding Read() or Write()
-  // futures will be outstanding.
-  std::shared_ptr<UnderlyingStream> shared_stream =
-      std::make_shared<UnderlyingStream>(std::move(stream));
-  PublishRequest publish_request;
-  *publish_request.mutable_initial_request() = initial_publish_request_;
-  return (*shared_stream)
-      ->Write(publish_request, grpc::WriteOptions())
-      .then([shared_stream](future<bool> write_response) {
-        if (!write_response.get()) {
-          return make_ready_future(absl::optional<PublishResponse>());
-        }
-        return (*shared_stream)->Read();
-      })
-      .then([shared_stream](
-                future<absl::optional<PublishResponse>> read_response) {
-        auto optional_response = read_response.get();
-        if (optional_response && optional_response->has_initial_response()) {
-          return make_ready_future(Status());
-        }
-        return (*shared_stream)->Finish();
-      })
-      .then([this, shared_stream](
-                future<Status> status_future) -> StatusOr<UnderlyingStream> {
-        Status status = status_future.get();
-        if (!status.ok()) return status;
-        std::lock_guard<std::mutex> g{mu_};
-        unsent_batches_ =
-            CreateBatches(UnbatchAllLockHeld(), batching_options_);
-        return std::move(*shared_stream);
-      });
 }
 
 }  // namespace pubsublite_internal

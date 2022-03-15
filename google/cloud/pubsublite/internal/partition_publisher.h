@@ -73,8 +73,6 @@ class PartitionPublisher
 
   void SatisfyOutstandingMessages();
 
-  future<StatusOr<UnderlyingStream>> Initializer(UnderlyingStream stream);
-
   BatchingOptions const batching_options_;
   google::cloud::pubsublite::v1::InitialPublishRequest const
       initial_publish_request_;

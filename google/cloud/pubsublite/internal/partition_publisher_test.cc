@@ -13,14 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
-#include "google/cloud/pubsublite/testing/mock_alarm_registry.h"
 #include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
-#include "google/cloud/pubsublite/testing/mock_resumable_async_reader_writer_stream.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <memory>
@@ -32,12 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::testing::_;
-using ::testing::ByMove;
-using ::testing::InSequence;
-using ::testing::Return;
-using ::testing::StrictMock;
-using ::testing::WithArg;
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
@@ -46,10 +37,7 @@ using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
-using ::google::cloud::pubsublite_testing::MockAlarmRegistry;
-using ::google::cloud::pubsublite_testing::MockAlarmRegistryCancelToken;
 using ::google::cloud::pubsublite_testing::MockAsyncReaderWriter;
-using ::google::cloud::pubsublite_testing::MockResumableAsyncReaderWriter;
 
 using AsyncReaderWriter =
     MockAsyncReaderWriter<PublishRequest, PublishResponse>;
@@ -59,22 +47,6 @@ using AsyncReadWriteStreamReturnType = std::unique_ptr<
 
 using ResumableAsyncReadWriteStream = std::unique_ptr<
     ResumableAsyncStreamingReadWriteRpc<PublishRequest, PublishResponse>>;
-
-auto const kAlarmDuration = std::chrono::milliseconds{1000 * 3600};
-
-PublishRequest GetInitializerPublishRequest() {
-  PublishRequest publish_request;
-  *publish_request.mutable_initial_request() =
-      InitialPublishRequest::default_instance();
-  return publish_request;
-}
-
-PublishResponse GetInitializerPublishResponse() {
-  PublishResponse publish_response;
-  *publish_response.mutable_initial_response() =
-      InitialPublishResponse::default_instance();
-  return publish_response;
-}
 
 class PartitionPublisherBatchingTest : public ::testing::Test {
  protected:
@@ -270,140 +242,6 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
                               "offset:", std::to_string(i * 3 + j)))});
     }
   }
-}
-
-class PartitionPublisherTest : public ::testing::Test {
- protected:
-  PartitionPublisherTest() {
-    EXPECT_CALL(alarm_, RegisterAlarm(kAlarmDuration, _))
-        .WillOnce(WithArg<1>([&](std::function<void()> const&) {
-          return absl::WrapUnique(alarm_token_);
-        }));
-
-    BatchingOptions options;
-    options.set_maximum_batch_message_count(batch_boundary_);
-    options.set_alarm_period(kAlarmDuration);
-
-    publisher_ = absl::make_unique<PartitionPublisher>(
-        [&](StreamInitializer<PublishRequest, PublishResponse> const&
-                initializer) {
-          initializer_ = std::move(initializer);
-          return absl::WrapUnique(resumable_stream_);
-        },
-        std::move(options), InitialPublishRequest::default_instance(), alarm_);
-  }
-
-  unsigned int batch_boundary_ = 5;
-  StreamInitializer<PublishRequest, PublishResponse> initializer_;
-  MockAlarmRegistryCancelToken* alarm_token_ =
-      new StrictMock<MockAlarmRegistryCancelToken>;
-  MockAlarmRegistry alarm_;
-  MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>*
-      resumable_stream_ = new StrictMock<
-          MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>;
-  std::unique_ptr<Publisher<Cursor>> publisher_;
-};
-
-TEST_F(PartitionPublisherTest, InitializerWriteFailureThenGood) {
-  InSequence seq;
-
-  promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
-      .WillOnce(Return(ByMove(start_promise.get_future())));
-
-  future<Status> publisher_start_future = publisher_->Start();
-
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
-      .WillOnce(Return(ByMove(make_ready_future(false))));
-  EXPECT_CALL(*underlying_stream, Finish)
-      .WillOnce(Return(ByMove(
-          make_ready_future(Status(StatusCode::kUnavailable, "Unavailable")))));
-  initializer_(absl::WrapUnique(underlying_stream));
-
-  underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
-      .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
-      .WillOnce(Return(ByMove(make_ready_future(
-          absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
-
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
-      .WillOnce(Return(ByMove(make_ready_future())));
-  publisher_->Shutdown().get();
-  start_promise.set_value(Status());
-  EXPECT_EQ(publisher_start_future.get(), Status());
-}
-
-TEST_F(PartitionPublisherTest, InitializerReadFailureThenGood) {
-  InSequence seq;
-
-  promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
-      .WillOnce(Return(ByMove(start_promise.get_future())));
-
-  future<Status> publisher_start_future = publisher_->Start();
-
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
-      .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
-      .WillOnce(
-          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))));
-  EXPECT_CALL(*underlying_stream, Finish)
-      .WillOnce(Return(ByMove(
-          make_ready_future(Status(StatusCode::kUnavailable, "Unavailable")))));
-  initializer_(absl::WrapUnique(underlying_stream));
-
-  underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
-      .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
-      .WillOnce(Return(ByMove(make_ready_future(
-          absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
-
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
-      .WillOnce(Return(ByMove(make_ready_future())));
-  publisher_->Shutdown().get();
-  start_promise.set_value(Status());
-  EXPECT_EQ(publisher_start_future.get(), Status());
-}
-
-TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
-  InSequence seq;
-
-  promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
-      .WillOnce(Return(ByMove(start_promise.get_future())));
-
-  future<Status> publisher_start_future = publisher_->Start();
-
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
-              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
-      .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
-      .WillOnce(Return(ByMove(make_ready_future(
-          absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
-
-  start_promise.set_value(Status(StatusCode::kInternal, "Permanent Error"));
-
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
-      .WillOnce(Return(ByMove(make_ready_future())));
-  publisher_->Shutdown().get();
-
-  EXPECT_EQ(publisher_start_future.get(),
-            Status(StatusCode::kInternal, "Permanent Error"));
 }
 
 }  // namespace pubsublite_internal
