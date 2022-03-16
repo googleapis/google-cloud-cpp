@@ -39,6 +39,8 @@ cc_library(
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
     deps = [
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:optional",
@@ -91,6 +93,8 @@ cc_library(
     ],
     deps = [
         ":google_cloud_cpp_common",
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
         "@com_github_grpc_grpc//:grpc++",
         "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/memory",
