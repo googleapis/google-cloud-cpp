@@ -71,7 +71,7 @@ https://cloud.google.com/docs/authentication/production
    project. As it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Run the example, change the placeholder(s) to appropriate values:
+3. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    bazel run :quickstart -- [PROJECT_ID] [LOCATION_ID] [PROCESSOR_ID]
@@ -108,7 +108,7 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-4. Run the example, change the placeholder(s) to appropriate values:
+4. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    .build/quickstart [PROJECT_ID] [LOCATION_ID] [PROCESSOR_ID]
