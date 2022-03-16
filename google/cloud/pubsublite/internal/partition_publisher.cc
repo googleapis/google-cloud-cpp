@@ -36,9 +36,14 @@ PartitionPublisher::PartitionPublisher(
     : batching_options_{std::move(batching_options)},
       initial_publish_request_{std::move(ipr)},
       // TODO(18suresha) implement `Initializer`
-      resumable_stream_{resumable_stream_factory([](UnderlyingStream stream) {
-        return make_ready_future(StatusOr<UnderlyingStream>(std::move(stream)));
-      })},
+      resumable_stream_{resumable_stream_factory(
+          [](ResumableAsyncStreamingReadWriteRpcImpl<
+              PublishRequest, PublishResponse>::UnderlyingStream stream) {
+            return make_ready_future(
+                StatusOr<ResumableAsyncStreamingReadWriteRpcImpl<
+                    PublishRequest, PublishResponse>::UnderlyingStream>(
+                    std::move(stream)));
+          })},
       service_composite_{resumable_stream_.get()},
       cancel_token_{alarm_registry.RegisterAlarm(
           batching_options_.alarm_period(),

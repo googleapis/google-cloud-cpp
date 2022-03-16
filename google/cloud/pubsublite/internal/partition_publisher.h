@@ -57,10 +57,6 @@ class PartitionPublisher
   future<void> Shutdown() override;
 
  private:
-  using UnderlyingStream = std::unique_ptr<AsyncStreamingReadWriteRpc<
-      google::cloud::pubsublite::v1::PublishRequest,
-      google::cloud::pubsublite::v1::PublishResponse>>;
-
   struct MessageWithPromise {
     google::cloud::pubsublite::v1::PubSubMessage message;
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
