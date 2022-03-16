@@ -12,10 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#3701) Change this visibility to "//:__subpackages__" so that users are
-# required to use the top-level BUILD file rather than reaching down into this
-# one.
-package(default_visibility = ["//visibility:public"])
+# TODO(#3701) Change the default_visibility to "//visibility:private", and
+# widen visibility as needed with per-target visibility.
+package(
+    default_deprecation = """
+    These targets are not for public use and will be removed sometime around
+    July 1, 2022. Only use Bazel targets defined in the top-level //BUILD.bazel
+    file. See https://github.com/googleapis/google-cloud-cpp/issues/3701 for
+    more details.
+    """,
+    default_visibility = ["//visibility:public"],
+)
 
 licenses(["notice"])  # Apache 2.0
 
