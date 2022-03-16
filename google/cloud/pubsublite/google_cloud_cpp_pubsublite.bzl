@@ -47,6 +47,7 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/publisher_stub.h",
     "internal/publisher_stub_factory.h",
     "internal/resumable_async_streaming_read_write_rpc.h",
+    "internal/routing_policy.h",
     "internal/service.h",
     "internal/service_composite.h",
     "internal/stream_factory.h",

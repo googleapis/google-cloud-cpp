@@ -117,6 +117,7 @@ add_library(
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
     internal/resumable_async_streaming_read_write_rpc.h
+    internal/routing_policy.h
     internal/service.h
     internal/service_composite.h
     internal/stream_factory.h
