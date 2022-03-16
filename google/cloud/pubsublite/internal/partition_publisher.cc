@@ -74,9 +74,10 @@ future<void> PartitionPublisher::Shutdown() {
       [this](future<void>) { SatisfyOutstandingMessages(); });
 }
 
-std::deque<PartitionPublisher::MessageWithFuture>
-PartitionPublisher::UnbatchAllLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
-  std::deque<MessageWithFuture> to_return;
+std::deque<PartitionPublisher::MessageWithPromise>
+PartitionPublisher::UnbatchAll() {  // ABSL_LOCKS_REQUIRED(mu_)
+  std::lock_guard<std::mutex> g{mu_};
+  std::deque<MessageWithPromise> to_return;
   for (auto& batch : in_flight_batches_) {
     for (auto& message : batch) {
       to_return.push_back(std::move(message));
@@ -96,11 +97,11 @@ PartitionPublisher::UnbatchAllLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
   return to_return;
 }
 
-std::deque<std::deque<PartitionPublisher::MessageWithFuture>>
-PartitionPublisher::CreateBatches(std::deque<MessageWithFuture> messages,
+std::deque<std::deque<PartitionPublisher::MessageWithPromise>>
+PartitionPublisher::CreateBatches(std::deque<MessageWithPromise> messages,
                                   BatchingOptions const& options) {
-  std::deque<std::deque<MessageWithFuture>> batches;
-  std::deque<MessageWithFuture> current_batch;
+  std::deque<std::deque<MessageWithPromise>> batches;
+  std::deque<MessageWithPromise> current_batch;
   std::int64_t current_byte_size = 0;
   std::int64_t current_messages = 0;
   for (auto& message_with_future : messages) {
@@ -124,11 +125,8 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithFuture> messages,
 }
 
 void PartitionPublisher::SatisfyOutstandingMessages() {
-  std::deque<MessageWithFuture> messages_with_futures;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    messages_with_futures = UnbatchAllLockHeld();
-  }
+  std::deque<MessageWithPromise> messages_with_futures;
+  messages_with_futures = UnbatchAll();
   for (auto& message_with_future : messages_with_futures) {
     message_with_future.message_promise.set_value(
         StatusOr<Cursor>(service_composite_.status()));

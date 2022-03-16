@@ -49,29 +49,26 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
  protected:
   PartitionPublisherBatchingTest() = default;
 
-  static std::deque<
-      std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>>
-  TestCreateBatches(
-      std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>> messages,
-      BatchingOptions const& options) {
-    std::deque<PartitionPublisher::MessageWithFuture> message_with_futures;
+  using MessagePromisePair =
+      std::pair<PubSubMessage, promise<StatusOr<Cursor>>>;
+
+  static std::deque<std::deque<MessagePromisePair>> TestCreateBatches(
+      std::deque<MessagePromisePair> messages, BatchingOptions const& options) {
+    std::deque<PartitionPublisher::MessageWithPromise> message_with_futures;
     for (auto& message_with_future : messages) {
-      message_with_futures.emplace_back(PartitionPublisher::MessageWithFuture{
+      message_with_futures.emplace_back(PartitionPublisher::MessageWithPromise{
           std::move(message_with_future.first),
           std::move(message_with_future.second)});
     }
     auto batches = PartitionPublisher::CreateBatches(
         std::move(message_with_futures), std::move(options));
-    std::deque<std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>>
-        ret_batches;
+    std::deque<std::deque<MessagePromisePair>> ret_batches;
     for (auto& batch : batches) {
-      std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
-          message_batch;
+      std::deque<MessagePromisePair> message_batch;
       for (auto& message_with_future : batch) {
         message_batch.emplace_back(
-            std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
-                std::move(message_with_future.message),
-                std::move(message_with_future.message_promise)});
+            MessagePromisePair{std::move(message_with_future.message),
+                               std::move(message_with_future.message_promise)});
       }
       ret_batches.push_back(std::move(message_batch));
     }
@@ -81,8 +78,7 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
 
 // batching logic
 TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
-  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
-      message_with_futures;
+  std::deque<MessagePromisePair> message_with_futures;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 10; ++i) {
     PubSubMessage message;
@@ -97,8 +93,7 @@ TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
                     Status(StatusCode::kUnavailable, std::to_string(i)));
         });
     message_with_futures.emplace_back(
-        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
-            message, std::move(message_promise)});
+        MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
@@ -118,8 +113,7 @@ TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
 
 TEST_F(PartitionPublisherBatchingTest,
        SingleMessageBatchMessageSizeRestriction) {
-  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
-      message_with_futures;
+  std::deque<MessagePromisePair> message_with_futures;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 10; ++i) {
     PubSubMessage message;
@@ -134,8 +128,7 @@ TEST_F(PartitionPublisherBatchingTest,
                     Status(StatusCode::kUnavailable, std::to_string(i)));
         });
     message_with_futures.emplace_back(
-        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
-            message, std::move(message_promise)});
+        MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
@@ -154,8 +147,7 @@ TEST_F(PartitionPublisherBatchingTest,
 }
 
 TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
-  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
-      message_with_futures;
+  std::deque<MessagePromisePair> message_with_futures;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 10; ++i) {
     PubSubMessage message;
@@ -172,8 +164,7 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
                                         "offset:", std::to_string(i))));
         });
     message_with_futures.emplace_back(
-        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
-            message, std::move(message_promise)});
+        MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
@@ -200,8 +191,7 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
 }
 
 TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
-  std::deque<std::pair<PubSubMessage, promise<StatusOr<Cursor>>>>
-      message_with_futures;
+  std::deque<MessagePromisePair> message_with_futures;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 9; ++i) {
     PubSubMessage message;
@@ -218,8 +208,7 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
                                         "offset:", std::to_string(i))));
         });
     message_with_futures.emplace_back(
-        std::pair<PubSubMessage, promise<StatusOr<Cursor>>>{
-            message, std::move(message_promise)});
+        MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
