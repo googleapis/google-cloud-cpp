@@ -66,7 +66,8 @@ class PartitionPublisher
 
   void Read();
 
-  std::deque<MessageWithPromise> UnbatchAll();
+  std::deque<MessageWithPromise> UnbatchAll(
+      std::unique_lock<std::mutex> const&);
 
   static std::deque<std::deque<MessageWithPromise>> CreateBatches(
       std::deque<MessageWithPromise> messages, BatchingOptions const& options);

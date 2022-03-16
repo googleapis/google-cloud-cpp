@@ -164,8 +164,7 @@ void PartitionPublisher::Read() {
 }
 
 std::deque<PartitionPublisher::MessageWithPromise>
-PartitionPublisher::UnbatchAll() {
-  std::lock_guard<std::mutex> g{mu_};
+PartitionPublisher::UnbatchAll(std::unique_lock<std::mutex> const&) {
   std::deque<MessageWithPromise> to_return;
   for (auto& batch : in_flight_batches_) {
     for (auto& message : batch) {
@@ -214,7 +213,7 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithPromise> messages,
 }
 
 void PartitionPublisher::SatisfyOutstandingMessages() {
-  auto messages_with_futures = UnbatchAll();
+  auto messages_with_futures = UnbatchAll(std::unique_lock<std::mutex>{mu_});
   for (auto& message_with_future : messages_with_futures) {
     message_with_future.message_promise.set_value(
         StatusOr<Cursor>(service_composite_.status()));
@@ -253,15 +252,8 @@ PartitionPublisher::Initializer(
                     PublishRequest, PublishResponse>::UnderlyingStream> {
         Status status = status_future.get();
         if (!status.ok()) return status;
-        auto unsent_batches = CreateBatches(UnbatchAll(), batching_options_);
-        std::lock_guard<std::mutex> g{mu_};
-        // account for race between unlocking between UnbatchAll and acquiring
-        // lock above in case some unsent batches are pushed in between via a
-        // `Flush` call
-        for (auto& batch : unsent_batches_) {
-          unsent_batches.push_back(std::move(batch));
-        }
-        unsent_batches_ = std::move(unsent_batches);
+        std::unique_lock<std::mutex> lk{mu_};
+        unsent_batches_ = CreateBatches(UnbatchAll(lk), batching_options_);
         return std::move(*shared_stream);
       });
 }
