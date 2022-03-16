@@ -245,3 +245,17 @@ cc_library(
         "//google/cloud/storage:google_cloud_cpp_storage_grpc",
     ],
 )
+
+cc_library(
+    name = "common",
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+    ],
+)
+
+cc_library(
+    name = "grpc_utils",
+    deps = [
+        "//google/cloud:google_cloud_cpp_grpc_utils",
+    ],
+)
