@@ -109,7 +109,7 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-4. Run the example, change the place holder to appropriate values:
+4. Run the example, change the placeholder(s) to appropriate values:
 
    ```bash
    .build/quickstart [BUCKET NAME]

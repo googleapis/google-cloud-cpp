@@ -69,7 +69,7 @@ https://cloud.google.com/docs/authentication/production
    Note that, as it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Run the example, change the place holder to appropriate values:
+3. Run the example, change the placeholder(s) to appropriate values:
 
    ```bash
    bazel run :quickstart -- [GCP PROJECT ID]
@@ -106,7 +106,7 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-4. Run the example, change the place holder to appropriate values:
+4. Run the example, change the placeholder(s) to appropriate values:
 
    ```bash
    .build/quickstart [GCP PROJECT ID]
