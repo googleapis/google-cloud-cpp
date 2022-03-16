@@ -13,16 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
-#include "google/cloud/pubsublite/testing/mock_alarm_registry.h"
 #include "google/cloud/pubsublite/testing/mock_async_reader_writer.h"
-#include "google/cloud/pubsublite/testing/mock_resumable_async_reader_writer_stream.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
-#include <chrono>
 #include <memory>
 #include <vector>
 
@@ -32,27 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::testing::_;
-using ::testing::ByMove;
-using ::testing::InSequence;
-using ::testing::Return;
-using ::testing::StrictMock;
-using ::testing::WithArg;
 
 using google::cloud::pubsublite::v1::Cursor;
-using google::cloud::pubsublite::v1::InitialPublishRequest;
-using google::cloud::pubsublite::v1::InitialPublishResponse;
-using google::cloud::pubsublite::v1::MessagePublishRequest;
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
-using ::google::cloud::pubsublite_testing::MockAlarmRegistry;
-using ::google::cloud::pubsublite_testing::MockAlarmRegistryCancelToken;
 using ::google::cloud::pubsublite_testing::MockAsyncReaderWriter;
-using ::google::cloud::pubsublite_testing::MockResumableAsyncReaderWriter;
 
 using AsyncReaderWriter =
     MockAsyncReaderWriter<PublishRequest, PublishResponse>;
@@ -62,22 +46,6 @@ using AsyncReadWriteStreamReturnType = std::unique_ptr<
 
 using ResumableAsyncReadWriteStream = std::unique_ptr<
     ResumableAsyncStreamingReadWriteRpc<PublishRequest, PublishResponse>>;
-
-auto const kAlarmDuration = std::chrono::milliseconds{1000 * 3600};
-
-PublishRequest GetInitializerPublishRequest() {
-  PublishRequest publish_request;
-  *publish_request.mutable_initial_request() =
-      InitialPublishRequest::default_instance();
-  return publish_request;
-}
-
-PublishResponse GetInitializerPublishResponse() {
-  PublishResponse publish_response;
-  *publish_response.mutable_initial_response() =
-      InitialPublishResponse::default_instance();
-  return publish_response;
-}
 
 class PartitionPublisherBatchingTest : public ::testing::Test {
  protected:
