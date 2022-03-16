@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/storage/internal/sha256_hash.h"
+#include "google/cloud/internal/sha256_hash.h"
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
@@ -31,14 +31,16 @@ std::ostream& operator<<(std::ostream& os, CustomHeader const& rhs) {
 }
 
 EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key) {
-  return EncryptionKeyData{"AES256", internal::Base64Encode(key),
-                           internal::Base64Encode(internal::Sha256Hash(key))};
+  return EncryptionKeyData{
+      "AES256", internal::Base64Encode(key),
+      internal::Base64Encode(google::cloud::internal::Sha256Hash(key))};
 }
 
 EncryptionKeyData EncryptionDataFromBase64Key(std::string const& key) {
   auto binary_key = internal::Base64Decode(key).value();
   return EncryptionKeyData{
-      "AES256", key, internal::Base64Encode(internal::Sha256Hash(binary_key))};
+      "AES256", key,
+      internal::Base64Encode(google::cloud::internal::Sha256Hash(binary_key))};
 }
 
 EncryptionKey EncryptionKey::FromBinaryKey(std::string const& key) {

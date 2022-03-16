@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/sha256_hash.h"
+#include "google/cloud/internal/sha256_hash.h"
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 #include <array>
 
 namespace google {
 namespace cloud {
-namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
@@ -77,6 +76,5 @@ std::vector<std::uint8_t> HexDecode(std::string const& str) {
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 }  // namespace cloud
 }  // namespace google

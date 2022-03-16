@@ -43,6 +43,8 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_BUILD_METADATA)
 string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER)
 configure_file(internal/build_info.cc.in internal/build_info.cc)
 
+find_package(OpenSSL REQUIRED)
+
 # the client library
 add_library(
     google_cloud_cpp_common # cmake-format: sort
@@ -114,6 +116,8 @@ add_library(
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
+    internal/sha256_hash.cc
+    internal/sha256_hash.h
     internal/status_payload_keys.cc
     internal/status_payload_keys.h
     internal/strerror.cc
@@ -148,7 +152,8 @@ add_library(
     version.h)
 target_link_libraries(
     google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::time
-                                   absl::variant Threads::Threads)
+                                   absl::variant Threads::Threads
+           OpenSSL::Crypto)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -230,6 +235,7 @@ if (BUILD_TESTING)
         internal/populate_common_options_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
+        internal/sha256_hash_test.cc
         internal/status_payload_keys_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
@@ -303,7 +309,7 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Common Components used by the Google Cloud C++ Client Libraries.")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common")
 string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "absl_memory" " absl_optional"
-              " absl_time")
+              " absl_time" " openssl")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
@@ -595,7 +601,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                "google_cloud_cpp_common"
                " google_cloud_cpp_iam_protos"
                " google_cloud_cpp_longrunning_operations_protos"
-               " google_cloud_cpp_rpc_status_protos")
+               " google_cloud_cpp_rpc_status_protos"
+    " openssl")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils")
 
     # Create and install the pkg-config files.

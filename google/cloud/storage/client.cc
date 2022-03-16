@@ -407,7 +407,8 @@ StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
     return signed_blob.status();
   }
 
-  std::string signature = internal::HexEncode(signed_blob->signed_blob);
+  std::string signature =
+      google::cloud::internal::HexEncode(signed_blob->signed_blob);
   internal::CurlHandle curl;
   std::ostringstream os;
   os << request.HostnameWithBucket();
@@ -451,7 +452,8 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   if (!signed_blob) {
     return signed_blob.status();
   }
-  std::string signature = internal::HexEncode(signed_blob->signed_blob);
+  std::string signature =
+      google::cloud::internal::HexEncode(signed_blob->signed_blob);
   auto required_fields = request.RequiredFormFields();
   required_fields["x-goog-signature"] = signature;
   required_fields["policy"] = base64_policy;
