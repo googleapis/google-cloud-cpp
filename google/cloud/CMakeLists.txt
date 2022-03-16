@@ -151,9 +151,9 @@ add_library(
     version.cc
     version.h)
 target_link_libraries(
-    google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::time
-                                   absl::variant Threads::Threads
-           OpenSSL::SSL OpenSSL::Crypto)
+    google_cloud_cpp_common
+    PUBLIC absl::memory absl::optional absl::time absl::variant
+           Threads::Threads OpenSSL::Crypto)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -602,7 +602,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                " google_cloud_cpp_iam_protos"
                " google_cloud_cpp_longrunning_operations_protos"
                " google_cloud_cpp_rpc_status_protos"
-    " openssl")
+               " openssl")
     string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils")
 
     # Create and install the pkg-config files.
