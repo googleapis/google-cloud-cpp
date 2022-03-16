@@ -17,7 +17,7 @@
 package(
     default_deprecation = """
     These targets are not for public use and will be removed sometime around
-    July 1, 2022. Only use Bazel targets defined in the top-level //BUILD.bazel
+    2023-03-16. Only use Bazel targets defined in the top-level //BUILD.bazel
     file. See https://github.com/googleapis/google-cloud-cpp/issues/3701 for
     more details.
     """,

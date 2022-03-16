@@ -12,17 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#3701) Change the default_visibility to "//visibility:private", and
-# widen visibility as needed with per-target visibility.
-package(
-    default_deprecation = """
-    These targets are not for public use and will be removed sometime around
-    July 1, 2022. Only use Bazel targets defined in the top-level //BUILD.bazel
-    file. See https://github.com/googleapis/google-cloud-cpp/issues/3701 for
-    more details.
-    """,
-    default_visibility = ["//visibility:public"],
-)
+package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -38,7 +28,7 @@ cc_library(
     ],
     deprecation = (
         "please use //google/cloud:google_cloud_cpp_grpc_utils instead." +
-        " This target will be removed on or about 2023-01-01. More details at" +
+        " This target will be removed on or about 2023-03-16. More details at" +
         " https://github.com/googleapis/google-cloud-cpp/issues/3932"
     ),
     tags = ["manual"],
