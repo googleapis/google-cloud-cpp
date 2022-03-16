@@ -255,6 +255,12 @@ PartitionPublisher::Initializer(
         if (!status.ok()) return status;
         auto unsent_batches = CreateBatches(UnbatchAll(), batching_options_);
         std::lock_guard<std::mutex> g{mu_};
+        // account for race between unlocking between UnbatchAll and acquiring
+        // lock above in case some unsent batches are pushed in between via a
+        // `Flush` call
+        for (auto& batch : unsent_batches_) {
+          unsent_batches.push_back(std::move(batch));
+        }
         unsent_batches_ = std::move(unsent_batches);
         return std::move(*shared_stream);
       });
