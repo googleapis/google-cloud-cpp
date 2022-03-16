@@ -42,7 +42,6 @@ using ::testing::WithArg;
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
 using google::cloud::pubsublite::v1::InitialPublishResponse;
-using google::cloud::pubsublite::v1::MessagePublishRequest;
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::PublishRequest;
