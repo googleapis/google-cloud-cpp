@@ -57,29 +57,29 @@ class PartitionPublisher
   future<void> Shutdown() override;
 
  private:
-  using UnderlyingStream = std::unique_ptr<AsyncStreamingReadWriteRpc<
-      google::cloud::pubsublite::v1::PublishRequest,
-      google::cloud::pubsublite::v1::PublishResponse>>;
-
-  struct MessageWithFuture {
+  struct MessageWithPromise {
     google::cloud::pubsublite::v1::PubSubMessage message;
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
   };
-
-  void AppendBatchesLockHeld();
 
   void WriteBatches();
 
   void Read();
 
-  std::deque<MessageWithFuture> UnbatchAllLockHeld();
+  std::deque<MessageWithPromise> UnbatchAll();
 
-  static std::deque<std::deque<MessageWithFuture>> CreateBatches(
-      std::deque<MessageWithFuture> messages, BatchingOptions const& options);
+  static std::deque<std::deque<MessageWithPromise>> CreateBatches(
+      std::deque<MessageWithPromise> messages, BatchingOptions const& options);
 
   void SatisfyOutstandingMessages();
 
-  future<StatusOr<UnderlyingStream>> Initializer(UnderlyingStream stream);
+  future<StatusOr<ResumableAsyncStreamingReadWriteRpcImpl<
+      google::cloud::pubsublite::v1::PublishRequest,
+      google::cloud::pubsublite::v1::PublishResponse>::UnderlyingStream>>
+  Initializer(ResumableAsyncStreamingReadWriteRpcImpl<
+              google::cloud::pubsublite::v1::PublishRequest,
+              google::cloud::pubsublite::v1::PublishResponse>::UnderlyingStream
+                  stream);
 
   BatchingOptions const batching_options_;
   google::cloud::pubsublite::v1::InitialPublishRequest const
@@ -87,15 +87,13 @@ class PartitionPublisher
 
   std::mutex mu_;
 
-  std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
-      google::cloud::pubsublite::v1::PublishRequest,
-      google::cloud::pubsublite::v1::PublishResponse>> const
-      resumable_stream_;  // ABSL_GUARDED_BY(mu_)
+  ResumableStream const resumable_stream_;  // ABSL_GUARDED_BY(mu_)
   ServiceComposite service_composite_;
-  std::deque<MessageWithFuture> unbatched_messages_;  // ABSL_GUARDED_BY(mu_)
-  std::deque<std::deque<MessageWithFuture>>
+  std::deque<MessageWithPromise> unbatched_messages_;  // ABSL_GUARDED_BY(mu_)
+  std::deque<std::deque<MessageWithPromise>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
-  std::deque<std::deque<MessageWithFuture>>
+  std::deque<std::deque<MessageWithPromise>>
+
       in_flight_batches_;  // ABSL_GUARDED_BY(mu_)
   bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
 

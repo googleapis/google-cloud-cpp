@@ -30,10 +30,10 @@ io::log_h2 "Using CMake version"
 cmake --version
 
 io::log_h2 "Update or install dependencies"
-brew list --versions openssl || brew install openssl
-brew list --versions ccache || brew install ccache
-brew list --versions cmake || brew install cmake
-brew list --versions ninja || brew install ninja
+brew list --versions openssl || ci/retry-command.sh 3 120 brew install openssl
+brew list --versions ccache || ci/retry-command.sh 3 120 brew install ccache
+brew list --versions cmake || ci/retry-command.sh 3 120 brew install cmake
+brew list --versions ninja || ci/retry-command.sh 3 120 brew install ninja
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
@@ -88,10 +88,14 @@ ctest_args=(
 
 # Cannot use `env -C` as the version of env on macOS does not support that flag
 io::log_h2 "Running minimal quickstart programs"
-(
-  cd "${BINARY_DIR}"
-  ctest "${ctest_args[@]}" -R "(storage_quickstart|pubsub_quickstart)"
-)
+if [ -r "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+  (
+    cd "${BINARY_DIR}"
+    ctest "${ctest_args[@]}" -R "(storage_quickstart|pubsub_quickstart)"
+  )
+else
+  io::log_yellow "No ${GOOGLE_APPLICATION_CREDENTIALS}. Skipping quickstarts."
+fi
 
 io::log_h2 "ccache stats"
 ccache --show-stats

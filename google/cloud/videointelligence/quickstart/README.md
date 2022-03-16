@@ -69,10 +69,10 @@ https://cloud.google.com/docs/authentication/production
    project. As it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Run the example, change the place holder(s) to appropriate values:
+3. Run the example:
 
    ```bash
-   bazel run :quickstart -- [...]
+   bazel run :quickstart
    ```
 
 ## Using with CMake
@@ -106,10 +106,10 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-4. Run the example, change the place holder to appropriate values:
+4. Run the example:
 
    ```bash
-   .build/quickstart [...]
+   .build/quickstart
    ```
 
 ## Platform Specific Notes

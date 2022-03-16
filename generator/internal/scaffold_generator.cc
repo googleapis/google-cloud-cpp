@@ -140,9 +140,6 @@ std::map<std::string, std::string> ScaffoldVars(
                        [](std::string const& x) { return x.empty(); });
   vars["proto_deps"] = absl::StrJoin(deps.begin(), end, "\n    ");
 
-  vars["cpp_files"] = "# EDIT HERE: add list of C++ files\n";
-  vars["mock_files"] = "# EDIT HERE: add list of mock headers\n";
-
   return vars;
 }
 
@@ -632,6 +629,9 @@ which should give you a taste of the $title$ C++ client library API.
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_ EDIT HERE _ENDPOINT=...` changes the default endpoint
+  ( EDIT HERE .googleapis.com) used by ` EDIT HERE Connection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,
@@ -763,7 +763,7 @@ https://cloud.google.com/docs/authentication/production
    project. As it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-3. Run the example, change the place holder(s) to appropriate values:
+3. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    bazel run :quickstart -- [...]
@@ -800,7 +800,7 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-4. Run the example, change the place holder to appropriate values:
+4. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    .build/quickstart [...]

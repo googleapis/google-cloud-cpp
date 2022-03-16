@@ -170,8 +170,9 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   ~ResumableAsyncStreamingReadWriteRpcImpl() override {
     future<void> shutdown = Shutdown();
     if (!shutdown.is_ready()) {
-      GCP_LOG(WARNING) << "`Finish` must be called and finished before object "
-                          "goes out of scope.";
+      GCP_LOG(WARNING)
+          << "`Shutdown` must be called and finished before object "
+             "goes out of scope if `Start` was called.";
       assert(false);
     }
     shutdown.get();
@@ -201,6 +202,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     future<Status> status_future;
     {
       std::lock_guard<std::mutex> g{mu_};
+      stream_state_ = State::kRetrying;
       status_future = status_promise_.get_future();
       assert(!retry_promise_.has_value());
       retry_promise_.emplace();
@@ -282,10 +284,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     return root_future;
   }
 
- private:
   using UnderlyingStream =
       std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>;
 
+ private:
   enum class State { kRetrying, kInitialized, kShutdown };
 
   future<absl::optional<ResponseType>> OnReadFutureFinish(
@@ -560,7 +562,7 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   // certainty.
   std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
       stream_;                             // ABSL_GUARDED_BY(mu_)
-  State stream_state_ = State::kRetrying;  // ABSL_GUARDED_BY(mu_)
+  State stream_state_ = State::kShutdown;  // ABSL_GUARDED_BY(mu_)
   // The below two member variables are to present a future to the user when
   // `Read` or `Write` finish with a failure. The returned future is only
   // completed when the invoked retry loop completes on success or permanent

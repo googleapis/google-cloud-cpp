@@ -38,7 +38,7 @@ PartitionPublisher::PartitionPublisher(
       initial_publish_request_{std::move(ipr)},
       resumable_stream_{resumable_stream_factory(std::bind(
           &PartitionPublisher::Initializer, this, std::placeholders::_1))},
-      service_composite_{*resumable_stream_},
+      service_composite_{resumable_stream_.get()},
       cancel_token_{alarm_registry.RegisterAlarm(
           batching_options_.alarm_period(),
           std::bind(&PartitionPublisher::Flush, this))} {}
@@ -64,7 +64,7 @@ future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
     return make_ready_future(
         StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
   }
-  MessageWithFuture unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
+  MessageWithPromise unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
   std::lock_guard<std::mutex> g{mu_};
@@ -76,7 +76,11 @@ void PartitionPublisher::Flush() {
   if (!service_composite_.status().ok()) return;
   {
     std::lock_guard<std::mutex> g{mu_};
-    AppendBatchesLockHeld();
+    for (auto& batch :
+         CreateBatches(std::move(unbatched_messages_), batching_options_)) {
+      unsent_batches_.push_back(std::move(batch));
+    }
+    unbatched_messages_.clear();
     if (writing_) return;
     writing_ = true;
   }
@@ -135,7 +139,7 @@ void PartitionPublisher::Read() {
           return;
         }
 
-        std::deque<MessageWithFuture> batch;
+        std::deque<MessageWithPromise> batch;
         {
           std::lock_guard<std::mutex> g{mu_};
           if (in_flight_batches_.empty()) {
@@ -159,9 +163,10 @@ void PartitionPublisher::Read() {
       });
 }
 
-std::deque<PartitionPublisher::MessageWithFuture>
-PartitionPublisher::UnbatchAllLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
-  std::deque<MessageWithFuture> to_return;
+std::deque<PartitionPublisher::MessageWithPromise>
+PartitionPublisher::UnbatchAll() {
+  std::lock_guard<std::mutex> g{mu_};
+  std::deque<MessageWithPromise> to_return;
   for (auto& batch : in_flight_batches_) {
     for (auto& message : batch) {
       to_return.push_back(std::move(message));
@@ -181,19 +186,11 @@ PartitionPublisher::UnbatchAllLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
   return to_return;
 }
 
-void PartitionPublisher::AppendBatchesLockHeld() {  // ABSL_LOCKS_REQUIRED(mu_)
-  for (auto& batch :
-       CreateBatches(std::move(unbatched_messages_), batching_options_)) {
-    unsent_batches_.push_back(std::move(batch));
-  }
-  unbatched_messages_.clear();
-}
-
-std::deque<std::deque<PartitionPublisher::MessageWithFuture>>
-PartitionPublisher::CreateBatches(std::deque<MessageWithFuture> messages,
+std::deque<std::deque<PartitionPublisher::MessageWithPromise>>
+PartitionPublisher::CreateBatches(std::deque<MessageWithPromise> messages,
                                   BatchingOptions const& options) {
-  std::deque<std::deque<MessageWithFuture>> batches;
-  std::deque<MessageWithFuture> current_batch;
+  std::deque<std::deque<MessageWithPromise>> batches;
+  std::deque<MessageWithPromise> current_batch;
   std::int64_t current_byte_size = 0;
   std::int64_t current_messages = 0;
   for (auto& message_with_future : messages) {
@@ -217,23 +214,22 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithFuture> messages,
 }
 
 void PartitionPublisher::SatisfyOutstandingMessages() {
-  std::deque<MessageWithFuture> messages_with_futures;
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    messages_with_futures = UnbatchAllLockHeld();
-  }
+  auto messages_with_futures = UnbatchAll();
   for (auto& message_with_future : messages_with_futures) {
     message_with_future.message_promise.set_value(
         StatusOr<Cursor>(service_composite_.status()));
   }
 }
 
-future<StatusOr<PartitionPublisher::UnderlyingStream>>
-PartitionPublisher::Initializer(UnderlyingStream stream) {
+future<StatusOr<ResumableAsyncStreamingReadWriteRpcImpl<
+    PublishRequest, PublishResponse>::UnderlyingStream>>
+PartitionPublisher::Initializer(
+    ResumableAsyncStreamingReadWriteRpcImpl<
+        PublishRequest, PublishResponse>::UnderlyingStream stream) {
   // By the time initializer is called, no outstanding Read() or Write()
   // futures will be outstanding.
-  std::shared_ptr<UnderlyingStream> shared_stream =
-      std::make_shared<UnderlyingStream>(std::move(stream));
+  auto shared_stream = std::make_shared<ResumableAsyncStreamingReadWriteRpcImpl<
+      PublishRequest, PublishResponse>::UnderlyingStream>(std::move(stream));
   PublishRequest publish_request;
   *publish_request.mutable_initial_request() = initial_publish_request_;
   return (*shared_stream)
@@ -252,13 +248,14 @@ PartitionPublisher::Initializer(UnderlyingStream stream) {
         }
         return (*shared_stream)->Finish();
       })
-      .then([this, shared_stream](
-                future<Status> status_future) -> StatusOr<UnderlyingStream> {
+      .then([this, shared_stream](future<Status> status_future)
+                -> StatusOr<ResumableAsyncStreamingReadWriteRpcImpl<
+                    PublishRequest, PublishResponse>::UnderlyingStream> {
         Status status = status_future.get();
         if (!status.ok()) return status;
+        auto unsent_batches = CreateBatches(UnbatchAll(), batching_options_);
         std::lock_guard<std::mutex> g{mu_};
-        unsent_batches_ =
-            CreateBatches(UnbatchAllLockHeld(), batching_options_);
+        unsent_batches_ = std::move(unsent_batches);
         return std::move(*shared_stream);
       });
 }

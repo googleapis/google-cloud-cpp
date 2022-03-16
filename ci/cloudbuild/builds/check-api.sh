@@ -59,10 +59,6 @@ function dump_abi() {
 }
 export -f dump_abi # enables this function to be called from a subshell
 
-feature_list+=(
-  "common"
-  "grpc_utils"
-)
 mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${feature_list[@]}")
 
 # Run the dump_abi function for each library in parallel since its slow.

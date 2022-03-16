@@ -18,15 +18,16 @@ namespace google {
 namespace cloud {
 namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 std::string RandomBackupName(google::cloud::internal::DefaultPRNG& generator) {
   // A backup ID must be between 2 and 60 characters, fitting the regular
-  // expression `[a-z][a-z0-9_\-]*[a-z0-9]`
+  // expression `[a-z][a-z0-9_]*[a-z0-9]`
   std::size_t const max_size = 60;
   std::string const prefix = "backup-";
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +
          google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
+             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_") +
          google::cloud::internal::Sample(
              generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }

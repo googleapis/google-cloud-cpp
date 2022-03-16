@@ -39,6 +39,9 @@ which should give you a taste of the Kubernetes Engine API C++ client library AP
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_CLUSTER_MANAGER_ENDPOINT=...` changes the default endpoint
+  (container.googleapis.com) used by `ClusterManagerConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

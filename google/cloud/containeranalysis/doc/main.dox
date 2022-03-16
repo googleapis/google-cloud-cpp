@@ -40,6 +40,12 @@ which should give you a taste of the Container Analysis API C++ client library A
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_CONTAINER_ANALYSIS_ENDPOINT=...` changes the default endpoint
+  (containeranalysis.googleapis.com) used by `ContainerAnalysisConnection`.
+
+- `GOOGLE_CLOUD_CPP_GRAFEAS_ENDPOINT=...` changes the default endpoint
+  (containeranalysis.googleapis.com) used by `GrafeasConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

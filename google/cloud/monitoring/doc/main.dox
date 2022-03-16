@@ -41,6 +41,33 @@ which should give you a taste of the Cloud Monitoring API C++ client library API
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_ALERT_POLICY_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `AlertPolicyServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_DASHBOARDS_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `DashboardsServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_GROUP_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `GroupServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `MetricServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_METRICS_SCOPES_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `MetricsScopesConnection`.
+
+- `GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `NotificationChannelServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_QUERY_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `QueryServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_SERVICE_MONITORING_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `ServiceMonitoringServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_ENDPOINT=...` changes the default endpoint
+  (monitoring.googleapis.com) used by `UptimeCheckServiceConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

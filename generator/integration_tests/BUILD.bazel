@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -58,5 +58,6 @@ cc_grpc_library(
     name = "google_cloud_cpp_generator_testing_cc_grpc",
     srcs = [":google_cloud_cpp_generator_testing_proto"],
     grpc_only = True,
+    visibility = [":__subpackages__"],
     deps = [":google_cloud_cpp_generator_testing_cc_proto"],
 )

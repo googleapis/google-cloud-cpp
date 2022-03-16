@@ -57,6 +57,12 @@ The following are general notes about using the library.
 There are several environment variables that can be set to configure certain
 behaviors in the library.
 
+- `GOOGLE_CLOUD_CPP_IAM_ENDPOINT=...` changes the default endpoint
+  (iam.googleapis.com) used by `IAMConnection`.
+
+- `GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT=...` changes the default endpoint
+  (iamcredentials.googleapis.com) used by `IAMCredentialsConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured you own logging backend,

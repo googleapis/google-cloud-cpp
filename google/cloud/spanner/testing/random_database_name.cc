@@ -21,24 +21,29 @@ namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string RandomDatabasePrefixRegex() {
-  return R"re(^db-\d{4}-\d{2}-\d{2}-.*$)re";
+  // Temporarily, we also match the old '-' separators.
+  return R"re(^db[-_]\d{4}[-_]\d{2}[-_]\d{2}[-_].*$)re";
 }
 
 std::string RandomDatabasePrefix(std::chrono::system_clock::time_point tp) {
-  std::string date = google::cloud::internal::FormatUtcDate(tp);
-  return "db-" + date + "-";
+  std::string prefix = "db_";
+  for (auto const& c : google::cloud::internal::FormatUtcDate(tp)) {
+    prefix.push_back(c == '-' ? '_' : c);
+  }
+  prefix.push_back('_');
+  return prefix;
 }
 
 std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
                                std::chrono::system_clock::time_point tp) {
   // A database ID must be between 2 and 30 characters, fitting the regular
-  // expression `[a-z][a-z0-9_\-]*[a-z0-9]`
+  // expression `[a-z][a-z0-9_]*[a-z0-9]`
   std::size_t const max_size = 30;
   auto const prefix = RandomDatabasePrefix(tp);
   auto size = static_cast<int>(max_size - 1 - prefix.size());
   return prefix +
          google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_-") +
+             generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789_") +
          google::cloud::internal::Sample(
              generator, 1, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }

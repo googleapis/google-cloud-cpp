@@ -27,6 +27,7 @@ RUN dnf makecache && \
         diffutils \
         findutils \
         git \
+        patch \
         python-pip \
         ShellCheck
 
