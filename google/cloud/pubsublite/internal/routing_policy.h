@@ -24,8 +24,9 @@ namespace pubsublite_internal {
 
 class RoutingPolicy {
  public:
-  virtual std::int64_t RouteWithoutKey(uint64_t num_partitions) = 0;
-  virtual std::int64_t Route(std::string message_key, uint64_t num_partitions) = 0;
+  virtual std::int64_t RouteWithoutKey(std::uint64_t num_partitions) = 0;
+  virtual std::int64_t Route(std::string message_key,
+                             uint64_t num_partitions) = 0;
 };
 
 }  // namespace pubsublite_internal
