@@ -29,7 +29,7 @@ namespace pubsublite_internal {
 
 class DefaultRoutingPolicy {
  public:
-  std::int64_t RouteWithoutKey(std::int64_t num_partitions) {
+  std::uint64_t RouteWithoutKey(std::int64_t num_partitions) {
     return counter_.fetch_add(1, std::memory_order_relaxed) % num_partitions;
   }
 
