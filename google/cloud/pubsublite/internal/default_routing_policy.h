@@ -44,9 +44,9 @@ class DefaultRoutingPolicy {
       for (unsigned int j = 0; j < 8; ++j) {
         uint8_t last_bit = (hash[i] & static_cast<std::uint8_t>(1));
         if (last_bit == 1) {
-          big_endian_value += DivideAndConquer((hash.size() - i - 1) * 8 + j,
-                                               num_partitions, mods) %
-                              num_partitions;
+          big_endian_value +=
+              GetExpMod((hash.size() - i - 1) * 8 + j, num_partitions, mods) %
+              num_partitions;
         }
         hash[i] >>= 1;
       }
@@ -55,7 +55,7 @@ class DefaultRoutingPolicy {
   }
 
  private:
-  static std::uint64_t DivideAndConquer(
+  static std::uint64_t GetExpMod(
       std::uint8_t exp, std::uint64_t num_partitions,
       std::unordered_map<std::uint8_t, std::uint64_t>& mods) {
     if (mods.find(exp) == mods.end()) {
@@ -64,8 +64,8 @@ class DefaultRoutingPolicy {
             static_cast<std::uint64_t>(std::pow<std::uint64_t>(2, exp)) %
             num_partitions;
       } else {
-        mods[exp] = (2 * DivideAndConquer(exp - 1, num_partitions, mods)) %
-                    num_partitions;
+        mods[exp] =
+            (2 * GetExpMod(exp - 1, num_partitions, mods)) % num_partitions;
       }
     }
     return mods[exp];
