@@ -44,8 +44,9 @@ class DefaultRoutingPolicy {
       for (unsigned int j = 0; j < 8; ++j) {
         uint8_t last_bit = (hash[i] & static_cast<std::uint8_t>(1));
         if (last_bit == 1) {
-          big_endian_value +=
-              GetExpMod((hash.size() - i - 1) * 8 + j, num_partitions, mods) %
+          big_endian_value =
+              (big_endian_value +
+               GetExpMod((hash.size() - i - 1) * 8 + j, num_partitions, mods)) %
               num_partitions;
         }
         hash[i] >>= 1;
