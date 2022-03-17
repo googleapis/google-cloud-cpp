@@ -42,14 +42,10 @@ class DefaultRoutingPolicy {
     std::unordered_map<std::uint8_t, std::uint64_t> mods;
     for (unsigned int i = 0; i < hash.size(); ++i) {
       for (unsigned int j = 0; j < 8; ++j) {
-        uint8_t last_bit = (hash[i] & static_cast<std::uint8_t>(1));
-        if (last_bit == 1) {
-          big_endian_value =
-              (big_endian_value +
-               GetExpMod((hash.size() - i - 1) * 8 + j, num_partitions, mods)) %
-              num_partitions;
-        }
-        hash[i] >>= 1;
+          big_endian_value +=
+               (hash[i] & static_cast<std::uint8_t>(1)) * GetExpMod(static_cast<std::uint8_t>((hash.size() - i - 1) * 8 + j), num_partitions, mods);
+          big_endian_value %= num_partitions;
+        hash[i] = static_cast<std::uint8_t>(hash[i] >> 1);
       }
     }
     return big_endian_value % num_partitions;
@@ -69,7 +65,7 @@ class DefaultRoutingPolicy {
             // potential overflow if returned value is greater than (2^65 - 1) /
             // 2, but if user has this number of partitions then there's a
             // bigger issue
-            (2 * GetExpMod(exp - 1, num_partitions, mods)) % num_partitions;
+            (2 * GetExpMod(static_cast<std::uint8_t>(exp - 1), num_partitions, mods)) % num_partitions;
       }
     }
     return mods[exp];
