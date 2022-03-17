@@ -406,6 +406,35 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
   EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kAborted));
 }
 
+/// @test verify that the upload steam transitions to a bad state on a partial
+/// write.
+TEST(ObjectWriteStreambufTest, PartialUploadChunk) {
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload = std::string(quantum * 4, '*');
+
+  auto next_byte = 2 * quantum - 1;
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(InvokeWithoutArgs([&]() {
+    return make_status_or(ResumableUploadResponse{
+        "", ResumableUploadResponse::kInProgress, next_byte, {}, {}});
+  }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
+    return next_byte;
+  });
+  EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
+  std::string id = "id";
+  EXPECT_CALL(*mock, session_id).WillRepeatedly(ReturnRef(id));
+
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), quantum, CreateNullHashFunction(), HashValues{},
+      CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
+  std::ostream output(&streambuf);
+  output.write(payload.data(), payload.size());
+  EXPECT_FALSE(output.good());
+  EXPECT_THAT(streambuf.last_status(), StatusIs(StatusCode::kAborted));
+}
+
 /// @test Verify that a stream flushes when mixing operations that add one
 /// character at a time and operations that add buffers.
 TEST(ObjectWriteStreambufTest, MixPutcPutn) {
