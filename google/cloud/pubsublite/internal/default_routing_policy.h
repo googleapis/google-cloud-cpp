@@ -58,13 +58,15 @@ class DefaultRoutingPolicy {
   static std::uint64_t DivideAndConquer(
       std::uint8_t exp, std::uint64_t num_partitions,
       std::unordered_map<std::uint8_t, std::uint64_t>& mods) {
-    if (exp < 64) {
-      return static_cast<std::uint64_t>(std::pow<std::uint64_t>(2, exp)) %
-             num_partitions;
-    }
     if (mods.find(exp) == mods.end()) {
-      mods[exp] = (2 * DivideAndConquer(exp - 1, num_partitions, mods)) %
-                  num_partitions;
+      if (exp < 64) {
+        mods[exp] =
+            static_cast<std::uint64_t>(std::pow<std::uint64_t>(2, exp)) %
+            num_partitions;
+      } else {
+        mods[exp] = (2 * DivideAndConquer(exp - 1, num_partitions, mods)) %
+                    num_partitions;
+      }
     }
     return mods[exp];
   }
