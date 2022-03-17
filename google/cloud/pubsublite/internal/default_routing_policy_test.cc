@@ -14,10 +14,7 @@
 
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
 #include <gmock/gmock.h>
-#include <fstream>
 #include <nlohmann/json.hpp>
-#include <iostream>
-#include <filesystem>
 
 namespace google {
 namespace cloud {
@@ -50,7 +47,6 @@ TEST(DefaultRoutingPolicyTest, RouteWithKey) {
     EXPECT_EQ(DefaultRoutingPolicy::Route(it.key(), 29), it.value());
   }
 }
-
 
 }  // namespace
 }  // namespace pubsublite_internal
