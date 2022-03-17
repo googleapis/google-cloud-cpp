@@ -66,6 +66,9 @@ class DefaultRoutingPolicy {
             num_partitions;
       } else {
         mods[exp] =
+            // potential overflow if returned value is greater than (2^65 - 1) /
+            // 2, but if user has this number of partitions then there's a
+            // bigger issue
             (2 * GetExpMod(exp - 1, num_partitions, mods)) % num_partitions;
       }
     }
