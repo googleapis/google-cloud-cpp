@@ -31,7 +31,7 @@ mapfile -t cmake_args < <(cmake::common_args)
 cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DCMAKE_CXX_STANDARD=11 \
-  -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON \
+  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable;bigquery;generator;iam;logging;pubsub;pubsublite;spanner;storage" \
   -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON
 cmake --build cmake-out
 
@@ -39,6 +39,11 @@ mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test
 
 integration::ctest_with_emulators "cmake-out"
+
+# This build should fail if any generated .bzl files differ from what was
+# checked in.
+io::log_h2 "Highlight generated code differences"
+git diff --exit-code
 
 if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
   io::log_h2 "ctcache stats"
