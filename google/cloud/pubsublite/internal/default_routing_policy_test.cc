@@ -14,6 +14,10 @@
 
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
 #include <gmock/gmock.h>
+#include <fstream>
+#include <nlohmann/json.hpp>
+#include <iostream>
+#include <filesystem>
 
 namespace google {
 namespace cloud {
@@ -24,22 +28,29 @@ namespace {
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 
 TEST(DefaultRoutingPolicyTest, RouteWithKey) {
-  EXPECT_EQ(DefaultRoutingPolicy::Route("oaisdhfoiahsd", 29), 18);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("P(#*YNPOIUDF", 29), 9);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("LCIUNDFPOASIUN", 29), 8);
-  EXPECT_EQ(DefaultRoutingPolicy::Route(";odsfiupoius", 29), 9);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("OPISUDfpoiu", 29), 2);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("dokjwO:IDf", 29), 21);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("%^&*", 29), 19);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("XXXXXXXXX", 29), 15);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("dpcollins", 29), 28);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("#()&$IJHLOIURF", 29), 2);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("dfasiduyf", 29), 6);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("983u2poer", 29), 3);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("8888888", 29), 6);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("OPUIPOUYPOIOPUIOIPUOUIPJOP", 29), 2);
-  EXPECT_EQ(DefaultRoutingPolicy::Route("x", 29), 16);
+  std::string data = R"""({
+  "oaisdhfoiahsd": 18,
+  "P(#*YNPOIUDF": 9,
+  "LCIUNDFPOASIUN":8,
+  ";odsfiupoius": 9,
+  "OPISUDfpoiu": 2,
+  "dokjwO:IDf": 21,
+  "%^&*": 19,
+  "XXXXXXXXX": 15,
+  "dpcollins": 28,
+  "#()&$IJHLOIURF": 2,
+  "dfasiduyf": 6,
+  "983u2poer": 3,
+  "8888888": 6,
+  "OPUIPOUYPOIOPUIOIPUOUIPJOP": 2,
+  "x": 16
+})""";
+  auto mod_data = nlohmann::json::parse(data, nullptr, false);
+  for (auto it = mod_data.begin(); it != mod_data.end(); ++it) {
+    EXPECT_EQ(DefaultRoutingPolicy::Route(it.key(), 29), it.value());
+  }
 }
+
 
 }  // namespace
 }  // namespace pubsublite_internal

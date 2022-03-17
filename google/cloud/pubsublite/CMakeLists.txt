@@ -212,7 +212,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
-
+    include(IncludeNlohmannJson)
     add_library(pubsublite_testing INTERFACE)
     target_sources(
         pubsublite_testing
@@ -224,7 +224,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     target_link_libraries(
         pubsublite_testing
         INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
-                  GTest::gmock GTest::gtest)
+                  GTest::gmock GTest::gtest nlohmann_json::nlohmann_json)
     target_include_directories(
         pubsublite_testing
         INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -258,7 +258,8 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
                     absl::str_format
                     GTest::gmock_main
                     GTest::gmock
-                    GTest::gtest)
+                    GTest::gtest
+                    nlohmann_json::nlohmann_json)
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of
