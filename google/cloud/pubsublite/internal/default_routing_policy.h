@@ -75,7 +75,7 @@ class DefaultRoutingPolicy {
     return result;
   }
 
-  std::atomic<std::int64_t> counter_;
+  std::atomic<std::int64_t> counter_{0};
 };
 
 }  // namespace pubsublite_internal

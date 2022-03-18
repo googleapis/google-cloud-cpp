@@ -25,6 +25,7 @@ namespace {
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 
 TEST(DefaultRoutingPolicyTest, RouteWithKey) {
+  // same list of test values as in other client libraries
   std::unordered_map<std::string, std::uint64_t> mods = {
       {"oaisdhfoiahsd", 18},
       {"P(#*YNPOIUDF", 9},
