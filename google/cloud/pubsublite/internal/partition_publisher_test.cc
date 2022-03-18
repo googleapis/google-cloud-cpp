@@ -34,6 +34,7 @@ namespace pubsublite_internal {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::_;
 using ::testing::ByMove;
+using ::testing::ElementsAre;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -106,6 +107,16 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
       ret_batches.push_back(std::move(message_batch));
     }
     return ret_batches;
+  }
+
+  static std::vector<PubSubMessage> GetMessageDequeFromBatch(
+      std::deque<MessagePromisePair> const& batch) {
+    std::vector<PubSubMessage> ret;
+    std::transform(batch.begin(), batch.end(), std::back_inserter(ret),
+                   [](MessagePromisePair const& message) {
+                     return std::move(message.first);
+                   });
+    return ret;
   }
 };
 
@@ -206,15 +217,20 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
   auto batches =
       TestCreateBatches(std::move(message_with_futures), std::move(options));
   EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
+  EXPECT_THAT(GetMessageDequeFromBatch(batches[0]),
+              ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
+                          IsProtoEqual(messages[2])));
+  EXPECT_THAT(GetMessageDequeFromBatch(batches[1]),
+              ElementsAre(IsProtoEqual(messages[3]), IsProtoEqual(messages[4]),
+                          IsProtoEqual(messages[5])));
+  EXPECT_THAT(GetMessageDequeFromBatch(batches[2]),
+              ElementsAre(IsProtoEqual(messages[6]), IsProtoEqual(messages[7]),
+                          IsProtoEqual(messages[8])));
+  EXPECT_THAT(GetMessageDequeFromBatch(batches[3]),
+              ElementsAre(IsProtoEqual(messages[9])));
   for (unsigned int i = 0; i < batches.size(); ++i) {
     auto& batch = batches[i];
-    if (i < batches.size() - 1) {
-      EXPECT_EQ(batch.size(), 3);
-    } else {
-      EXPECT_EQ(batch.size(), messages.size() % 3);
-    }
     for (unsigned int j = 0; j < batch.size(); ++j) {
-      EXPECT_THAT(batch[j].first, IsProtoEqual(messages[i * 3 + j]));
       batch[j].second.set_value(StatusOr<Cursor>{
           Status(StatusCode::kUnavailable,
                  absl::StrCat("batch:", std::to_string(i),
@@ -250,11 +266,18 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
   auto batches =
       TestCreateBatches(std::move(message_with_futures), std::move(options));
   EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
+  EXPECT_THAT(GetMessageDequeFromBatch(batches[0]),
+              ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
+                          IsProtoEqual(messages[2])));
+  EXPECT_THAT(GetMessageDequeFromBatch(batches[1]),
+              ElementsAre(IsProtoEqual(messages[3]), IsProtoEqual(messages[4]),
+                          IsProtoEqual(messages[5])));
+  EXPECT_THAT(GetMessageDequeFromBatch(batches[2]),
+              ElementsAre(IsProtoEqual(messages[6]), IsProtoEqual(messages[7]),
+                          IsProtoEqual(messages[8])));
   for (unsigned int i = 0; i < batches.size(); ++i) {
     auto& batch = batches[i];
-    EXPECT_EQ(batch.size(), 3);
     for (unsigned int j = 0; j < batch.size(); ++j) {
-      EXPECT_THAT(batch[j].first, IsProtoEqual(messages[i * 3 + j]));
       batch[j].second.set_value(StatusOr<Cursor>{
           Status(StatusCode::kUnavailable,
                  absl::StrCat("batch:", std::to_string(i),
@@ -265,35 +288,43 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
 
 class PartitionPublisherTest : public ::testing::Test {
  protected:
-  PartitionPublisherTest() {
+  PartitionPublisherTest()
+      : alarm_token_ref_{*alarm_token_},
+        resumable_stream_ref_{*resumable_stream_} {
     EXPECT_CALL(alarm_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
           leaked_alarm_ = std::move(on_alarm);
-          return absl::WrapUnique(alarm_token_);
+          return std::move(alarm_token_);
         }));
 
     BatchingOptions options;
-    options.set_maximum_batch_message_count(batch_boundary_);
+    options.set_maximum_batch_message_count(kBatchBoundary_);
     options.set_alarm_period(kAlarmDuration);
 
     publisher_ = absl::make_unique<PartitionPublisher>(
         [&](StreamInitializer<PublishRequest, PublishResponse> const&
                 initializer) {
           initializer_ = std::move(initializer);
-          return absl::WrapUnique(resumable_stream_);
+          return std::move(resumable_stream_);
         },
         std::move(options), InitialPublishRequest::default_instance(), alarm_);
   }
 
-  unsigned int batch_boundary_ = 5;
+  unsigned int const kBatchBoundary_ = 5;
   StreamInitializer<PublishRequest, PublishResponse> initializer_;
-  MockAlarmRegistryCancelToken* alarm_token_ =
-      new StrictMock<MockAlarmRegistryCancelToken>;
+  std::unique_ptr<StrictMock<MockAlarmRegistryCancelToken>> alarm_token_ =
+      absl::make_unique<StrictMock<MockAlarmRegistryCancelToken>>();
+  StrictMock<MockAlarmRegistryCancelToken>& alarm_token_ref_;
   MockAlarmRegistry alarm_;
   std::function<void()> leaked_alarm_;
-  MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>*
-      resumable_stream_ = new StrictMock<
-          MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>;
+  std::unique_ptr<
+      MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>
+      resumable_stream_ = absl::make_unique<StrictMock<
+          MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>>();
+  MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>&
+      resumable_stream_ref_;
+  std::unique_ptr<StrictMock<AsyncReaderWriter>> underlying_stream_ =
+      absl::make_unique<StrictMock<AsyncReaderWriter>>();
   std::unique_ptr<Publisher<Cursor>> publisher_;
 };
 
@@ -301,29 +332,28 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   InSequence seq;
 
   promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
+  EXPECT_CALL(resumable_stream_ref_, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   promise<absl::optional<PublishResponse>> read_promise;
   // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(*resumable_stream_, Read)
+  EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
       .WillOnce(Return(ByMove(read_promise.get_future())));
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
   std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i < 11; ++i) {
+  for (unsigned int i : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -331,13 +361,13 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   }
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
-  for (unsigned int i = 0; i < 11; ++i) {
+  for (unsigned int i : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}) {
     publish_message_futures.push_back(
         publisher_->Publish(individual_publish_messages[i]));
   }
 
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
   auto shutdown_future = publisher_->Shutdown();
   start_promise.set_value(Status());
@@ -360,26 +390,25 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
   InSequence seq;
 
   promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
+  EXPECT_CALL(resumable_stream_ref_, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   promise<absl::optional<PublishResponse>> read_promise;
   // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(*resumable_stream_, Read)
+  EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
       .WillOnce(Return(ByMove(read_promise.get_future())));
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
@@ -387,7 +416,7 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
   PublishRequest publish_request;
   *publish_request.mutable_message_publish_request()->add_messages() =
       PubSubMessage::default_instance();
-  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
   leaked_alarm_();
@@ -403,8 +432,8 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
   // shouldn't do anything b/c lifecycle ended
   publisher_->Flush();
 
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
@@ -422,26 +451,25 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
   InSequence seq;
 
   promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
+  EXPECT_CALL(resumable_stream_ref_, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   promise<absl::optional<PublishResponse>> read_promise;
   // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(*resumable_stream_, Read)
+  EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
       .WillOnce(Return(ByMove(read_promise.get_future())));
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
@@ -461,8 +489,8 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
   // shouldn't do anything b/c lifecycle ended
   publisher_->Flush();
 
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
@@ -479,29 +507,28 @@ TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
   InSequence seq;
 
   promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
+  EXPECT_CALL(resumable_stream_ref_, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   promise<absl::optional<PublishResponse>> read_promise;
   // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(*resumable_stream_, Read)
+  EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
       .WillOnce(Return(ByMove(read_promise.get_future())));
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
   read_promise.set_value(absl::optional<PublishResponse>());
@@ -519,38 +546,37 @@ TEST_F(PartitionPublisherTest, InitializerWriteFailureThenGood) {
   InSequence seq;
 
   promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
+  EXPECT_CALL(resumable_stream_ref_, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   promise<absl::optional<PublishResponse>> read_promise;
   // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(*resumable_stream_, Read)
+  EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
       .WillOnce(Return(ByMove(read_promise.get_future())));
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(false))));
-  EXPECT_CALL(*underlying_stream, Finish)
+  EXPECT_CALL(*underlying_stream_, Finish)
       .WillOnce(Return(ByMove(
           make_ready_future(Status(StatusCode::kUnavailable, "Unavailable")))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
-  underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  underlying_stream_ = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
@@ -561,41 +587,40 @@ TEST_F(PartitionPublisherTest, InitializerReadFailureThenGood) {
   InSequence seq;
 
   promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
+  EXPECT_CALL(resumable_stream_ref_, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   promise<absl::optional<PublishResponse>> read_promise;
   // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(*resumable_stream_, Read)
+  EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
       .WillOnce(Return(ByMove(read_promise.get_future())));
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))));
-  EXPECT_CALL(*underlying_stream, Finish)
+  EXPECT_CALL(*underlying_stream_, Finish)
       .WillOnce(Return(ByMove(
           make_ready_future(Status(StatusCode::kUnavailable, "Unavailable")))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
-  underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  underlying_stream_ = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
@@ -606,26 +631,25 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
   InSequence seq;
 
   promise<Status> start_promise;
-  EXPECT_CALL(*resumable_stream_, Start)
+  EXPECT_CALL(resumable_stream_ref_, Start)
       .WillOnce(Return(ByMove(start_promise.get_future())));
 
   promise<absl::optional<PublishResponse>> read_promise;
   // first `Read` response is nullopt because resumable stream in retry loop
-  EXPECT_CALL(*resumable_stream_, Read)
+  EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
       .WillOnce(Return(ByMove(read_promise.get_future())));
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  auto* underlying_stream = new StrictMock<AsyncReaderWriter>;
-  EXPECT_CALL(*underlying_stream,
+  EXPECT_CALL(*underlying_stream_,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream, Read)
+  EXPECT_CALL(*underlying_stream_, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(absl::WrapUnique(underlying_stream));
+  initializer_(std::move(underlying_stream_));
 
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
@@ -633,7 +657,7 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
   PublishRequest publish_request;
   *publish_request.mutable_message_publish_request()->add_messages() =
       PubSubMessage::default_instance();
-  EXPECT_CALL(*resumable_stream_, Write(IsProtoEqual(publish_request)))
+  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
   leaked_alarm_();
@@ -641,8 +665,8 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
   start_promise.set_value(Status(StatusCode::kInternal, "Permanent Error"));
   read_promise.set_value(absl::optional<PublishResponse>());
 
-  EXPECT_CALL(*alarm_token_, Destroy);
-  EXPECT_CALL(*resumable_stream_, Shutdown)
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
 
