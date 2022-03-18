@@ -95,7 +95,7 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
-        internal/default_routing_policy.h
+    internal/default_routing_policy.h
     internal/futures.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
@@ -212,7 +212,6 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
-    include(IncludeNlohmannJson)
     add_library(pubsublite_testing INTERFACE)
     target_sources(
         pubsublite_testing
@@ -224,7 +223,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     target_link_libraries(
         pubsublite_testing
         INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
-                  GTest::gmock GTest::gtest nlohmann_json::nlohmann_json)
+                  GTest::gmock GTest::gtest)
     target_include_directories(
         pubsublite_testing
         INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -237,7 +236,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     set(pubsublite_unit_tests
         # cmake-format: sort
         endpoint_test.cc
-            internal/default_routing_policy_test.cc
+        internal/default_routing_policy_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
         internal/stream_factory_test.cc)
@@ -258,8 +257,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
                     absl::str_format
                     GTest::gmock_main
                     GTest::gmock
-                    GTest::gtest
-                    nlohmann_json::nlohmann_json)
+                    GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of

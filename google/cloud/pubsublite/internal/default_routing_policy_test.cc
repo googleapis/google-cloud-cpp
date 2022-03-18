@@ -14,7 +14,7 @@
 
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
 #include <gmock/gmock.h>
-#include <nlohmann/json.hpp>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -25,26 +25,24 @@ namespace {
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 
 TEST(DefaultRoutingPolicyTest, RouteWithKey) {
-  std::string data = R"""({
-  "oaisdhfoiahsd": 18,
-  "P(#*YNPOIUDF": 9,
-  "LCIUNDFPOASIUN":8,
-  ";odsfiupoius": 9,
-  "OPISUDfpoiu": 2,
-  "dokjwO:IDf": 21,
-  "%^&*": 19,
-  "XXXXXXXXX": 15,
-  "dpcollins": 28,
-  "#()&$IJHLOIURF": 2,
-  "dfasiduyf": 6,
-  "983u2poer": 3,
-  "8888888": 6,
-  "OPUIPOUYPOIOPUIOIPUOUIPJOP": 2,
-  "x": 16
-})""";
-  auto mod_data = nlohmann::json::parse(data, nullptr, false);
-  for (auto it = mod_data.begin(); it != mod_data.end(); ++it) {
-    EXPECT_EQ(DefaultRoutingPolicy::Route(it.key(), 29), it.value());
+  std::unordered_map<std::string, std::uint64_t> mods = {
+      {"oaisdhfoiahsd", 18},
+      {"P(#*YNPOIUDF", 9},
+      {"LCIUNDFPOASIUN", 8},
+      {";odsfiupoius", 9},
+      {"OPISUDfpoiu", 2},
+      {"dokjwO:IDf", 21},
+      {"%^&*", 19},
+      {"XXXXXXXXX", 15},
+      {"dpcollins", 28},
+      {"#()&$IJHLOIURF", 2},
+      {"dfasiduyf", 6},
+      {"983u2poer", 3},
+      {"8888888", 6},
+      {"OPUIPOUYPOIOPUIOIPUOUIPJOP", 2},
+      {"x", 16}};
+  for (auto const& it : mods) {
+    EXPECT_EQ(DefaultRoutingPolicy::Route(it.first, 29), it.second);
   }
 }
 

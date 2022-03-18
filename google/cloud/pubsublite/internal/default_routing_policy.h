@@ -20,6 +20,7 @@
 #include <atomic>
 #include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <unordered_map>
 
 namespace google {
@@ -35,41 +36,50 @@ class DefaultRoutingPolicy {
 
   static std::uint64_t Route(std::string const& message_key,
                              std::uint64_t num_partitions) {
-    std::vector<std::uint8_t> hash =
-        google::cloud::internal::Sha256Hash(message_key);
-    assert(hash.size() == 256 / 8);
-    std::uint64_t big_endian_value = 0;
-    std::unordered_map<std::uint8_t, std::uint64_t> mods;
-    for (unsigned int i = 0; i < hash.size(); ++i) {
-      for (unsigned int j = 0; j < 8; ++j) {
-          big_endian_value +=
-               (hash[i] & static_cast<std::uint8_t>(1)) * GetExpMod(static_cast<std::uint8_t>((hash.size() - i - 1) * 8 + j), num_partitions, mods);
-          big_endian_value %= num_partitions;
-        hash[i] = static_cast<std::uint8_t>(hash[i] >> 1);
-      }
-    }
-    return big_endian_value % num_partitions;
+    return GetMod(google::cloud::internal::Sha256Hash(message_key),
+                  num_partitions);
   }
 
  private:
-  static std::uint64_t GetExpMod(
-      std::uint8_t exp, std::uint64_t num_partitions,
-      std::unordered_map<std::uint8_t, std::uint64_t>& mods) {
-    if (mods.find(exp) == mods.end()) {
-      if (exp < 64) {
-        mods[exp] =
-            static_cast<std::uint64_t>(std::pow<std::uint64_t>(2, exp)) %
-            num_partitions;
-      } else {
-        mods[exp] =
-            // potential overflow if returned value is greater than (2^65 - 1) /
-            // 2, but if user has this number of partitions then there's a
-            // bigger issue
-            (2 * GetExpMod(static_cast<std::uint8_t>(exp - 1), num_partitions, mods)) % num_partitions;
-      }
+  // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
+  static std::uint64_t ModPow(std::uint64_t val, std::uint8_t pow,
+                              std::uint64_t mod) {
+    std::uint64_t result = 1;
+    for (int i = 0; i < pow; ++i) {
+      result *= (val % mod);
+      result %= mod;
     }
-    return mods[exp];
+    return result;
   }
+
+  // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
+  // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
+  static std::uint64_t GetMod(std::vector<uint8_t> big_endian,
+                              std::uint64_t mod) {
+    assert(big_endian.size() < UINT8_MAX);
+    std::uint64_t result = 0;
+    for (uint8_t i = 0; i < big_endian.size(); ++i) {
+      std::uint64_t val_mod = 0;
+      for (unsigned int j = 0; j < 8; ++j) {
+        if (big_endian[i] & static_cast<std::uint8_t>(1)) {
+          val_mod += static_cast<std::uint8_t>(std::pow(2, j));
+        }
+        big_endian[i] = static_cast<std::uint8_t>(big_endian[i] >> 1);
+      }
+
+      std::uint8_t pow = big_endian.size() - (i + 1);
+      std::uint64_t pow_mod =
+          ModPow(static_cast<std::uint64_t>(std::pow(2, 8)), pow, mod);
+
+      std::uint64_t index_result =
+          (static_cast<std::uint64_t>(val_mod) * pow_mod) % mod;
+      result += index_result;
+
+      result %= mod;
+    }
+    return result;
+  }
+
   std::atomic<std::int64_t> counter_;
 };
 
