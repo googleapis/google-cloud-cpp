@@ -59,17 +59,12 @@ class DefaultRoutingPolicy {
     assert(big_endian.size() < UINT8_MAX);
     std::uint64_t result = 0;
     for (uint8_t i = 0; i < big_endian.size(); ++i) {
-      std::uint64_t val_mod = 0;
-      for (unsigned int j = 0; j < 8; ++j) {
-        if (big_endian[i] & static_cast<std::uint8_t>(1)) {
-          val_mod += static_cast<std::uint8_t>(std::pow(2, j));
-        }
-        big_endian[i] = static_cast<std::uint8_t>(big_endian[i] >> 1);
-      }
+      std::uint64_t val_mod = big_endian[i] % mod;
 
       std::uint8_t pow = big_endian.size() - (i + 1);
-      std::uint64_t pow_mod =
-          ModPow(static_cast<std::uint64_t>(std::pow(2, 8)), pow, mod);
+      std::uint64_t pow_mod = ModPow(
+          // 2^8
+          static_cast<std::uint64_t>(2 * 2 * 2 * 2 * 2 * 2 * 2 * 2), pow, mod);
 
       std::uint64_t index_result =
           (static_cast<std::uint64_t>(val_mod) * pow_mod) % mod;
