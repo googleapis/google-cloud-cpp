@@ -88,6 +88,10 @@ struct UserProjectOption {
  *     https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2.3
  *
  * For REST-based services using HTTP/1.1 or HTTP/1.0 this is the `Host` header.
+ *
+ * For this option to have no effect on the headers, it must be explicitly set
+ * to the empty string. This use case is not typical for applications outside of
+ * Google.
  */
 struct AuthorityOption {
   using Type = std::string;
