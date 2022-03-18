@@ -32,7 +32,8 @@ TEST(ThroughputOptions, Basic) {
       "--project-id=test-project",
       "--region=test-region",
       "--thread-count=42",
-      "--grpc-channel-count=1",
+      "--grpc-channel-count=8",
+      "--direct-path-channel-count=2",
       "--minimum-object-size=16KiB",
       "--maximum-object-size=32KiB",
       "--minimum-write-size=16KiB",
@@ -57,7 +58,8 @@ TEST(ThroughputOptions, Basic) {
   EXPECT_EQ("test-project", options->project_id);
   EXPECT_EQ("test-region", options->region);
   EXPECT_EQ(42, options->thread_count);
-  EXPECT_EQ(1, options->grpc_channel_count);
+  EXPECT_EQ(8, options->grpc_channel_count);
+  EXPECT_EQ(2, options->direct_path_channel_count);
   EXPECT_EQ(16 * kKiB, options->minimum_object_size);
   EXPECT_EQ(32 * kKiB, options->maximum_object_size);
   EXPECT_EQ(16 * kKiB, options->minimum_write_size);
@@ -159,6 +161,11 @@ TEST(ThroughputOptions, Validate) {
       "self-test",
       "--region=r",
       "--grpc-channel-count=-1",
+  }));
+  EXPECT_FALSE(ParseThroughputOptions({
+      "self-test",
+      "--region=r",
+      "--direct-path-channel-count=-1",
   }));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",

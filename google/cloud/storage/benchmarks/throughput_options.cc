@@ -64,6 +64,12 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.grpc_channel_count = std::stoi(val);
        }},
+      {"--direct-path-channel-count",
+       "number of DirectPath gRPC channels created by the client library, use "
+       "0 for the default",
+       [&options](std::string const& val) {
+         options.direct_path_channel_count = std::stoi(val);
+       }},
       {"--minimum-object-size", "configure the minimum object size",
        [&options](std::string const& val) {
          options.minimum_object_size = ParseSize(val);
@@ -189,6 +195,13 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
     std::ostringstream os;
     os << "Invalid value for --grpc-channel-count ("
        << options.grpc_channel_count << "), should be >= 0";
+    return make_status(os);
+  }
+
+  if (options.direct_path_channel_count < 0) {
+    std::ostringstream os;
+    os << "Invalid value for --direct-path-channel-count ("
+       << options.direct_path_channel_count << "), should be >= 0";
     return make_status(os);
   }
 

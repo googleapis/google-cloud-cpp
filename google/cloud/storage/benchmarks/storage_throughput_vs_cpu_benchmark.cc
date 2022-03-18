@@ -146,48 +146,47 @@ int main(int argc, char* argv[]) {
     }
   };
 
-  std::cout << "# Running test on bucket: " << bucket_name << "\n# Start time: "
-            << google::cloud::internal::FormatRfc3339(
-                   std::chrono::system_clock::now())
-            << "\n# Region: " << options->region
-            << "\n# Duration: " << options->duration.count() << "s"
-            << "\n# Thread Count: " << options->thread_count
-            << "\n# Client Per Thread: " << options->client_per_thread
-            << "\n# gRPC Channel Count: " << options->grpc_channel_count
-            << "\n# Object Size Range: [" << options->minimum_object_size << ","
-            << options->maximum_object_size << "]\n# Write Size Range: ["
-            << options->minimum_write_size << "," << options->maximum_write_size
-            << "]\n# Write Quantum: " << options->write_quantum
-            << "\n# Read Size Range: [" << options->minimum_read_size << ","
-            << options->maximum_read_size
-            << "]\n# Read Quantum: " << options->read_quantum
-            << "\n# Object Size Range (MiB): ["
-            << options->minimum_object_size / gcs_bm::kMiB << ","
-            << options->maximum_object_size / gcs_bm::kMiB
-            << "]\n# Write Size Range (KiB): ["
-            << options->minimum_write_size / gcs_bm::kKiB << ","
-            << options->maximum_write_size / gcs_bm::kKiB
-            << "]\n# Write Quantum (KiB): "
-            << options->write_quantum / gcs_bm::kKiB
-            << "\n# Read Size Range (KiB): ["
-            << options->minimum_read_size / gcs_bm::kKiB << ","
-            << options->maximum_read_size / gcs_bm::kKiB
-            << "]\n# Read Quantum (KiB): "
-            << options->read_quantum / gcs_bm::kKiB
-            << "\n# Minimum Sample Count: " << options->minimum_sample_count
-            << "\n# Maximum Sample Count: " << options->maximum_sample_count
-            << "\n# Enabled Libs: "
-            << absl::StrJoin(options->libs, ",", Formatter{})
-            << "\n# Enabled Transports: "
-            << absl::StrJoin(options->transports, ",", Formatter{})
-            << "\n# Enabled CRC32C: "
-            << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
-            << "\n# Enabled MD5: "
-            << absl::StrJoin(options->enabled_md5, ",", Formatter{})
-            << "\n# REST Endpoint: " << options->rest_endpoint
-            << "\n# Grpc Endpoint: " << options->grpc_endpoint
-            << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
-            << "\n# Build info: " << notes << "\n";
+  std::cout
+      << "# Running test on bucket: " << bucket_name << "\n# Start time: "
+      << google::cloud::internal::FormatRfc3339(
+             std::chrono::system_clock::now())
+      << "\n# Region: " << options->region
+      << "\n# Duration: " << options->duration.count() << "s"
+      << "\n# Thread Count: " << options->thread_count
+      << "\n# Client Per Thread: " << options->client_per_thread
+      << "\n# gRPC Channel Count: " << options->grpc_channel_count
+      << "\n# DirectPath Channel Count: " << options->direct_path_channel_count
+      << "\n# Object Size Range: [" << options->minimum_object_size << ","
+      << options->maximum_object_size << "]\n# Write Size Range: ["
+      << options->minimum_write_size << "," << options->maximum_write_size
+      << "]\n# Write Quantum: " << options->write_quantum
+      << "\n# Read Size Range: [" << options->minimum_read_size << ","
+      << options->maximum_read_size
+      << "]\n# Read Quantum: " << options->read_quantum
+      << "\n# Object Size Range (MiB): ["
+      << options->minimum_object_size / gcs_bm::kMiB << ","
+      << options->maximum_object_size / gcs_bm::kMiB
+      << "]\n# Write Size Range (KiB): ["
+      << options->minimum_write_size / gcs_bm::kKiB << ","
+      << options->maximum_write_size / gcs_bm::kKiB
+      << "]\n# Write Quantum (KiB): " << options->write_quantum / gcs_bm::kKiB
+      << "\n# Read Size Range (KiB): ["
+      << options->minimum_read_size / gcs_bm::kKiB << ","
+      << options->maximum_read_size / gcs_bm::kKiB
+      << "]\n# Read Quantum (KiB): " << options->read_quantum / gcs_bm::kKiB
+      << "\n# Minimum Sample Count: " << options->minimum_sample_count
+      << "\n# Maximum Sample Count: " << options->maximum_sample_count
+      << "\n# Enabled Libs: " << absl::StrJoin(options->libs, ",", Formatter{})
+      << "\n# Enabled Transports: "
+      << absl::StrJoin(options->transports, ",", Formatter{})
+      << "\n# Enabled CRC32C: "
+      << absl::StrJoin(options->enabled_crc32c, ",", Formatter{})
+      << "\n# Enabled MD5: "
+      << absl::StrJoin(options->enabled_md5, ",", Formatter{})
+      << "\n# REST Endpoint: " << options->rest_endpoint
+      << "\n# Grpc Endpoint: " << options->grpc_endpoint
+      << "\n# Direct Path Endpoint: " << options->direct_path_endpoint
+      << "\n# Build info: " << notes << "\n";
   // Make the output generated so far immediately visible, helps with debugging.
   std::cout << std::flush;
 
@@ -239,9 +238,9 @@ gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
     if (t == ExperimentTransport::kDirectPath) {
-      if (options.grpc_channel_count > 0) {
+      if (options.direct_path_channel_count > 0) {
         opts.set<google::cloud::GrpcNumChannelsOption>(
-            options.grpc_channel_count);
+            options.direct_path_channel_count);
       }
       return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("media")
                                    .set<google::cloud::EndpointOption>(
