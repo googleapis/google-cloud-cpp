@@ -18,6 +18,7 @@
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
@@ -151,6 +152,8 @@ int main(int argc, char* argv[]) {
             << "\n# Region: " << options->region
             << "\n# Duration: " << options->duration.count() << "s"
             << "\n# Thread Count: " << options->thread_count
+            << "\n# Client Per Thread: " << options->client_per_thread
+            << "\n# gRPC Channel Count: " << options->grpc_channel_count
             << "\n# Object Size Range: [" << options->minimum_object_size << ","
             << options->maximum_object_size << "]\n# Write Size Range: ["
             << options->minimum_write_size << "," << options->maximum_write_size
@@ -236,11 +239,19 @@ gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     using ::google::cloud::storage_experimental::DefaultGrpcClient;
     if (t == ExperimentTransport::kDirectPath) {
+      if (options.grpc_channel_count > 0) {
+        opts.set<google::cloud::GrpcNumChannelsOption>(
+            options.grpc_channel_count);
+      }
       return DefaultGrpcClient(opts.set<gcs_ex::GrpcPluginOption>("media")
                                    .set<google::cloud::EndpointOption>(
                                        options.direct_path_endpoint));
     }
     if (t == ExperimentTransport::kGrpc) {
+      if (options.grpc_channel_count > 0) {
+        opts.set<google::cloud::GrpcNumChannelsOption>(
+            options.grpc_channel_count);
+      }
       return DefaultGrpcClient(
           opts.set<gcs_ex::GrpcPluginOption>("media")
               .set<google::cloud::EndpointOption>(options.grpc_endpoint));

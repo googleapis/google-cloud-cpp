@@ -31,6 +31,7 @@ struct ThroughputOptions {
       std::chrono::seconds(std::chrono::minutes(15));
   int thread_count = 1;
   bool client_per_thread = false;
+  int grpc_channel_count = 0;
   std::int64_t minimum_object_size = 32 * kMiB;
   std::int64_t maximum_object_size = 256 * kMiB;
   std::size_t minimum_write_size = 16 * kMiB;
