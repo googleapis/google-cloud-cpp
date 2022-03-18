@@ -89,9 +89,8 @@ struct UserProjectOption {
  *
  * For REST-based services using HTTP/1.1 or HTTP/1.0 this is the `Host` header.
  *
- * For this option to have no effect on the headers, it must be explicitly set
- * to the empty string. This use case is not typical for applications outside of
- * Google.
+ * Setting this option to the empty string has no effect, i.e., no headers are
+ * set. This can be useful if you are not using Google's production environment.
  */
 struct AuthorityOption {
   using Type = std::string;
