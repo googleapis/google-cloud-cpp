@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
 
 #include "google/cloud/version.h"
+#include <array>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -26,13 +27,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /// Return the SHA256 hash (as raw bytes) of @p str.
-std::vector<std::uint8_t> Sha256Hash(std::string const& str);
+std::array<std::uint8_t, 32> Sha256Hash(std::string const& str);
 
 /// Return the SHA256 hash (as raw bytes) of @p bytes.
-std::vector<std::uint8_t> Sha256Hash(std::vector<std::uint8_t> const& bytes);
+std::array<std::uint8_t, 32> Sha256Hash(std::vector<std::uint8_t> const& bytes);
 
 /// Return @p bytes encoded as a lowercase hexadecimal string.
 std::string HexEncode(std::vector<std::uint8_t> const& bytes);
+
+/// Return @p bytes encoded as a lowercase hexadecimal string.
+std::string HexEncode(std::array<std::uint8_t, 32> const& bytes);
 
 /// Parse @p str as a hex-encoded string.
 std::vector<std::uint8_t> HexDecode(std::string const& str);

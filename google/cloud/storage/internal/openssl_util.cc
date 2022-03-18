@@ -60,6 +60,12 @@ std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
   return std::move(enc).FlushAndPad();
 }
 
+std::string Base64Encode(std::array<std::uint8_t, 32> const& bytes) {
+  google::cloud::internal::Base64Encoder enc;
+  for (auto c : bytes) enc.PushBack(c);
+  return std::move(enc).FlushAndPad();
+}
+
 StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
     std::string const& str, std::string const& pem_contents,
     storage::oauth2::JwtSigningAlgorithms alg) {

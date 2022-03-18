@@ -44,6 +44,11 @@ std::string Base64Encode(std::string const& str);
 std::string Base64Encode(std::vector<std::uint8_t> const& bytes);
 
 /**
+ * Encodes a byte array using Base64.
+ */
+std::string Base64Encode(std::array<std::uint8_t, 32> const& bytes);
+
+/**
  * Signs a string with the private key from a PEM container.
  *
  * @return Returns the signature as an *unencoded* byte array. The caller

@@ -54,7 +54,7 @@ class DefaultRoutingPolicy {
 
   // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
   // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
-  static std::uint64_t GetMod(std::vector<uint8_t> big_endian,
+  static std::uint64_t GetMod(std::array<uint8_t, 32> big_endian,
                               std::uint64_t mod) {
     assert(big_endian.size() < UINT8_MAX);
     std::uint64_t result = 0;

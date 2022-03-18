@@ -53,7 +53,8 @@ TEST(DefaultRoutingPolicyTest, RouteWithoutKey) {
   uint64_t initial_partition = rp.RouteWithoutKey(num_partitions);
   for (unsigned int i = 0; i < num_partitions; ++i) {
     uint64_t next_partition = rp.RouteWithoutKey(num_partitions);
-    EXPECT_EQ((initial_partition + 1) % num_partitions, next_partition % num_partitions);
+    EXPECT_EQ((initial_partition + 1) % num_partitions,
+              next_partition % num_partitions);
     initial_partition = next_partition;
   }
 }
