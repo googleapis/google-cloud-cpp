@@ -47,7 +47,7 @@ TEST(DefaultRoutingPolicyTest, RouteWithKey) {
 }
 
 TEST(DefaultRoutingPolicyTest, RouteWithoutKey) {
-  int num_partitions = 29;
+  unsigned int num_partitions = 29;
   DefaultRoutingPolicy rp;
   uint64_t initial_partition = rp.RouteWithoutKey(num_partitions);
   for (unsigned int i = 0; i < num_partitions; ++i) {
