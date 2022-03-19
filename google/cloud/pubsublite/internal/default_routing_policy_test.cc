@@ -20,7 +20,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
-namespace {
 
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 
@@ -59,7 +58,30 @@ TEST(DefaultRoutingPolicyTest, RouteWithoutKey) {
   }
 }
 
-}  // namespace
+class TestGetMod : public ::testing::Test {
+ protected:
+  static std::uint64_t GetMod(std::array<std::uint8_t, 32> big_endian,
+                              std::uint64_t mod) {
+    return DefaultRoutingPolicy::GetMod(std::move(big_endian), mod);
+  }
+};
+
+TEST_F(TestGetMod, MaxValue) {
+  std::array<std::uint8_t, 32> arr{255, 255, 255, 255, 255, 255, 255, 255,
+                                   255, 255, 255, 255, 255, 255, 255, 255,
+                                   255, 255, 255, 255, 255, 255, 255, 255,
+                                   255, 255, 255, 255, 255, 255, 255, 255};
+  EXPECT_EQ(GetMod(std::move(arr), 2), 1);
+}
+
+TEST_F(TestGetMod, OneLessThanMaxValue) {
+  std::array<std::uint8_t, 32> arr{255, 255, 255, 255, 255, 255, 255, 255,
+                                   255, 255, 255, 255, 255, 255, 255, 255,
+                                   255, 255, 255, 255, 255, 255, 255, 255,
+                                   255, 255, 255, 255, 255, 255, 255, 254};
+  EXPECT_EQ(GetMod(std::move(arr), 2), 0);
+}
+
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

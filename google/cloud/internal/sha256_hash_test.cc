@@ -23,10 +23,13 @@ namespace {
 
 using ::testing::ElementsAre;
 
-TEST(Sha256Hash, HexEncodeEmpty) { EXPECT_EQ("", HexEncode({})); }
+TEST(Sha256Hash, HexEncodeEmpty) {
+  EXPECT_EQ("", HexEncode(std::vector<std::uint8_t>{}));
+}
 
 TEST(Sha256Hash, HexEncodeBasic) {
-  EXPECT_EQ("0001ff7f10", HexEncode({0x00, 0x01, 0xFF, 0x7F, 0x10}));
+  EXPECT_EQ("0001ff7f10",
+            HexEncode(std::vector<std::uint8_t>{0x00, 0x01, 0xFF, 0x7F, 0x10}));
 }
 
 TEST(Sha256Hash, HexDecodeEmpty) { EXPECT_TRUE(HexDecode({}).empty()); }
