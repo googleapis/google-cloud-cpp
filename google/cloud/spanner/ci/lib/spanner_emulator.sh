@@ -34,7 +34,7 @@ function spanner_emulator::internal::read_emulator_port() {
   local emulator_port="0"
   local -r expected=" : Server address: "
   for _ in $(seq 1 8); do
-    if grep -q "${expected}" "${logfile}"; then
+    if grep -q -s "${expected}" "${logfile}"; then
       # The port number is whatever is after the last ':'.
       emulator_port=$(grep "${expected}" "${logfile}" | awk -F: '{print $NF}')
       break

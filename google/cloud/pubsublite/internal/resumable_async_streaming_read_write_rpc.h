@@ -284,10 +284,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     return root_future;
   }
 
- private:
   using UnderlyingStream =
       std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>;
 
+ private:
   enum class State { kRetrying, kInitialized, kShutdown };
 
   future<absl::optional<ResponseType>> OnReadFutureFinish(

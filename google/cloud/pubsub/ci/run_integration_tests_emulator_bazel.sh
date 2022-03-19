@@ -43,7 +43,7 @@ production_only_targets=()
 # otherwise.
 pushd "${HOME}" >/dev/null
 pubsub_emulator::start
-popd
+popd >/dev/null
 trap pubsub_emulator::kill EXIT
 
 excluded_targets=()
