@@ -247,9 +247,9 @@ PartitionPublisher::Initializer(ResumableStreamImpl::UnderlyingStream stream) {
         }
         return (*shared_stream)->Finish();
       })
-      .then([this, shared_stream](future<Status> status_future)
+      .then([this, shared_stream](future<Status> f)
                 -> StatusOr<ResumableStreamImpl::UnderlyingStream> {
-        Status status = status_future.get();
+        Status status = f.get();
         if (!status.ok()) return status;
         std::unique_lock<std::mutex> lk{mu_};
         unsent_batches_ = CreateBatches(UnbatchAll(lk), batching_options_);

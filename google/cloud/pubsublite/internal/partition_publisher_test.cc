@@ -24,6 +24,7 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <memory>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -88,14 +89,14 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
 
   static std::deque<std::deque<MessagePromisePair>> TestCreateBatches(
       std::deque<MessagePromisePair> messages, BatchingOptions const& options) {
-    std::deque<PartitionPublisher::MessageWithPromise> message_with_futures;
+    std::deque<PartitionPublisher::MessageWithPromise> message_with_promises;
     for (auto& message_with_future : messages) {
-      message_with_futures.emplace_back(PartitionPublisher::MessageWithPromise{
+      message_with_promises.emplace_back(PartitionPublisher::MessageWithPromise{
           std::move(message_with_future.first),
           std::move(message_with_future.second)});
     }
     auto batches = PartitionPublisher::CreateBatches(
-        std::move(message_with_futures), std::move(options));
+        std::move(message_with_promises), std::move(options));
     std::deque<std::deque<MessagePromisePair>> ret_batches;
     for (auto& batch : batches) {
       std::deque<MessagePromisePair> message_batch;
@@ -109,7 +110,7 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
     return ret_batches;
   }
 
-  static std::vector<PubSubMessage> GetMessageDequeFromBatch(
+  static std::vector<PubSubMessage> GetMessagesFromBatch(
       std::deque<MessagePromisePair> const& batch) {
     std::vector<PubSubMessage> ret;
     std::transform(batch.begin(), batch.end(), std::back_inserter(ret),
@@ -122,21 +123,20 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
 
 // batching logic
 TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
-  std::deque<MessagePromisePair> message_with_futures;
+  std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 10; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
     promise<StatusOr<Cursor>> message_promise;
-    message_promise.get_future().then(
-        [i](future<StatusOr<Cursor>> status_future) {
-          auto status = status_future.get();
-          EXPECT_FALSE(status.ok());
-          EXPECT_EQ(status.status(),
-                    Status(StatusCode::kUnavailable, std::to_string(i)));
-        });
-    message_with_futures.emplace_back(
+    message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
+      auto status = f.get();
+      EXPECT_FALSE(status.ok());
+      EXPECT_EQ(status.status(),
+                Status(StatusCode::kUnavailable, std::to_string(i)));
+    });
+    message_with_promises.emplace_back(
         MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
@@ -144,7 +144,7 @@ TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
   options.set_maximum_batch_message_count(1);
 
   auto batches =
-      TestCreateBatches(std::move(message_with_futures), std::move(options));
+      TestCreateBatches(std::move(message_with_promises), std::move(options));
   EXPECT_EQ(batches.size(), messages.size());
   for (unsigned int i = 0; i < messages.size(); ++i) {
     auto& batch = batches[i];
@@ -157,21 +157,20 @@ TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
 
 TEST_F(PartitionPublisherBatchingTest,
        SingleMessageBatchMessageSizeRestriction) {
-  std::deque<MessagePromisePair> message_with_futures;
+  std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 10; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
     promise<StatusOr<Cursor>> message_promise;
-    message_promise.get_future().then(
-        [i](future<StatusOr<Cursor>> status_future) {
-          auto status = status_future.get();
-          EXPECT_FALSE(status.ok());
-          EXPECT_EQ(status.status(),
-                    Status(StatusCode::kUnavailable, std::to_string(i)));
-        });
-    message_with_futures.emplace_back(
+    message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
+      auto status = f.get();
+      EXPECT_FALSE(status.ok());
+      EXPECT_EQ(status.status(),
+                Status(StatusCode::kUnavailable, std::to_string(i)));
+    });
+    message_with_promises.emplace_back(
         MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
@@ -179,7 +178,7 @@ TEST_F(PartitionPublisherBatchingTest,
   options.set_maximum_batch_bytes(1);
 
   auto batches =
-      TestCreateBatches(std::move(message_with_futures), std::move(options));
+      TestCreateBatches(std::move(message_with_promises), std::move(options));
   EXPECT_EQ(batches.size(), messages.size());
   for (unsigned int i = 0; i < messages.size(); ++i) {
     auto& batch = batches[i];
@@ -191,23 +190,22 @@ TEST_F(PartitionPublisherBatchingTest,
 }
 
 TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
-  std::deque<MessagePromisePair> message_with_futures;
+  std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 10; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
     promise<StatusOr<Cursor>> message_promise;
-    message_promise.get_future().then(
-        [i](future<StatusOr<Cursor>> status_future) {
-          auto status = status_future.get();
-          EXPECT_FALSE(status.ok());
-          EXPECT_EQ(status.status(),
-                    Status(StatusCode::kUnavailable,
-                           absl::StrCat("batch:", std::to_string(i / 3),
-                                        "offset:", std::to_string(i))));
-        });
-    message_with_futures.emplace_back(
+    message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
+      auto status = f.get();
+      EXPECT_FALSE(status.ok());
+      EXPECT_EQ(status.status(),
+                Status(StatusCode::kUnavailable,
+                       absl::StrCat("batch:", std::to_string(i / 3),
+                                    "offset:", std::to_string(i))));
+    });
+    message_with_promises.emplace_back(
         MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
@@ -215,18 +213,18 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
   options.set_maximum_batch_message_count(3);
 
   auto batches =
-      TestCreateBatches(std::move(message_with_futures), std::move(options));
+      TestCreateBatches(std::move(message_with_promises), std::move(options));
   EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
-  EXPECT_THAT(GetMessageDequeFromBatch(batches[0]),
+  EXPECT_THAT(GetMessagesFromBatch(batches[0]),
               ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
                           IsProtoEqual(messages[2])));
-  EXPECT_THAT(GetMessageDequeFromBatch(batches[1]),
+  EXPECT_THAT(GetMessagesFromBatch(batches[1]),
               ElementsAre(IsProtoEqual(messages[3]), IsProtoEqual(messages[4]),
                           IsProtoEqual(messages[5])));
-  EXPECT_THAT(GetMessageDequeFromBatch(batches[2]),
+  EXPECT_THAT(GetMessagesFromBatch(batches[2]),
               ElementsAre(IsProtoEqual(messages[6]), IsProtoEqual(messages[7]),
                           IsProtoEqual(messages[8])));
-  EXPECT_THAT(GetMessageDequeFromBatch(batches[3]),
+  EXPECT_THAT(GetMessagesFromBatch(batches[3]),
               ElementsAre(IsProtoEqual(messages[9])));
   for (unsigned int i = 0; i < batches.size(); ++i) {
     auto& batch = batches[i];
@@ -240,23 +238,22 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
 }
 
 TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
-  std::deque<MessagePromisePair> message_with_futures;
+  std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
   for (unsigned int i = 0; i < 9; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
     promise<StatusOr<Cursor>> message_promise;
-    message_promise.get_future().then(
-        [i](future<StatusOr<Cursor>> status_future) {
-          auto status = status_future.get();
-          EXPECT_FALSE(status.ok());
-          EXPECT_EQ(status.status(),
-                    Status(StatusCode::kUnavailable,
-                           absl::StrCat("batch:", std::to_string(i / 3),
-                                        "offset:", std::to_string(i))));
-        });
-    message_with_futures.emplace_back(
+    message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
+      auto status = f.get();
+      EXPECT_FALSE(status.ok());
+      EXPECT_EQ(status.status(),
+                Status(StatusCode::kUnavailable,
+                       absl::StrCat("batch:", std::to_string(i / 3),
+                                    "offset:", std::to_string(i))));
+    });
+    message_with_promises.emplace_back(
         MessagePromisePair{message, std::move(message_promise)});
     messages.push_back(std::move(message));
   }
@@ -264,15 +261,15 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
   options.set_maximum_batch_bytes(messages[0].ByteSizeLong() * 3);
 
   auto batches =
-      TestCreateBatches(std::move(message_with_futures), std::move(options));
+      TestCreateBatches(std::move(message_with_promises), std::move(options));
   EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
-  EXPECT_THAT(GetMessageDequeFromBatch(batches[0]),
+  EXPECT_THAT(GetMessagesFromBatch(batches[0]),
               ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
                           IsProtoEqual(messages[2])));
-  EXPECT_THAT(GetMessageDequeFromBatch(batches[1]),
+  EXPECT_THAT(GetMessagesFromBatch(batches[1]),
               ElementsAre(IsProtoEqual(messages[3]), IsProtoEqual(messages[4]),
                           IsProtoEqual(messages[5])));
-  EXPECT_THAT(GetMessageDequeFromBatch(batches[2]),
+  EXPECT_THAT(GetMessagesFromBatch(batches[2]),
               ElementsAre(IsProtoEqual(messages[6]), IsProtoEqual(messages[7]),
                           IsProtoEqual(messages[8])));
   for (unsigned int i = 0; i < batches.size(); ++i) {
@@ -353,7 +350,9 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   initializer_(std::move(underlying_stream_));
 
   std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}) {
+  unsigned int message_count =
+      2 * kBatchBoundary_ + 1;  // We want two full batches and a partial one.
+  for (int i = 0; i != message_count; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -361,10 +360,10 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   }
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
-  for (unsigned int i : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}) {
-    publish_message_futures.push_back(
-        publisher_->Publish(individual_publish_messages[i]));
-  }
+  std::transform(
+      individual_publish_messages.begin(), individual_publish_messages.end(),
+      std::back_inserter(publish_message_futures),
+      [this](PubSubMessage m) { return publisher_->Publish(std::move(m)); });
 
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
@@ -374,8 +373,8 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   read_promise.set_value(absl::optional<PublishResponse>());
   shutdown_future.get();
 
-  for (unsigned int i = 0; i < individual_publish_messages.size(); ++i) {
-    auto individual_message_publish_response = publish_message_futures[i].get();
+  for (auto& publish_message_resp : publish_message_futures) {
+    auto individual_message_publish_response = publish_message_resp.get();
     EXPECT_FALSE(individual_message_publish_response);
     EXPECT_EQ(individual_message_publish_response.status(),
               Status(StatusCode::kAborted, "`Shutdown` called"));
