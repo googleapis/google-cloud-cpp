@@ -304,12 +304,19 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
 class PartitionPublisherTest : public ::testing::Test {
  protected:
   PartitionPublisherTest()
+      // the reference remains valid because we only `EXPECT_CALL` on its member
+      // function that's only called in its destructor which is only called in
+      // `Shutdown`
       : alarm_token_ref_{*alarm_token_},
+        // the reference remains valid because the resumable stream object is
+        // never destroyed before the publisher goes out of scope at the end of
+        // the test case
         resumable_stream_ref_{*resumable_stream_} {
     EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
           // as this is a unit test, we mock the AlarmRegistry behavior
-          // this enables the test suite to control when messages are flushed
+          // this enables the test suite to control when the alarm is
+          // rung/messages are flushed
           on_alarm_ = std::move(on_alarm);
           return std::move(alarm_token_);
         }));
