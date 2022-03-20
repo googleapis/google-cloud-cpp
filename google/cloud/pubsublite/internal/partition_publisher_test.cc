@@ -23,6 +23,7 @@
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <cmath>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -125,7 +126,8 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
 TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
   std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
-  for (unsigned int i = 0; i < 10; ++i) {
+  unsigned int const num_messages = 10;
+  for (unsigned int i = 0; i < num_messages; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -145,8 +147,9 @@ TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
 
   auto batches =
       TestCreateBatches(std::move(message_with_promises), std::move(options));
-  EXPECT_EQ(batches.size(), messages.size());
-  for (unsigned int i = 0; i < messages.size(); ++i) {
+  EXPECT_EQ(messages.size(), num_messages);
+  EXPECT_EQ(batches.size(), num_messages);
+  for (unsigned int i = 0; i < num_messages; ++i) {
     auto& batch = batches[i];
     EXPECT_EQ(batch.size(), 1);
     EXPECT_THAT(batch[0].first, IsProtoEqual(messages[i]));
@@ -159,7 +162,8 @@ TEST_F(PartitionPublisherBatchingTest,
        SingleMessageBatchMessageSizeRestriction) {
   std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
-  for (unsigned int i = 0; i < 10; ++i) {
+  unsigned int const num_messages = 10;
+  for (unsigned int i = 0; i < num_messages; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -179,8 +183,9 @@ TEST_F(PartitionPublisherBatchingTest,
 
   auto batches =
       TestCreateBatches(std::move(message_with_promises), std::move(options));
-  EXPECT_EQ(batches.size(), messages.size());
-  for (unsigned int i = 0; i < messages.size(); ++i) {
+  EXPECT_EQ(messages.size(), num_messages);
+  EXPECT_EQ(batches.size(), num_messages);
+  for (unsigned int i = 0; i < num_messages; ++i) {
     auto& batch = batches[i];
     EXPECT_EQ(batch.size(), 1);
     EXPECT_THAT(batch[0].first, IsProtoEqual(messages[i]));
@@ -192,7 +197,9 @@ TEST_F(PartitionPublisherBatchingTest,
 TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
   std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
-  for (unsigned int i = 0; i < 10; ++i) {
+  unsigned int const num_messages = 10;
+  unsigned int const max_batch_message_count = 3;
+  for (unsigned int i = 0; i < num_messages; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -202,7 +209,8 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
       EXPECT_FALSE(status.ok());
       EXPECT_EQ(status.status(),
                 Status(StatusCode::kUnavailable,
-                       absl::StrCat("batch:", std::to_string(i / 3),
+                       absl::StrCat("batch:",
+                                    std::to_string(i / max_batch_message_count),
                                     "offset:", std::to_string(i))));
     });
     message_with_promises.emplace_back(
@@ -210,11 +218,13 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
-  options.set_maximum_batch_message_count(3);
+
+  options.set_maximum_batch_message_count(max_batch_message_count);
 
   auto batches =
       TestCreateBatches(std::move(message_with_promises), std::move(options));
-  EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
+  EXPECT_EQ(batches.size(),
+            std::ceil(num_messages / ((double)max_batch_message_count)));
   EXPECT_THAT(GetMessagesFromBatch(batches[0]),
               ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
                           IsProtoEqual(messages[2])));
@@ -229,10 +239,10 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
   for (unsigned int i = 0; i < batches.size(); ++i) {
     auto& batch = batches[i];
     for (unsigned int j = 0; j < batch.size(); ++j) {
-      batch[j].second.set_value(StatusOr<Cursor>{
-          Status(StatusCode::kUnavailable,
-                 absl::StrCat("batch:", std::to_string(i),
-                              "offset:", std::to_string(i * 3 + j)))});
+      batch[j].second.set_value(StatusOr<Cursor>{Status(
+          StatusCode::kUnavailable,
+          absl::StrCat("batch:", std::to_string(i), "offset:",
+                       std::to_string(i * max_batch_message_count + j)))});
     }
   }
 }
@@ -240,7 +250,11 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
 TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
   std::deque<MessagePromisePair> message_with_promises;
   std::deque<PubSubMessage> messages;
-  for (unsigned int i = 0; i < 9; ++i) {
+  unsigned int const num_messages = 9;
+  // all messages are of same size so <message size> * 3 is enough for 3
+  // messages
+  unsigned int const max_batch_message_count = 3;
+  for (unsigned int i = 0; i < num_messages; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -250,7 +264,8 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
       EXPECT_FALSE(status.ok());
       EXPECT_EQ(status.status(),
                 Status(StatusCode::kUnavailable,
-                       absl::StrCat("batch:", std::to_string(i / 3),
+                       absl::StrCat("batch:",
+                                    std::to_string(i / max_batch_message_count),
                                     "offset:", std::to_string(i))));
     });
     message_with_promises.emplace_back(
@@ -258,11 +273,14 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
-  options.set_maximum_batch_bytes(messages[0].ByteSizeLong() * 3);
+
+  options.set_maximum_batch_bytes(messages[0].ByteSizeLong() *
+                                  max_batch_message_count);
 
   auto batches =
       TestCreateBatches(std::move(message_with_promises), std::move(options));
-  EXPECT_EQ(batches.size(), ceil(((double)messages.size()) / 3.0));
+  EXPECT_EQ(batches.size(),
+            std::ceil(num_messages / ((double)max_batch_message_count)));
   EXPECT_THAT(GetMessagesFromBatch(batches[0]),
               ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
                           IsProtoEqual(messages[2])));
@@ -275,10 +293,10 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
   for (unsigned int i = 0; i < batches.size(); ++i) {
     auto& batch = batches[i];
     for (unsigned int j = 0; j < batch.size(); ++j) {
-      batch[j].second.set_value(StatusOr<Cursor>{
-          Status(StatusCode::kUnavailable,
-                 absl::StrCat("batch:", std::to_string(i),
-                              "offset:", std::to_string(i * 3 + j)))});
+      batch[j].second.set_value(StatusOr<Cursor>{Status(
+          StatusCode::kUnavailable,
+          absl::StrCat("batch:", std::to_string(i), "offset:",
+                       std::to_string(i * max_batch_message_count + j)))});
     }
   }
 }
@@ -288,9 +306,11 @@ class PartitionPublisherTest : public ::testing::Test {
   PartitionPublisherTest()
       : alarm_token_ref_{*alarm_token_},
         resumable_stream_ref_{*resumable_stream_} {
-    EXPECT_CALL(alarm_, RegisterAlarm(kAlarmDuration, _))
+    EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
-          leaked_alarm_ = std::move(on_alarm);
+          // as this is a unit test, we mock the AlarmRegistry behavior
+          // this enables the test suite to control when messages are flushed
+          on_alarm_ = std::move(on_alarm);
           return std::move(alarm_token_);
         }));
 
@@ -299,21 +319,27 @@ class PartitionPublisherTest : public ::testing::Test {
     options.set_alarm_period(kAlarmDuration);
 
     publisher_ = absl::make_unique<PartitionPublisher>(
-        [&](StreamInitializer<PublishRequest, PublishResponse> const&
-                initializer) {
+        [&](StreamInitializer<PublishRequest, PublishResponse> initializer) {
+          // as this is a unit test, we mock the resumable stream behavior
+          // this enables the test suite to control when underlying streams are
+          // initialized
           initializer_ = std::move(initializer);
           return std::move(resumable_stream_);
         },
-        std::move(options), InitialPublishRequest::default_instance(), alarm_);
+        std::move(options), InitialPublishRequest::default_instance(),
+        alarm_registry_);
   }
 
   unsigned int const kBatchBoundary_ = 5;
   StreamInitializer<PublishRequest, PublishResponse> initializer_;
   std::unique_ptr<StrictMock<MockAlarmRegistryCancelToken>> alarm_token_ =
       absl::make_unique<StrictMock<MockAlarmRegistryCancelToken>>();
+  // we use *ref_ to maintain access to the underlying object of `std::move`d
+  // `std::unique_ptr<>`s to call `EXPECT_CALL` on them at various points in
+  // different test cases
   StrictMock<MockAlarmRegistryCancelToken>& alarm_token_ref_;
-  MockAlarmRegistry alarm_;
-  std::function<void()> leaked_alarm_;
+  MockAlarmRegistry alarm_registry_;
+  std::function<void()> on_alarm_;
   std::unique_ptr<
       MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>
       resumable_stream_ = absl::make_unique<StrictMock<
@@ -352,7 +378,7 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   std::vector<PubSubMessage> individual_publish_messages;
   unsigned int message_count =
       2 * kBatchBoundary_ + 1;  // We want two full batches and a partial one.
-  for (int i = 0; i != message_count; ++i) {
+  for (unsigned int i = 0; i != message_count; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -418,7 +444,7 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
   EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
-  leaked_alarm_();
+  on_alarm_();
 
   read_promise.set_value(absl::make_optional(GetInitializerPublishResponse()));
 
@@ -659,7 +685,7 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
   EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
-  leaked_alarm_();
+  on_alarm_();
 
   start_promise.set_value(Status(StatusCode::kInternal, "Permanent Error"));
   read_promise.set_value(absl::optional<PublishResponse>());
