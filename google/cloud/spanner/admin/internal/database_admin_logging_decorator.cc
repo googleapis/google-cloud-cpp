@@ -160,6 +160,21 @@ DatabaseAdminLogging::AsyncCreateBackup(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::spanner::admin::database::v1::CopyBackupRequest const&
+                 request) {
+        return child_->AsyncCopyBackup(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminLogging::GetBackup(
     grpc::ClientContext& context,

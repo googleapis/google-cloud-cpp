@@ -99,6 +99,11 @@ class DefaultDatabaseAdminConnectionIdempotencyPolicy
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency CopyBackup(
+      google::spanner::admin::database::v1::CopyBackupRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const&) override {
     return Idempotency::kIdempotent;

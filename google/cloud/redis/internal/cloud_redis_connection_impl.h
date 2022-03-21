@@ -56,6 +56,10 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
   StatusOr<google::cloud::redis::v1::Instance> GetInstance(
       google::cloud::redis::v1::GetInstanceRequest const& request) override;
 
+  StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
@@ -77,6 +81,10 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
 
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
+      override;
 
  private:
   std::unique_ptr<redis::CloudRedisRetryPolicy> retry_policy() {

@@ -150,6 +150,25 @@ DatabaseAdminAuth::AsyncCreateBackup(
       });
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminAuth::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCopyBackup(cq, *std::move(context), request);
+      });
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminAuth::GetBackup(
     grpc::ClientContext& context,

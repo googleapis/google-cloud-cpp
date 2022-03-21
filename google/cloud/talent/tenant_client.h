@@ -95,12 +95,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.CreateTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L85}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       std::string const& parent,
@@ -114,12 +114,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.CreateTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L85}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       google::cloud::talent::v4::CreateTenantRequest const& request,
@@ -134,12 +134,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.GetTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L102}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(std::string const& name,
                                                         Options opts = {});
@@ -152,12 +152,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.GetTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L102}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
       google::cloud::talent::v4::GetTenantRequest const& request,
@@ -178,12 +178,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.UpdateTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L116}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::Tenant const& tenant,
@@ -197,12 +197,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.UpdateTenantRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L116}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::UpdateTenantRequest const& request,
@@ -247,12 +247,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.ListTenantsRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L145}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
       std::string const& parent, Options opts = {});
@@ -265,12 +265,12 @@ class TenantServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
   /// [google.cloud.talent.v4.ListTenantsRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L145}
   /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L33}
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
       google::cloud::talent::v4::ListTenantsRequest request, Options opts = {});

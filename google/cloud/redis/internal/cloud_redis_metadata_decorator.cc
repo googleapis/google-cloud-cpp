@@ -48,6 +48,14 @@ StatusOr<google::cloud::redis::v1::Instance> CloudRedisMetadata::GetInstance(
   return child_->GetInstance(context, request);
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisMetadata::GetInstanceAuthString(
+    grpc::ClientContext& context,
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetInstanceAuthString(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +117,15 @@ CloudRedisMetadata::AsyncDeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisMetadata::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

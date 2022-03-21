@@ -100,6 +100,14 @@ DatabaseAdminConnection::CreateBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Backup>>
+DatabaseAdminConnection::CopyBackup(
+    google::spanner::admin::database::v1::CopyBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::database::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminConnection::GetBackup(
     google::spanner::admin::database::v1::GetBackupRequest const&) {

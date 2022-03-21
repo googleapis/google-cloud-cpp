@@ -86,6 +86,20 @@ CloudRedisConnectionImpl::GetInstance(
       request, __func__);
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisConnectionImpl::GetInstanceAuthString(
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetInstanceAuthString(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::redis::v1::GetInstanceAuthStringRequest const&
+                 request) {
+        return stub_->GetInstanceAuthString(context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
@@ -286,6 +300,37 @@ CloudRedisConnectionImpl::DeleteInstance(
           google::cloud::redis::v1::OperationMetadata>,
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteInstance(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::RescheduleMaintenance(
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  auto stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::redis::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return stub->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RescheduleMaintenance(request), polling_policy(),
       __func__);
 }
 
