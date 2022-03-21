@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -224,6 +225,18 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
   EXPECT_STATUS_OK(updated_backup);
   EXPECT_EQ(MakeTimestamp(updated_backup->expire_time()).value(),
             new_expire_time);
+
+  // While we have a backup handy, verify that we can copy it.
+  auto backup_id = spanner_testing::RandomBackupName(generator_);
+  auto copy_backup =
+      database_admin_client_
+          .CopyBackup(in.FullName(), backup_id, backup->name(),
+                      new_expire_time.get<protobuf::Timestamp>().value())
+          .get();
+  EXPECT_STATUS_OK(copy_backup);
+  if (copy_backup) {
+    EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(copy_backup->name()));
+  }
 
   EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(backup->name()));
 }

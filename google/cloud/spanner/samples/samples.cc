@@ -761,7 +761,8 @@ void CreateBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout
       << "Backup " << backup->name() << " of " << backup->database()
-      << " of size " << backup->size_bytes() << " bytes"
+      << " of size " << backup->size_bytes() << " bytes as of "
+      << google::cloud::spanner::MakeTimestamp(backup->version_time()).value()
       << " was created at "
       << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
       << ".\n";
@@ -832,7 +833,9 @@ void GetBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout
       << "Backup " << backup->name() << " of size " << backup->size_bytes()
-      << " bytes was created at "
+      << " bytes as of "
+      << google::cloud::spanner::MakeTimestamp(backup->version_time()).value()
+      << " was created at "
       << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
       << ".\n";
 }
@@ -852,15 +855,32 @@ void GetBackupCommand(std::vector<std::string> argv) {
 void UpdateBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
                   std::string const& backup_id,
-                  google::cloud::spanner::Timestamp expire_time) {
+                  absl::Duration expiry_extension) {
   google::cloud::spanner::Backup backup_name(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  auto backup = client.GetBackup(backup_name.FullName());
+  if (!backup) throw std::runtime_error(backup.status().message());
+  auto expire_time =
+      google::cloud::spanner::MakeTimestamp(backup->expire_time())
+          .value()
+          .get<absl::Time>()
+          .value();
+  expire_time += expiry_extension;
+  auto max_expire_time =
+      google::cloud::spanner::MakeTimestamp(backup->max_expire_time())
+          .value()
+          .get<absl::Time>()
+          .value();
+  if (expire_time > max_expire_time) expire_time = max_expire_time;
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup_name.FullName());
   *request.mutable_backup()->mutable_expire_time() =
-      expire_time.get<google::protobuf::Timestamp>().value();
+      google::cloud::spanner::MakeTimestamp(expire_time)
+          .value()
+          .get<google::protobuf::Timestamp>()
+          .value();
   request.mutable_update_mask()->add_paths("expire_time");
-  auto backup = client.UpdateBackup(request);
+  backup = client.UpdateBackup(request);
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout
       << "Backup " << backup->name() << " updated to expire at "
@@ -876,9 +896,58 @@ void UpdateBackupCommand(std::vector<std::string> argv) {
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
-  auto now = DatabaseNow(MakeSampleClient(argv[0], argv[1], argv[2]));
-  UpdateBackup(std::move(client), argv[0], argv[1], argv[2],
-               TimestampAdd(now, absl::Hours(7)));
+  UpdateBackup(std::move(client), argv[0], argv[1], argv[2], absl::Hours(7));
+}
+
+//! [copy-backup] [START spanner_create_copy_backup]
+void CopyBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
+                std::string const& src_project_id,
+                std::string const& src_instance_id,
+                std::string const& src_backup_id,
+                std::string const& dst_project_id,
+                std::string const& dst_instance_id,
+                std::string const& dst_backup_id,
+                google::cloud::spanner::Timestamp expire_time) {
+  google::cloud::spanner::Backup source(
+      google::cloud::spanner::Instance(src_project_id, src_instance_id),
+      src_backup_id);
+  google::cloud::spanner::Instance dst_in(dst_project_id, dst_instance_id);
+  auto copy_backup =
+      client
+          .CopyBackup(dst_in.FullName(), dst_backup_id, source.FullName(),
+                      expire_time.get<google::protobuf::Timestamp>().value())
+          .get();
+  if (!copy_backup) throw std::runtime_error(copy_backup.status().message());
+  std::cout << "Copy Backup " << copy_backup->name()  //
+            << " of " << source.FullName()            //
+            << " of size " << copy_backup->size_bytes() << " bytes as of "
+            << google::cloud::spanner::MakeTimestamp(
+                   copy_backup->version_time())
+                   .value()
+            << " was created at "
+            << google::cloud::spanner::MakeTimestamp(copy_backup->create_time())
+                   .value()
+            << ".\n";
+}
+//! [copy-backup] [END spanner_create_copy_backup]
+
+void CopyBackupCommand(std::vector<std::string> argv) {
+  if (argv.size() != 5) {
+    throw std::runtime_error(
+        "copy-backup <project-id> <instance-id> <backup-id>"
+        " <copy-instance-id> <copy-backup-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  google::cloud::spanner::Backup source(
+      google::cloud::spanner::Instance(argv[0], argv[1]), argv[2]);
+  auto backup = client.GetBackup(source.FullName());
+  if (!backup) throw std::runtime_error(backup.status().message());
+  auto expire_time = TimestampAdd(
+      google::cloud::spanner::MakeTimestamp(backup->expire_time()).value(),
+      absl::Hours(7));
+  CopyBackup(std::move(client), argv[0], argv[1], argv[2], argv[0], argv[3],
+             argv[4], expire_time);
 }
 
 //! [delete-backup] [START spanner_delete_backup]
@@ -1026,7 +1095,8 @@ void CreateBackupWithEncryptionKey(
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout
       << "Backup " << backup->name() << " of " << backup->database()
-      << " of size " << backup->size_bytes() << " bytes"
+      << " of size " << backup->size_bytes() << " bytes as of "
+      << google::cloud::spanner::MakeTimestamp(backup->version_time()).value()
       << " was created at "
       << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
       << " using encryption key " << encryption_key.FullName() << ".\n";
@@ -1136,11 +1206,14 @@ void ListBackupsCommand(std::vector<std::string> argv) {
 void ListBackupOperations(
     google::cloud::spanner_admin::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
-    std::string const& database_id) {
+    std::string const& database_id, std::string const& backup_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
   google::cloud::spanner::Database database(in, database_id);
+  google::cloud::spanner::Backup backup(in, backup_id);
+
   google::spanner::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent(in.FullName());
+
   request.set_filter(std::string("(metadata.@type=type.googleapis.com/") +
                      "google.spanner.admin.database.v1.CreateBackupMetadata)" +
                      " AND (metadata.database=" + database.FullName() + ")");
@@ -1148,13 +1221,35 @@ void ListBackupOperations(
     if (!operation) throw std::runtime_error(operation.status().message());
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
     operation->metadata().UnpackTo(&metadata);
-    std::cout << "Backup " << metadata.name() << " on database "
-              << metadata.database()
-              << " progress: " << metadata.progress().progress_percent()
-              << "% complete.\n";
+    std::cout << "Backup " << metadata.name() << " of database "
+              << metadata.database() << " is "
+              << metadata.progress().progress_percent() << "% complete.\n";
+  }
+
+  request.set_filter(std::string("(metadata.@type:type.googleapis.com/") +
+                     "google.spanner.admin.database.v1.CopyBackupMetadata)" +
+                     " AND (metadata.source_backup=" + backup.FullName() + ")");
+  for (auto const& operation : client.ListBackupOperations(request)) {
+    if (!operation) throw std::runtime_error(operation.status().message());
+    google::spanner::admin::database::v1::CopyBackupMetadata metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "Copy " << metadata.name() << " of backup "
+              << metadata.source_backup() << " is "
+              << metadata.progress().progress_percent() << "% complete.\n";
   }
 }
 //! [list-backup-operations] [END spanner_list_backup_operations]
+
+void ListBackupOperationsCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "list-backup-operations <project-id> <instance-id> <database-id>"
+        " <backup-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  ListBackupOperations(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
 
 //! [list-database-operations] [START spanner_list_database_operations]
 void ListDatabaseOperations(
@@ -3437,6 +3532,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"restore-database", RestoreDatabaseCommand},
       {"get-backup", GetBackupCommand},
       {"update-backup", UpdateBackupCommand},
+      {"copy-backup", CopyBackupCommand},
       {"delete-backup", DeleteBackupCommand},
       {"create-backup-and-cancel", CreateBackupAndCancelCommand},
       {"create-database-with-encryption-key",
@@ -3446,8 +3542,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"restore-database-with-encryption-key",
        RestoreDatabaseWithEncryptionKeyCommand},
       {"list-backups", ListBackupsCommand},
-      make_database_command_entry("list-backup-operations",
-                                  ListBackupOperations),
+      {"list-backup-operations", ListBackupOperationsCommand},
       {"list-database-operations", ListDatabaseOperationsCommand},
       make_database_command_entry("drop-database", DropDatabase),
       make_database_command_entry("database-get-iam-policy",
@@ -3693,6 +3788,8 @@ void RunAllSlowInstanceTests(
 
     auto const backup_id =
         google::cloud::spanner_testing::RandomBackupName(generator);
+    auto const copy_backup_id =
+        google::cloud::spanner_testing::RandomBackupName(generator);
     auto const restore_database_id =
         google::cloud::spanner_testing::RandomDatabaseName(generator);
 
@@ -3713,9 +3810,20 @@ void RunAllSlowInstanceTests(
       GetBackup(database_admin_client, project_id, crud_instance_id, backup_id);
 
       SampleBanner("spanner_update_backup");
-      expire_time = TimestampAdd(expire_time, absl::Hours(1));
       UpdateBackup(database_admin_client, project_id, crud_instance_id,
-                   backup_id, expire_time);
+                   backup_id, absl::Hours(1));
+
+      SampleBanner("spanner_create_copy_backup");
+      CopyBackup(database_admin_client, project_id, crud_instance_id, backup_id,
+                 project_id, crud_instance_id, copy_backup_id, expire_time);
+
+      SampleBanner("spanner_list_backup_operations");
+      ListBackupOperations(database_admin_client, project_id, crud_instance_id,
+                           database_id, backup_id);
+
+      SampleBanner("spanner_delete_backup");
+      DeleteBackup(database_admin_client, project_id, crud_instance_id,
+                   copy_backup_id);
 
       SampleBanner("spanner_restore_backup");
       RestoreDatabase(database_admin_client, project_id, crud_instance_id,
@@ -3732,10 +3840,6 @@ void RunAllSlowInstanceTests(
       SampleBanner("spanner_cancel_backup_create");
       CreateBackupAndCancel(database_admin_client, project_id, crud_instance_id,
                             database_id, backup_id, expire_time);
-
-      SampleBanner("spanner_list_backup_operations");
-      ListBackupOperations(database_admin_client, project_id, crud_instance_id,
-                           database_id);
 
       SampleBanner("spanner_list_backups");
       ListBackups(database_admin_client, project_id, crud_instance_id);
