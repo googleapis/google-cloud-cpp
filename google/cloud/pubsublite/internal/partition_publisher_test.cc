@@ -307,21 +307,17 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
 class PartitionPublisherTest : public ::testing::Test {
  protected:
   PartitionPublisherTest()
-      // the reference remains valid because we only `EXPECT_CALL` on its member
-      // function that's only called in its destructor which is only called in
-      // `Shutdown`
-      : alarm_token_ref_{*alarm_token_},
-        // the reference remains valid because the resumable stream object is
-        // never destroyed before the publisher goes out of scope at the end of
-        // the test case
-        resumable_stream_ref_{*resumable_stream_} {
+      : alarm_token_ref_{*(new StrictMock<MockAlarmRegistryCancelToken>)},
+        resumable_stream_ref_{*(
+            new StrictMock<MockResumableAsyncReaderWriter<PublishRequest,
+                                                          PublishResponse>>)} {
     EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
           // as this is a unit test, we mock the AlarmRegistry behavior
           // this enables the test suite to control when the alarm is
           // rung/messages are flushed
           on_alarm_ = std::move(on_alarm);
-          return std::move(alarm_token_);
+          return absl::WrapUnique(&alarm_token_ref_);
         }));
 
     BatchingOptions options;
@@ -334,7 +330,7 @@ class PartitionPublisherTest : public ::testing::Test {
           // this enables the test suite to control when underlying streams are
           // initialized
           initializer_ = std::move(initializer);
-          return std::move(resumable_stream_);
+          return absl::WrapUnique(&resumable_stream_ref_);
         },
         std::move(options), InitialPublishRequest::default_instance(),
         alarm_registry_);
@@ -342,18 +338,19 @@ class PartitionPublisherTest : public ::testing::Test {
 
   unsigned int const kBatchBoundary_ = 5;
   StreamInitializer<PublishRequest, PublishResponse> initializer_;
-  std::unique_ptr<StrictMock<MockAlarmRegistryCancelToken>> alarm_token_ =
-      absl::make_unique<StrictMock<MockAlarmRegistryCancelToken>>();
   // we use *ref_ to maintain access to the underlying object of `std::move`d
   // `std::unique_ptr<>`s to call `EXPECT_CALL` on them at various points in
   // different test cases
+
+  // the reference remains valid because we only `EXPECT_CALL` on its member
+  // function that's only called in its destructor which is only called in
+  // `Shutdown`
   StrictMock<MockAlarmRegistryCancelToken>& alarm_token_ref_;
   MockAlarmRegistry alarm_registry_;
   std::function<void()> on_alarm_;
-  std::unique_ptr<
-      MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>
-      resumable_stream_ = absl::make_unique<StrictMock<
-          MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>>();
+  // the reference remains valid because the resumable stream object is
+  // never destroyed before the publisher goes out of scope at the end of
+  // the test case
   MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>&
       resumable_stream_ref_;
   std::unique_ptr<Publisher<Cursor>> publisher_;
