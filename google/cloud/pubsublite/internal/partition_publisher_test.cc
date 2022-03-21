@@ -23,7 +23,6 @@
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
-#include <cmath>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -199,6 +198,9 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
   std::deque<PubSubMessage> messages;
   unsigned int const num_messages = 10;
   unsigned int const max_batch_message_count = 3;
+  // ceil
+  unsigned int const expected_batch_count =
+      (num_messages + max_batch_message_count - 1) / max_batch_message_count;
   for (unsigned int i = 0; i < num_messages; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
@@ -223,8 +225,7 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
 
   auto batches =
       TestCreateBatches(std::move(message_with_promises), std::move(options));
-  EXPECT_EQ(batches.size(),
-            std::ceil(num_messages / ((double)max_batch_message_count)));
+  EXPECT_EQ(batches.size(), expected_batch_count);
   EXPECT_THAT(GetMessagesFromBatch(batches[0]),
               ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
                           IsProtoEqual(messages[2])));
@@ -254,6 +255,9 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
   // all messages are of same size so <message size> * 3 is enough for 3
   // messages
   unsigned int const max_batch_message_count = 3;
+  // ceil
+  unsigned int const expected_batch_count =
+      (num_messages + max_batch_message_count - 1) / max_batch_message_count;
   for (unsigned int i = 0; i < num_messages; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
@@ -279,8 +283,7 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
 
   auto batches =
       TestCreateBatches(std::move(message_with_promises), std::move(options));
-  EXPECT_EQ(batches.size(),
-            std::ceil(num_messages / ((double)max_batch_message_count)));
+  EXPECT_EQ(batches.size(), expected_batch_count);
   EXPECT_THAT(GetMessagesFromBatch(batches[0]),
               ElementsAre(IsProtoEqual(messages[0]), IsProtoEqual(messages[1]),
                           IsProtoEqual(messages[2])));
@@ -353,8 +356,6 @@ class PartitionPublisherTest : public ::testing::Test {
           MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>>();
   MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>&
       resumable_stream_ref_;
-  std::unique_ptr<StrictMock<AsyncReaderWriter>> underlying_stream_ =
-      absl::make_unique<StrictMock<AsyncReaderWriter>>();
   std::unique_ptr<Publisher<Cursor>> publisher_;
 };
 
@@ -374,13 +375,14 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  EXPECT_CALL(*underlying_stream_,
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
   std::vector<PubSubMessage> individual_publish_messages;
   unsigned int message_count =
@@ -434,13 +436,14 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  EXPECT_CALL(*underlying_stream_,
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
@@ -495,13 +498,14 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  EXPECT_CALL(*underlying_stream_,
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
@@ -551,13 +555,14 @@ TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  EXPECT_CALL(*underlying_stream_,
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
@@ -590,22 +595,23 @@ TEST_F(PartitionPublisherTest, InitializerWriteFailureThenGood) {
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  EXPECT_CALL(*underlying_stream_,
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(false))));
-  EXPECT_CALL(*underlying_stream_, Finish)
+  EXPECT_CALL(*underlying_stream, Finish)
       .WillOnce(Return(ByMove(
           make_ready_future(Status(StatusCode::kUnavailable, "Unavailable")))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
-  underlying_stream_ = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-  EXPECT_CALL(*underlying_stream_,
+  underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
@@ -631,25 +637,26 @@ TEST_F(PartitionPublisherTest, InitializerReadFailureThenGood) {
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  EXPECT_CALL(*underlying_stream_,
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(
           Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))));
-  EXPECT_CALL(*underlying_stream_, Finish)
+  EXPECT_CALL(*underlying_stream, Finish)
       .WillOnce(Return(ByMove(
           make_ready_future(Status(StatusCode::kUnavailable, "Unavailable")))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
-  underlying_stream_ = absl::make_unique<StrictMock<AsyncReaderWriter>>();
-  EXPECT_CALL(*underlying_stream_,
+  underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
@@ -675,13 +682,14 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
 
   future<Status> publisher_start_future = publisher_->Start();
 
-  EXPECT_CALL(*underlying_stream_,
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
       .WillOnce(Return(ByMove(make_ready_future(true))));
-  EXPECT_CALL(*underlying_stream_, Read)
+  EXPECT_CALL(*underlying_stream, Read)
       .WillOnce(Return(ByMove(make_ready_future(
           absl::make_optional(GetInitializerPublishResponse())))));
-  initializer_(std::move(underlying_stream_));
+  initializer_(std::move(underlying_stream));
 
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
