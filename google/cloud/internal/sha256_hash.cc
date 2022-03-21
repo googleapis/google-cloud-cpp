@@ -13,9 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/sha256_hash.h"
-#include <openssl/evp.h>
+#include "absl/base/casts.h"
 #include <openssl/sha.h>
-#include <algorithm>
 #include <array>
 #include <cassert>
 
@@ -34,15 +33,10 @@ std::array<std::uint8_t, 32> Sha256Hash(Byte const* data, std::size_t count) {
 
   std::array<unsigned char, SHA256_DIGEST_LENGTH> hash{};
   SHA256_Final(hash.data(), &sha256);
-  // Note that this constructor (from a range) converts the `unsigned char` to
-  // `std::uint8_t` if needed, this should work because (a) the values returned
-  // by `SHA256_Final()` are 8-bit values, and (b) because if `std::uint8_t`
-  // exists it must be large enough to fit an `unsigned char`.
-  std::vector<std::uint8_t> vec{hash.begin(), hash.end()};
-  assert(vec.size() == 32);
-  std::array<std::uint8_t, 32> arr;
-  std::copy_n(vec.begin(), 32, arr.begin());
-  return arr;
+  // absl::bit_cast is a backport of std::bit_cast from c++20 that checks that
+  // the types are trivially copyable
+  // and the same size and converts between them in a way that is not UB.
+  return absl::bit_cast<std::array<std::uint8_t, 32>>(hash);
 }
 }  // namespace
 
@@ -55,17 +49,7 @@ std::array<std::uint8_t, 32> Sha256Hash(
   return Sha256Hash(bytes.data(), bytes.size());
 }
 
-std::string HexEncode(std::vector<std::uint8_t> const& bytes) {
-  std::string result;
-  std::array<char, sizeof("ff")> buf{};
-  for (auto c : bytes) {
-    std::snprintf(buf.data(), buf.size(), "%02x", c);
-    result += buf.data();
-  }
-  return result;
-}
-
-std::string HexEncode(std::array<std::uint8_t, 32> const& bytes) {
+std::string HexEncode(absl::Span<std::uint8_t const> const& bytes) {
   std::string result;
   std::array<char, sizeof("ff")> buf{};
   for (auto c : bytes) {

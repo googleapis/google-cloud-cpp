@@ -40,9 +40,11 @@ cc_library(
     hdrs = google_cloud_cpp_common_hdrs,
     deps = [
         "@boringssl//:crypto",
+        "@com_google_absl//absl/base",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:optional",
+        "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/types:variant",
     ],
 )

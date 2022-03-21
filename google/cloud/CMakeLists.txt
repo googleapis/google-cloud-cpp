@@ -152,8 +152,14 @@ add_library(
     version.h)
 target_link_libraries(
     google_cloud_cpp_common
-    PUBLIC absl::memory absl::optional absl::time absl::variant
-           Threads::Threads OpenSSL::Crypto)
+    PUBLIC absl::base
+           absl::memory
+           absl::optional
+           absl::span
+           absl::time
+           absl::variant
+           Threads::Threads
+           OpenSSL::Crypto)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

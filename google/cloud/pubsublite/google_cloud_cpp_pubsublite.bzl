@@ -92,6 +92,7 @@ google_cloud_cpp_pubsublite_srcs = [
     "internal/cursor_metadata_decorator.cc",
     "internal/cursor_stub.cc",
     "internal/cursor_stub_factory.cc",
+    "internal/default_routing_policy.cc",
     "internal/partition_assignment_auth_decorator.cc",
     "internal/partition_assignment_logging_decorator.cc",
     "internal/partition_assignment_metadata_decorator.cc",

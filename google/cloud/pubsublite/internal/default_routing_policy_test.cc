@@ -25,6 +25,7 @@ using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 
 TEST(DefaultRoutingPolicyTest, RouteWithKey) {
   // same list of test values as in other client libraries
+  DefaultRoutingPolicy rp;
   std::unordered_map<std::string, std::uint64_t> mods = {
       {"oaisdhfoiahsd", 18},
       {"P(#*YNPOIUDF", 9},
@@ -41,8 +42,8 @@ TEST(DefaultRoutingPolicyTest, RouteWithKey) {
       {"8888888", 6},
       {"OPUIPOUYPOIOPUIOIPUOUIPJOP", 2},
       {"x", 16}};
-  for (auto const& it : mods) {
-    EXPECT_EQ(DefaultRoutingPolicy::Route(it.first, 29), it.second);
+  for (auto const& kv : mods) {
+    EXPECT_EQ(rp.Route(kv.first, 29), kv.second);
   }
 }
 
@@ -58,28 +59,62 @@ TEST(DefaultRoutingPolicyTest, RouteWithoutKey) {
   }
 }
 
-class TestGetMod : public ::testing::Test {
- protected:
-  static std::uint64_t GetMod(std::array<std::uint8_t, 32> big_endian,
-                              std::uint64_t mod) {
-    return DefaultRoutingPolicy::GetMod(std::move(big_endian), mod);
-  }
-};
-
-TEST_F(TestGetMod, MaxValue) {
+// expected values obtained from Python3 REPL
+TEST(TestGetMod, MaxValue) {
   std::array<std::uint8_t, 32> arr{255, 255, 255, 255, 255, 255, 255, 255,
                                    255, 255, 255, 255, 255, 255, 255, 255,
                                    255, 255, 255, 255, 255, 255, 255, 255,
                                    255, 255, 255, 255, 255, 255, 255, 255};
-  EXPECT_EQ(GetMod(std::move(arr), 2), 1);
+  EXPECT_EQ(GetMod(arr, 2), 1);
+  EXPECT_EQ(GetMod(arr, 18), 15);
+  EXPECT_EQ(GetMod(arr, 100), 35);
+  EXPECT_EQ(GetMod(arr, 10023), 5397);
+  EXPECT_EQ(GetMod(arr, UINT8_MAX), 0);
 }
 
-TEST_F(TestGetMod, OneLessThanMaxValue) {
+TEST(TestGetMod, OneLessThanMaxValue) {
   std::array<std::uint8_t, 32> arr{255, 255, 255, 255, 255, 255, 255, 255,
                                    255, 255, 255, 255, 255, 255, 255, 255,
                                    255, 255, 255, 255, 255, 255, 255, 255,
                                    255, 255, 255, 255, 255, 255, 255, 254};
-  EXPECT_EQ(GetMod(std::move(arr), 2), 0);
+  EXPECT_EQ(GetMod(arr, 2), 0);
+  EXPECT_EQ(GetMod(arr, 18), 14);
+  EXPECT_EQ(GetMod(arr, 100), 34);
+  EXPECT_EQ(GetMod(arr, 10023), 5396);
+  EXPECT_EQ(GetMod(arr, UINT8_MAX), 254);
+}
+
+TEST(TestGetMod, Zeros) {
+  std::array<std::uint8_t, 32> arr{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  EXPECT_EQ(GetMod(arr, 2), 0);
+  EXPECT_EQ(GetMod(arr, 18), 0);
+  EXPECT_EQ(GetMod(arr, 100), 0);
+  EXPECT_EQ(GetMod(arr, 10023), 0);
+  EXPECT_EQ(GetMod(arr, UINT8_MAX), 0);
+}
+
+TEST(TestGetMod, ArbitraryValue) {
+  std::array<std::uint8_t, 32> arr{255, 255, 255, 255, 255, 255, 2,   255,
+                                   5,   79,  255, 255, 255, 255, 80,  255,
+                                   255, 255, 8,   255, 255, 4,   255, 255,
+                                   78,  255, 255, 100, 255, 255, 255, 254};
+  EXPECT_EQ(GetMod(arr, 10), 0);
+  EXPECT_EQ(GetMod(arr, 109), 4);
+  EXPECT_EQ(GetMod(arr, 10023), 3346);
+  EXPECT_EQ(GetMod(arr, 109000), 60390);
+  EXPECT_EQ(GetMod(arr, UINT8_MAX), 100);
+}
+
+TEST(TestGetMod, ArbitraryValue1) {
+  std::array<std::uint8_t, 32> arr{0, 48, 0, 0,   60, 0,   0, 56, 0,  99, 0,
+                                   0, 0,  0, 0,   90, 231, 0, 89, 0,  27, 80,
+                                   0, 0,  0, 254, 0,  0,   0, 0,  23, 0};
+  EXPECT_EQ(GetMod(arr, 109001), 68945);
+  EXPECT_EQ(GetMod(arr, 102301), 93535);
+  EXPECT_EQ(GetMod(arr, 23), 13);
+  EXPECT_EQ(GetMod(arr, UINT8_MAX), 37);
 }
 
 }  // namespace pubsublite_internal

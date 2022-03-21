@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
 
 #include "google/cloud/version.h"
+#include "absl/types/span.h"
 #include <array>
 #include <cstdint>
 #include <string>
@@ -33,10 +34,7 @@ std::array<std::uint8_t, 32> Sha256Hash(std::string const& str);
 std::array<std::uint8_t, 32> Sha256Hash(std::vector<std::uint8_t> const& bytes);
 
 /// Return @p bytes encoded as a lowercase hexadecimal string.
-std::string HexEncode(std::vector<std::uint8_t> const& bytes);
-
-/// Return @p bytes encoded as a lowercase hexadecimal string.
-std::string HexEncode(std::array<std::uint8_t, 32> const& bytes);
+std::string HexEncode(absl::Span<std::uint8_t const> const& bytes);
 
 /// Parse @p str as a hex-encoded string.
 std::vector<std::uint8_t> HexDecode(std::string const& str);

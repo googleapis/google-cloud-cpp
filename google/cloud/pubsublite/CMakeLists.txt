@@ -97,6 +97,7 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/default_routing_policy.cc
     internal/default_routing_policy.h
     internal/futures.h
     internal/partition_assignment_auth_decorator.cc

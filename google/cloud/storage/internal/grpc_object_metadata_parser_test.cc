@@ -30,7 +30,7 @@ namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
-using google::cloud::internal::HexDecode;
+using ::google::cloud::internal::HexDecode;
 using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(GrpcClientFromProto, ObjectSimple) {
