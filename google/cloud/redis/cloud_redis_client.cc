@@ -61,6 +61,22 @@ StatusOr<google::cloud::redis::v1::Instance> CloudRedisClient::GetInstance(
   return connection_->GetInstance(request);
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisClient::GetInstanceAuthString(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::v1::GetInstanceAuthStringRequest request;
+  request.set_name(name);
+  return connection_->GetInstanceAuthString(request);
+}
+
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisClient::GetInstanceAuthString(
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetInstanceAuthString(request);
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::CreateInstance(
     std::string const& parent, std::string const& instance_id,
@@ -192,6 +208,28 @@ CloudRedisClient::DeleteInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisClient::RescheduleMaintenance(
+    std::string const& name,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest::RescheduleType
+        reschedule_type,
+    google::protobuf::Timestamp const& schedule_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::v1::RescheduleMaintenanceRequest request;
+  request.set_name(name);
+  request.set_reschedule_type(reschedule_type);
+  *request.mutable_schedule_time() = schedule_time;
+  return connection_->RescheduleMaintenance(request);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisClient::RescheduleMaintenance(
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RescheduleMaintenance(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

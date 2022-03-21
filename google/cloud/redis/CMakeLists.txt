@@ -53,7 +53,9 @@ target_link_libraries(
            google-cloud-cpp::api_http_protos
            google-cloud-cpp::api_resource_protos
            google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos)
+           google-cloud-cpp::rpc_status_protos
+           google-cloud-cpp::type_dayofweek_protos
+           google-cloud-cpp::type_timeofday_protos)
 
 file(
     GLOB source_files
