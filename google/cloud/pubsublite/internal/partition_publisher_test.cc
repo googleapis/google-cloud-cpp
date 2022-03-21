@@ -206,7 +206,7 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
     promise<StatusOr<Cursor>> message_promise;
-    message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
+    message_promise.get_future().then([=](future<StatusOr<Cursor>> f) {
       auto status = f.get();
       EXPECT_FALSE(status.ok());
       EXPECT_EQ(status.status(),
@@ -263,7 +263,7 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
     promise<StatusOr<Cursor>> message_promise;
-    message_promise.get_future().then([i](future<StatusOr<Cursor>> f) {
+    message_promise.get_future().then([=](future<StatusOr<Cursor>> f) {
       auto status = f.get();
       EXPECT_FALSE(status.ok());
       EXPECT_EQ(status.status(),
