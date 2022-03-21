@@ -22,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
-std::uint64_t ModPow(std::uint64_t val, std::uint32_t pow, std::uint32_t mod) {
+std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod) {
   std::uint64_t result = 1;
   for (std::uint32_t i = 0; i < pow; ++i) {
     result *= (val % mod);

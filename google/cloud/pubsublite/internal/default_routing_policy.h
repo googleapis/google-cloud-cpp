@@ -27,7 +27,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-std::uint64_t ModPow(std::uint64_t val, std::uint32_t pow, std::uint32_t mod);
+std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod);
 
 std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
 
