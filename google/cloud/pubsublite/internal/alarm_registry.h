@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ALARM_REGISTRY_H
 
+#include "google/cloud/future.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <functional>
@@ -41,6 +42,8 @@ class AlarmRegistry {
   AlarmRegistry& operator=(AlarmRegistry&&) = delete;
   // When CancelToken is destroyed, the alarm will not be running and will never
   // run again.
+  // All `CancelToken`s returned from `RegisterAlarm` must be destroyed before
+  // this `AlarmRegistry` object is destructed
   class CancelToken {
    protected:
     CancelToken() = default;
@@ -49,7 +52,7 @@ class AlarmRegistry {
     virtual ~CancelToken() = default;
     CancelToken(CancelToken const&) = delete;
     CancelToken& operator=(CancelToken const&) = delete;
-    CancelToken(AlarmRegistry&&) = delete;
+    CancelToken(CancelToken&&) = delete;
     CancelToken& operator=(CancelToken&&) = delete;
   };
 

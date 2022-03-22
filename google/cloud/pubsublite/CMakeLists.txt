@@ -86,6 +86,8 @@ add_library(
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
     internal/alarm_registry.h
+    internal/alarm_registry_impl.cc
+    internal/alarm_registry_impl.h
     internal/batching_options.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
