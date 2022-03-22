@@ -39,6 +39,12 @@ class MockCloudRedisConnection : public redis::CloudRedisConnection {
               (google::cloud::redis::v1::GetInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::redis::v1::InstanceAuthString>,
+      GetInstanceAuthString,
+      (google::cloud::redis::v1::GetInstanceAuthStringRequest const& request),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               CreateInstance,
               (google::cloud::redis::v1::CreateInstanceRequest const& request),
@@ -73,6 +79,12 @@ class MockCloudRedisConnection : public redis::CloudRedisConnection {
               DeleteInstance,
               (google::cloud::redis::v1::DeleteInstanceRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::redis::v1::Instance>>,
+      RescheduleMaintenance,
+      (google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

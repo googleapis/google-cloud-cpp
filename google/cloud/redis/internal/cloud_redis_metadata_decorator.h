@@ -43,6 +43,11 @@ class CloudRedisMetadata : public CloudRedisStub {
       grpc::ClientContext& context,
       google::cloud::redis::v1::GetInstanceRequest const& request) override;
 
+  StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
+      grpc::ClientContext& context,
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -78,6 +83,12 @@ class CloudRedisMetadata : public CloudRedisStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

@@ -47,6 +47,15 @@ StatusOr<google::cloud::redis::v1::Instance> CloudRedisAuth::GetInstance(
   return child_->GetInstance(context, request);
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisAuth::GetInstanceAuthString(
+    grpc::ClientContext& context,
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetInstanceAuthString(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisAuth::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +186,26 @@ CloudRedisAuth::AsyncDeleteInstance(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncDeleteInstance(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisAuth::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRescheduleMaintenance(cq, *std::move(context),
+                                                 request);
       });
 }
 

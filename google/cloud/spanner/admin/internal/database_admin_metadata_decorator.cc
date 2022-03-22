@@ -117,6 +117,15 @@ DatabaseAdminMetadata::AsyncCreateBackup(
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminMetadata::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCopyBackup(cq, std::move(context), request);
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminMetadata::GetBackup(
     grpc::ClientContext& context,
@@ -206,9 +215,8 @@ void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

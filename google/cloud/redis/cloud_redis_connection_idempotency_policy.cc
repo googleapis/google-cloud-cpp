@@ -53,6 +53,11 @@ class DefaultCloudRedisConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency GetInstanceAuthString(
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
   Idempotency CreateInstance(
       google::cloud::redis::v1::CreateInstanceRequest const&) override {
     return Idempotency::kNonIdempotent;
@@ -85,6 +90,11 @@ class DefaultCloudRedisConnectionIdempotencyPolicy
 
   Idempotency DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency RescheduleMaintenance(
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 };

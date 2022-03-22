@@ -57,6 +57,19 @@ StatusOr<google::cloud::redis::v1::Instance> CloudRedisLogging::GetInstance(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisLogging::GetInstanceAuthString(
+    grpc::ClientContext& context,
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::redis::v1::GetInstanceAuthStringRequest const&
+                 request) {
+        return child_->GetInstanceAuthString(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisLogging::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
@@ -151,6 +164,22 @@ CloudRedisLogging::AsyncDeleteInstance(
              std::unique_ptr<grpc::ClientContext> context,
              google::cloud::redis::v1::DeleteInstanceRequest const& request) {
         return child_->AsyncDeleteInstance(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisLogging::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::redis::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return child_->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                  request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }

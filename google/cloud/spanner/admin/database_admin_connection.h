@@ -94,6 +94,10 @@ class DatabaseAdminConnection {
   CreateBackup(
       google::spanner::admin::database::v1::CreateBackupRequest const& request);
 
+  virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
+  CopyBackup(
+      google::spanner::admin::database::v1::CopyBackupRequest const& request);
+
   virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request);
 

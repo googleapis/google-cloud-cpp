@@ -34,7 +34,7 @@ function pubsub_emulator::internal::read_emulator_port() {
   local emulator_port="0"
   local -r expected=": Server started, listening on "
   for _ in $(seq 1 60); do
-    if grep -q "${expected}" "${logfile}"; then
+    if grep -q -s "${expected}" "${logfile}"; then
       # The port number is whatever is after 'listening on'.
       emulator_port=$(grep "${expected}" "${logfile}" | awk -F' ' '{print $NF}')
       break

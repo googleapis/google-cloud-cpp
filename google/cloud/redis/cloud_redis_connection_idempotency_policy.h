@@ -44,6 +44,10 @@ class CloudRedisConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetInstance(
       google::cloud::redis::v1::GetInstanceRequest const& request) = 0;
 
+  virtual google::cloud::Idempotency GetInstanceAuthString(
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency CreateInstance(
       google::cloud::redis::v1::CreateInstanceRequest const& request) = 0;
 
@@ -64,6 +68,10 @@ class CloudRedisConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency RescheduleMaintenance(
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>

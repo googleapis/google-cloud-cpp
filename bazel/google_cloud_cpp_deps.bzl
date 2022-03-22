@@ -85,10 +85,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/d4f3468ef85278428005ed555b3a85db91551ee6.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/22e0fa00af3c54bc6e29cc6fc207fc007c839ec7.tar.gz",
             ],
-            strip_prefix = "googleapis-d4f3468ef85278428005ed555b3a85db91551ee6",
-            sha256 = "0e71e1de48893043caa1d98b6accbfe282b79d2099e8597699957d0b049a4c13",
+            strip_prefix = "googleapis-22e0fa00af3c54bc6e29cc6fc207fc007c839ec7",
+            sha256 = "1d5a6b0008beb279a355a8ace0506c424cd4b78c41e049ab3edfe485e1512a8d",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]
@@ -129,11 +129,11 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.44.0",
+            strip_prefix = "grpc-1.45.0",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.44.0.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.45.0.tar.gz",
             ],
-            sha256 = "8c05641b9f91cbc92f51cc4a5b3a226788d7a63f20af4ca7aaca50d92cc94a0d",
+            sha256 = "ec19657a677d49af59aa806ec299c070c882986c9fcc022b1c22c2a3caf01bcd",
         )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which

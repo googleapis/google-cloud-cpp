@@ -161,6 +161,21 @@ DefaultDatabaseAdminStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDatabaseAdminStub::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::database::v1::CopyBackupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCopyBackup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminStub::GetBackup(
     grpc::ClientContext& client_context,

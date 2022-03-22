@@ -48,9 +48,7 @@ class DefaultDataClient : public DataClient {
                     Options options = {})
       : project_(std::move(project)),
         instance_(std::move(instance)),
-        authority_(options.has<AuthorityOption>()
-                       ? absl::make_optional(options.get<AuthorityOption>())
-                       : absl::nullopt),
+        authority_(options.get<AuthorityOption>()),
         user_project_(
             options.has<UserProjectOption>()
                 ? absl::make_optional(options.get<UserProjectOption>())
@@ -192,9 +190,7 @@ class DefaultDataClient : public DataClient {
   }
 
   void ApplyOptions(grpc::ClientContext* context) {
-    if (authority_) {
-      context->set_authority(*authority_);
-    }
+    if (!authority_.empty()) context->set_authority(authority_);
     if (user_project_) {
       context->AddMetadata("x-goog-user-project", *user_project_);
     }
@@ -202,7 +198,7 @@ class DefaultDataClient : public DataClient {
 
   std::string project_;
   std::string instance_;
-  absl::optional<std::string> authority_;
+  std::string authority_;
   absl::optional<std::string> user_project_;
   internal::CommonClient<btproto::Bigtable> impl_;
 };
