@@ -25,7 +25,7 @@ namespace pubsublite_internal {
 AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
     : cq_{std::move(cq)} {}
 
-void AlarmRegistryImpl::OnAlarm(unsigned int i,
+void AlarmRegistryImpl::OnAlarm(std::uint64_t i,
                                 std::shared_ptr<bool> alarm_status,
                                 std::shared_ptr<std::mutex> mu) {
   {

@@ -57,7 +57,7 @@ class AlarmRegistryImpl : public AlarmRegistry {
     std::function<void()> on_alarm;
   };
 
-  void OnAlarm(unsigned int i, std::shared_ptr<bool> alarm_status,
+  void OnAlarm(std::uint64_t i, std::shared_ptr<bool> alarm_status,
                std::shared_ptr<std::mutex> mu);
 
   google::cloud::CompletionQueue cq_;
