@@ -738,7 +738,7 @@ class InitializedPartitionPublisherTest : public PartitionPublisherTest {
     EXPECT_CALL(resumable_stream_ref_, Shutdown)
         .WillOnce(Return(ByMove(make_ready_future())));
     publisher_->Shutdown().get();
-    read_promise1_.set_value(absl::optional<PublishResponse>());
+    read_promise_.set_value(absl::optional<PublishResponse>());
     start_promise_.set_value(Status());
     EXPECT_EQ(publisher_start_future_.get(), Status());
   }
@@ -746,7 +746,6 @@ class InitializedPartitionPublisherTest : public PartitionPublisherTest {
   promise<Status> start_promise_;
   promise<absl::optional<PublishResponse>> read_promise_;
   future<Status> publisher_start_future_;
-  promise<absl::optional<PublishResponse>> read_promise1_;
 };
 
 TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
@@ -776,9 +775,11 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
   publish_response1.mutable_message_response()
       ->mutable_start_cursor()
       ->set_offset(20);
+  auto temp_read_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
-  read_promise_.set_value(std::move(publish_response1));
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
+  temp_read_promise.set_value(std::move(publish_response1));
 
   auto individual_message_publish_response = publish_future.get();
   EXPECT_TRUE(individual_message_publish_response);
@@ -815,9 +816,11 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGoodThroughFlush) {
   publish_response1.mutable_message_response()
       ->mutable_start_cursor()
       ->set_offset(0);
+  auto temp_read_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
-  read_promise_.set_value(std::move(publish_response1));
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
+  temp_read_promise.set_value(std::move(publish_response1));
 
   auto individual_message_publish_response = publish_future.get();
   EXPECT_TRUE(individual_message_publish_response);
@@ -876,9 +879,11 @@ TEST_F(InitializedPartitionPublisherTest,
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
+  auto temp_read_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
-  read_promise_.set_value(absl::optional<PublishResponse>());
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
+  temp_read_promise.set_value(absl::optional<PublishResponse>());
 
   PublishRequest publish_request1;
   MessagePublishRequest& message_publish_request1 =
@@ -895,10 +900,10 @@ TEST_F(InitializedPartitionPublisherTest,
   publish_response1.mutable_message_response()
       ->mutable_start_cursor()
       ->set_offset(0);
-  auto temp_promise = std::move(read_promise1_);
-  read_promise1_ = promise<absl::optional<PublishResponse>>{};
+  auto temp_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
   temp_promise.set_value(std::move(publish_response1));
 
   for (unsigned int i = 0; i < 3; ++i) {
@@ -961,9 +966,11 @@ TEST_F(InitializedPartitionPublisherTest,
 
   write_promise.set_value(false);
 
+  auto temp_read_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
-  read_promise_.set_value(absl::optional<PublishResponse>());
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
+  temp_read_promise.set_value(absl::optional<PublishResponse>());
 
   for (unsigned int i = 0; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
@@ -987,10 +994,10 @@ TEST_F(InitializedPartitionPublisherTest,
     publish_response1.mutable_message_response()
         ->mutable_start_cursor()
         ->set_offset(i);
-    auto temp_read_promise = std::move(read_promise1_);
-    read_promise1_ = promise<absl::optional<PublishResponse>>{};
+    temp_read_promise = std::move(read_promise_);
+    read_promise_ = promise<absl::optional<PublishResponse>>{};
     EXPECT_CALL(resumable_stream_ref_, Read)
-        .WillOnce(Return(ByMove(read_promise1_.get_future())));
+        .WillOnce(Return(ByMove(read_promise_.get_future())));
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
@@ -1061,9 +1068,11 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
 
   write_promise.set_value(false);
 
+  auto temp_read_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
-  read_promise_.set_value(absl::optional<PublishResponse>());
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
+  temp_read_promise.set_value(absl::optional<PublishResponse>());
 
   for (unsigned int i = 0; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
@@ -1087,10 +1096,10 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
     publish_response1.mutable_message_response()
         ->mutable_start_cursor()
         ->set_offset(i);
-    auto temp_read_promise = std::move(read_promise1_);
-    read_promise1_ = promise<absl::optional<PublishResponse>>{};
+    temp_read_promise = std::move(read_promise_);
+    read_promise_ = promise<absl::optional<PublishResponse>>{};
     EXPECT_CALL(resumable_stream_ref_, Read)
-        .WillOnce(Return(ByMove(read_promise1_.get_future())));
+        .WillOnce(Return(ByMove(read_promise_.get_future())));
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
@@ -1150,11 +1159,13 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
       ->mutable_start_cursor()
       ->set_offset(0);
 
+  auto temp_read_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
 
   on_alarm_();
-  read_promise_.set_value(std::move(publish_response));
+  temp_read_promise.set_value(std::move(publish_response));
 
   publish_message_futures.push_back(
       publisher_->Publish(individual_publish_messages[10]));
@@ -1176,11 +1187,11 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
 
   write_promise.set_value(false);
 
-  auto temp_promise = std::move(read_promise1_);
-  read_promise1_ = promise<absl::optional<PublishResponse>>{};
+  temp_read_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
-      .WillOnce(Return(ByMove(read_promise1_.get_future())));
-  temp_promise.set_value(absl::optional<PublishResponse>());
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
+  temp_read_promise.set_value(absl::optional<PublishResponse>());
 
   for (unsigned int i = 5; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
@@ -1204,10 +1215,10 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
     publish_response1.mutable_message_response()
         ->mutable_start_cursor()
         ->set_offset(i);
-    auto temp_read_promise = std::move(read_promise1_);
-    read_promise1_ = promise<absl::optional<PublishResponse>>{};
+    temp_read_promise = std::move(read_promise_);
+    read_promise_ = promise<absl::optional<PublishResponse>>{};
     EXPECT_CALL(resumable_stream_ref_, Read)
-        .WillOnce(Return(ByMove(read_promise1_.get_future())));
+        .WillOnce(Return(ByMove(read_promise_.get_future())));
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
