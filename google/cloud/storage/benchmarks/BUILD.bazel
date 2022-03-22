@@ -38,16 +38,13 @@ cc_library(
 
 load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 
-[cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
+[cc_binary(
+    name = program.replace("/", "_").replace(".cc", ""),
+    srcs = [program],
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
-    tags = [
-        "integration-test",
-    ],
     deps = [
         ":storage_benchmarks",
         "//:common",
@@ -59,7 +56,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
         "@com_github_curl_curl//:curl",
         "@com_google_absl//absl/strings",
     ],
-) for test in storage_benchmark_programs]
+) for program in storage_benchmark_programs]
 
 load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
 

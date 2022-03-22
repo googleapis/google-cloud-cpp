@@ -49,6 +49,8 @@ cc_library(
         "@com_google_absl//absl/time",
         "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
+        # Do not sort: grpc++ must come last
+        "@com_github_grpc_grpc//:grpc++",
     ],
 )
 

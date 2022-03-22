@@ -32,22 +32,19 @@ cc_library(
 
 load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
 
-[cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
+[cc_binary(
+    name = program.replace("/", "_").replace(".cc", ""),
+    srcs = [program],
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
-    tags = [
-        "integration-test",
-    ],
     deps = [
         ":bigtable_benchmark_common",
         "//:bigtable",
         "//:common",
     ],
-) for test in bigtable_benchmark_programs]
+) for program in bigtable_benchmark_programs]
 
 load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
 
