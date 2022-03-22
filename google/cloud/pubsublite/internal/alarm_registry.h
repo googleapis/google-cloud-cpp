@@ -43,7 +43,7 @@ class AlarmRegistry {
   // When CancelToken is destroyed, the alarm will not be running and will never
   // run again.
   // All `CancelToken`s returned from `RegisterAlarm` must be destroyed before
-  // this `AlarmRegistry` object is destructed
+  // this `AlarmRegistry` object is destructed.
   class CancelToken {
    protected:
     CancelToken() = default;

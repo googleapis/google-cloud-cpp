@@ -35,17 +35,16 @@ void AlarmRegistryImpl::OnAlarm(std::uint64_t i,
   cq_.MakeRelativeTimer(registered_alarms_[i].period)
       .then([this, i, alarm_status,
              mu](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+        bool is_ok = f.get().ok();
         {
           std::lock_guard<std::mutex> g{*mu};
           if (!*alarm_status) return;
+          if (!is_ok) {
+            *alarm_status = false;
+            return;
+          }
+          registered_alarms_[i].on_alarm();
         }
-        bool is_ok = f.get().ok();
-        if (!is_ok) {
-          std::lock_guard<std::mutex> g{*mu};
-          *alarm_status = false;
-          return;
-        }
-        registered_alarms_[i].on_alarm();
         OnAlarm(i, std::move(alarm_status), std::move(mu));
       });
 }
@@ -64,6 +63,7 @@ std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
   auto last_index = registered_alarms_.size();
   registered_alarms_.push_back(
       RegisteredAlarmData{period, std::move(on_alarm)});
+  // mu guards status
   auto status = std::make_shared<bool>(true);
   auto mu = std::make_shared<std::mutex>();
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token =
