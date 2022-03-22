@@ -30,7 +30,8 @@ namespace {
 using google::cloud::CompletionQueue;
 using google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::ByMove;
-using ::testing::InSequence;;
+using ::testing::InSequence;
+;
 using ::testing::Return;
 using ::testing::StrictMock;
 
