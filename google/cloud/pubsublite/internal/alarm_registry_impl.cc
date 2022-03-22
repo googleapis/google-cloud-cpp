@@ -26,8 +26,8 @@ AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
     : cq_{std::move(cq)} {}
 
 void AlarmRegistryImpl::OnAlarm(std::uint64_t i,
-                                std::shared_ptr<bool> alarm_status,
-                                std::shared_ptr<std::mutex> mu) {
+                                std::shared_ptr<bool> const& alarm_status,
+                                std::shared_ptr<std::mutex> const& mu) {
   {
     std::lock_guard<std::mutex> g{*mu};
     if (!*alarm_status) return;
