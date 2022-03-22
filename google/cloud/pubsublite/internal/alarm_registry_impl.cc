@@ -61,13 +61,14 @@ AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
 
 std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
     std::chrono::milliseconds period, std::function<void()> on_alarm) {
+  auto last_index = registered_alarms_.size();
   registered_alarms_.push_back(
       RegisteredAlarmData{period, std::move(on_alarm)});
   auto status = std::make_shared<bool>(true);
   auto mu = std::make_shared<std::mutex>();
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token =
       absl::make_unique<CancelTokenImpl>(status, mu);
-  OnAlarm(registered_alarms_.size() - 1, status, mu);
+  OnAlarm(last_index, status, mu);
   return cancel_token;
 }
 
