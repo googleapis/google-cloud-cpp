@@ -26,8 +26,8 @@ cc_library(
     srcs = google_cloud_cpp_bigtable_srcs,
     hdrs = google_cloud_cpp_bigtable_hdrs,
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/bigtable:__subpackages__",
     ],
     # Do not sort: grpc++ must come last
     deps = [
@@ -49,8 +49,8 @@ cc_library(
     srcs = google_cloud_cpp_bigtable_mocks_srcs,
     hdrs = google_cloud_cpp_bigtable_mocks_hdrs,
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/bigtable:__subpackages__",
     ],
     deps = [
         ":bigtable_client_internal",
@@ -63,7 +63,7 @@ cc_library(
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
 
 cc_library(
-    name = "bigtable_client_testing",
+    name = "bigtable_client_testing_private",
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
     deps = [
@@ -75,6 +75,18 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",
     ],
+)
+
+# TODO(#3701): Delete this target after 2023-04-01.
+cc_library(
+    name = "bigtable_client_testing",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. More
+    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":bigtable_client_testing_private"],
 )
 
 load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
