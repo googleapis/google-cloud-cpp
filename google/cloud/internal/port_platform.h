@@ -91,4 +91,10 @@
 
 // clang-format on
 
+// Applications may override the default by adding a -D option.
+#ifndef GOOGLE_CLOUD_CPP_HAVE_COROUTINES
+#define GOOGLE_CLOUD_CPP_HAVE_COROUTINES \
+  (GOOGLE_CLOUD_CPP_CPP_VERSION >= 202002L && __cpp_impl_coroutine)
+#endif  // GOOGLE_CLOUD_CPP_HAVE_COROUTINES
+
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PORT_PLATFORM_H

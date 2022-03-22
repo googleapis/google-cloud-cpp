@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_COROUTINES_H
 
 #include "google/cloud/internal/port_platform.h"
-#if GOOGLE_CLOUD_CPP_CPP_VERSION >= 202002L && __cpp_impl_coroutine
+#if GOOGLE_CLOUD_CPP_HAVE_COROUTINES
 #include "google/cloud/future_generic.h"
 #include "google/cloud/future_void.h"
 #include "google/cloud/version.h"
@@ -127,5 +127,5 @@ auto operator co_await(future<T> f) noexcept
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google::cloud
 
-#endif  // GOOGLE_CLOUD_CPP_CPP_VERSION >= 202002L && __cpp_impl_coroutine
+#endif  // GOOGLE_CLOUD_CPP_CPP_HAVE_COROUTINES
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FUTURE_COROUTINES_H
