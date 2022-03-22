@@ -16,8 +16,6 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
-#include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <deque>
@@ -32,8 +30,7 @@ namespace {
 using google::cloud::CompletionQueue;
 using google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::ByMove;
-using ::testing::InSequence;
-using ::testing::MockFunction;
+using ::testing::InSequence;;
 using ::testing::Return;
 using ::testing::StrictMock;
 
