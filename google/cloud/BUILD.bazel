@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -35,15 +35,31 @@ sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_common",
+    name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:optional",
         "@com_google_absl//absl/types:variant",
     ],
+)
+
+cc_library(
+    name = "google_cloud_cpp_common",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. Use
+    //:common instead. More info:
+    https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_common_private"],
 )
 
 load(
@@ -81,13 +97,17 @@ load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchma
 load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_grpc_utils",
+    name = "google_cloud_cpp_grpc_utils_private",
     srcs = google_cloud_cpp_grpc_utils_srcs,
     # TODO(#3932) - remove the filtering comprehension.
     hdrs = [
         header
         for header in google_cloud_cpp_grpc_utils_hdrs
         if not "grpc_utils/" in header
+    ],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
     ],
     deps = [
         ":google_cloud_cpp_common",
@@ -101,6 +121,18 @@ cc_library(
         "@com_google_googleapis//google/rpc:error_details_cc_proto",
         "@com_google_googleapis//google/rpc:status_cc_proto",
     ],
+)
+
+cc_library(
+    name = "google_cloud_cpp_grpc_utils",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. Use
+    //:grpc_utils instead. More info:
+    https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_grpc_utils_private"],
 )
 
 load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")

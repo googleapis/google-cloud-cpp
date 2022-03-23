@@ -38,7 +38,7 @@ cc_library(
     ],
     deps = [
         ":google_cloud_cpp_storage",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:grpc_utils",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
@@ -65,7 +65,7 @@ cc_library(
         "//:__pkg__",
     ],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
@@ -93,7 +93,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_grpc",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
@@ -119,7 +119,7 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     deps = [
         ":google_cloud_cpp_storage",
         ":storage_client_testing",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",

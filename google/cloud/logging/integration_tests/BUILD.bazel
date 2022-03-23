@@ -26,8 +26,8 @@ load(":logging_client_integration_tests.bzl", "logging_client_integration_tests"
         "integration-test",
     ],
     deps = [
+        "//:common",
         "//:experimental-logging",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",

@@ -26,8 +26,8 @@ load(":pubsub_client_benchmark_programs.bzl", "pubsub_client_benchmark_programs"
         "integration-test",
     ],
     deps = [
+        "//:common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_absl//absl/strings:str_format",

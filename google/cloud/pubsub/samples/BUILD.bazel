@@ -25,8 +25,8 @@ cc_library(
     srcs = pubsub_samples_common_srcs,
     hdrs = pubsub_samples_common_hdrs,
     deps = [
+        "//:common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/pubsub:pubsub_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
     ],
@@ -39,8 +39,8 @@ load(":pubsub_samples_unit_tests.bzl", "pubsub_samples_unit_tests")
     srcs = [test],
     deps = [
         ":pubsub_samples_common",
+        "//:common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
@@ -74,8 +74,8 @@ cc_proto_library(
     deps = [
         ":pubsub_samples_common",
         ":samples_cc_proto",
+        "//:common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_integration_samples]
@@ -85,9 +85,9 @@ cc_proto_library(
     srcs = [test],
     deps = [
         ":pubsub_samples_common",
+        "//:common",
         "//:pubsub",
         "//:pubsub_mocks",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],

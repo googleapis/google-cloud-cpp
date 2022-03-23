@@ -23,9 +23,9 @@ cc_library(
     srcs = storage_benchmarks_srcs,
     hdrs = storage_benchmarks_hdrs,
     deps = [
+        "//:common",
+        "//:grpc_utils",
         "//:storage",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
@@ -50,8 +50,8 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
     ],
     deps = [
         ":storage_benchmarks",
+        "//:common",
         "//:storage",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
@@ -72,8 +72,8 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
     }),
     deps = [
         ":storage_benchmarks",
+        "//:common",
         "//:storage",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
