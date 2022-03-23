@@ -55,7 +55,7 @@ class AlarmRegistryImpl : public AlarmRegistry {
   // static with arguments rather than member variables, so parameters aren't
   // bound to object lifetime
   static void OnAlarm(CompletionQueue cq, std::chrono::milliseconds period,
-                      // make on_alarm unique_ptr?
+                      // make on_alarm unique_ptr/shared_ptr?
                       std::function<void()> const& on_alarm,
                       std::shared_ptr<bool> const& alarm_status,
                       std::shared_ptr<std::mutex> const& mu);
