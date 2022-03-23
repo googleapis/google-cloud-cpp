@@ -52,9 +52,9 @@ AlarmRegistryImpl::CancelTokenImpl::CancelTokenImpl(
 
 AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
   // the alarm function is guarded by *mu_ and is only invoked after checking
-  // *shutdown, so this guarantees that the destructor is run when the alarm
-  // function isn't running and the function won't run after the destructor
-  // finishes
+  // *shutdown all while guarded by *mu, so this guarantees that the alarm
+  // function isn't running when the destructor is run and the function won't
+  // run after the destructor finishes
   std::lock_guard<std::mutex> g{*mu_};
   *shutdown_ = true;
 }
