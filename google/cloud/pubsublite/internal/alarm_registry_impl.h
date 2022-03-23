@@ -31,41 +31,43 @@ class AlarmRegistryImpl : public AlarmRegistry {
  public:
   explicit AlarmRegistryImpl(google::cloud::CompletionQueue cq);
 
-  // TODO(18suresha): implement destructor sanity check?
-  //  ~AlarmRegistryImpl() override;
-  // When CancelToken is destroyed, the alarm will not be running and will never
-  // run again.
-  class CancelTokenImpl : public AlarmRegistry::CancelToken {
-   public:
-    CancelTokenImpl(std::shared_ptr<std::mutex> mu,
-                    std::shared_ptr<bool> shutdown);
-
-    ~CancelTokenImpl() override;
-
-   private:
-    std::shared_ptr<std::mutex> mu_;
-    std::shared_ptr<bool> shutdown_;  // ABSL_GUARDED_BY(*mu_)
-  };
-
   std::unique_ptr<AlarmRegistry::CancelToken> RegisterAlarm(
       std::chrono::milliseconds period,
       std::function<void()> on_alarm) override;
 
  private:
   struct AlarmState {
+    AlarmState(CompletionQueue cmq, std::chrono::milliseconds prd,
+               std::function<void()> alarm_func, bool is_shutdown)
+        : cq{std::move(cmq)},
+          period{prd},
+          on_alarm{std::move(alarm_func)},
+          shutdown{is_shutdown} {}
     CompletionQueue cq;
     std::chrono::milliseconds period;
-    std::shared_ptr<std::mutex> mu;
-    // make on_alarm unique_ptr/shared_ptr?
+    std::mutex mu;
     std::function<void()> on_alarm;  // ABSL_GUARDED_BY(*mu_)
-    std::shared_ptr<bool> shutdown;  // ABSL_GUARDED_BY(*mu_)
+    bool shutdown;                   // ABSL_GUARDED_BY(*mu_)
   };
 
   // static with arguments rather than member variables, so parameters aren't
   // bound to object lifetime
-  static void OnAlarm(std::shared_ptr<AlarmState> const& state);
+  static void ScheduleAlarm(std::shared_ptr<AlarmState> const& state);
 
   google::cloud::CompletionQueue cq_;
+
+ public:
+  // When CancelToken is destroyed, the alarm will not be running and will never
+  // run again.
+  class CancelTokenImpl : public AlarmRegistry::CancelToken {
+   public:
+    explicit CancelTokenImpl(std::shared_ptr<AlarmState>);
+
+    ~CancelTokenImpl() override;
+
+   private:
+    std::shared_ptr<AlarmState> state_;  // ABSL_GUARDED_BY(*mu_)
+  };
 };
 
 }  // namespace pubsublite_internal

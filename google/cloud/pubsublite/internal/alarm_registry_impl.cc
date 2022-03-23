@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/version.h"
 #include "absl/memory/memory.h"
@@ -26,49 +27,50 @@ namespace pubsublite_internal {
 AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
     : cq_{std::move(cq)} {}
 
-void AlarmRegistryImpl::OnAlarm(std::shared_ptr<AlarmState> const& state) {
+void AlarmRegistryImpl::ScheduleAlarm(
+    std::shared_ptr<AlarmState> const& state) {
   {
-    std::lock_guard<std::mutex> g{*state->mu};
-    if (*state->shutdown) return;
+    std::lock_guard<std::mutex> g{state->mu};
+    if (state->shutdown) return;
   }
   state->cq.MakeRelativeTimer(state->period)
       .then([state](future<StatusOr<std::chrono::system_clock::time_point>> f) {
-        if (!f.get().ok()) {
-          GCP_LOG(INFO) << "`MakeRelativeTimer` returned a non-ok `StatusOr`";
+        auto status = f.get();
+        if (!status.ok()) {
+          GCP_LOG(INFO) << absl::StrCat(
+              "`MakeRelativeTimer` returned a non-ok `StatusOr`:",
+              status.status().message());
           return;
         }
         {
-          std::lock_guard<std::mutex> g{*state->mu};
-          if (*state->shutdown) return;
+          std::lock_guard<std::mutex> g{state->mu};
+          if (state->shutdown) return;
           state->on_alarm();
         }
-        OnAlarm(std::move(state));
+        ScheduleAlarm(std::move(state));
       });
 }
 
 AlarmRegistryImpl::CancelTokenImpl::CancelTokenImpl(
-    std::shared_ptr<std::mutex> mu, std::shared_ptr<bool> shutdown)
-    : mu_{std::move(mu)}, shutdown_{std::move(shutdown)} {}
+    std::shared_ptr<AlarmState> state)
+    : state_{std::move(state)} {}
 
 AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
   // the alarm function is guarded by *mu_ and is only invoked after checking
   // *shutdown all while guarded by *mu, so this guarantees that the alarm
   // function isn't running when the destructor is run and the function won't
   // run after the destructor finishes
-  std::lock_guard<std::mutex> g{*mu_};
-  *shutdown_ = true;
+  std::lock_guard<std::mutex> g{state_->mu};
+  state_->shutdown = true;
 }
 
 std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
     std::chrono::milliseconds period, std::function<void()> on_alarm) {
   // mu guards shutdown
-  auto mu = std::make_shared<std::mutex>();
-  auto shutdown = std::make_shared<bool>(false);
-  std::unique_ptr<AlarmRegistry::CancelToken> cancel_token =
-      absl::make_unique<CancelTokenImpl>(mu, shutdown);
-  OnAlarm(std::make_shared<AlarmState>(AlarmState{
-      cq_, period, std::move(mu), std::move(on_alarm), std::move(shutdown)}));
-  return cancel_token;
+  std::shared_ptr<AlarmState> state{
+      new AlarmState{cq_, period, std::move(on_alarm), false}};
+  ScheduleAlarm(state);
+  return absl::make_unique<CancelTokenImpl>(state);
 }
 
 }  // namespace pubsublite_internal
