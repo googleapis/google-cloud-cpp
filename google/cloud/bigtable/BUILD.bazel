@@ -60,12 +60,10 @@ cc_library(
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
 
 cc_library(
-    name = "bigtable_client_testing_private",
+    name = "bigtable_client_testing",
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
-    visibility = [
-        ":__subpackages__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":bigtable_client_internal",
         ":google_cloud_cpp_bigtable_mocks",
@@ -75,18 +73,6 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",
     ],
-)
-
-# TODO(#3701): Delete this target after 2023-04-01.
-cc_library(
-    name = "bigtable_client_testing",
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
-    tags = ["manual"],
-    visibility = ["//visibility:public"],
-    deps = [":bigtable_client_testing_private"],
 )
 
 load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
