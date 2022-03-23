@@ -52,16 +52,15 @@ class AlarmRegistryImpl : public AlarmRegistry {
       std::function<void()> on_alarm) override;
 
  private:
-  struct RegisteredAlarmData {
-    std::chrono::milliseconds period;
-    std::function<void()> on_alarm;
-  };
-
-  void OnAlarm(std::uint64_t i, std::shared_ptr<bool> const& alarm_status,
-               std::shared_ptr<std::mutex> const& mu);
+  // static with arguments rather than member variables, so parameters aren't
+  // bound to object lifetime
+  static void OnAlarm(CompletionQueue cq, std::chrono::milliseconds period,
+                      // make on_alarm unique_ptr?
+                      std::function<void()> const& on_alarm,
+                      std::shared_ptr<bool> const& alarm_status,
+                      std::shared_ptr<std::mutex> const& mu);
 
   google::cloud::CompletionQueue cq_;
-  std::vector<RegisteredAlarmData> registered_alarms_;
 };
 
 }  // namespace pubsublite_internal

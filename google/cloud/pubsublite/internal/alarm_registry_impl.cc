@@ -25,16 +25,18 @@ namespace pubsublite_internal {
 AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
     : cq_{std::move(cq)} {}
 
-void AlarmRegistryImpl::OnAlarm(std::uint64_t i,
+void AlarmRegistryImpl::OnAlarm(CompletionQueue cq,
+                                std::chrono::milliseconds period,
+                                std::function<void()> const& on_alarm,
                                 std::shared_ptr<bool> const& alarm_status,
                                 std::shared_ptr<std::mutex> const& mu) {
   {
     std::lock_guard<std::mutex> g{*mu};
     if (!*alarm_status) return;
   }
-  cq_.MakeRelativeTimer(registered_alarms_[i].period)
-      .then([this, i, alarm_status,
-             mu](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+  cq.MakeRelativeTimer(period).then(
+      [cq, period, on_alarm, alarm_status,
+       mu](future<StatusOr<std::chrono::system_clock::time_point>> f) {
         bool is_ok = f.get().ok();
         {
           std::lock_guard<std::mutex> g{*mu};
@@ -43,9 +45,10 @@ void AlarmRegistryImpl::OnAlarm(std::uint64_t i,
             *alarm_status = false;
             return;
           }
-          registered_alarms_[i].on_alarm();
+          on_alarm();
         }
-        OnAlarm(i, std::move(alarm_status), std::move(mu));
+        OnAlarm(std::move(cq), std::move(period), std::move(on_alarm),
+                std::move(alarm_status), std::move(mu));
       });
 }
 
@@ -60,15 +63,12 @@ AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
 
 std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
     std::chrono::milliseconds period, std::function<void()> on_alarm) {
-  auto last_index = registered_alarms_.size();
-  registered_alarms_.push_back(
-      RegisteredAlarmData{period, std::move(on_alarm)});
   // mu guards status
   auto status = std::make_shared<bool>(true);
   auto mu = std::make_shared<std::mutex>();
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token =
       absl::make_unique<CancelTokenImpl>(status, mu);
-  OnAlarm(last_index, status, mu);
+  OnAlarm(cq_, std::move(period), std::move(on_alarm), status, mu);
   return cancel_token;
 }
 
