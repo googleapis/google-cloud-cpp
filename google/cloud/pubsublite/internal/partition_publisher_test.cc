@@ -44,7 +44,6 @@ using ::testing::WithArg;
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
 using google::cloud::pubsublite::v1::InitialPublishResponse;
-using google::cloud::pubsublite::v1::MessagePublishRequest;
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::PublishRequest;
@@ -347,6 +346,14 @@ class PartitionPublisherTest : public ::testing::Test {
       individual_publish_messages.push_back(std::move(message));
     }
     return individual_publish_messages;
+  }
+
+  static PublishRequest ExpectedBatch(std::vector<PubSubMessage> const& tm,
+                                      std::size_t begin, std::size_t end) {
+    PublishRequest r;
+    for (auto i = begin; i != end; ++i)
+      *r.mutable_message_publish_request()->add_messages() = tm[i];
+    return r;
   }
 
   unsigned int const kBatchBoundary_ = 5;
@@ -766,12 +773,15 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
+  // send a single empty message
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
 
   PublishRequest publish_request;
   *publish_request.mutable_message_publish_request()->add_messages() =
       PubSubMessage::default_instance();
+
+  // the batch that is written should only contain a single empty message
   EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
@@ -785,8 +795,11 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
+  // set value of previous outstanding Read call which should ack the previous
+  // Write call
   temp_read_promise.set_value(std::move(publish_response1));
 
+  // assert that message is acked
   auto individual_message_publish_response = publish_future.get();
   EXPECT_TRUE(individual_message_publish_response);
   EXPECT_EQ(individual_message_publish_response->offset(), 20);
@@ -795,6 +808,7 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
   publisher_->Flush();
 }
 
+// same test as above but we directly call Flush instead of invoking alarm
 TEST_F(InitializedPartitionPublisherTest, SinglePublishGoodThroughFlush) {
   InSequence seq;
 
@@ -857,19 +871,19 @@ TEST_F(InitializedPartitionPublisherTest,
   publish_message_futures.push_back(
       publisher_->Publish(individual_publish_messages[1]));
 
-  PublishRequest publish_request;
-  MessagePublishRequest& message_publish_request =
-      *publish_request.mutable_message_publish_request();
-  *message_publish_request.add_messages() = individual_publish_messages[0];
-  *message_publish_request.add_messages() = individual_publish_messages[1];
-  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
+  EXPECT_CALL(
+      resumable_stream_ref_,
+      Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0, 2))))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
+  // send a batch out on the wire containing the first two messages which are
+  // the only ones `Publish`ed thus far
   on_alarm_();
 
   publish_message_futures.push_back(
       publisher_->Publish(individual_publish_messages[2]));
 
+  // a retry will occur because a nullopt will satisfy the Read call
   underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
   EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
@@ -883,15 +897,16 @@ TEST_F(InitializedPartitionPublisherTest,
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
+  // indicate a Read failure
   temp_read_promise.set_value(absl::optional<PublishResponse>());
 
-  PublishRequest publish_request1;
-  MessagePublishRequest& message_publish_request1 =
-      *publish_request1.mutable_message_publish_request();
-  *message_publish_request1.add_messages() = individual_publish_messages[0];
-  *message_publish_request1.add_messages() = individual_publish_messages[1];
-  *message_publish_request1.add_messages() = individual_publish_messages[2];
-  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request1)))
+  // after reinitializing the stream, all the messages are rebatched
+  // because we sent a third message after the first two were sent out in a
+  // batch
+  // the new Write call contains all three messages
+  EXPECT_CALL(
+      resumable_stream_ref_,
+      Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0, 3))))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
   on_alarm_();
@@ -902,10 +917,12 @@ TEST_F(InitializedPartitionPublisherTest,
       ->set_offset(0);
   auto temp_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
+  // expect continuous Reads
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
   temp_promise.set_value(std::move(publish_response1));
 
+  // assert that all messages are acked
   for (unsigned int i = 0; i != 3; ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
@@ -929,27 +946,27 @@ TEST_F(InitializedPartitionPublisherTest,
   auto individual_publish_messages =
       CreateTestMessages(2 * kBatchBoundary_ + 1);
 
+  // publish first two batches worth of messages that are left unacked
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
     publish_message_futures.push_back(
         publisher_->Publish(individual_publish_messages[i]));
   }
 
-  PublishRequest publish_request;
-  for (unsigned int i = 0; i != kBatchBoundary_; ++i) {
-    *publish_request.mutable_message_publish_request()->add_messages() =
-        individual_publish_messages[i];
-  }
-
   promise<bool> write_promise;
-  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
+  // expect first batch to be written
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0,
+                                               kBatchBoundary_))))
       .WillOnce(Return(ByMove(write_promise.get_future())));
 
   on_alarm_();
 
+  // push 11th unacked message
   publish_message_futures.push_back(
       publisher_->Publish(individual_publish_messages[10]));
 
+  // expect a reinitialize because Write call fails with false
   underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
   EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
@@ -959,26 +976,32 @@ TEST_F(InitializedPartitionPublisherTest,
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
+  // indicate failed Write call
   write_promise.set_value(false);
 
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
+  // failed Read call
   temp_read_promise.set_value(absl::optional<PublishResponse>());
 
-  for (std::size_t i = 0; i < individual_publish_messages.size();) {
-    PublishRequest publish_request1;
-    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_,
-                          individual_publish_messages.size());
-    for (; i != end; ++i) {
-      *publish_request1.mutable_message_publish_request()->add_messages() =
-          individual_publish_messages[i];
-    }
-    EXPECT_CALL(resumable_stream_ref_,
-                Write(IsProtoEqual(std::move(publish_request1))))
-        .WillOnce(Return(ByMove(make_ready_future(true))));
-  }
+  // expect continuously written batches of max size kBatchBoundary_
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0,
+                                               kBatchBoundary_))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(
+                  individual_publish_messages, kBatchBoundary_,
+                  static_cast<std::size_t>(2 * kBatchBoundary_)))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(
+                  ExpectedBatch(individual_publish_messages,
+                                static_cast<std::size_t>(2 * kBatchBoundary_),
+                                2 * kBatchBoundary_ + 1))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
 
   on_alarm_();
 
@@ -990,11 +1013,13 @@ TEST_F(InitializedPartitionPublisherTest,
         ->set_offset(i);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
+    // expect continuous Read calls
     EXPECT_CALL(resumable_stream_ref_, Read)
         .WillOnce(Return(ByMove(read_promise_.get_future())));
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
+  // assert that all messages are acked
   for (std::size_t i = 0; i != individual_publish_messages.size(); ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
@@ -1017,35 +1042,34 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
   auto individual_publish_messages =
       CreateTestMessages(2 * kBatchBoundary_ + 1);
 
+  // publish first 10 messages but not acked
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
     publish_message_futures.push_back(
         publisher_->Publish(individual_publish_messages[i]));
   }
 
-  PublishRequest publish_request;
-  for (unsigned int i = 0; i != kBatchBoundary_; ++i) {
-    *publish_request.mutable_message_publish_request()->add_messages() =
-        individual_publish_messages[i];
-  }
-
-  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
+  // expect first batch of kBatchBoundary_ messages
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0,
+                                               kBatchBoundary_))))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
-  publish_request = PublishRequest();
-  for (unsigned int i = kBatchBoundary_; i != 2 * kBatchBoundary_; ++i) {
-    *publish_request.mutable_message_publish_request()->add_messages() =
-        individual_publish_messages[i];
-  }
   promise<bool> write_promise;
-  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
+  // expect second batch of kBatchBoundary_ messages
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(
+                  individual_publish_messages, kBatchBoundary_,
+                  static_cast<std::size_t>(2) * kBatchBoundary_))))
       .WillOnce(Return(ByMove(write_promise.get_future())));
 
   on_alarm_();
 
+  // send 11th unacked message
   publish_message_futures.push_back(
       publisher_->Publish(individual_publish_messages[10]));
 
+  // expect reinitialize
   underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
   EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
@@ -1055,26 +1079,32 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
+  // second Write failed
   write_promise.set_value(false);
 
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
+  // the first outstanding Read failed so all the messages are left unacked
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
   temp_read_promise.set_value(absl::optional<PublishResponse>());
 
-  for (std::size_t i = 0; i < individual_publish_messages.size();) {
-    PublishRequest publish_request1;
-    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_,
-                          individual_publish_messages.size());
-    for (; i != end; ++i) {
-      *publish_request1.mutable_message_publish_request()->add_messages() =
-          individual_publish_messages[i];
-    }
-    EXPECT_CALL(resumable_stream_ref_,
-                Write(IsProtoEqual(std::move(publish_request1))))
-        .WillOnce(Return(ByMove(make_ready_future(true))));
-  }
+  // expect batches of max size kBatchBoundary_
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0,
+                                               kBatchBoundary_))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(
+                  individual_publish_messages, kBatchBoundary_,
+                  static_cast<std::size_t>(2 * kBatchBoundary_)))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(
+                  ExpectedBatch(individual_publish_messages,
+                                static_cast<std::size_t>(2 * kBatchBoundary_),
+                                2 * kBatchBoundary_ + 1))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
 
   on_alarm_();
 
@@ -1091,6 +1121,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
+  // assert that all messages are acked
   for (std::size_t i = 0; i != individual_publish_messages.size(); ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
@@ -1119,22 +1150,16 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
         publisher_->Publish(individual_publish_messages[i]));
   }
 
-  PublishRequest publish_request;
-  for (unsigned int i = 0; i != kBatchBoundary_; ++i) {
-    *publish_request.mutable_message_publish_request()->add_messages() =
-        individual_publish_messages[i];
-  }
-
-  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0,
+                                               kBatchBoundary_))))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
-  publish_request = PublishRequest();
-  for (unsigned int i = kBatchBoundary_; i != 2 * kBatchBoundary_; ++i) {
-    *publish_request.mutable_message_publish_request()->add_messages() =
-        individual_publish_messages[i];
-  }
   promise<bool> write_promise;
-  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(
+                  individual_publish_messages, kBatchBoundary_,
+                  static_cast<std::size_t>(2) * kBatchBoundary_))))
       .WillOnce(Return(ByMove(write_promise.get_future())));
 
   PublishResponse publish_response;
@@ -1148,17 +1173,21 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
       .WillOnce(Return(ByMove(read_promise_.get_future())));
 
   on_alarm_();
+  // first Read is successful so first kBatchBoundary_ messages are acked
   temp_read_promise.set_value(std::move(publish_response));
 
+  // send 11th unacked message
   publish_message_futures.push_back(
       publisher_->Publish(individual_publish_messages[10]));
 
+  // assert that first kBatchBoundary_ messages are acked
   for (unsigned int i = 0; i != kBatchBoundary_; ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
     EXPECT_EQ(individual_message_publish_response->offset(), i);
   }
 
+  // expect reinitialize
   underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
   EXPECT_CALL(*underlying_stream,
               Write(IsProtoEqual(GetInitializerPublishRequest()), _))
@@ -1168,30 +1197,33 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
+  // second Write fails
   write_promise.set_value(false);
 
   temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
+  // Read fails
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
   temp_read_promise.set_value(absl::optional<PublishResponse>());
 
-  for (std::size_t i = 5; i < individual_publish_messages.size();) {
-    PublishRequest publish_request1;
-    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_,
-                          individual_publish_messages.size());
-    for (; i != end; ++i) {
-      *publish_request1.mutable_message_publish_request()->add_messages() =
-          individual_publish_messages[i];
-    }
-    EXPECT_CALL(resumable_stream_ref_,
-                Write(IsProtoEqual(std::move(publish_request1))))
-        .WillOnce(Return(ByMove(make_ready_future(true))));
-  }
+  // expect last two batches (one of full size and one of 11 % kBatchBoundary_
+  // size)
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(ExpectedBatch(
+                  individual_publish_messages, kBatchBoundary_,
+                  static_cast<std::size_t>(2 * kBatchBoundary_)))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(resumable_stream_ref_,
+              Write(IsProtoEqual(
+                  ExpectedBatch(individual_publish_messages,
+                                static_cast<std::size_t>(2 * kBatchBoundary_),
+                                2 * kBatchBoundary_ + 1))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
 
   on_alarm_();
 
-  for (std::size_t i = 5; i < individual_publish_messages.size();
+  for (std::size_t i = kBatchBoundary_; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
     PublishResponse publish_response1;
     publish_response1.mutable_message_response()
@@ -1199,12 +1231,15 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
         ->set_offset(i);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
+    // expect continuous Reads
     EXPECT_CALL(resumable_stream_ref_, Read)
         .WillOnce(Return(ByMove(read_promise_.get_future())));
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
-  for (std::size_t i = 5; i != individual_publish_messages.size(); ++i) {
+  // assert that rest of messages are acked
+  for (std::size_t i = kBatchBoundary_; i != individual_publish_messages.size();
+       ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
     EXPECT_EQ(individual_message_publish_response->offset(), i);
