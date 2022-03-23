@@ -38,11 +38,10 @@ class AlarmRegistryImpl : public AlarmRegistry {
  private:
   struct AlarmState {
     AlarmState(CompletionQueue completion_queue,
-               std::chrono::milliseconds period,
-               std::function<void()> alarm_func)
+               std::chrono::milliseconds period, std::function<void()> on_alarm)
         : cq{std::move(completion_queue)},
           period{period},
-          on_alarm{std::move(alarm_func)} {}
+          on_alarm{std::move(on_alarm)} {}
     CompletionQueue cq;
     std::chrono::milliseconds const period;
     std::mutex mu;

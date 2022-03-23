@@ -60,8 +60,7 @@ AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
 
 std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
     std::chrono::milliseconds period, std::function<void()> on_alarm) {
-  std::shared_ptr<AlarmState> state{
-      new AlarmState{cq_, period, std::move(on_alarm)}};
+  auto state = std::make_shared<AlarmState>(cq_, period, std::move(on_alarm));
   ScheduleAlarm(state);
   return absl::make_unique<CancelTokenImpl>(state);
 }

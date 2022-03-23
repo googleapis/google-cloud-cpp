@@ -68,21 +68,21 @@ TEST_F(AlarmRegistryImplTest, TimerErrorBeforeRun) {
 TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterSingleRun) {
   InSequence seq;
 
-  promise<StatusOr<std::chrono::system_clock::time_point>> timer;
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
   EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
-      .WillOnce(Return(ByMove(timer.get_future())));
+      .WillOnce(Return(ByMove(timer1.get_future())));
   auto token = alarm_.RegisterAlarm(kAlarmPeriod_, fun_.AsStdFunction());
 
   EXPECT_CALL(fun_, Call);
 
-  promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer2;
   EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
-      .WillOnce(Return(ByMove(timer1.get_future())));
-  timer.set_value(std::chrono::system_clock::time_point{});
+      .WillOnce(Return(ByMove(timer2.get_future())));
+  timer1.set_value(std::chrono::system_clock::time_point{});
 
   token = nullptr;
 
-  timer1.set_value(std::chrono::system_clock::time_point{});
+  timer2.set_value(std::chrono::system_clock::time_point{});
 }
 
 TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterFiveRuns) {
@@ -111,17 +111,17 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterFiveRuns) {
 TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
   InSequence seq;
 
-  promise<StatusOr<std::chrono::system_clock::time_point>> timer;
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
   EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
-      .WillOnce(Return(ByMove(timer.get_future())));
+      .WillOnce(Return(ByMove(timer1.get_future())));
   auto token = alarm_.RegisterAlarm(kAlarmPeriod_, fun_.AsStdFunction());
 
   EXPECT_CALL(fun_, Call);
 
-  promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer2;
   EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
-      .WillOnce(Return(ByMove(timer1.get_future())));
-  timer.set_value(std::chrono::system_clock::time_point{});
+      .WillOnce(Return(ByMove(timer2.get_future())));
+  timer1.set_value(std::chrono::system_clock::time_point{});
 
   promise<void> in_alarm_function;
   promise<void> destroy_finished;
@@ -133,22 +133,22 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
               std::future_status::timeout);
   });
 
-  promise<StatusOr<std::chrono::system_clock::time_point>> timer2;
-
-  std::thread first{[&in_alarm_function, &destroy_finished, &token]() {
+  std::thread first{[&]() {
     // guarantee that alarm function is being invoked
     in_alarm_function.get_future().get();
     token = nullptr;
     destroy_finished.set_value();
   }};
 
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer3;
+
   EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
-      .WillOnce(Return(ByMove(timer2.get_future())));
-  timer1.set_value(std::chrono::system_clock::time_point{});
+      .WillOnce(Return(ByMove(timer3.get_future())));
+  timer2.set_value(std::chrono::system_clock::time_point{});
 
   first.join();
 
-  timer2.set_value(std::chrono::system_clock::time_point{});
+  timer3.set_value(std::chrono::system_clock::time_point{});
 }
 
 }  // namespace
