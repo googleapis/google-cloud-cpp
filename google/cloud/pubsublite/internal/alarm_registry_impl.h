@@ -37,14 +37,14 @@ class AlarmRegistryImpl : public AlarmRegistry {
   // run again.
   class CancelTokenImpl : public AlarmRegistry::CancelToken {
    public:
-    CancelTokenImpl(std::shared_ptr<bool> alarm_status,
-                    std::shared_ptr<std::mutex> mu);
+    CancelTokenImpl(std::shared_ptr<std::mutex> mu,
+                    std::shared_ptr<bool> shutdown);
 
     ~CancelTokenImpl() override;
 
    private:
-    std::shared_ptr<bool> alarm_status_;
     std::shared_ptr<std::mutex> mu_;
+    std::shared_ptr<bool> shutdown_;  // ABSL_GUARDED_BY(*mu_)
   };
 
   std::unique_ptr<AlarmRegistry::CancelToken> RegisterAlarm(
@@ -52,13 +52,18 @@ class AlarmRegistryImpl : public AlarmRegistry {
       std::function<void()> on_alarm) override;
 
  private:
+  struct AlarmState {
+    CompletionQueue cq;
+    std::chrono::milliseconds period;
+    std::shared_ptr<std::mutex> mu;
+    // make on_alarm unique_ptr/shared_ptr?
+    std::function<void()> on_alarm;  // ABSL_GUARDED_BY(*mu_)
+    std::shared_ptr<bool> shutdown;  // ABSL_GUARDED_BY(*mu_)
+  };
+
   // static with arguments rather than member variables, so parameters aren't
   // bound to object lifetime
-  static void OnAlarm(CompletionQueue cq, std::chrono::milliseconds period,
-                      // make on_alarm unique_ptr/shared_ptr?
-                      std::function<void()> const& on_alarm,
-                      std::shared_ptr<bool> const& alarm_status,
-                      std::shared_ptr<std::mutex> const& mu);
+  static void OnAlarm(std::shared_ptr<AlarmState> const& state);
 
   google::cloud::CompletionQueue cq_;
 };
