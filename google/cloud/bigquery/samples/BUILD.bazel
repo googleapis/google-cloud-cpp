@@ -29,7 +29,7 @@ load(":bigquery_client_samples.bzl", "bigquery_client_samples")
     ],
     deps = [
         "//:bigquery",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
@@ -43,7 +43,7 @@ load(":bigquery_client_mock_samples.bzl", "bigquery_client_mock_samples")
     deps = [
         "//:bigquery",
         "//:bigquery_mocks",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],

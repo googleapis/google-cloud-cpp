@@ -48,9 +48,9 @@ cc_library(
         "-I$(BINDIR)",
     ],
     deps = [
+        "//:common",
+        "//:grpc_utils",
         "//generator/integration_tests:google_cloud_cpp_generator_testing_cc_grpc",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
@@ -73,7 +73,7 @@ load(":google_cloud_cpp_generator_golden_tests.bzl", "google_cloud_cpp_generator
     ],
     deps = [
         ":google_cloud_cpp_generator_golden",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",

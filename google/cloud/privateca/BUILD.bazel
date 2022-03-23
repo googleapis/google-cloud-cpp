@@ -36,8 +36,8 @@ cc_library(
     ),
     visibility = ["//:__pkg__"],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_googleapis//google/cloud/security/privateca/v1:privateca_cc_grpc",
     ],
 )
@@ -53,7 +53,7 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_privateca",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
     ],
 )

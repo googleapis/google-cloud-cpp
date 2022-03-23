@@ -36,8 +36,8 @@ cc_library(
     ),
     visibility = ["//:__pkg__"],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_googleapis//google/monitoring/dashboard/v1:dashboard_cc_grpc",
         "@com_google_googleapis//google/monitoring/metricsscope/v1:metricsscope_cc_grpc",
         "@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc",
@@ -55,7 +55,7 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_monitoring",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
     ],
 )

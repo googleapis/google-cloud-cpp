@@ -31,8 +31,8 @@ cc_library(
     ],
     # Do not sort: grpc++ must come last
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_absl//absl/memory",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
@@ -54,7 +54,7 @@ cc_library(
     ],
     deps = [
         ":bigtable_client_internal",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
@@ -69,8 +69,8 @@ cc_library(
     deps = [
         ":bigtable_client_internal",
         ":google_cloud_cpp_bigtable_mocks",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",
@@ -85,8 +85,8 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
     deps = [
         ":bigtable_client_internal",
         ":bigtable_client_testing",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_absl//absl/memory",
@@ -103,8 +103,8 @@ cc_test(
     deps = [
         ":bigtable_client_internal",
         ":bigtable_client_testing",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_absl//absl/memory",
