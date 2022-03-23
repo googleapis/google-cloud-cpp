@@ -56,8 +56,8 @@ AlarmRegistryImpl::CancelTokenImpl::CancelTokenImpl(
     : state_{std::move(state)} {}
 
 AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
-  // the alarm function is guarded by *mu_ and is only invoked after checking
-  // *shutdown all while guarded by *mu, so this guarantees that the alarm
+  // the alarm function is guarded by mu and is only invoked after checking
+  // shutdown all while guarded by mu, so this guarantees that the alarm
   // function isn't running when the destructor is run and the function won't
   // run after the destructor finishes
   std::lock_guard<std::mutex> g{state_->mu};
@@ -68,7 +68,7 @@ std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
     std::chrono::milliseconds period, std::function<void()> on_alarm) {
   // mu guards shutdown
   std::shared_ptr<AlarmState> state{
-      new AlarmState{cq_, period, std::move(on_alarm), false}};
+      new AlarmState{cq_, period, std::move(on_alarm)}};
   ScheduleAlarm(state);
   return absl::make_unique<CancelTokenImpl>(state);
 }

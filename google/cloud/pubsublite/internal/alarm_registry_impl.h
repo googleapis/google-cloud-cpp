@@ -37,26 +37,24 @@ class AlarmRegistryImpl : public AlarmRegistry {
 
  private:
   struct AlarmState {
-    AlarmState(CompletionQueue cmq, std::chrono::milliseconds prd,
-               std::function<void()> alarm_func, bool is_shutdown)
-        : cq{std::move(cmq)},
-          period{prd},
-          on_alarm{std::move(alarm_func)},
-          shutdown{is_shutdown} {}
+    AlarmState(CompletionQueue completion_queue, std::chrono::milliseconds period,
+               std::function<void()> alarm_func)
+        : cq{std::move(completion_queue)},
+          period{period},
+          on_alarm{std::move(alarm_func)} {}
     CompletionQueue cq;
-    std::chrono::milliseconds period;
+    std::chrono::milliseconds const period;
     std::mutex mu;
-    std::function<void()> on_alarm;  // ABSL_GUARDED_BY(*mu_)
-    bool shutdown;                   // ABSL_GUARDED_BY(*mu_)
+    std::function<void()> on_alarm;  // ABSL_GUARDED_BY(mu)
+    bool shutdown = false;                   // ABSL_GUARDED_BY(mu)
   };
 
   // static with arguments rather than member variables, so parameters aren't
   // bound to object lifetime
   static void ScheduleAlarm(std::shared_ptr<AlarmState> const& state);
 
-  google::cloud::CompletionQueue cq_;
+  google::cloud::CompletionQueue const cq_;
 
- public:
   // When CancelToken is destroyed, the alarm will not be running and will never
   // run again.
   class CancelTokenImpl : public AlarmRegistry::CancelToken {
@@ -66,7 +64,7 @@ class AlarmRegistryImpl : public AlarmRegistry {
     ~CancelTokenImpl() override;
 
    private:
-    std::shared_ptr<AlarmState> state_;  // ABSL_GUARDED_BY(*mu_)
+    std::shared_ptr<AlarmState> state_;
   };
 };
 
