@@ -238,9 +238,9 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
                           IsProtoEqual(messages[8])));
   EXPECT_THAT(GetMessagesFromBatch(batches[3]),
               ElementsAre(IsProtoEqual(messages[9])));
-  for (unsigned int i = 0; i != batches.size(); ++i) {
+  for (std::size_t i = 0; i != batches.size(); ++i) {
     auto& batch = batches[i];
-    for (unsigned int j = 0; j != batch.size(); ++j) {
+    for (std::size_t j = 0; j != batch.size(); ++j) {
       batch[j].second.set_value(StatusOr<Cursor>{Status(
           StatusCode::kUnavailable,
           absl::StrCat("batch:", std::to_string(i), "offset:",
@@ -294,9 +294,9 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
   EXPECT_THAT(GetMessagesFromBatch(batches[2]),
               ElementsAre(IsProtoEqual(messages[6]), IsProtoEqual(messages[7]),
                           IsProtoEqual(messages[8])));
-  for (unsigned int i = 0; i != batches.size(); ++i) {
+  for (std::size_t i = 0; i != batches.size(); ++i) {
     auto& batch = batches[i];
-    for (unsigned int j = 0; j != batch.size(); ++j) {
+    for (std::size_t j = 0; j != batch.size(); ++j) {
       batch[j].second.set_value(StatusOr<Cursor>{Status(
           StatusCode::kUnavailable,
           absl::StrCat("batch:", std::to_string(i), "offset:",
@@ -335,6 +335,18 @@ class PartitionPublisherTest : public ::testing::Test {
         },
         std::move(options), InitialPublishRequest::default_instance(),
         alarm_registry_);
+  }
+
+  static std::vector<PubSubMessage> CreateTestMessages(
+      unsigned int num_messages) {
+    std::vector<PubSubMessage> individual_publish_messages;
+    for (unsigned int i = 0; i != num_messages; ++i) {
+      PubSubMessage message;
+      *message.mutable_key() = "key";
+      *message.mutable_data() = std::to_string(i);
+      individual_publish_messages.push_back(std::move(message));
+    }
+    return individual_publish_messages;
   }
 
   unsigned int const kBatchBoundary_ = 5;
@@ -382,15 +394,9 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
-  std::vector<PubSubMessage> individual_publish_messages;
   unsigned int message_count =
       2 * kBatchBoundary_ + 1;  // We want two full batches and a partial one.
-  for (unsigned int i = 0; i != message_count; ++i) {
-    PubSubMessage message;
-    *message.mutable_key() = "key";
-    *message.mutable_data() = std::to_string(i);
-    individual_publish_messages.push_back(std::move(message));
-  }
+  auto individual_publish_messages = CreateTestMessages(message_count);
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   std::transform(
@@ -843,13 +849,7 @@ TEST_F(InitializedPartitionPublisherTest,
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
-  std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i != 3; ++i) {
-    PubSubMessage message;
-    *message.mutable_key() = "key";
-    *message.mutable_data() = std::to_string(i);
-    individual_publish_messages.push_back(std::move(message));
-  }
+  auto individual_publish_messages = CreateTestMessages(3);
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   publish_message_futures.push_back(
@@ -926,13 +926,8 @@ TEST_F(InitializedPartitionPublisherTest,
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
-  std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i != 2 * kBatchBoundary_ + 1; ++i) {
-    PubSubMessage message;
-    *message.mutable_key() = "key";
-    *message.mutable_data() = std::to_string(i);
-    individual_publish_messages.push_back(std::move(message));
-  }
+  auto individual_publish_messages =
+      CreateTestMessages(2 * kBatchBoundary_ + 1);
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
@@ -972,11 +967,11 @@ TEST_F(InitializedPartitionPublisherTest,
       .WillOnce(Return(ByMove(read_promise_.get_future())));
   temp_read_promise.set_value(absl::optional<PublishResponse>());
 
-  for (unsigned int i = 0; i < individual_publish_messages.size();) {
+  for (std::size_t i = 0; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
-    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_, individual_publish_messages.size());
-    for (; i != end;
-         ++i) {
+    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_,
+                          individual_publish_messages.size());
+    for (; i != end; ++i) {
       *publish_request1.mutable_message_publish_request()->add_messages() =
           individual_publish_messages[i];
     }
@@ -987,7 +982,7 @@ TEST_F(InitializedPartitionPublisherTest,
 
   on_alarm_();
 
-  for (unsigned int i = 0; i < individual_publish_messages.size();
+  for (std::size_t i = 0; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
     PublishResponse publish_response1;
     publish_response1.mutable_message_response()
@@ -1000,7 +995,7 @@ TEST_F(InitializedPartitionPublisherTest,
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
-  for (unsigned int i = 0; i != individual_publish_messages.size(); ++i) {
+  for (std::size_t i = 0; i != individual_publish_messages.size(); ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
     EXPECT_EQ(individual_message_publish_response->offset(), i);
@@ -1019,13 +1014,8 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
-  std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i != 2 * kBatchBoundary_ + 1; ++i) {
-    PubSubMessage message;
-    *message.mutable_key() = "key";
-    *message.mutable_data() = std::to_string(i);
-    individual_publish_messages.push_back(std::move(message));
-  }
+  auto individual_publish_messages =
+      CreateTestMessages(2 * kBatchBoundary_ + 1);
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
@@ -1043,7 +1033,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
   publish_request = PublishRequest();
-  for (unsigned int i = 5; i != 5 + kBatchBoundary_; ++i) {
+  for (unsigned int i = kBatchBoundary_; i != 2 * kBatchBoundary_; ++i) {
     *publish_request.mutable_message_publish_request()->add_messages() =
         individual_publish_messages[i];
   }
@@ -1073,12 +1063,11 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
       .WillOnce(Return(ByMove(read_promise_.get_future())));
   temp_read_promise.set_value(absl::optional<PublishResponse>());
 
-  for (unsigned int i = 0; i < individual_publish_messages.size();) {
+  for (std::size_t i = 0; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
-    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_, individual_publish_messages.size());
-    for (;
-         i != end;
-         ++i) {
+    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_,
+                          individual_publish_messages.size());
+    for (; i != end; ++i) {
       *publish_request1.mutable_message_publish_request()->add_messages() =
           individual_publish_messages[i];
     }
@@ -1089,7 +1078,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
 
   on_alarm_();
 
-  for (unsigned int i = 0; i < individual_publish_messages.size();
+  for (std::size_t i = 0; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
     PublishResponse publish_response1;
     publish_response1.mutable_message_response()
@@ -1102,7 +1091,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
-  for (unsigned int i = 0; i != individual_publish_messages.size(); ++i) {
+  for (std::size_t i = 0; i != individual_publish_messages.size(); ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
     EXPECT_EQ(individual_message_publish_response->offset(), i);
@@ -1121,13 +1110,8 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
           absl::make_optional(GetInitializerPublishResponse())))));
   initializer_(std::move(underlying_stream));
 
-  std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i != 2 * kBatchBoundary_ + 1; ++i) {
-    PubSubMessage message;
-    *message.mutable_key() = "key";
-    *message.mutable_data() = std::to_string(i);
-    individual_publish_messages.push_back(std::move(message));
-  }
+  auto individual_publish_messages =
+      CreateTestMessages(2 * kBatchBoundary_ + 1);
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
@@ -1145,7 +1129,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
   publish_request = PublishRequest();
-  for (unsigned int i = 5; i != 5 + kBatchBoundary_; ++i) {
+  for (unsigned int i = kBatchBoundary_; i != 2 * kBatchBoundary_; ++i) {
     *publish_request.mutable_message_publish_request()->add_messages() =
         individual_publish_messages[i];
   }
@@ -1192,12 +1176,11 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
       .WillOnce(Return(ByMove(read_promise_.get_future())));
   temp_read_promise.set_value(absl::optional<PublishResponse>());
 
-  for (unsigned int i = 5; i < individual_publish_messages.size();) {
+  for (std::size_t i = 5; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
-    unsigned int orig_i = i;
-    for (;
-         i < orig_i + kBatchBoundary_ && i < individual_publish_messages.size();
-         ++i) {
+    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_,
+                          individual_publish_messages.size());
+    for (; i != end; ++i) {
       *publish_request1.mutable_message_publish_request()->add_messages() =
           individual_publish_messages[i];
     }
@@ -1208,7 +1191,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
 
   on_alarm_();
 
-  for (unsigned int i = 5; i < individual_publish_messages.size();
+  for (std::size_t i = 5; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
     PublishResponse publish_response1;
     publish_response1.mutable_message_response()
@@ -1221,7 +1204,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
     temp_read_promise.set_value(std::move(publish_response1));
   }
 
-  for (unsigned int i = 5; i != individual_publish_messages.size(); ++i) {
+  for (std::size_t i = 5; i != individual_publish_messages.size(); ++i) {
     auto individual_message_publish_response = publish_message_futures[i].get();
     EXPECT_TRUE(individual_message_publish_response);
     EXPECT_EQ(individual_message_publish_response->offset(), i);
