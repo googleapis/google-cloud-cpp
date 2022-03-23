@@ -14,7 +14,7 @@
 
 # The targets in this package are intended for testing our own libraries, and
 # are not intended for public usage.
-package(default_visibility = ["//google/cloud:__subpackages__"])
+package(default_visibility = ["//:__subpackages__"])
 
 licenses(["notice"])  # Apache 2.0
 
