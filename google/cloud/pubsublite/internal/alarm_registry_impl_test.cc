@@ -36,9 +36,6 @@ using ::testing::MockFunction;
 using ::testing::Return;
 using ::testing::StrictMock;
 
-// 10,000 seconds to ensure this test has no time dependence
-std::chrono::milliseconds constexpr kAlarmPeriod{10000 * 1000};
-
 class AlarmRegistryImplTest : public ::testing::Test {
  protected:
   AlarmRegistryImplTest()
@@ -47,22 +44,24 @@ class AlarmRegistryImplTest : public ::testing::Test {
   std::shared_ptr<StrictMock<MockCompletionQueueImpl>> cq_;
   AlarmRegistryImpl alarm_;
   StrictMock<MockFunction<void()>> fun_;
+  // 10,000 seconds to ensure this test has no time dependence
+  std::chrono::milliseconds const kAlarmPeriod_{10000 * 1000};
 };
 
 TEST_F(AlarmRegistryImplTest, TokenDestroyedBeforeRun) {
   promise<StatusOr<std::chrono::system_clock::time_point>> timer;
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer.get_future())));
-  auto token = alarm_.RegisterAlarm(kAlarmPeriod, fun_.AsStdFunction());
+  auto token = alarm_.RegisterAlarm(kAlarmPeriod_, fun_.AsStdFunction());
   token = nullptr;
   timer.set_value(std::chrono::system_clock::time_point{});
 }
 
 TEST_F(AlarmRegistryImplTest, TimerErrorBeforeRun) {
   promise<StatusOr<std::chrono::system_clock::time_point>> timer;
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer.get_future())));
-  auto token = alarm_.RegisterAlarm(kAlarmPeriod, fun_.AsStdFunction());
+  auto token = alarm_.RegisterAlarm(kAlarmPeriod_, fun_.AsStdFunction());
   timer.set_value(Status{StatusCode::kCancelled, "cancelled"});
 }
 
@@ -70,14 +69,14 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterSingleRun) {
   InSequence seq;
 
   promise<StatusOr<std::chrono::system_clock::time_point>> timer;
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer.get_future())));
-  auto token = alarm_.RegisterAlarm(kAlarmPeriod, fun_.AsStdFunction());
+  auto token = alarm_.RegisterAlarm(kAlarmPeriod_, fun_.AsStdFunction());
 
   EXPECT_CALL(fun_, Call);
 
   promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer1.get_future())));
   timer.set_value(std::chrono::system_clock::time_point{});
 
@@ -90,15 +89,16 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterFiveRuns) {
   InSequence seq;
 
   promise<StatusOr<std::chrono::system_clock::time_point>> timer;
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer.get_future())));
-  auto token = alarm_.RegisterAlarm(kAlarmPeriod, fun_.AsStdFunction());
+  auto token = alarm_.RegisterAlarm(kAlarmPeriod_, fun_.AsStdFunction());
 
   for (unsigned int i = 0; i < 5; ++i) {
     EXPECT_CALL(fun_, Call);
     auto temp_promise = std::move(timer);
     timer = promise<StatusOr<std::chrono::system_clock::time_point>>{};
-    EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+    EXPECT_CALL(*cq_,
+                MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
         .WillOnce(Return(ByMove(timer.get_future())));
     temp_promise.set_value(std::chrono::system_clock::time_point{});
   }
@@ -112,14 +112,14 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
   InSequence seq;
 
   promise<StatusOr<std::chrono::system_clock::time_point>> timer;
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer.get_future())));
-  auto token = alarm_.RegisterAlarm(kAlarmPeriod, fun_.AsStdFunction());
+  auto token = alarm_.RegisterAlarm(kAlarmPeriod_, fun_.AsStdFunction());
 
   EXPECT_CALL(fun_, Call);
 
   promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer1.get_future())));
   timer.set_value(std::chrono::system_clock::time_point{});
 
@@ -143,7 +143,7 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
 
   std::thread first{destroy_token};
 
-  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer2.get_future())));
   timer1.set_value(std::chrono::system_clock::time_point{});
 
