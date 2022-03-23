@@ -496,7 +496,7 @@ TEST(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
   EXPECT_THAT(response, Not(IsOk()));
 }
 
-TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
+TEST(RetryResumableUploadSessionTest, UploadChunkPolicyExhaustedOnStart) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
@@ -509,7 +509,7 @@ TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
                     HasSubstr("Retry policy exhausted before first attempt")));
 }
 
-TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
+TEST(RetryResumableUploadSessionTest, UploadFinalChunkPolicyExhaustedOnStart) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
@@ -522,7 +522,7 @@ TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
                     HasSubstr("Retry policy exhausted before first attempt")));
 }
 
-TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
+TEST(RetryResumableUploadSessionTest, ResetSessionPolicyExhaustedOnStart) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),

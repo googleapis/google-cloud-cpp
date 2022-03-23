@@ -88,8 +88,6 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
 
   auto writer = absl::make_unique<MockInsertStream>();
 
-  EXPECT_FALSE(session.done());
-  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, CreateUploadWriter)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
@@ -128,14 +126,10 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
   auto upload = session.UploadChunk({{payload}});
   ASSERT_STATUS_OK(upload);
   EXPECT_EQ(size, upload->committed_size.value_or(0));
-  EXPECT_EQ(size, session.next_expected_byte());
-  EXPECT_FALSE(session.done());
 
   upload = session.UploadFinalChunk({{payload}}, 2 * size, hashes);
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
-  EXPECT_EQ(2 * size, session.next_expected_byte());
-  EXPECT_TRUE(session.done());
 }
 
 TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
@@ -147,8 +141,6 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
   auto const payload = MakeRandomData(rng, 8 * 1024 * 1024L);
   auto const size = payload.size();
 
-  EXPECT_FALSE(session.done());
-  EXPECT_EQ(0, session.next_expected_byte());
   std::size_t expected_write_offset = 0;
   EXPECT_CALL(*mock, CreateUploadWriter)
       .Times(AtLeast(1))
@@ -180,14 +172,10 @@ TEST(GrpcResumableUploadSessionTest, SingleStreamForLargeChunks) {
   auto upload = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size, upload->committed_size.value_or(0));
-  EXPECT_EQ(size, session.next_expected_byte());
-  EXPECT_FALSE(session.done());
 
   upload = session.UploadFinalChunk({{payload}}, 2 * size, HashValues{});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
-  EXPECT_EQ(2 * size, session.next_expected_byte());
-  EXPECT_TRUE(session.done());
 }
 
 TEST(GrpcResumableUploadSessionTest, Reset) {
@@ -198,7 +186,6 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, CreateUploadWriter)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
@@ -227,7 +214,8 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
               EXPECT_FALSE(r.finish_write());
               return true;
             });
-        EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess(size)));
+        EXPECT_CALL(*writer, Close)
+            .WillOnce(Return(MockCloseSuccess(2 * size)));
         return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       });
 
@@ -243,18 +231,15 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
 
   upload = session.ResetSession();
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(size, session.next_expected_byte());
+  EXPECT_EQ(size, upload->committed_size.value_or(0));
 
   upload = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(2 * size, session.next_expected_byte());
+  EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
   auto decoded_session_url =
       DecodeGrpcResumableUploadSessionUrl(session.session_id());
   ASSERT_STATUS_OK(decoded_session_url);
   EXPECT_EQ("test-upload-id", decoded_session_url->upload_id);
-  StatusOr<ResumableUploadResponse> const& last_response =
-      session.last_response();
-  ASSERT_STATUS_OK(last_response);
 }
 
 TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
@@ -265,7 +250,6 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, CreateUploadWriter)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
         auto writer = absl::make_unique<MockInsertStream>();
@@ -313,21 +297,19 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
   auto upload = session.UploadFinalChunk({{payload}}, size, HashValues{});
   EXPECT_THAT(upload, StatusIs(StatusCode::kUnavailable));
 
-  session.ResetSession();
-  EXPECT_EQ(0, session.next_expected_byte());
+  auto response = session.ResetSession();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(0, response->committed_size.value_or(0));
+
   auto decoded_session_url =
       DecodeGrpcResumableUploadSessionUrl(session.session_id());
   ASSERT_STATUS_OK(decoded_session_url);
   EXPECT_EQ("test-upload-id", decoded_session_url->upload_id);
-  StatusOr<ResumableUploadResponse> const& last_response =
-      session.last_response();
-  ASSERT_STATUS_OK(last_response);
-  EXPECT_EQ(last_response.value(), resume_response);
 
   upload = session.UploadFinalChunk({{payload}}, size, HashValues{});
-  EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(size, session.next_expected_byte());
-  EXPECT_TRUE(session.done());
+  ASSERT_STATUS_OK(upload);
+  EXPECT_EQ(size, upload->committed_size.value_or(0));
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, upload->upload_state);
 }
 
 }  // namespace

@@ -26,6 +26,7 @@ namespace internal {
 
 ObjectWriteStreambuf::ObjectWriteStreambuf(
     std::unique_ptr<ResumableUploadSession> upload_session,
+    StatusOr<ResumableUploadResponse> last_response,
     std::size_t max_buffer_size, std::unique_ptr<HashFunction> hash_function,
     HashValues known_hashes, std::unique_ptr<HashValidator> hash_validator,
     AutoFinalizeConfig auto_finalize)
@@ -35,17 +36,14 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       known_hashes_(std::move(known_hashes)),
       hash_validator_(std::move(hash_validator)),
       auto_finalize_(auto_finalize),
-      last_response_(ResumableUploadResponse{
-          {}, ResumableUploadResponse::kInProgress, 0, absl::nullopt, {}}) {
+      last_response_(std::move(last_response)) {
   current_ios_buffer_.resize(max_buffer_size_);
+  if (last_response_) {
+    committed_size_ = last_response_->committed_size.value_or(0);
+  }
   auto* pbeg = current_ios_buffer_.data();
   auto* pend = pbeg + current_ios_buffer_.size();
   setp(pbeg, pend);
-  // Sessions start in a closed state for uploads that have already been
-  // finalized.
-  if (upload_session_->done()) {
-    last_response_ = upload_session_->last_response();
-  }
 }
 
 void ObjectWriteStreambuf::AutoFlushFinal() {
@@ -59,7 +57,8 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Close() {
 }
 
 bool ObjectWriteStreambuf::IsOpen() const {
-  return static_cast<bool>(upload_session_) && !upload_session_->done();
+  return last_response_ &&
+         last_response_->upload_state == ResumableUploadResponse::kInProgress;
 }
 
 bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
@@ -128,7 +127,7 @@ void ObjectWriteStreambuf::FlushFinal() {
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();
-  auto const upload_size = upload_session_->next_expected_byte() + actual_size;
+  auto const upload_size = committed_size_ + actual_size;
   hash_function_->Update(pbase(), actual_size);
 
   // After this point the session will be closed, and no more calls to the hash
@@ -180,7 +179,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   // GCS upload returns an updated range header that sets the next expected
   // byte. Check to make sure it remains consistent with the bytes stored in the
   // buffer.
-  auto expected_next_byte = upload_session_->next_expected_byte() + actual_size;
+  auto const expected_committed_size = committed_size_ + actual_size;
   last_response_ = upload_session_->UploadChunk(payload);
 
   if (last_response_) {
@@ -194,27 +193,23 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
       pbump(static_cast<int>(b.size()));
     }
 
-    // We cannot use the last committed byte in `last_response_` because when
-    // using X-Upload-Content-Length GCS returns 0 when the upload completed
-    // even if no "final chunk" is sent.  The resumable upload classes know how
-    // to deal with this mess, so let's not duplicate that code here.
-    auto actual_next_byte = upload_session_->next_expected_byte();
-    if (actual_next_byte < expected_next_byte) {
-      // TODO(#8559) - if actual_next_byte < first_buffered_byte and there is
-      //   enough space in the buffer we could save the bytes for a future
-      //   write.
+    // If the upload completed, the stream was implicitly "closed", there is
+    // no need to verify anything else.
+    if (last_response_->upload_state == ResumableUploadResponse::kDone) {
+      committed_size_ =
+          last_response_->committed_size.value_or(expected_committed_size);
+      return;
+    }
+    auto actual_committed_size = last_response_->committed_size.value_or(0);
+    if (actual_committed_size != expected_committed_size) {
       std::ostringstream error_message;
-      error_message << "Could not continue upload stream. GCS requested byte "
-                    << actual_next_byte << " which has already been uploaded.";
-      last_response_ = Status(StatusCode::kAborted, error_message.str());
-    } else if (actual_next_byte > expected_next_byte) {
-      std::ostringstream error_message;
-      error_message << "Could not continue upload stream. "
-                    << "GCS requested unexpected byte. (expected: "
-                    << expected_next_byte << ", actual: " << actual_next_byte
-                    << ")";
+      error_message << "Could not continue upload stream. GCS reports "
+                    << actual_committed_size
+                    << " as committed, but we expected "
+                    << expected_committed_size;
       last_response_ = Status(StatusCode::kAborted, error_message.str());
     }
+    committed_size_ = expected_committed_size;
   }
 
   // Upload failures are irrecoverable because the internal buffer is opaque
@@ -223,7 +218,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   // resumable_session_id can still be retrieved.
   if (!last_response_) {
     upload_session_ = absl::make_unique<ResumableUploadSessionError>(
-        last_response_.status(), next_expected_byte(), resumable_session_id());
+        last_response_.status(), resumable_session_id());
   }
 }
 

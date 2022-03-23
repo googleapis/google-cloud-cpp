@@ -40,10 +40,7 @@ class LoggingResumableUploadSession : public ResumableUploadSession {
       ConstBufferSequence const& buffers, std::uint64_t upload_size,
       HashValues const& full_object_hashes) override;
   StatusOr<ResumableUploadResponse> ResetSession() override;
-  std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
-  StatusOr<ResumableUploadResponse> const& last_response() const override;
-  bool done() const override;
 
  private:
   std::unique_ptr<ResumableUploadSession> session_;

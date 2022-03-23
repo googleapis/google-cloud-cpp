@@ -166,10 +166,8 @@ class ParallelUploadTest
     session_mocks_.emplace(std::move(session));
     using internal::ResumableUploadResponse;
 
-    EXPECT_CALL(res, done()).WillRepeatedly(Return(false));
     static std::string session_id(kIndividualSessionId);
     EXPECT_CALL(res, session_id()).WillRepeatedly(ReturnRef(session_id));
-    EXPECT_CALL(res, next_expected_byte()).WillRepeatedly(Return(0));
     EXPECT_CALL(res, UploadChunk)
         .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
             "fake-url", ResumableUploadResponse::kInProgress, 0, {}, {}})));
@@ -182,61 +180,49 @@ class ParallelUploadTest
 
   testing::MockResumableUploadSession& ExpectCreateSession(
       std::string const& object_name, int generation,
-      absl::optional<std::string> const& expected_content =
-          absl::optional<std::string>(),
-      absl::optional<std::string> const& resumable_session_id =
-          absl::optional<std::string>()) {
+      absl::optional<std::string> const& expected_content = absl::nullopt,
+      absl::optional<std::string> const& resumable_session_id = absl::nullopt,
+      absl::optional<std::uint64_t> initial_committed_size = absl::nullopt) {
     auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
     using internal::ResumableUploadResponse;
 
-    EXPECT_CALL(res, done()).WillRepeatedly(Return(false));
     static std::string session_id(kIndividualSessionId);
     EXPECT_CALL(res, session_id()).WillRepeatedly(ReturnRef(session_id));
-    EXPECT_CALL(res, next_expected_byte()).WillRepeatedly(Return(0));
-    if (expected_content) {
-      EXPECT_CALL(res, UploadFinalChunk)
-          .WillOnce([expected_content, object_name, generation](
-                        ConstBufferSequence const& content,
-                        std::uint64_t /*size*/,
-                        HashValues const& /*full_object_hashes*/) {
+    EXPECT_CALL(res, UploadFinalChunk)
+        .WillOnce([expected_content, object_name, generation](
+                      ConstBufferSequence const& content, std::uint64_t size,
+                      HashValues const& /*full_object_hashes*/) {
+          if (expected_content) {
             EXPECT_THAT(content, ElementsAre(ConstBuffer(*expected_content)));
-            return make_status_or(
-                ResumableUploadResponse{"fake-url",
-                                        ResumableUploadResponse::kDone,
-                                        0,
-                                        MockObject(object_name, generation),
-                                        {}});
-          });
-    } else {
-      EXPECT_CALL(res, UploadFinalChunk)
-          .WillOnce(Return(make_status_or(
+          }
+          return make_status_or(
               ResumableUploadResponse{"fake-url",
                                       ResumableUploadResponse::kDone,
-                                      0,
+                                      size,
                                       MockObject(object_name, generation),
-                                      {}})));
-    }
-    AddNewExpectation(object_name, resumable_session_id);
+                                      {}});
+        });
+    AddNewExpectation(object_name, resumable_session_id,
+                      std::move(initial_committed_size));
 
     return res;
   }
 
   testing::MockResumableUploadSession& ExpectCreateSessionToSuspend(
       std::string const& object_name,
-      absl::optional<std::string> const& resumable_session_id =
-          absl::optional<std::string>()) {
+      absl::optional<std::string> const& resumable_session_id = absl::nullopt,
+      absl::optional<std::uint64_t> initial_committed_size = absl::nullopt) {
     auto session = absl::make_unique<testing::MockResumableUploadSession>();
     auto& res = *session;
     session_mocks_.emplace(std::move(session));
     using internal::ResumableUploadResponse;
 
-    EXPECT_CALL(res, done()).WillRepeatedly(Return(false));
     static std::string session_id(kIndividualSessionId);
     EXPECT_CALL(res, session_id()).WillRepeatedly(ReturnRef(session_id));
-    EXPECT_CALL(res, next_expected_byte()).WillRepeatedly(Return(0));
-    AddNewExpectation(object_name, resumable_session_id);
+    AddNewExpectation(object_name, resumable_session_id,
+                      std::move(initial_committed_size));
 
     return res;
   }
@@ -248,9 +234,11 @@ class ParallelUploadTest
   void AddNewExpectation(
       std::string const& object_name,
       absl::optional<std::string> const& resumable_session_id =
-          absl::optional<std::string>()) {
+          absl::optional<std::string>(),
+      absl::optional<std::uint64_t> initial_committed_size = absl::nullopt) {
     EXPECT_CALL(*mock_, CreateResumableSession)
-        .WillOnce([this, object_name, resumable_session_id](
+        .WillOnce([this, object_name, resumable_session_id,
+                   initial_committed_size](
                       internal::ResumableUploadRequest const& request) {
           EXPECT_EQ(object_name, request.object_name());
           EXPECT_EQ(kBucketName, request.bucket_name());
@@ -263,14 +251,19 @@ class ParallelUploadTest
                       actual_resumable_session_id.value());
           }
 
-          auto res = std::move(session_mocks_.top());
+          auto mock = std::move(session_mocks_.top());
           session_mocks_.pop();
-          if (!res) {
-            return StatusOr<CreateResumableSessionResponse>(
-                std::move(res).status());
+          if (!mock.ok()) {
+            return StatusOr<internal::CreateResumableSessionResponse>(
+                std::move(mock).status());
           }
-          return make_status_or(CreateResumableSessionResponse{
-              *std::move(res), ResumableUploadResponse{}});
+          return make_status_or(internal::CreateResumableSessionResponse{
+              *std::move(mock),
+              internal::ResumableUploadResponse{
+                  "fake-url", internal::ResumableUploadResponse::kInProgress,
+                  /*.committed_size=*/std::move(initial_committed_size),
+                  /*.object_metadata=*/absl::nullopt,
+                  /*.annotations=*/std::string{}}});
         })
         .RetiresOnSaturation();
   }
@@ -1751,15 +1744,12 @@ TEST_F(ParallelUploadTest, SuspendUploadFileShards) {
 
 TEST_F(ParallelUploadTest, SuspendUploadFileResume) {
   // The expectations need to be reversed.
-  auto& session3 = ExpectCreateSession(kPrefix + ".upload_shard_2", 333, "hi",
-                                       kIndividualSessionId);
-  ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "def",
-                      kIndividualSessionId);
-  auto& session1 = ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "");
-  // last stream has one byte uploaded
-  EXPECT_CALL(session3, next_expected_byte()).WillRepeatedly(Return(1));
-  // first stream is fully uploaded
-  EXPECT_CALL(session1, next_expected_byte()).WillRepeatedly(Return(3));
+  (void)ExpectCreateSession(kPrefix + ".upload_shard_2", 333, "hi",
+                            kIndividualSessionId, /*initial_committed_size=*/1);
+  (void)ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "def",
+                            kIndividualSessionId);
+  (void)ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", absl::nullopt,
+                            /*initial_committed_size=*/3);
   nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},
@@ -1830,9 +1820,9 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
                                kIndividualSessionId);
   ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_1",
                                kIndividualSessionId);
-  auto& session1 = ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_0",
-                                                kIndividualSessionId);
-  EXPECT_CALL(session1, next_expected_byte()).WillRepeatedly(Return(7));
+  (void)ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_0",
+                                     kIndividualSessionId,
+                                     /*initial_committed_size=*/7);
   nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},

@@ -53,9 +53,9 @@ RetryResumableUploadSession::RetryResumableUploadSession(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     ResumableUploadResponse const& last_response)
     : session_(std::move(session)),
-      committed_size_(last_response.committed_size.value_or(0)),
       retry_policy_prototype_(std::move(retry_policy)),
-      backoff_policy_prototype_(std::move(backoff_policy)) {}
+      backoff_policy_prototype_(std::move(backoff_policy)),
+      committed_size_(last_response.committed_size.value_or(0)) {}
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
     ConstBufferSequence const& buffers) {
@@ -246,19 +246,8 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
   return Status(last_status.code(), std::move(os).str());
 }
 
-std::uint64_t RetryResumableUploadSession::next_expected_byte() const {
-  return session_->next_expected_byte();
-}
-
 std::string const& RetryResumableUploadSession::session_id() const {
   return session_->session_id();
-}
-
-bool RetryResumableUploadSession::done() const { return session_->done(); }
-
-StatusOr<ResumableUploadResponse> const&
-RetryResumableUploadSession::last_response() const {
-  return session_->last_response();
 }
 
 void RetryResumableUploadSession::AppendDebug(char const* action,

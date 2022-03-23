@@ -66,8 +66,6 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_FALSE(session.done());
-  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
@@ -97,14 +95,10 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   auto upload = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size, upload->committed_size.value_or(0));
-  EXPECT_EQ(size, session.next_expected_byte());
-  EXPECT_FALSE(session.done());
 
   upload = session.UploadFinalChunk({{payload}}, 2 * size, {});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
-  EXPECT_EQ(2 * size, session.next_expected_byte());
-  EXPECT_TRUE(session.done());
 }
 
 TEST(CurlResumableUploadSessionTest, Reset) {
@@ -121,7 +115,6 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
@@ -148,49 +141,15 @@ TEST(CurlResumableUploadSessionTest, Reset) {
       });
 
   auto upload = session.UploadChunk({{payload}});
-  EXPECT_EQ(size, session.next_expected_byte());
+  ASSERT_STATUS_OK(upload);
+  EXPECT_EQ(size, upload->committed_size.value_or(0));
   upload = session.UploadChunk({{payload}});
   EXPECT_THAT(upload, Not(IsOk()));
-  EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_EQ(url1, session.session_id());
 
-  session.ResetSession();
-  EXPECT_EQ(2 * size, session.next_expected_byte());
-  // Changes to the session id are ignored, they do not happen in production
-  // anyway
-  EXPECT_EQ(url1, session.session_id());
-  StatusOr<ResumableUploadResponse> const& last_response =
-      session.last_response();
-  ASSERT_STATUS_OK(last_response);
-  EXPECT_EQ(last_response.value(), resume_response);
-}
-
-TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
-  auto mock = MockCurlClient::Create();
-  std::string url1 = "https://invalid.example.com/not-used-in-mock-1";
-  std::string url2 = "https://invalid.example.com/not-used-in-mock-2";
-  ResumableUploadRequest request("test-bucket", "test-object");
-  CurlResumableUploadSession session(mock, request, url1);
-
-  std::string const payload = "test payload";
-  auto const size = payload.size();
-
-  EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, UploadChunk)
-      .WillOnce([&](UploadChunkRequest const&) {
-        return make_status_or(ResumableUploadResponse{
-            "", ResumableUploadResponse::kInProgress, size, {}, {}});
-      })
-      .WillOnce([&](UploadChunkRequest const&) {
-        return make_status_or(ResumableUploadResponse{
-            url2, ResumableUploadResponse::kInProgress, 2 * size, {}, {}});
-      });
-
-  auto upload = session.UploadChunk({{payload}});
-  EXPECT_EQ(size, session.next_expected_byte());
-  upload = session.UploadChunk({{payload}});
-  EXPECT_STATUS_OK(upload);
-  EXPECT_EQ(2 * size, session.next_expected_byte());
+  upload = session.ResetSession();
+  ASSERT_STATUS_OK(upload);
+  EXPECT_EQ(2 * size, upload->committed_size.value_or(0));
   // Changes to the session id are ignored, they do not happen in production
   // anyway
   EXPECT_EQ(url1, session.session_id());
@@ -205,8 +164,6 @@ TEST(CurlResumableUploadSessionTest, Empty) {
   std::string const payload{};
   auto const size = payload.size();
 
-  EXPECT_FALSE(session.done());
-  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
@@ -218,10 +175,9 @@ TEST(CurlResumableUploadSessionTest, Empty) {
       });
 
   auto upload = session.UploadFinalChunk({{payload}}, size, {});
-  EXPECT_STATUS_OK(upload);
+  ASSERT_STATUS_OK(upload);
   EXPECT_EQ(size, upload->committed_size.value_or(0));
-  EXPECT_EQ(size, session.next_expected_byte());
-  EXPECT_TRUE(session.done());
+  EXPECT_EQ(ResumableUploadResponse::kDone, upload->upload_state);
 }
 
 }  // namespace

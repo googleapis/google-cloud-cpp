@@ -42,6 +42,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf() = default;
 
   ObjectWriteStreambuf(std::unique_ptr<ResumableUploadSession> upload_session,
+                       StatusOr<ResumableUploadResponse> last_response,
                        std::size_t max_buffer_size,
                        std::unique_ptr<HashFunction> hash_function,
                        HashValues known_hashes,
@@ -68,9 +69,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   }
 
   /// The next expected byte, if applicable, always 0 for non-resumable uploads.
-  virtual std::uint64_t next_expected_byte() const {
-    return upload_session_->next_expected_byte();
-  }
+  virtual std::uint64_t next_expected_byte() const { return committed_size_; }
 
   virtual Status last_status() const { return last_response_.status(); }
 
@@ -119,7 +118,9 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::string computed_hash_;
   std::string received_hash_;
 
+  // TODO(coryan) - this may need to be refactored
   StatusOr<ResumableUploadResponse> last_response_;
+  std::uint64_t committed_size_ = 0;
 };
 
 }  // namespace internal

@@ -28,9 +28,10 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
   ParallelObjectWriteStreambuf(
       std::shared_ptr<ParallelUploadStateImpl> state, std::size_t stream_idx,
       std::unique_ptr<ResumableUploadSession> upload_session,
-      std::size_t max_buffer_size, ResumableUploadRequest const& request)
+      ResumableUploadResponse response, std::size_t max_buffer_size,
+      ResumableUploadRequest const& request)
       : ObjectWriteStreambuf(
-            std::move(upload_session), max_buffer_size,
+            std::move(upload_session), std::move(response), max_buffer_size,
             CreateHashFunction(request),
             internal::HashValues{
                 request.GetOption<Crc32cChecksumValue>().value_or(""),
@@ -92,7 +93,7 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
   assert(idx < streams_.size());
   lk.unlock();
   return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
-      shared_from_this(), idx, std::move(session),
+      shared_from_this(), idx, std::move(session), std::move(create->state),
       raw_client.client_options().upload_buffer_size(), request));
 }
 

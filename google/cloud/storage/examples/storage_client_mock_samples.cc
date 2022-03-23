@@ -84,9 +84,6 @@ TEST(StorageMockingSamples, MockWriteObject) {
         auto mock_result =
             absl::make_unique<gcs::testing::MockResumableUploadSession>();
         using gcs::internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock_result, next_expected_byte())
-            .WillRepeatedly(Return(0));
         EXPECT_CALL(*mock_result, UploadChunk)
             .WillRepeatedly(Return(google::cloud::make_status_or(
                 ResumableUploadResponse{"fake-url",
@@ -165,9 +162,6 @@ TEST(StorageMockingSamples, MockWriteObjectFailure) {
         auto mock_result =
             absl::make_unique<gcs::testing::MockResumableUploadSession>();
         using gcs::internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock_result, next_expected_byte())
-            .WillRepeatedly(Return(0));
         EXPECT_CALL(*mock_result, UploadChunk)
             .WillRepeatedly(Return(google::cloud::Status(
                 google::cloud::StatusCode::kInvalidArgument,

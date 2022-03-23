@@ -56,18 +56,12 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::ResetSession() {
   return result;
 }
 
-std::uint64_t CurlResumableUploadSession::next_expected_byte() const {
-  return next_expected_;
-}
-
 void CurlResumableUploadSession::Update(
     StatusOr<ResumableUploadResponse> const& result, std::size_t chunk_size) {
-  last_response_ = result;
   if (!result.ok()) {
     return;
   }
-  done_ = result->upload_state == ResumableUploadResponse::kDone;
-  if (done_) {
+  if (result->upload_state == ResumableUploadResponse::kDone) {
     // Sometimes (e.g. when the user sets the X-Upload-Content-Length header)
     // the upload completes but does *not* include a `last_committed_byte`
     // value. In this case we update the next expected byte using the chunk

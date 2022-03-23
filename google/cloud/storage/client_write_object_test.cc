@@ -58,8 +58,6 @@ TEST_F(WriteObjectTest, WriteObject) {
 
         auto mock = absl::make_unique<testing::MockResumableUploadSession>();
         using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
         EXPECT_CALL(*mock, UploadChunk)
             .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
                 "fake-url", ResumableUploadResponse::kInProgress, 0, {}, {}})));
@@ -128,8 +126,6 @@ TEST_F(WriteObjectTest, WriteObjectErrorInChunk) {
 
         auto mock = absl::make_unique<testing::MockResumableUploadSession>();
         using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
         EXPECT_CALL(*mock, UploadChunk)
             .WillOnce(Return(Status(StatusCode::kDataLoss, "ooops")));
         EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(session_id));
@@ -171,8 +167,6 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   auto create_mock = [&](internal::ResumableUploadRequest const&) {
     auto mock = absl::make_unique<testing::MockResumableUploadSession>();
     EXPECT_CALL(*mock, UploadChunk).WillRepeatedly(Return(PermanentError()));
-    EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
-    EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
     EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(empty));
 
     return make_status_or(internal::CreateResumableSessionResponse{
@@ -229,9 +223,6 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
 
         auto mock = absl::make_unique<testing::MockResumableUploadSession>();
         using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock, next_expected_byte())
-            .WillRepeatedly([&bytes_written]() { return bytes_written; });
 
         EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([expected, &bytes_written](
@@ -297,9 +288,6 @@ TEST_F(WriteObjectTest, UploadFile) {
 
         auto mock = absl::make_unique<testing::MockResumableUploadSession>();
         using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock, next_expected_byte())
-            .WillRepeatedly([&bytes_written]() { return bytes_written; });
         EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([&](internal::ConstBufferSequence const& data,
                           std::uint64_t size, internal::HashValues const&) {

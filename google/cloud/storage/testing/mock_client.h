@@ -168,11 +168,7 @@ class MockResumableUploadSession
               (override));
   MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, ResetSession, (),
               (override));
-  MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const, override));
   MOCK_METHOD(std::string const&, session_id, (), (const, override));
-  MOCK_METHOD(bool, done, (), (const, override));
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse> const&, last_response,
-              (), (const, override));
 };
 
 class MockObjectReadSource : public internal::ObjectReadSource {
@@ -200,6 +196,20 @@ Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
                       Policies&&... p) {
   return internal::ClientImplDetails::CreateClient(
       mock, std::forward<Policies>(p)...);
+}
+
+/// Simulate an initial resumable upload session response.
+inline internal::ResumableUploadResponse MockResumableUploadSessionInit() {
+  return internal::ResumableUploadResponse{
+      "", internal::ResumableUploadResponse::kInProgress, absl::nullopt,
+      absl::nullopt, std::string{}};
+}
+
+/// Simulate the final resumable upload session response.
+inline internal::ResumableUploadResponse MockResumableUploadSessionFinal() {
+  return internal::ResumableUploadResponse{
+      "", internal::ResumableUploadResponse::kDone, absl::nullopt,
+      ObjectMetadata(), std::string{}};
 }
 
 }  // namespace testing

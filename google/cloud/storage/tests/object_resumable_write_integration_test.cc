@@ -157,6 +157,61 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   }
 }
 
+TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeWithPartial) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+  auto constexpr kUploadQuantum = 256 * 1024;
+  auto const q0 = MakeRandomData(kUploadQuantum);
+  auto const q1 = MakeRandomData(2 * kUploadQuantum);
+  auto const q2 = MakeRandomData(3 * kUploadQuantum);
+
+  auto const session_id = [&]() {
+    // Start the upload, add some data, and flush it.
+    auto os =
+        client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+    EXPECT_TRUE(os.good()) << "status=" << os.last_status();
+    os.write(q0.data(), q0.size());
+    os.flush();
+    EXPECT_STATUS_OK(os.last_status());
+    auto id = os.resumable_session_id();
+    std::move(os).Suspend();
+    return id;
+  }();
+
+  auto expected_committed_size = static_cast<std::uint64_t>(q0.size());
+  for (auto const& data : {q1, q2}) {
+    auto os = client->WriteObject(bucket_name_, object_name,
+                                  RestoreResumableUploadSession(session_id));
+    ASSERT_TRUE(os.good()) << "status=" << os.last_status();
+    EXPECT_EQ(os.resumable_session_id(), session_id);
+    EXPECT_EQ(os.next_expected_byte(), expected_committed_size);
+    os.write(data.data(), data.size());
+    os.flush();
+    EXPECT_STATUS_OK(os.last_status());
+    expected_committed_size += data.size();
+    std::move(os).Suspend();
+  }
+
+  auto os = client->WriteObject(bucket_name_, object_name,
+                                RestoreResumableUploadSession(session_id));
+  ASSERT_TRUE(os.good()) << "status=" << os.last_status();
+  EXPECT_EQ(os.resumable_session_id(), session_id);
+  EXPECT_EQ(os.next_expected_byte(), expected_committed_size);
+  os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+  auto meta = os.metadata().value();
+  ScheduleForDelete(meta);
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name_, meta.bucket());
+
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(stream.status());
+  auto const actual = std::string{std::istreambuf_iterator<char>{stream}, {}};
+  EXPECT_EQ(q0 + q1 + q2, actual);
+}
+
 TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

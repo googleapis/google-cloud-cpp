@@ -56,10 +56,7 @@ class RetryResumableUploadSession : public ResumableUploadSession {
       ConstBufferSequence const& buffers, std::uint64_t upload_size,
       HashValues const& full_object_hashes) override;
   StatusOr<ResumableUploadResponse> ResetSession() override;
-  std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
-  bool done() const override;
-  StatusOr<ResumableUploadResponse> const& last_response() const override;
 
  private:
   using UploadChunkFunction =
@@ -84,9 +81,9 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   };
 
   std::unique_ptr<ResumableUploadSession> session_;
-  std::uint64_t committed_size_ = 0;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::uint64_t committed_size_ = 0;
   std::mutex mu_;
   std::deque<DebugEntry> debug_;
 };

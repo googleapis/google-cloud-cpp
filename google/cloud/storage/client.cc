@@ -88,13 +88,15 @@ ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
   auto create = raw_client_->CreateResumableSession(request);
   if (!create) {
-    auto error = absl::make_unique<internal::ResumableUploadSessionError>(
-        std::move(create).status());
+    auto status = std::move(create).status();
+    auto error =
+        absl::make_unique<internal::ResumableUploadSessionError>(status);
 
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
-            std::move(error), 0, internal::CreateNullHashFunction(),
-            internal::HashValues{}, internal::CreateNullHashValidator(),
+            std::move(error), std::move(status), 0,
+            internal::CreateNullHashFunction(), internal::HashValues{},
+            internal::CreateNullHashValidator(),
             AutoFinalizeConfig::kDisabled));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
@@ -103,7 +105,7 @@ ObjectWriteStream Client::WriteObjectImpl(
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
       raw_client_->client_options().upload_buffer_size());
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
-      std::move(create->session), buffer_size,
+      std::move(create->session), std::move(create->state), buffer_size,
       internal::CreateHashFunction(request),
       internal::HashValues{
           request.GetOption<Crc32cChecksumValue>().value_or(""),

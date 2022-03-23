@@ -55,6 +55,16 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.40.0 - TBD
 
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+**BREAKING CHANGES**
+
+* While the interface and behavior for `storage::Client::WriteObject()` remains
+  stable, its implementation has changed. Normally implementation details are
+  not breaking changes, but any application mocking the storage library
+  necessarily depends on these implementation details. We updated the
+  [mocking examples][storage-mocking-link] to guide you in changing any tests.
+
 ## v1.39.0 - 2022-04
 
 **BREAKING CHANGES**
