@@ -149,22 +149,19 @@ TEST(AlarmRegistryImpl, TokenDestroyedDuringSecondRun) {
   EXPECT_TRUE(flag);
 
   promise<void> in_alarm_function;
-  promise<void> about_to_destroy;
-  auto destroy_token = [&in_alarm_function, &about_to_destroy, &token]() {
+  auto destroy_token = [&in_alarm_function, &token]() {
     // guarantee that alarm function is being invoked
     in_alarm_function.get_future().get();
-    about_to_destroy.set_value();
     token = nullptr;
   };
 
-  EXPECT_CALL(fun, Call).WillOnce(
-      [&in_alarm_function, &about_to_destroy, &flag]() {
-        in_alarm_function.set_value();
-        // introduce some blocking in this thread to give the other thread a
-        // better chance to acquire lock first
-        about_to_destroy.get_future().get();
-        flag = !flag;
-      });
+  EXPECT_CALL(fun, Call).WillOnce([&in_alarm_function, &flag]() {
+    in_alarm_function.set_value();
+    // introduce some blocking in this thread to give the other thread a
+    // better chance to acquire lock first
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    flag = !flag;
+  });
 
   temp_promise = std::move(timer);
   timer = promise<StatusOr<std::chrono::system_clock::time_point>>{};
