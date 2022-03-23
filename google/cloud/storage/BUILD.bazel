@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#3701) Change this visibility to "//:__subpackages__" so that users are
-# required to use the top-level BUILD file rather than reaching down into this
-# one.
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -35,6 +32,10 @@ cc_library(
         "//conditions:default": [],
     }),
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [
         ":google_cloud_cpp_storage",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -60,8 +61,8 @@ cc_library(
         "//conditions:default": [],
     }),
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/storage:__subpackages__",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -88,6 +89,7 @@ cc_library(
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
+    visibility = ["//visibility:public"],
     deps = [
         ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_grpc",
