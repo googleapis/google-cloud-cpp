@@ -29,8 +29,8 @@ load(":pubsub_client_integration_tests.bzl", "pubsub_client_integration_tests")
         "//:common",
         "//:pubsub",
         "//google/cloud/pubsub:pubsub_client_testing_private",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_integration_tests]

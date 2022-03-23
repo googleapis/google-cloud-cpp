@@ -56,7 +56,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_spanner",
         "//:common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -74,7 +74,7 @@ cc_library(
         ":google_cloud_cpp_spanner",
         ":google_cloud_cpp_spanner_mocks",
         "//:common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -101,8 +101,8 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
         ":google_cloud_cpp_spanner_mocks",
         ":spanner_client_testing",
         "//:common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/numeric:int128",
         "@com_google_googletest//:gtest_main",

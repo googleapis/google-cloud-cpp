@@ -26,7 +26,7 @@ cc_library(
         "//:bigtable",
         "//:common",
         "//google/cloud/bigtable:bigtable_client_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 )
 
@@ -59,7 +59,7 @@ load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
         ":bigtable_benchmark_common",
         "//:bigtable",
         "//:common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_benchmarks_unit_tests]

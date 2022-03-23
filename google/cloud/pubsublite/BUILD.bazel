@@ -69,8 +69,8 @@ load(":pubsublite_unit_tests.bzl", "pubsublite_unit_tests")
             ":google_cloud_cpp_pubsublite_mocks",
             ":pubsublite_testing",
             "//:common",
-            "//google/cloud/testing_util:google_cloud_cpp_testing",
-            "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+            "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+            "//google/cloud/testing_util:google_cloud_cpp_testing_private",
             "@com_google_googletest//:gtest_main",
         ],
     )

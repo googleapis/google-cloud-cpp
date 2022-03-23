@@ -30,7 +30,7 @@ load(":iam_client_samples.bzl", "iam_client_samples")
     deps = [
         "//:common",
         "//:iam",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in iam_client_samples]
@@ -44,7 +44,7 @@ load(":iam_client_mock_samples.bzl", "iam_client_mock_samples")
         "//:common",
         "//:iam",
         "//:iam_mocks",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in iam_client_mock_samples]
