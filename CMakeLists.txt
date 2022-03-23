@@ -28,17 +28,20 @@ project(
     VERSION 1.39.0
     LANGUAGES CXX C)
 
-# Allow applications to override the CMAKE_CXX_STANDARD, but if not set use 11.
-if (NOT CMAKE_CXX_STANDARD)
+if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
+    # AppleClang defaults to C++98, so we bump it to C++11.
+    message(
+        WARNING
+            "CMAKE_CXX_STANDARD was undefined, defaulting to C++11."
+            "To select the desired standard use something like the following:"
+            "\n"
+            "    cmake -DCMAKE_CXX_STANDARD=17 ..."
+            "\n"
+            "For more details, see "
+            "https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html"
+    )
     set(CMAKE_CXX_STANDARD 11)
 endif ()
-if (CMAKE_CXX_STANDARD VERSION_LESS 11)
-    message(
-        FATAL_ERROR
-            "CMAKE_CXX_STANDARD must be >= 11, was ${CMAKE_CXX_STANDARD}")
-endif ()
-
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)

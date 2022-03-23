@@ -28,15 +28,15 @@ void LoggingResultSetReader::TryCancel() {
   GCP_LOG(DEBUG) << __func__ << "() >> (void)";
 }
 
-absl::optional<google::spanner::v1::PartialResultSet>
-LoggingResultSetReader::Read() {
+absl::optional<PartialResultSet> LoggingResultSetReader::Read() {
   GCP_LOG(DEBUG) << __func__ << "() << (void)";
   auto result = impl_->Read();
   if (!result) {
     GCP_LOG(DEBUG) << __func__ << "() >> (optional-with-no-value)";
   } else {
     GCP_LOG(DEBUG) << __func__ << "() >> "
-                   << DebugString(*result, tracing_options_);
+                   << (result->resumption ? "resumption " : "")
+                   << DebugString(result->result, tracing_options_);
   }
   return result;
 }

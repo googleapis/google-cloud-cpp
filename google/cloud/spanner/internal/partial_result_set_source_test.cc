@@ -80,7 +80,12 @@ std::function<T()> ResultMock(T const& result) {
   };
 }
 
-using ReadResult = absl::optional<spanner_proto::PartialResultSet>;
+absl::optional<PartialResultSet> ReadResult(
+    spanner_proto::PartialResultSet response) {
+  return PartialResultSet{std::move(response), false};
+}
+
+absl::optional<PartialResultSet> ReadResult() { return {}; }
 
 MATCHER_P(IsValidAndEquals, expected,
           "Verifies that a StatusOr<Row> contains the given Row") {
@@ -90,8 +95,7 @@ MATCHER_P(IsValidAndEquals, expected,
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kInvalidArgument, "invalid")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
@@ -121,8 +125,8 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response)))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kCancelled, "cancelled")));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
@@ -140,8 +144,8 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
 /// @test Verify the behavior when the first response does not contain metadata.
 TEST(PartialResultSetSourceTest, MissingMetadata) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(spanner_proto::PartialResultSet()));
+  spanner_proto::PartialResultSet response;
+  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult(response)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
@@ -162,8 +166,8 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response)))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -184,7 +188,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
     values: { string_value: "10" })pb";
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock<ReadResult>(response));
+  EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult(response)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
@@ -239,8 +243,8 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response)))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -359,12 +363,12 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]))
-      .WillOnce(ResultMock<ReadResult>(response[2]))
-      .WillOnce(ResultMock<ReadResult>(response[3]))
-      .WillOnce(ResultMock<ReadResult>(response[4]))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult(response[2])))
+      .WillOnce(ResultMock(ReadResult(response[3])))
+      .WillOnce(ResultMock(ReadResult(response[4])))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -418,10 +422,10 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]))
-      .WillOnce(ResultMock<ReadResult>(response[2]))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult(response[2])))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -481,12 +485,12 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]))
-      .WillOnce(ResultMock<ReadResult>(response[2]))
-      .WillOnce(ResultMock<ReadResult>(response[3]))
-      .WillOnce(ResultMock<ReadResult>(response[4]))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult(response[2])))
+      .WillOnce(ResultMock(ReadResult(response[3])))
+      .WillOnce(ResultMock(ReadResult(response[4])))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -533,8 +537,8 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
@@ -577,8 +581,8 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
@@ -621,9 +625,9 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 
@@ -668,9 +672,9 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]))
-      .WillOnce(ResultMock<ReadResult>(response[2]));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult(response[2])));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
@@ -740,12 +744,12 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
   EXPECT_CALL(*grpc_reader, Read())
-      .WillOnce(ResultMock<ReadResult>(response[0]))
-      .WillOnce(ResultMock<ReadResult>(response[1]))
-      .WillOnce(ResultMock<ReadResult>(response[2]))
-      .WillOnce(ResultMock<ReadResult>(response[3]))
-      .WillOnce(ResultMock<ReadResult>(response[4]))
-      .WillOnce(ResultMock<ReadResult>(absl::nullopt));
+      .WillOnce(ResultMock(ReadResult(response[0])))
+      .WillOnce(ResultMock(ReadResult(response[1])))
+      .WillOnce(ResultMock(ReadResult(response[2])))
+      .WillOnce(ResultMock(ReadResult(response[3])))
+      .WillOnce(ResultMock(ReadResult(response[4])))
+      .WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).Times(0);
 

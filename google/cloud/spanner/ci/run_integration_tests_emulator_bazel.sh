@@ -36,7 +36,7 @@ bazel_test_args=("$@")
 # otherwise. Use a fixed port so Bazel can cache the test results.
 pushd "${HOME}" >/dev/null
 spanner_emulator::start 8787
-popd
+popd >/dev/null
 trap spanner_emulator::kill EXIT
 
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \

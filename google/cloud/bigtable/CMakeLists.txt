@@ -265,6 +265,8 @@ if (BUILD_TESTING)
                google-cloud-cpp::bigtable_protos
                google-cloud-cpp::common
                google-cloud-cpp::grpc_utils
+               google_cloud_cpp_testing
+               google_cloud_cpp_testing_grpc
                GTest::gmock_main
                GTest::gmock
                GTest::gtest

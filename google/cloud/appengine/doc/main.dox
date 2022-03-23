@@ -38,6 +38,30 @@ which should give you a taste of the App Engine Admin API C++ client library API
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_APPLICATIONS_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `ApplicationsConnection`.
+
+- `GOOGLE_CLOUD_CPP_AUTHORIZED_CERTIFICATES_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `AuthorizedCertificatesConnection`.
+
+- `GOOGLE_CLOUD_CPP_AUTHORIZED_DOMAINS_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `AuthorizedDomainsConnection`.
+
+- `GOOGLE_CLOUD_CPP_DOMAIN_MAPPINGS_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `DomainMappingsConnection`.
+
+- `GOOGLE_CLOUD_CPP_FIREWALL_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `FirewallConnection`.
+
+- `GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `InstancesConnection`.
+
+- `GOOGLE_CLOUD_CPP_SERVICES_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `ServicesConnection`.
+
+- `GOOGLE_CLOUD_CPP_VERSIONS_ENDPOINT=...` changes the default endpoint
+  (appengine.googleapis.com) used by `VersionsConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

@@ -483,10 +483,10 @@ class GoldenThingAdminClient {
   ///  `projects/<project>/instances/<instance>/backups/<backup_id>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L110}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L109}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
@@ -505,13 +505,13 @@ class GoldenThingAdminClient {
   /// There can be only one pending backup creation per database. Backup creation
   /// of different databases can run concurrently.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L110}
+  /// @param request @googleapis_link{google::test::admin::database::v1::CreateBackupRequest,generator/integration_tests/backup.proto#L109}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L110}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L109}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request, Options opts = {});
@@ -524,10 +524,10 @@ class GoldenThingAdminClient {
   ///  `projects/<project>/instances/<instance>/backups/<backup>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L177}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L176}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(std::string const& name, Options opts = {});
@@ -535,13 +535,13 @@ class GoldenThingAdminClient {
   ///
   /// Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L177}
+  /// @param request @googleapis_link{google::test::admin::database::v1::GetBackupRequest,generator/integration_tests/backup.proto#L176}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L177}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L176}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(google::test::admin::database::v1::GetBackupRequest const& request, Options opts = {});
@@ -560,10 +560,10 @@ class GoldenThingAdminClient {
   ///  by clients that do not know about them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L161}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L160}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -571,13 +571,13 @@ class GoldenThingAdminClient {
   ///
   /// Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L161}
+  /// @param request @googleapis_link{google::test::admin::database::v1::UpdateBackupRequest,generator/integration_tests/backup.proto#L160}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L161}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L160}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request, Options opts = {});
@@ -591,7 +591,7 @@ class GoldenThingAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
-  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L190}
+  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L189}
   ///
   Status
   DeleteBackup(std::string const& name, Options opts = {});
@@ -599,11 +599,11 @@ class GoldenThingAdminClient {
   ///
   /// Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L190}
+  /// @param request @googleapis_link{google::test::admin::database::v1::DeleteBackupRequest,generator/integration_tests/backup.proto#L189}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
-  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L190}
+  /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L189}
   ///
   Status
   DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request, Options opts = {});
@@ -617,10 +617,10 @@ class GoldenThingAdminClient {
   ///  form `projects/<project>/instances/<instance>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L203}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L202}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(std::string const& parent, Options opts = {});
@@ -630,13 +630,13 @@ class GoldenThingAdminClient {
   /// Backups returned are ordered by `create_time` in descending order,
   /// starting from the most recent `create_time`.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L203}
+  /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupsRequest,generator/integration_tests/backup.proto#L202}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L36}
+  /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L203}
-  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L36}
+  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L202}
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   ///
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(google::test::admin::database::v1::ListBackupsRequest request, Options opts = {});
@@ -772,7 +772,7 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L274}
+  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L273}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation>
@@ -790,12 +790,12 @@ class GoldenThingAdminClient {
   /// `operation.metadata.value.progress.start_time` in descending order starting
   /// from the most recently started operation.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupOperationsRequest,generator/integration_tests/backup.proto#L274}
+  /// @param request @googleapis_link{google::test::admin::database::v1::ListBackupOperationsRequest,generator/integration_tests/backup.proto#L273}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L274}
+  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L273}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   StreamRange<google::longrunning::Operation>

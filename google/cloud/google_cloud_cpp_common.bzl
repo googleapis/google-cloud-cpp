@@ -48,6 +48,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/filesystem.h",
     "internal/format_time_point.h",
     "internal/future_base.h",
+    "internal/future_coroutines.h",
     "internal/future_fwd.h",
     "internal/future_impl.h",
     "internal/future_then_impl.h",

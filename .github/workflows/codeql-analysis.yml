@@ -34,7 +34,7 @@ jobs:
           git -C build/vcpkg checkout -q $(<ci/etc/vcpkg-commit.txt)
       - name: cache-vcpkg
         id: cache-vcpkg
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.cache/vcpkg

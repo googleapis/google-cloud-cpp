@@ -74,6 +74,10 @@ class DatabaseAdminConnectionIdempotencyPolicy {
       google::spanner::admin::database::v1::CreateBackupRequest const&
           request) = 0;
 
+  virtual google::cloud::Idempotency CopyBackup(
+      google::spanner::admin::database::v1::CopyBackupRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const&
           request) = 0;

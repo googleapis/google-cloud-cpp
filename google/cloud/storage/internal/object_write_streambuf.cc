@@ -180,7 +180,6 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   // GCS upload returns an updated range header that sets the next expected
   // byte. Check to make sure it remains consistent with the bytes stored in the
   // buffer.
-  auto first_buffered_byte = upload_session_->next_expected_byte();
   auto expected_next_byte = upload_session_->next_expected_byte() + actual_size;
   last_response_ = upload_session_->UploadChunk(payload);
 
@@ -200,8 +199,10 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
     // even if no "final chunk" is sent.  The resumable upload classes know how
     // to deal with this mess, so let's not duplicate that code here.
     auto actual_next_byte = upload_session_->next_expected_byte();
-    if (actual_next_byte < expected_next_byte &&
-        actual_next_byte < first_buffered_byte) {
+    if (actual_next_byte < expected_next_byte) {
+      // TODO(#8559) - if actual_next_byte < first_buffered_byte and there is
+      //   enough space in the buffer we could save the bytes for a future
+      //   write.
       std::ostringstream error_message;
       error_message << "Could not continue upload stream. GCS requested byte "
                     << actual_next_byte << " which has already been uploaded.";

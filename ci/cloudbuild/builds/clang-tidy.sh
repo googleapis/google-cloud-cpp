@@ -26,9 +26,12 @@ export CTCACHE_DIR=~/.cache/ctcache
 mapfile -t cmake_args < <(cmake::common_args)
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
+# Note: we use C++11 for this build because we don't want tidy suggestions that
+# require a newer C++ standard.
 cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
-  -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON \
+  -DCMAKE_CXX_STANDARD=11 \
+  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable;bigquery;generator;iam;logging;pubsub;pubsublite;spanner;storage" \
   -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON
 cmake --build cmake-out
 
@@ -36,6 +39,13 @@ mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test
 
 integration::ctest_with_emulators "cmake-out"
+
+if [[ "${TRIGGER_TYPE}" != "manual" ]]; then
+  # This build should fail if any of the above work generated
+  # code differences (for example, by updating .bzl files).
+  io::log_h2 "Highlight generated code differences"
+  git diff --exit-code
+fi
 
 if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
   io::log_h2 "ctcache stats"

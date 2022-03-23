@@ -90,6 +90,12 @@ class MockDatabaseAdminConnection
               (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+      CopyBackup,
+      (google::spanner::admin::database::v1::CopyBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
       (google::spanner::admin::database::v1::GetBackupRequest const& request),
       (override));

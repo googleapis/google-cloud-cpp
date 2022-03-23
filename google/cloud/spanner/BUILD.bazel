@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#3701) Change this visibility to "//:__subpackages__" so that users are
-# required to use the top-level BUILD file rather than reaching down into this
-# one.
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -26,8 +23,8 @@ cc_library(
     srcs = google_cloud_cpp_spanner_srcs,
     hdrs = google_cloud_cpp_spanner_hdrs,
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/spanner:__subpackages__",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -51,8 +48,8 @@ cc_library(
     srcs = google_cloud_cpp_spanner_mocks_srcs,
     hdrs = google_cloud_cpp_spanner_mocks_hdrs,
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/spanner:__subpackages__",
     ],
     deps = [
         ":google_cloud_cpp_spanner",
@@ -65,9 +62,12 @@ cc_library(
 load(":spanner_client_testing.bzl", "spanner_client_testing_hdrs", "spanner_client_testing_srcs")
 
 cc_library(
-    name = "spanner_client_testing",
+    name = "spanner_client_testing_private",
     srcs = spanner_client_testing_srcs,
     hdrs = spanner_client_testing_hdrs,
+    visibility = [
+        ":__subpackages__",
+    ],
     deps = [
         ":google_cloud_cpp_spanner",
         ":google_cloud_cpp_spanner_mocks",
@@ -75,6 +75,18 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
+)
+
+# TODO(#3701): Delete this target after 2023-04-01.
+cc_library(
+    name = "spanner_client_testing",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. More
+    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":spanner_client_testing_private"],
 )
 
 load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")

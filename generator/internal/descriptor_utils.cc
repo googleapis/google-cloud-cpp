@@ -254,7 +254,7 @@ void SetResourceRoutingMethodVars(
     method_vars["method_request_param_key"] = param;
     std::vector<std::string> chunks;
     auto const* input_type = method.input_type();
-    for (auto const sv : absl::StrSplit(param, '.')) {
+    for (auto const& sv : absl::StrSplit(param, '.')) {
       auto const chunk = std::string(sv);
       auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
       chunks.push_back(FieldName(chunk_descriptor));

@@ -18,27 +18,6 @@ licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
-config_setting(
-    name = "windows",
-    deprecation = "This config setting is deprecated, to be retired on 2022-03-15. See #... for details.",
-    values = {"cpu": "x64_windows"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "linux_x86_64",
-    deprecation = "This config setting is deprecated, to be retired on 2022-03-15. See #... for details.",
-    values = {"cpu": "k8"},
-    visibility = ["//visibility:public"],
-)
-
-config_setting(
-    name = "macos",
-    deprecation = "This config setting is deprecated, to be retired on 2022-03-15. See #... for details.",
-    values = {"cpu": "darwin"},
-    visibility = ["//visibility:public"],
-)
-
 cc_library(
     name = "google_cloud_cpp_testing",
     srcs = google_cloud_cpp_testing_srcs,

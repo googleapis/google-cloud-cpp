@@ -62,7 +62,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 
 steps:
   # Builds the docker image that will be used by the main build step.
-- name: 'gcr.io/kaniko-project/executor:v1.6.0-debug'
+- name: 'gcr.io/kaniko-project/executor:v1.8.0-debug'
   args: [
     '--log-format=text',
     '--context=dir:///workspace/ci',
@@ -70,6 +70,7 @@ steps:
     '--cache=true',
     '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
     '--push-retry=3',
+    '--image-fs-extract-retry=3'
   ]
 
   # Pull the docker image. The step running 'ci/cloud/build.sh' would do this

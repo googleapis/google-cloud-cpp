@@ -31,7 +31,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct InstanceAdminRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
-           status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kUnavailable;
   }
 };

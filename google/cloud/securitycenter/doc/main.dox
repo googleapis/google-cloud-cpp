@@ -38,6 +38,9 @@ which should give you a taste of the Security Command Center API C++ client libr
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_SECURITY_CENTER_ENDPOINT=...` changes the default endpoint
+  (securitycenter.googleapis.com) used by `SecurityCenterConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,

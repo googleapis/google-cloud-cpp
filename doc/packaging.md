@@ -259,7 +259,7 @@ Finally we build gRPC from source also:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -382,7 +382,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -521,7 +521,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -676,7 +676,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -845,7 +845,7 @@ Finally we build gRPC from source also:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -983,7 +983,7 @@ Finally we build gRPC from source also:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1117,7 +1117,7 @@ Protobuf we just installed in `/usr/local`:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1289,7 +1289,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1481,7 +1481,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.45.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1558,3 +1558,44 @@ cmake --build cmake-out --target install
 ```
 
 </details>
+<details>
+<summary>macOS</summary>
+<br>
+
+First install Xcode to get all the needed development tools. These instructions
+also use [Homebrew](https://brew.sh/) to install the needed third-party
+dependencies.
+
+If you don't already have Xcode installed:
+```bash
+xcode-select --install
+```
+
+Follow the instructions at https://brew.sh to install Homebrew. Then install
+the needed dependencies:
+
+```bash
+# Some additional build tools
+brew install cmake ninja
+# Installs google-cloud-cpp's needed deps
+brew install abseil protobuf grpc nlohmann-json crc32c openssl@1.1
+```
+
+Now configure, build, and install the `google-cloud-cpp` libraries that you need.
+In this example, we install the [storage][storage-link] and
+[spanner][spanner-link] libraries.
+```bash
+cmake -S . -B cmake-out \
+  -GNinja \
+  -DGOOGLE_CLOUD_CPP_ENABLE="storage;spanner" \
+  -DCMAKE_CXX_STANDARD=11 \
+  -DCMAKE_BUILD_TYPE=release \
+  -DBUILD_TESTING=OFF \
+  -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@1.1)" \
+  -DCMAKE_INSTALL_PREFIX=/tmp/test-install
+cmake --build cmake-out
+cmake --build cmake-out --target install
+```
+
+[storage-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage#readme
+[spanner-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner#readme

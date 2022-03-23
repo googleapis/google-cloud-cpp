@@ -39,6 +39,21 @@ which should give you a taste of the Cloud Talent Solution C++ client library AP
 
 ## Environment Variables
 
+- `GOOGLE_CLOUD_CPP_COMPANY_SERVICE_ENDPOINT=...` changes the default endpoint
+  (jobs.googleapis.com) used by `CompanyServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_COMPLETION_ENDPOINT=...` changes the default endpoint
+  (jobs.googleapis.com) used by `CompletionConnection`.
+
+- `GOOGLE_CLOUD_CPP_EVENT_SERVICE_ENDPOINT=...` changes the default endpoint
+  (jobs.googleapis.com) used by `EventServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_JOB_SERVICE_ENDPOINT=...` changes the default endpoint
+  (jobs.googleapis.com) used by `JobServiceConnection`.
+
+- `GOOGLE_CLOUD_CPP_TENANT_SERVICE_ENDPOINT=...` changes the default endpoint
+  (jobs.googleapis.com) used by `TenantServiceConnection`.
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,
