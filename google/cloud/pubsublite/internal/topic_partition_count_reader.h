@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TopicPartitionCountReader {
  public:
-  virtual future<std::int64_t> Read(google::cloud::pubsublite::TopicPath) = 0;
+  virtual future<std::uint64_t> Read(google::cloud::pubsublite::TopicPath) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
