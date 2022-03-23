@@ -125,12 +125,6 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
 
   promise<void> in_alarm_function;
   promise<void> destroy_finished;
-  auto destroy_token = [&in_alarm_function, &destroy_finished, &token]() {
-    // guarantee that alarm function is being invoked
-    in_alarm_function.get_future().get();
-    token = nullptr;
-    destroy_finished.set_value();
-  };
 
   EXPECT_CALL(fun_, Call).WillOnce([&in_alarm_function, &destroy_finished]() {
     in_alarm_function.set_value();
@@ -141,7 +135,12 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
 
   promise<StatusOr<std::chrono::system_clock::time_point>> timer2;
 
-  std::thread first{destroy_token};
+  std::thread first{[&in_alarm_function, &destroy_finished, &token]() {
+    // guarantee that alarm function is being invoked
+    in_alarm_function.get_future().get();
+    token = nullptr;
+    destroy_finished.set_value();
+  }};
 
   EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod_)))
       .WillOnce(Return(ByMove(timer2.get_future())));
