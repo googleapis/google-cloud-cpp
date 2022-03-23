@@ -63,6 +63,9 @@ cc_library(
     name = "bigtable_client_testing_private",
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
+    visibility = [
+        ":__subpackages__",
+    ],
     deps = [
         ":bigtable_client_internal",
         ":google_cloud_cpp_bigtable_mocks",
