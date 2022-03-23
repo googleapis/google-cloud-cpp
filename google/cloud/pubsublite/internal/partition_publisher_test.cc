@@ -927,7 +927,7 @@ TEST_F(InitializedPartitionPublisherTest,
   initializer_(std::move(underlying_stream));
 
   std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i != 11; ++i) {
+  for (unsigned int i = 0; i != 2 * kBatchBoundary_ + 1; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -935,7 +935,7 @@ TEST_F(InitializedPartitionPublisherTest,
   }
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
-  for (unsigned int i = 0; i != 10; ++i) {
+  for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
     publish_message_futures.push_back(
         publisher_->Publish(individual_publish_messages[i]));
   }
@@ -974,9 +974,8 @@ TEST_F(InitializedPartitionPublisherTest,
 
   for (unsigned int i = 0; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
-    unsigned int orig_i = i;
-    for (;
-         i < orig_i + kBatchBoundary_ && i < individual_publish_messages.size();
+    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_, individual_publish_messages.size());
+    for (; i != end;
          ++i) {
       *publish_request1.mutable_message_publish_request()->add_messages() =
           individual_publish_messages[i];
@@ -1021,7 +1020,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
   initializer_(std::move(underlying_stream));
 
   std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i != 11; ++i) {
+  for (unsigned int i = 0; i != 2 * kBatchBoundary_ + 1; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -1029,7 +1028,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
   }
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
-  for (unsigned int i = 0; i != 10; ++i) {
+  for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
     publish_message_futures.push_back(
         publisher_->Publish(individual_publish_messages[i]));
   }
@@ -1076,9 +1075,9 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
 
   for (unsigned int i = 0; i < individual_publish_messages.size();) {
     PublishRequest publish_request1;
-    unsigned int orig_i = i;
+    auto end = (std::min)(static_cast<std::size_t>(i) + kBatchBoundary_, individual_publish_messages.size());
     for (;
-         i < orig_i + kBatchBoundary_ && i < individual_publish_messages.size();
+         i != end;
          ++i) {
       *publish_request1.mutable_message_publish_request()->add_messages() =
           individual_publish_messages[i];
@@ -1123,7 +1122,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
   initializer_(std::move(underlying_stream));
 
   std::vector<PubSubMessage> individual_publish_messages;
-  for (unsigned int i = 0; i != 11; ++i) {
+  for (unsigned int i = 0; i != 2 * kBatchBoundary_ + 1; ++i) {
     PubSubMessage message;
     *message.mutable_key() = "key";
     *message.mutable_data() = std::to_string(i);
@@ -1131,7 +1130,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
   }
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
-  for (unsigned int i = 0; i != 10; ++i) {
+  for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
     publish_message_futures.push_back(
         publisher_->Publish(individual_publish_messages[i]));
   }
