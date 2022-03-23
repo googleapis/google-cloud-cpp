@@ -37,7 +37,8 @@ class AlarmRegistryImpl : public AlarmRegistry {
 
  private:
   struct AlarmState {
-    AlarmState(CompletionQueue completion_queue, std::chrono::milliseconds period,
+    AlarmState(CompletionQueue completion_queue,
+               std::chrono::milliseconds period,
                std::function<void()> alarm_func)
         : cq{std::move(completion_queue)},
           period{period},
@@ -46,14 +47,8 @@ class AlarmRegistryImpl : public AlarmRegistry {
     std::chrono::milliseconds const period;
     std::mutex mu;
     std::function<void()> on_alarm;  // ABSL_GUARDED_BY(mu)
-    bool shutdown = false;                   // ABSL_GUARDED_BY(mu)
+    bool shutdown = false;           // ABSL_GUARDED_BY(mu)
   };
-
-  // static with arguments rather than member variables, so parameters aren't
-  // bound to object lifetime
-  static void ScheduleAlarm(std::shared_ptr<AlarmState> const& state);
-
-  google::cloud::CompletionQueue const cq_;
 
   // When CancelToken is destroyed, the alarm will not be running and will never
   // run again.
@@ -66,6 +61,12 @@ class AlarmRegistryImpl : public AlarmRegistry {
    private:
     std::shared_ptr<AlarmState> state_;
   };
+
+  // static with arguments rather than member variables, so parameters aren't
+  // bound to object lifetime
+  static void ScheduleAlarm(std::shared_ptr<AlarmState> const& state);
+
+  google::cloud::CompletionQueue const cq_;
 };
 
 }  // namespace pubsublite_internal

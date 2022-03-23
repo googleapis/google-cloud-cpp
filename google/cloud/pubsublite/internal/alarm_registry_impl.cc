@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/version.h"
 #include "absl/memory/memory.h"
@@ -29,17 +28,12 @@ AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
 
 void AlarmRegistryImpl::ScheduleAlarm(
     std::shared_ptr<AlarmState> const& state) {
-  {
-    std::lock_guard<std::mutex> g{state->mu};
-    if (state->shutdown) return;
-  }
   state->cq.MakeRelativeTimer(state->period)
       .then([state](future<StatusOr<std::chrono::system_clock::time_point>> f) {
         auto status = f.get();
         if (!status.ok()) {
-          GCP_LOG(INFO) << absl::StrCat(
-              "`MakeRelativeTimer` returned a non-ok `StatusOr`:",
-              status.status().message());
+          GCP_LOG(INFO) << "`MakeRelativeTimer` returned a non-ok status: "
+                        << status.status();
           return;
         }
         {
@@ -47,7 +41,7 @@ void AlarmRegistryImpl::ScheduleAlarm(
           if (state->shutdown) return;
           state->on_alarm();
         }
-        ScheduleAlarm(std::move(state));
+        ScheduleAlarm(state);
       });
 }
 
@@ -66,7 +60,6 @@ AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
 
 std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
     std::chrono::milliseconds period, std::function<void()> on_alarm) {
-  // mu guards shutdown
   std::shared_ptr<AlarmState> state{
       new AlarmState{cq_, period, std::move(on_alarm)}};
   ScheduleAlarm(state);

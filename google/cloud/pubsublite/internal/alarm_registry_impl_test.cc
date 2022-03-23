@@ -32,7 +32,6 @@ using google::cloud::CompletionQueue;
 using google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::ByMove;
 using ::testing::InSequence;
-;
 using ::testing::MockFunction;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -77,15 +76,14 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterSingleRun) {
 
   EXPECT_CALL(fun_, Call);
 
-  auto temp_promise = std::move(timer);
-  timer = promise<StatusOr<std::chrono::system_clock::time_point>>{};
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
   EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
-      .WillOnce(Return(ByMove(timer.get_future())));
-  temp_promise.set_value(std::chrono::system_clock::time_point{});
+      .WillOnce(Return(ByMove(timer1.get_future())));
+  timer.set_value(std::chrono::system_clock::time_point{});
 
   token = nullptr;
 
-  timer.set_value(std::chrono::system_clock::time_point{});
+  timer1.set_value(std::chrono::system_clock::time_point{});
 }
 
 TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterFiveRuns) {
@@ -110,37 +108,20 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedAfterFiveRuns) {
   timer.set_value(std::chrono::system_clock::time_point{});
 }
 
-TEST(AlarmRegistryImpl, TokenDestroyedDuringSecondRun) {
+TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
   InSequence seq;
 
-  // not using StrictMock because of ON_CALL
-  auto cq = std::make_shared<MockCompletionQueueImpl>();
-  AlarmRegistryImpl alarm{CompletionQueue{cq}};
-  StrictMock<MockFunction<void()>> fun;
-
-  // using ctr to assert that MakeRelativeTimer is called at least twice
-  int ctr = 0;
   promise<StatusOr<std::chrono::system_clock::time_point>> timer;
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+      .WillOnce(Return(ByMove(timer.get_future())));
+  auto token = alarm_.RegisterAlarm(kAlarmPeriod, fun_.AsStdFunction());
 
-  // using ON_CALL due to nondeterminism with which thread acquires the lock
-  // first when destructor is invoked
-  ON_CALL(*cq, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
-      .WillByDefault([&timer, &ctr]() {
-        ++ctr;
-        return timer.get_future();
-      });
+  EXPECT_CALL(fun_, Call);
 
-  auto token = alarm.RegisterAlarm(kAlarmPeriod, fun.AsStdFunction());
-
-  EXPECT_EQ(ctr, 1);
-
-  EXPECT_CALL(fun, Call);
-
-  auto temp_promise = std::move(timer);
-  timer = promise<StatusOr<std::chrono::system_clock::time_point>>{};
-  temp_promise.set_value(std::chrono::system_clock::time_point{});
-
-  EXPECT_EQ(ctr, 2);
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer1;
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+      .WillOnce(Return(ByMove(timer1.get_future())));
+  timer.set_value(std::chrono::system_clock::time_point{});
 
   promise<void> in_alarm_function;
   promise<void> destroy_finished;
@@ -151,23 +132,24 @@ TEST(AlarmRegistryImpl, TokenDestroyedDuringSecondRun) {
     destroy_finished.set_value();
   };
 
-  EXPECT_CALL(fun, Call).WillOnce([&in_alarm_function, &destroy_finished]() {
+  EXPECT_CALL(fun_, Call).WillOnce([&in_alarm_function, &destroy_finished]() {
     in_alarm_function.set_value();
     // Unable to destroy token while the alarm is outstanding
     EXPECT_EQ(destroy_finished.get_future().wait_for(std::chrono::seconds(2)),
               std::future_status::timeout);
   });
 
-  temp_promise = std::move(timer);
-  timer = promise<StatusOr<std::chrono::system_clock::time_point>>{};
+  promise<StatusOr<std::chrono::system_clock::time_point>> timer2;
 
   std::thread first{destroy_token};
 
-  temp_promise.set_value(std::chrono::system_clock::time_point{});
+  EXPECT_CALL(*cq_, MakeRelativeTimer(std::chrono::nanoseconds(kAlarmPeriod)))
+      .WillOnce(Return(ByMove(timer2.get_future())));
+  timer1.set_value(std::chrono::system_clock::time_point{});
 
   first.join();
 
-  timer.set_value(std::chrono::system_clock::time_point{});
+  timer2.set_value(std::chrono::system_clock::time_point{});
 }
 
 }  // namespace
