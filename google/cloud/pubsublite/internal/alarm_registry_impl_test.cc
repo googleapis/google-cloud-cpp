@@ -121,7 +121,6 @@ TEST(AlarmRegistryImpl, TokenDestroyedDuringSecondRun) {
   AlarmRegistryImpl alarm{CompletionQueue{cq}};
   StrictMock<MockFunction<void()>> fun;
 
-  bool flag = false;
   // using ctr to assert that MakeRelativeTimer is called at least twice
   int ctr = 0;
   promise<StatusOr<std::chrono::system_clock::time_point>> timer;
@@ -138,7 +137,7 @@ TEST(AlarmRegistryImpl, TokenDestroyedDuringSecondRun) {
 
   EXPECT_EQ(ctr, 1);
 
-  EXPECT_CALL(fun, Call).WillOnce([&flag]() { flag = !flag; });
+  EXPECT_CALL(fun, Call);
 
   auto temp_promise = std::move(timer);
   timer = promise<StatusOr<std::chrono::system_clock::time_point>>{};
@@ -146,25 +145,21 @@ TEST(AlarmRegistryImpl, TokenDestroyedDuringSecondRun) {
 
   EXPECT_EQ(ctr, 2);
 
-  EXPECT_TRUE(flag);
-
   promise<void> in_alarm_function;
-  promise<void> about_to_destroy;
-  auto destroy_token = [&in_alarm_function, &about_to_destroy, &token]() {
+  promise<void> destroy_finished;
+  auto destroy_token = [&in_alarm_function, &destroy_finished, &token]() {
     // guarantee that alarm function is being invoked
     in_alarm_function.get_future().get();
-    about_to_destroy.set_value();
     token = nullptr;
+    destroy_finished.set_value();
   };
 
-  EXPECT_CALL(fun, Call).WillOnce(
-      [&in_alarm_function, &about_to_destroy, &flag]() {
-        in_alarm_function.set_value();
-        // introduce some blocking in this thread to give the other thread a
-        // better chance to acquire lock first
-        about_to_destroy.get_future().get();
-        flag = !flag;
-      });
+  EXPECT_CALL(fun, Call).WillOnce([&in_alarm_function, &destroy_finished]() {
+    in_alarm_function.set_value();
+    // Unable to destroy token while the alarm is outstanding
+    EXPECT_EQ(destroy_finished.get_future().wait_for(std::chrono::seconds(2)),
+              std::future_status::timeout);
+  });
 
   temp_promise = std::move(timer);
   timer = promise<StatusOr<std::chrono::system_clock::time_point>>{};
@@ -176,9 +171,6 @@ TEST(AlarmRegistryImpl, TokenDestroyedDuringSecondRun) {
   first.join();
 
   timer.set_value(std::chrono::system_clock::time_point{});
-
-  // second run has to complete
-  EXPECT_FALSE(flag);
 }
 
 }  // namespace
