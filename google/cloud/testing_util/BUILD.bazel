@@ -12,14 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+# The targets in this package are intended for testing our own libraries, and
+# are not intended for public usage.
+package(default_visibility = ["//:__subpackages__"])
 
 licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_testing",
+    name = "google_cloud_cpp_testing_private",
     srcs = google_cloud_cpp_testing_srcs,
     hdrs = google_cloud_cpp_testing_hdrs,
     defines = select({
@@ -40,6 +42,17 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "google_cloud_cpp_testing",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. More
+    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_testing_private"],
+)
+
 load(":google_cloud_cpp_testing_unit_tests.bzl", "google_cloud_cpp_testing_unit_tests")
 
 [cc_test(
@@ -55,7 +68,7 @@ load(":google_cloud_cpp_testing_unit_tests.bzl", "google_cloud_cpp_testing_unit_
 load(":google_cloud_cpp_testing_grpc.bzl", "google_cloud_cpp_testing_grpc_hdrs", "google_cloud_cpp_testing_grpc_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_testing_grpc",
+    name = "google_cloud_cpp_testing_grpc_private",
     srcs = google_cloud_cpp_testing_grpc_srcs,
     hdrs = google_cloud_cpp_testing_grpc_hdrs,
     deps = [
@@ -67,6 +80,17 @@ cc_library(
         "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
     ],
+)
+
+cc_library(
+    name = "google_cloud_cpp_testing_grpc",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. More
+    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_testing_grpc_private"],
 )
 
 load(":google_cloud_cpp_testing_grpc_unit_tests.bzl", "google_cloud_cpp_testing_grpc_unit_tests")
@@ -85,11 +109,22 @@ load(":google_cloud_cpp_testing_grpc_unit_tests.bzl", "google_cloud_cpp_testing_
 load(":google_cloud_cpp_testing_rest.bzl", "google_cloud_cpp_testing_rest_hdrs", "google_cloud_cpp_testing_rest_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_testing_rest",
+    name = "google_cloud_cpp_testing_rest_private",
     srcs = google_cloud_cpp_testing_rest_srcs,
     hdrs = google_cloud_cpp_testing_rest_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_rest_internal",
         "@com_google_googletest//:gtest_main",
     ],
+)
+
+cc_library(
+    name = "google_cloud_cpp_testing_rest",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. More
+    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_testing_rest_private"],
 )

@@ -74,8 +74,8 @@ load(":google_cloud_cpp_generator_golden_tests.bzl", "google_cloud_cpp_generator
     deps = [
         ":google_cloud_cpp_generator_golden",
         "//:common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_generator_golden_tests]
