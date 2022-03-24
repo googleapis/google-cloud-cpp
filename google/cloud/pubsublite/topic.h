@@ -15,9 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_H
 
-#include "google/cloud/pubsublite/internal/location.h"
-#include "google/cloud/pubsublite/project_id_or_number.h"
-#include "google/cloud/pubsublite/topic_name.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/version.h"
 #include <utility>
@@ -72,8 +69,8 @@ class Topic {
 };
 
 bool operator==(Topic const& a, Topic const& b) {
-  return a.project_id() == b.project_id() && a.location() == b.location() &&
-         a.topic_id() == b.topic_id();
+  return a.project() == b.project() && a.location() == b.location() &&
+         a.topic_name() == b.topic_name();
 }
 
 std::ostream& operator<<(std::ostream& os, Topic const& rhs) {
