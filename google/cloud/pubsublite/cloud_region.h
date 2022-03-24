@@ -24,6 +24,9 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A wrapped string representing a Google Cloud region.
+ */
 class CloudRegion {
  public:
   explicit CloudRegion(std::string region) : region_{std::move(region)} {}

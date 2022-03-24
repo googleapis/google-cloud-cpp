@@ -12,25 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_OR_ZONE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_OR_ZONE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_LOCATION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_LOCATION_H
 
 #include "google/cloud/pubsublite/cloud_region.h"
 #include "google/cloud/pubsublite/cloud_zone.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
+#include <algorithm>
 
 namespace google {
 namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudRegionOrZone {
+class Location {
  public:
-  explicit CloudRegionOrZone(CloudRegion region) : value_{std::move(region)} {}
+  explicit Location(CloudRegion region) : value_{std::move(region)} {}
 
-  explicit CloudRegionOrZone(CloudZone zone) : value_{std::move(zone)} {}
+  explicit Location(CloudZone zone) : value_{std::move(zone)} {}
 
   bool HasCloudRegion() const {
     return absl::holds_alternative<CloudRegion>(value_);
@@ -59,9 +61,17 @@ class CloudRegionOrZone {
   absl::variant<CloudRegion, CloudZone> const value_;
 };
 
+Location ParseLocation(std::string const& location) {
+  auto possible_zone = ParseCloudZone(location);
+  if (possible_zone.ok()) {
+    return Location{*possible_zone};
+  }
+  return Location{CloudRegion{location}};
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_OR_ZONE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_LOCATION_H
