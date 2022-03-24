@@ -30,9 +30,9 @@ class MessageMetadata {
                   google::cloud::pubsublite::v1::Cursor cursor)
       : partition_{partition}, cursor_{std::move(cursor)} {}
 
-  std::int64_t GetPartition() const { return partition_; }
+  std::int64_t Partition() const { return partition_; }
 
-  google::cloud::pubsublite::v1::Cursor GetCursor() const { return cursor_; }
+  google::cloud::pubsublite::v1::Cursor Cursor() const { return cursor_; }
 
  private:
   std::int64_t const partition_;

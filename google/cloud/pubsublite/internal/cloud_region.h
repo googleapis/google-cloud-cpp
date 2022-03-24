@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_split.h"
 #include <string>
 #include <utility>
 
@@ -27,15 +29,21 @@ namespace pubsublite_internal {
 /**
  * A wrapped string representing a Google Cloud region.
  */
-class CloudRegion {
- public:
-  explicit CloudRegion(std::string region) : region_{std::move(region)} {}
-
-  std::string const& GetRegion() const { return region_; }
-
- private:
-  std::string const region_;
+struct CloudRegion {
+  CloudRegion(std::string region) : region{std::move(region)} {}
+  static StatusOr<CloudRegion> Parse(std::string const& region) {
+    std::vector<std::string> splits = absl::StrSplit(region, '-');
+    if (splits.size() != 2) {
+      return Status{StatusCode::kInvalidArgument, "Invalid region name"};
+    }
+    return CloudRegion{region};
+  }
+  std::string const region;
 };
+
+bool operator==(CloudRegion const& a, CloudRegion const& b) {
+  return a.region == b.region;
+}
 
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

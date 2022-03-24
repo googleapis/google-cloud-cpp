@@ -30,32 +30,28 @@ namespace pubsublite_internal {
 /**
  * A representation of a Google Cloud zone.
  */
-class CloudZone {
- public:
-  explicit CloudZone(CloudRegion region, char zone_id)
-      : region_{std::move(region)}, zone_id_{zone_id} {}
+struct CloudZone {
+  CloudZone(CloudRegion region, char zone_id)
+      : region{std::move(region)}, zone_id{zone_id} {}
 
-  CloudRegion const& GetCloudRegion() const { return region_; }
-
-  char GetZoneId() const { return zone_id_; };
-
- private:
-  CloudRegion const region_;
-  char const zone_id_;
+  /**
+   * Construct a CloudZone from a valid zone string. `zone` must be formatted
+   * as: <location>-<direction><number>-<letter>
+   */
+  static StatusOr<CloudZone> Parse(std::string const& zone) {
+    std::vector<std::string> splits = absl::StrSplit(zone, '-');
+    if (splits.size() != 3 || splits[2].length() != 1) {
+      return Status{StatusCode::kInvalidArgument, "Invalid zone name"};
+    }
+    return CloudZone{CloudRegion{absl::StrCat(splits[0], "-", splits[1])},
+                     splits[2][0]};
+  }
+  CloudRegion const region;
+  char const zone_id;
 };
 
-/**
- * Construct a CloudZone from a valid zone string. `zone` must be formatted as:
- * <location>-<direction><number>-<letter>
- */
-StatusOr<CloudZone> ParseCloudZone(std::string const& zone) {
-  std::vector<std::string> splits = absl::StrSplit(zone, '-');
-  if (splits.size() != 3 || splits[2].length() != 1) {
-    return StatusOr<CloudZone>{
-        Status{StatusCode::kInvalidArgument, "Invalid Zone Name"}};
-  }
-  return StatusOr<CloudZone>{CloudZone{
-      CloudRegion{absl::StrCat(splits[0], "-", splits[1])}, splits[2][0]}};
+bool operator==(CloudZone const& a, CloudZone const& b) {
+  return a.region == b.region && a.zone_id == b.zone_id;
 }
 
 }  // namespace pubsublite_internal

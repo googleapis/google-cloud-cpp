@@ -18,6 +18,7 @@
 
 pubsublite_unit_tests = [
     "endpoint_test.cc",
+    "internal/location_test.cc",
     "internal/partition_publisher_test.cc",
     "internal/resumable_async_streaming_read_write_rpc_test.cc",
     "internal/service_composite_test.cc",

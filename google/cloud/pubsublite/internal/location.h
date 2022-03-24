@@ -34,39 +34,40 @@ class Location {
 
   explicit Location(CloudZone zone) : value_{std::move(zone)} {}
 
-  bool HasCloudRegion() const {
-    return absl::holds_alternative<CloudRegion>(value_);
-  }
-
-  bool HasCloudZone() const {
-    return absl::holds_alternative<CloudZone>(value_);
-  }
-
   CloudRegion const& GetCloudRegion() const {
-    return absl::get<CloudRegion>(value_);
+    if (absl::holds_alternative<CloudRegion>(value_)) {
+      return absl::get<CloudRegion>(value_);
+    }
+    return absl::get<CloudZone>(value_).region;
   }
-
-  CloudZone const& GetCloudZone() const { return absl::get<CloudZone>(value_); }
 
   std::string ToString() const {
-    if (HasCloudRegion()) {
-      return absl::get<CloudRegion>(value_).GetRegion();
+    if (absl::holds_alternative<CloudRegion>(value_)) {
+      return absl::get<CloudRegion>(value_).region;
     }
     CloudZone cloud_zone = absl::get<CloudZone>(value_);
-    return absl::StrCat(cloud_zone.GetCloudRegion().GetRegion(), "-",
-                        std::string(1, cloud_zone.GetZoneId()));
+    return absl::StrCat(cloud_zone.region.region, "-",
+                        std::string(1, cloud_zone.zone_id));
+  }
+
+  static StatusOr<Location> Parse(std::string const& location) {
+    auto possible_zone = CloudZone::Parse(location);
+    if (possible_zone.ok()) {
+      return Location{*possible_zone};
+    }
+    auto possible_region = CloudRegion::Parse(location);
+    if (possible_region.ok()) {
+      return Location{*possible_region};
+    }
+    return Status{StatusCode::kInvalidArgument, "Invalid location"};
   }
 
  private:
   absl::variant<CloudRegion, CloudZone> const value_;
 };
 
-Location ParseLocation(std::string const& location) {
-  auto possible_zone = ParseCloudZone(location);
-  if (possible_zone.ok()) {
-    return Location{*possible_zone};
-  }
-  return Location{CloudRegion{location}};
+bool operator==(Location const& a, Location const& b) {
+  return a.ToString() == b.ToString();
 }
 
 }  // namespace pubsublite_internal
