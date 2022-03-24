@@ -107,8 +107,7 @@ void PartitionPublisher::WriteBatches() {
   MessagePublishRequest& message_publish_request =
       *publish_request.mutable_message_publish_request();
   for (auto& message : in_flight_batches_.back()) {
-    // don't move so that messages can be rewritten on failure
-    *message_publish_request.add_messages() = message.message;
+    *message_publish_request.add_messages() = std::move(message.message);
   }
   root.get_future()
       .then(ChainFuture(resumable_stream_->Write(std::move(publish_request))))
