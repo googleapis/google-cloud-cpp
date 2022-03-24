@@ -68,9 +68,7 @@ add_library(
     admin_connection_idempotency_policy.cc
     admin_connection_idempotency_policy.h
     admin_options.h
-    batching_options.h
     cloud_region.h
-    cloud_region_or_zone.h
     cloud_zone.h
     endpoint.cc
     endpoint.h
@@ -102,8 +100,6 @@ add_library(
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
     internal/futures.h
-    internal/multipartition_publisher.cc
-    internal/multipartition_publisher.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -128,7 +124,6 @@ add_library(
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
     internal/resumable_async_streaming_read_write_rpc.h
-    internal/routing_policy.h
     internal/service.h
     internal/service_composite.h
     internal/stream_factory.h
@@ -142,7 +137,6 @@ add_library(
     internal/subscriber_stub.h
     internal/subscriber_stub_factory.cc
     internal/subscriber_stub_factory.h
-    internal/topic_partition_count_reader.h
     internal/topic_stats_auth_decorator.cc
     internal/topic_stats_auth_decorator.h
     internal/topic_stats_connection_impl.cc
@@ -158,6 +152,7 @@ add_library(
     internal/topic_stats_stub.h
     internal/topic_stats_stub_factory.cc
     internal/topic_stats_stub_factory.h
+    location.h
     message_metadata.h
     project_id.h
     project_id_or_number.h

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_PATH_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_PATH_H
 
-#include "google/cloud/pubsublite/cloud_region_or_zone.h"
+#include "google/cloud/pubsublite/location.h"
 #include "google/cloud/pubsublite/project_id_or_number.h"
 #include "google/cloud/pubsublite/topic_name.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -27,29 +27,26 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A string wrapper representing a topic.
+ */
 class TopicPath {
  public:
-  explicit TopicPath(ProjectIdOrNumber project, CloudRegionOrZone location,
-                     TopicName name)
-      : project_{std::move(project)},
-        location_{std::move(location)},
-        name_{std::move(name)} {}
-
-  ProjectIdOrNumber const& GetProject() const { return project_; }
-
-  CloudRegionOrZone const& GetLocation() const { return location_; }
-
-  TopicName const& GetName() const { return name_; }
+  explicit TopicPath(ProjectIdOrNumber const& project, Location const& location,
+                     TopicName const& name)
+      : project_{project.ToString()},
+        location_{location.ToString()},
+        name_{name.GetName()} {}
 
   std::string ToString() const {
-    return absl::StrCat("projects/", project_.ToString(), "/locations/",
-                        location_.ToString(), "/topics/", name_.GetName());
+    return absl::StrCat("projects/", project_, "/locations/", location_,
+                        "/topics/", name_);
   }
 
  private:
-  ProjectIdOrNumber project_;
-  CloudRegionOrZone location_;
-  TopicName name_;
+  std::string const project_;
+  std::string const location_;
+  std::string const name_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
