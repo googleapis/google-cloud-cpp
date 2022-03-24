@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_ZONE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_ZONE_H
 
-#include "google/cloud/pubsublite/cloud_region.h"
+#include "google/cloud/pubsublite/internal/cloud_region.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 /**
  * A representation of a Google Cloud zone.
@@ -58,9 +58,9 @@ StatusOr<CloudZone> ParseCloudZone(std::string const& zone) {
       CloudRegion{absl::StrCat(splits[0], "-", splits[1])}, splits[2][0]}};
 }
 
+}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_ZONE_H

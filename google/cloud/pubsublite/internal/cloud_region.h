@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_NAME_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_NAME_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H
 
 #include "google/cloud/version.h"
 #include <string>
@@ -21,25 +21,25 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
-/*
- * A string wrapper for the name of a topic.
+/**
+ * A wrapped string representing a Google Cloud region.
  */
-class TopicName {
+class CloudRegion {
  public:
-  explicit TopicName(std::string name) : name_{std::move(name)} {}
+  explicit CloudRegion(std::string region) : region_{std::move(region)} {}
 
-  std::string const& GetName() const { return name_; }
+  std::string const& GetRegion() const { return region_; }
 
  private:
-  std::string const name_;
+  std::string const region_;
 };
 
+}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_NAME_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H
