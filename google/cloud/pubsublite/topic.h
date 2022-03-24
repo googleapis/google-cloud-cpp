@@ -53,7 +53,7 @@ class Topic {
 
   /**
    * Returns the fully qualified topic name as a string of the form:
-   * "projects/<project-id>/topics/<topic-id>"
+   * "projects/<project-id>/locations/<location>/topics/<topic-id>"
    */
   std::string FullName() const {
     return absl::StrCat("projects/", project_, "/locations/", location_,
