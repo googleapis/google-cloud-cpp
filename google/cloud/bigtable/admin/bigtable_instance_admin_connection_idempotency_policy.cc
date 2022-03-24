@@ -144,6 +144,11 @@ class DefaultBigtableInstanceAdminConnectionIdempotencyPolicy
       google::iam::v1::TestIamPermissionsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency ListHotTablets(
+      google::bigtable::admin::v2::ListHotTabletsRequest) override {
+    return Idempotency::kIdempotent;
+  }
 };
 }  // namespace
 

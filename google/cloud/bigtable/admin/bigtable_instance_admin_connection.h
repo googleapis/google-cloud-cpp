@@ -119,6 +119,9 @@ class BigtableInstanceAdminConnection {
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
+      google::bigtable::admin::v2::ListHotTabletsRequest request);
 };
 
 std::shared_ptr<BigtableInstanceAdminConnection>
