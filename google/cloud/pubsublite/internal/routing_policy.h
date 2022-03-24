@@ -1,3 +1,5 @@
+
+
 // Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,8 +26,9 @@ namespace pubsublite_internal {
 
 class RoutingPolicy {
  public:
-  virtual std::int64_t RouteWithoutKey() = 0;
-  virtual std::int64_t Route(std::string message_key) = 0;
+  virtual std::uint64_t RouteWithoutKey(std::uint32_t num_partitions) = 0;
+  virtual std::uint64_t Route(std::string message_key,
+                              std::uint32_t num_partitions) = 0;
 };
 
 }  // namespace pubsublite_internal

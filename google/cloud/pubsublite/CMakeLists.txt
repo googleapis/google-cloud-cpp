@@ -68,10 +68,6 @@ add_library(
     admin_connection_idempotency_policy.cc
     admin_connection_idempotency_policy.h
     admin_options.h
-    batching_options.h
-    cloud_region.h
-    cloud_region_or_zone.h
-    cloud_zone.h
     endpoint.cc
     endpoint.h
     internal/admin_auth_decorator.cc
@@ -159,11 +155,7 @@ add_library(
     internal/topic_stats_stub_factory.cc
     internal/topic_stats_stub_factory.h
     message_metadata.h
-    project_id.h
-    project_id_or_number.h
-    project_number.h
-    topic_name.h
-    topic_path.h
+    topic.h
     topic_stats_client.cc
     topic_stats_client.h
     topic_stats_connection.cc

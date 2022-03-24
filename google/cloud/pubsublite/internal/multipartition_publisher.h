@@ -15,14 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_MULTIPARTITION_PUBLISHER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_MULTIPARTITION_PUBLISHER_H
 
-#include "google/cloud/pubsublite/batching_options.h"
 #include "google/cloud/pubsublite/internal/alarm_registry.h"
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/pubsublite/internal/routing_policy.h"
 #include "google/cloud/pubsublite/internal/service_composite.h"
 #include "google/cloud/pubsublite/internal/topic_partition_count_reader.h"
 #include "google/cloud/pubsublite/message_metadata.h"
-#include "google/cloud/pubsublite/topic_path.h"
+#include "google/cloud/pubsublite/topic.h"
 #include "absl/functional/function_ref.h"
 #include <google/cloud/pubsublite/v1/publisher.pb.h>
 #include <mutex>
@@ -39,7 +38,7 @@ class MultipartitionPublisher
   MultipartitionPublisher(
       std::function<std::unique_ptr<PartitionPublisher>(std::int64_t)>,
       std::unique_ptr<TopicPartitionCountReader>, AlarmRegistry&,
-      std::unique_ptr<RoutingPolicy>, google::cloud::pubsublite::TopicPath);
+      std::unique_ptr<RoutingPolicy>, google::cloud::pubsublite::Topic);
 
   ~MultipartitionPublisher() override;
 
@@ -67,7 +66,7 @@ class MultipartitionPublisher
   std::unique_ptr<TopicPartitionCountReader> reader_;  // ABSL_GUARDED_BY(mu_)
   ServiceComposite service_composite_;
   std::unique_ptr<RoutingPolicy> routing_policy_;  // ABSL_GUARDED_BY(mu_)
-  google::cloud::pubsublite::TopicPath topic_path_;
+  google::cloud::pubsublite::Topic topic_;
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 };
 

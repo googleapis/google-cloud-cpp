@@ -21,7 +21,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 using google::cloud::pubsublite::MessageMetadata;
-using google::cloud::pubsublite::TopicPath;
+using google::cloud::pubsublite::Topic;
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
@@ -30,11 +30,11 @@ MultipartitionPublisher::MultipartitionPublisher(
         publisher_factory,
     std::unique_ptr<TopicPartitionCountReader> reader,
     AlarmRegistry& alarm_registry,
-    std::unique_ptr<RoutingPolicy> routing_policy, TopicPath topic_path)
+    std::unique_ptr<RoutingPolicy> routing_policy, Topic topic)
     : publisher_factory_{std::move(publisher_factory)},
       reader_{std::move(reader)},
       routing_policy_{std::move(routing_policy)},
-      topic_path_{std::move(topic_path)},
+      topic_{std::move(topic)},
       cancel_token_{alarm_registry.RegisterAlarm(
           std::chrono::milliseconds{60 * 1000},
           std::bind(&MultipartitionPublisher::CreatePublishers, this))} {}
@@ -57,7 +57,7 @@ void MultipartitionPublisher::CreatePublishers() {
   future<std::uint64_t> read_future;
   {
     std::lock_guard<std::mutex> g{mu_};
-    read_future = reader_->Read(topic_path_);
+    read_future = reader_->Read(topic_);
   }
   read_future.then([this](future<std::uint64_t> num_partitions_future) {
     std::uint64_t num_partitions = num_partitions_future.get();
@@ -73,8 +73,10 @@ void MultipartitionPublisher::CreatePublishers() {
 future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     PubSubMessage m) {
   std::lock_guard<std::mutex> g{mu_};
-  std::int64_t partition = m.key().empty() ? routing_policy_->RouteWithoutKey()
-                                           : routing_policy_->Route(m.key());
+  std::int64_t partition =
+      m.key().empty()
+          ? routing_policy_->RouteWithoutKey(partition_publishers_.size())
+          : routing_policy_->Route(m.key(), partition_publishers_.size());
   // TODO(18suresha) handle invalid partition?
   return partition_publishers_[partition]->Publish(m).then(
       [partition](future<StatusOr<Cursor>> publish_future) {

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
 
-#include "google/cloud/pubsublite/topic_path.h"
+#include "google/cloud/pubsublite/topic.h"
 #include "google/cloud/future.h"
 #include "google/cloud/version.h"
 #include <utility>
@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TopicPartitionCountReader {
  public:
-  virtual future<std::uint64_t> Read(google::cloud::pubsublite::TopicPath) = 0;
+  virtual future<std::uint64_t> Read(google::cloud::pubsublite::Topic) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
