@@ -12,31 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
 
+#include "google/cloud/pubsublite/topic_path.h"
+#include "google/cloud/future.h"
 #include "google/cloud/version.h"
-#include <string>
 #include <utility>
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
+namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudRegion {
+class TopicPartitionCountReader {
  public:
-  explicit CloudRegion(std::string region) : region_{std::move(region)} {}
-
-  std::string const& GetRegion() const { return region_; }
-
- private:
-  std::string const region_;
+  virtual future<std::uint64_t> Read(google::cloud::pubsublite::TopicPath) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_REGION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H

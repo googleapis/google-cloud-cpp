@@ -24,9 +24,6 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/*
- * A string wrapper for the name of a topic.
- */
 class TopicName {
  public:
   explicit TopicName(std::string name) : name_{std::move(name)} {}

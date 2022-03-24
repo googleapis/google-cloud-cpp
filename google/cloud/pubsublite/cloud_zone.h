@@ -16,10 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_CLOUD_ZONE_H
 
 #include "google/cloud/pubsublite/cloud_region.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/strings/str_split.h"
 #include <utility>
 
 namespace google {
@@ -27,9 +24,6 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A representation of a Google Cloud zone.
- */
 class CloudZone {
  public:
   explicit CloudZone(CloudRegion region, char zone_id)
@@ -43,20 +37,6 @@ class CloudZone {
   CloudRegion const region_;
   char const zone_id_;
 };
-
-/**
- * Construct a CloudZone from a valid zone string. `zone` must be formatted as:
- * <location>-<direction><number>-<letter>
- */
-StatusOr<CloudZone> ParseCloudZone(std::string const& zone) {
-  std::vector<std::string> splits = absl::StrSplit(zone, '-');
-  if (splits.size() != 3 || splits[2].length() != 1) {
-    return StatusOr<CloudZone>{
-        Status{StatusCode::kInvalidArgument, "Invalid Zone Name"}};
-  }
-  return StatusOr<CloudZone>{CloudZone{
-      CloudRegion{absl::StrCat(splits[0], "-", splits[1])}, splits[2][0]}};
-}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite

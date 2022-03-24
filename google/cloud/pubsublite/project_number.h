@@ -22,11 +22,6 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A wrapper class for the
- * "https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin"
- * project number</a>.
- */
 class ProjectNumber {
  public:
   explicit ProjectNumber(std::int64_t number) : number_{number} {}
