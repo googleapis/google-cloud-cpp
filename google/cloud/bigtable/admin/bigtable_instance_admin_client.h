@@ -122,7 +122,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
   ///
   /// [google.bigtable.admin.v2.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L280}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
   /// [google.bigtable.admin.v2.Instance]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
   ///
@@ -143,14 +143,14 @@ class BigtableInstanceAdminClient {
   /// is enabled.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L280}
+  /// @googleapis_link{google::bigtable::admin::v2::CreateInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
   ///
   /// [google.bigtable.admin.v2.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L280}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
   /// [google.bigtable.admin.v2.Instance]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
   ///
@@ -170,7 +170,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
   ///
   /// [google.bigtable.admin.v2.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L308}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
   /// [google.bigtable.admin.v2.Instance]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
   ///
@@ -181,14 +181,14 @@ class BigtableInstanceAdminClient {
   /// Gets information about an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L308}
+  /// @googleapis_link{google::bigtable::admin::v2::GetInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
   ///
   /// [google.bigtable.admin.v2.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L308}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
   /// [google.bigtable.admin.v2.Instance]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
   ///
@@ -205,12 +205,12 @@ class BigtableInstanceAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
+  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
   ///
   /// [google.bigtable.admin.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L320}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
   /// [google.bigtable.admin.v2.ListInstancesResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
   ///
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
       std::string const& parent, Options opts = {});
@@ -219,16 +219,16 @@ class BigtableInstanceAdminClient {
   /// Lists information about instances in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L320}
+  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
+  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
   ///
   /// [google.bigtable.admin.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L320}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
   /// [google.bigtable.admin.v2.ListInstancesResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L335}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
   ///
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
       google::bigtable::admin::v2::ListInstancesRequest const& request,
@@ -269,7 +269,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
   ///
   /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
   /// [google.bigtable.admin.v2.Instance]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
   ///
@@ -282,14 +282,14 @@ class BigtableInstanceAdminClient {
   /// fields of an Instance and is the preferred way to update an Instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
+  /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L41}
   ///
   /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
   /// [google.bigtable.admin.v2.Instance]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L41}
   ///
@@ -306,7 +306,7 @@ class BigtableInstanceAdminClient {
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L362}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
   ///
   Status DeleteInstance(std::string const& name, Options opts = {});
 
@@ -314,12 +314,12 @@ class BigtableInstanceAdminClient {
   /// Delete an instance from a project.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L362}
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L362}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
   ///
   Status DeleteInstance(
       google::bigtable::admin::v2::DeleteInstanceRequest const& request,
@@ -350,7 +350,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
   ///
   /// [google.bigtable.admin.v2.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L374}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
   /// [google.bigtable.admin.v2.Cluster]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
   ///
@@ -368,14 +368,14 @@ class BigtableInstanceAdminClient {
   /// is enabled.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L374}
+  /// @googleapis_link{google::bigtable::admin::v2::CreateClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
   ///
   /// [google.bigtable.admin.v2.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L374}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
   /// [google.bigtable.admin.v2.Cluster]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
   ///
@@ -395,7 +395,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
   ///
   /// [google.bigtable.admin.v2.GetClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
   /// [google.bigtable.admin.v2.Cluster]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
   ///
@@ -406,14 +406,14 @@ class BigtableInstanceAdminClient {
   /// Gets information about a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
+  /// @googleapis_link{google::bigtable::admin::v2::GetClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
   ///
   /// [google.bigtable.admin.v2.GetClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
   /// [google.bigtable.admin.v2.Cluster]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
   ///
@@ -432,12 +432,12 @@ class BigtableInstanceAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
+  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
   ///
   /// [google.bigtable.admin.v2.ListClustersRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L408}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
   /// [google.bigtable.admin.v2.ListClustersResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
   ///
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
       std::string const& parent, Options opts = {});
@@ -446,16 +446,16 @@ class BigtableInstanceAdminClient {
   /// Lists information about clusters in an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListClustersRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L408}
+  /// @googleapis_link{google::bigtable::admin::v2::ListClustersRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
+  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
   ///
   /// [google.bigtable.admin.v2.ListClustersRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L408}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
   /// [google.bigtable.admin.v2.ListClustersResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L425}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
   ///
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
       google::bigtable::admin::v2::ListClustersRequest const& request,
@@ -508,7 +508,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
   ///
   /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L513}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L522}
   /// [google.bigtable.admin.v2.Cluster]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
   ///
@@ -531,14 +531,14 @@ class BigtableInstanceAdminClient {
   /// and explicitly set a serve_node count via the update_mask.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L513}
+  /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L522}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L137}
   ///
   /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L513}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L522}
   /// [google.bigtable.admin.v2.Cluster]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L137}
   ///
@@ -556,7 +556,7 @@ class BigtableInstanceAdminClient {
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L441}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
   ///
   Status DeleteCluster(std::string const& name, Options opts = {});
 
@@ -564,12 +564,12 @@ class BigtableInstanceAdminClient {
   /// Deletes a cluster from an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L441}
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L441}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
   ///
   Status DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request,
@@ -594,7 +594,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.CreateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L523}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L532}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -607,14 +607,14 @@ class BigtableInstanceAdminClient {
   /// Creates an app profile within an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L523}
+  /// @googleapis_link{google::bigtable::admin::v2::CreateAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L532}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.CreateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L523}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L532}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -634,7 +634,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.GetAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L548}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L557}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -645,14 +645,14 @@ class BigtableInstanceAdminClient {
   /// Gets information about an app profile.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L548}
+  /// @googleapis_link{google::bigtable::admin::v2::GetAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L557}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.GetAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L548}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L557}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -675,7 +675,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L560}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L569}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -686,14 +686,14 @@ class BigtableInstanceAdminClient {
   /// Lists information about app profiles in an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListAppProfilesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L560}
+  /// @googleapis_link{google::bigtable::admin::v2::ListAppProfilesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L569}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L560}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L569}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -715,7 +715,7 @@ class BigtableInstanceAdminClient {
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.UpdateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L606}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L615}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -727,14 +727,14 @@ class BigtableInstanceAdminClient {
   /// Updates an app profile within an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::UpdateAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L606}
+  /// @googleapis_link{google::bigtable::admin::v2::UpdateAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L615}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L236}
   ///
   /// [google.bigtable.admin.v2.UpdateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L606}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L615}
   /// [google.bigtable.admin.v2.AppProfile]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L236}
   ///
@@ -752,7 +752,7 @@ class BigtableInstanceAdminClient {
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L619}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L628}
   ///
   Status DeleteAppProfile(std::string const& name, Options opts = {});
 
@@ -760,12 +760,12 @@ class BigtableInstanceAdminClient {
   /// Deletes an app profile from an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L619}
+  /// @googleapis_link{google::bigtable::admin::v2::DeleteAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L628}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.bigtable.admin.v2.DeleteAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L619}
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L628}
   ///
   Status DeleteAppProfile(
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
@@ -923,6 +923,46 @@ class BigtableInstanceAdminClient {
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Lists hot tablets in a cluster, within the time range provided. Hot
+  /// tablets are ordered based on CPU usage.
+  ///
+  /// @param parent  Required. The cluster name to list hot tablets.
+  ///  Value is in the following form:
+  ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::HotTablet,google/bigtable/admin/v2/instance.proto#L300}
+  ///
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L648}
+  /// [google.bigtable.admin.v2.HotTablet]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L300}
+  ///
+  StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
+      std::string const& parent, Options opts = {});
+
+  ///
+  /// Lists hot tablets in a cluster, within the time range provided. Hot
+  /// tablets are ordered based on CPU usage.
+  ///
+  /// @param request
+  /// @googleapis_link{google::bigtable::admin::v2::ListHotTabletsRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L648}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::bigtable::admin::v2::HotTablet,google/bigtable/admin/v2/instance.proto#L300}
+  ///
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L648}
+  /// [google.bigtable.admin.v2.HotTablet]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L300}
+  ///
+  StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
+      google::bigtable::admin::v2::ListHotTabletsRequest request,
       Options opts = {});
 
  private:

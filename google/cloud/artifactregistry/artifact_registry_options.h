@@ -42,6 +42,11 @@ struct ArtifactRegistryBackoffPolicyOption {
 };
 
 /// Option to use with `google::cloud::Options`.
+struct ArtifactRegistryPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/// Option to use with `google::cloud::Options`.
 struct ArtifactRegistryConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ArtifactRegistryConnectionIdempotencyPolicy>;
 };
@@ -49,6 +54,7 @@ struct ArtifactRegistryConnectionIdempotencyPolicyOption {
 using ArtifactRegistryPolicyOptionList =
     OptionList<ArtifactRegistryRetryPolicyOption,
                ArtifactRegistryBackoffPolicyOption,
+               ArtifactRegistryPollingPolicyOption,
                ArtifactRegistryConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
