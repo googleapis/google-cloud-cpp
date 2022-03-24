@@ -74,10 +74,9 @@ PublishRequest GetInitializerPublishRequest() {
 }
 
 PublishResponse GetInitializerPublishResponse() {
-  PublishResponse publish_response;
-  *publish_response.mutable_initial_response() =
-      InitialPublishResponse::default_instance();
-  return publish_response;
+  PublishResponse pr;
+  *pr.mutable_initial_response() = InitialPublishResponse::default_instance();
+  return pr;
 }
 
 class PartitionPublisherBatchingTest : public ::testing::Test {
@@ -420,9 +419,9 @@ TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   shutdown_future.get();
 
   for (auto& publish_message_resp : publish_message_futures) {
-    auto individual_message_publish_response = publish_message_resp.get();
-    EXPECT_FALSE(individual_message_publish_response);
-    EXPECT_EQ(individual_message_publish_response.status(),
+    auto message_response = publish_message_resp.get();
+    EXPECT_FALSE(message_response);
+    EXPECT_EQ(message_response.status(),
               Status(StatusCode::kAborted, "`Shutdown` called"));
   }
 
@@ -484,10 +483,10 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
 
-  auto individual_message_publish_response = publish_future.get();
-  EXPECT_FALSE(individual_message_publish_response);
+  auto message_response = publish_future.get();
+  EXPECT_FALSE(message_response);
   EXPECT_EQ(
-      individual_message_publish_response.status(),
+      message_response.status(),
       Status(StatusCode::kAborted,
              absl::StrCat("Invalid `Read` response: ",
                           GetInitializerPublishResponse().DebugString())));
@@ -521,12 +520,10 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
   future<StatusOr<Cursor>> publish_future =
       publisher_->Publish(PubSubMessage::default_instance());
 
-  PublishResponse publish_response1;
-  publish_response1.mutable_message_response()
-      ->mutable_start_cursor()
-      ->set_offset(0);
+  PublishResponse pr;
+  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
   promise<absl::optional<PublishResponse>> read_promise1;
-  read_promise.set_value(std::move(publish_response1));
+  read_promise.set_value(std::move(pr));
 
   EXPECT_EQ(publisher_start_future.get(),
             Status(StatusCode::kFailedPrecondition,
@@ -542,9 +539,9 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
   publisher_->Shutdown().get();
   start_promise.set_value(Status());
 
-  auto individual_message_publish_response = publish_future.get();
-  EXPECT_FALSE(individual_message_publish_response);
-  EXPECT_EQ(individual_message_publish_response.status(),
+  auto message_response = publish_future.get();
+  EXPECT_FALSE(message_response);
+  EXPECT_EQ(message_response.status(),
             Status(StatusCode::kFailedPrecondition,
                    "Server sent message response when no batches were "
                    "outstanding."));
@@ -721,9 +718,9 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
       .WillOnce(Return(ByMove(make_ready_future())));
   publisher_->Shutdown().get();
 
-  auto individual_message_publish_response = publish_future.get();
-  EXPECT_FALSE(individual_message_publish_response);
-  EXPECT_EQ(individual_message_publish_response.status(),
+  auto message_response = publish_future.get();
+  EXPECT_FALSE(message_response);
+  EXPECT_EQ(message_response.status(),
             Status(StatusCode::kInternal, "Permanent Error"));
 }
 
@@ -787,22 +784,20 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
 
   on_alarm_();
 
-  PublishResponse publish_response1;
-  publish_response1.mutable_message_response()
-      ->mutable_start_cursor()
-      ->set_offset(20);
+  PublishResponse pr;
+  pr.mutable_message_response()->mutable_start_cursor()->set_offset(20);
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
   // set value of previous outstanding Read call which should ack the previous
   // Write call
-  temp_read_promise.set_value(std::move(publish_response1));
+  temp_read_promise.set_value(std::move(pr));
 
   // assert that message is acked
-  auto individual_message_publish_response = publish_future.get();
-  EXPECT_TRUE(individual_message_publish_response);
-  EXPECT_EQ(individual_message_publish_response->offset(), 20);
+  auto message_response = publish_future.get();
+  EXPECT_TRUE(message_response);
+  EXPECT_EQ(message_response->offset(), 20);
 
   // shouldn't do anything b/c lifecycle ended
   publisher_->Flush();
@@ -832,19 +827,17 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGoodThroughFlush) {
 
   publisher_->Flush();
 
-  PublishResponse publish_response1;
-  publish_response1.mutable_message_response()
-      ->mutable_start_cursor()
-      ->set_offset(0);
+  PublishResponse pr;
+  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
-  temp_read_promise.set_value(std::move(publish_response1));
+  temp_read_promise.set_value(std::move(pr));
 
-  auto individual_message_publish_response = publish_future.get();
-  EXPECT_TRUE(individual_message_publish_response);
-  EXPECT_EQ(individual_message_publish_response->offset(), 0);
+  auto message_response = publish_future.get();
+  EXPECT_TRUE(message_response);
+  EXPECT_EQ(message_response->offset(), 0);
 
   // shouldn't do anything b/c no messages left
   publisher_->Flush();
@@ -911,22 +904,20 @@ TEST_F(InitializedPartitionPublisherTest,
 
   on_alarm_();
 
-  PublishResponse publish_response1;
-  publish_response1.mutable_message_response()
-      ->mutable_start_cursor()
-      ->set_offset(0);
+  PublishResponse pr;
+  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
   auto temp_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   // expect continuous Reads
   EXPECT_CALL(resumable_stream_ref_, Read)
       .WillOnce(Return(ByMove(read_promise_.get_future())));
-  temp_promise.set_value(std::move(publish_response1));
+  temp_promise.set_value(std::move(pr));
 
   // assert that all messages are acked
   for (unsigned int i = 0; i != 3; ++i) {
-    auto individual_message_publish_response = publish_message_futures[i].get();
-    EXPECT_TRUE(individual_message_publish_response);
-    EXPECT_EQ(individual_message_publish_response->offset(), i);
+    auto message_response = publish_message_futures[i].get();
+    EXPECT_TRUE(message_response);
+    EXPECT_EQ(message_response->offset(), i);
   }
 }
 
@@ -1007,23 +998,21 @@ TEST_F(InitializedPartitionPublisherTest,
 
   for (std::size_t i = 0; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
-    PublishResponse publish_response1;
-    publish_response1.mutable_message_response()
-        ->mutable_start_cursor()
-        ->set_offset(i);
+    PublishResponse pr;
+    pr.mutable_message_response()->mutable_start_cursor()->set_offset(i);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
     // expect continuous Read calls
     EXPECT_CALL(resumable_stream_ref_, Read)
         .WillOnce(Return(ByMove(read_promise_.get_future())));
-    temp_read_promise.set_value(std::move(publish_response1));
+    temp_read_promise.set_value(std::move(pr));
   }
 
   // assert that all messages are acked
   for (std::size_t i = 0; i != individual_publish_messages.size(); ++i) {
-    auto individual_message_publish_response = publish_message_futures[i].get();
-    EXPECT_TRUE(individual_message_publish_response);
-    EXPECT_EQ(individual_message_publish_response->offset(), i);
+    auto message_response = publish_message_futures[i].get();
+    EXPECT_TRUE(message_response);
+    EXPECT_EQ(message_response->offset(), i);
   }
 }
 
@@ -1110,22 +1099,20 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
 
   for (std::size_t i = 0; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
-    PublishResponse publish_response1;
-    publish_response1.mutable_message_response()
-        ->mutable_start_cursor()
-        ->set_offset(i);
+    PublishResponse pr;
+    pr.mutable_message_response()->mutable_start_cursor()->set_offset(i);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
     EXPECT_CALL(resumable_stream_ref_, Read)
         .WillOnce(Return(ByMove(read_promise_.get_future())));
-    temp_read_promise.set_value(std::move(publish_response1));
+    temp_read_promise.set_value(std::move(pr));
   }
 
   // assert that all messages are acked
   for (std::size_t i = 0; i != individual_publish_messages.size(); ++i) {
-    auto individual_message_publish_response = publish_message_futures[i].get();
-    EXPECT_TRUE(individual_message_publish_response);
-    EXPECT_EQ(individual_message_publish_response->offset(), i);
+    auto message_response = publish_message_futures[i].get();
+    EXPECT_TRUE(message_response);
+    EXPECT_EQ(message_response->offset(), i);
   }
 }
 
@@ -1162,10 +1149,8 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
                   static_cast<std::size_t>(2) * kBatchBoundary_))))
       .WillOnce(Return(ByMove(write_promise.get_future())));
 
-  PublishResponse publish_response;
-  publish_response.mutable_message_response()
-      ->mutable_start_cursor()
-      ->set_offset(0);
+  PublishResponse pr;
+  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
 
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
@@ -1174,7 +1159,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
 
   on_alarm_();
   // first Read is successful so first kBatchBoundary_ messages are acked
-  temp_read_promise.set_value(std::move(publish_response));
+  temp_read_promise.set_value(std::move(pr));
 
   // send 11th unacked message
   publish_message_futures.push_back(
@@ -1182,9 +1167,9 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
 
   // assert that first kBatchBoundary_ messages are acked
   for (unsigned int i = 0; i != kBatchBoundary_; ++i) {
-    auto individual_message_publish_response = publish_message_futures[i].get();
-    EXPECT_TRUE(individual_message_publish_response);
-    EXPECT_EQ(individual_message_publish_response->offset(), i);
+    auto message_response = publish_message_futures[i].get();
+    EXPECT_TRUE(message_response);
+    EXPECT_EQ(message_response->offset(), i);
   }
 
   // expect reinitialize
@@ -1225,24 +1210,22 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
 
   for (std::size_t i = kBatchBoundary_; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
-    PublishResponse publish_response1;
-    publish_response1.mutable_message_response()
-        ->mutable_start_cursor()
-        ->set_offset(i);
+    PublishResponse pr1;
+    pr1.mutable_message_response()->mutable_start_cursor()->set_offset(i);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
     // expect continuous Reads
     EXPECT_CALL(resumable_stream_ref_, Read)
         .WillOnce(Return(ByMove(read_promise_.get_future())));
-    temp_read_promise.set_value(std::move(publish_response1));
+    temp_read_promise.set_value(std::move(pr1));
   }
 
   // assert that rest of messages are acked
   for (std::size_t i = kBatchBoundary_; i != individual_publish_messages.size();
        ++i) {
-    auto individual_message_publish_response = publish_message_futures[i].get();
-    EXPECT_TRUE(individual_message_publish_response);
-    EXPECT_EQ(individual_message_publish_response->offset(), i);
+    auto message_response = publish_message_futures[i].get();
+    EXPECT_TRUE(message_response);
+    EXPECT_EQ(message_response->offset(), i);
   }
 }
 
