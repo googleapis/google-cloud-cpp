@@ -72,7 +72,8 @@ class Topic {
 };
 
 bool operator==(Topic const& a, Topic const& b) {
-  return a.project_id() == b.project_id() && a.topic_id() == b.topic_id();
+  return a.project_id() == b.project_id() && a.location() == b.location() &&
+         a.topic_id() == b.topic_id();
 }
 
 std::ostream& operator<<(std::ostream& os, Topic const& rhs) {
