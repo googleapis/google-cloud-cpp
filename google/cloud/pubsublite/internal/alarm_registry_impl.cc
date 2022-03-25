@@ -28,8 +28,8 @@ AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
 
 void AlarmRegistryImpl::ScheduleAlarm(
     std::shared_ptr<AlarmState> const& state) {
-  state->cq.MakeRelativeTimer(state->period)
-      .then([state](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+  auto temp = state->cq.MakeRelativeTimer(state->period).then(
+      [state](future<StatusOr<std::chrono::system_clock::time_point>> f) {
         auto status = f.get();
         if (!status.ok()) {
           GCP_LOG(INFO) << "`MakeRelativeTimer` returned a non-ok status: "
@@ -43,6 +43,8 @@ void AlarmRegistryImpl::ScheduleAlarm(
         }
         ScheduleAlarm(state);
       });
+  std::lock_guard<std::mutex> g{state->mu};
+  state->timer = std::move(temp);
 }
 
 AlarmRegistryImpl::CancelTokenImpl::CancelTokenImpl(
@@ -55,6 +57,7 @@ AlarmRegistryImpl::CancelTokenImpl::~CancelTokenImpl() {
   // function isn't running when the destructor is run and the function won't
   // run after the destructor finishes
   std::lock_guard<std::mutex> g{state_->mu};
+  state_->timer.cancel();
   state_->shutdown = true;
 }
 

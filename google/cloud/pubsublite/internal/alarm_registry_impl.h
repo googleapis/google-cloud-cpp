@@ -49,6 +49,7 @@ class AlarmRegistryImpl : public AlarmRegistry {
     CompletionQueue cq;
     std::chrono::milliseconds const period;
     std::mutex mu;
+    future<void> timer;              // ABSL_GUARDED_BY(mu)
     std::function<void()> on_alarm;  // ABSL_GUARDED_BY(mu)
     bool shutdown = false;           // ABSL_GUARDED_BY(mu)
   };
