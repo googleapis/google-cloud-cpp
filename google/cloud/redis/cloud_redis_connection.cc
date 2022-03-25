@@ -47,6 +47,12 @@ StatusOr<google::cloud::redis::v1::Instance> CloudRedisConnection::GetInstance(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisConnection::GetInstanceAuthString(
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const&) {
@@ -100,6 +106,14 @@ CloudRedisConnection::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::RescheduleMaintenance(
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 

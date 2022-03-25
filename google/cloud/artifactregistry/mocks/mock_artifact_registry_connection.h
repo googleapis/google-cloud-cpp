@@ -39,6 +39,29 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::DockerImage>,
+      GetDockerImage,
+      (google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>,
+      ImportAptArtifacts,
+      (google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>,
+      ImportYumArtifacts,
+      (google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       StreamRange<google::devtools::artifactregistry::v1::Repository>,
       ListRepositories,
       (google::devtools::artifactregistry::v1::ListRepositoriesRequest request),
@@ -50,6 +73,129 @@ class MockArtifactRegistryConnection
       (google::devtools::artifactregistry::v1::GetRepositoryRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::artifactregistry::v1::Repository>>,
+      CreateRepository,
+      (google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::Repository>,
+      UpdateRepository,
+      (google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
+      DeleteRepository,
+      (google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::devtools::artifactregistry::v1::Package>,
+      ListPackages,
+      (google::devtools::artifactregistry::v1::ListPackagesRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::devtools::artifactregistry::v1::Package>,
+              GetPackage,
+              (google::devtools::artifactregistry::v1::GetPackageRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
+      DeletePackage,
+      (google::devtools::artifactregistry::v1::DeletePackageRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::devtools::artifactregistry::v1::Version>,
+      ListVersions,
+      (google::devtools::artifactregistry::v1::ListVersionsRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::devtools::artifactregistry::v1::Version>,
+              GetVersion,
+              (google::devtools::artifactregistry::v1::GetVersionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
+      DeleteVersion,
+      (google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::devtools::artifactregistry::v1::File>, ListFiles,
+      (google::devtools::artifactregistry::v1::ListFilesRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::File>, GetFile,
+      (google::devtools::artifactregistry::v1::GetFileRequest const& request),
+      (override));
+
+  MOCK_METHOD(StreamRange<google::devtools::artifactregistry::v1::Tag>,
+              ListTags,
+              (google::devtools::artifactregistry::v1::ListTagsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::Tag>, GetTag,
+      (google::devtools::artifactregistry::v1::GetTagRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::Tag>, CreateTag,
+      (google::devtools::artifactregistry::v1::CreateTagRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::Tag>, UpdateTag,
+      (google::devtools::artifactregistry::v1::UpdateTagRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteTag,
+      (google::devtools::artifactregistry::v1::DeleteTagRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>,
+      GetProjectSettings,
+      (google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>,
+              UpdateProjectSettings,
+              (google::devtools::artifactregistry::v1::
+                   UpdateProjectSettingsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

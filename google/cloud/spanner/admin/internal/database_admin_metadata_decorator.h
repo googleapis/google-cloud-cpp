@@ -87,6 +87,12 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
+
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::GetBackupRequest const& request)

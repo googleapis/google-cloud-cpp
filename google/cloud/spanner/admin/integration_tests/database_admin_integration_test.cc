@@ -129,10 +129,27 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
   EXPECT_FALSE(database->has_encryption_config());
   EXPECT_THAT(database->encryption_info(), IsEmpty());
+  if (emulator_) {
+    EXPECT_EQ(database->database_dialect(),
+              google::spanner::admin::database::v1::DatabaseDialect::
+                  DATABASE_DIALECT_UNSPECIFIED);
+  } else {
+    if (database->database_dialect() ==
+        google::spanner::admin::database::v1::DatabaseDialect::
+            DATABASE_DIALECT_UNSPECIFIED) {
+      // TODO(#8573): Remove when CreateDatabase() returns correct dialect.
+      database->set_database_dialect(google::spanner::admin::database::v1::
+                                         DatabaseDialect::GOOGLE_STANDARD_SQL);
+    }
+    EXPECT_EQ(database->database_dialect(),
+              google::spanner::admin::database::v1::DatabaseDialect::
+                  GOOGLE_STANDARD_SQL);
+  }
 
   auto get_result = client_.GetDatabase(database_.FullName());
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
+  EXPECT_EQ(database->database_dialect(), get_result->database_dialect());
   EXPECT_FALSE(get_result->has_encryption_config());
   if (emulator_) {
     EXPECT_THAT(get_result->encryption_info(), IsEmpty());
@@ -144,6 +161,17 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
                     GOOGLE_DEFAULT_ENCRYPTION);
     }
   }
+
+  auto list_db = [&] {
+    for (auto const& db : client_.ListDatabases(instance_.FullName())) {
+      if (db && db->name() == database_.FullName()) return db;
+    }
+    return StatusOr<google::spanner::admin::database::v1::Database>{
+        Status{StatusCode::kNotFound, "disappeared"}};
+  }();
+  ASSERT_THAT(list_db, IsOk());
+  EXPECT_EQ(database->name(), list_db->name());
+  EXPECT_EQ(database->database_dialect(), list_db->database_dialect());
 
   if (!emulator_) {
     auto current_policy = client_.GetIamPolicy(database_.FullName());
@@ -294,6 +322,8 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
   creq.add_extra_statements(
       absl::StrCat("ALTER DATABASE `", database_.database_id(),
                    "` SET OPTIONS (version_retention_period='7d')"));
+  creq.set_database_dialect(google::spanner::admin::database::v1::
+                                DatabaseDialect::GOOGLE_STANDARD_SQL);
   auto database = client_.CreateDatabase(creq).get();
   if (emulator_) {
     // TODO(#5479): Awaiting emulator support for version_retention_period.
@@ -303,11 +333,15 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
   EXPECT_EQ("7d", database->version_retention_period());
+  EXPECT_EQ(database->database_dialect(),
+            google::spanner::admin::database::v1::DatabaseDialect::
+                GOOGLE_STANDARD_SQL);
 
   // Verify that version_retention_period is returned from GetDatabase().
   auto get = client_.GetDatabase(database_.FullName());
   ASSERT_THAT(get, IsOk());
   EXPECT_EQ(database->name(), get->name());
+  EXPECT_EQ(database->database_dialect(), get->database_dialect());
   EXPECT_EQ("7d", get->version_retention_period());
 
   // Verify that earliest_version_time doesn't go past database create_time.
@@ -315,6 +349,24 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
   EXPECT_TRUE(get->has_earliest_version_time());
   EXPECT_LE(MakeTimestamp(get->create_time()).value(),
             MakeTimestamp(get->earliest_version_time()).value());
+
+  // Verify that version_retention_period is returned via ListDatabases().
+  auto list_db = [&] {
+    for (auto const& db : client_.ListDatabases(instance_.FullName())) {
+      if (db && db->name() == database_.FullName()) return db;
+    }
+    return StatusOr<google::spanner::admin::database::v1::Database>{
+        Status{StatusCode::kNotFound, "disappeared"}};
+  }();
+  ASSERT_THAT(list_db, IsOk());
+  EXPECT_EQ(database->name(), list_db->name());
+  EXPECT_EQ(database->database_dialect(), list_db->database_dialect());
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", list_db->version_retention_period());
+  } else {
+    EXPECT_EQ("7d", list_db->version_retention_period());
+  }
 
   auto drop = client_.DropDatabase(database_.FullName());
   EXPECT_THAT(drop, IsOk());
@@ -462,7 +514,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
   EXPECT_THAT(drop, IsOk());
 }
 
-// @test Verify we can create a database with an encryption key.
+/// @test Verify we can create a database with an encryption key.
 TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
   if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
   KmsKeyName encryption_key(instance_.project_id(), location_, kKeyRing,
@@ -509,8 +561,8 @@ TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
   EXPECT_STATUS_OK(client_.DropDatabase(database_.FullName()));
 }
 
-// @test Verify creating a database fails if a nonexistent encryption key is
-// supplied.
+/// @test Verify creating a database fails if a nonexistent encryption key is
+/// supplied.
 TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
   if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
   KmsKeyName nonexistent_encryption_key(instance_.project_id(), location_,
@@ -524,6 +576,49 @@ TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
   auto database = client_.CreateDatabase(creq).get();
   EXPECT_THAT(database, StatusIs(StatusCode::kFailedPrecondition,
                                  HasSubstr("KMS Key provided is not usable")));
+}
+
+/// @test Verify basic operations for PostgreSQL-type databases.
+TEST_F(DatabaseAdminClientTest, DatabasePostgreSQLBasics) {
+  google::spanner::admin::database::v1::CreateDatabaseRequest creq;
+  creq.set_parent(database_.instance().FullName());
+  creq.set_create_statement(
+      absl::StrCat("CREATE DATABASE ", database_.database_id()));
+  creq.set_database_dialect(
+      google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
+  auto database = client_.CreateDatabase(creq).get();
+  ASSERT_STATUS_OK(database);
+  EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
+  if (emulator_) {
+    EXPECT_EQ(database->database_dialect(),
+              google::spanner::admin::database::v1::DatabaseDialect::
+                  DATABASE_DIALECT_UNSPECIFIED);
+  } else {
+    EXPECT_EQ(
+        database->database_dialect(),
+        google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
+  }
+
+  // Verify that GetDatabase() returns the correct dialect.
+  auto get = client_.GetDatabase(database->name());
+  ASSERT_THAT(get, IsOk());
+  EXPECT_EQ(database->name(), get->name());
+  EXPECT_EQ(database->database_dialect(), get->database_dialect());
+
+  // Verify that ListDatabases() returns the correct dialect.
+  auto list_db = [&] {
+    for (auto const& db : client_.ListDatabases(instance_.FullName())) {
+      if (db && db->name() == database_.FullName()) return db;
+    }
+    return StatusOr<google::spanner::admin::database::v1::Database>{
+        Status{StatusCode::kNotFound, "disappeared"}};
+  }();
+  ASSERT_THAT(list_db, IsOk());
+  EXPECT_EQ(database->name(), list_db->name());
+  EXPECT_EQ(database->database_dialect(), list_db->database_dialect());
+
+  auto drop_status = client_.DropDatabase(database->name());
+  EXPECT_STATUS_OK(drop_status);
 }
 
 }  // namespace

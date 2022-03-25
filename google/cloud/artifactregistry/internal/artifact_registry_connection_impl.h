@@ -26,10 +26,13 @@
 #include "google/cloud/artifactregistry/internal/artifact_registry_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -54,6 +57,22 @@ class ArtifactRegistryConnectionImpl
       google::devtools::artifactregistry::v1::ListDockerImagesRequest request)
       override;
 
+  StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
+      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) override;
+
   StreamRange<google::devtools::artifactregistry::v1::Repository>
   ListRepositories(
       google::devtools::artifactregistry::v1::ListRepositoriesRequest request)
@@ -62,6 +81,92 @@ class ArtifactRegistryConnectionImpl
   StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&
           request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+  CreateRepository(
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
+      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteRepository(
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) override;
+
+  StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
+      google::devtools::artifactregistry::v1::ListPackagesRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
+      google::devtools::artifactregistry::v1::GetPackageRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeletePackage(
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) override;
+
+  StreamRange<google::devtools::artifactregistry::v1::Version> ListVersions(
+      google::devtools::artifactregistry::v1::ListVersionsRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
+      google::devtools::artifactregistry::v1::GetVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion(
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) override;
+
+  StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
+      google::devtools::artifactregistry::v1::ListFilesRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
+      google::devtools::artifactregistry::v1::GetFileRequest const& request)
+      override;
+
+  StreamRange<google::devtools::artifactregistry::v1::Tag> ListTags(
+      google::devtools::artifactregistry::v1::ListTagsRequest request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
+      google::devtools::artifactregistry::v1::GetTagRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
+      google::devtools::artifactregistry::v1::CreateTagRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
+      google::devtools::artifactregistry::v1::UpdateTagRequest const& request)
+      override;
+
+  Status DeleteTag(
+      google::devtools::artifactregistry::v1::DeleteTagRequest const& request)
+      override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  GetProjectSettings(
+      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  UpdateProjectSettings(
+      google::devtools::artifactregistry::v1::
+          UpdateProjectSettingsRequest const& request) override;
 
  private:
   std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy>
@@ -100,6 +205,18 @@ class ArtifactRegistryConnectionImpl
     return options_
         .get<artifactregistry::
                  ArtifactRegistryConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
+      return options
+          .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
         ->clone();
   }
 

@@ -130,6 +130,11 @@ class MockBigtableInstanceAdminConnection
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
+
+  MOCK_METHOD(StreamRange<google::bigtable::admin::v2::HotTablet>,
+              ListHotTablets,
+              (google::bigtable::admin::v2::ListHotTabletsRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

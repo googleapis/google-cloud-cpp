@@ -124,12 +124,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L31}
   ///
   /// [google.cloud.channel.v1.ListCustomersRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L987}
   /// [google.cloud.channel.v1.Customer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
       google::cloud::channel::v1::ListCustomersRequest request,
@@ -155,12 +155,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L31}
   ///
   /// [google.cloud.channel.v1.GetCustomerRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1015}
   /// [google.cloud.channel.v1.Customer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
       std::string const& name, Options opts = {});
@@ -185,12 +185,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L31}
   ///
   /// [google.cloud.channel.v1.GetCustomerRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1015}
   /// [google.cloud.channel.v1.Customer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
       google::cloud::channel::v1::GetCustomerRequest const& request,
@@ -255,12 +255,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L31}
   ///
   /// [google.cloud.channel.v1.CreateCustomerRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1027}
   /// [google.cloud.channel.v1.Customer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   StatusOr<google::cloud::channel::v1::Customer> CreateCustomer(
       google::cloud::channel::v1::CreateCustomerRequest const& request,
@@ -286,12 +286,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L31}
   ///
   /// [google.cloud.channel.v1.UpdateCustomerRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1037}
   /// [google.cloud.channel.v1.Customer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   StatusOr<google::cloud::channel::v1::Customer> UpdateCustomer(
       google::cloud::channel::v1::UpdateCustomerRequest const& request,
@@ -368,12 +368,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L31}
   ///
   /// [google.cloud.channel.v1.ImportCustomerRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1058}
   /// [google.cloud.channel.v1.Customer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   StatusOr<google::cloud::channel::v1::Customer> ImportCustomer(
       google::cloud::channel::v1::ImportCustomerRequest const& request,
@@ -408,12 +408,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_link{google::cloud::channel::v1::Customer,google/cloud/channel/v1/customers.proto#L31}
   ///
   /// [google.cloud.channel.v1.ProvisionCloudIdentityRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1104}
   /// [google.cloud.channel.v1.Customer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L32}
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
@@ -437,12 +437,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.ListEntitlementsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1125}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
       google::cloud::channel::v1::ListEntitlementsRequest request,
@@ -474,12 +474,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::TransferableSku,google/cloud/channel/v1/entitlements.proto#L215}
+  /// @googleapis_link{google::cloud::channel::v1::TransferableSku,google/cloud/channel/v1/entitlements.proto#L213}
   ///
   /// [google.cloud.channel.v1.ListTransferableSkusRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1159}
   /// [google.cloud.channel.v1.TransferableSku]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L215}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L213}
   ///
   StreamRange<google::cloud::channel::v1::TransferableSku> ListTransferableSkus(
       google::cloud::channel::v1::ListTransferableSkusRequest request,
@@ -541,12 +541,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.GetEntitlementRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1272}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   StatusOr<google::cloud::channel::v1::Entitlement> GetEntitlement(
       google::cloud::channel::v1::GetEntitlementRequest const& request,
@@ -596,12 +596,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.CreateEntitlementRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1358}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
       google::cloud::channel::v1::CreateEntitlementRequest const& request,
@@ -638,12 +638,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.ChangeParametersRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1448}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
       google::cloud::channel::v1::ChangeParametersRequest const& request,
@@ -681,12 +681,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.ChangeRenewalSettingsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1478}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ChangeRenewalSettings(
@@ -722,12 +722,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.ChangeOfferRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1502}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
       google::cloud::channel::v1::ChangeOfferRequest const& request,
@@ -765,12 +765,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.StartPaidServiceRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1539}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
       google::cloud::channel::v1::StartPaidServiceRequest const& request,
@@ -805,12 +805,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.SuspendEntitlementRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1581}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
       google::cloud::channel::v1::SuspendEntitlementRequest const& request,
@@ -850,12 +850,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::OperationMetadata,google/cloud/channel/v1/operations.proto#L27}
+  /// @googleapis_link{google::cloud::channel::v1::OperationMetadata,google/cloud/channel/v1/operations.proto#L25}
   ///
   /// [google.cloud.channel.v1.CancelEntitlementRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1560}
   /// [google.cloud.channel.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L27}
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L25}
   ///
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   CancelEntitlement(
@@ -897,12 +897,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_link{google::cloud::channel::v1::Entitlement,google/cloud/channel/v1/entitlements.proto#L32}
   ///
   /// [google.cloud.channel.v1.ActivateEntitlementRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1602}
   /// [google.cloud.channel.v1.Entitlement]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L34}
+  /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
       google::cloud::channel::v1::ActivateEntitlementRequest const& request,
@@ -994,12 +994,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::OperationMetadata,google/cloud/channel/v1/operations.proto#L27}
+  /// @googleapis_link{google::cloud::channel::v1::OperationMetadata,google/cloud/channel/v1/operations.proto#L25}
   ///
   /// [google.cloud.channel.v1.TransferEntitlementsToGoogleRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1424}
   /// [google.cloud.channel.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L27}
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L25}
   ///
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   TransferEntitlementsToGoogle(
@@ -1027,12 +1027,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   /// [google.cloud.channel.v1.ListChannelPartnerLinksRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1285}
   /// [google.cloud.channel.v1.ChannelPartnerLink]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
   ListChannelPartnerLinks(
@@ -1061,12 +1061,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   /// [google.cloud.channel.v1.GetChannelPartnerLinkRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1317}
   /// [google.cloud.channel.v1.ChannelPartnerLink]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
   GetChannelPartnerLink(
@@ -1103,12 +1103,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   /// [google.cloud.channel.v1.CreateChannelPartnerLinkRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1328}
   /// [google.cloud.channel.v1.ChannelPartnerLink]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
   CreateChannelPartnerLink(
@@ -1145,12 +1145,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_link{google::cloud::channel::v1::ChannelPartnerLink,google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   /// [google.cloud.channel.v1.UpdateChannelPartnerLinkRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1341}
   /// [google.cloud.channel.v1.ChannelPartnerLink]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L65}
+  /// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L64}
   ///
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
   UpdateChannelPartnerLink(
@@ -1175,12 +1175,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L131}
+  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L130}
   ///
   /// [google.cloud.channel.v1.LookupOfferRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1623}
   /// [google.cloud.channel.v1.Offer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L131}
+  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L130}
   ///
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request,
@@ -1198,12 +1198,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Product,google/cloud/channel/v1/products.proto#L38}
+  /// @googleapis_link{google::cloud::channel::v1::Product,google/cloud/channel/v1/products.proto#L37}
   ///
   /// [google.cloud.channel.v1.ListProductsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1636}
   /// [google.cloud.channel.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/products.proto#L38}
+  /// @googleapis_reference_link{google/cloud/channel/v1/products.proto#L37}
   ///
   StreamRange<google::cloud::channel::v1::Product> ListProducts(
       google::cloud::channel::v1::ListProductsRequest request,
@@ -1221,12 +1221,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Sku,google/cloud/channel/v1/products.proto#L56}
+  /// @googleapis_link{google::cloud::channel::v1::Sku,google/cloud/channel/v1/products.proto#L55}
   ///
   /// [google.cloud.channel.v1.ListSkusRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1665}
   /// [google.cloud.channel.v1.Sku]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/products.proto#L56}
+  /// @googleapis_reference_link{google/cloud/channel/v1/products.proto#L55}
   ///
   StreamRange<google::cloud::channel::v1::Sku> ListSkus(
       google::cloud::channel::v1::ListSkusRequest request, Options opts = {});
@@ -1243,12 +1243,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L131}
+  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L130}
   ///
   /// [google.cloud.channel.v1.ListOffersRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1705}
   /// [google.cloud.channel.v1.Offer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L131}
+  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L130}
   ///
   StreamRange<google::cloud::channel::v1::Offer> ListOffers(
       google::cloud::channel::v1::ListOffersRequest request, Options opts = {});

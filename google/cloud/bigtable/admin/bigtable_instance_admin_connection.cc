@@ -163,6 +163,14 @@ BigtableInstanceAdminConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::bigtable::admin::v2::HotTablet>
+    BigtableInstanceAdminConnection::ListHotTablets(
+        google::bigtable::admin::v2::
+            ListHotTabletsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::HotTablet>>();
+}
+
 std::shared_ptr<BigtableInstanceAdminConnection>
 MakeBigtableInstanceAdminConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

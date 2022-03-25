@@ -45,6 +45,12 @@ class CloudRedisStub {
       grpc::ClientContext& context,
       google::cloud::redis::v1::GetInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::redis::v1::InstanceAuthString>
+  GetInstanceAuthString(
+      grpc::ClientContext& context,
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -81,6 +87,13 @@ class CloudRedisStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRescheduleMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -108,6 +121,11 @@ class DefaultCloudRedisStub : public CloudRedisStub {
   StatusOr<google::cloud::redis::v1::Instance> GetInstance(
       grpc::ClientContext& client_context,
       google::cloud::redis::v1::GetInstanceRequest const& request) override;
+
+  StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
+      grpc::ClientContext& client_context,
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
@@ -144,6 +162,12 @@ class DefaultCloudRedisStub : public CloudRedisStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

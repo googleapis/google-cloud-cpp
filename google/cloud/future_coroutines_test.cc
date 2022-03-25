@@ -14,7 +14,7 @@
 // limitations under the License.
 
 #include "google/cloud/future.h"
-#if GOOGLE_CLOUD_CPP_CPP_VERSION >= 202002L && __cpp_impl_coroutine
+#if GOOGLE_CLOUD_CPP_HAVE_COROUTINES
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <ranges>
@@ -149,4 +149,4 @@ TEST(FutureCoroutines, ThrowInt) {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google::cloud
 
-#endif  // GOOGLE_CLOUD_CPP_CPP_VERSION >= 202002L
+#endif  // GOOGLE_CLOUD_CPP_CPP_HAVE_COROUTINES

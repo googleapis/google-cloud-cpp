@@ -60,6 +60,10 @@ class CloudRedisConnection {
   virtual StatusOr<google::cloud::redis::v1::Instance> GetInstance(
       google::cloud::redis::v1::GetInstanceRequest const& request);
 
+  virtual StatusOr<google::cloud::redis::v1::InstanceAuthString>
+  GetInstanceAuthString(
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request);
+
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
       google::cloud::redis::v1::CreateInstanceRequest const& request);
 
@@ -81,6 +85,10 @@ class CloudRedisConnection {
   virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
   DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
+  RescheduleMaintenance(
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
 };
 
 std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(

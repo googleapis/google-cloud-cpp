@@ -110,6 +110,17 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
                                                    db.database_id(), "`"))
                       .get();
   ASSERT_STATUS_OK(database);
+  EXPECT_EQ(database->name(), db.FullName());
+  if (database->database_dialect() ==
+      google::spanner::admin::database::v1::DatabaseDialect::
+          DATABASE_DIALECT_UNSPECIFIED) {
+    // TODO(#8573): Remove when CreateDatabase() returns correct dialect.
+    database->set_database_dialect(google::spanner::admin::database::v1::
+                                       DatabaseDialect::GOOGLE_STANDARD_SQL);
+  }
+  EXPECT_EQ(database->database_dialect(),
+            google::spanner::admin::database::v1::DatabaseDialect::
+                GOOGLE_STANDARD_SQL);
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
@@ -160,6 +171,7 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
     // Verify that the version_time is the same as the creation_time.
     EXPECT_EQ(MakeTimestamp(backup->version_time()).value(),
               MakeTimestamp(backup->create_time()).value());
+    EXPECT_EQ(backup->database_dialect(), database->database_dialect());
   }
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db.FullName()));
@@ -167,7 +179,10 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
   Backup backup_name(in, db.database_id());
   auto backup_get = database_admin_client_.GetBackup(backup_name.FullName());
   EXPECT_STATUS_OK(backup_get);
-  EXPECT_EQ(backup_get->name(), backup->name());
+  if (backup_get) {
+    EXPECT_EQ(backup_get->name(), backup->name());
+    EXPECT_EQ(backup_get->database_dialect(), backup->database_dialect());
+  }
 
   Database restore_db(in, spanner_testing::RandomDatabaseName(generator_));
   auto restored_database =
@@ -176,6 +191,19 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
                            restore_db.database_id(), backup_name.FullName())
           .get();
   EXPECT_STATUS_OK(restored_database);
+  if (restored_database) {
+    EXPECT_EQ(restored_database->name(), restore_db.FullName());
+    if (restored_database->database_dialect() ==
+        google::spanner::admin::database::v1::DatabaseDialect::
+            DATABASE_DIALECT_UNSPECIFIED) {
+      // TODO(#8573): Remove when RestoreDatabase() returns correct dialect.
+      restored_database->set_database_dialect(
+          google::spanner::admin::database::v1::DatabaseDialect::
+              GOOGLE_STANDARD_SQL);
+    }
+    EXPECT_EQ(restored_database->database_dialect(),
+              database->database_dialect());
+  }
 
   // List the database operations
   std::ostringstream db_op_filter;

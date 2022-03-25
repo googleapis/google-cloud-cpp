@@ -96,12 +96,12 @@ class ConnectionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L125}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L124}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   CreateConnection(
@@ -113,16 +113,16 @@ class ConnectionServiceClient {
   /// Creates a new connection.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::CreateConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L125}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::CreateConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L124}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L125}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L124}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   CreateConnection(
@@ -138,12 +138,12 @@ class ConnectionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L143}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L142}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
       std::string const& name, Options opts = {});
@@ -152,16 +152,16 @@ class ConnectionServiceClient {
   /// Returns specified connection.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::GetConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L143}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::GetConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L142}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L143}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L142}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
       google::cloud::bigquery::connection::v1::GetConnectionRequest const&
@@ -176,12 +176,12 @@ class ConnectionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L155}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L154}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StreamRange<google::cloud::bigquery::connection::v1::Connection>
   ListConnections(std::string const& parent, Options opts = {});
@@ -190,16 +190,16 @@ class ConnectionServiceClient {
   /// Returns a list of connections in the given project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::ListConnectionsRequest,google/cloud/bigquery/connection/v1/connection.proto#L155}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::ListConnectionsRequest,google/cloud/bigquery/connection/v1/connection.proto#L154}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L155}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L154}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StreamRange<google::cloud::bigquery::connection::v1::Connection>
   ListConnections(
@@ -218,12 +218,12 @@ class ConnectionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L182}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L181}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   UpdateConnection(
@@ -236,16 +236,16 @@ class ConnectionServiceClient {
   /// credential if connection properties are in the update field mask.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::UpdateConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L182}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::UpdateConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L181}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   /// [google.cloud.bigquery.connection.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L182}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L181}
   /// [google.cloud.bigquery.connection.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L213}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   UpdateConnection(
@@ -262,7 +262,7 @@ class ConnectionServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.connection.v1.DeleteConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L200}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L199}
   ///
   Status DeleteConnection(std::string const& name, Options opts = {});
 
@@ -270,12 +270,12 @@ class ConnectionServiceClient {
   /// Deletes connection and associated credential.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::connection::v1::DeleteConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L200}
+  /// @googleapis_link{google::cloud::bigquery::connection::v1::DeleteConnectionRequest,google/cloud/bigquery/connection/v1/connection.proto#L199}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.connection.v1.DeleteConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L200}
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L199}
   ///
   Status DeleteConnection(
       google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&

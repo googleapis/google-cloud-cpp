@@ -728,6 +728,23 @@ google::storage::v2::QueryWriteStatusRequest GrpcObjectRequestParser::ToProto(
   return r;
 }
 
+ResumableUploadResponse GrpcObjectRequestParser::FromProto(
+    google::storage::v2::QueryWriteStatusResponse const& response,
+    Options const& options) {
+  ResumableUploadResponse result;
+  result.upload_state = ResumableUploadResponse::kInProgress;
+  if (response.has_persisted_size()) {
+    result.committed_size =
+        static_cast<std::uint64_t>(response.persisted_size());
+  }
+  if (response.has_resource()) {
+    result.payload =
+        GrpcObjectMetadataParser::FromProto(response.resource(), options);
+    result.upload_state = ResumableUploadResponse::kDone;
+  }
+  return result;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

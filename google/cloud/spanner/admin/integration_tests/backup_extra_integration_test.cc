@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -249,6 +250,35 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithVersionTime) {
         EXPECT_STATUS_OK(database_admin_client_.DropDatabase(rdb.FullName()));
       }
 
+      // While we have a backup handy, verify that we can copy it.
+      auto backup_id = spanner_testing::RandomBackupName(generator_);
+      auto max_expire_time =
+          google::cloud::spanner::MakeTimestamp(backup->max_expire_time())
+              .value();
+      auto bad_expire_time =
+          google::cloud::spanner::MakeTimestamp(
+              max_expire_time.get<absl::Time>().value() + absl::Hours(1))
+              .value();
+      auto copy_backup =
+          database_admin_client_
+              .CopyBackup(db.instance().FullName(), backup_id, backup->name(),
+                          bad_expire_time.get<protobuf::Timestamp>().value())
+              .get();
+      EXPECT_THAT(copy_backup, StatusIs(StatusCode::kInvalidArgument,
+                                        HasSubstr("exceeded the maximum")));
+      if (!copy_backup) {
+        copy_backup =
+            database_admin_client_
+                .CopyBackup(db.instance().FullName(), backup_id, backup->name(),
+                            max_expire_time.get<protobuf::Timestamp>().value())
+                .get();
+        EXPECT_STATUS_OK(copy_backup);
+      }
+      if (copy_backup) {
+        EXPECT_STATUS_OK(
+            database_admin_client_.DeleteBackup(copy_backup->name()));
+      }
+
       EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(backup->name()));
     }
   }
@@ -367,9 +397,10 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
   google::spanner::admin::database::v1::CreateDatabaseRequest creq;
   creq.set_parent(db.instance().FullName());
-  creq.set_create_statement(
-      absl::StrCat("CREATE DATABASE `", db.database_id(), "`"));
+  creq.set_create_statement(absl::StrCat("CREATE DATABASE ", db.database_id()));
   creq.mutable_encryption_config()->set_kms_key_name(encryption_key.FullName());
+  creq.set_database_dialect(
+      google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
   auto database = database_admin_client_.CreateDatabase(creq).get();
   ASSERT_STATUS_OK(database);
   EXPECT_TRUE(database->has_encryption_config());
@@ -378,6 +409,8 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
               encryption_key.FullName());
   }
   EXPECT_THAT(database->encryption_info(), IsEmpty());
+  EXPECT_EQ(database->database_dialect(),
+            google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
 
   auto database_get = database_admin_client_.GetDatabase(db.FullName());
   ASSERT_STATUS_OK(database_get);
@@ -387,6 +420,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_EQ(database_get->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
+  EXPECT_EQ(database_get->database_dialect(), database->database_dialect());
 
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
@@ -411,6 +445,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_THAT(backup->encryption_info().kms_key_version(),
                 HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
   }
+  EXPECT_EQ(backup->database_dialect(), database->database_dialect());
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db.FullName()));
 
@@ -426,6 +461,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_THAT(backup_get->encryption_info().kms_key_version(),
                 HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
   }
+  EXPECT_EQ(backup_get->database_dialect(), database->database_dialect());
 
   Database restore_db(in, spanner_testing::RandomDatabaseName(generator_));
   google::spanner::admin::database::v1::RestoreDatabaseRequest rreq;
@@ -443,6 +479,15 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_EQ(restored_database->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
+  if (restored_database->database_dialect() ==
+      google::spanner::admin::database::v1::DatabaseDialect::
+          DATABASE_DIALECT_UNSPECIFIED) {
+    // TODO(#8573): Remove when RestoreDatabase() returns correct dialect.
+    restored_database->set_database_dialect(
+        google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
+  }
+  EXPECT_EQ(restored_database->database_dialect(),
+            database->database_dialect());
 
   auto restored_get = database_admin_client_.GetDatabase(restore_db.FullName());
   ASSERT_STATUS_OK(restored_get);
@@ -452,6 +497,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_EQ(restored_get->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
+  EXPECT_EQ(restored_get->database_dialect(), database->database_dialect());
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(restore_db.FullName()));
 
@@ -473,6 +519,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
             b->encryption_info().kms_key_version(),
             HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
       }
+      EXPECT_EQ(b->database_dialect(), backup->database_dialect());
     }
   }
   EXPECT_TRUE(found);

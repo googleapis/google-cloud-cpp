@@ -45,7 +45,8 @@ std::shared_ptr<ArtifactRegistryStub> CreateDefaultArtifactRegistryStub(
           channel);
   std::shared_ptr<ArtifactRegistryStub> stub =
       std::make_shared<DefaultArtifactRegistryStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<ArtifactRegistryAuth>(std::move(auth),

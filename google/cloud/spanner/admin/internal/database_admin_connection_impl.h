@@ -93,6 +93,10 @@ class DatabaseAdminConnectionImpl
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
+
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request)
       override;

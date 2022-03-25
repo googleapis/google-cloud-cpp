@@ -15,6 +15,7 @@
 #include "google/cloud/pubsublite/internal/partition_publisher.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <functional>
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -23,27 +24,21 @@ namespace pubsublite_internal {
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
+using google::cloud::pubsublite::v1::MessagePublishRequest;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
 
 PartitionPublisher::PartitionPublisher(
-    absl::FunctionRef<
-        ResumableStream(StreamInitializer<PublishRequest, PublishResponse>)>
+    absl::FunctionRef<std::unique_ptr<ResumableStream>(
+        StreamInitializer<PublishRequest, PublishResponse>)>
         resumable_stream_factory,
     BatchingOptions batching_options, InitialPublishRequest ipr,
     AlarmRegistry& alarm_registry)
     : batching_options_{std::move(batching_options)},
       initial_publish_request_{std::move(ipr)},
-      // TODO(18suresha) implement `Initializer`
-      resumable_stream_{resumable_stream_factory(
-          [](ResumableAsyncStreamingReadWriteRpcImpl<
-              PublishRequest, PublishResponse>::UnderlyingStream stream) {
-            return make_ready_future(
-                StatusOr<ResumableAsyncStreamingReadWriteRpcImpl<
-                    PublishRequest, PublishResponse>::UnderlyingStream>(
-                    std::move(stream)));
-          })},
+      resumable_stream_{resumable_stream_factory(std::bind(
+          &PartitionPublisher::Initializer, this, std::placeholders::_1))},
       service_composite_{resumable_stream_.get()},
       cancel_token_{alarm_registry.RegisterAlarm(
           batching_options_.alarm_period(),
@@ -60,17 +55,37 @@ PartitionPublisher::~PartitionPublisher() {
 }
 
 future<Status> PartitionPublisher::Start() {
-  return service_composite_.Start();
-  // TODO(18suresha) call and implement `Read`
+  auto start_return = service_composite_.Start();
+  Read();
+  return start_return;
 }
 
-future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage) {
-  // TODO(18suresha) implement
-  return make_ready_future(StatusOr<Cursor>{Status{}});
+future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
+  if (!service_composite_.status().ok()) {
+    return make_ready_future(
+        StatusOr<Cursor>(Status(StatusCode::kAborted, "Already shut down.")));
+  }
+  MessageWithPromise unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
+  future<StatusOr<Cursor>> message_future =
+      unbatched.message_promise.get_future();
+  std::lock_guard<std::mutex> g{mu_};
+  unbatched_messages_.emplace_back(std::move(unbatched));
+  return message_future;
 }
 
 void PartitionPublisher::Flush() {
-  // TODO(18suresha) implement
+  if (!service_composite_.status().ok()) return;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    auto batches =
+        CreateBatches(std::move(unbatched_messages_), batching_options_);
+    std::move(batches.begin(), batches.end(),
+              std::back_inserter(unsent_batches_));
+    unbatched_messages_.clear();
+    if (writing_) return;
+    writing_ = true;
+  }
+  WriteBatches();
 }
 
 future<void> PartitionPublisher::Shutdown() {
@@ -79,9 +94,80 @@ future<void> PartitionPublisher::Shutdown() {
       [this](future<void>) { SatisfyOutstandingMessages(); });
 }
 
-std::deque<PartitionPublisher::MessageWithPromise>
-PartitionPublisher::UnbatchAll() {  // ABSL_LOCKS_REQUIRED(mu_)
+void PartitionPublisher::WriteBatches() {
+  AsyncRoot root;
   std::lock_guard<std::mutex> g{mu_};
+  if (unsent_batches_.empty() || !service_composite_.status().ok()) {
+    writing_ = false;
+    return;
+  }
+  in_flight_batches_.push_back(std::move(unsent_batches_.front()));
+  unsent_batches_.pop_front();
+  PublishRequest publish_request;
+  MessagePublishRequest& message_publish_request =
+      *publish_request.mutable_message_publish_request();
+  for (auto& message : in_flight_batches_.back()) {
+    // don't move so that messages can be rewritten on failure
+    *message_publish_request.add_messages() = message.message;
+  }
+  root.get_future()
+      .then(ChainFuture(resumable_stream_->Write(std::move(publish_request))))
+      .then([this](future<bool> write_response) {
+        if (write_response.get()) return WriteBatches();
+        std::lock_guard<std::mutex> g{mu_};
+        writing_ = false;
+      });
+}
+
+void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
+  // optional not engaged implies that the retry loop has finished
+  if (!response) return Read();
+  if (!response->has_message_response()) {
+    // if we don't receive a `MessagePublishResponse` and/or receive an
+    // `InitialPublishResponse`, we abort because this should not be the
+    // case once we start `Read`ing
+    service_composite_.Abort(Status(
+        StatusCode::kAborted,
+        absl::StrCat("Invalid `Read` response: ", response->DebugString())));
+    return;
+  }
+
+  std::deque<MessageWithPromise> batch;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (in_flight_batches_.empty()) {
+      return service_composite_.Abort(
+          Status(StatusCode::kFailedPrecondition,
+                 "Server sent message response when no batches were "
+                 "outstanding."));
+    }
+    batch = std::move(in_flight_batches_.front());
+    in_flight_batches_.pop_front();
+  }
+  std::int64_t offset = response->message_response().start_cursor().offset();
+  for (auto& message : batch) {
+    Cursor c;
+    c.set_offset(offset);
+    ++offset;
+    message.message_promise.set_value(std::move(c));
+  }
+  Read();
+}
+
+void PartitionPublisher::Read() {
+  AsyncRoot root;
+  if (!service_composite_.status().ok()) return;
+  // need lock because calling `resumable_stream_->Read()`
+  std::lock_guard<std::mutex> g{mu_};
+  root.get_future()
+      .then(ChainFuture(resumable_stream_->Read()))
+      .then([this](future<absl::optional<PublishResponse>> response) {
+        OnRead(response.get());
+      });
+}
+
+std::deque<PartitionPublisher::MessageWithPromise>
+PartitionPublisher::UnbatchAll(std::unique_lock<std::mutex> const&) {
   std::deque<MessageWithPromise> to_return;
   for (auto& batch : in_flight_batches_) {
     for (auto& message : batch) {
@@ -109,8 +195,8 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithPromise> messages,
   std::deque<MessageWithPromise> current_batch;
   std::int64_t current_byte_size = 0;
   std::int64_t current_messages = 0;
-  for (auto& message_with_future : messages) {
-    std::int64_t message_size = message_with_future.message.ByteSizeLong();
+  for (auto& message : messages) {
+    std::int64_t message_size = message.message.ByteSizeLong();
     if (current_messages + 1 > options.maximum_batch_message_count() ||
         current_byte_size + message_size > options.maximum_batch_bytes()) {
       if (!current_batch.empty()) {
@@ -121,7 +207,7 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithPromise> messages,
         current_messages = 0;
       }
     }
-    current_batch.push_back(std::move(message_with_future));
+    current_batch.push_back(std::move(message));
     current_byte_size += message_size;
     ++current_messages;
   }
@@ -130,12 +216,46 @@ PartitionPublisher::CreateBatches(std::deque<MessageWithPromise> messages,
 }
 
 void PartitionPublisher::SatisfyOutstandingMessages() {
-  std::deque<MessageWithPromise> messages_with_futures;
-  messages_with_futures = UnbatchAll();
-  for (auto& message_with_future : messages_with_futures) {
-    message_with_future.message_promise.set_value(
+  auto unacked_messages = UnbatchAll(std::unique_lock<std::mutex>{mu_});
+  for (auto& message : unacked_messages) {
+    message.message_promise.set_value(
         StatusOr<Cursor>(service_composite_.status()));
   }
+}
+
+future<StatusOr<ResumableAsyncStreamingReadWriteRpcImpl<
+    PublishRequest, PublishResponse>::UnderlyingStream>>
+PartitionPublisher::Initializer(ResumableStreamImpl::UnderlyingStream stream) {
+  // By the time initializer is called, no outstanding Read() or Write()
+  // futures will be outstanding.
+  auto shared_stream = std::make_shared<ResumableStreamImpl::UnderlyingStream>(
+      std::move(stream));
+  PublishRequest publish_request;
+  *publish_request.mutable_initial_request() = initial_publish_request_;
+  return (*shared_stream)
+      ->Write(publish_request, grpc::WriteOptions())
+      .then([shared_stream](future<bool> write_response) {
+        if (!write_response.get()) {
+          return make_ready_future(absl::optional<PublishResponse>());
+        }
+        return (*shared_stream)->Read();
+      })
+      .then([shared_stream](
+                future<absl::optional<PublishResponse>> read_response) {
+        auto response = read_response.get();
+        if (response && response->has_initial_response()) {
+          return make_ready_future(Status());
+        }
+        return (*shared_stream)->Finish();
+      })
+      .then([this, shared_stream](future<Status> f)
+                -> StatusOr<ResumableStreamImpl::UnderlyingStream> {
+        Status status = f.get();
+        if (!status.ok()) return status;
+        std::unique_lock<std::mutex> lk{mu_};
+        unsent_batches_ = CreateBatches(UnbatchAll(lk), batching_options_);
+        return std::move(*shared_stream);
+      });
 }
 
 }  // namespace pubsublite_internal
