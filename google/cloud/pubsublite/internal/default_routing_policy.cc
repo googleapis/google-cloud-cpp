@@ -41,7 +41,7 @@ std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod) {
     std::uint64_t pow = big_endian.size() - (i + 1);
     std::uint64_t pow_mod = ModPow(
         // 2^8
-        static_cast<std::uint64_t>(2 * 2 * 2 * 2 * 2 * 2 * 2 * 2), pow, mod);
+        static_cast<std::uint64_t>(1 << 8), pow, mod);
 
     result += (val_mod * pow_mod) % mod;
     result %= mod;
@@ -49,14 +49,13 @@ std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod) {
   return result;
 }
 
-std::uint64_t DefaultRoutingPolicy::RouteWithoutKey(
-    std::uint32_t num_partitions) {
+std::uint64_t DefaultRoutingPolicy::Route(std::uint32_t num_partitions) {
   return counter_.fetch_add(1, std::memory_order_relaxed) % num_partitions;
 }
 
-std::uint64_t DefaultRoutingPolicy::Route(std::string message_key,
+std::uint64_t DefaultRoutingPolicy::Route(std::string const& message_key,
                                           std::uint32_t num_partitions) {
-  return GetMod(google::cloud::internal::Sha256Hash(std::move(message_key)),
+  return GetMod(google::cloud::internal::Sha256Hash(message_key),
                 num_partitions);
 }
 

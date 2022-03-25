@@ -27,17 +27,24 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+// Calculates the val^pow % mod while accounting for overflow.
+// Needed because after calculating `big_endian[i]` % `mod` in `GetMod`, we need
+// to account for its position in the array by multiplying it by an offset.
 std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod);
 
+// returns <integer value of `big_endian`> % `mod` while accounting for overflow
 std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
 
 class DefaultRoutingPolicy : public RoutingPolicy {
  public:
-  std::uint64_t RouteWithoutKey(std::uint32_t num_partitions) override;
+  std::uint64_t Route(std::uint32_t num_partitions) override;
 
-  // uses SHA-256 as it's provided in the standard library of all silver
-  // languages, enabling consistent hashing across languages
-  std::uint64_t Route(std::string message_key,
+  // Uses SHA-256 as it's provided in the standard library of all silver
+  // languages, enabling consistent hashing across languages.
+  // Algorithm is <big-endian integer representation of SHA256(`message_key`)> %
+  // `num_partitions`
+  // Note that the same algorithm is used across all client libraries.
+  std::uint64_t Route(std::string const& message_key,
                       std::uint32_t num_partitions) override;
 
  private:

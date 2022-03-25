@@ -22,11 +22,17 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+/**
+ * Interface for a Pub/Sub Lite routing policy that determines the partition
+ * that a message should be sent to, either depending on the message's key or
+ * not.
+ */
 class RoutingPolicy {
  public:
-  virtual std::uint64_t RouteWithoutKey(std::uint32_t num_partitions) = 0;
-  virtual std::uint64_t Route(std::string message_key,
+  virtual std::uint64_t Route(std::uint32_t num_partitions) = 0;
+  virtual std::uint64_t Route(std::string const& message_key,
                               std::uint32_t num_partitions) = 0;
+  virtual ~RoutingPolicy() = default;
 };
 
 }  // namespace pubsublite_internal
