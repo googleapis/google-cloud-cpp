@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/location.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <chrono>
 #include <deque>
 #include <memory>
 
@@ -24,14 +22,6 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 namespace {
-
-using ::google::cloud::testing_util::IsOk;
-using ::testing::_;
-using ::testing::ByMove;
-using ::testing::InSequence;
-using ::testing::MockFunction;
-using ::testing::Return;
-using ::testing::StrictMock;
 
 TEST(CloudRegion, ValidRegion) {
   std::string str = "first-second";
