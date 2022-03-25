@@ -122,7 +122,7 @@ TEST_F(AlarmRegistryImplTest, TokenDestroyedDuringSecondRun) {
   promise<void> in_alarm_function;
   promise<void> destroy_finished;
 
-  EXPECT_CALL(fun_, Call).WillOnce([&in_alarm_function, &destroy_finished]() {
+  EXPECT_CALL(fun_, Call).WillOnce([&]() {
     in_alarm_function.set_value();
     // Unable to destroy token while the alarm is outstanding
     EXPECT_EQ(destroy_finished.get_future().wait_for(std::chrono::seconds(2)),
