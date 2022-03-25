@@ -97,8 +97,6 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
-    internal/default_routing_policy.cc
-    internal/default_routing_policy.h
     internal/futures.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
@@ -124,7 +122,6 @@ add_library(
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
     internal/resumable_async_streaming_read_write_rpc.h
-    internal/routing_policy.h
     internal/service.h
     internal/service_composite.h
     internal/stream_factory.h
@@ -245,7 +242,6 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     set(pubsublite_unit_tests
         # cmake-format: sort
         endpoint_test.cc
-        internal/default_routing_policy_test.cc
         internal/partition_publisher_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
