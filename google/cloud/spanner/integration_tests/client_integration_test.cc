@@ -886,6 +886,25 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
   }
 }
 
+/// @test Verify database_dialect is returned in information schema.
+TEST_F(ClientIntegrationTest, DatabaseDialect) {
+  auto rows = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT s.OPTION_VALUE
+        FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
+        WHERE s.OPTION_NAME = 'database_dialect'
+      )"""));
+  using RowType = std::tuple<std::string>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (emulator_) {
+      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+    } else {
+      EXPECT_THAT(row, IsOk());
+    }
+    if (!row) break;
+    EXPECT_EQ("GOOGLE_STANDARD_SQL", std::get<0>(*row));
+  }
+}
+
 /// @test Verify version_retention_period is returned in information schema.
 TEST_F(ClientIntegrationTest, VersionRetentionPeriod) {
   auto rows = client_->ExecuteQuery(SqlStatement(R"""(

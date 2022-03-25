@@ -30,10 +30,10 @@ load(
     ],
     deps = [
         "//:bigtable",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "//google/cloud/bigtable:bigtable_client_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_admin_integration_tests]

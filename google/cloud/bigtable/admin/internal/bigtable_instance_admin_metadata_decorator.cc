@@ -195,6 +195,14 @@ BigtableInstanceAdminMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
+StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
+BigtableInstanceAdminMetadata::ListHotTablets(
+    grpc::ClientContext& context,
+    google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListHotTablets(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

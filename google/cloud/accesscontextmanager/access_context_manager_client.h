@@ -107,12 +107,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.ListAccessPoliciesRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L431}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
   ListAccessPolicies(
@@ -129,12 +129,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.GetAccessPolicyRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L463}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
   GetAccessPolicy(std::string const& name, Options opts = {});
@@ -148,12 +148,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.GetAccessPolicyRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L463}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
   GetAccessPolicy(
@@ -169,16 +169,16 @@ class AccessContextManagerClient {
   /// BadRequest proto.
   ///
   /// @param request
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   CreateAccessPolicy(
@@ -200,12 +200,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L476}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(
@@ -226,12 +226,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L476}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
@@ -299,12 +299,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.ListAccessLevelsRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L498}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
   ListAccessLevels(std::string const& parent, Options opts = {});
@@ -319,12 +319,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.ListAccessLevelsRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L498}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
   ListAccessLevels(
@@ -344,12 +344,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.GetAccessLevelRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L539}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
   GetAccessLevel(std::string const& name, Options opts = {});
@@ -364,12 +364,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.GetAccessLevelRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L539}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
   GetAccessLevel(
@@ -398,12 +398,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.CreateAccessLevelRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L564}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   CreateAccessLevel(
@@ -426,12 +426,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.CreateAccessLevelRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L564}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   CreateAccessLevel(google::identity::accesscontextmanager::v1::
@@ -458,12 +458,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L585}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   UpdateAccessLevel(
@@ -486,12 +486,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L585}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L37}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   UpdateAccessLevel(google::identity::accesscontextmanager::v1::
@@ -600,12 +600,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.ListServicePerimetersRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L654}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
   ListServicePerimeters(std::string const& parent, Options opts = {});
@@ -620,12 +620,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.ListServicePerimetersRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L654}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
   ListServicePerimeters(
@@ -645,12 +645,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.GetServicePerimeterRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L690}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
   GetServicePerimeter(std::string const& name, Options opts = {});
@@ -665,12 +665,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.GetServicePerimeterRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L690}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
   GetServicePerimeter(google::identity::accesscontextmanager::v1::
@@ -699,12 +699,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.CreateServicePerimeterRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L705}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   CreateServicePerimeter(
@@ -728,12 +728,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.CreateServicePerimeterRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L705}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   CreateServicePerimeter(google::identity::accesscontextmanager::v1::
@@ -758,12 +758,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L726}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   UpdateServicePerimeter(
@@ -786,12 +786,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L726}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L42}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   UpdateServicePerimeter(google::identity::accesscontextmanager::v1::
@@ -927,12 +927,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L831}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   ListGcpUserAccessBindings(std::string const& parent, Options opts = {});
@@ -947,12 +947,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L831}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::
@@ -969,12 +969,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L878}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   GetGcpUserAccessBinding(std::string const& name, Options opts = {});
@@ -989,12 +989,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L878}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::
@@ -1019,12 +1019,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.CreateGcpUserAccessBindingRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L890}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
@@ -1051,12 +1051,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.CreateGcpUserAccessBindingRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L890}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
@@ -1083,12 +1083,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L906}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
@@ -1109,12 +1109,12 @@ class AccessContextManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L906}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L34}
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>

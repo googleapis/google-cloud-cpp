@@ -393,6 +393,22 @@ BigtableInstanceAdminClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminClient::ListHotTablets(std::string const& parent,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::ListHotTabletsRequest request;
+  request.set_parent(parent);
+  return connection_->ListHotTablets(request);
+}
+
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminClient::ListHotTablets(
+    google::bigtable::admin::v2::ListHotTabletsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListHotTablets(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
 }  // namespace cloud

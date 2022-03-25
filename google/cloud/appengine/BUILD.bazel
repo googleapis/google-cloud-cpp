@@ -36,8 +36,8 @@ cc_library(
     ),
     visibility = ["//:__pkg__"],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_googleapis//google/appengine/legacy:legacy_cc_grpc",
         "@com_google_googleapis//google/appengine/logging/v1:logging_cc_grpc",
         "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc",
@@ -55,7 +55,7 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_appengine",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
     ],
 )

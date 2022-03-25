@@ -23,10 +23,10 @@ cc_library(
     srcs = storage_examples_common_srcs,
     hdrs = storage_examples_common_hdrs,
     deps = [
+        "//:common",
         "//:storage",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 )
 
@@ -37,10 +37,10 @@ load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
     srcs = [test],
     deps = [
         ":storage_examples_common",
+        "//:common",
         "//:storage",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_examples_unit_tests]
@@ -55,10 +55,10 @@ load(":storage_examples.bzl", "storage_examples")
     ],
     deps = [
         ":storage_examples_common",
+        "//:common",
         "//:storage",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:google_cloud_cpp_storage_grpc",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_examples]

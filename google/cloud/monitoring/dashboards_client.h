@@ -95,14 +95,14 @@ class DashboardsServiceClient {
   /// Identity and Access Management](https://cloud.google.com/iam).
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::dashboard::v1::CreateDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L101}
+  /// @googleapis_link{google::monitoring::dashboard::v1::CreateDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L100}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
   /// [google.monitoring.dashboard.v1.CreateDashboardRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L101}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L100}
   /// [google.monitoring.dashboard.v1.Dashboard]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
@@ -118,14 +118,14 @@ class DashboardsServiceClient {
   /// [Cloud Identity and Access Management](https://cloud.google.com/iam).
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::dashboard::v1::ListDashboardsRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L118}
+  /// @googleapis_link{google::monitoring::dashboard::v1::ListDashboardsRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L117}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
   /// [google.monitoring.dashboard.v1.ListDashboardsRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L118}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L117}
   /// [google.monitoring.dashboard.v1.Dashboard]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
@@ -141,14 +141,14 @@ class DashboardsServiceClient {
   /// [Cloud Identity and Access Management](https://cloud.google.com/iam).
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::dashboard::v1::GetDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L151}
+  /// @googleapis_link{google::monitoring::dashboard::v1::GetDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L150}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
   /// [google.monitoring.dashboard.v1.GetDashboardRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L151}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L150}
   /// [google.monitoring.dashboard.v1.Dashboard]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
@@ -164,12 +164,12 @@ class DashboardsServiceClient {
   /// [Cloud Identity and Access Management](https://cloud.google.com/iam).
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::dashboard::v1::DeleteDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L166}
+  /// @googleapis_link{google::monitoring::dashboard::v1::DeleteDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L165}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.monitoring.dashboard.v1.DeleteDashboardRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L166}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L165}
   ///
   Status DeleteDashboard(
       google::monitoring::dashboard::v1::DeleteDashboardRequest const& request,
@@ -183,14 +183,14 @@ class DashboardsServiceClient {
   /// [Cloud Identity and Access Management](https://cloud.google.com/iam).
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::dashboard::v1::UpdateDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L179}
+  /// @googleapis_link{google::monitoring::dashboard::v1::UpdateDashboardRequest,google/monitoring/dashboard/v1/dashboards_service.proto#L178}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///
   /// [google.monitoring.dashboard.v1.UpdateDashboardRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L179}
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L178}
   /// [google.monitoring.dashboard.v1.Dashboard]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L33}
   ///

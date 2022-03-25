@@ -675,6 +675,40 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestWithObjectMetadata) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcObjectRequestParser, WriteObjectResponseSimple) {
+  google::storage::v2::WriteObjectResponse input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        persisted_size: 123456
+      )pb",
+      &input));
+
+  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  EXPECT_EQ(actual.upload_state, ResumableUploadResponse::kInProgress);
+  EXPECT_EQ(actual.committed_size.value_or(0), 123456);
+  EXPECT_FALSE(actual.payload.has_value());
+}
+
+TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
+  google::storage::v2::WriteObjectResponse input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        resource {
+          name: "test-object-name"
+          bucket: "projects/_/buckets/test-bucket-name"
+          size: 123456
+        })pb",
+      &input));
+
+  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  EXPECT_EQ(actual.upload_state, ResumableUploadResponse::kDone);
+  EXPECT_FALSE(actual.committed_size.has_value());
+  ASSERT_TRUE(actual.payload.has_value());
+  EXPECT_EQ(actual.payload->name(), "test-object-name");
+  EXPECT_EQ(actual.payload->bucket(), "test-bucket-name");
+  EXPECT_EQ(actual.payload->size(), 123456);
+}
+
 TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
   google::storage::v2::ListObjectsRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -1134,6 +1168,40 @@ TEST(GrpcObjectRequestParser, QueryResumableUploadRequestSimple) {
 
   auto actual = GrpcObjectRequestParser::ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, QueryResumableUploadResponseSimple) {
+  google::storage::v2::QueryWriteStatusResponse input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        persisted_size: 123456
+      )pb",
+      &input));
+
+  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  EXPECT_EQ(actual.upload_state, ResumableUploadResponse::kInProgress);
+  EXPECT_EQ(actual.committed_size.value_or(0), 123456);
+  EXPECT_FALSE(actual.payload.has_value());
+}
+
+TEST(GrpcObjectRequestParser, QueryResumableUploadResponseWithResource) {
+  google::storage::v2::QueryWriteStatusResponse input;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        resource {
+          name: "test-object-name"
+          bucket: "projects/_/buckets/test-bucket-name"
+          size: 123456
+        })pb",
+      &input));
+
+  auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
+  EXPECT_EQ(actual.upload_state, ResumableUploadResponse::kDone);
+  EXPECT_FALSE(actual.committed_size.has_value());
+  ASSERT_TRUE(actual.payload.has_value());
+  EXPECT_EQ(actual.payload->name(), "test-object-name");
+  EXPECT_EQ(actual.payload->bucket(), "test-bucket-name");
+  EXPECT_EQ(actual.payload->size(), 123456);
 }
 
 }  // namespace
