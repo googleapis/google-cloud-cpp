@@ -84,6 +84,7 @@ TEST(Location, ValidCloudRegion) {
   EXPECT_TRUE(location.ok());
   EXPECT_EQ(location->GetCloudRegion(), CloudRegion(str));
   EXPECT_EQ(location->ToString(), str);
+  EXPECT_EQ(*location, Location(CloudRegion(str)));
 }
 
 TEST(Location, InvalidCloudRegion) {
@@ -101,6 +102,7 @@ TEST(Location, ValidCloudZone) {
   EXPECT_TRUE(location.ok());
   EXPECT_EQ(location->GetCloudRegion(), CloudRegion(region));
   EXPECT_EQ(location->ToString(), region + "-" + zone_id);
+  EXPECT_EQ(*location, Location(CloudZone(CloudRegion(region), zone_id)));
 }
 
 TEST(Location, InvalidCloudZone) {
