@@ -42,7 +42,7 @@ std::string Base64Encode(std::string const& str);
 /**
  * Encodes a byte array using Base64.
  */
-std::string Base64Encode(absl::Span<std::uint8_t const> const& bytes);
+std::string Base64Encode(absl::Span<std::uint8_t const> bytes);
 
 /**
  * Signs a string with the private key from a PEM container.

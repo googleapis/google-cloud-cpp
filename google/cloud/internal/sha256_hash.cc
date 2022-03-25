@@ -49,7 +49,7 @@ std::array<std::uint8_t, 32> Sha256Hash(
   return Sha256Hash(bytes.data(), bytes.size());
 }
 
-std::string HexEncode(absl::Span<std::uint8_t const> const& bytes) {
+std::string HexEncode(absl::Span<std::uint8_t const> bytes) {
   std::string result;
   std::array<char, sizeof("ff")> buf{};
   for (auto c : bytes) {
