@@ -35,6 +35,8 @@ class DefaultRoutingPolicy : public RoutingPolicy {
  public:
   std::uint64_t RouteWithoutKey(std::uint32_t num_partitions) override;
 
+  // uses SHA-256 as it's provided in the standard library of all silver
+  // languages, enabling consistent hashing across languages
   std::uint64_t Route(std::string message_key,
                       std::uint32_t num_partitions) override;
 
