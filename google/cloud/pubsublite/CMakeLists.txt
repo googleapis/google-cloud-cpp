@@ -215,6 +215,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
+    
     add_library(pubsublite_testing INTERFACE)
     target_sources(
         pubsublite_testing
