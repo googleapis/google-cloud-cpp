@@ -54,7 +54,7 @@ std::string Base64Encode(std::string const& str) {
   return std::move(enc).FlushAndPad();
 }
 
-std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
+std::string Base64Encode(absl::Span<std::uint8_t const> bytes) {
   google::cloud::internal::Base64Encoder enc;
   for (auto c : bytes) enc.PushBack(c);
   return std::move(enc).FlushAndPad();

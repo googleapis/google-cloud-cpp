@@ -183,8 +183,6 @@ add_library(
     internal/service_account_parser.h
     internal/service_account_requests.cc
     internal/service_account_requests.h
-    internal/sha256_hash.cc
-    internal/sha256_hash.h
     internal/sign_blob_requests.cc
     internal/sign_blob_requests.h
     internal/signed_url_requests.cc
@@ -532,7 +530,6 @@ if (BUILD_TESTING)
         internal/retry_resumable_upload_session_test.cc
         internal/self_signing_service_account_credentials_test.cc
         internal/service_account_requests_test.cc
-        internal/sha256_hash_test.cc
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
         internal/tuple_filter_test.cc

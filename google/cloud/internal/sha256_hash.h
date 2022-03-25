@@ -12,36 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SHA256_HASH_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SHA256_HASH_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
 
-#include "google/cloud/storage/version.h"
+#include "google/cloud/version.h"
+#include "absl/types/span.h"
+#include <array>
 #include <cstdint>
 #include <string>
 #include <vector>
 
 namespace google {
 namespace cloud {
-namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /// Return the SHA256 hash (as raw bytes) of @p str.
-std::vector<std::uint8_t> Sha256Hash(std::string const& str);
+// (8 bits per byte) * 32 bytes = 256 bits
+std::array<std::uint8_t, 32> Sha256Hash(std::string const& str);
 
 /// Return the SHA256 hash (as raw bytes) of @p bytes.
-std::vector<std::uint8_t> Sha256Hash(std::vector<std::uint8_t> const& bytes);
+// (8 bits per byte) * 32 bytes = 256 bits
+std::array<std::uint8_t, 32> Sha256Hash(std::vector<std::uint8_t> const& bytes);
 
 /// Return @p bytes encoded as a lowercase hexadecimal string.
-std::string HexEncode(std::vector<std::uint8_t> const& bytes);
+std::string HexEncode(absl::Span<std::uint8_t const> bytes);
 
 /// Parse @p str as a hex-encoded string.
 std::vector<std::uint8_t> HexDecode(std::string const& str);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SHA256_HASH_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
