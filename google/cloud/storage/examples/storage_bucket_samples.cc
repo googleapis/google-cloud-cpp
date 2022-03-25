@@ -152,7 +152,7 @@ void CreateBucketDualRegion(google::cloud::storage::Client client,
     std::cout << "Bucket " << metadata->name() << " created."
               << "\nFull Metadata: " << *metadata << "\n";
   }
-  // [START storage_create_bucket_dual_region]
+  // [END storage_create_bucket_dual_region]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
