@@ -46,7 +46,11 @@ void AlarmRegistryImpl::ScheduleAlarm(
             ScheduleAlarm(state);
           });
   std::lock_guard<std::mutex> g{state->mu};
-  state->timer = std::move(temp);
+  if (!state->shutdown) {
+    state->timer = std::move(temp);
+  } else {
+    temp.cancel();
+  }
 }
 
 AlarmRegistryImpl::CancelTokenImpl::CancelTokenImpl(

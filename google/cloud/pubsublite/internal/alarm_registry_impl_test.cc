@@ -39,8 +39,8 @@ using ::testing::Return;
 using ::testing::StrictMock;
 
 // 10,000 seconds to ensure this test has no time dependence
-std::chrono::milliseconds constexpr kAlarmPeriod{10000 *
-                                                 std::chrono::seconds(1)};
+auto constexpr kAlarmPeriod =
+    std::chrono::milliseconds{10000 * std::chrono::seconds(1)};
 
 class AlarmRegistryImplTest : public ::testing::Test {
  protected:
