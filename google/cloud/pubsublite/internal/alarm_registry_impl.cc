@@ -28,21 +28,23 @@ AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
 
 void AlarmRegistryImpl::ScheduleAlarm(
     std::shared_ptr<AlarmState> const& state) {
-  auto temp = state->cq.MakeRelativeTimer(state->period).then(
-      [state](future<StatusOr<std::chrono::system_clock::time_point>> f) {
-        auto status = f.get();
-        if (!status.ok()) {
-          GCP_LOG(INFO) << "`MakeRelativeTimer` returned a non-ok status: "
-                        << status.status();
-          return;
-        }
-        {
-          std::lock_guard<std::mutex> g{state->mu};
-          if (state->shutdown) return;
-          state->on_alarm();
-        }
-        ScheduleAlarm(state);
-      });
+  auto temp =
+      state->cq.MakeRelativeTimer(state->period)
+          .then([state](
+                    future<StatusOr<std::chrono::system_clock::time_point>> f) {
+            auto status = f.get();
+            if (!status.ok()) {
+              GCP_LOG(INFO) << "`MakeRelativeTimer` returned a non-ok status: "
+                            << status.status();
+              return;
+            }
+            {
+              std::lock_guard<std::mutex> g{state->mu};
+              if (state->shutdown) return;
+              state->on_alarm();
+            }
+            ScheduleAlarm(state);
+          });
   std::lock_guard<std::mutex> g{state->mu};
   state->timer = std::move(temp);
 }
