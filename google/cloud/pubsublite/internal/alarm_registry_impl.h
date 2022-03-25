@@ -26,7 +26,11 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-// TODO(18suresha): description
+/**
+ * Default implementation of `AlarmRegistry`.
+ *
+ * @note Utilizes `CompletionQueue::MakeRelativeTimer`.
+ */
 class AlarmRegistryImpl : public AlarmRegistry {
  public:
   explicit AlarmRegistryImpl(google::cloud::CompletionQueue cq);
