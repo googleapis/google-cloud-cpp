@@ -28,6 +28,10 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+/**
+ * A wrapper around a Google Cloud Location which can be either a `CloudRegion`
+ * or `CloudZone`.
+ */
 class Location {
  public:
   explicit Location(CloudRegion region) : value_{std::move(region)} {}
@@ -52,13 +56,9 @@ class Location {
 
   static StatusOr<Location> Parse(std::string const& location) {
     auto possible_zone = CloudZone::Parse(location);
-    if (possible_zone.ok()) {
-      return Location{*possible_zone};
-    }
+    if (possible_zone.ok()) return Location{*possible_zone};
     auto possible_region = CloudRegion::Parse(location);
-    if (possible_region.ok()) {
-      return Location{*possible_region};
-    }
+    if (possible_region.ok()) return Location{*possible_region};
     return Status{StatusCode::kInvalidArgument, "Invalid location"};
   }
 
@@ -66,7 +66,7 @@ class Location {
   absl::variant<CloudRegion, CloudZone> const value_;
 };
 
-bool operator==(Location const& a, Location const& b) {
+inline bool operator==(Location const& a, Location const& b) {
   return a.ToString() == b.ToString();
 }
 

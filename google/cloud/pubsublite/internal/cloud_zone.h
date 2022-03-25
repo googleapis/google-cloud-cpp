@@ -50,7 +50,7 @@ struct CloudZone {
   char const zone_id;
 };
 
-bool operator==(CloudZone const& a, CloudZone const& b) {
+inline bool operator==(CloudZone const& a, CloudZone const& b) {
   return a.region == b.region && a.zone_id == b.zone_id;
 }
 

@@ -41,7 +41,7 @@ struct CloudRegion {
   std::string const region;
 };
 
-bool operator==(CloudRegion const& a, CloudRegion const& b) {
+inline bool operator==(CloudRegion const& a, CloudRegion const& b) {
   return a.region == b.region;
 }
 
