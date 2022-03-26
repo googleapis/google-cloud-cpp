@@ -35,6 +35,10 @@ class AlarmRegistryImpl : public AlarmRegistry {
  public:
   explicit AlarmRegistryImpl(google::cloud::CompletionQueue cq);
 
+  /**
+   * @note The returned `CancelToken` should not be destructed in `on_alarm()`'s
+   * downcall.
+   */
   std::unique_ptr<AlarmRegistry::CancelToken> RegisterAlarm(
       std::chrono::milliseconds period,
       std::function<void()> on_alarm) override;
