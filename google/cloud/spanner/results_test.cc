@@ -30,7 +30,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace spanner_proto = ::google::spanner::v1;
+namespace spanner_proto = ::google::spanner;
 
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -119,7 +119,7 @@ TEST(RowStream, IterateError) {
 
 TEST(RowStream, TimestampNoTransaction) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
-  spanner_proto::ResultSetMetadata no_transaction;
+  spanner_proto::v1::ResultSetMetadata no_transaction;
   EXPECT_CALL(*mock_source, Metadata()).WillOnce(Return(no_transaction));
 
   RowStream rows(std::move(mock_source));
@@ -128,7 +128,7 @@ TEST(RowStream, TimestampNoTransaction) {
 
 TEST(RowStream, TimestampNotPresent) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
-  spanner_proto::ResultSetMetadata transaction_no_timestamp;
+  spanner_proto::v1::ResultSetMetadata transaction_no_timestamp;
   transaction_no_timestamp.mutable_transaction()->set_id("placeholder");
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_no_timestamp));
@@ -139,7 +139,7 @@ TEST(RowStream, TimestampNotPresent) {
 
 TEST(RowStream, TimestampPresent) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
-  spanner_proto::ResultSetMetadata transaction_with_timestamp;
+  spanner_proto::v1::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("placeholder2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =
@@ -153,7 +153,7 @@ TEST(RowStream, TimestampPresent) {
 
 TEST(ProfileQueryResult, TimestampPresent) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
-  spanner_proto::ResultSetMetadata transaction_with_timestamp;
+  spanner_proto::v1::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("placeholder2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =

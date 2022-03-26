@@ -26,12 +26,13 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace gcsa = ::google::spanner::admin::instance;
+
 using ::google::cloud::testing_util::StatusIs;
 using spanner_mocks::MockInstanceAdminConnection;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-namespace gcsa = ::google::spanner::admin::instance::v1;
 
 TEST(InstanceAdminClientTest, CopyAndMove) {
   auto conn1 = std::make_shared<MockInstanceAdminConnection>();
@@ -95,13 +96,13 @@ TEST(InstanceAdminClientTest, ListInstanceConfigs) {
             EXPECT_EQ("test-project", p.project_id);
             return google::cloud::internal::MakePaginationRange<
                 ListInstanceConfigsRange>(
-                gcsa::ListInstanceConfigsRequest{},
-                [](gcsa::ListInstanceConfigsRequest const&) {
-                  return StatusOr<gcsa::ListInstanceConfigsResponse>(
+                gcsa::v1::ListInstanceConfigsRequest{},
+                [](gcsa::v1::ListInstanceConfigsRequest const&) {
+                  return StatusOr<gcsa::v1::ListInstanceConfigsResponse>(
                       Status(StatusCode::kPermissionDenied, "uh-oh"));
                 },
-                [](gcsa::ListInstanceConfigsResponse const&) {
-                  return std::vector<gcsa::InstanceConfig>{};
+                [](gcsa::v1::ListInstanceConfigsResponse const&) {
+                  return std::vector<gcsa::v1::InstanceConfig>{};
                 });
           });
 
@@ -121,13 +122,13 @@ TEST(InstanceAdminClientTest, ListInstances) {
         EXPECT_EQ("labels.test-key:test-value", p.filter);
 
         return google::cloud::internal::MakePaginationRange<ListInstancesRange>(
-            gcsa::ListInstancesRequest{},
-            [](gcsa::ListInstancesRequest const&) {
-              return StatusOr<gcsa::ListInstancesResponse>(
+            gcsa::v1::ListInstancesRequest{},
+            [](gcsa::v1::ListInstancesRequest const&) {
+              return StatusOr<gcsa::v1::ListInstancesResponse>(
                   Status(StatusCode::kPermissionDenied, "uh-oh"));
             },
-            [](gcsa::ListInstancesResponse const&) {
-              return std::vector<gcsa::Instance>{};
+            [](gcsa::v1::ListInstancesResponse const&) {
+              return std::vector<gcsa::v1::Instance>{};
             });
       });
 

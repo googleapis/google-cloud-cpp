@@ -21,15 +21,15 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::instance::v1;
+namespace gcsa = ::google::spanner::admin::instance;
 
 InstanceAdminMetadata::InstanceAdminMetadata(
     std::shared_ptr<InstanceAdminStub> child)
     : child_(std::move(child)),
       api_client_header_(google::cloud::internal::ApiClientHeader()) {}
 
-StatusOr<gcsa::Instance> InstanceAdminMetadata::GetInstance(
-    grpc::ClientContext& context, gcsa::GetInstanceRequest const& request) {
+StatusOr<gcsa::v1::Instance> InstanceAdminMetadata::GetInstance(
+    grpc::ClientContext& context, gcsa::v1::GetInstanceRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetInstance(context, request);
 }
@@ -37,7 +37,7 @@ StatusOr<gcsa::Instance> InstanceAdminMetadata::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncCreateInstance(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::CreateInstanceRequest const& request) {
+    gcsa::v1::CreateInstanceRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -45,34 +45,36 @@ InstanceAdminMetadata::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncUpdateInstance(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::UpdateInstanceRequest const& request) {
+    gcsa::v1::UpdateInstanceRequest const& request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
 Status InstanceAdminMetadata::DeleteInstance(
-    grpc::ClientContext& context, gcsa::DeleteInstanceRequest const& request) {
+    grpc::ClientContext& context,
+    gcsa::v1::DeleteInstanceRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->DeleteInstance(context, request);
 }
 
-StatusOr<gcsa::InstanceConfig> InstanceAdminMetadata::GetInstanceConfig(
+StatusOr<gcsa::v1::InstanceConfig> InstanceAdminMetadata::GetInstanceConfig(
     grpc::ClientContext& context,
-    gcsa::GetInstanceConfigRequest const& request) {
+    gcsa::v1::GetInstanceConfigRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetInstanceConfig(context, request);
 }
 
-StatusOr<gcsa::ListInstanceConfigsResponse>
+StatusOr<gcsa::v1::ListInstanceConfigsResponse>
 InstanceAdminMetadata::ListInstanceConfigs(
     grpc::ClientContext& context,
-    gcsa::ListInstanceConfigsRequest const& request) {
+    gcsa::v1::ListInstanceConfigsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListInstanceConfigs(context, request);
 }
 
-StatusOr<gcsa::ListInstancesResponse> InstanceAdminMetadata::ListInstances(
-    grpc::ClientContext& context, gcsa::ListInstancesRequest const& request) {
+StatusOr<gcsa::v1::ListInstancesResponse> InstanceAdminMetadata::ListInstances(
+    grpc::ClientContext& context,
+    gcsa::v1::ListInstancesRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListInstances(context, request);
 }

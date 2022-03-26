@@ -33,7 +33,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace spanner_proto = ::google::spanner::v1;
+namespace spanner_proto = ::google::spanner;
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
@@ -76,7 +76,7 @@ TEST(MutationsTest, InsertSimple) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -110,7 +110,7 @@ TEST(MutationsTest, InsertComplex) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -137,7 +137,7 @@ TEST(MutationsTest, UpdateSimple) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -173,7 +173,7 @@ TEST(MutationsTest, UpdateComplex) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -200,7 +200,7 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -238,7 +238,7 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -265,7 +265,7 @@ TEST(MutationsTest, ReplaceSimple) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -295,7 +295,7 @@ TEST(MutationsTest, ReplaceComplex) {
       }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -315,7 +315,7 @@ TEST(MutationsTest, DeleteSimple) {
       key_set: { keys: { values { string_value: "key-to-delete" } } }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
@@ -416,7 +416,7 @@ TEST(MutationsTest, FluentDeleteBuilder) {
       key_set: { keys: { values { string_value: "key-to-delete" } } }
     }
   )pb";
-  spanner_proto::Mutation expected;
+  spanner_proto::v1::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }

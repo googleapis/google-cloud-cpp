@@ -27,10 +27,11 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace spanner_proto = ::google::spanner;
+
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
-namespace spanner_proto = ::google::spanner::v1;
 
 class LoggingSpannerStubTest : public ::testing::Test {
  protected:
@@ -54,14 +55,14 @@ class LoggingSpannerStubTest : public ::testing::Test {
  * result, because that makes the tests easier to write.
  */
 TEST_F(LoggingSpannerStubTest, CreateSessionSuccess) {
-  spanner_proto::Session session;
+  spanner_proto::v1::Session session;
   session.set_name("test-session-name");
   EXPECT_CALL(*mock_, CreateSession).WillOnce(Return(session));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status =
-      stub.CreateSession(context, spanner_proto::CreateSessionRequest());
+      stub.CreateSession(context, spanner_proto::v1::CreateSessionRequest());
   EXPECT_STATUS_OK(status);
 
   auto const log_lines = log_.ExtractLines();
@@ -75,7 +76,7 @@ TEST_F(LoggingSpannerStubTest, CreateSession) {
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status =
-      stub.CreateSession(context, spanner_proto::CreateSessionRequest());
+      stub.CreateSession(context, spanner_proto::v1::CreateSessionRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -89,7 +90,7 @@ TEST_F(LoggingSpannerStubTest, BatchCreateSessions) {
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status = stub.BatchCreateSessions(
-      context, spanner_proto::BatchCreateSessionsRequest());
+      context, spanner_proto::v1::BatchCreateSessionsRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -102,7 +103,8 @@ TEST_F(LoggingSpannerStubTest, GetSession) {
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
-  auto status = stub.GetSession(context, spanner_proto::GetSessionRequest());
+  auto status =
+      stub.GetSession(context, spanner_proto::v1::GetSessionRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -116,7 +118,7 @@ TEST_F(LoggingSpannerStubTest, ListSessions) {
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status =
-      stub.ListSessions(context, spanner_proto::ListSessionsRequest());
+      stub.ListSessions(context, spanner_proto::v1::ListSessionsRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -130,7 +132,7 @@ TEST_F(LoggingSpannerStubTest, DeleteSession) {
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status =
-      stub.DeleteSession(context, spanner_proto::DeleteSessionRequest());
+      stub.DeleteSession(context, spanner_proto::v1::DeleteSessionRequest());
   EXPECT_EQ(TransientError(), status);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteSession")));
@@ -142,7 +144,8 @@ TEST_F(LoggingSpannerStubTest, ExecuteSql) {
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
-  auto status = stub.ExecuteSql(context, spanner_proto::ExecuteSqlRequest());
+  auto status =
+      stub.ExecuteSql(context, spanner_proto::v1::ExecuteSqlRequest());
   EXPECT_EQ(TransientError(), status.status());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ExecuteSql")));
@@ -151,16 +154,16 @@ TEST_F(LoggingSpannerStubTest, ExecuteSql) {
 
 TEST_F(LoggingSpannerStubTest, ExecuteStreamingSql) {
   EXPECT_CALL(*mock_, ExecuteStreamingSql)
-      .WillOnce(
-          [](grpc::ClientContext&, spanner_proto::ExecuteSqlRequest const&) {
-            return std::unique_ptr<
-                grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
-          });
+      .WillOnce([](grpc::ClientContext&,
+                   spanner_proto::v1::ExecuteSqlRequest const&) {
+        return std::unique_ptr<
+            grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>{};
+      });
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status =
-      stub.ExecuteStreamingSql(context, spanner_proto::ExecuteSqlRequest());
+      stub.ExecuteStreamingSql(context, spanner_proto::v1::ExecuteSqlRequest());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ExecuteStreamingSql")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(" null stream")));
@@ -171,8 +174,8 @@ TEST_F(LoggingSpannerStubTest, ExecuteBatchDml) {
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
-  auto status =
-      stub.ExecuteBatchDml(context, spanner_proto::ExecuteBatchDmlRequest());
+  auto status = stub.ExecuteBatchDml(
+      context, spanner_proto::v1::ExecuteBatchDmlRequest());
   EXPECT_EQ(TransientError(), status.status());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ExecuteBatchDml")));
@@ -181,14 +184,15 @@ TEST_F(LoggingSpannerStubTest, ExecuteBatchDml) {
 
 TEST_F(LoggingSpannerStubTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead)
-      .WillOnce([](grpc::ClientContext&, spanner_proto::ReadRequest const&) {
+      .WillOnce([](grpc::ClientContext&,
+                   spanner_proto::v1::ReadRequest const&) {
         return std::unique_ptr<
-            grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
+            grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>{};
       });
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
-  auto status = stub.StreamingRead(context, spanner_proto::ReadRequest());
+  auto status = stub.StreamingRead(context, spanner_proto::v1::ReadRequest());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingRead")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
@@ -199,8 +203,8 @@ TEST_F(LoggingSpannerStubTest, BeginTransaction) {
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
-  auto status =
-      stub.BeginTransaction(context, spanner_proto::BeginTransactionRequest());
+  auto status = stub.BeginTransaction(
+      context, spanner_proto::v1::BeginTransactionRequest());
   EXPECT_EQ(TransientError(), status.status());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("BeginTransaction")));
@@ -212,7 +216,7 @@ TEST_F(LoggingSpannerStubTest, Commit) {
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
-  auto status = stub.Commit(context, spanner_proto::CommitRequest());
+  auto status = stub.Commit(context, spanner_proto::v1::CommitRequest());
   EXPECT_EQ(TransientError(), status.status());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Commit")));
@@ -224,7 +228,7 @@ TEST_F(LoggingSpannerStubTest, Rollback) {
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
-  auto status = stub.Rollback(context, spanner_proto::RollbackRequest());
+  auto status = stub.Rollback(context, spanner_proto::v1::RollbackRequest());
   EXPECT_EQ(TransientError(), status);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Rollback")));
@@ -237,7 +241,7 @@ TEST_F(LoggingSpannerStubTest, PartitionQuery) {
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status =
-      stub.PartitionQuery(context, spanner_proto::PartitionQueryRequest());
+      stub.PartitionQuery(context, spanner_proto::v1::PartitionQueryRequest());
   EXPECT_EQ(TransientError(), status.status());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("PartitionQuery")));
@@ -250,7 +254,7 @@ TEST_F(LoggingSpannerStubTest, PartitionRead) {
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
   auto status =
-      stub.PartitionRead(context, spanner_proto::PartitionReadRequest());
+      stub.PartitionRead(context, spanner_proto::v1::PartitionReadRequest());
   EXPECT_EQ(TransientError(), status.status());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("PartitionRead")));
