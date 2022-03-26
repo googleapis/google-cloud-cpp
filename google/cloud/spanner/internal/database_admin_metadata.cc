@@ -21,7 +21,7 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::database::v1;
+namespace gcsa = ::google::spanner::admin::database;
 
 DatabaseAdminMetadata::DatabaseAdminMetadata(
     std::shared_ptr<DatabaseAdminStub> child)
@@ -31,19 +31,21 @@ DatabaseAdminMetadata::DatabaseAdminMetadata(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateDatabase(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::CreateDatabaseRequest const& request) {
+    gcsa::v1::CreateDatabaseRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateDatabase(cq, std::move(context), request);
 }
 
-StatusOr<gcsa::Database> DatabaseAdminMetadata::GetDatabase(
-    grpc::ClientContext& context, gcsa::GetDatabaseRequest const& request) {
+StatusOr<gcsa::v1::Database> DatabaseAdminMetadata::GetDatabase(
+    grpc::ClientContext& context, gcsa::v1::GetDatabaseRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetDatabase(context, request);
 }
 
-StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminMetadata::GetDatabaseDdl(
-    grpc::ClientContext& context, gcsa::GetDatabaseDdlRequest const& request) {
+StatusOr<gcsa::v1::GetDatabaseDdlResponse>
+DatabaseAdminMetadata::GetDatabaseDdl(
+    grpc::ClientContext& context,
+    gcsa::v1::GetDatabaseDdlRequest const& request) {
   SetMetadata(context, "database=" + request.database());
   return child_->GetDatabaseDdl(context, request);
 }
@@ -51,7 +53,7 @@ StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminMetadata::GetDatabaseDdl(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::UpdateDatabaseDdlRequest const& request) {
+    gcsa::v1::UpdateDatabaseDdlRequest const& request) {
   SetMetadata(*context, "database=" + request.database());
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
 }
@@ -74,7 +76,7 @@ DatabaseAdminMetadata::ListDatabases(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncRestoreDatabase(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::RestoreDatabaseRequest const& request) {
+    gcsa::v1::RestoreDatabaseRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncRestoreDatabase(cq, std::move(context), request);
 }
@@ -104,13 +106,13 @@ DatabaseAdminMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateBackup(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::CreateBackupRequest const& request) {
+    gcsa::v1::CreateBackupRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
-StatusOr<gcsa::Backup> DatabaseAdminMetadata::GetBackup(
-    grpc::ClientContext& context, gcsa::GetBackupRequest const& request) {
+StatusOr<gcsa::v1::Backup> DatabaseAdminMetadata::GetBackup(
+    grpc::ClientContext& context, gcsa::v1::GetBackupRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetBackup(context, request);
 }
@@ -130,8 +132,9 @@ DatabaseAdminMetadata::ListBackups(
   return child_->ListBackups(context, request);
 }
 
-StatusOr<gcsa::Backup> DatabaseAdminMetadata::UpdateBackup(
-    grpc::ClientContext& context, gcsa::UpdateBackupRequest const& request) {
+StatusOr<gcsa::v1::Backup> DatabaseAdminMetadata::UpdateBackup(
+    grpc::ClientContext& context,
+    gcsa::v1::UpdateBackupRequest const& request) {
   SetMetadata(context, "backup.name=" + request.backup().name());
   return child_->UpdateBackup(context, request);
 }

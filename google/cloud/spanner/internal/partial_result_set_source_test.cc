@@ -33,7 +33,7 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace spanner_proto = ::google::spanner::v1;
+namespace spanner_proto = ::google::spanner;
 
 using ::google::cloud::spanner::MakeTestRow;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
@@ -81,7 +81,7 @@ std::function<T()> ResultMock(T const& result) {
 }
 
 absl::optional<PartialResultSet> ReadResult(
-    spanner_proto::PartialResultSet response) {
+    spanner_proto::v1::PartialResultSet response) {
   return PartialResultSet{std::move(response), false};
 }
 
@@ -122,7 +122,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
     }
     values: { string_value: "80" }
   )pb";
-  spanner_proto::PartialResultSet response;
+  spanner_proto::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(ResultMock(ReadResult(response)))
@@ -144,7 +144,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
 /// @test Verify the behavior when the first response does not contain metadata.
 TEST(PartialResultSetSourceTest, MissingMetadata) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
-  spanner_proto::PartialResultSet response;
+  spanner_proto::v1::PartialResultSet response;
   EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult(response)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   // The destructor should try to cancel the RPC to avoid deadlocks.
@@ -163,7 +163,7 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
 TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
   auto constexpr kText = R"pb(metadata: {})pb";
-  spanner_proto::PartialResultSet response;
+  spanner_proto::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(ResultMock(ReadResult(response)))
@@ -186,7 +186,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   auto constexpr kText = R"pb(
     metadata: {}
     values: { string_value: "10" })pb";
-  spanner_proto::PartialResultSet response;
+  spanner_proto::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read()).WillOnce(ResultMock(ReadResult(response)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
@@ -240,7 +240,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
       }
     }
   )pb";
-  spanner_proto::PartialResultSet response;
+  spanner_proto::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(ResultMock(ReadResult(response)))
@@ -265,7 +265,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata expected_metadata;
+  spanner_proto::v1::ResultSetMetadata expected_metadata;
   ASSERT_TRUE(
       TextFormat::ParseFromString(kTextExpectedMetadata, &expected_metadata));
   auto actual_metadata = (*reader)->Metadata();
@@ -298,7 +298,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
       }
     }
   )pb";
-  spanner_proto::ResultSetStats expected_stats;
+  spanner_proto::v1::ResultSetStats expected_stats;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextExpectedStats, &expected_stats));
   auto actual_stats = (*reader)->Stats();
   EXPECT_TRUE(actual_stats.has_value());
@@ -357,7 +357,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
         }
       )pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
@@ -416,7 +416,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
         values: { string_value: "22" }
       )pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
@@ -479,7 +479,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
         values: { string_value: "still not_chunked" }
       )pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
@@ -531,7 +531,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
       )pb",
       R"pb(chunked_value: true)pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
@@ -575,7 +575,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
       )pb",
       R"pb()pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
@@ -619,7 +619,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
         chunked_value: true
       )pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
@@ -666,7 +666,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
         values: { number_value: 99 }
       )pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
@@ -738,7 +738,7 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
         }
       )pb",
   }};
-  std::array<spanner_proto::PartialResultSet, text.size()> response;
+  std::array<spanner_proto::v1::PartialResultSet, text.size()> response;
   for (std::size_t i = 0; i != text.size(); ++i) {
     SCOPED_TRACE("Converting text to proto [" + std::to_string(i) + "]");
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));

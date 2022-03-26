@@ -28,30 +28,31 @@ namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace gcsa = ::google::spanner::admin::database;
+namespace spanner = ::google::cloud::spanner;
+
 using ::google::cloud::spanner_admin_mocks::MockDatabaseAdminConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::UnorderedElementsAreArray;
-namespace gcsa = ::google::spanner::admin::database::v1;
-namespace spanner = ::google::cloud::spanner;
 
 TEST(CleanupStaleDatabases, Empty) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce(
-          [&expected_instance](gcsa::ListDatabasesRequest const& request) {
-            EXPECT_EQ(request.parent(), expected_instance.FullName());
-            return internal::MakePaginationRange<StreamRange<gcsa::Database>>(
-                gcsa::ListDatabasesRequest{},
-                [](gcsa::ListDatabasesRequest const&) {
-                  gcsa::ListDatabasesResponse response;
-                  return StatusOr<gcsa::ListDatabasesResponse>(response);
-                },
-                [](gcsa::ListDatabasesResponse const&) {
-                  return std::vector<gcsa::Database>{};
-                });
-          });
+      .WillOnce([&expected_instance](
+                    gcsa::v1::ListDatabasesRequest const& request) {
+        EXPECT_EQ(request.parent(), expected_instance.FullName());
+        return internal::MakePaginationRange<StreamRange<gcsa::v1::Database>>(
+            gcsa::v1::ListDatabasesRequest{},
+            [](gcsa::v1::ListDatabasesRequest const&) {
+              gcsa::v1::ListDatabasesResponse response;
+              return StatusOr<gcsa::v1::ListDatabasesResponse>(response);
+            },
+            [](gcsa::v1::ListDatabasesResponse const&) {
+              return std::vector<gcsa::v1::Database>{};
+            });
+      });
 
   spanner_admin::DatabaseAdminClient client(mock);
   auto status = CleanupStaleDatabases(client, "test-project", "test-instance",
@@ -63,19 +64,19 @@ TEST(CleanupStaleDatabases, ListError) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce(
-          [&expected_instance](gcsa::ListDatabasesRequest const& request) {
-            EXPECT_EQ(request.parent(), expected_instance.FullName());
-            return internal::MakePaginationRange<StreamRange<gcsa::Database>>(
-                gcsa::ListDatabasesRequest{},
-                [](gcsa::ListDatabasesRequest const&) {
-                  return StatusOr<gcsa::ListDatabasesResponse>(
-                      Status(StatusCode::kPermissionDenied, "uh-oh"));
-                },
-                [](gcsa::ListDatabasesResponse const&) {
-                  return std::vector<gcsa::Database>{};
-                });
-          });
+      .WillOnce([&expected_instance](
+                    gcsa::v1::ListDatabasesRequest const& request) {
+        EXPECT_EQ(request.parent(), expected_instance.FullName());
+        return internal::MakePaginationRange<StreamRange<gcsa::v1::Database>>(
+            gcsa::v1::ListDatabasesRequest{},
+            [](gcsa::v1::ListDatabasesRequest const&) {
+              return StatusOr<gcsa::v1::ListDatabasesResponse>(
+                  Status(StatusCode::kPermissionDenied, "uh-oh"));
+            },
+            [](gcsa::v1::ListDatabasesResponse const&) {
+              return std::vector<gcsa::v1::Database>{};
+            });
+      });
 
   spanner_admin::DatabaseAdminClient client(mock);
   auto status = CleanupStaleDatabases(client, "test-project", "test-instance",
@@ -105,35 +106,35 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
 
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce([&](gcsa::ListDatabasesRequest const& request) {
+      .WillOnce([&](gcsa::v1::ListDatabasesRequest const& request) {
         EXPECT_EQ(request.parent(), expected_instance.FullName());
-        return internal::MakePaginationRange<StreamRange<gcsa::Database>>(
-            gcsa::ListDatabasesRequest{},
-            [&](gcsa::ListDatabasesRequest const&) {
-              gcsa::ListDatabasesResponse response;
+        return internal::MakePaginationRange<StreamRange<gcsa::v1::Database>>(
+            gcsa::v1::ListDatabasesRequest{},
+            [&](gcsa::v1::ListDatabasesRequest const&) {
+              gcsa::v1::ListDatabasesResponse response;
               for (auto const& id : expect_dropped) {
-                gcsa::Database db;
+                gcsa::v1::Database db;
                 db.set_name(
                     spanner::Database(expected_instance, id).FullName());
                 *response.add_databases() = std::move(db);
               }
               for (auto const& id : expect_not_dropped) {
-                gcsa::Database db;
+                gcsa::v1::Database db;
                 db.set_name(
                     spanner::Database(expected_instance, id).FullName());
                 *response.add_databases() = std::move(db);
               }
-              return StatusOr<gcsa::ListDatabasesResponse>(response);
+              return StatusOr<gcsa::v1::ListDatabasesResponse>(response);
             },
-            [](gcsa::ListDatabasesResponse const& r) {
-              return std::vector<gcsa::Database>{r.databases().begin(),
-                                                 r.databases().end()};
+            [](gcsa::v1::ListDatabasesResponse const& r) {
+              return std::vector<gcsa::v1::Database>{r.databases().begin(),
+                                                     r.databases().end()};
             });
       });
 
   std::vector<std::string> dropped;
   EXPECT_CALL(*mock, DropDatabase)
-      .WillRepeatedly([&](gcsa::DropDatabaseRequest const& request) {
+      .WillRepeatedly([&](gcsa::v1::DropDatabaseRequest const& request) {
         auto db = spanner::MakeDatabase(request.database()).value();
         EXPECT_EQ(expected_instance, db.instance());
         dropped.push_back(db.database_id());

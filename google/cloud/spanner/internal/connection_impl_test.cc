@@ -59,6 +59,8 @@ namespace {
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #endif
 
+namespace spanner_proto = ::google::spanner;
+
 using ::google::cloud::spanner_testing::HasSessionAndTransaction;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -82,8 +84,6 @@ using ::testing::SetArgPointee;
 using ::testing::StartsWith;
 using ::testing::UnorderedPointwise;
 using ::testing::Unused;
-
-namespace spanner_proto = ::google::spanner::v1;
 
 // A simple protobuf builder.
 template <typename T>
@@ -182,7 +182,7 @@ bool ContainsNoRows(spanner::RowStream& rows) {
 // Helper to set the Transaction's ID. Requires selector.ok().
 void SetTransactionId(spanner::Transaction& txn, std::string tid) {
   Visit(txn, [&tid](SessionHolder&,
-                    StatusOr<spanner_proto::TransactionSelector>& selector,
+                    StatusOr<spanner_proto::v1::TransactionSelector>& selector,
                     std::string const&, std::int64_t) {
     selector->set_id(std::move(tid));
     return 0;
@@ -191,25 +191,27 @@ void SetTransactionId(spanner::Transaction& txn, std::string tid) {
 
 // Helper to mark the Transaction as invalid.
 void SetTransactionInvalid(spanner::Transaction& txn, Status status) {
-  Visit(txn, [&status](SessionHolder&,
-                       StatusOr<spanner_proto::TransactionSelector>& selector,
-                       std::string const&, std::int64_t) {
-    selector = std::move(status);
-    return 0;
-  });
+  Visit(txn,
+        [&status](SessionHolder&,
+                  StatusOr<spanner_proto::v1::TransactionSelector>& selector,
+                  std::string const&, std::int64_t) {
+          selector = std::move(status);
+          return 0;
+        });
 }
 
 // Helper to create a Transaction proto with a specified (or default) id.
-spanner_proto::Transaction MakeTestTransaction(std::string id = "1234567890") {
-  spanner_proto::Transaction txn;
+spanner_proto::v1::Transaction MakeTestTransaction(
+    std::string id = "1234567890") {
+  spanner_proto::v1::Transaction txn;
   txn.set_id(std::move(id));
   return txn;
 }
 
 // Create a `BatchCreateSessionsResponse` with the given `sessions`.
-spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
+spanner_proto::v1::BatchCreateSessionsResponse MakeSessionsResponse(
     std::vector<std::string> sessions) {
-  spanner_proto::BatchCreateSessionsResponse response;
+  spanner_proto::v1::BatchCreateSessionsResponse response;
   for (auto& session : sessions) {
     response.add_session()->set_name(std::move(session));
   }
@@ -218,10 +220,10 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
 
 // Create a `CommitResponse` with the given `commit_timestamp` and
 // `commit_stats`.
-spanner_proto::CommitResponse MakeCommitResponse(
+spanner_proto::v1::CommitResponse MakeCommitResponse(
     spanner::Timestamp commit_timestamp,
     absl::optional<spanner::CommitStats> commit_stats = absl::nullopt) {
-  spanner_proto::CommitResponse response;
+  spanner_proto::v1::CommitResponse response;
   *response.mutable_commit_timestamp() =
       commit_timestamp.get<protobuf::Timestamp>().value();
   if (commit_stats.has_value()) {
@@ -261,10 +263,10 @@ std::shared_ptr<spanner::Connection> MakeLimitedRetryConnection(
   return MakeConnectionImpl(db, {std::move(mock)}, std::move(opts));
 }
 
-class MockGrpcReader
-    : public ::grpc::ClientReaderInterface<spanner_proto::PartialResultSet> {
+class MockGrpcReader : public ::grpc::ClientReaderInterface<
+                           spanner_proto::v1::PartialResultSet> {
  public:
-  MOCK_METHOD(bool, Read, (spanner_proto::PartialResultSet*), (override));
+  MOCK_METHOD(bool, Read, (spanner_proto::v1::PartialResultSet*), (override));
   MOCK_METHOD(bool, NextMessageSize, (std::uint32_t*), (override));
   MOCK_METHOD(grpc::Status, Finish, (), (override));
   MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
@@ -274,7 +276,7 @@ class MockGrpcReader
 // `responses` (which can be given in proto or text format) in sequence,
 // and then yields the specified `status` (default OK).
 std::unique_ptr<MockGrpcReader> MakeReader(
-    std::vector<spanner_proto::PartialResultSet> responses,
+    std::vector<spanner_proto::v1::PartialResultSet> responses,
     grpc::Status status = grpc::Status()) {
   auto reader = absl::make_unique<MockGrpcReader>();
   Sequence s;
@@ -293,7 +295,7 @@ std::unique_ptr<MockGrpcReader> MakeReader(
 std::unique_ptr<MockGrpcReader> MakeReader(
     std::vector<std::string> const& responses,
     grpc::Status status = grpc::Status()) {
-  std::vector<spanner_proto::PartialResultSet> response_protos;
+  std::vector<spanner_proto::v1::PartialResultSet> response_protos;
   response_protos.resize(responses.size());
   for (std::size_t i = 0; i < responses.size(); ++i) {
     if (!TextFormat::ParseFromString(responses[i], &response_protos[i])) {
@@ -306,7 +308,7 @@ std::unique_ptr<MockGrpcReader> MakeReader(
 std::unique_ptr<MockGrpcReader> MakeReader(
     std::initializer_list<internal::NonConstructible>,
     grpc::Status status = grpc::Status()) {
-  return MakeReader(std::vector<spanner_proto::PartialResultSet>{},
+  return MakeReader(std::vector<spanner_proto::v1::PartialResultSet>{},
                     std::move(status));
 }
 
@@ -396,9 +398,10 @@ TEST(ConnectionImplTest, ReadSuccess) {
         resume_token: "end-of-stream"
       )pb",
   };
-  EXPECT_CALL(*mock,
-              StreamingRead(
-                  _, HasPriority(spanner_proto::RequestOptions::PRIORITY_LOW)))
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, HasPriority(spanner_proto::v1::RequestOptions::PRIORITY_LOW)))
       .WillOnce(
           [&retry_status](grpc::ClientContext&,
                           google::spanner::v1::ReadRequest const& request) {
@@ -810,67 +813,71 @@ TEST(ConnectionImplTest, QueryOptions) {
     // Given these QueryOptions ...
     spanner::QueryOptions options;
     // ... expect these protos.
-    spanner_proto::ExecuteSqlRequest::QueryOptions qo_proto;
-    spanner_proto::RequestOptions ro_proto;
+    spanner_proto::v1::ExecuteSqlRequest::QueryOptions qo_proto;
+    spanner_proto::v1::RequestOptions ro_proto;
   } test_cases[] = {
       // Default options.
       {spanner::QueryOptions(),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>().Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Build(),
+       ProtoBuilder<spanner_proto::v1::RequestOptions>().Build()},
 
       // Optimizer version alone.
       {spanner::QueryOptions().set_optimizer_version(""),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
-           .Apply(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Apply(&spanner_proto::v1::ExecuteSqlRequest::QueryOptions::
                       set_optimizer_version,
                   "")
            .Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
+       ProtoBuilder<spanner_proto::v1::RequestOptions>().Build()},
       {spanner::QueryOptions().set_optimizer_version("some-version"),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
-           .Apply(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Apply(&spanner_proto::v1::ExecuteSqlRequest::QueryOptions::
                       set_optimizer_version,
                   "some-version")
            .Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
+       ProtoBuilder<spanner_proto::v1::RequestOptions>().Build()},
 
       // Optimizer stats package alone.
       {spanner::QueryOptions().set_optimizer_statistics_package(""),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
-           .Apply(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Apply(&spanner_proto::v1::ExecuteSqlRequest::QueryOptions::
                       set_optimizer_statistics_package,
                   "")
            .Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
+       ProtoBuilder<spanner_proto::v1::RequestOptions>().Build()},
       {spanner::QueryOptions().set_optimizer_statistics_package("some-stats"),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
-           .Apply(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Apply(&spanner_proto::v1::ExecuteSqlRequest::QueryOptions::
                       set_optimizer_statistics_package,
                   "some-stats")
            .Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>().Build()},
+       ProtoBuilder<spanner_proto::v1::RequestOptions>().Build()},
 
       // Request priority alone.
       {spanner::QueryOptions().set_request_priority(
            spanner::RequestPriority::kLow),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>().Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>()
-           .Apply(&spanner_proto::RequestOptions::set_priority,
-                  spanner_proto::RequestOptions::PRIORITY_LOW)
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Build(),
+       ProtoBuilder<spanner_proto::v1::RequestOptions>()
+           .Apply(&spanner_proto::v1::RequestOptions::set_priority,
+                  spanner_proto::v1::RequestOptions::PRIORITY_LOW)
            .Build()},
       {spanner::QueryOptions().set_request_priority(
            spanner::RequestPriority::kHigh),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>().Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>()
-           .Apply(&spanner_proto::RequestOptions::set_priority,
-                  spanner_proto::RequestOptions::PRIORITY_HIGH)
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Build(),
+       ProtoBuilder<spanner_proto::v1::RequestOptions>()
+           .Apply(&spanner_proto::v1::RequestOptions::set_priority,
+                  spanner_proto::v1::RequestOptions::PRIORITY_HIGH)
            .Build()},
 
       // Request tag alone.
       {spanner::QueryOptions().set_request_tag("tag"),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>().Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>()
-           .Apply(&spanner_proto::RequestOptions::set_request_tag, "tag")
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Build(),
+       ProtoBuilder<spanner_proto::v1::RequestOptions>()
+           .Apply(&spanner_proto::v1::RequestOptions::set_request_tag, "tag")
            .Build()},
 
       // All options together.
@@ -879,18 +886,18 @@ TEST(ConnectionImplTest, QueryOptions) {
            .set_optimizer_statistics_package("some-stats")
            .set_request_priority(spanner::RequestPriority::kLow)
            .set_request_tag("tag"),
-       ProtoBuilder<spanner_proto::ExecuteSqlRequest::QueryOptions>()
-           .Apply(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+       ProtoBuilder<spanner_proto::v1::ExecuteSqlRequest::QueryOptions>()
+           .Apply(&spanner_proto::v1::ExecuteSqlRequest::QueryOptions::
                       set_optimizer_version,
                   "some-version")
-           .Apply(&spanner_proto::ExecuteSqlRequest::QueryOptions::
+           .Apply(&spanner_proto::v1::ExecuteSqlRequest::QueryOptions::
                       set_optimizer_statistics_package,
                   "some-stats")
            .Build(),
-       ProtoBuilder<spanner_proto::RequestOptions>()
-           .Apply(&spanner_proto::RequestOptions::set_priority,
-                  spanner_proto::RequestOptions::PRIORITY_LOW)
-           .Apply(&spanner_proto::RequestOptions::set_request_tag, "tag")
+       ProtoBuilder<spanner_proto::v1::RequestOptions>()
+           .Apply(&spanner_proto::v1::RequestOptions::set_priority,
+                  spanner_proto::v1::RequestOptions::PRIORITY_LOW)
+           .Apply(&spanner_proto::v1::RequestOptions::set_request_tag, "tag")
            .Build()},
   };
 
@@ -935,7 +942,7 @@ TEST(ConnectionImplTest, QueryOptions) {
     auto grpc_reader = absl::make_unique<NiceMock<MockGrpcReader>>();
     auto constexpr kResponseText =
         R"pb(metadata: { transaction: { id: "2468ACE" } })pb";
-    spanner_proto::PartialResultSet response;
+    spanner_proto::v1::PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
     EXPECT_CALL(*grpc_reader, Read)
         .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
@@ -944,48 +951,50 @@ TEST(ConnectionImplTest, QueryOptions) {
       InSequence seq;
 
       auto execute_sql_request_matcher = AllOf(
-          Property(&spanner_proto::ExecuteSqlRequest::query_options,
+          Property(&spanner_proto::v1::ExecuteSqlRequest::query_options,
                    IsProtoEqual(tc.qo_proto)),
-          Property(
-              &spanner_proto::ExecuteSqlRequest::request_options,
-              IsProtoEqual(
-                  ProtoBuilder<spanner_proto::RequestOptions>(tc.ro_proto)
-                      .Apply(
-                          &spanner_proto::RequestOptions::set_transaction_tag,
-                          "tag")
-                      .Build())));
+          Property(&spanner_proto::v1::ExecuteSqlRequest::request_options,
+                   IsProtoEqual(ProtoBuilder<spanner_proto::v1::RequestOptions>(
+                                    tc.ro_proto)
+                                    .Apply(&spanner_proto::v1::RequestOptions::
+                                               set_transaction_tag,
+                                           "tag")
+                                    .Build())));
       auto begin_transaction_request_matcher = Property(
-          &spanner_proto::BeginTransactionRequest::request_options,
+          &spanner_proto::v1::BeginTransactionRequest::request_options,
           IsProtoEqual(
-              ProtoBuilder<spanner_proto::RequestOptions>(tc.ro_proto)
-                  .Apply(&spanner_proto::RequestOptions::clear_priority)
+              ProtoBuilder<spanner_proto::v1::RequestOptions>(tc.ro_proto)
+                  .Apply(&spanner_proto::v1::RequestOptions::clear_priority)
                   .Build()));
       auto untagged_execute_sql_request_matcher =
-          AllOf(Property(&spanner_proto::ExecuteSqlRequest::query_options,
+          AllOf(Property(&spanner_proto::v1::ExecuteSqlRequest::query_options,
                          IsProtoEqual(tc.qo_proto)),
-                Property(&spanner_proto::ExecuteSqlRequest::request_options,
+                Property(&spanner_proto::v1::ExecuteSqlRequest::request_options,
                          IsProtoEqual(tc.ro_proto)));
       auto execute_batch_dml_request_matcher = Property(
-          &spanner_proto::ExecuteBatchDmlRequest::request_options,
+          &spanner_proto::v1::ExecuteBatchDmlRequest::request_options,
           IsProtoEqual(
-              ProtoBuilder<spanner_proto::RequestOptions>(tc.ro_proto)
-                  .Apply(&spanner_proto::RequestOptions::set_transaction_tag,
-                         "tag")
+              ProtoBuilder<spanner_proto::v1::RequestOptions>(tc.ro_proto)
+                  .Apply(
+                      &spanner_proto::v1::RequestOptions::set_transaction_tag,
+                      "tag")
                   .Build()));
       auto read_request_matcher = Property(
-          &spanner_proto::ReadRequest::request_options,
+          &spanner_proto::v1::ReadRequest::request_options,
           IsProtoEqual(
-              ProtoBuilder<spanner_proto::RequestOptions>(tc.ro_proto)
-                  .Apply(&spanner_proto::RequestOptions::set_transaction_tag,
-                         "tag")
+              ProtoBuilder<spanner_proto::v1::RequestOptions>(tc.ro_proto)
+                  .Apply(
+                      &spanner_proto::v1::RequestOptions::set_transaction_tag,
+                      "tag")
                   .Build()));
       auto commit_request_matcher = Property(
-          &spanner_proto::CommitRequest::request_options,
+          &spanner_proto::v1::CommitRequest::request_options,
           IsProtoEqual(
-              ProtoBuilder<spanner_proto::RequestOptions>(tc.ro_proto)
-                  .Apply(&spanner_proto::RequestOptions::clear_request_tag)
-                  .Apply(&spanner_proto::RequestOptions::set_transaction_tag,
-                         "tag")
+              ProtoBuilder<spanner_proto::v1::RequestOptions>(tc.ro_proto)
+                  .Apply(&spanner_proto::v1::RequestOptions::clear_request_tag)
+                  .Apply(
+                      &spanner_proto::v1::RequestOptions::set_transaction_tag,
+                      "tag")
                   .Build()));
 
       // ExecuteQuery().
@@ -1080,7 +1089,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
     metadata: { transaction: { id: "1234567890" } }
     stats: { row_count_exact: 42 }
   )pb";
-  spanner_proto::ResultSet response;
+  spanner_proto::v1::ResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql)
@@ -1196,7 +1205,7 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionMissing) {
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
   // Return an otherwise valid response that does not contain a transaction.
-  spanner_proto::ResultSet response;
+  spanner_proto::v1::ResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString("metadata: {}", &response));
   EXPECT_CALL(*mock, ExecuteSql).WillOnce(Return(response));
 
@@ -1358,7 +1367,7 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
       }
     }
   )pb";
-  spanner_proto::ResultSet response;
+  spanner_proto::v1::ResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   EXPECT_CALL(*mock, ExecuteSql)
@@ -1456,7 +1465,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
     metadata: {}
     stats: { query_plan { plan_nodes: { index: 42 } } }
   )pb";
-  spanner_proto::ResultSet response;
+  spanner_proto::v1::ResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*mock, ExecuteSql)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
@@ -1563,12 +1572,12 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
     result_sets: { stats: { row_count_exact: 1 } }
     result_sets: { stats: { row_count_exact: 2 } }
   )pb";
-  spanner_proto::ExecuteBatchDmlResponse response;
+  spanner_proto::v1::ExecuteBatchDmlResponse response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(
       *mock,
       ExecuteBatchDml(
-          _, HasPriority(spanner_proto::RequestOptions::PRIORITY_MEDIUM)))
+          _, HasPriority(spanner_proto::v1::RequestOptions::PRIORITY_MEDIUM)))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
 
@@ -1612,7 +1621,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
     result_sets: { stats: { row_count_exact: 43 } }
     status: { code: 2 message: "oops" }
   )pb";
-  spanner_proto::ExecuteBatchDmlResponse response;
+  spanner_proto::v1::ExecuteBatchDmlResponse response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
   EXPECT_CALL(*mock, ExecuteBatchDml).WillOnce(Return(response));
 
@@ -1713,7 +1722,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
     // error status in the response.
     auto constexpr kText =
         R"pb(status: { code: 6 message: "failed to insert ..." })pb";
-    spanner_proto::ExecuteBatchDmlResponse response;
+    spanner_proto::v1::ExecuteBatchDmlResponse response;
     ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
     EXPECT_CALL(*mock, ExecuteBatchDml(_, AllOf(HasSession("session-name"),
                                                 HasBeginTransaction())))
@@ -1942,7 +1951,7 @@ TEST(ConnectionImplTest, CommitGetSessionTooManyTransientFailures) {
 TEST(ConnectionImplTest, CommitGetSessionRetry) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
-  spanner_proto::Transaction txn = MakeTestTransaction();
+  spanner_proto::v1::Transaction txn = MakeTestTransaction();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);
@@ -1963,7 +1972,7 @@ TEST(ConnectionImplTest, CommitGetSessionRetry) {
 TEST(ConnectionImplTest, CommitBeginTransactionRetry) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
-  spanner_proto::Transaction txn = MakeTestTransaction();
+  spanner_proto::v1::Transaction txn = MakeTestTransaction();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);
@@ -2026,7 +2035,7 @@ TEST(ConnectionImplTest, CommitBeginTransactionPermanentFailure) {
 TEST(ConnectionImplTest, CommitCommitPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
-  spanner_proto::Transaction txn = MakeTestTransaction();
+  spanner_proto::v1::Transaction txn = MakeTestTransaction();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);
@@ -2045,7 +2054,7 @@ TEST(ConnectionImplTest, CommitCommitPermanentFailure) {
 TEST(ConnectionImplTest, CommitCommitTooManyTransientFailures) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
-  spanner_proto::Transaction txn = MakeTestTransaction();
+  spanner_proto::v1::Transaction txn = MakeTestTransaction();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);
@@ -2117,10 +2126,10 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(
       *mock,
-      Commit(_,
-             AllOf(HasSession("test-session-name"),
-                   HasNakedTransactionId("test-txn-id"),
-                   HasPriority(spanner_proto::RequestOptions::PRIORITY_HIGH))))
+      Commit(_, AllOf(HasSession("test-session-name"),
+                      HasNakedTransactionId("test-txn-id"),
+                      HasPriority(
+                          spanner_proto::v1::RequestOptions::PRIORITY_HIGH))))
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
@@ -2139,7 +2148,7 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
 TEST(ConnectionImplTest, CommitSuccessWithStats) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
-  spanner_proto::Transaction txn = MakeTestTransaction();
+  spanner_proto::v1::Transaction txn = MakeTestTransaction();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
   auto conn = MakeConnectionImpl(db, {mock});
@@ -2529,8 +2538,8 @@ TEST(ConnectionImplTest, MultipleThreads) {
       .WillRepeatedly(
           [&session_prefix, &session_counter](
               grpc::ClientContext&,
-              spanner_proto::BatchCreateSessionsRequest const& request) {
-            spanner_proto::BatchCreateSessionsResponse response;
+              spanner_proto::v1::BatchCreateSessionsRequest const& request) {
+            spanner_proto::v1::BatchCreateSessionsResponse response;
             for (int i = 0; i < request.session_count(); ++i) {
               response.add_session()->set_name(
                   session_prefix + std::to_string(++session_counter));
@@ -2540,7 +2549,7 @@ TEST(ConnectionImplTest, MultipleThreads) {
   EXPECT_CALL(*mock, Rollback)
       .WillRepeatedly(
           [session_prefix](grpc::ClientContext&,
-                           spanner_proto::RollbackRequest const& request) {
+                           spanner_proto::v1::RollbackRequest const& request) {
             EXPECT_THAT(request.session(), StartsWith(session_prefix));
             return Status();
           });
@@ -2605,7 +2614,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
         }
       }
     )pb";
-    spanner_proto::PartialResultSet response;
+    spanner_proto::v1::PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
     // The first two responses are reads from two different "begin"
     // transactions.

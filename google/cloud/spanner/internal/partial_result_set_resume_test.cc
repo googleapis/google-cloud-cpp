@@ -30,7 +30,7 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace spanner_proto = ::google::spanner::v1;
+namespace spanner_proto = ::google::spanner;
 
 using ::google::cloud::Idempotency;
 using ::google::cloud::spanner_testing::MockPartialResultSetReader;
@@ -42,7 +42,7 @@ using ::testing::HasSubstr;
 using ::testing::Return;
 
 absl::optional<PartialResultSet> ReadReturn(
-    spanner_proto::PartialResultSet response) {
+    spanner_proto::v1::PartialResultSet response) {
   return PartialResultSet{std::move(response), false};
 }
 
@@ -66,7 +66,7 @@ std::unique_ptr<PartialResultSetReader> MakeTestResume(
 }
 
 TEST(PartialResultSetResume, Success) {
-  spanner_proto::PartialResultSet response;
+  spanner_proto::v1::PartialResultSet response;
   auto constexpr kText =
       R"pb(
     metadata: {
@@ -122,7 +122,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
     values: { string_value: "value-1" }
     values: { string_value: "value-2" }
   )pb";
-  spanner_proto::PartialResultSet r0;
+  spanner_proto::v1::PartialResultSet r0;
   ASSERT_TRUE(TextFormat::ParseFromString(kText0, &r0));
 
   auto constexpr kText1 = R"pb(
@@ -130,7 +130,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
     values: { string_value: "value-3" }
     values: { string_value: "value-4" }
   )pb";
-  spanner_proto::PartialResultSet r1;
+  spanner_proto::v1::PartialResultSet r1;
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
   MockFactory mock_factory;
@@ -194,7 +194,7 @@ TEST(PartialResultSetResume, PermanentError) {
     values: { string_value: "value-1" }
     values: { string_value: "value-2" }
       )pb";
-  spanner_proto::PartialResultSet r0;
+  spanner_proto::v1::PartialResultSet r0;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &r0));
 
   MockFactory mock_factory;
@@ -246,7 +246,7 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
     values: { string_value: "value-1" }
     values: { string_value: "value-2" }
   )pb";
-  spanner_proto::PartialResultSet r0;
+  spanner_proto::v1::PartialResultSet r0;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &r0));
 
   MockFactory mock_factory;
