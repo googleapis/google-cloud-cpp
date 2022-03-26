@@ -50,6 +50,7 @@ std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod) {
 }
 
 std::uint64_t DefaultRoutingPolicy::Route(std::uint32_t num_partitions) {
+  // atomic operation
   return counter_++ % num_partitions;
 }
 
