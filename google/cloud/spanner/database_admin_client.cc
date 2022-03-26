@@ -24,12 +24,12 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::database;
+namespace gsad = ::google::spanner::admin::database;
 
 DatabaseAdminClient::DatabaseAdminClient(ConnectionOptions const& options)
     : conn_(MakeDatabaseAdminConnection(options)) {}
 
-future<StatusOr<gcsa::v1::Database>> DatabaseAdminClient::CreateDatabase(
+future<StatusOr<gsad::v1::Database>> DatabaseAdminClient::CreateDatabase(
     Database db, std::vector<std::string> extra_statements,
     EncryptionConfig encryption_config) {
   internal::OptionsSpan span(conn_->options());
@@ -37,18 +37,18 @@ future<StatusOr<gcsa::v1::Database>> DatabaseAdminClient::CreateDatabase(
                                 std::move(encryption_config)});
 }
 
-StatusOr<gcsa::v1::Database> DatabaseAdminClient::GetDatabase(Database db) {
+StatusOr<gsad::v1::Database> DatabaseAdminClient::GetDatabase(Database db) {
   internal::OptionsSpan span(conn_->options());
   return conn_->GetDatabase({std::move(db)});
 }
 
-StatusOr<gcsa::v1::GetDatabaseDdlResponse> DatabaseAdminClient::GetDatabaseDdl(
+StatusOr<gsad::v1::GetDatabaseDdlResponse> DatabaseAdminClient::GetDatabaseDdl(
     Database db) {
   internal::OptionsSpan span(conn_->options());
   return conn_->GetDatabaseDdl({std::move(db)});
 }
 
-future<StatusOr<gcsa::v1::UpdateDatabaseDdlMetadata>>
+future<StatusOr<gsad::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminClient::UpdateDatabase(Database db,
                                     std::vector<std::string> statements) {
   internal::OptionsSpan span(conn_->options());
@@ -65,14 +65,14 @@ Status DatabaseAdminClient::DropDatabase(Database db) {
   return conn_->DropDatabase({std::move(db)});
 }
 
-future<StatusOr<gcsa::v1::Database>> DatabaseAdminClient::RestoreDatabase(
+future<StatusOr<gsad::v1::Database>> DatabaseAdminClient::RestoreDatabase(
     Database db, Backup const& backup, EncryptionConfig encryption_config) {
   internal::OptionsSpan span(conn_->options());
   return conn_->RestoreDatabase(
       {std::move(db), backup.FullName(), std::move(encryption_config)});
 }
 
-future<StatusOr<gcsa::v1::Database>> DatabaseAdminClient::RestoreDatabase(
+future<StatusOr<gsad::v1::Database>> DatabaseAdminClient::RestoreDatabase(
     Database db, google::spanner::admin::database::v1::Backup const& backup,
     EncryptionConfig encryption_config) {
   internal::OptionsSpan span(conn_->options());
@@ -148,7 +148,7 @@ DatabaseAdminClient::TestIamPermissions(Database db,
   return conn_->TestIamPermissions({std::move(db), std::move(permissions)});
 }
 
-future<StatusOr<gcsa::v1::Backup>> DatabaseAdminClient::CreateBackup(
+future<StatusOr<gsad::v1::Backup>> DatabaseAdminClient::CreateBackup(
     Database db, std::string backup_id, Timestamp expire_time,
     absl::optional<Timestamp> version_time,
     EncryptionConfig encryption_config) {
@@ -163,16 +163,16 @@ future<StatusOr<gcsa::v1::Backup>> DatabaseAdminClient::CreateBackup(
        expire_time, std::move(version_time), std::move(encryption_config)});
 }
 
-future<StatusOr<gcsa::v1::Backup>> DatabaseAdminClient::CreateBackup(
+future<StatusOr<gsad::v1::Backup>> DatabaseAdminClient::CreateBackup(
     Database db, std::string backup_id,
     std::chrono::system_clock::time_point expire_time) {
   internal::OptionsSpan span(conn_->options());
   auto ts = MakeTimestamp(expire_time);
-  if (!ts) return make_ready_future(StatusOr<gcsa::v1::Backup>(ts.status()));
+  if (!ts) return make_ready_future(StatusOr<gsad::v1::Backup>(ts.status()));
   return CreateBackup(std::move(db), std::move(backup_id), *ts);
 }
 
-StatusOr<gcsa::v1::Backup> DatabaseAdminClient::GetBackup(
+StatusOr<gsad::v1::Backup> DatabaseAdminClient::GetBackup(
     Backup const& backup) {
   internal::OptionsSpan span(conn_->options());
   return conn_->GetBackup({backup.FullName()});
@@ -195,7 +195,7 @@ ListBackupsRange DatabaseAdminClient::ListBackups(Instance in,
   return conn_->ListBackups({std::move(in), std::move(filter)});
 }
 
-StatusOr<gcsa::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+StatusOr<gsad::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     google::spanner::admin::database::v1::Backup const& backup,
     Timestamp expire_time) {
   internal::OptionsSpan span(conn_->options());
@@ -207,7 +207,7 @@ StatusOr<gcsa::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
   return conn_->UpdateBackup({request});
 }
 
-StatusOr<gcsa::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+StatusOr<gsad::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     Backup const& backup, Timestamp expire_time) {
   internal::OptionsSpan span(conn_->options());
   google::spanner::admin::database::v1::UpdateBackupRequest request;
@@ -218,7 +218,7 @@ StatusOr<gcsa::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
   return conn_->UpdateBackup({request});
 }
 
-StatusOr<gcsa::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+StatusOr<gsad::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     google::spanner::admin::database::v1::Backup const& backup,
     std::chrono::system_clock::time_point const& expire_time) {
   auto ts = MakeTimestamp(expire_time);
@@ -226,7 +226,7 @@ StatusOr<gcsa::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
   return UpdateBackupExpireTime(backup, *ts);
 }
 
-StatusOr<gcsa::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+StatusOr<gsad::v1::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     Backup const& backup,
     std::chrono::system_clock::time_point const& expire_time) {
   auto ts = MakeTimestamp(expire_time);

@@ -28,7 +28,7 @@ namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace gcsa = ::google::spanner::admin::database;
+namespace gsad = ::google::spanner::admin::database;
 namespace spanner = ::google::cloud::spanner;
 
 using ::google::cloud::spanner_admin_mocks::MockDatabaseAdminConnection;
@@ -41,16 +41,16 @@ TEST(CleanupStaleDatabases, Empty) {
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce([&expected_instance](
-                    gcsa::v1::ListDatabasesRequest const& request) {
+                    gsad::v1::ListDatabasesRequest const& request) {
         EXPECT_EQ(request.parent(), expected_instance.FullName());
-        return internal::MakePaginationRange<StreamRange<gcsa::v1::Database>>(
-            gcsa::v1::ListDatabasesRequest{},
-            [](gcsa::v1::ListDatabasesRequest const&) {
-              gcsa::v1::ListDatabasesResponse response;
-              return StatusOr<gcsa::v1::ListDatabasesResponse>(response);
+        return internal::MakePaginationRange<StreamRange<gsad::v1::Database>>(
+            gsad::v1::ListDatabasesRequest{},
+            [](gsad::v1::ListDatabasesRequest const&) {
+              gsad::v1::ListDatabasesResponse response;
+              return StatusOr<gsad::v1::ListDatabasesResponse>(response);
             },
-            [](gcsa::v1::ListDatabasesResponse const&) {
-              return std::vector<gcsa::v1::Database>{};
+            [](gsad::v1::ListDatabasesResponse const&) {
+              return std::vector<gsad::v1::Database>{};
             });
       });
 
@@ -65,16 +65,16 @@ TEST(CleanupStaleDatabases, ListError) {
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce([&expected_instance](
-                    gcsa::v1::ListDatabasesRequest const& request) {
+                    gsad::v1::ListDatabasesRequest const& request) {
         EXPECT_EQ(request.parent(), expected_instance.FullName());
-        return internal::MakePaginationRange<StreamRange<gcsa::v1::Database>>(
-            gcsa::v1::ListDatabasesRequest{},
-            [](gcsa::v1::ListDatabasesRequest const&) {
-              return StatusOr<gcsa::v1::ListDatabasesResponse>(
+        return internal::MakePaginationRange<StreamRange<gsad::v1::Database>>(
+            gsad::v1::ListDatabasesRequest{},
+            [](gsad::v1::ListDatabasesRequest const&) {
+              return StatusOr<gsad::v1::ListDatabasesResponse>(
                   Status(StatusCode::kPermissionDenied, "uh-oh"));
             },
-            [](gcsa::v1::ListDatabasesResponse const&) {
-              return std::vector<gcsa::v1::Database>{};
+            [](gsad::v1::ListDatabasesResponse const&) {
+              return std::vector<gsad::v1::Database>{};
             });
       });
 
@@ -106,35 +106,35 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
 
   spanner::Instance const expected_instance("test-project", "test-instance");
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce([&](gcsa::v1::ListDatabasesRequest const& request) {
+      .WillOnce([&](gsad::v1::ListDatabasesRequest const& request) {
         EXPECT_EQ(request.parent(), expected_instance.FullName());
-        return internal::MakePaginationRange<StreamRange<gcsa::v1::Database>>(
-            gcsa::v1::ListDatabasesRequest{},
-            [&](gcsa::v1::ListDatabasesRequest const&) {
-              gcsa::v1::ListDatabasesResponse response;
+        return internal::MakePaginationRange<StreamRange<gsad::v1::Database>>(
+            gsad::v1::ListDatabasesRequest{},
+            [&](gsad::v1::ListDatabasesRequest const&) {
+              gsad::v1::ListDatabasesResponse response;
               for (auto const& id : expect_dropped) {
-                gcsa::v1::Database db;
+                gsad::v1::Database db;
                 db.set_name(
                     spanner::Database(expected_instance, id).FullName());
                 *response.add_databases() = std::move(db);
               }
               for (auto const& id : expect_not_dropped) {
-                gcsa::v1::Database db;
+                gsad::v1::Database db;
                 db.set_name(
                     spanner::Database(expected_instance, id).FullName());
                 *response.add_databases() = std::move(db);
               }
-              return StatusOr<gcsa::v1::ListDatabasesResponse>(response);
+              return StatusOr<gsad::v1::ListDatabasesResponse>(response);
             },
-            [](gcsa::v1::ListDatabasesResponse const& r) {
-              return std::vector<gcsa::v1::Database>{r.databases().begin(),
+            [](gsad::v1::ListDatabasesResponse const& r) {
+              return std::vector<gsad::v1::Database>{r.databases().begin(),
                                                      r.databases().end()};
             });
       });
 
   std::vector<std::string> dropped;
   EXPECT_CALL(*mock, DropDatabase)
-      .WillRepeatedly([&](gcsa::v1::DropDatabaseRequest const& request) {
+      .WillRepeatedly([&](gsad::v1::DropDatabaseRequest const& request) {
         auto db = spanner::MakeDatabase(request.database()).value();
         EXPECT_EQ(expected_instance, db.instance());
         dropped.push_back(db.database_id());

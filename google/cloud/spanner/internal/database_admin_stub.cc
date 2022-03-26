@@ -26,14 +26,14 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::database;
+namespace gsad = ::google::spanner::admin::database;
 
 DatabaseAdminStub::~DatabaseAdminStub() = default;
 
 class DefaultDatabaseAdminStub : public DatabaseAdminStub {
  public:
   DefaultDatabaseAdminStub(
-      std::unique_ptr<gcsa::v1::DatabaseAdmin::StubInterface> database_admin,
+      std::unique_ptr<gsad::v1::DatabaseAdmin::StubInterface> database_admin,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
       : database_admin_(std::move(database_admin)),
@@ -43,20 +43,20 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-      gcsa::v1::CreateDatabaseRequest const& request) override {
+      gsad::v1::CreateDatabaseRequest const& request) override {
     return cq.MakeUnaryRpc(
         [this](grpc::ClientContext* context,
-               gcsa::v1::CreateDatabaseRequest const& request,
+               gsad::v1::CreateDatabaseRequest const& request,
                grpc::CompletionQueue* cq) {
           return database_admin_->AsyncCreateDatabase(context, request, cq);
         },
         request, std::move(context));
   }
 
-  StatusOr<gcsa::v1::Database> GetDatabase(
+  StatusOr<gsad::v1::Database> GetDatabase(
       grpc::ClientContext& client_context,
-      gcsa::v1::GetDatabaseRequest const& request) override {
-    gcsa::v1::Database response;
+      gsad::v1::GetDatabaseRequest const& request) override {
+    gsad::v1::Database response;
     auto status =
         database_admin_->GetDatabase(&client_context, request, &response);
     if (!status.ok()) {
@@ -65,10 +65,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  StatusOr<gcsa::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
+  StatusOr<gsad::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
       grpc::ClientContext& client_context,
-      gcsa::v1::GetDatabaseDdlRequest const& request) override {
-    gcsa::v1::GetDatabaseDdlResponse response;
+      gsad::v1::GetDatabaseDdlRequest const& request) override {
+    gsad::v1::GetDatabaseDdlResponse response;
     auto status =
         database_admin_->GetDatabaseDdl(&client_context, request, &response);
     if (!status.ok()) {
@@ -79,10 +79,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-      gcsa::v1::UpdateDatabaseDdlRequest const& request) override {
+      gsad::v1::UpdateDatabaseDdlRequest const& request) override {
     return cq.MakeUnaryRpc(
         [this](grpc::ClientContext* context,
-               gcsa::v1::UpdateDatabaseDdlRequest const& request,
+               gsad::v1::UpdateDatabaseDdlRequest const& request,
                grpc::CompletionQueue* cq) {
           return database_admin_->AsyncUpdateDatabaseDdl(context, request, cq);
         },
@@ -90,7 +90,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
   Status DropDatabase(grpc::ClientContext& client_context,
-                      gcsa::v1::DropDatabaseRequest const& request) override {
+                      gsad::v1::DropDatabaseRequest const& request) override {
     google::protobuf::Empty response;
     grpc::Status status =
         database_admin_->DropDatabase(&client_context, request, &response);
@@ -100,10 +100,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return google::cloud::Status();
   }
 
-  StatusOr<gcsa::v1::ListDatabasesResponse> ListDatabases(
+  StatusOr<gsad::v1::ListDatabasesResponse> ListDatabases(
       grpc::ClientContext& client_context,
-      gcsa::v1::ListDatabasesRequest const& request) override {
-    gcsa::v1::ListDatabasesResponse response;
+      gsad::v1::ListDatabasesRequest const& request) override {
+    gsad::v1::ListDatabasesResponse response;
     auto status =
         database_admin_->ListDatabases(&client_context, request, &response);
     if (!status.ok()) {
@@ -114,10 +114,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-      gcsa::v1::RestoreDatabaseRequest const& request) override {
+      gsad::v1::RestoreDatabaseRequest const& request) override {
     return cq.MakeUnaryRpc(
         [this](grpc::ClientContext* context,
-               gcsa::v1::RestoreDatabaseRequest const& request,
+               gsad::v1::RestoreDatabaseRequest const& request,
                grpc::CompletionQueue* cq) {
           return database_admin_->AsyncRestoreDatabase(context, request, cq);
         },
@@ -162,10 +162,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-      gcsa::v1::CreateBackupRequest const& request) override {
+      gsad::v1::CreateBackupRequest const& request) override {
     return cq.MakeUnaryRpc(
         [this](grpc::ClientContext* context,
-               gcsa::v1::CreateBackupRequest const& request,
+               gsad::v1::CreateBackupRequest const& request,
                grpc::CompletionQueue* cq) {
           return database_admin_->AsyncCreateBackup(context, request, cq);
         },
@@ -186,7 +186,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
   Status DeleteBackup(grpc::ClientContext& client_context,
-                      gcsa::v1::DeleteBackupRequest const& request) override {
+                      gsad::v1::DeleteBackupRequest const& request) override {
     google::protobuf::Empty response;
     grpc::Status status =
         database_admin_->DeleteBackup(&client_context, request, &response);
@@ -196,10 +196,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return google::cloud::Status();
   }
 
-  StatusOr<gcsa::v1::ListBackupsResponse> ListBackups(
+  StatusOr<gsad::v1::ListBackupsResponse> ListBackups(
       grpc::ClientContext& client_context,
-      gcsa::v1::ListBackupsRequest const& request) override {
-    gcsa::v1::ListBackupsResponse response;
+      gsad::v1::ListBackupsRequest const& request) override {
+    gsad::v1::ListBackupsResponse response;
     auto status =
         database_admin_->ListBackups(&client_context, request, &response);
     if (!status.ok()) {
@@ -221,10 +221,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  StatusOr<gcsa::v1::ListBackupOperationsResponse> ListBackupOperations(
+  StatusOr<gsad::v1::ListBackupOperationsResponse> ListBackupOperations(
       grpc::ClientContext& client_context,
-      gcsa::v1::ListBackupOperationsRequest const& request) override {
-    gcsa::v1::ListBackupOperationsResponse response;
+      gsad::v1::ListBackupOperationsRequest const& request) override {
+    gsad::v1::ListBackupOperationsResponse response;
     auto status = database_admin_->ListBackupOperations(&client_context,
                                                         request, &response);
     if (!status.ok()) {
@@ -233,10 +233,10 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  StatusOr<gcsa::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
+  StatusOr<gsad::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
       grpc::ClientContext& client_context,
-      gcsa::v1::ListDatabaseOperationsRequest const& request) override {
-    gcsa::v1::ListDatabaseOperationsResponse response;
+      gsad::v1::ListDatabaseOperationsRequest const& request) override {
+    gsad::v1::ListDatabaseOperationsResponse response;
     auto status = database_admin_->ListDatabaseOperations(&client_context,
                                                           request, &response);
     if (!status.ok()) {
@@ -274,7 +274,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
  private:
-  std::unique_ptr<gcsa::v1::DatabaseAdmin::StubInterface> database_admin_;
+  std::unique_ptr<gsad::v1::DatabaseAdmin::StubInterface> database_admin_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
@@ -284,7 +284,7 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
   auto channel =
       grpc::CreateCustomChannel(opts.get<EndpointOption>(),
                                 opts.get<GrpcCredentialOption>(), channel_args);
-  auto spanner_grpc_stub = gcsa::v1::DatabaseAdmin::NewStub(channel);
+  auto spanner_grpc_stub = gsad::v1::DatabaseAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
 

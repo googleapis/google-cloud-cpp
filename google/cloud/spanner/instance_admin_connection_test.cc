@@ -31,7 +31,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace gcsa = ::google::spanner::admin::instance;
+namespace gsai = ::google::spanner::admin::instance;
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -72,19 +72,19 @@ TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
     node_count: 7
     state: CREATING
   )pb";
-  gcsa::v1::Instance expected_instance;
+  gsai::v1::Instance expected_instance;
   ASSERT_TRUE(TextFormat::ParseFromString(kInstanceText, &expected_instance));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstance)
       .WillOnce([&expected_name](grpc::ClientContext&,
-                                 gcsa::v1::GetInstanceRequest const& request) {
+                                 gsai::v1::GetInstanceRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
         return Status(StatusCode::kUnavailable, "try-again");
       })
       .WillOnce([&expected_name, &expected_instance](
                     grpc::ClientContext&,
-                    gcsa::v1::GetInstanceRequest const& request) {
+                    gsai::v1::GetInstanceRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
         return expected_instance;
       });
@@ -122,7 +122,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
   EXPECT_CALL(*mock, AsyncCreateInstance)
       .WillOnce([&expected_name](CompletionQueue&,
                                  std::unique_ptr<grpc::ClientContext>,
-                                 gcsa::v1::CreateInstanceRequest const& r) {
+                                 gsai::v1::CreateInstanceRequest const& r) {
         EXPECT_EQ("test-instance", r.instance_id());
         EXPECT_EQ("projects/test-project", r.parent());
         auto const& instance = r.instance();
@@ -145,7 +145,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::v1::Instance instance;
+        gsai::v1::Instance instance;
         instance.set_name(expected_name);
         op.mutable_response()->PackFrom(instance);
         return make_ready_future(make_status_or(op));
@@ -170,7 +170,7 @@ TEST(InstanceAdminClientTest, CreateInstanceError) {
 
   EXPECT_CALL(*mock, AsyncCreateInstance)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::v1::CreateInstanceRequest const&) {
+                   gsai::v1::CreateInstanceRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
@@ -193,13 +193,13 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
 
   EXPECT_CALL(*mock, AsyncUpdateInstance)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::v1::UpdateInstanceRequest const&) {
+                   gsai::v1::UpdateInstanceRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kUnavailable, "try-again")));
       })
       .WillOnce([&expected_name](CompletionQueue&,
                                  std::unique_ptr<grpc::ClientContext>,
-                                 gcsa::v1::UpdateInstanceRequest const& r) {
+                                 gsai::v1::UpdateInstanceRequest const& r) {
         EXPECT_EQ(expected_name, r.instance().name());
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
@@ -214,14 +214,14 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::v1::Instance instance;
+        gsai::v1::Instance instance;
         instance.set_name(expected_name);
         op.mutable_response()->PackFrom(instance);
         return make_ready_future(make_status_or(op));
       });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
-  gcsa::v1::UpdateInstanceRequest req;
+  gsai::v1::UpdateInstanceRequest req;
   req.mutable_instance()->set_name(expected_name);
   auto fut = conn->UpdateInstance({req});
   auto instance = fut.get();
@@ -235,13 +235,13 @@ TEST(InstanceAdminClientTest, UpdateInstancePermanentFailure) {
 
   EXPECT_CALL(*mock, AsyncUpdateInstance)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::v1::UpdateInstanceRequest const&) {
+                   gsai::v1::UpdateInstanceRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
-  auto fut = conn->UpdateInstance({gcsa::v1::UpdateInstanceRequest()});
+  auto fut = conn->UpdateInstance({gsai::v1::UpdateInstanceRequest()});
   auto instance = fut.get();
   EXPECT_THAT(instance, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -252,12 +252,12 @@ TEST(InstanceAdminClientTest, UpdateInstanceTooManyTransients) {
   EXPECT_CALL(*mock, AsyncUpdateInstance)
       .Times(AtLeast(2))
       .WillRepeatedly([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                         gcsa::v1::UpdateInstanceRequest const&) {
+                         gsai::v1::UpdateInstanceRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kUnavailable, "try-again")));
       });
   auto conn = MakeLimitedRetryConnection(std::move(mock));
-  auto fut = conn->UpdateInstance({gcsa::v1::UpdateInstanceRequest()});
+  auto fut = conn->UpdateInstance({gsai::v1::UpdateInstanceRequest()});
   auto instance = fut.get();
   EXPECT_THAT(instance, StatusIs(StatusCode::kUnavailable));
 }
@@ -270,13 +270,13 @@ TEST(InstanceAdminConnectionTest, DeleteInstanceSuccess) {
   EXPECT_CALL(*mock, DeleteInstance)
       .WillOnce(
           [&expected_name](grpc::ClientContext&,
-                           gcsa::v1::DeleteInstanceRequest const& request) {
+                           gsai::v1::DeleteInstanceRequest const& request) {
             EXPECT_EQ(expected_name, request.name());
             return Status(StatusCode::kUnavailable, "try-again");
           })
       .WillOnce(
           [&expected_name](grpc::ClientContext&,
-                           gcsa::v1::DeleteInstanceRequest const& request) {
+                           gsai::v1::DeleteInstanceRequest const& request) {
             EXPECT_EQ(expected_name, request.name());
             return Status();
           });
@@ -319,7 +319,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
     }
     leader_options: "location"
   )pb";
-  gcsa::v1::InstanceConfig expected_instance_config;
+  gsai::v1::InstanceConfig expected_instance_config;
   ASSERT_TRUE(
       TextFormat::ParseFromString(kConfigText, &expected_instance_config));
 
@@ -327,13 +327,13 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
   EXPECT_CALL(*mock, GetInstanceConfig)
       .WillOnce(
           [&expected_name](grpc::ClientContext&,
-                           gcsa::v1::GetInstanceConfigRequest const& request) {
+                           gsai::v1::GetInstanceConfigRequest const& request) {
             EXPECT_EQ(expected_name, request.name());
             return Status(StatusCode::kUnavailable, "try-again");
           })
       .WillOnce([&expected_name, &expected_instance_config](
                     grpc::ClientContext&,
-                    gcsa::v1::GetInstanceConfigRequest const& request) {
+                    gsai::v1::GetInstanceConfigRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
         return expected_instance_config;
       });
@@ -398,7 +398,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
         leader_options: "location3"
       )pb",
   };
-  gcsa::v1::InstanceConfig expected_instance_configs[3];
+  gsai::v1::InstanceConfig expected_instance_configs[3];
   ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[0],
                                           &expected_instance_configs[0]));
   ASSERT_TRUE(TextFormat::ParseFromString(kInstanceConfigText[1],
@@ -410,35 +410,35 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstanceConfigs)
       .WillOnce([&](grpc::ClientContext&,
-                    gcsa::v1::ListInstanceConfigsRequest const& request) {
+                    gsai::v1::ListInstanceConfigsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_TRUE(request.page_token().empty());
         return Status(StatusCode::kUnavailable, "try-again");
       })
       .WillOnce([&](grpc::ClientContext&,
-                    gcsa::v1::ListInstanceConfigsRequest const& request) {
+                    gsai::v1::ListInstanceConfigsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_TRUE(request.page_token().empty());
 
-        gcsa::v1::ListInstanceConfigsResponse response;
+        gsai::v1::ListInstanceConfigsResponse response;
         response.set_next_page_token("p1");
         *response.add_instance_configs() = expected_instance_configs[0];
         *response.add_instance_configs() = expected_instance_configs[1];
         return response;
       })
       .WillOnce([&](grpc::ClientContext&,
-                    gcsa::v1::ListInstanceConfigsRequest const& request) {
+                    gsai::v1::ListInstanceConfigsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("p1", request.page_token());
 
-        gcsa::v1::ListInstanceConfigsResponse response;
+        gsai::v1::ListInstanceConfigsResponse response;
         response.clear_next_page_token();
         *response.add_instance_configs() = expected_instance_configs[2];
         return response;
       });
 
   auto conn = MakeLimitedRetryConnection(mock);
-  std::vector<gcsa::v1::InstanceConfig> actual_instance_configs;
+  std::vector<gsai::v1::InstanceConfig> actual_instance_configs;
   for (auto const& instance_config :
        conn->ListInstanceConfigs({"test-project"})) {
     ASSERT_STATUS_OK(instance_config);
@@ -481,31 +481,31 @@ TEST(InstanceAdminConnectionTest, ListInstancesSuccess) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstances)
       .WillOnce([&](grpc::ClientContext&,
-                    gcsa::v1::ListInstancesRequest const& request) {
+                    gsai::v1::ListInstancesRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("labels.test-key:test-value", request.filter());
         EXPECT_TRUE(request.page_token().empty());
         return Status(StatusCode::kUnavailable, "try-again");
       })
       .WillOnce([&](grpc::ClientContext&,
-                    gcsa::v1::ListInstancesRequest const& request) {
+                    gsai::v1::ListInstancesRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("labels.test-key:test-value", request.filter());
         EXPECT_TRUE(request.page_token().empty());
 
-        gcsa::v1::ListInstancesResponse response;
+        gsai::v1::ListInstancesResponse response;
         response.set_next_page_token("p1");
         response.add_instances()->set_name("i1");
         response.add_instances()->set_name("i2");
         return response;
       })
       .WillOnce([&](grpc::ClientContext&,
-                    gcsa::v1::ListInstancesRequest const& request) {
+                    gsai::v1::ListInstancesRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("labels.test-key:test-value", request.filter());
         EXPECT_EQ("p1", request.page_token());
 
-        gcsa::v1::ListInstancesResponse response;
+        gsai::v1::ListInstancesResponse response;
         response.clear_next_page_token();
         response.add_instances()->set_name("i3");
         return response;

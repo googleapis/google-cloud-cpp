@@ -27,8 +27,6 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace spanner_proto = ::google::spanner;
-
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
@@ -50,7 +48,7 @@ TEST_F(LoggingResultSetReaderTest, Read) {
   auto mock = absl::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, Read())
       .WillOnce([] {
-        spanner_proto::v1::PartialResultSet result;
+        google::spanner::v1::PartialResultSet result;
         result.set_resume_token("test-token");
         return PartialResultSet{std::move(result), false};
       })

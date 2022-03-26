@@ -35,8 +35,6 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace spanner_proto = ::google::spanner;
-
 using ::google::cloud::Idempotency;
 
 class DefaultPartialResultSetReader : public PartialResultSetReader {
@@ -70,26 +68,26 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
       reader_;
 };
 
-spanner_proto::v1::TransactionOptions PartitionedDmlTransactionOptions() {
-  spanner_proto::v1::TransactionOptions options;
+google::spanner::v1::TransactionOptions PartitionedDmlTransactionOptions() {
+  google::spanner::v1::TransactionOptions options;
   *options.mutable_partitioned_dml() =
-      spanner_proto::v1::TransactionOptions_PartitionedDml();
+      google::spanner::v1::TransactionOptions_PartitionedDml();
   return options;
 }
 
-spanner_proto::v1::RequestOptions_Priority ProtoRequestPriority(
+google::spanner::v1::RequestOptions_Priority ProtoRequestPriority(
     absl::optional<spanner::RequestPriority> const& request_priority) {
   if (request_priority) {
     switch (*request_priority) {
       case spanner::RequestPriority::kLow:
-        return spanner_proto::v1::RequestOptions::PRIORITY_LOW;
+        return google::spanner::v1::RequestOptions::PRIORITY_LOW;
       case spanner::RequestPriority::kMedium:
-        return spanner_proto::v1::RequestOptions::PRIORITY_MEDIUM;
+        return google::spanner::v1::RequestOptions::PRIORITY_MEDIUM;
       case spanner::RequestPriority::kHigh:
-        return spanner_proto::v1::RequestOptions::PRIORITY_HIGH;
+        return google::spanner::v1::RequestOptions::PRIORITY_HIGH;
     }
   }
-  return spanner_proto::v1::RequestOptions::PRIORITY_UNSPECIFIED;
+  return google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED;
 }
 
 // Operations that set `TransactionSelector::begin` in the request and receive
@@ -116,7 +114,7 @@ spanner::RowStream ConnectionImpl::Read(ReadParams params) {
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t) {
         return ReadImpl(session, s, tag, std::move(params));
       });
@@ -127,7 +125,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionRead(
   return Visit(
       std::move(params.read_params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t) {
         return PartitionReadImpl(session, s, tag, params.read_params,
                                  params.partition_options);
@@ -138,7 +136,7 @@ spanner::RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t seqno) {
         return ExecuteQueryImpl(session, s, tag, seqno, std::move(params));
       });
@@ -148,7 +146,7 @@ StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t seqno) {
         return ExecuteDmlImpl(session, s, tag, seqno, std::move(params));
       });
@@ -158,7 +156,7 @@ spanner::ProfileQueryResult ConnectionImpl::ProfileQuery(SqlParams params) {
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t seqno) {
         return ProfileQueryImpl(session, s, tag, seqno, std::move(params));
       });
@@ -169,7 +167,7 @@ StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDml(
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t seqno) {
         return ProfileDmlImpl(session, s, tag, seqno, std::move(params));
       });
@@ -179,7 +177,7 @@ StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t seqno) {
         return AnalyzeSqlImpl(session, s, tag, seqno, std::move(params));
       });
@@ -190,7 +188,7 @@ StatusOr<spanner::PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
   auto txn = spanner::MakeReadOnlyTransaction();  // becomes partitioned DML
   return Visit(txn, [this, &params](
                         SessionHolder& session,
-                        StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                        StatusOr<google::spanner::v1::TransactionSelector>& s,
                         std::string const& tag, std::int64_t seqno) {
     return ExecutePartitionedDmlImpl(session, s, tag, seqno, std::move(params));
   });
@@ -201,7 +199,7 @@ StatusOr<std::vector<spanner::QueryPartition>> ConnectionImpl::PartitionQuery(
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t) {
         return PartitionQueryImpl(session, s, tag, params);
       });
@@ -212,7 +210,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t seqno) {
         return ExecuteBatchDmlImpl(session, s, tag, seqno, std::move(params));
       });
@@ -222,7 +220,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::Commit(CommitParams params) {
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t) {
         return this->CommitImpl(session, s, tag, std::move(params));
       });
@@ -231,7 +229,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::Commit(CommitParams params) {
 Status ConnectionImpl::Rollback(RollbackParams params) {
   return Visit(std::move(params.transaction),
                [this](SessionHolder& session,
-                      StatusOr<spanner_proto::v1::TransactionSelector>& s,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::string const& tag, std::int64_t) {
                  return this->RollbackImpl(session, s, tag);
                });
@@ -265,12 +263,12 @@ ResultType MakeStatusOnlyResult(Status status) {
 class DmlResultSetSource : public ResultSourceInterface {
  public:
   static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
-      spanner_proto::v1::ResultSet result_set) {
+      google::spanner::v1::ResultSet result_set) {
     return std::unique_ptr<ResultSourceInterface>(
         new DmlResultSetSource(std::move(result_set)));
   }
 
-  explicit DmlResultSetSource(spanner_proto::v1::ResultSet result_set)
+  explicit DmlResultSetSource(google::spanner::v1::ResultSet result_set)
       : result_set_(std::move(result_set)) {}
   ~DmlResultSetSource() override = default;
 
@@ -291,7 +289,7 @@ class DmlResultSetSource : public ResultSourceInterface {
   }
 
  private:
-  spanner_proto::v1::ResultSet result_set_;
+  google::spanner::v1::ResultSet result_set_;
 };
 
 // Used as an intermediary for streaming PartitionedDml operations.
@@ -390,11 +388,11 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
  * @param func identifies the calling function for logging purposes.
  *   It should generally be passed the value of `__func__`.
  */
-StatusOr<spanner_proto::v1::Transaction> ConnectionImpl::BeginTransaction(
-    SessionHolder& session, spanner_proto::v1::TransactionOptions options,
+StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
+    SessionHolder& session, google::spanner::v1::TransactionOptions options,
     std::string request_tag, std::string const& transaction_tag,
     char const* func) {
-  spanner_proto::v1::BeginTransactionRequest begin;
+  google::spanner::v1::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   *begin.mutable_options() = std::move(options);
   // `begin.request_options.priority` is ignored. To set the priority
@@ -408,7 +406,7 @@ StatusOr<spanner_proto::v1::Transaction> ConnectionImpl::BeginTransaction(
       RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
-              spanner_proto::v1::BeginTransactionRequest const& request) {
+              google::spanner::v1::BeginTransactionRequest const& request) {
         return stub->BeginTransaction(context, request);
       },
       begin, func);
@@ -421,7 +419,8 @@ StatusOr<spanner_proto::v1::Transaction> ConnectionImpl::BeginTransaction(
 }
 
 spanner::RowStream ConnectionImpl::ReadImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, ReadParams params) {
   if (!s.ok()) {
     return MakeStatusOnlyResult<spanner::RowStream>(s.status());
@@ -432,7 +431,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     return MakeStatusOnlyResult<spanner::RowStream>(std::move(prepare_status));
   }
 
-  auto request = std::make_shared<spanner_proto::v1::ReadRequest>();
+  auto request = std::make_shared<google::spanner::v1::ReadRequest>();
   request->set_session(session->session_name());
   *request->mutable_transaction() = *s;
   request->set_table(std::move(params.table));
@@ -507,7 +506,8 @@ spanner::RowStream ConnectionImpl::ReadImpl(
 }
 
 StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, ReadParams const& params,
     spanner::PartitionOptions const& partition_options) {
   if (!s.ok()) {
@@ -521,7 +521,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
     return prepare_status;
   }
 
-  spanner_proto::v1::PartitionReadRequest request;
+  google::spanner::v1::PartitionReadRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = *s;
   request.set_table(params.table);
@@ -538,7 +538,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
-                spanner_proto::v1::PartitionReadRequest const& request) {
+                google::spanner::v1::PartitionReadRequest const& request) {
           return stub->PartitionRead(context, request);
         },
         request, __func__);
@@ -581,7 +581,8 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
 template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
@@ -591,7 +592,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     return s.status();
   }
 
-  spanner_proto::v1::ExecuteSqlRequest request;
+  google::spanner::v1::ExecuteSqlRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = *s;
   auto sql_statement = ToProto(std::move(params.statement));
@@ -651,7 +652,8 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
 
 template <typename ResultType>
 ResultType ConnectionImpl::CommonQueryImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   if (!s.ok()) {
@@ -672,7 +674,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
   auto const& tracing_options = RpcTracingOptions();
   auto retry_resume_fn =
       [stub, retry_policy_prototype, backoff_policy_prototype, tracing_enabled,
-       tracing_options](spanner_proto::v1::ExecuteSqlRequest& request) mutable
+       tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
     auto factory = [stub, request, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
@@ -706,24 +708,27 @@ ResultType ConnectionImpl::CommonQueryImpl(
 }
 
 spanner::RowStream ConnectionImpl::ExecuteQueryImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
   return CommonQueryImpl<spanner::RowStream>(
       session, s, transaction_tag, seqno, std::move(params),
-      spanner_proto::v1::ExecuteSqlRequest::NORMAL);
+      google::spanner::v1::ExecuteSqlRequest::NORMAL);
 }
 
 spanner::ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
   return CommonQueryImpl<spanner::ProfileQueryResult>(
       session, s, transaction_tag, seqno, std::move(params),
-      spanner_proto::v1::ExecuteSqlRequest::PROFILE);
+      google::spanner::v1::ExecuteSqlRequest::PROFILE);
 }
 
 template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   if (!s.ok()) {
@@ -743,13 +748,13 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
 
   auto retry_resume_fn =
       [function_name, stub, retry_policy_prototype, backoff_policy_prototype,
-       session](spanner_proto::v1::ExecuteSqlRequest& request) mutable
+       session](google::spanner::v1::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
-    StatusOr<spanner_proto::v1::ResultSet> response = RetryLoop(
+    StatusOr<google::spanner::v1::ResultSet> response = RetryLoop(
         retry_policy_prototype->clone(), backoff_policy_prototype->clone(),
         Idempotency::kIdempotent,
         [stub](grpc::ClientContext& context,
-               spanner_proto::v1::ExecuteSqlRequest const& request) {
+               google::spanner::v1::ExecuteSqlRequest const& request) {
           return stub->ExecuteSql(context, request);
         },
         request, function_name);
@@ -766,27 +771,30 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
 }
 
 StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDmlImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
   return CommonDmlImpl<spanner::DmlResult>(
       session, s, transaction_tag, seqno, std::move(params),
-      spanner_proto::v1::ExecuteSqlRequest::NORMAL);
+      google::spanner::v1::ExecuteSqlRequest::NORMAL);
 }
 
 StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
   return CommonDmlImpl<spanner::ProfileDmlResult>(
       session, s, transaction_tag, seqno, std::move(params),
-      spanner_proto::v1::ExecuteSqlRequest::PROFILE);
+      google::spanner::v1::ExecuteSqlRequest::PROFILE);
 }
 
 StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
   auto result = CommonDmlImpl<spanner::ProfileDmlResult>(
       session, s, transaction_tag, seqno, std::move(params),
-      spanner_proto::v1::ExecuteSqlRequest::PLAN);
+      google::spanner::v1::ExecuteSqlRequest::PLAN);
   if (result.status().ok()) {
     return *result->ExecutionPlan();
   }
@@ -795,7 +803,8 @@ StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 
 StatusOr<std::vector<spanner::QueryPartition>>
 ConnectionImpl::PartitionQueryImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, PartitionQueryParams const& params) {
   if (!s.ok()) {
     return s.status();
@@ -808,7 +817,7 @@ ConnectionImpl::PartitionQueryImpl(
     return prepare_status;
   }
 
-  spanner_proto::v1::PartitionQueryRequest request;
+  google::spanner::v1::PartitionQueryRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = *s;
   auto sql_statement = ToProto(params.statement);
@@ -825,7 +834,7 @@ ConnectionImpl::PartitionQueryImpl(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
-                spanner_proto::v1::PartitionQueryRequest const& request) {
+                google::spanner::v1::PartitionQueryRequest const& request) {
           return stub->PartitionQuery(context, request);
         },
         request, __func__);
@@ -865,7 +874,8 @@ ConnectionImpl::PartitionQueryImpl(
 }
 
 StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno,
     ExecuteBatchDmlParams params) {
   if (!s.ok()) {
@@ -877,7 +887,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     return prepare_status;
   }
 
-  spanner_proto::v1::ExecuteBatchDmlRequest request;
+  google::spanner::v1::ExecuteBatchDmlRequest request;
   request.set_session(session->session_name());
   request.set_seqno(seqno);
   *request.mutable_transaction() = *s;
@@ -888,7 +898,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
       params.options.has<spanner::RequestPriorityOption>()
           ? ProtoRequestPriority(
                 params.options.get<spanner::RequestPriorityOption>())
-          : spanner_proto::v1::RequestOptions::PRIORITY_UNSPECIFIED);
+          : google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED);
   auto const& request_tag = params.options.get<spanner::RequestTagOption>();
   request.mutable_request_options()->set_request_tag(request_tag);
   request.mutable_request_options()->set_transaction_tag(transaction_tag);
@@ -899,7 +909,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
-                spanner_proto::v1::ExecuteBatchDmlRequest const& request) {
+                google::spanner::v1::ExecuteBatchDmlRequest const& request) {
           return stub->ExecuteBatchDml(context, request);
         },
         request, __func__);
@@ -937,7 +947,8 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 
 StatusOr<spanner::PartitionedDmlResult>
 ConnectionImpl::ExecutePartitionedDmlImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, std::int64_t seqno,
     ExecutePartitionedDmlParams params) {
   if (!s.ok()) {
@@ -965,7 +976,7 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
                         /*partition_token=*/{}});
   auto dml_result = CommonQueryImpl<StreamingPartitionedDmlResult>(
       session, s, transaction_tag, seqno, std::move(sql_params),
-      spanner_proto::v1::ExecuteSqlRequest::NORMAL);
+      google::spanner::v1::ExecuteSqlRequest::NORMAL);
   auto rows_modified = dml_result.RowsModifiedLowerBound();
   if (!rows_modified.ok()) {
     auto status = std::move(rows_modified).status();
@@ -978,7 +989,8 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
 }
 
 StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag, CommitParams params) {
   if (!s.ok()) {
     // Fail the commit if the transaction has been invalidated.
@@ -990,7 +1002,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     return prepare_status;
   }
 
-  spanner_proto::v1::CommitRequest request;
+  google::spanner::v1::CommitRequest request;
   request.set_session(session->session_name());
   for (auto&& m : params.mutations) {
     *request.add_mutations() = std::move(m).as_proto();
@@ -1004,7 +1016,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   // ignored (for a user-supplied transaction).
   request.mutable_request_options()->set_transaction_tag(transaction_tag);
 
-  if (s->selector_case() != spanner_proto::v1::TransactionSelector::kId) {
+  if (s->selector_case() != google::spanner::v1::TransactionSelector::kId) {
     auto begin =
         BeginTransaction(session, s->has_begin() ? s->begin() : s->single_use(),
                          std::string(), transaction_tag, __func__);
@@ -1021,7 +1033,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
-              spanner_proto::v1::CommitRequest const& request) {
+              google::spanner::v1::CommitRequest const& request) {
         return stub->Commit(context, request);
       },
       request, __func__);
@@ -1050,7 +1062,8 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 }
 
 Status ConnectionImpl::RollbackImpl(
-    SessionHolder& session, StatusOr<spanner_proto::v1::TransactionSelector>& s,
+    SessionHolder& session,
+    StatusOr<google::spanner::v1::TransactionSelector>& s,
     std::string const& transaction_tag) {
   if (!s.ok()) {
     return s.status();
@@ -1075,7 +1088,7 @@ Status ConnectionImpl::RollbackImpl(
     s->set_id(begin->id());
   }
 
-  spanner_proto::v1::RollbackRequest request;
+  google::spanner::v1::RollbackRequest request;
   request.set_session(session->session_name());
   request.set_transaction_id(s->id());
   auto stub = session_pool_->GetStub(*session);
@@ -1083,7 +1096,7 @@ Status ConnectionImpl::RollbackImpl(
       RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
-              spanner_proto::v1::RollbackRequest const& request) {
+              google::spanner::v1::RollbackRequest const& request) {
         return stub->Rollback(context, request);
       },
       request, __func__);
