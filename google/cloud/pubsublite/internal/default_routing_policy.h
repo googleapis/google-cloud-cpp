@@ -35,15 +35,21 @@ std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod);
 // returns <integer value of `big_endian`> % `mod` while accounting for overflow
 std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
 
+/**
+ * Implements the same routing policy as all the other Pub/Sub Lite client
+ * libraries.
+ *
+ * All the client libraries provided by Google use the same algorithm to route
+ * messages.
+ *
+ * @note Algorithm for routing with a message key is <big-endian integer
+ * representation of SHA256(message key)> % <number of partitions>. Uses SHA-256
+ * as it's provided in the standard library of all silver languages, enabling
+ * consistent hashing across languages.
+ */
 class DefaultRoutingPolicy : public RoutingPolicy {
  public:
   std::uint64_t Route(std::uint32_t num_partitions) override;
-
-  // Uses SHA-256 as it's provided in the standard library of all silver
-  // languages, enabling consistent hashing across languages.
-  // Algorithm is <big-endian integer representation of SHA256(`message_key`)> %
-  // `num_partitions`
-  // Note that the same algorithm is used across all client libraries.
   std::uint64_t Route(std::string const& message_key,
                       std::uint32_t num_partitions) override;
 

@@ -29,10 +29,10 @@ namespace pubsublite_internal {
  */
 class RoutingPolicy {
  public:
+  virtual ~RoutingPolicy() = default;
   virtual std::uint64_t Route(std::uint32_t num_partitions) = 0;
   virtual std::uint64_t Route(std::string const& message_key,
                               std::uint32_t num_partitions) = 0;
-  virtual ~RoutingPolicy() = default;
 };
 
 }  // namespace pubsublite_internal
