@@ -26,7 +26,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace gcsa = ::google::spanner::admin::instance;
+namespace gsai = ::google::spanner::admin::instance;
 
 using ::google::cloud::testing_util::StatusIs;
 using spanner_mocks::MockInstanceAdminConnection;
@@ -96,13 +96,13 @@ TEST(InstanceAdminClientTest, ListInstanceConfigs) {
             EXPECT_EQ("test-project", p.project_id);
             return google::cloud::internal::MakePaginationRange<
                 ListInstanceConfigsRange>(
-                gcsa::v1::ListInstanceConfigsRequest{},
-                [](gcsa::v1::ListInstanceConfigsRequest const&) {
-                  return StatusOr<gcsa::v1::ListInstanceConfigsResponse>(
+                gsai::v1::ListInstanceConfigsRequest{},
+                [](gsai::v1::ListInstanceConfigsRequest const&) {
+                  return StatusOr<gsai::v1::ListInstanceConfigsResponse>(
                       Status(StatusCode::kPermissionDenied, "uh-oh"));
                 },
-                [](gcsa::v1::ListInstanceConfigsResponse const&) {
-                  return std::vector<gcsa::v1::InstanceConfig>{};
+                [](gsai::v1::ListInstanceConfigsResponse const&) {
+                  return std::vector<gsai::v1::InstanceConfig>{};
                 });
           });
 
@@ -122,13 +122,13 @@ TEST(InstanceAdminClientTest, ListInstances) {
         EXPECT_EQ("labels.test-key:test-value", p.filter);
 
         return google::cloud::internal::MakePaginationRange<ListInstancesRange>(
-            gcsa::v1::ListInstancesRequest{},
-            [](gcsa::v1::ListInstancesRequest const&) {
-              return StatusOr<gcsa::v1::ListInstancesResponse>(
+            gsai::v1::ListInstancesRequest{},
+            [](gsai::v1::ListInstancesRequest const&) {
+              return StatusOr<gsai::v1::ListInstancesResponse>(
                   Status(StatusCode::kPermissionDenied, "uh-oh"));
             },
-            [](gcsa::v1::ListInstancesResponse const&) {
-              return std::vector<gcsa::v1::Instance>{};
+            [](gsai::v1::ListInstancesResponse const&) {
+              return std::vector<gsai::v1::Instance>{};
             });
       });
 

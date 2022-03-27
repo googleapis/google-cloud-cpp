@@ -30,86 +30,85 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace spanner_proto = ::google::spanner;
-
 /**
  * DefaultSpannerStub - a stub that calls Spanner's gRPC interface.
  */
 class DefaultSpannerStub : public SpannerStub {
  public:
   explicit DefaultSpannerStub(
-      std::unique_ptr<spanner_proto::v1::Spanner::StubInterface> grpc_stub)
+      std::unique_ptr<google::spanner::v1::Spanner::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   DefaultSpannerStub(DefaultSpannerStub const&) = delete;
   DefaultSpannerStub& operator=(DefaultSpannerStub const&) = delete;
 
-  StatusOr<spanner_proto::v1::Session> CreateSession(
+  StatusOr<google::spanner::v1::Session> CreateSession(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::CreateSessionRequest const& request) override;
-  StatusOr<spanner_proto::v1::BatchCreateSessionsResponse> BatchCreateSessions(
+      google::spanner::v1::CreateSessionRequest const& request) override;
+  StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
+  BatchCreateSessions(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::BatchCreateSessionsRequest const& request) override;
-  future<StatusOr<spanner_proto::v1::BatchCreateSessionsResponse>>
+      google::spanner::v1::BatchCreateSessionsRequest const& request) override;
+  future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      spanner_proto::v1::BatchCreateSessionsRequest const& request) override;
-  StatusOr<spanner_proto::v1::Session> GetSession(
+      google::spanner::v1::BatchCreateSessionsRequest const& request) override;
+  StatusOr<google::spanner::v1::Session> GetSession(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::GetSessionRequest const& request) override;
-  StatusOr<spanner_proto::v1::ListSessionsResponse> ListSessions(
+      google::spanner::v1::GetSessionRequest const& request) override;
+  StatusOr<google::spanner::v1::ListSessionsResponse> ListSessions(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::ListSessionsRequest const& request) override;
+      google::spanner::v1::ListSessionsRequest const& request) override;
   Status DeleteSession(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::DeleteSessionRequest const& request) override;
+      google::spanner::v1::DeleteSessionRequest const& request) override;
   future<Status> AsyncDeleteSession(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      spanner_proto::v1::DeleteSessionRequest const& request) override;
-  StatusOr<spanner_proto::v1::ResultSet> ExecuteSql(
+      google::spanner::v1::DeleteSessionRequest const& request) override;
+  StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::ExecuteSqlRequest const& request) override;
-  future<StatusOr<spanner_proto::v1::ResultSet>> AsyncExecuteSql(
+      google::spanner::v1::ExecuteSqlRequest const& request) override;
+  future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
-      spanner_proto::v1::ExecuteSqlRequest const& request) override;
+      google::spanner::v1::ExecuteSqlRequest const& request) override;
   std::unique_ptr<
-      grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>
+      grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   ExecuteStreamingSql(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::ExecuteSqlRequest const& request) override;
-  StatusOr<spanner_proto::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
+      google::spanner::v1::ExecuteSqlRequest const& request) override;
+  StatusOr<google::spanner::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::ExecuteBatchDmlRequest const& request) override;
+      google::spanner::v1::ExecuteBatchDmlRequest const& request) override;
   std::unique_ptr<
-      grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>
+      grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   StreamingRead(grpc::ClientContext& client_context,
-                spanner_proto::v1::ReadRequest const& request) override;
-  StatusOr<spanner_proto::v1::Transaction> BeginTransaction(
+                google::spanner::v1::ReadRequest const& request) override;
+  StatusOr<google::spanner::v1::Transaction> BeginTransaction(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::BeginTransactionRequest const& request) override;
-  StatusOr<spanner_proto::v1::CommitResponse> Commit(
+      google::spanner::v1::BeginTransactionRequest const& request) override;
+  StatusOr<google::spanner::v1::CommitResponse> Commit(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::CommitRequest const& request) override;
+      google::spanner::v1::CommitRequest const& request) override;
   Status Rollback(grpc::ClientContext& client_context,
-                  spanner_proto::v1::RollbackRequest const& request) override;
-  StatusOr<spanner_proto::v1::PartitionResponse> PartitionQuery(
+                  google::spanner::v1::RollbackRequest const& request) override;
+  StatusOr<google::spanner::v1::PartitionResponse> PartitionQuery(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::PartitionQueryRequest const& request) override;
-  StatusOr<spanner_proto::v1::PartitionResponse> PartitionRead(
+      google::spanner::v1::PartitionQueryRequest const& request) override;
+  StatusOr<google::spanner::v1::PartitionResponse> PartitionRead(
       grpc::ClientContext& client_context,
-      spanner_proto::v1::PartitionReadRequest const& request) override;
+      google::spanner::v1::PartitionReadRequest const& request) override;
 
  private:
-  std::unique_ptr<spanner_proto::v1::Spanner::StubInterface> grpc_stub_;
+  std::unique_ptr<google::spanner::v1::Spanner::StubInterface> grpc_stub_;
 };
 
-StatusOr<spanner_proto::v1::Session> DefaultSpannerStub::CreateSession(
+StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::CreateSessionRequest const& request) {
-  spanner_proto::v1::Session response;
+    google::spanner::v1::CreateSessionRequest const& request) {
+  google::spanner::v1::Session response;
   grpc::Status grpc_status =
       grpc_stub_->CreateSession(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -118,11 +117,11 @@ StatusOr<spanner_proto::v1::Session> DefaultSpannerStub::CreateSession(
   return response;
 }
 
-StatusOr<spanner_proto::v1::BatchCreateSessionsResponse>
+StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 DefaultSpannerStub::BatchCreateSessions(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::BatchCreateSessionsRequest const& request) {
-  spanner_proto::v1::BatchCreateSessionsResponse response;
+    google::spanner::v1::BatchCreateSessionsRequest const& request) {
+  google::spanner::v1::BatchCreateSessionsResponse response;
   grpc::Status grpc_status =
       grpc_stub_->BatchCreateSessions(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -131,24 +130,24 @@ DefaultSpannerStub::BatchCreateSessions(
   return response;
 }
 
-future<StatusOr<spanner_proto::v1::BatchCreateSessionsResponse>>
+future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 DefaultSpannerStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    spanner_proto::v1::BatchCreateSessionsRequest const& request) {
+    google::spanner::v1::BatchCreateSessionsRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             spanner_proto::v1::BatchCreateSessionsRequest const& request,
+             google::spanner::v1::BatchCreateSessionsRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchCreateSessions(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<spanner_proto::v1::Session> DefaultSpannerStub::GetSession(
+StatusOr<google::spanner::v1::Session> DefaultSpannerStub::GetSession(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::GetSessionRequest const& request) {
-  spanner_proto::v1::Session response;
+    google::spanner::v1::GetSessionRequest const& request) {
+  google::spanner::v1::Session response;
   grpc::Status grpc_status =
       grpc_stub_->GetSession(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -157,11 +156,11 @@ StatusOr<spanner_proto::v1::Session> DefaultSpannerStub::GetSession(
   return response;
 }
 
-StatusOr<spanner_proto::v1::ListSessionsResponse>
+StatusOr<google::spanner::v1::ListSessionsResponse>
 DefaultSpannerStub::ListSessions(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ListSessionsRequest const& request) {
-  spanner_proto::v1::ListSessionsResponse response;
+    google::spanner::v1::ListSessionsRequest const& request) {
+  google::spanner::v1::ListSessionsResponse response;
   grpc::Status grpc_status =
       grpc_stub_->ListSessions(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -172,7 +171,7 @@ DefaultSpannerStub::ListSessions(
 
 Status DefaultSpannerStub::DeleteSession(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::DeleteSessionRequest const& request) {
+    google::spanner::v1::DeleteSessionRequest const& request) {
   google::protobuf::Empty response;
   grpc::Status grpc_status =
       grpc_stub_->DeleteSession(&client_context, request, &response);
@@ -182,11 +181,11 @@ Status DefaultSpannerStub::DeleteSession(
 future<Status> DefaultSpannerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    spanner_proto::v1::DeleteSessionRequest const& request) {
+    google::spanner::v1::DeleteSessionRequest const& request) {
   return cq
       .MakeUnaryRpc(
           [this](grpc::ClientContext* context,
-                 spanner_proto::v1::DeleteSessionRequest const& request,
+                 google::spanner::v1::DeleteSessionRequest const& request,
                  grpc::CompletionQueue* cq) {
             return grpc_stub_->AsyncDeleteSession(context, request, cq);
           },
@@ -196,10 +195,10 @@ future<Status> DefaultSpannerStub::AsyncDeleteSession(
       });
 }
 
-StatusOr<spanner_proto::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
+StatusOr<google::spanner::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ExecuteSqlRequest const& request) {
-  spanner_proto::v1::ResultSet response;
+    google::spanner::v1::ExecuteSqlRequest const& request) {
+  google::spanner::v1::ResultSet response;
   grpc::Status grpc_status =
       grpc_stub_->ExecuteSql(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -208,14 +207,14 @@ StatusOr<spanner_proto::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
   return response;
 }
 
-future<StatusOr<spanner_proto::v1::ResultSet>>
+future<StatusOr<google::spanner::v1::ResultSet>>
 DefaultSpannerStub::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    spanner_proto::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request) {
   return cq.MakeUnaryRpc(
       [this](grpc::ClientContext* context,
-             spanner_proto::v1::ExecuteSqlRequest const& request,
+             google::spanner::v1::ExecuteSqlRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncExecuteSql(context, request, cq);
       },
@@ -223,18 +222,18 @@ DefaultSpannerStub::AsyncExecuteSql(
 }
 
 std::unique_ptr<
-    grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>
+    grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::ExecuteStreamingSql(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request) {
   return grpc_stub_->ExecuteStreamingSql(&client_context, request);
 }
 
-StatusOr<spanner_proto::v1::ExecuteBatchDmlResponse>
+StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 DefaultSpannerStub::ExecuteBatchDml(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ExecuteBatchDmlRequest const& request) {
-  spanner_proto::v1::ExecuteBatchDmlResponse response;
+    google::spanner::v1::ExecuteBatchDmlRequest const& request) {
+  google::spanner::v1::ExecuteBatchDmlResponse response;
   grpc::Status grpc_status =
       grpc_stub_->ExecuteBatchDml(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -244,17 +243,17 @@ DefaultSpannerStub::ExecuteBatchDml(
 }
 
 std::unique_ptr<
-    grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>
+    grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::StreamingRead(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ReadRequest const& request) {
+    google::spanner::v1::ReadRequest const& request) {
   return grpc_stub_->StreamingRead(&client_context, request);
 }
 
-StatusOr<spanner_proto::v1::Transaction> DefaultSpannerStub::BeginTransaction(
+StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::BeginTransactionRequest const& request) {
-  spanner_proto::v1::Transaction response;
+    google::spanner::v1::BeginTransactionRequest const& request) {
+  google::spanner::v1::Transaction response;
   grpc::Status grpc_status =
       grpc_stub_->BeginTransaction(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -263,10 +262,10 @@ StatusOr<spanner_proto::v1::Transaction> DefaultSpannerStub::BeginTransaction(
   return response;
 }
 
-StatusOr<spanner_proto::v1::CommitResponse> DefaultSpannerStub::Commit(
+StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::CommitRequest const& request) {
-  spanner_proto::v1::CommitResponse response;
+    google::spanner::v1::CommitRequest const& request) {
+  google::spanner::v1::CommitResponse response;
   grpc::Status grpc_status =
       grpc_stub_->Commit(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -277,18 +276,18 @@ StatusOr<spanner_proto::v1::CommitResponse> DefaultSpannerStub::Commit(
 
 Status DefaultSpannerStub::Rollback(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::RollbackRequest const& request) {
+    google::spanner::v1::RollbackRequest const& request) {
   google::protobuf::Empty response;
   grpc::Status grpc_status =
       grpc_stub_->Rollback(&client_context, request, &response);
   return google::cloud::MakeStatusFromRpcError(grpc_status);
 }
 
-StatusOr<spanner_proto::v1::PartitionResponse>
+StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionQuery(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::PartitionQueryRequest const& request) {
-  spanner_proto::v1::PartitionResponse response;
+    google::spanner::v1::PartitionQueryRequest const& request) {
+  google::spanner::v1::PartitionResponse response;
   grpc::Status grpc_status =
       grpc_stub_->PartitionQuery(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -297,11 +296,11 @@ DefaultSpannerStub::PartitionQuery(
   return response;
 }
 
-StatusOr<spanner_proto::v1::PartitionResponse>
+StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionRead(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::PartitionReadRequest const& request) {
-  spanner_proto::v1::PartitionResponse response;
+    google::spanner::v1::PartitionReadRequest const& request) {
+  google::spanner::v1::PartitionResponse response;
   grpc::Status grpc_status =
       grpc_stub_->PartitionRead(&client_context, request, &response);
   if (!grpc_status.ok()) {
@@ -324,7 +323,7 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
 
   auto channel =
       auth->CreateChannel(opts.get<EndpointOption>(), channel_arguments);
-  auto spanner_grpc_stub = spanner_proto::v1::Spanner::NewStub(channel);
+  auto spanner_grpc_stub = google::spanner::v1::Spanner::NewStub(channel);
   std::shared_ptr<SpannerStub> stub =
       std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
 

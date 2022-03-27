@@ -24,22 +24,20 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace spanner_proto = ::google::spanner;
-
 MetadataSpannerStub::MetadataSpannerStub(std::shared_ptr<SpannerStub> child,
                                          std::string resource_prefix_header)
     : child_(std::move(child)),
       api_client_header_(google::cloud::internal::ApiClientHeader()),
       resource_prefix_header_(std::move(resource_prefix_header)) {}
 
-StatusOr<spanner_proto::v1::Session> MetadataSpannerStub::CreateSession(
+StatusOr<google::spanner::v1::Session> MetadataSpannerStub::CreateSession(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::CreateSessionRequest const& request) {
+    google::spanner::v1::CreateSessionRequest const& request) {
   SetMetadata(client_context, "database=" + request.database());
   return child_->CreateSession(client_context, request);
 }
 
-StatusOr<spanner_proto::v1::BatchCreateSessionsResponse>
+StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 MetadataSpannerStub::BatchCreateSessions(
     grpc::ClientContext& client_context,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
@@ -47,33 +45,33 @@ MetadataSpannerStub::BatchCreateSessions(
   return child_->BatchCreateSessions(client_context, request);
 }
 
-future<StatusOr<spanner_proto::v1::BatchCreateSessionsResponse>>
+future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 MetadataSpannerStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    spanner_proto::v1::BatchCreateSessionsRequest const& request) {
+    google::spanner::v1::BatchCreateSessionsRequest const& request) {
   SetMetadata(*context, "database=" + request.database());
   return child_->AsyncBatchCreateSessions(cq, std::move(context), request);
 }
 
-StatusOr<spanner_proto::v1::Session> MetadataSpannerStub::GetSession(
+StatusOr<google::spanner::v1::Session> MetadataSpannerStub::GetSession(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::GetSessionRequest const& request) {
+    google::spanner::v1::GetSessionRequest const& request) {
   SetMetadata(client_context, "name=" + request.name());
   return child_->GetSession(client_context, request);
 }
 
-StatusOr<spanner_proto::v1::ListSessionsResponse>
+StatusOr<google::spanner::v1::ListSessionsResponse>
 MetadataSpannerStub::ListSessions(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ListSessionsRequest const& request) {
+    google::spanner::v1::ListSessionsRequest const& request) {
   SetMetadata(client_context, "database=" + request.database());
   return child_->ListSessions(client_context, request);
 }
 
 Status MetadataSpannerStub::DeleteSession(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::DeleteSessionRequest const& request) {
+    google::spanner::v1::DeleteSessionRequest const& request) {
   SetMetadata(client_context, "name=" + request.name());
   return child_->DeleteSession(client_context, request);
 }
@@ -81,86 +79,87 @@ Status MetadataSpannerStub::DeleteSession(
 future<Status> MetadataSpannerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    spanner_proto::v1::DeleteSessionRequest const& request) {
+    google::spanner::v1::DeleteSessionRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteSession(cq, std::move(context), request);
 }
 
-StatusOr<spanner_proto::v1::ResultSet> MetadataSpannerStub::ExecuteSql(
+StatusOr<google::spanner::v1::ResultSet> MetadataSpannerStub::ExecuteSql(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->ExecuteSql(client_context, request);
 }
 
-future<StatusOr<spanner_proto::v1::ResultSet>>
+future<StatusOr<google::spanner::v1::ResultSet>>
 MetadataSpannerStub::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    spanner_proto::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request) {
   SetMetadata(*context, "session=" + request.session());
   return child_->AsyncExecuteSql(cq, std::move(context), request);
 }
 
 std::unique_ptr<
-    grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>
+    grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
 MetadataSpannerStub::ExecuteStreamingSql(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ExecuteSqlRequest const& request) {
+    google::spanner::v1::ExecuteSqlRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->ExecuteStreamingSql(client_context, request);
 }
 
-StatusOr<spanner_proto::v1::ExecuteBatchDmlResponse>
+StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 MetadataSpannerStub::ExecuteBatchDml(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ExecuteBatchDmlRequest const& request) {
+    google::spanner::v1::ExecuteBatchDmlRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->ExecuteBatchDml(client_context, request);
 }
 
 std::unique_ptr<
-    grpc::ClientReaderInterface<spanner_proto::v1::PartialResultSet>>
+    grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
 MetadataSpannerStub::StreamingRead(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::ReadRequest const& request) {
+    google::spanner::v1::ReadRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->StreamingRead(client_context, request);
 }
 
-StatusOr<spanner_proto::v1::Transaction> MetadataSpannerStub::BeginTransaction(
+StatusOr<google::spanner::v1::Transaction>
+MetadataSpannerStub::BeginTransaction(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::BeginTransactionRequest const& request) {
+    google::spanner::v1::BeginTransactionRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->BeginTransaction(client_context, request);
 }
 
-StatusOr<spanner_proto::v1::CommitResponse> MetadataSpannerStub::Commit(
+StatusOr<google::spanner::v1::CommitResponse> MetadataSpannerStub::Commit(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::CommitRequest const& request) {
+    google::spanner::v1::CommitRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->Commit(client_context, request);
 }
 
 Status MetadataSpannerStub::Rollback(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::RollbackRequest const& request) {
+    google::spanner::v1::RollbackRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->Rollback(client_context, request);
 }
 
-StatusOr<spanner_proto::v1::PartitionResponse>
+StatusOr<google::spanner::v1::PartitionResponse>
 MetadataSpannerStub::PartitionQuery(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::PartitionQueryRequest const& request) {
+    google::spanner::v1::PartitionQueryRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->PartitionQuery(client_context, request);
 }
 
-StatusOr<spanner_proto::v1::PartitionResponse>
+StatusOr<google::spanner::v1::PartitionResponse>
 MetadataSpannerStub::PartitionRead(
     grpc::ClientContext& client_context,
-    spanner_proto::v1::PartitionReadRequest const& request) {
+    google::spanner::v1::PartitionReadRequest const& request) {
   SetMetadata(client_context, "session=" + request.session());
   return child_->PartitionRead(client_context, request);
 }
