@@ -160,19 +160,17 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
     operation->metadata().UnpackTo(&metadata);
     db_names.push_back(metadata.database());
   }
-  EXPECT_LE(1, std::count(db_names.begin(), db_names.end(), db.FullName()))
-      << "Database " << db.database_id()
+  EXPECT_LE(1, std::count(db_names.begin(), db_names.end(), database->name()))
+      << "Database " << database->name()
       << " not found in the backup operation list.";
 
   auto backup = backup_future.get();
-  EXPECT_STATUS_OK(backup);
-  if (backup) {
-    EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
-    // Verify that the version_time is the same as the creation_time.
-    EXPECT_EQ(MakeTimestamp(backup->version_time()).value(),
-              MakeTimestamp(backup->create_time()).value());
-    EXPECT_EQ(backup->database_dialect(), database->database_dialect());
-  }
+  ASSERT_STATUS_OK(backup);
+  EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
+  // Verify that the version_time is the same as the creation_time.
+  EXPECT_EQ(MakeTimestamp(backup->version_time()).value(),
+            MakeTimestamp(backup->create_time()).value());
+  EXPECT_EQ(backup->database_dialect(), database->database_dialect());
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db.FullName()));
 
@@ -203,30 +201,31 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
     }
     EXPECT_EQ(restored_database->database_dialect(),
               database->database_dialect());
-  }
 
-  // List the database operations
-  std::ostringstream db_op_filter;
-  db_op_filter
-      << "(metadata.@type:type.googleapis.com/"
-      << "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)";
-  google::spanner::admin::database::v1::ListDatabaseOperationsRequest dreq;
-  dreq.set_parent(in.FullName());
-  dreq.set_filter(db_op_filter.str());
-  std::vector<std::string> restored_db_names;
-  for (auto const& operation :
-       database_admin_client_.ListDatabaseOperations(dreq)) {
-    if (!operation) break;
-    google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata md;
-    operation->metadata().UnpackTo(&md);
-    restored_db_names.push_back(md.name());
-  }
-  EXPECT_LE(1, std::count(restored_db_names.begin(), restored_db_names.end(),
-                          restored_database->name()))
-      << "Backup " << restored_database->name()
-      << " not found in the OptimizeRestoredDatabase operation list.";
+    // List the database operations
+    std::ostringstream db_op_filter;
+    db_op_filter
+        << "(metadata.@type:type.googleapis.com/"
+        << "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)";
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest dreq;
+    dreq.set_parent(in.FullName());
+    dreq.set_filter(db_op_filter.str());
+    std::vector<std::string> restored_db_names;
+    for (auto const& operation :
+         database_admin_client_.ListDatabaseOperations(dreq)) {
+      if (!operation) break;
+      google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata md;
+      operation->metadata().UnpackTo(&md);
+      restored_db_names.push_back(md.name());
+    }
+    EXPECT_LE(1, std::count(restored_db_names.begin(), restored_db_names.end(),
+                            restored_database->name()))
+        << "Backup " << restored_database->name()
+        << " not found in the OptimizeRestoredDatabase operation list.";
 
-  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(restore_db.FullName()));
+    EXPECT_STATUS_OK(
+        database_admin_client_.DropDatabase(restore_db.FullName()));
+  }
 
   std::ostringstream backup_filter;
   backup_filter << "expire_time <= \"" << expire_time << "\"";
@@ -235,7 +234,6 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
   req.set_filter(backup_filter.str());
   std::vector<std::string> backup_names;
   for (auto const& b : database_admin_client_.ListBackups(req)) {
-    if (!backup) break;
     backup_names.push_back(b->name());
   }
   EXPECT_LE(
@@ -250,8 +248,10 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
   ureq.mutable_update_mask()->add_paths("expire_time");
   auto updated_backup = database_admin_client_.UpdateBackup(ureq);
   EXPECT_STATUS_OK(updated_backup);
-  EXPECT_EQ(MakeTimestamp(updated_backup->expire_time()).value(),
-            new_expire_time);
+  if (updated_backup) {
+    EXPECT_EQ(MakeTimestamp(updated_backup->expire_time()).value(),
+              new_expire_time);
+  }
 
   EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(backup->name()));
 }
