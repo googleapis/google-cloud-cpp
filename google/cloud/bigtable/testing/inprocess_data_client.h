@@ -72,6 +72,10 @@ class InProcessDataClient : public bigtable::DataClient {
       grpc::ClientContext* context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request,
       grpc::CompletionQueue* cq) override;
+  grpc::Status PingAndWarm(
+      grpc::ClientContext* context,
+      google::bigtable::v2::PingAndWarmRequest const& request,
+      google::bigtable::v2::PingAndWarmResponse* response) override;
   grpc::Status ReadModifyWriteRow(
       grpc::ClientContext* context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request,

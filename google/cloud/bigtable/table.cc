@@ -298,6 +298,25 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
       });
 }
 
+StatusOr<google::bigtable::v2::PingAndWarmResponse> Table::PingAndWarm() {
+  grpc::Status status;
+  btproto::PingAndWarmRequest request;
+  auto instance_name = InstanceName(project_id_, instance_id_);
+  request.set_name(instance_name);
+  request.set_app_profile_id(app_profile_id_);
+
+  auto response = ClientUtils::MakeCall(
+      *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      MetadataUpdatePolicy(instance_name, MetadataParamTypes::NAME),
+      &DataClient::PingAndWarm, request, "Table::PingAndWarm", status,
+      Idempotency::kIdempotent);
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 // Call the `google.bigtable.v2.Bigtable.SampleRowKeys` RPC until
 // successful. When RPC is finished, this function returns the SampleRowKeys
 // as a std::vector<>. If the RPC fails, it will keep retrying until the

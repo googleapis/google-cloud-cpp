@@ -654,6 +654,24 @@ class Table {
       std::vector<Mutation> false_mutations);
 
   /**
+   * Warm up associated **instance** metadata for this connection.
+   *
+   * This call is not required but may be useful for connection keep-alive.
+   *
+   * @par Idempotency
+   * This operation is always treated as idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Examples
+   * @snippet data_snippets.cc ping and warm
+   */
+  StatusOr<google::bigtable::v2::PingAndWarmResponse> PingAndWarm();
+
+  /**
    * Sample of the row keys in the table, including approximate data sizes.
    *
    * @note The sample may only include one element for small tables.  In

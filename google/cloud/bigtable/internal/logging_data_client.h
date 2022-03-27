@@ -75,6 +75,10 @@ class LoggingDataClient : public DataClient {
       google::bigtable::v2::CheckAndMutateRowRequest const& request,
       grpc::CompletionQueue* cq) override;
 
+  grpc::Status PingAndWarm(grpc::ClientContext* context,
+                           btproto::PingAndWarmRequest const& request,
+                           btproto::PingAndWarmResponse* response) override;
+
   grpc::Status ReadModifyWriteRow(
       grpc::ClientContext* context,
       btproto::ReadModifyWriteRowRequest const& request,

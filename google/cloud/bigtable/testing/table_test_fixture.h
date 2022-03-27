@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include <chrono>
 #include <string>
 
 namespace google {
@@ -43,7 +44,10 @@ class TableTestFixture : public ::testing::Test {
       cq_impl_;
   CompletionQueue cq_;
   std::shared_ptr<MockDataClient> client_;
-  bigtable::Table table_ = bigtable::Table(client_, kTableId);
+  bigtable::Table table_ =
+      bigtable::Table(client_, kTableId,
+                      ExponentialBackoffPolicy(std::chrono::milliseconds(0),
+                                               std::chrono::milliseconds(0)));
 };
 
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(

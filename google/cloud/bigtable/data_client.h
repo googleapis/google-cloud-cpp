@@ -118,6 +118,10 @@ class DataClient {
       grpc::ClientContext* context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request,
       grpc::CompletionQueue* cq) = 0;
+  virtual grpc::Status PingAndWarm(
+      grpc::ClientContext* context,
+      google::bigtable::v2::PingAndWarmRequest const& request,
+      google::bigtable::v2::PingAndWarmResponse* response) = 0;
   virtual grpc::Status ReadModifyWriteRow(
       grpc::ClientContext* context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request,

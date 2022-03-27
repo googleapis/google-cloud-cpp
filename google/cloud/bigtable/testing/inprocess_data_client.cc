@@ -56,6 +56,12 @@ InProcessDataClient::AsyncCheckAndMutateRow(
       google::bigtable::v2::CheckAndMutateRowResponse>>(result.release());
 }
 
+grpc::Status InProcessDataClient::PingAndWarm(
+    grpc::ClientContext* context, btproto::PingAndWarmRequest const& request,
+    btproto::PingAndWarmResponse* response) {
+  return Stub()->PingAndWarm(context, request, response);
+}
+
 grpc::Status InProcessDataClient::ReadModifyWriteRow(
     grpc::ClientContext* context,
     btproto::ReadModifyWriteRowRequest const& request,

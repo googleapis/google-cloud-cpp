@@ -64,6 +64,7 @@ bigtable_client_unit_tests = [
     "table_bulk_apply_test.cc",
     "table_check_and_mutate_row_test.cc",
     "table_config_test.cc",
+    "table_ping_and_warm_test.cc",
     "table_readmodifywriterow_test.cc",
     "table_readrow_test.cc",
     "table_readrows_test.cc",

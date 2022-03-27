@@ -28,6 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::StatusIs;
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
@@ -75,6 +76,17 @@ std::string const kFamily1 = "family1";
 std::string const kFamily2 = "family2";
 std::string const kFamily3 = "family3";
 std::string const kFamily4 = "family4";
+
+TEST_F(DataIntegrationTest, TablePingAndWarm) {
+  auto table = GetTable();
+  auto resp = table.PingAndWarm();
+  // TODO(#8609) - Remove check once emulator supports PingAndWarm.
+  if (UsingCloudBigtableEmulator()) {
+    EXPECT_THAT(resp, StatusIs(StatusCode::kUnimplemented));
+  } else {
+    EXPECT_STATUS_OK(resp);
+  }
+}
 
 TEST_F(DataIntegrationTest, TableApply) {
   auto table = GetTable();

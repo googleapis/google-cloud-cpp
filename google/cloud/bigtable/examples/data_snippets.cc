@@ -706,6 +706,24 @@ void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
+void PingAndWarm(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw Usage{"ping-and-warm <project-id> <instance-id>"};
+  }
+
+  //! [ping and warm]
+  namespace cbt = ::google::cloud::bigtable;
+  [](std::string const& project_id, std::string const& instance_id) {
+    auto table =
+        cbt::Table(cbt::MakeDataClient(project_id, instance_id), "ignored");
+    auto resp = table.PingAndWarm();
+    if (!resp) throw std::runtime_error(resp.status().message());
+    std::cout << "Successfully warmed instance\n";
+  }
+  //! [ping and warm]
+  (argv.at(0), argv.at(1));
+}
+
 void RunMutateExamples(
     google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     google::cloud::internal::DefaultPRNG& generator,
@@ -791,6 +809,12 @@ void RunDataExamples(
 
   std::cout << "\nRunning ConfigureConnectionPoolSize()" << std::endl;
   ConfigureConnectionPoolSize({project_id, instance_id, table_id});
+
+  // TODO(#8609) - Remove check once emulator supports PingAndWarm.
+  if (!google::cloud::bigtable::examples::UsingEmulator()) {
+    std::cout << "\nRunning PingAndWarm()" << std::endl;
+    PingAndWarm({project_id, instance_id});
+  }
 
   std::cout << "\nPreparing data for MutateDeleteColumns()" << std::endl;
   MutateInsertUpdateRows(
@@ -923,6 +947,7 @@ int main(int argc, char* argv[]) try {
                        {"<row-key>", "<family-name>", "<column-name>"},
                        DeleteSelectiveFamilyCells),
       MakeCommandEntry("row-exists", {"<row-key>"}, RowExists),
+      {"ping-and-warm", PingAndWarm},
       {"mutate-delete-columns", MutateDeleteColumns},
       {"mutate-delete-rows", MutateDeleteRowsCommand},
       {"mutate-insert-update-rows", MutateInsertUpdateRowsCommand},

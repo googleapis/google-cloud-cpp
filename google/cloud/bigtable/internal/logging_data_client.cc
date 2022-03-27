@@ -70,6 +70,18 @@ LoggingDataClient::AsyncCheckAndMutateRow(
   return child_->AsyncCheckAndMutateRow(context, request, cq);
 }
 
+grpc::Status LoggingDataClient::PingAndWarm(
+    grpc::ClientContext* context, btproto::PingAndWarmRequest const& request,
+    btproto::PingAndWarmResponse* response) {
+  return LogWrapper(
+      [this](grpc::ClientContext* context,
+             btproto::PingAndWarmRequest const& request,
+             btproto::PingAndWarmResponse* response) {
+        return child_->PingAndWarm(context, request, response);
+      },
+      context, request, response, __func__, tracing_options_);
+}
+
 grpc::Status LoggingDataClient::ReadModifyWriteRow(
     grpc::ClientContext* context,
     btproto::ReadModifyWriteRowRequest const& request,

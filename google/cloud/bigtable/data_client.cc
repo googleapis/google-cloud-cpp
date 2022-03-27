@@ -94,6 +94,13 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->AsyncCheckAndMutateRow(context, request, cq);
   }
 
+  grpc::Status PingAndWarm(grpc::ClientContext* context,
+                           btproto::PingAndWarmRequest const& request,
+                           btproto::PingAndWarmResponse* response) override {
+    ApplyOptions(context);
+    return impl_.Stub()->PingAndWarm(context, request, response);
+  }
+
   grpc::Status ReadModifyWriteRow(
       grpc::ClientContext* context,
       btproto::ReadModifyWriteRowRequest const& request,

@@ -63,6 +63,11 @@ class MockDataClient : public bigtable::DataClient {
                google::bigtable::v2::CheckAndMutateRowRequest const&,
                grpc::CompletionQueue*),
               (override));
+  MOCK_METHOD(grpc::Status, PingAndWarm,
+              (grpc::ClientContext*,
+               google::bigtable::v2::PingAndWarmRequest const&,
+               google::bigtable::v2::PingAndWarmResponse*),
+              (override));
   MOCK_METHOD(grpc::Status, ReadModifyWriteRow,
               (grpc::ClientContext*,
                google::bigtable::v2::ReadModifyWriteRowRequest const&,
