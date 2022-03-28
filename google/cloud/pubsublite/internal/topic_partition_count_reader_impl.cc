@@ -46,7 +46,8 @@ future<StatusOr<std::uint64_t>> TopicPartitionCountReaderImpl::Read(
   return p->get_future().then([](future<StatusOr<TopicPartitions>> f) {
     auto partitions = f.get();
     if (!partitions) return StatusOr<std::uint64_t>{partitions.status()};
-    return StatusOr<std::uint64_t>{partitions.value().partition_count()};
+    return StatusOr<std::uint64_t>{
+        static_cast<std::uint64_t>(partitions.value().partition_count())};
   });
 }
 
