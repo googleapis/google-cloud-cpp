@@ -49,7 +49,7 @@ class AlarmRegistry {
     virtual ~CancelToken() = default;
     CancelToken(CancelToken const&) = delete;
     CancelToken& operator=(CancelToken const&) = delete;
-    CancelToken(AlarmRegistry&&) = delete;
+    CancelToken(CancelToken&&) = delete;
     CancelToken& operator=(CancelToken&&) = delete;
   };
 
