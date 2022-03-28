@@ -30,7 +30,7 @@ namespace pubsublite_internal {
 
 class TopicPartitionCountReaderImpl : public TopicPartitionCountReader {
  public:
-  TopicPartitionCountReaderImpl(
+  explicit TopicPartitionCountReaderImpl(
       std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection>
           connection);
   future<StatusOr<std::uint64_t>> Read(
