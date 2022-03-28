@@ -68,12 +68,12 @@ class Topic {
   std::string topic_name_;
 };
 
-bool operator==(Topic const& a, Topic const& b) {
+inline bool operator==(Topic const& a, Topic const& b) {
   return a.project() == b.project() && a.location() == b.location() &&
          a.topic_name() == b.topic_name();
 }
 
-std::ostream& operator<<(std::ostream& os, Topic const& rhs) {
+inline std::ostream& operator<<(std::ostream& os, Topic const& rhs) {
   return os << rhs.FullName();
 }
 
