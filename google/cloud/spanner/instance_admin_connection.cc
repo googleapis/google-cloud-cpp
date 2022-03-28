@@ -28,8 +28,8 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::instance::v1;
-namespace giam = ::google::iam::v1;
+namespace gsai = ::google::spanner::admin::instance;
+
 using ::google::cloud::Idempotency;
 
 namespace {
@@ -51,27 +51,28 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
   Options options() override { return opts_; }
 
-  StatusOr<gcsa::Instance> GetInstance(GetInstanceParams gip) override {
-    gcsa::GetInstanceRequest request;
+  StatusOr<gsai::v1::Instance> GetInstance(GetInstanceParams gip) override {
+    gsai::v1::GetInstanceRequest request;
     request.set_name(std::move(gip.instance_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::GetInstanceRequest const& request) {
+               gsai::v1::GetInstanceRequest const& request) {
           return stub_->GetInstance(context, request);
         },
         request, __func__);
   }
 
-  future<StatusOr<gcsa::Instance>> CreateInstance(
+  future<StatusOr<gsai::v1::Instance>> CreateInstance(
       CreateInstanceParams p) override {
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Instance>(
+    return google::cloud::internal::AsyncLongRunningOperation<
+        gsai::v1::Instance>(
         background_threads_->cq(), std::move(p.request),
         [stub](google::cloud::CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context,
-               gcsa::CreateInstanceRequest const& request) {
+               gsai::v1::CreateInstanceRequest const& request) {
           return stub->AsyncCreateInstance(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
@@ -85,20 +86,21 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
-            gcsa::Instance>,
+            gsai::v1::Instance>,
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
         __func__);
   }
 
-  future<StatusOr<gcsa::Instance>> UpdateInstance(
+  future<StatusOr<gsai::v1::Instance>> UpdateInstance(
       UpdateInstanceParams p) override {
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Instance>(
+    return google::cloud::internal::AsyncLongRunningOperation<
+        gsai::v1::Instance>(
         background_threads_->cq(), std::move(p.request),
         [stub](google::cloud::CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context,
-               gcsa::UpdateInstanceRequest const& request) {
+               gsai::v1::UpdateInstanceRequest const& request) {
           return stub->AsyncUpdateInstance(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
@@ -112,33 +114,33 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
-            gcsa::Instance>,
+            gsai::v1::Instance>,
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent, polling_policy_prototype_->clone(), __func__);
   }
 
   Status DeleteInstance(DeleteInstanceParams p) override {
-    gcsa::DeleteInstanceRequest request;
+    gsai::v1::DeleteInstanceRequest request;
     request.set_name(std::move(p.instance_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::DeleteInstanceRequest const& request) {
+               gsai::v1::DeleteInstanceRequest const& request) {
           return stub_->DeleteInstance(context, request);
         },
         request, __func__);
   }
 
-  StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
+  StatusOr<gsai::v1::InstanceConfig> GetInstanceConfig(
       GetInstanceConfigParams p) override {
-    gcsa::GetInstanceConfigRequest request;
+    gsai::v1::GetInstanceConfigRequest request;
     request.set_name(std::move(p.instance_config_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::GetInstanceConfigRequest const& request) {
+               gsai::v1::GetInstanceConfigRequest const& request) {
           return stub_->GetInstanceConfig(context, request);
         },
         request, __func__);
@@ -146,7 +148,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
   ListInstanceConfigsRange ListInstanceConfigs(
       ListInstanceConfigsParams params) override {
-    gcsa::ListInstanceConfigsRequest request;
+    gsai::v1::ListInstanceConfigsRequest request;
     request.set_parent("projects/" + params.project_id);
     request.clear_page_token();
     auto stub = stub_;
@@ -161,17 +163,18 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         ListInstanceConfigsRange>(
         std::move(request),
         [stub, retry, backoff,
-         function_name](gcsa::ListInstanceConfigsRequest const& r) {
+         function_name](gsai::v1::ListInstanceConfigsRequest const& r) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
-                     gcsa::ListInstanceConfigsRequest const& request) {
+                     gsai::v1::ListInstanceConfigsRequest const& request) {
                 return stub->ListInstanceConfigs(context, request);
               },
               r, function_name);
         },
-        [](gcsa::ListInstanceConfigsResponse r) {
-          std::vector<gcsa::InstanceConfig> result(r.instance_configs().size());
+        [](gsai::v1::ListInstanceConfigsResponse r) {
+          std::vector<gsai::v1::InstanceConfig> result(
+              r.instance_configs().size());
           auto& configs = *r.mutable_instance_configs();
           std::move(configs.begin(), configs.end(), result.begin());
           return result;
@@ -179,7 +182,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   }
 
   ListInstancesRange ListInstances(ListInstancesParams params) override {
-    gcsa::ListInstancesRequest request;
+    gsai::v1::ListInstancesRequest request;
     request.set_parent("projects/" + params.project_id);
     request.set_filter(std::move(params.filter));
     request.clear_page_token();
@@ -194,37 +197,39 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     return google::cloud::internal::MakePaginationRange<ListInstancesRange>(
         std::move(request),
         [stub, retry, backoff,
-         function_name](gcsa::ListInstancesRequest const& r) {
+         function_name](gsai::v1::ListInstancesRequest const& r) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
-                     gcsa::ListInstancesRequest const& request) {
+                     gsai::v1::ListInstancesRequest const& request) {
                 return stub->ListInstances(context, request);
               },
               r, function_name);
         },
-        [](gcsa::ListInstancesResponse r) {
-          std::vector<gcsa::Instance> result(r.instances().size());
+        [](gsai::v1::ListInstancesResponse r) {
+          std::vector<gsai::v1::Instance> result(r.instances().size());
           auto& instances = *r.mutable_instances();
           std::move(instances.begin(), instances.end(), result.begin());
           return result;
         });
   }
 
-  StatusOr<giam::Policy> GetIamPolicy(GetIamPolicyParams p) override {
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      GetIamPolicyParams p) override {
     google::iam::v1::GetIamPolicyRequest request;
     request.set_resource(std::move(p.instance_name));
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               giam::GetIamPolicyRequest const& request) {
+               google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
         },
         request, __func__);
   }
 
-  StatusOr<giam::Policy> SetIamPolicy(SetIamPolicyParams p) override {
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      SetIamPolicyParams p) override {
     google::iam::v1::SetIamPolicyRequest request;
     request.set_resource(std::move(p.instance_name));
     *request.mutable_policy() = std::move(p.policy);
@@ -235,7 +240,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency,
         [this](grpc::ClientContext& context,
-               giam::SetIamPolicyRequest const& request) {
+               google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
         },
         request, __func__);
@@ -252,7 +257,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               giam::TestIamPermissionsRequest const& request) {
+               google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
         },
         request, __func__);

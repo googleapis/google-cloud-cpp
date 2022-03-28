@@ -95,12 +95,12 @@ class ImageAnnotatorClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L814}
+  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L813}
   ///
   /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L793}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L792}
   /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L814}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L813}
   ///
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
@@ -112,16 +112,16 @@ class ImageAnnotatorClient {
   /// Run image detection and annotation for a batch of images.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L793}
+  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L792}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L814}
+  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L813}
   ///
   /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L793}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L792}
   /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L814}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L813}
   ///
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
@@ -143,12 +143,12 @@ class ImageAnnotatorClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L888}
+  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L887}
   ///
   /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L866}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L865}
   /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L888}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L887}
   ///
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
   BatchAnnotateFiles(
@@ -166,16 +166,16 @@ class ImageAnnotatorClient {
   /// extracted.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L866}
+  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L865}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L888}
+  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L887}
   ///
   /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L866}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L865}
   /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L888}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L887}
   ///
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
   BatchAnnotateFiles(
@@ -201,12 +201,12 @@ class ImageAnnotatorClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L940}
+  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L939}
   ///
   /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L916}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L915}
   /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L940}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
   ///
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(
@@ -228,16 +228,16 @@ class ImageAnnotatorClient {
   /// GCS bucket, each json file containing BatchAnnotateImagesResponse proto.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L916}
+  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L915}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L940}
+  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L939}
   ///
   /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L916}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L915}
   /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L940}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
   ///
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(
@@ -257,12 +257,12 @@ class ImageAnnotatorClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L968}
+  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L967}
   ///
   /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L947}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L946}
   /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L968}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L967}
   ///
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
@@ -279,16 +279,16 @@ class ImageAnnotatorClient {
   /// `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L947}
+  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L946}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L968}
+  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L967}
   ///
   /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L947}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L946}
   /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L968}
+  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L967}
   ///
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(

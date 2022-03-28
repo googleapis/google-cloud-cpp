@@ -42,6 +42,18 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
       google::devtools::artifactregistry::v1::ListDockerImagesRequest
           request) = 0;
 
+  virtual google::cloud::Idempotency GetDockerImage(
+      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ImportAptArtifacts(
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ImportYumArtifacts(
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) = 0;
+
   virtual google::cloud::Idempotency ListRepositories(
       google::devtools::artifactregistry::v1::ListRepositoriesRequest
           request) = 0;
@@ -49,6 +61,82 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetRepository(
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&
           request) = 0;
+
+  virtual google::cloud::Idempotency CreateRepository(
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateRepository(
+      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeleteRepository(
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListPackages(
+      google::devtools::artifactregistry::v1::ListPackagesRequest request) = 0;
+
+  virtual google::cloud::Idempotency GetPackage(
+      google::devtools::artifactregistry::v1::GetPackageRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeletePackage(
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListVersions(
+      google::devtools::artifactregistry::v1::ListVersionsRequest request) = 0;
+
+  virtual google::cloud::Idempotency GetVersion(
+      google::devtools::artifactregistry::v1::GetVersionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeleteVersion(
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListFiles(
+      google::devtools::artifactregistry::v1::ListFilesRequest request) = 0;
+
+  virtual google::cloud::Idempotency GetFile(
+      google::devtools::artifactregistry::v1::GetFileRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency ListTags(
+      google::devtools::artifactregistry::v1::ListTagsRequest request) = 0;
+
+  virtual google::cloud::Idempotency GetTag(
+      google::devtools::artifactregistry::v1::GetTagRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency CreateTag(
+      google::devtools::artifactregistry::v1::CreateTagRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateTag(
+      google::devtools::artifactregistry::v1::UpdateTagRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency DeleteTag(
+      google::devtools::artifactregistry::v1::DeleteTagRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency GetProjectSettings(
+      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+          request) = 0;
+
+  virtual google::cloud::Idempotency UpdateProjectSettings(
+      google::devtools::artifactregistry::v1::
+          UpdateProjectSettingsRequest const& request) = 0;
 };
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>

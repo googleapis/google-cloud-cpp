@@ -422,6 +422,40 @@ BigtableInstanceAdminConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminConnectionImpl::ListHotTablets(
+    google::bigtable::admin::v2::ListHotTabletsRequest request) {
+  request.clear_page_token();
+  auto stub = stub_;
+  auto retry =
+      std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListHotTablets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::bigtable::admin::v2::HotTablet>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::bigtable::admin::v2::ListHotTabletsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::bigtable::admin::v2::ListHotTabletsRequest const&
+                       request) {
+              return stub->ListHotTablets(context, request);
+            },
+            r, function_name);
+      },
+      [](google::bigtable::admin::v2::ListHotTabletsResponse r) {
+        std::vector<google::bigtable::admin::v2::HotTablet> result(
+            r.hot_tablets().size());
+        auto& messages = *r.mutable_hot_tablets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
 }  // namespace cloud

@@ -38,18 +38,12 @@ using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
-class RetryResumableUploadSessionTest : public ::testing::Test {
- protected:
-  void SetUp() override {}
-  void TearDown() override {}
-};
-
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
   return ExponentialBackoffPolicy(1_us, 2_us, 2).clone();
 }
 
 /// @test Verify that transient failures are handled as expected.
-TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
+TEST(RetryResumableUploadSessionTest, HandleTransient) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -117,7 +111,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
 }
 
 /// @test Verify that a permanent error on UploadChunk results in a failure.
-TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
+TEST(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -141,7 +135,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
 }
 
 /// @test Verify that a permanent error on ResetSession results in a failure.
-TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
+TEST(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -169,7 +163,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
 }
 
 /// @test Verify that ResetSession consumes the transient error budget.
-TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
+TEST(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -211,7 +205,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
 }
 
 /// @test Verify that too many transients on ResetSession result in a failure.
-TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
+TEST(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -242,7 +236,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
 
 /// @test Verify that transients (or elapsed time) from different chunks do not
 /// accumulate.
-TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
+TEST(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -330,7 +324,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
 
 /// @test Verify that a permanent error on UploadFinalChunk results in a
 /// failure.
-TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
+TEST(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -358,7 +352,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
 
 /// @test Verify that too many transients on UploadFinalChunk result in a
 /// failure.
-TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
+TEST(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -478,7 +472,7 @@ TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
 }
 
 /// @test Verify that transient failures which move next_bytes are handled
-TEST_F(RetryResumableUploadSessionTest, HandleTransientPartialFailures) {
+TEST(RetryResumableUploadSessionTest, HandleTransientPartialFailures) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -567,7 +561,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransientPartialFailures) {
 }
 
 /// @test Verify that responses without a range header are handled.
-TEST_F(RetryResumableUploadSessionTest, MissingRangeHeaderInUpload) {
+TEST(RetryResumableUploadSessionTest, MissingRangeHeaderInUpload) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -627,7 +621,7 @@ TEST_F(RetryResumableUploadSessionTest, MissingRangeHeaderInUpload) {
 }
 
 /// @test Verify that responses without a range header are handled.
-TEST_F(RetryResumableUploadSessionTest, MissingRangeHeaderInReset) {
+TEST(RetryResumableUploadSessionTest, MissingRangeHeaderInReset) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -675,7 +669,7 @@ TEST_F(RetryResumableUploadSessionTest, MissingRangeHeaderInReset) {
 }
 
 /// @test Verify that erroneous server behavior (uncommitting data) is handled.
-TEST_F(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
+TEST(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -717,7 +711,7 @@ TEST_F(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
 }
 
 /// @test Verify that retry exhaustion following a short write fails.
-TEST_F(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
+TEST(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
@@ -758,7 +752,7 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
 }
 
 /// @test Verify that short writes are retried.
-TEST_F(RetryResumableUploadSessionTest, ShortWriteRetrySucceeds) {
+TEST(RetryResumableUploadSessionTest, ShortWriteRetrySucceeds) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;

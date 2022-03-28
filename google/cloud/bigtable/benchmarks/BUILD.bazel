@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -24,30 +24,27 @@ cc_library(
     hdrs = bigtable_benchmark_common_hdrs,
     deps = [
         "//:bigtable",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "//google/cloud/bigtable:bigtable_client_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 )
 
 load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
 
-[cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
+[cc_binary(
+    name = program.replace("/", "_").replace(".cc", ""),
+    srcs = [program],
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
     }),
-    tags = [
-        "integration-test",
-    ],
     deps = [
         ":bigtable_benchmark_common",
         "//:bigtable",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
     ],
-) for test in bigtable_benchmark_programs]
+) for program in bigtable_benchmark_programs]
 
 load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
 
@@ -61,8 +58,8 @@ load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
     deps = [
         ":bigtable_benchmark_common",
         "//:bigtable",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_benchmarks_unit_tests]

@@ -38,9 +38,16 @@ include(CompileProtos)
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_artifactregistry_protos
     # cmake-format: sort
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/apt_artifact.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/artifact.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/file.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/package.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/repository.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/service.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/settings.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/tag.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/version.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/devtools/artifactregistry/v1/yum_artifact.proto
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")

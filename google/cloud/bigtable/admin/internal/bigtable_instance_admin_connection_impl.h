@@ -122,6 +122,9 @@ class BigtableInstanceAdminConnectionImpl
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
+      google::bigtable::admin::v2::ListHotTabletsRequest request) override;
+
  private:
   std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy>
   retry_policy() {

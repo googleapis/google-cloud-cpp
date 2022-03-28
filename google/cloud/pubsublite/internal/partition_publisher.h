@@ -33,13 +33,16 @@ namespace pubsublite_internal {
 class PartitionPublisher
     : public Publisher<google::cloud::pubsublite::v1::Cursor> {
  private:
-  using ResumableStream = std::unique_ptr<ResumableAsyncStreamingReadWriteRpc<
+  using ResumableStream = ResumableAsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
-      google::cloud::pubsublite::v1::PublishResponse>>;
+      google::cloud::pubsublite::v1::PublishResponse>;
+  using ResumableStreamImpl = ResumableAsyncStreamingReadWriteRpcImpl<
+      google::cloud::pubsublite::v1::PublishRequest,
+      google::cloud::pubsublite::v1::PublishResponse>;
 
  public:
   explicit PartitionPublisher(
-      absl::FunctionRef<ResumableStream(
+      absl::FunctionRef<std::unique_ptr<ResumableStream>(
           StreamInitializer<google::cloud::pubsublite::v1::PublishRequest,
                             google::cloud::pubsublite::v1::PublishResponse>)>,
       BatchingOptions, google::cloud::pubsublite::v1::InitialPublishRequest,
@@ -62,12 +65,23 @@ class PartitionPublisher
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
   };
 
-  std::deque<MessageWithPromise> UnbatchAll();
+  void WriteBatches();
+
+  void Read();
+
+  void OnRead(
+      absl::optional<google::cloud::pubsublite::v1::PublishResponse> response);
+
+  std::deque<MessageWithPromise> UnbatchAll(
+      std::unique_lock<std::mutex> const&);
 
   static std::deque<std::deque<MessageWithPromise>> CreateBatches(
       std::deque<MessageWithPromise> messages, BatchingOptions const& options);
 
   void SatisfyOutstandingMessages();
+
+  future<StatusOr<ResumableStreamImpl::UnderlyingStream>> Initializer(
+      ResumableStreamImpl::UnderlyingStream stream);
 
   BatchingOptions const batching_options_;
   google::cloud::pubsublite::v1::InitialPublishRequest const
@@ -75,12 +89,14 @@ class PartitionPublisher
 
   std::mutex mu_;
 
-  ResumableStream const resumable_stream_;  // ABSL_GUARDED_BY(mu_)
+  std::unique_ptr<ResumableStream> const
+      resumable_stream_;  // ABSL_GUARDED_BY(mu_)
   ServiceComposite service_composite_;
   std::deque<MessageWithPromise> unbatched_messages_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithPromise>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithPromise>>
+
       in_flight_batches_;  // ABSL_GUARDED_BY(mu_)
   bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
 

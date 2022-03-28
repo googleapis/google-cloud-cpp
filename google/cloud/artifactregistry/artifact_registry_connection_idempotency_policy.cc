@@ -49,6 +49,24 @@ class DefaultArtifactRegistryConnectionIdempotencyPolicy
     return Idempotency::kIdempotent;
   }
 
+  Idempotency GetDockerImage(
+      google::devtools::artifactregistry::v1::GetDockerImageRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ImportAptArtifacts(
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ImportYumArtifacts(
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
   Idempotency ListRepositories(
       google::devtools::artifactregistry::v1::ListRepositoriesRequest)
       override {
@@ -59,6 +77,123 @@ class DefaultArtifactRegistryConnectionIdempotencyPolicy
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&)
       override {
     return Idempotency::kIdempotent;
+  }
+
+  Idempotency CreateRepository(
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateRepository(
+      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteRepository(
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ListPackages(
+      google::devtools::artifactregistry::v1::ListPackagesRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency GetPackage(
+      google::devtools::artifactregistry::v1::GetPackageRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency DeletePackage(
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ListVersions(
+      google::devtools::artifactregistry::v1::ListVersionsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency GetVersion(
+      google::devtools::artifactregistry::v1::GetVersionRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency DeleteVersion(
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency ListFiles(
+      google::devtools::artifactregistry::v1::ListFilesRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency GetFile(
+      google::devtools::artifactregistry::v1::GetFileRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency ListTags(
+      google::devtools::artifactregistry::v1::ListTagsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency GetTag(
+      google::devtools::artifactregistry::v1::GetTagRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency CreateTag(
+      google::devtools::artifactregistry::v1::CreateTagRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency UpdateTag(
+      google::devtools::artifactregistry::v1::UpdateTagRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency DeleteTag(
+      google::devtools::artifactregistry::v1::DeleteTagRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency GetProjectSettings(
+      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&)
+      override {
+    return Idempotency::kIdempotent;
+  }
+
+  Idempotency UpdateProjectSettings(
+      google::devtools::artifactregistry::v1::
+          UpdateProjectSettingsRequest const&) override {
+    return Idempotency::kNonIdempotent;
   }
 };
 }  // namespace

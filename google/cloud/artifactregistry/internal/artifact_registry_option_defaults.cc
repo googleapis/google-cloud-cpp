@@ -50,6 +50,18 @@ Options ArtifactRegistryDefaultOptions(Options options) {
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
+  if (!options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
+    options.set<artifactregistry::ArtifactRegistryPollingPolicyOption>(
+        GenericPollingPolicy<
+            artifactregistry::ArtifactRegistryRetryPolicyOption::Type,
+            artifactregistry::ArtifactRegistryBackoffPolicyOption::Type>(
+            options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+                ->clone())
+            .clone());
+  }
   if (!options.has<artifactregistry::
                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
     options.set<

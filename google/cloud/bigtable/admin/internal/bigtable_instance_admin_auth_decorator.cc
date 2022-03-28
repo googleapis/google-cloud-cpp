@@ -267,6 +267,15 @@ BigtableInstanceAdminAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
+StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
+BigtableInstanceAdminAuth::ListHotTablets(
+    grpc::ClientContext& context,
+    google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListHotTablets(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

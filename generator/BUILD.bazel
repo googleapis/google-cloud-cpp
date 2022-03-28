@@ -24,7 +24,7 @@ cc_library(
     hdrs = google_cloud_cpp_generator_hdrs,
     deps = [
         ":generator_config_cc_proto",
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
@@ -44,8 +44,8 @@ cc_library(
     hdrs = google_cloud_cpp_generator_testing_srcs,
     deps = [
         ":google_cloud_cpp_generator",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 )

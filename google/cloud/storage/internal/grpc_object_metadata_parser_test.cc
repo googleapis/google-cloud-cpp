@@ -15,8 +15,8 @@
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
-#include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -30,6 +30,7 @@ namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
+using ::google::cloud::internal::HexDecode;
 using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(GrpcClientFromProto, ObjectSimple) {
@@ -191,11 +192,11 @@ TEST(GrpcClientFromProto, MD5Roundtrip) {
     std::vector<std::uint8_t> proto;
   } cases[] = {
       {"1B2M2Y8AsgTpgAmY7PhCfg==",
-       internal::HexDecode("d41d8cd98f00b204e9800998ecf8427e")},
+       HexDecode("d41d8cd98f00b204e9800998ecf8427e")},
       {"nhB9nTcrtoJr2B01QqQZ1g==",
-       internal::HexDecode("9e107d9d372bb6826bd81d3542a419d6")},
+       HexDecode("9e107d9d372bb6826bd81d3542a419d6")},
       {"96HF9K981B+JfoQuTVnyCg==",
-       internal::HexDecode("f7a1c5f4af7cd41f897e842e4d59f20a")},
+       HexDecode("f7a1c5f4af7cd41f897e842e4d59f20a")},
   };
   for (auto const& test : cases) {
     auto const p = std::string{test.proto.begin(), test.proto.end()};
