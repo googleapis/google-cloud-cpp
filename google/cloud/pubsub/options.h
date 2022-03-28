@@ -39,10 +39,14 @@
  */
 
 #include "google/cloud/pubsub/backoff_policy.h"
+#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include <google/cloud/pubsublite/v1/common.pb.h>
 #include <chrono>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -263,6 +267,15 @@ struct MaxOutstandingBytesOption {
  */
 struct MaxConcurrencyOption {
   using Type = std::size_t;
+};
+
+/**
+ * A function to convert a Pub/Sub message to a Pub/Sub Lite message.
+ */
+struct PublishMessageTransformer {
+  using Type =
+      std::function<StatusOr<google::cloud::pubsublite::v1::SequencedMessage>(
+          google::cloud::pubsub::Message)>;
 };
 
 /**

@@ -30,6 +30,7 @@ cc_library(
         "//:common",
         "//:grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
+        "@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc",
         # Do not sort: grpc++ must come last
         "@com_github_grpc_grpc//:grpc++",
     ],

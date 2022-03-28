@@ -34,6 +34,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using std::chrono::seconds;
 using ms = std::chrono::milliseconds;
 
+using google::cloud::pubsub::Message;
+using google::cloud::pubsub::PublishMessageTransformer;
+using google::cloud::pubsublite::v1::AttributeValues;
+using google::cloud::pubsublite::v1::PubSubMessage;
+using google::cloud::pubsublite::v1::SequencedMessage;
+
 std::size_t DefaultThreadCount() {
   auto constexpr kDefaultThreadCount = 4;
   auto const n = std::thread::hardware_concurrency();
@@ -60,6 +66,9 @@ Options DefaultCommonOptions(Options opts) {
   }
   if (opts.get<GrpcBackgroundThreadPoolSizeOption>() == 0) {
     opts.set<GrpcBackgroundThreadPoolSizeOption>(DefaultThreadCount());
+  }
+  if (!opts.has<PublishMessageTransformer>()) {
+    opts.set<PublishMessageTransformer>(DefaultPublishMessageTransformer);
   }
 
   // Enforce Constraints
@@ -147,6 +156,38 @@ Options DefaultSubscriberOptionsOnly(Options opts) {
   bytes = std::max<std::int64_t>(0, bytes);
 
   return opts;
+}
+
+StatusOr<SequencedMessage> DefaultPublishMessageTransformer(
+    Message const& message) {
+  SequencedMessage sm;
+
+  // how to set cursor?
+
+  auto chrono_nanoseconds =
+      std::chrono::duration_cast<std::chrono::nanoseconds>(
+          message.publish_time().time_since_epoch());
+  auto chrono_seconds =
+      std::chrono::duration_cast<std::chrono::seconds>(chrono_nanoseconds);
+  sm.mutable_publish_time()->set_seconds(chrono_seconds.count());
+  sm.mutable_publish_time()->set_nanos(static_cast<std::int32_t>(
+      chrono_nanoseconds.count() -
+      std::chrono::duration_cast<std::chrono::nanoseconds>(chrono_seconds)
+          .count()));
+
+  PubSubMessage m;
+  m.set_key(message.ordering_key());
+  *m.mutable_data() = message.data();
+  for (auto kv : message.attributes()) {
+    AttributeValues av;
+    av.add_values(std::move(kv.second));
+    (*m.mutable_attributes())[kv.first] = std::move(av);
+  }
+  *sm.mutable_message() = std::move(m);
+
+  sm.set_size_bytes(sm.message().ByteSizeLong());
+
+  return sm;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

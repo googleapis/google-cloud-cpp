@@ -15,8 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULTS_H
 
+#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include <google/cloud/pubsublite/v1/common.pb.h>
 
 namespace google {
 namespace cloud {
@@ -34,6 +37,9 @@ Options DefaultPublisherOptionsOnly(Options opts);
 Options DefaultSubscriberOptions(Options opts);
 
 Options DefaultSubscriberOptionsOnly(Options opts);
+
+StatusOr<google::cloud::pubsublite::v1::SequencedMessage>
+DefaultPublishMessageTransformer(const google::cloud::pubsub::Message&);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
