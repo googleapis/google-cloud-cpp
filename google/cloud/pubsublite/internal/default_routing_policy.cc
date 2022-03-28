@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
 #include "google/cloud/version.h"
-#include "google/cloud/pubsublite/internal/batching_options.h"
 #include <unordered_map>
 
 namespace google {
@@ -24,8 +23,6 @@ namespace pubsublite_internal {
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
 std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod) {
-  BatchingOptions o;
-  o.maximum_batch_bytes();
   std::uint64_t result = 1;
   for (std::uint32_t i = 0; i < pow; ++i) {
     result *= (val % mod);

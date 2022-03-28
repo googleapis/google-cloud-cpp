@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
-#include "google/cloud/pubsublite/internal/batching_options.h"
 #include <gmock/gmock.h>
 #include <unordered_map>
 
@@ -25,8 +24,6 @@ namespace pubsublite_internal {
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 
 TEST(DefaultRoutingPolicyTest, RouteWithKey) {
-  BatchingOptions o;
-  o.maximum_batch_bytes();
   // same list of test values as in other client libraries
   DefaultRoutingPolicy rp;
   std::unordered_map<std::string, std::uint64_t> mods = {
