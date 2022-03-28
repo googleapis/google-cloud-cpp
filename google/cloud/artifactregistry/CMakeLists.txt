@@ -60,7 +60,11 @@ target_link_libraries(
            google-cloud-cpp::api_field_behavior_protos
            google-cloud-cpp::api_http_protos
            google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::iam_v1_options_protos
+           google-cloud-cpp::iam_v1_iam_policy_protos
            google-cloud-cpp::iam_v1_policy_protos
+           google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::type_expr_protos)
 
 file(
