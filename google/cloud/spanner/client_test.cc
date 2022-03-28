@@ -38,8 +38,6 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace spanner_proto = ::google::spanner::v1;
-
 using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -95,7 +93,7 @@ TEST(ClientTest, ReadSuccess) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -136,7 +134,7 @@ TEST(ClientTest, ReadFailure) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -182,7 +180,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -223,7 +221,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -307,7 +305,7 @@ TEST(ClientTest, ExecuteBatchDmlError) {
 
 TEST(ClientTest, ExecutePartitionedDmlSuccess) {
   auto source = absl::make_unique<MockResultSetSource>();
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow()).WillRepeatedly(Return(Row()));
 
@@ -424,7 +422,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -472,7 +470,7 @@ TEST(ClientTest, CommitMutatorRollback) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -514,7 +512,7 @@ TEST(ClientTest, CommitMutatorRollbackError) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -556,7 +554,7 @@ TEST(ClientTest, CommitMutatorException) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
@@ -983,7 +981,7 @@ TEST(ClientTest, ProfileQuerySuccess) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText0, &metadata));
   auto constexpr kText1 = R"pb(
     query_plan: { plan_nodes: { display_name: "test-node" } }
@@ -1047,7 +1045,7 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
       }
     }
   )pb";
-  spanner_proto::ResultSetMetadata metadata;
+  google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(TextFormat::ParseFromString(kText0, &metadata));
   auto constexpr kText1 = R"pb(
     query_plan: { plan_nodes: { display_name: "test-node" } }

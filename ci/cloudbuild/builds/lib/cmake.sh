@@ -40,7 +40,7 @@ if command -v ccache >/dev/null 2>&1; then
   io::log "Clearing ccache stats"
   ccache --zero-stats
   function show_stats_handler() {
-    if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
+    if [[ "${TRIGGER_TYPE:-}" != "manual" || "${VERBOSE_FLAG:-}" == "true" ]]; then
       io::log "===> ccache stats"
       ccache --show-stats
     fi

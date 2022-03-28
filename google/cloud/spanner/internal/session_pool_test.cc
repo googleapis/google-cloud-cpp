@@ -51,8 +51,6 @@ using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::UnorderedElementsAre;
 
-namespace spanner_proto = ::google::spanner::v1;
-
 // Matches a BatchCreateSessionsRequest with the specified `session_count`.
 MATCHER_P(SessionCountIs, session_count,
           "BatchCreateSessionsRequest has expected session_count") {
@@ -66,9 +64,9 @@ MATCHER_P(LabelsAre, labels, "BatchCreateSessionsRequest has expected labels") {
 }
 
 // Create a response with the given `sessions`
-spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
+google::spanner::v1::BatchCreateSessionsResponse MakeSessionsResponse(
     std::vector<std::string> sessions) {
-  spanner_proto::BatchCreateSessionsResponse response;
+  google::spanner::v1::BatchCreateSessionsResponse response;
   for (auto& session : sessions) {
     response.add_session()->set_name(std::move(session));
   }
@@ -94,8 +92,9 @@ TEST(SessionPool, Allocate) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(
-          [&db](grpc::ClientContext&,
-                spanner_proto::BatchCreateSessionsRequest const& request) {
+          [&db](
+              grpc::ClientContext&,
+              google::spanner::v1::BatchCreateSessionsRequest const& request) {
             EXPECT_EQ(db.FullName(), request.database());
             EXPECT_EQ(1, request.session_count());
             return MakeSessionsResponse({"session1"});
@@ -114,15 +113,17 @@ TEST(SessionPool, ReleaseBadSession) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(
-          [&db](grpc::ClientContext&,
-                spanner_proto::BatchCreateSessionsRequest const& request) {
+          [&db](
+              grpc::ClientContext&,
+              google::spanner::v1::BatchCreateSessionsRequest const& request) {
             EXPECT_EQ(db.FullName(), request.database());
             EXPECT_EQ(1, request.session_count());
             return MakeSessionsResponse({"session1"});
           })
       .WillOnce(
-          [&db](grpc::ClientContext&,
-                spanner_proto::BatchCreateSessionsRequest const& request) {
+          [&db](
+              grpc::ClientContext&,
+              google::spanner::v1::BatchCreateSessionsRequest const& request) {
             EXPECT_EQ(db.FullName(), request.database());
             EXPECT_EQ(1, request.session_count());
             return MakeSessionsResponse({"session2"});
@@ -408,7 +409,7 @@ TEST(SessionPool, SessionRefresh) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
 
-  spanner_proto::ResultSet result;
+  google::spanner::v1::ResultSet result;
   auto constexpr kResultSetText = R"pb(
     metadata: {
       row_type: { fields: { type: { code: INT64 } } }
@@ -419,12 +420,12 @@ TEST(SessionPool, SessionRefresh) {
   ASSERT_TRUE(TextFormat::ParseFromString(kResultSetText, &result));
 
   EXPECT_CALL(*mock, AsyncExecuteSql)
-      .WillOnce([&result](CompletionQueue&,
-                          std::unique_ptr<grpc::ClientContext>,
-                          spanner_proto::ExecuteSqlRequest const& request) {
-        EXPECT_EQ("s2", request.session());
-        return make_ready_future(make_status_or(std::move(result)));
-      });
+      .WillOnce(
+          [&result](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::spanner::v1::ExecuteSqlRequest const& request) {
+            EXPECT_EQ("s2", request.session());
+            return make_ready_future(make_status_or(std::move(result)));
+          });
 
   auto db = spanner::Database("project", "instance", "database");
   auto impl = std::make_shared<FakeCompletionQueueImpl>();

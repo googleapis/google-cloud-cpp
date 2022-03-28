@@ -35,8 +35,6 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace spanner_proto = ::google::spanner::v1;
-
 using ::google::cloud::Idempotency;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
@@ -156,7 +154,7 @@ void SessionPool::RefreshExpiringSessions() {
   }
   for (auto& refresh : sessions_to_refresh) {
     AsyncRefreshSession(cq_, refresh.first, std::move(refresh.second))
-        .then([](future<StatusOr<spanner_proto::ResultSet>> result) {
+        .then([](future<StatusOr<google::spanner::v1::ResultSet>> result) {
           // We simply discard the response as handling IsSessionNotFound()
           // by removing the session from the pool is problematic (and would
           // not eliminate the possibility of IsSessionNotFound() elsewhere).
@@ -358,7 +356,7 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
 Status SessionPool::CreateSessionsSync(
     std::shared_ptr<Channel> const& channel,
     std::map<std::string, std::string> const& labels, int num_sessions) {
-  spanner_proto::BatchCreateSessionsRequest request;
+  google::spanner::v1::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
   request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
                                                                labels.end());
@@ -368,7 +366,7 @@ Status SessionPool::CreateSessionsSync(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       google::cloud::Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
-              spanner_proto::BatchCreateSessionsRequest const& request) {
+              google::spanner::v1::BatchCreateSessionsRequest const& request) {
         return stub->BatchCreateSessions(context, request);
       },
       request, __func__);
@@ -380,14 +378,15 @@ void SessionPool::CreateSessionsAsync(
     std::map<std::string, std::string> const& labels, int num_sessions) {
   std::weak_ptr<SessionPool> pool = shared_from_this();
   AsyncBatchCreateSessions(cq_, channel->stub, labels, num_sessions)
-      .then([pool, channel](
-                future<StatusOr<spanner_proto::BatchCreateSessionsResponse>>
-                    result) {
-        if (auto shared_pool = pool.lock()) {
-          shared_pool->HandleBatchCreateSessionsDone(channel,
-                                                     std::move(result).get());
-        }
-      });
+      .then(
+          [pool, channel](
+              future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
+                  result) {
+            if (auto shared_pool = pool.lock()) {
+              shared_pool->HandleBatchCreateSessionsDone(
+                  channel, std::move(result).get());
+            }
+          });
 }
 
 SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,
@@ -406,11 +405,11 @@ SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,
   });
 }
 
-future<StatusOr<spanner_proto::BatchCreateSessionsResponse>>
+future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SessionPool::AsyncBatchCreateSessions(
     CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
     std::map<std::string, std::string> const& labels, int num_sessions) {
-  spanner_proto::BatchCreateSessionsRequest request;
+  google::spanner::v1::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
   request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
                                                                labels.end());
@@ -419,7 +418,7 @@ SessionPool::AsyncBatchCreateSessions(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-             spanner_proto::BatchCreateSessionsRequest const& request) {
+             google::spanner::v1::BatchCreateSessionsRequest const& request) {
         return stub->AsyncBatchCreateSessions(cq, std::move(context), request);
       },
       std::move(request), __func__);
@@ -428,33 +427,34 @@ SessionPool::AsyncBatchCreateSessions(
 future<Status> SessionPool::AsyncDeleteSession(
     CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
     std::string session_name) {
-  spanner_proto::DeleteSessionRequest request;
+  google::spanner::v1::DeleteSessionRequest request;
   request.set_name(std::move(session_name));
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-             spanner_proto::DeleteSessionRequest const& request) {
+             google::spanner::v1::DeleteSessionRequest const& request) {
         return stub->AsyncDeleteSession(cq, std::move(context), request);
       },
       std::move(request), __func__);
 }
 
 /// Refresh the session `session_name` by executing a `SELECT 1` query on it.
-future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
-    CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
-    std::string session_name) {
-  spanner_proto::ExecuteSqlRequest request;
+future<StatusOr<google::spanner::v1::ResultSet>>
+SessionPool::AsyncRefreshSession(CompletionQueue& cq,
+                                 std::shared_ptr<SpannerStub> const& stub,
+                                 std::string session_name) {
+  google::spanner::v1::ExecuteSqlRequest request;
   request.set_session(std::move(session_name));
   // Single-use transaction with strong concurrency.
   request.set_sql("SELECT 1;");
   request.mutable_request_options()->set_priority(
-      spanner_proto::RequestOptions::PRIORITY_LOW);
+      google::spanner::v1::RequestOptions::PRIORITY_LOW);
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-             spanner_proto::ExecuteSqlRequest const& request) {
+             google::spanner::v1::ExecuteSqlRequest const& request) {
         return stub->AsyncExecuteSql(cq, std::move(context), request);
       },
       std::move(request), __func__);
@@ -462,7 +462,7 @@ future<StatusOr<spanner_proto::ResultSet>> SessionPool::AsyncRefreshSession(
 
 Status SessionPool::HandleBatchCreateSessionsDone(
     std::shared_ptr<Channel> const& channel,
-    StatusOr<spanner_proto::BatchCreateSessionsResponse> response) {
+    StatusOr<google::spanner::v1::BatchCreateSessionsResponse> response) {
   std::unique_lock<std::mutex> lk(mu_);
   --create_calls_in_progress_;
   if (!response.ok()) {

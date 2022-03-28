@@ -7,7 +7,7 @@ github:
 name: cxx20-ci
 substitutions:
   _BUILD_NAME: cxx20
-  _DISTRO: fedora-34-cxx20
+  _DISTRO: fedora-35-cxx20
   _TRIGGER_TYPE: ci
 tags:
 - ci
