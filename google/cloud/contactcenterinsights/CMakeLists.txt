@@ -18,7 +18,7 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Contact Center AI Insights API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF
     "A C++ Client Library for the Contact Center AI Insights API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "contactcenterinsights_internal"
                             "contactcenterinsights_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -75,13 +75,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_contactcenterinsights)
 set_target_properties(
     google_cloud_cpp_contactcenterinsights
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-contactcenterinsights
+    PROPERTIES EXPORT_NAME google-cloud-cpp::contactcenterinsights
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_contactcenterinsights
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-contactcenterinsights ALIAS
+add_library(google-cloud-cpp::contactcenterinsights ALIAS
             google_cloud_cpp_contactcenterinsights)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -102,12 +102,11 @@ target_sources(google_cloud_cpp_contactcenterinsights_mocks
                INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_contactcenterinsights_mocks
-    INTERFACE google-cloud-cpp::experimental-contactcenterinsights
-              GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::contactcenterinsights GTest::gmock_main
+              GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_contactcenterinsights_mocks
-    PROPERTIES EXPORT_NAME
-               google-cloud-cpp::experimental-contactcenterinsights_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::contactcenterinsights_mocks)
 target_include_directories(
     google_cloud_cpp_contactcenterinsights_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -119,9 +118,8 @@ target_compile_options(google_cloud_cpp_contactcenterinsights_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(contactcenterinsights_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        contactcenterinsights_quickstart
-        PRIVATE google-cloud-cpp::experimental-contactcenterinsights)
+    target_link_libraries(contactcenterinsights_quickstart
+                          PRIVATE google-cloud-cpp::contactcenterinsights)
     google_cloud_cpp_add_common_options(contactcenterinsights_quickstart)
     add_test(
         NAME contactcenterinsights_quickstart
