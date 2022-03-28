@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_IMPL_H
 
+#include "google/cloud/pubsublite/admin_connection.h"
+#include "google/cloud/pubsublite/internal/topic_partition_count_reader.h"
 #include "google/cloud/pubsublite/topic.h"
 #include "google/cloud/future.h"
 #include "google/cloud/version.h"
-#include "google/cloud/pubsublite/admin_connection.h"
-#include "google/cloud/pubsublite/internal/topic_partition_count_reader.h"
 #include <memory>
 #include <utility>
 
@@ -30,11 +30,15 @@ namespace pubsublite_internal {
 
 class TopicPartitionCountReaderImpl : public TopicPartitionCountReader {
  public:
-  TopicPartitionCountReaderImpl(std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection> connection);
-  future<StatusOr<std::uint64_t>> Read(google::cloud::pubsublite::Topic) override;
+  TopicPartitionCountReaderImpl(
+      std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection>
+          connection);
+  future<StatusOr<std::uint64_t>> Read(
+      google::cloud::pubsublite::Topic) override;
 
  private:
-  std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection> connection_;
+  std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection>
+      connection_;
 };
 
 }  // namespace pubsublite_internal

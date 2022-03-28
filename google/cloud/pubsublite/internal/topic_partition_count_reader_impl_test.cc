@@ -32,6 +32,7 @@ using google::cloud::pubsublite::v1::TopicPartitions;
 using google::cloud::pubsublite_mocks::MockAdminServiceConnection;
 
 TEST(TestAsyncRead, Valid) {
+  std::uint64_t const num_partitions = 50;
   auto connection = std::make_shared<MockAdminServiceConnection>();
   TopicPartitionCountReaderImpl reader{connection};
   Topic topic{"project", "location", "name"};
@@ -40,11 +41,38 @@ TEST(TestAsyncRead, Valid) {
   auto p = std::make_shared<promise<void>>();
   EXPECT_CALL(*connection, GetTopicPartitions(IsProtoEqual(req)))
       .WillOnce([=](GetTopicPartitionsRequest const&) {
-        p.get();
+        p->get_future().get();
         TopicPartitions tp;
-        tp.set_partition_count(50);
+        tp.set_partition_count(num_partitions);
         return tp;
       });
+  future<StatusOr<std::uint64_t>> f = reader.Read(topic);
+  EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
+  p->set_value();
+  auto val = f.get();
+  EXPECT_TRUE(val);
+  EXPECT_EQ(*val, num_partitions);
+}
+
+TEST(TestAsyncRead, Error) {
+  Status error_status = Status{StatusCode::kAborted, "123"};
+  auto connection = std::make_shared<MockAdminServiceConnection>();
+  TopicPartitionCountReaderImpl reader{connection};
+  Topic topic{"project1", "location1", "name1"};
+  GetTopicPartitionsRequest req;
+  *req.mutable_name() = topic.FullName();
+  auto p = std::make_shared<promise<void>>();
+  EXPECT_CALL(*connection, GetTopicPartitions(IsProtoEqual(req)))
+      .WillOnce([=](GetTopicPartitionsRequest const&) {
+        p->get_future().get();
+        return error_status;
+      });
+  future<StatusOr<std::uint64_t>> f = reader.Read(topic);
+  EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
+  p->set_value();
+  auto val = f.get();
+  EXPECT_FALSE(val);
+  EXPECT_EQ(val.status(), error_status);
 }
 
 }  // namespace pubsublite_internal

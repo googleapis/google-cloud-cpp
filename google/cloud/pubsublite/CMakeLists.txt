@@ -140,9 +140,9 @@ add_library(
     internal/subscriber_stub.h
     internal/subscriber_stub_factory.cc
     internal/subscriber_stub_factory.h
-        internal/topic_partition_count_reader.h
-        internal/topic_partition_count_reader_impl.cc
-        internal/topic_partition_count_reader_impl.h
+    internal/topic_partition_count_reader.h
+    internal/topic_partition_count_reader_impl.cc
+    internal/topic_partition_count_reader_impl.h
     internal/topic_stats_auth_decorator.cc
     internal/topic_stats_auth_decorator.h
     internal/topic_stats_connection_impl.cc
@@ -158,7 +158,7 @@ add_library(
     internal/topic_stats_stub.h
     internal/topic_stats_stub_factory.cc
     internal/topic_stats_stub_factory.h
-        topic.h
+    topic.h
     topic_stats_client.cc
     topic_stats_client.h
     topic_stats_connection.cc
@@ -257,7 +257,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
         internal/stream_factory_test.cc
-            internal/topic_partition_count_reader_impl_test.cc)
+        internal/topic_partition_count_reader_impl_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"
                          YEAR "2021")

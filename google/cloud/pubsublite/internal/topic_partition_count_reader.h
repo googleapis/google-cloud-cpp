@@ -26,6 +26,9 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+/**
+ * This interface declares an asynchronous method to get the number of partitions for a Pub/Sub Lite topic.
+ */
 class TopicPartitionCountReader {
  public:
   virtual future<StatusOr<std::uint64_t>> Read(google::cloud::pubsublite::Topic) = 0;
