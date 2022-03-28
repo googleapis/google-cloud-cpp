@@ -97,6 +97,8 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/default_routing_policy.cc
+    internal/default_routing_policy.h
     internal/futures.h
     internal/multipartition_publisher.cc
     internal/multipartition_publisher.h
@@ -221,7 +223,6 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
-
     add_library(pubsublite_testing INTERFACE)
     target_sources(
         pubsublite_testing
@@ -249,6 +250,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     set(pubsublite_unit_tests
         # cmake-format: sort
         endpoint_test.cc
+        internal/default_routing_policy_test.cc
         internal/partition_publisher_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc

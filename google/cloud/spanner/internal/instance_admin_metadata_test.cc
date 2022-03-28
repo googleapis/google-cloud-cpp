@@ -28,8 +28,9 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace gsai = ::google::spanner::admin::instance;
+
 using ::google::cloud::testing_util::ValidateMetadataFixture;
-namespace gcsa = ::google::spanner::admin::instance::v1;
 
 class InstanceAdminMetadataTest : public ::testing::Test {
  protected:
@@ -57,7 +58,7 @@ class InstanceAdminMetadataTest : public ::testing::Test {
 TEST_F(InstanceAdminMetadataTest, GetInstance) {
   EXPECT_CALL(*mock_, GetInstance)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::GetInstanceRequest const&) {
+                       gsai::v1::GetInstanceRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -67,7 +68,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstance) {
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::GetInstanceRequest request;
+  gsai::v1::GetInstanceRequest request;
   request.set_name(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -79,7 +80,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstance) {
 TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
   EXPECT_CALL(*mock_, GetInstanceConfig)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::GetInstanceConfigRequest const&) {
+                       gsai::v1::GetInstanceConfigRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -89,7 +90,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::GetInstanceConfigRequest request;
+  gsai::v1::GetInstanceConfigRequest request;
   request.set_name(google::cloud::Project("test-project-id").FullName() +
                    "/instanceConfigs/test-instance-config-id");
   auto response = stub.GetInstanceConfig(context, request);
@@ -99,7 +100,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
 TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
   EXPECT_CALL(*mock_, ListInstanceConfigs)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::ListInstanceConfigsRequest const&) {
+                       gsai::v1::ListInstanceConfigsRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -109,7 +110,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::ListInstanceConfigsRequest request;
+  gsai::v1::ListInstanceConfigsRequest request;
   request.set_parent(google::cloud::Project("test-project-id").FullName());
   auto response = stub.ListInstanceConfigs(context, request);
   EXPECT_EQ(TransientError(), response.status());
@@ -119,7 +120,7 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
   EXPECT_CALL(*mock_, AsyncCreateInstance)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       gcsa::CreateInstanceRequest const&) {
+                       gsai::v1::CreateInstanceRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -130,7 +131,7 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
 
   InstanceAdminMetadata stub(mock_);
   CompletionQueue cq;
-  gcsa::CreateInstanceRequest request;
+  gsai::v1::CreateInstanceRequest request;
   request.set_parent(google::cloud::Project("test-project-id").FullName());
   request.set_instance_id("test-instance-id");
   auto response = stub.AsyncCreateInstance(
@@ -142,7 +143,7 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
   EXPECT_CALL(*mock_, AsyncUpdateInstance)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       gcsa::UpdateInstanceRequest const&) {
+                       gsai::v1::UpdateInstanceRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(*context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -153,7 +154,7 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
 
   InstanceAdminMetadata stub(mock_);
   CompletionQueue cq;
-  gcsa::UpdateInstanceRequest request;
+  gsai::v1::UpdateInstanceRequest request;
   request.mutable_instance()->set_name(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -166,7 +167,7 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
 TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
   EXPECT_CALL(*mock_, DeleteInstance)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::DeleteInstanceRequest const&) {
+                       gsai::v1::DeleteInstanceRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -176,7 +177,7 @@ TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::DeleteInstanceRequest request;
+  gsai::v1::DeleteInstanceRequest request;
   request.set_name(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -188,7 +189,7 @@ TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
 TEST_F(InstanceAdminMetadataTest, ListInstances) {
   EXPECT_CALL(*mock_, ListInstances)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::ListInstancesRequest const&) {
+                       gsai::v1::ListInstancesRequest const&) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -198,7 +199,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstances) {
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::ListInstancesRequest request;
+  gsai::v1::ListInstancesRequest request;
   request.set_parent(google::cloud::Project("test-project-id").FullName());
   auto response = stub.ListInstances(context, request);
   EXPECT_EQ(TransientError(), response.status());

@@ -22,6 +22,12 @@ licenses(["notice"])  # Apache 2.0
 # remain available). This is a test for backwards compatibility. If you need to
 # change the test, there is good chance you are breaking something.
 DEPRECATED_TARGETS = [
+    "google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
+    "google/cloud/pubsub:pubsub_client_testing",
+    "google/cloud/spanner:spanner_client_testing",
+    "google/cloud/testing_util:google_cloud_cpp_testing",
+    "google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+    "google/cloud/testing_util:google_cloud_cpp_testing_rest",
     "google/cloud:google_cloud_cpp_common",
     "google/cloud:google_cloud_cpp_grpc_utils",
 ]

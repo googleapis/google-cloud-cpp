@@ -75,7 +75,7 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
   std::lock_guard<std::mutex> g{mu_};
   std::int64_t partition =
       m.key().empty()
-          ? routing_policy_->RouteWithoutKey(partition_publishers_.size())
+          ? routing_policy_->Route(partition_publishers_.size())
           : routing_policy_->Route(m.key(), partition_publishers_.size());
   // TODO(18suresha) handle invalid partition?
   return partition_publishers_[partition]->Publish(m).then(

@@ -14,9 +14,9 @@
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/curl_handle.h"
-#include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/sha256_hash.h"
 #include "absl/strings/str_split.h"
 #include <algorithm>
 #include <cctype>
@@ -253,7 +253,8 @@ std::chrono::seconds V4SignUrlRequest::DefaultExpires() {
 
 std::string V4SignUrlRequest::CanonicalRequestHash(
     std::string const& client_id) const {
-  return HexEncode(Sha256Hash(CanonicalRequest(client_id)));
+  return google::cloud::internal::HexEncode(
+      google::cloud::internal::Sha256Hash(CanonicalRequest(client_id)));
 }
 
 std::string V4SignUrlRequest::Scope() const {

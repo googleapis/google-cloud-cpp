@@ -83,7 +83,6 @@ storage_client_unit_tests = [
     "internal/retry_resumable_upload_session_test.cc",
     "internal/self_signing_service_account_credentials_test.cc",
     "internal/service_account_requests_test.cc",
-    "internal/sha256_hash_test.cc",
     "internal/sign_blob_requests_test.cc",
     "internal/signed_url_requests_test.cc",
     "internal/tuple_filter_test.cc",
