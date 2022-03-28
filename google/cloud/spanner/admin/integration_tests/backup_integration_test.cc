@@ -165,6 +165,17 @@ TEST_F(BackupIntegrationTest, BackupRestore) {
       << " not found in the backup operation list.";
 
   auto backup = backup_future.get();
+  {
+    // TODO(#8594): Remove this when we know how to deal with the issue.
+    auto matcher = testing_util::StatusIs(
+        StatusCode::kFailedPrecondition,
+        testing::HasSubstr("exceeded the maximum timestamp staleness"));
+    testing::StringMatchResultListener listener;
+    if (matcher.impl().MatchAndExplain(backup, &listener)) {
+      EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db.FullName()));
+      GTEST_SKIP();
+    }
+  }
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
   // Verify that the version_time is the same as the creation_time.
