@@ -42,10 +42,10 @@ std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
  * All the client libraries provided by Google use the same algorithm to route
  * messages.
  *
- * @note Algorithm for routing with a message key is <big-endian integer
- * representation of SHA256(message key)> % <number of partitions>. Uses SHA-256
- * as it's provided in the standard library of all silver languages, enabling
- * consistent hashing across languages.
+ * @note The algorithm for routing with a message key is <big-endian integer
+ * representation of SHA256(message key)> % <number of partitions>. It uses
+ * SHA-256 as it is available in most programming languages, enabling consistent
+ * hashing across languages.
  */
 class DefaultRoutingPolicy : public RoutingPolicy {
  public:
