@@ -26,12 +26,12 @@ load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests"
         "integration-test",
     ],
     deps = [
+        "//:common",
         "//:spanner",
         "//:spanner_mocks",
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client_testing_private",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in spanner_client_integration_tests]

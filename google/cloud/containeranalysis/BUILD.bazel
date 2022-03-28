@@ -36,8 +36,8 @@ cc_library(
     ),
     visibility = ["//:__pkg__"],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc",
         "@com_google_googleapis//grafeas/v1:grafeas_cc_grpc",
     ],
@@ -54,7 +54,7 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_containeranalysis",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
     ],
 )

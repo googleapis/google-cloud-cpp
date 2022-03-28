@@ -43,6 +43,35 @@ ArtifactRegistryMetadata::ListDockerImages(
   return child_->ListDockerImages(context, request);
 }
 
+StatusOr<google::devtools::artifactregistry::v1::DockerImage>
+ArtifactRegistryMetadata::GetDockerImage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetDockerImage(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncImportAptArtifacts(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncImportAptArtifacts(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncImportYumArtifacts(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncImportYumArtifacts(cq, std::move(context), request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
 ArtifactRegistryMetadata::ListRepositories(
     grpc::ClientContext& context,
@@ -59,6 +88,202 @@ ArtifactRegistryMetadata::GetRepository(
         request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetRepository(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncCreateRepository(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateRepository(cq, std::move(context), request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Repository>
+ArtifactRegistryMetadata::UpdateRepository(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+        request) {
+  SetMetadata(context, "repository.name=" + request.repository().name());
+  return child_->UpdateRepository(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncDeleteRepository(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteRepository(cq, std::move(context), request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
+ArtifactRegistryMetadata::ListPackages(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListPackagesRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListPackages(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryMetadata::GetPackage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetPackage(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncDeletePackage(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeletePackage(cq, std::move(context), request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
+ArtifactRegistryMetadata::ListVersions(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListVersionsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListVersions(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryMetadata::GetVersion(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetVersion(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncDeleteVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteVersion(cq, std::move(context), request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
+ArtifactRegistryMetadata::ListFiles(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListFiles(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryMetadata::GetFile(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetFileRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetFile(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
+ArtifactRegistryMetadata::ListTags(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListTags(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Tag>
+ArtifactRegistryMetadata::GetTag(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetTagRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetTag(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Tag>
+ArtifactRegistryMetadata::CreateTag(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateTag(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Tag>
+ArtifactRegistryMetadata::UpdateTag(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
+  SetMetadata(context, "tag.name=" + request.tag().name());
+  return child_->UpdateTag(context, request);
+}
+
+Status ArtifactRegistryMetadata::DeleteTag(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteTag(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> ArtifactRegistryMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->SetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> ArtifactRegistryMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->GetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ArtifactRegistryMetadata::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->TestIamPermissions(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+ArtifactRegistryMetadata::GetProjectSettings(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetProjectSettings(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+ArtifactRegistryMetadata::UpdateProjectSettings(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
+        request) {
+  SetMetadata(context,
+              "project_settings.name=" + request.project_settings().name());
+  return child_->UpdateProjectSettings(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetOperation(cq, std::move(context), request);
+}
+
+future<Status> ArtifactRegistryMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void ArtifactRegistryMetadata::SetMetadata(grpc::ClientContext& context,

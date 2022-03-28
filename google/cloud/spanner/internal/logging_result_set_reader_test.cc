@@ -29,7 +29,6 @@ namespace {
 
 using ::testing::Contains;
 using ::testing::HasSubstr;
-namespace spanner_proto = ::google::spanner::v1;
 
 class LoggingResultSetReaderTest : public ::testing::Test {
  protected:
@@ -49,7 +48,7 @@ TEST_F(LoggingResultSetReaderTest, Read) {
   auto mock = absl::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, Read())
       .WillOnce([] {
-        spanner_proto::PartialResultSet result;
+        google::spanner::v1::PartialResultSet result;
         result.set_resume_token("test-token");
         return PartialResultSet{std::move(result), false};
       })

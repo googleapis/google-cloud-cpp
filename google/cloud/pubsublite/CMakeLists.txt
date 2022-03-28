@@ -86,6 +86,8 @@ add_library(
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
     internal/alarm_registry.h
+    internal/alarm_registry_impl.cc
+    internal/alarm_registry_impl.h
     internal/batching_options.h
     internal/cloud_region.h
     internal/cloud_zone.h
@@ -99,6 +101,8 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/default_routing_policy.cc
+    internal/default_routing_policy.h
     internal/futures.h
     internal/location.h
     internal/partition_assignment_auth_decorator.cc
@@ -125,6 +129,7 @@ add_library(
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
     internal/resumable_async_streaming_read_write_rpc.h
+    internal/routing_policy.h
     internal/service.h
     internal/service_composite.h
     internal/stream_factory.h
@@ -220,7 +225,6 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     # googletest itself), because the generic `FindGTest` module does not define
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
-
     add_library(pubsublite_testing INTERFACE)
     target_sources(
         pubsublite_testing
@@ -248,7 +252,9 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     set(pubsublite_unit_tests
         # cmake-format: sort
         endpoint_test.cc
-        internal/location_test.cc
+        internal/alarm_registry_impl_test.cc
+        internal/default_routing_policy_test.cc
+            internal/location_test.cc
         internal/partition_publisher_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc

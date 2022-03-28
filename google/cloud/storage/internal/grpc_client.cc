@@ -126,22 +126,10 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
   if (timeout.count() != 0) {
     context.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto status = stub_->QueryWriteStatus(
+  auto response = stub_->QueryWriteStatus(
       context, GrpcObjectRequestParser::ToProto(request));
-  if (!status) return std::move(status).status();
-
-  ResumableUploadResponse response;
-  response.upload_state = ResumableUploadResponse::kInProgress;
-  if (status->has_persisted_size()) {
-    response.committed_size =
-        static_cast<std::uint64_t>(status->persisted_size());
-  }
-  if (status->has_resource()) {
-    response.payload =
-        GrpcObjectMetadataParser::FromProto(status->resource(), options());
-    response.upload_state = ResumableUploadResponse::kDone;
-  }
-  return response;
+  if (!response) return std::move(response).status();
+  return GrpcObjectRequestParser::FromProto(*response, options());
 }
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>

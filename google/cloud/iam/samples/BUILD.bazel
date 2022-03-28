@@ -28,9 +28,9 @@ load(":iam_client_samples.bzl", "iam_client_samples")
         "integration-test",
     ],
     deps = [
+        "//:common",
         "//:iam",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in iam_client_samples]
@@ -41,10 +41,10 @@ load(":iam_client_mock_samples.bzl", "iam_client_mock_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
+        "//:common",
         "//:iam",
         "//:iam_mocks",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in iam_client_mock_samples]

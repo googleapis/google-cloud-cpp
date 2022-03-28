@@ -31,7 +31,7 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::database::v1;
+namespace gsad = ::google::spanner::admin::database;
 
 using ::google::cloud::Idempotency;
 using ::google::cloud::internal::RetryLoop;
@@ -39,14 +39,14 @@ using ::google::cloud::internal::RetryLoop;
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 DatabaseAdminConnection::CreateBackup(CreateBackupParams) {
-  return google::cloud::make_ready_future(StatusOr<gcsa::Backup>(
+  return google::cloud::make_ready_future(StatusOr<gsad::v1::Backup>(
       Status(StatusCode::kUnimplemented, "not implemented")));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 DatabaseAdminConnection::RestoreDatabase(RestoreDatabaseParams) {
-  return google::cloud::make_ready_future(StatusOr<gcsa::Database>(
+  return google::cloud::make_ready_future(StatusOr<gsad::v1::Database>(
       Status(StatusCode::kUnimplemented, "not implemented")));
 }
 
@@ -64,13 +64,13 @@ Status DatabaseAdminConnection::DeleteBackup(DeleteBackupParams) {
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 ListBackupsRange DatabaseAdminConnection::ListBackups(ListBackupsParams) {
   return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
-      gcsa::ListBackupsRequest{},
-      [](gcsa::ListBackupsRequest const&) {
-        return StatusOr<gcsa::ListBackupsResponse>(
+      gsad::v1::ListBackupsRequest{},
+      [](gsad::v1::ListBackupsRequest const&) {
+        return StatusOr<gsad::v1::ListBackupsResponse>(
             Status(StatusCode::kUnimplemented, "not implemented"));
       },
-      [](gcsa::ListBackupsResponse const&) {
-        return std::vector<gcsa::Backup>{};
+      [](gsad::v1::ListBackupsResponse const&) {
+        return std::vector<gsad::v1::Backup>{};
       });
 }
 
@@ -85,12 +85,12 @@ ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
     ListBackupOperationsParams) {
   return google::cloud::internal::MakePaginationRange<
       ListBackupOperationsRange>(
-      gcsa::ListBackupOperationsRequest{},
-      [](gcsa::ListBackupOperationsRequest const&) {
-        return StatusOr<gcsa::ListBackupOperationsResponse>(
+      gsad::v1::ListBackupOperationsRequest{},
+      [](gsad::v1::ListBackupOperationsRequest const&) {
+        return StatusOr<gsad::v1::ListBackupOperationsResponse>(
             Status(StatusCode::kUnimplemented, "not implemented"));
       },
-      [](gcsa::ListBackupOperationsResponse const&) {
+      [](gsad::v1::ListBackupOperationsResponse const&) {
         return std::vector<google::longrunning::Operation>{};
       });
 }
@@ -100,12 +100,12 @@ ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
     ListDatabaseOperationsParams) {
   return google::cloud::internal::MakePaginationRange<
       ListDatabaseOperationsRange>(
-      gcsa::ListDatabaseOperationsRequest{},
-      [](gcsa::ListDatabaseOperationsRequest const&) {
-        return StatusOr<gcsa::ListDatabaseOperationsResponse>(
+      gsad::v1::ListDatabaseOperationsRequest{},
+      [](gsad::v1::ListDatabaseOperationsRequest const&) {
+        return StatusOr<gsad::v1::ListDatabaseOperationsResponse>(
             Status(StatusCode::kUnimplemented, "not implemented"));
       },
-      [](gcsa::ListDatabaseOperationsResponse const&) {
+      [](gsad::v1::ListDatabaseOperationsResponse const&) {
         return std::vector<google::longrunning::Operation>{};
       });
 }
@@ -133,12 +133,12 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(CreateDatabaseParams p) override {
-    gcsa::CreateDatabaseRequest request;
+    gsad::v1::CreateDatabaseRequest request;
     request.set_parent(p.database.instance().FullName());
     request.set_create_statement("CREATE DATABASE `" +
                                  p.database.database_id() + "`");
     struct EncryptionVisitor {
-      explicit EncryptionVisitor(gcsa::CreateDatabaseRequest& request)
+      explicit EncryptionVisitor(gsad::v1::CreateDatabaseRequest& request)
           : request_(request) {}
       void operator()(DefaultEncryption const&) const {
         // No encryption_config => GOOGLE_DEFAULT_ENCRYPTION.
@@ -150,18 +150,19 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         auto* config = request_.mutable_encryption_config();
         config->set_kms_key_name(cme.encryption_key().FullName());
       }
-      gcsa::CreateDatabaseRequest& request_;
+      gsad::v1::CreateDatabaseRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
     for (auto& s : p.extra_statements) {
       *request.add_extra_statements() = std::move(s);
     }
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Database>(
+    return google::cloud::internal::AsyncLongRunningOperation<
+        gsad::v1::Database>(
         background_threads_->cq(), std::move(request),
         [stub](google::cloud::CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context,
-               gcsa::CreateDatabaseRequest const& request) {
+               gsad::v1::CreateDatabaseRequest const& request) {
           return stub->AsyncCreateDatabase(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
@@ -175,7 +176,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
-            gcsa::Database>,
+            gsad::v1::Database>,
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
         __func__);
@@ -183,13 +184,13 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       GetDatabaseParams p) override {
-    gcsa::GetDatabaseRequest request;
+    gsad::v1::GetDatabaseRequest request;
     request.set_name(p.database.FullName());
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::GetDatabaseRequest const& request) {
+               gsad::v1::GetDatabaseRequest const& request) {
           return stub_->GetDatabase(context, request);
         },
         request, __func__);
@@ -197,13 +198,13 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(GetDatabaseDdlParams p) override {
-    gcsa::GetDatabaseDdlRequest request;
+    gsad::v1::GetDatabaseDdlRequest request;
     request.set_database(p.database.FullName());
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::GetDatabaseDdlRequest const& request) {
+               gsad::v1::GetDatabaseDdlRequest const& request) {
           return stub_->GetDatabaseDdl(context, request);
         },
         request, __func__);
@@ -212,18 +213,18 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabase(UpdateDatabaseParams p) override {
-    gcsa::UpdateDatabaseDdlRequest request;
+    gsad::v1::UpdateDatabaseDdlRequest request;
     request.set_database(p.database.FullName());
     for (auto& s : p.statements) {
       *request.add_statements() = std::move(s);
     }
     auto stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
-        gcsa::UpdateDatabaseDdlMetadata>(
+        gsad::v1::UpdateDatabaseDdlMetadata>(
         background_threads_->cq(), std::move(request),
         [stub](google::cloud::CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context,
-               gcsa::UpdateDatabaseDdlRequest const& request) {
+               gsad::v1::UpdateDatabaseDdlRequest const& request) {
           return stub->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
@@ -237,7 +238,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
-            gcsa::UpdateDatabaseDdlMetadata>,
+            gsad::v1::UpdateDatabaseDdlMetadata>,
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
         __func__);
@@ -250,14 +251,14 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::DropDatabaseRequest const& request) {
+               gsad::v1::DropDatabaseRequest const& request) {
           return stub_->DropDatabase(context, request);
         },
         request, __func__);
   }
 
   ListDatabaseRange ListDatabases(ListDatabasesParams p) override {
-    gcsa::ListDatabasesRequest request;
+    gsad::v1::ListDatabasesRequest request;
     request.set_parent(p.instance.FullName());
     request.clear_page_token();
     auto stub = stub_;
@@ -272,17 +273,17 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     return google::cloud::internal::MakePaginationRange<ListDatabaseRange>(
         std::move(request),
         [stub, retry, backoff,
-         function_name](gcsa::ListDatabasesRequest const& r) {
+         function_name](gsad::v1::ListDatabasesRequest const& r) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
-                     gcsa::ListDatabasesRequest const& request) {
+                     gsad::v1::ListDatabasesRequest const& request) {
                 return stub->ListDatabases(context, request);
               },
               r, function_name);
         },
-        [](gcsa::ListDatabasesResponse r) {
-          std::vector<gcsa::Database> result(r.databases().size());
+        [](gsad::v1::ListDatabasesResponse r) {
+          std::vector<gsad::v1::Database> result(r.databases().size());
           auto& dbs = *r.mutable_databases();
           std::move(dbs.begin(), dbs.end(), result.begin());
           return result;
@@ -291,12 +292,12 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(RestoreDatabaseParams p) override {
-    gcsa::RestoreDatabaseRequest request;
+    gsad::v1::RestoreDatabaseRequest request;
     request.set_parent(p.database.instance().FullName());
     request.set_database_id(p.database.database_id());
     request.set_backup(std::move(p.backup_full_name));
     struct EncryptionVisitor {
-      explicit EncryptionVisitor(gcsa::RestoreDatabaseRequest& request)
+      explicit EncryptionVisitor(gsad::v1::RestoreDatabaseRequest& request)
           : request_(request) {}
       void operator()(DefaultEncryption const&) const {
         // No encryption_config => USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION.
@@ -304,24 +305,25 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       }
       void operator()(GoogleEncryption const&) const {
         auto* config = request_.mutable_encryption_config();
-        config->set_encryption_type(
-            gcsa::RestoreDatabaseEncryptionConfig::GOOGLE_DEFAULT_ENCRYPTION);
+        config->set_encryption_type(gsad::v1::RestoreDatabaseEncryptionConfig::
+                                        GOOGLE_DEFAULT_ENCRYPTION);
       }
       void operator()(CustomerManagedEncryption const& cme) const {
         auto* config = request_.mutable_encryption_config();
-        config->set_encryption_type(
-            gcsa::RestoreDatabaseEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION);
+        config->set_encryption_type(gsad::v1::RestoreDatabaseEncryptionConfig::
+                                        CUSTOMER_MANAGED_ENCRYPTION);
         config->set_kms_key_name(cme.encryption_key().FullName());
       }
-      gcsa::RestoreDatabaseRequest& request_;
+      gsad::v1::RestoreDatabaseRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Database>(
+    return google::cloud::internal::AsyncLongRunningOperation<
+        gsad::v1::Database>(
         background_threads_->cq(), std::move(request),
         [stub](google::cloud::CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context,
-               gcsa::RestoreDatabaseRequest const& request) {
+               gsad::v1::RestoreDatabaseRequest const& request) {
           return stub->AsyncRestoreDatabase(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
@@ -335,7 +337,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
-            gcsa::Database>,
+            gsad::v1::Database>,
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
         __func__);
@@ -390,8 +392,9 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         request, __func__);
   }
 
-  future<StatusOr<gcsa::Backup>> CreateBackup(CreateBackupParams p) override {
-    gcsa::CreateBackupRequest request;
+  future<StatusOr<gsad::v1::Backup>> CreateBackup(
+      CreateBackupParams p) override {
+    gsad::v1::CreateBackupRequest request;
     request.set_parent(p.database.instance().FullName());
     request.set_backup_id(p.backup_id);
     auto& backup = *request.mutable_backup();
@@ -404,7 +407,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           p.version_time->get<protobuf::Timestamp>().value();
     }
     struct EncryptionVisitor {
-      explicit EncryptionVisitor(gcsa::CreateBackupRequest& request)
+      explicit EncryptionVisitor(gsad::v1::CreateBackupRequest& request)
           : request_(request) {}
       void operator()(DefaultEncryption const&) const {
         // No encryption_config => USE_DATABASE_ENCRYPTION.
@@ -413,23 +416,23 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       void operator()(GoogleEncryption const&) const {
         auto* config = request_.mutable_encryption_config();
         config->set_encryption_type(
-            gcsa::CreateBackupEncryptionConfig::GOOGLE_DEFAULT_ENCRYPTION);
+            gsad::v1::CreateBackupEncryptionConfig::GOOGLE_DEFAULT_ENCRYPTION);
       }
       void operator()(CustomerManagedEncryption const& cme) const {
         auto* config = request_.mutable_encryption_config();
-        config->set_encryption_type(
-            gcsa::CreateBackupEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION);
+        config->set_encryption_type(gsad::v1::CreateBackupEncryptionConfig::
+                                        CUSTOMER_MANAGED_ENCRYPTION);
         config->set_kms_key_name(cme.encryption_key().FullName());
       }
-      gcsa::CreateBackupRequest& request_;
+      gsad::v1::CreateBackupRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
     auto stub = stub_;
-    return google::cloud::internal::AsyncLongRunningOperation<gcsa::Backup>(
+    return google::cloud::internal::AsyncLongRunningOperation<gsad::v1::Backup>(
         background_threads_->cq(), std::move(request),
         [stub](google::cloud::CompletionQueue& cq,
                std::unique_ptr<grpc::ClientContext> context,
-               gcsa::CreateBackupRequest const& request) {
+               gsad::v1::CreateBackupRequest const& request) {
           return stub->AsyncCreateBackup(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
@@ -443,7 +446,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
-            gcsa::Backup>,
+            gsad::v1::Backup>,
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent, polling_policy_prototype_->clone(),
         __func__);
@@ -451,13 +454,13 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       GetBackupParams p) override {
-    gcsa::GetBackupRequest request;
+    gsad::v1::GetBackupRequest request;
     request.set_name(p.backup_full_name);
     return RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::GetBackupRequest const& request) {
+               gsad::v1::GetBackupRequest const& request) {
           return stub_->GetBackup(context, request);
         },
         request, __func__);
@@ -470,14 +473,14 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::DeleteBackupRequest const& request) {
+               gsad::v1::DeleteBackupRequest const& request) {
           return stub_->DeleteBackup(context, request);
         },
         request, __func__);
   }
 
   ListBackupsRange ListBackups(ListBackupsParams p) override {
-    gcsa::ListBackupsRequest request;
+    gsad::v1::ListBackupsRequest request;
     request.set_parent(p.instance.FullName());
     request.set_filter(std::move(p.filter));
     auto stub = stub_;
@@ -492,17 +495,17 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
         std::move(request),
         [stub, retry, backoff,
-         function_name](gcsa::ListBackupsRequest const& r) {
+         function_name](gsad::v1::ListBackupsRequest const& r) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
-                     gcsa::ListBackupsRequest const& request) {
+                     gsad::v1::ListBackupsRequest const& request) {
                 return stub->ListBackups(context, request);
               },
               r, function_name);
         },
-        [](gcsa::ListBackupsResponse r) {
-          std::vector<gcsa::Backup> result(r.backups().size());
+        [](gsad::v1::ListBackupsResponse r) {
+          std::vector<gsad::v1::Backup> result(r.backups().size());
           auto& backups = *r.mutable_backups();
           std::move(backups.begin(), backups.end(), result.begin());
           return result;
@@ -515,7 +518,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
-               gcsa::UpdateBackupRequest const& request) {
+               gsad::v1::UpdateBackupRequest const& request) {
           return stub_->UpdateBackup(context, request);
         },
         p.request, __func__);
@@ -523,7 +526,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   ListBackupOperationsRange ListBackupOperations(
       ListBackupOperationsParams p) override {
-    gcsa::ListBackupOperationsRequest request;
+    gsad::v1::ListBackupOperationsRequest request;
     request.set_parent(p.instance.FullName());
     request.set_filter(std::move(p.filter));
     auto stub = stub_;
@@ -539,16 +542,16 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         ListBackupOperationsRange>(
         std::move(request),
         [stub, retry, backoff,
-         function_name](gcsa::ListBackupOperationsRequest const& r) {
+         function_name](gsad::v1::ListBackupOperationsRequest const& r) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
-                     gcsa::ListBackupOperationsRequest const& request) {
+                     gsad::v1::ListBackupOperationsRequest const& request) {
                 return stub->ListBackupOperations(context, request);
               },
               r, function_name);
         },
-        [](gcsa::ListBackupOperationsResponse r) {
+        [](gsad::v1::ListBackupOperationsResponse r) {
           std::vector<google::longrunning::Operation> result(
               r.operations().size());
           auto& operations = *r.mutable_operations();
@@ -559,7 +562,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   ListDatabaseOperationsRange ListDatabaseOperations(
       ListDatabaseOperationsParams p) override {
-    gcsa::ListDatabaseOperationsRequest request;
+    gsad::v1::ListDatabaseOperationsRequest request;
     request.set_parent(p.instance.FullName());
     request.set_filter(std::move(p.filter));
     auto stub = stub_;
@@ -575,16 +578,16 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         ListDatabaseOperationsRange>(
         std::move(request),
         [stub, retry, backoff,
-         function_name](gcsa::ListDatabaseOperationsRequest const& r) {
+         function_name](gsad::v1::ListDatabaseOperationsRequest const& r) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
               [stub](grpc::ClientContext& context,
-                     gcsa::ListDatabaseOperationsRequest const& request) {
+                     gsad::v1::ListDatabaseOperationsRequest const& request) {
                 return stub->ListDatabaseOperations(context, request);
               },
               r, function_name);
         },
-        [](gcsa::ListDatabaseOperationsResponse r) {
+        [](gsad::v1::ListDatabaseOperationsResponse r) {
           std::vector<google::longrunning::Operation> result(
               r.operations().size());
           auto& operations = *r.mutable_operations();

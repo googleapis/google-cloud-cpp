@@ -17,11 +17,11 @@
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"

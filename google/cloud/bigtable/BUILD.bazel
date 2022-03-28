@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#3701) Change this visibility to "//:__subpackages__" so that users are
-# required to use the top-level BUILD file rather than reaching down into this
-# one.
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -26,13 +23,13 @@ cc_library(
     srcs = google_cloud_cpp_bigtable_srcs,
     hdrs = google_cloud_cpp_bigtable_hdrs,
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/bigtable:__subpackages__",
     ],
     # Do not sort: grpc++ must come last
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_absl//absl/memory",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
@@ -49,13 +46,13 @@ cc_library(
     srcs = google_cloud_cpp_bigtable_mocks_srcs,
     hdrs = google_cloud_cpp_bigtable_mocks_hdrs,
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/bigtable:__subpackages__",
     ],
     deps = [
         ":bigtable_client_internal",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -66,13 +63,14 @@ cc_library(
     name = "bigtable_client_testing",
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
+    visibility = ["//visibility:public"],
     deps = [
         ":bigtable_client_internal",
         ":google_cloud_cpp_bigtable_mocks",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//:common",
+        "//:grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -85,10 +83,10 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
     deps = [
         ":bigtable_client_internal",
         ":bigtable_client_testing",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//:common",
+        "//:grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
@@ -103,10 +101,10 @@ cc_test(
     deps = [
         ":bigtable_client_internal",
         ":bigtable_client_testing",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//:common",
+        "//:grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],

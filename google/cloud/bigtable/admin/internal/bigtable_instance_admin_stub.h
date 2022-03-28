@@ -131,6 +131,11 @@ class BigtableInstanceAdminStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
+  virtual StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
+  ListHotTablets(
+      grpc::ClientContext& context,
+      google::bigtable::admin::v2::ListHotTabletsRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -248,6 +253,11 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& client_context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse> ListHotTablets(
+      grpc::ClientContext& client_context,
+      google::bigtable::admin::v2::ListHotTabletsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

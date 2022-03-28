@@ -12,44 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/sha256_hash.h"
-#include <openssl/evp.h>
+#include "google/cloud/internal/sha256_hash.h"
+#include "absl/base/casts.h"
 #include <openssl/sha.h>
 #include <array>
+#include <cassert>
 
 namespace google {
 namespace cloud {
-namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace {
 template <typename Byte,
           typename std::enable_if<sizeof(Byte) == 1, int>::type = 0>
-std::vector<std::uint8_t> Sha256Hash(Byte const* data, std::size_t count) {
+std::array<std::uint8_t, 32> Sha256Hash(Byte const* data, std::size_t count) {
   SHA256_CTX sha256;
   SHA256_Init(&sha256);
   SHA256_Update(&sha256, data, count);
 
   std::array<unsigned char, SHA256_DIGEST_LENGTH> hash{};
   SHA256_Final(hash.data(), &sha256);
-  // Note that this constructor (from a range) converts the `unsigned char` to
-  // `std::uint8_t` if needed, this should work because (a) the values returned
-  // by `SHA256_Final()` are 8-bit values, and (b) because if `std::uint8_t`
-  // exists it must be large enough to fit an `unsigned char`.
-  return {hash.begin(), hash.end()};
+  // absl::bit_cast is a backport of std::bit_cast from c++20 that checks that
+  // the types are trivially copyable
+  // and the same size and converts between them in a way that is not UB.
+  return absl::bit_cast<std::array<std::uint8_t, 32>>(hash);
 }
 }  // namespace
 
-std::vector<std::uint8_t> Sha256Hash(std::string const& str) {
+std::array<std::uint8_t, 32> Sha256Hash(std::string const& str) {
   return Sha256Hash(str.data(), str.size());
 }
 
-std::vector<std::uint8_t> Sha256Hash(std::vector<std::uint8_t> const& bytes) {
+std::array<std::uint8_t, 32> Sha256Hash(
+    std::vector<std::uint8_t> const& bytes) {
   return Sha256Hash(bytes.data(), bytes.size());
 }
 
-std::string HexEncode(std::vector<std::uint8_t> const& bytes) {
+std::string HexEncode(absl::Span<std::uint8_t const> bytes) {
   std::string result;
   std::array<char, sizeof("ff")> buf{};
   for (auto c : bytes) {
@@ -77,6 +77,5 @@ std::vector<std::uint8_t> HexDecode(std::string const& str) {
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 }  // namespace cloud
 }  // namespace google

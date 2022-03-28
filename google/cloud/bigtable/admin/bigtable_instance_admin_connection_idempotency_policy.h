@@ -99,6 +99,9 @@ class BigtableInstanceAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency ListHotTablets(
+      google::bigtable::admin::v2::ListHotTabletsRequest request) = 0;
 };
 
 std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>
