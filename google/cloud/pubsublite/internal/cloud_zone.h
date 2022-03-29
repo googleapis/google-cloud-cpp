@@ -48,8 +48,8 @@ struct CloudZone {
     return absl::StrCat(region.ToString(), "-", std::string(1, zone_id));
   }
 
-  CloudRegion const region;
-  char const zone_id;
+  CloudRegion region;
+  char zone_id;
 };
 
 inline bool operator==(CloudZone const& a, CloudZone const& b) {

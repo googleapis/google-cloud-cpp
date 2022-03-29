@@ -40,7 +40,7 @@ struct CloudRegion {
 
   std::string ToString() const { return region; }
 
-  std::string const region;
+  std::string region;
 };
 
 inline bool operator==(CloudRegion const& a, CloudRegion const& b) {

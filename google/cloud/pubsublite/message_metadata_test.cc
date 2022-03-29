@@ -76,16 +76,14 @@ TEST(MessageMetadata, Serialize) {
 }
 
 TEST(MessageMetadata, RoundTrip) {
-  std::int64_t partition = 6754342782;
-  std::int64_t offset = 45753487382;
+  std::int64_t partition = 345452233;
+  std::int64_t offset = 8574552345;
   Cursor cursor;
   cursor.set_offset(offset);
-  std::string input = std::to_string(partition) + ":" + std::to_string(offset);
-  auto mm = MessageMetadata::Parse(input);
-  EXPECT_TRUE(mm.ok());
-  EXPECT_EQ(partition, mm->Partition());
-  EXPECT_THAT(cursor, IsProtoEqual(mm->Cursor()));
-  EXPECT_EQ(mm->Serialize(), input);
+  MessageMetadata mm{partition, cursor};
+  auto mm1 = MessageMetadata::Parse(mm.Serialize());
+  EXPECT_TRUE(mm1.ok());
+  EXPECT_EQ(mm, *mm1);
 }
 
 }  // namespace

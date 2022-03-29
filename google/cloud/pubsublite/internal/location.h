@@ -47,11 +47,9 @@ class Location {
 
   std::string ToString() const {
     if (absl::holds_alternative<CloudRegion>(value_)) {
-      return absl::get<CloudRegion>(value_).region;
+      return absl::get<CloudRegion>(value_).ToString();
     }
-    CloudZone cloud_zone = absl::get<CloudZone>(value_);
-    return absl::StrCat(cloud_zone.region.region, "-",
-                        std::string(1, cloud_zone.zone_id));
+    return absl::get<CloudZone>(value_).ToString();
   }
 
   static StatusOr<Location> Parse(std::string const& location) {

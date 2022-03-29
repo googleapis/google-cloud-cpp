@@ -73,6 +73,11 @@ class MessageMetadata {
   google::cloud::pubsublite::v1::Cursor cursor_;
 };
 
+inline bool operator==(MessageMetadata const& a, MessageMetadata const& b) {
+  return a.Partition() == b.Partition() &&
+         a.Cursor().offset() == b.Cursor().offset();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
