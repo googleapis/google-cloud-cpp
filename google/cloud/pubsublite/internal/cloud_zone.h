@@ -56,6 +56,10 @@ inline bool operator==(CloudZone const& a, CloudZone const& b) {
   return a.region == b.region && a.zone_id == b.zone_id;
 }
 
+inline bool operator!=(CloudZone const& a, CloudZone const& b) {
+  return !(a == b);
+}
+
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

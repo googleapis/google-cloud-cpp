@@ -78,6 +78,10 @@ inline bool operator==(MessageMetadata const& a, MessageMetadata const& b) {
          a.Cursor().offset() == b.Cursor().offset();
 }
 
+inline bool operator!=(MessageMetadata const& a, MessageMetadata const& b) {
+  return !(a == b);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
