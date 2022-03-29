@@ -61,7 +61,7 @@ class MessageMetadata {
   }
 
   /**
-   * Serializes current object. Serialization format is not stable cross-binary
+   * Serializes current object. Serialization format is not stable cross-binary.
    */
   std::string Serialize() const {
     return absl::StrCat(std::to_string(partition_), ":",
