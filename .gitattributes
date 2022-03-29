@@ -1,0 +1,5 @@
+# Force the use of Unix LF style line endings
+* text eol=lf
+
+# Our ABI dumps should not be modified. Mark them as binary.
+*.gz binary
