@@ -75,6 +75,19 @@ TEST(MessageMetadata, Serialize) {
   EXPECT_EQ(mm.Serialize(), "2389457:945678234");
 }
 
+TEST(MessageMetadata, RoundTrip) {
+  std::int64_t partition = 6754342782;
+  std::int64_t offset = 45753487382;
+  Cursor cursor;
+  cursor.set_offset(offset);
+  std::string input = std::to_string(partition) + ":" + std::to_string(offset);
+  auto mm = MessageMetadata::Parse(input);
+  EXPECT_TRUE(mm.ok());
+  EXPECT_EQ(partition, mm->Partition());
+  EXPECT_THAT(cursor, IsProtoEqual(mm->Cursor()));
+  EXPECT_EQ(mm->Serialize(), input);
+}
+
 }  // namespace
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

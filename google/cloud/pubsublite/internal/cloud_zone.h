@@ -31,9 +31,6 @@ namespace pubsublite_internal {
  * A representation of a Google Cloud zone.
  */
 struct CloudZone {
-  CloudZone(CloudRegion region, char zone_id)
-      : region{std::move(region)}, zone_id{zone_id} {}
-
   /**
    * Construct a CloudZone from a valid zone string. `zone` must be formatted
    * as: <location>-<direction><number>-<letter>
@@ -46,6 +43,11 @@ struct CloudZone {
     return CloudZone{CloudRegion{absl::StrCat(splits[0], "-", splits[1])},
                      splits[2][0]};
   }
+
+  std::string ToString() const {
+    return absl::StrCat(region.ToString(), "-", std::string(1, zone_id));
+  }
+
   CloudRegion const region;
   char const zone_id;
 };

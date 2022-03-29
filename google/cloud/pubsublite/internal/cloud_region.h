@@ -30,7 +30,6 @@ namespace pubsublite_internal {
  * A wrapped string representing a Google Cloud region.
  */
 struct CloudRegion {
-  explicit CloudRegion(std::string region) : region{std::move(region)} {}
   static StatusOr<CloudRegion> Parse(std::string const& region) {
     std::vector<std::string> splits = absl::StrSplit(region, '-');
     if (splits.size() != 2) {
@@ -38,6 +37,9 @@ struct CloudRegion {
     }
     return CloudRegion{region};
   }
+
+  std::string ToString() const { return region; }
+
   std::string const region;
 };
 

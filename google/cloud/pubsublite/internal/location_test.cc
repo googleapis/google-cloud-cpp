@@ -27,7 +27,8 @@ TEST(CloudRegion, ValidRegion) {
   std::string str = "first-second";
   auto region = CloudRegion::Parse(str);
   EXPECT_TRUE(region.ok());
-  EXPECT_EQ(*region, CloudRegion(str));
+  EXPECT_EQ(*region, (CloudRegion{str}));
+  EXPECT_EQ(str, region->ToString());
 }
 
 TEST(CloudRegion, InvalidRegionNoDash) {
@@ -49,9 +50,11 @@ TEST(CloudRegion, InvalidRegionTooManyDashes) {
 TEST(CloudZone, ValidZone) {
   std::string region = "first-second";
   char zone_id = 't';
-  auto zone = CloudZone::Parse(region + "-" + zone_id);
+  std::string formatted_zone = region + "-" + zone_id;
+  auto zone = CloudZone::Parse(formatted_zone);
   EXPECT_TRUE(zone.ok());
-  EXPECT_EQ(*zone, CloudZone(CloudRegion(region), zone_id));
+  EXPECT_EQ(*zone, (CloudZone{CloudRegion{region}, zone_id}));
+  EXPECT_EQ(formatted_zone, zone->ToString());
 }
 
 TEST(CloudZone, InvalidZoneNoDash) {
@@ -82,9 +85,9 @@ TEST(Location, ValidCloudRegion) {
   std::string str = "first-second";
   auto location = Location::Parse(str);
   EXPECT_TRUE(location.ok());
-  EXPECT_EQ(location->GetCloudRegion(), CloudRegion(str));
+  EXPECT_EQ(location->GetCloudRegion(), (CloudRegion{str}));
   EXPECT_EQ(location->ToString(), str);
-  EXPECT_EQ(*location, Location(CloudRegion(str)));
+  EXPECT_EQ(*location, (Location{CloudRegion{str}}));
 }
 
 TEST(Location, InvalidCloudRegion) {
@@ -100,9 +103,9 @@ TEST(Location, ValidCloudZone) {
   char zone_id = 't';
   auto location = Location::Parse(region + "-" + zone_id);
   EXPECT_TRUE(location.ok());
-  EXPECT_EQ(location->GetCloudRegion(), CloudRegion(region));
+  EXPECT_EQ(location->GetCloudRegion(), (CloudRegion{region}));
   EXPECT_EQ(location->ToString(), region + "-" + zone_id);
-  EXPECT_EQ(*location, Location(CloudZone(CloudRegion(region), zone_id)));
+  EXPECT_EQ(*location, (Location{CloudZone{CloudRegion{region}, zone_id}}));
 }
 
 TEST(Location, InvalidCloudZone) {

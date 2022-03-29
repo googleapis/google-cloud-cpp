@@ -43,8 +43,8 @@ class MessageMetadata {
   google::cloud::pubsublite::v1::Cursor Cursor() const { return cursor_; }
 
   /**
-   * Parses a string into a `MessageMetadata` object with the expected format
-   * "<partition>:<offset of cursor>"
+   * Parses a string into a MessageMetadata object. The formatting of this
+   * string is not stable cross-binary.
    */
   static StatusOr<MessageMetadata> Parse(std::string const& input) {
     std::vector<std::string> splits = absl::StrSplit(input, ':');
@@ -61,7 +61,7 @@ class MessageMetadata {
   }
 
   /**
-   * Serializes current object as "<partition>:<offset of cursor>".
+   * Serializes current object. Serialization format is not stable cross-binary
    */
   std::string Serialize() const {
     return absl::StrCat(std::to_string(partition_), ":",
