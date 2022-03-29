@@ -57,11 +57,6 @@ class Topic {
                         "/topics/", topic_name_);
   }
 
-  friend bool operator==(Topic const& a, Topic const& b);
-  friend bool operator!=(Topic const& a, Topic const& b) { return !(a == b); }
-
-  friend std::ostream& operator<<(std::ostream& os, Topic const& rhs);
-
  private:
   std::string project_;
   std::string location_;
@@ -72,6 +67,8 @@ inline bool operator==(Topic const& a, Topic const& b) {
   return a.project() == b.project() && a.location() == b.location() &&
          a.topic_name() == b.topic_name();
 }
+
+inline bool operator!=(Topic const& a, Topic const& b) { return !(a == b); }
 
 inline std::ostream& operator<<(std::ostream& os, Topic const& rhs) {
   return os << rhs.FullName();
