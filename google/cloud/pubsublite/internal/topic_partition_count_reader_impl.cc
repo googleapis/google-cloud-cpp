@@ -30,7 +30,7 @@ TopicPartitionCountReaderImpl::TopicPartitionCountReaderImpl(
     std::shared_ptr<AdminServiceConnection> connection)
     : connection_{std::move(connection)} {};
 
-future<StatusOr<std::uint64_t>> TopicPartitionCountReaderImpl::Read(
+future<StatusOr<std::uint32_t>> TopicPartitionCountReaderImpl::Read(
     google::cloud::pubsublite::Topic topic) {
   GetTopicPartitionsRequest req;
   *req.mutable_name() = topic.FullName();
@@ -45,9 +45,9 @@ future<StatusOr<std::uint64_t>> TopicPartitionCountReaderImpl::Read(
   t.detach();
   return p->get_future().then([](future<StatusOr<TopicPartitions>> f) {
     auto partitions = f.get();
-    if (!partitions) return StatusOr<std::uint64_t>{partitions.status()};
-    return StatusOr<std::uint64_t>{
-        static_cast<std::uint64_t>(partitions.value().partition_count())};
+    if (!partitions) return StatusOr<std::uint32_t>{partitions.status()};
+    return StatusOr<std::uint32_t>{
+        static_cast<std::uint32_t>(partitions.value().partition_count())};
   });
 }
 

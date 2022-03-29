@@ -32,7 +32,7 @@ using google::cloud::pubsublite::v1::TopicPartitions;
 using google::cloud::pubsublite_mocks::MockAdminServiceConnection;
 
 TEST(TestAsyncRead, Valid) {
-  std::uint64_t const num_partitions = 50;
+  std::uint32_t const num_partitions = 50;
   auto connection = std::make_shared<MockAdminServiceConnection>();
   TopicPartitionCountReaderImpl reader{connection};
   Topic topic{"project", "location", "name"};
@@ -46,7 +46,7 @@ TEST(TestAsyncRead, Valid) {
         tp.set_partition_count(num_partitions);
         return tp;
       });
-  future<StatusOr<std::uint64_t>> f = reader.Read(topic);
+  future<StatusOr<std::uint32_t>> f = reader.Read(topic);
   EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
   p->set_value();
   auto val = f.get();
@@ -67,7 +67,7 @@ TEST(TestAsyncRead, Error) {
         p->get_future().get();
         return error_status;
       });
-  future<StatusOr<std::uint64_t>> f = reader.Read(topic);
+  future<StatusOr<std::uint32_t>> f = reader.Read(topic);
   EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
   p->set_value();
   auto val = f.get();

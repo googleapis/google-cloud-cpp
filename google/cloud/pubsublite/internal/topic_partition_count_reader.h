@@ -32,7 +32,7 @@ namespace pubsublite_internal {
  */
 class TopicPartitionCountReader {
  public:
-  virtual future<StatusOr<std::uint64_t>> Read(
+  virtual future<StatusOr<std::uint32_t>> Read(
       google::cloud::pubsublite::Topic) = 0;
 };
 

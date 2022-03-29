@@ -33,7 +33,7 @@ class TopicPartitionCountReaderImpl : public TopicPartitionCountReader {
   explicit TopicPartitionCountReaderImpl(
       std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection>
           connection);
-  future<StatusOr<std::uint64_t>> Read(
+  future<StatusOr<std::uint32_t>> Read(
       google::cloud::pubsublite::Topic) override;
 
  private:
