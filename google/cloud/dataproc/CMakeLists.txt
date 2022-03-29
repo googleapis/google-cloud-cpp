@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Dataproc API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Dataproc API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "dataproc_internal" "dataproc_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -82,14 +82,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_dataproc)
 set_target_properties(
     google_cloud_cpp_dataproc
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-dataproc
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::dataproc VERSION
+                                                      "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_dataproc
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-dataproc ALIAS
-            google_cloud_cpp_dataproc)
+add_library(google-cloud-cpp::dataproc ALIAS google_cloud_cpp_dataproc)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -108,11 +107,10 @@ add_library(google_cloud_cpp_dataproc_mocks INTERFACE)
 target_sources(google_cloud_cpp_dataproc_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_dataproc_mocks
-    INTERFACE google-cloud-cpp::experimental-dataproc GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_dataproc_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-dataproc_mocks)
+    INTERFACE google-cloud-cpp::dataproc GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_dataproc_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::dataproc_mocks)
 target_include_directories(
     google_cloud_cpp_dataproc_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

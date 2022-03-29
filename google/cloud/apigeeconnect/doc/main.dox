@@ -9,7 +9,7 @@ The hybrid model includes a management plane hosted by Apigee in the Cloud and
 a runtime plane that you install and manage on one of the
 [supported Kubernetes platforms](https://cloud.google.com/apigee/docs/hybrid/supported-platforms).
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++11 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]

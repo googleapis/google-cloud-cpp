@@ -21,23 +21,25 @@ exports_files([
 ])
 
 EXPERIMENTAL_LIBRARIES = [
-    "apigeeconnect",
-    "contactcenterinsights",
-    "datacatalog",
-    "dataproc",
-    "documentai",
-    "language",
     "logging",
-    "managedidentities",
     "osconfig",
-    "profiler",
-    "resourcesettings",
     "speech",
     # This is WIP, it needs a number of hand-crafted APIs.
     "pubsublite",
 ]
 
 TRANSITION_LIBRARIES = [
+    # 2022-03-28
+    "apigeeconnect",
+    "contactcenterinsights",
+    "datacatalog",
+    "dataproc",
+    "documentai",
+    "language",
+    "managedidentities",
+    "profiler",
+    "resourcesettings",
+    # 2022-02-28
     "accessapproval",
     "accesscontextmanager",
     "apigateway",

@@ -1,7 +1,5 @@
 # Cloud Dataproc API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Dataproc API][cloud-service-docs], a managed Apache Spark and Apache
 Hadoop service that lets you take advantage of open source data tools for batch
@@ -11,7 +9,7 @@ applications in Cloud Dataproc.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

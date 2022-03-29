@@ -47,7 +47,7 @@ automate the following steps.
 mapfile -t ga < <(bazel --batch query \
   --noshow_progress --noshow_loading_progress \
   'kind(cc_library, //:all) except filter("experimental|mocks", kind(cc_library, //:all))' |
-  sed -e 's;//:;;' | grep -E -v 'storage|bigtable|spanner|pubsub')
+  sed -e 's;//:;;' | grep -E -v 'storage|bigtable|spanner|pubsub|common|grpc_utils')
 ```
 
 ### `CHANGELOG.md`
