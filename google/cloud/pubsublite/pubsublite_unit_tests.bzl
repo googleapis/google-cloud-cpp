@@ -25,5 +25,6 @@ pubsublite_unit_tests = [
     "internal/resumable_async_streaming_read_write_rpc_test.cc",
     "internal/service_composite_test.cc",
     "internal/stream_factory_test.cc",
+    "message_metadata_test.cc",
     "topic_test.cc",
 ]

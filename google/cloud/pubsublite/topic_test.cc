@@ -35,11 +35,8 @@ TEST(Topic, BasicTopic) {
   EXPECT_EQ(project, topic.project());
   EXPECT_EQ(location, topic.location());
   EXPECT_EQ(topic_name, topic.topic_name());
-  EXPECT_EQ(
-      topic.FullName(),
-      absl::StrJoin(std::vector<std::string>{"projects", project, "locations",
-                                             location, "topics", topic_name},
-                    "/"));
+  EXPECT_EQ(topic.FullName(),
+            "projects/project/locations/location/topics/topic_name");
 }
 
 }  // namespace
