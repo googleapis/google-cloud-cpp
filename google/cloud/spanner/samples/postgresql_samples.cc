@@ -66,7 +66,7 @@ void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
             AlbumId    BIGINT NOT NULL,
             SingerId   BIGINT NOT NULL,
             AlbumTitle CHARACTER VARYING,
-            PRIMARY KEY(SingerId, AlbumId),
+            PRIMARY KEY(AlbumId, SingerId),
             FOREIGN KEY(SingerId) REFERENCES Singers(SingerId)
         )
       )""",
