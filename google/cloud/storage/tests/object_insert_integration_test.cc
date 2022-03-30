@@ -16,10 +16,10 @@
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <regex>
@@ -65,7 +65,8 @@ class ObjectInsertIntegrationTest
       }
       ASSERT_FALSE(value.empty())
           << "Expected non-empty value for ${" << env << "}";
-      google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", value);
+      google::cloud::testing_util::SetEnv("GOOGLE_APPLICATION_CREDENTIALS",
+                                          value);
     }
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")

@@ -17,8 +17,8 @@
 #include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -48,8 +48,8 @@ class GrpcClientFailuresTest
 
   void SetUp() override {
     std::string const grpc_config = GetParam();
-    google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                    grpc_config);
+    google::cloud::testing_util::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                        grpc_config);
     auto options =
         Options{}
             .set<RestEndpointOption>("http://localhost:1")

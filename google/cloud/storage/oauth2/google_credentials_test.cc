@@ -22,7 +22,6 @@
 #include "google/cloud/storage/testing/constants.h"
 #include "google/cloud/storage/testing/write_base64.h"
 #include "google/cloud/internal/filesystem.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
