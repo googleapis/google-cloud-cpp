@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/setenv.h"
 #include <gmock/gmock.h>
 
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::internal::SetEnv;
-using ::google::cloud::internal::UnsetEnv;
+using ::google::cloud::testing_util::SetEnv;
+using ::google::cloud::testing_util::UnsetEnv;
 
 /// @test Verify passing an empty string creates an environment variable.
 TEST(SetEnv, SetEmptyEnvVar) {

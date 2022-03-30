@@ -17,8 +17,8 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -69,8 +69,8 @@ class CurlClientTest : public ::testing::Test,
                     StatusIs(kStatusErrorCode, HasSubstr(kStatusErrorMsg)));
       };
     } else if (error_type == "libcurl-failure") {
-      google::cloud::internal::SetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT",
-                                      "http://localhost:1");
+      google::cloud::testing_util::SetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                          "http://localhost:1");
       client_ = CurlClient::Create(
           Options{}
               .set<Oauth2CredentialsOption>(

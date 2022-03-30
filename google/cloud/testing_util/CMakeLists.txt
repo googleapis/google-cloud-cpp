@@ -37,6 +37,8 @@ if (BUILD_TESTING)
         scoped_log.cc
         scoped_log.h
         scoped_thread.h
+        setenv.cc
+        setenv.h
         status_matchers.cc
         status_matchers.h
         testing_types.cc
@@ -71,6 +73,7 @@ if (BUILD_TESTING)
         contains_once_test.cc
         example_driver_test.cc
         scoped_environment_test.cc
+        setenv_test.cc
         status_matchers_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
