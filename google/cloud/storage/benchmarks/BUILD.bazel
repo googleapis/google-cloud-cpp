@@ -20,6 +20,7 @@ load(":storage_benchmarks.bzl", "storage_benchmarks_hdrs", "storage_benchmarks_s
 
 cc_library(
     name = "storage_benchmarks",
+    testonly = True,
     srcs = storage_benchmarks_srcs,
     hdrs = storage_benchmarks_hdrs,
     deps = [
@@ -40,6 +41,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 
 [cc_binary(
     name = program.replace("/", "_").replace(".cc", ""),
+    testonly = True,
     srcs = [program],
     linkopts = select({
         "@platforms//os:windows": [],

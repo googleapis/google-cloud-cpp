@@ -20,6 +20,7 @@ load(":bigtable_examples_common.bzl", "bigtable_examples_common_hdrs", "bigtable
 
 cc_library(
     name = "bigtable_examples_common",
+    testonly = True,
     srcs = bigtable_examples_common_srcs,
     hdrs = bigtable_examples_common_hdrs,
     deps = [

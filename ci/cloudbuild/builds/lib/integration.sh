@@ -27,9 +27,9 @@ source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
-python3 -m pip uninstall -y --quiet googleapis-storage-testbench
+python3 -m pip uninstall -y --quiet googleapis-storage-testbench Werkzeug
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  "git+https://github.com/googleapis/storage-testbench@v0.15.0"
+  Werkzeug==2.0.3 "git+https://github.com/googleapis/storage-testbench@v0.15.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
@@ -274,7 +274,7 @@ function integration::ctest_with_emulators() {
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
-  io::log_h2 "Running Rest integration tests (with emulator)"
+  io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }

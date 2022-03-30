@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/setenv.h"
 // We need _putenv_s() on WIN32 and setenv()/unsetenv() on Posix. clang-tidy
 // recommends including <cstdlib>. That seems wrong, as <cstdlib> is not
 // guaranteed to define the Posix/WIN32 functions.
@@ -21,15 +21,7 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-
-void UnsetEnv(char const* variable) {
-#ifdef _WIN32
-  (void)_putenv_s(variable, "");
-#else
-  unsetenv(variable);
-#endif  // _WIN32
-}
+namespace testing_util {
 
 void SetEnv(char const* variable, char const* value) {
   if (value == nullptr) {
@@ -51,7 +43,15 @@ void SetEnv(char const* variable, absl::optional<std::string> value) {
   SetEnv(variable, value->data());
 }
 
-}  // namespace internal
+void UnsetEnv(char const* variable) {
+#ifdef _WIN32
+  (void)_putenv_s(variable, "");
+#else
+  unsetenv(variable);
+#endif  // _WIN32
+}
+
+}  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

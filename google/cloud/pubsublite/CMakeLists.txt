@@ -86,6 +86,8 @@ add_library(
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
     internal/alarm_registry.h
+    internal/alarm_registry_impl.cc
+    internal/alarm_registry_impl.h
     internal/batching_options.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
@@ -250,6 +252,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
     set(pubsublite_unit_tests
         # cmake-format: sort
         endpoint_test.cc
+        internal/alarm_registry_impl_test.cc
         internal/default_routing_policy_test.cc
         internal/partition_publisher_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc

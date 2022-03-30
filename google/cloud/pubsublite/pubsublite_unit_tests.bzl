@@ -18,6 +18,7 @@
 
 pubsublite_unit_tests = [
     "endpoint_test.cc",
+    "internal/alarm_registry_impl_test.cc",
     "internal/default_routing_policy_test.cc",
     "internal/partition_publisher_test.cc",
     "internal/resumable_async_streaming_read_write_rpc_test.cc",

@@ -15,7 +15,7 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/setenv.h"
 #include <gtest/gtest.h>
 #include <memory>
 
@@ -32,14 +32,14 @@ TEST(GoldenThingAdminDefaultOptions, DefaultEndpoint) {
 }
 
 TEST(GoldenThingAdminDefaultOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
+  testing_util::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   auto updated_options = GoldenThingAdminDefaultOptions(options);
   EXPECT_EQ("foo.googleapis.com", updated_options.get<EndpointOption>());
 }
 
 TEST(GoldenThingAdminDefaultOptions, OptionEndpoint) {
-  internal::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
+  testing_util::SetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT", "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenThingAdminDefaultOptions(options);

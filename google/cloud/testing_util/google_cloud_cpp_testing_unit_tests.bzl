@@ -22,5 +22,6 @@ google_cloud_cpp_testing_unit_tests = [
     "contains_once_test.cc",
     "example_driver_test.cc",
     "scoped_environment_test.cc",
+    "setenv_test.cc",
     "status_matchers_test.cc",
 ]

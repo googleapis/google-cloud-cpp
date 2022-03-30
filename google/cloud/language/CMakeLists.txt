@@ -18,7 +18,7 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Natural Language API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF
     "A C++ Client Library for the Cloud Natural Language API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "language_internal" "language_testing"
                             "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -70,14 +70,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_language)
 set_target_properties(
     google_cloud_cpp_language
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-language
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::language VERSION
+                                                      "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_language
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-language ALIAS
-            google_cloud_cpp_language)
+add_library(google-cloud-cpp::language ALIAS google_cloud_cpp_language)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -96,11 +95,10 @@ add_library(google_cloud_cpp_language_mocks INTERFACE)
 target_sources(google_cloud_cpp_language_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_language_mocks
-    INTERFACE google-cloud-cpp::experimental-language GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_language_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-language_mocks)
+    INTERFACE google-cloud-cpp::language GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_language_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::language_mocks)
 target_include_directories(
     google_cloud_cpp_language_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -112,7 +110,7 @@ target_compile_options(google_cloud_cpp_language_mocks
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(language_quickstart "quickstart/quickstart.cc")
     target_link_libraries(language_quickstart
-                          PRIVATE google-cloud-cpp::experimental-language)
+                          PRIVATE google-cloud-cpp::language)
     google_cloud_cpp_add_common_options(language_quickstart)
     add_test(
         NAME language_quickstart
