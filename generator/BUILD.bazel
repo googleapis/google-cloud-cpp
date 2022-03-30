@@ -40,7 +40,7 @@ load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_test
 
 cc_library(
     name = "google_cloud_cpp_generator_testing",
-    testonly = 1,
+    testonly = True,
     srcs = google_cloud_cpp_generator_testing_hdrs,
     hdrs = google_cloud_cpp_generator_testing_srcs,
     deps = [

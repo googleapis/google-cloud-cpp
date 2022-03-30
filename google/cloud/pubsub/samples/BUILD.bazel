@@ -22,7 +22,7 @@ load(":pubsub_samples_common.bzl", "pubsub_samples_common_hdrs", "pubsub_samples
 
 cc_library(
     name = "pubsub_samples_common",
-    testonly = 1,
+    testonly = True,
     srcs = pubsub_samples_common_srcs,
     hdrs = pubsub_samples_common_hdrs,
     deps = [

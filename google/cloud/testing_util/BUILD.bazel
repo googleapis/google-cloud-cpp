@@ -22,7 +22,7 @@ load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_c
 
 cc_library(
     name = "google_cloud_cpp_testing_private",
-    testonly = 1,
+    testonly = True,
     srcs = google_cloud_cpp_testing_srcs,
     hdrs = google_cloud_cpp_testing_hdrs,
     defines = select({
@@ -45,7 +45,7 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_testing",
-    testonly = 1,
+    testonly = True,
     deprecation = """
     This target is deprecated and will be removed on or after 2023-04-01. More
     info: https://github.com/googleapis/google-cloud-cpp/issues/3701
@@ -71,7 +71,7 @@ load(":google_cloud_cpp_testing_grpc.bzl", "google_cloud_cpp_testing_grpc_hdrs",
 
 cc_library(
     name = "google_cloud_cpp_testing_grpc_private",
-    testonly = 1,
+    testonly = True,
     srcs = google_cloud_cpp_testing_grpc_srcs,
     hdrs = google_cloud_cpp_testing_grpc_hdrs,
     deps = [
@@ -87,7 +87,7 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_testing_grpc",
-    testonly = 1,
+    testonly = True,
     deprecation = """
     This target is deprecated and will be removed on or after 2023-04-01. More
     info: https://github.com/googleapis/google-cloud-cpp/issues/3701
@@ -114,7 +114,7 @@ load(":google_cloud_cpp_testing_rest.bzl", "google_cloud_cpp_testing_rest_hdrs",
 
 cc_library(
     name = "google_cloud_cpp_testing_rest_private",
-    testonly = 1,
+    testonly = True,
     srcs = google_cloud_cpp_testing_rest_srcs,
     hdrs = google_cloud_cpp_testing_rest_hdrs,
     deps = [
@@ -125,7 +125,7 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_testing_rest",
-    testonly = 1,
+    testonly = True,
     deprecation = """
     This target is deprecated and will be removed on or after 2023-04-01. More
     info: https://github.com/googleapis/google-cloud-cpp/issues/3701
