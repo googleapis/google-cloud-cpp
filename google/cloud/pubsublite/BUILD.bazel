@@ -34,6 +34,7 @@ load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mock
 
 cc_library(
     name = "google_cloud_cpp_pubsublite_mocks",
+    testonly = True,
     srcs = google_cloud_cpp_pubsublite_mocks_srcs,
     hdrs = google_cloud_cpp_pubsublite_mocks_hdrs,
     visibility = ["//:__pkg__"],
@@ -48,6 +49,7 @@ load(":pubsublite_testing.bzl", "pubsublite_testing_hdrs", "pubsublite_testing_s
 
 cc_library(
     name = "pubsublite_testing",
+    testonly = True,
     srcs = pubsublite_testing_srcs,
     hdrs = pubsublite_testing_hdrs,
     visibility = ["//:__pkg__"],

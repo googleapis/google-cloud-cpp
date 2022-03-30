@@ -20,6 +20,7 @@ load(":storage_examples_common.bzl", "storage_examples_common_hdrs", "storage_ex
 
 cc_library(
     name = "storage_examples_common",
+    testonly = True,
     srcs = storage_examples_common_srcs,
     hdrs = storage_examples_common_hdrs,
     deps = [
