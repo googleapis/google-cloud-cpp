@@ -107,9 +107,12 @@ this program.
 
 using ResultHandler = std::function<void(gcs_bm::ThroughputResult)>;
 
+gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options);
+
 void RunThread(ThroughputOptions const& ThroughputOptions,
                std::string const& bucket_name, int thread_id,
-               ResultHandler const& handler);
+               ResultHandler const& handler,
+               gcs_bm::ClientProvider const& provider);
 
 google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]);
 
@@ -209,12 +212,13 @@ int main(int argc, char* argv[]) {
     std::lock_guard<std::mutex> lk(mu);
     gcs_bm::PrintAsCsv(std::cout, result);
   };
+  auto provider = MakeProvider(*options);
 
   gcs_bm::PrintThroughputResultHeader(std::cout);
   std::vector<std::future<void>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
     tasks.emplace_back(std::async(std::launch::async, RunThread, *options,
-                                  bucket_name, i, handler));
+                                  bucket_name, i, handler, provider));
   }
   for (auto& f : tasks) f.get();
 
@@ -231,7 +235,22 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
+gcs_bm::ClientProvider PerTransport(gcs_bm::ClientProvider const& provider) {
+  struct State {
+    std::mutex mu;
+    std::map<ExperimentTransport, gcs::Client> clients;
+  };
+  auto state = std::make_shared<State>();
+  return [state, provider](ExperimentTransport t) mutable {
+    std::lock_guard<std::mutex> lk{state->mu};
+    auto l = state->clients.find(t);
+    if (l != state->clients.end()) return l->second;
+    auto p = state->clients.emplace(t, provider(t));
+    return p.first->second;
+  };
+}
+
+gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
   return [=](ExperimentTransport t) {
     auto opts =
         google::cloud::Options{}.set<gcs::ProjectIdOption>(options.project_id);
@@ -263,8 +282,15 @@ gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
   };
 }
 
+gcs_bm::ClientProvider MakeProvider(ThroughputOptions const& options) {
+  auto provider = BaseProvider(options);
+  if (!options.client_per_thread) provider = PerTransport(std::move(provider));
+  return provider;
+}
+
 void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
-               int thread_id, ResultHandler const& handler) {
+               int thread_id, ResultHandler const& handler,
+               gcs_bm::ClientProvider const& provider) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
@@ -276,8 +302,6 @@ void RunThread(ThroughputOptions const& options, std::string const& bucket_name,
   }
   auto const upload_buffer_size = client_options->upload_buffer_size();
   auto const download_buffer_size = client_options->download_buffer_size();
-
-  auto provider = MakeProvider(options);
 
   auto uploaders = gcs_bm::CreateUploadExperiments(options, provider);
   if (uploaders.empty()) {
