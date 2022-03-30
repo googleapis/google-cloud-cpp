@@ -133,8 +133,8 @@ StatusOr<RewriteObjectResponse> HybridClient::RewriteObject(
   return curl_->RewriteObject(request);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-HybridClient::CreateResumableSession(ResumableUploadRequest const& request) {
+StatusOr<CreateResumableSessionResponse> HybridClient::CreateResumableSession(
+    ResumableUploadRequest const& request) {
   return grpc_->CreateResumableSession(request);
 }
 

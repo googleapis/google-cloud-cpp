@@ -81,7 +81,8 @@ TEST(StorageMockingSamples, MockWriteObject) {
       .WillOnce([&expected_metadata](
                     gcs::internal::ResumableUploadRequest const& request) {
         EXPECT_EQ(request.bucket_name(), "mock-bucket-name") << request;
-        auto* mock_result = new gcs::testing::MockResumableUploadSession;
+        auto mock_result =
+            absl::make_unique<gcs::testing::MockResumableUploadSession>();
         using gcs::internal::ResumableUploadResponse;
         EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(false));
         EXPECT_CALL(*mock_result, next_expected_byte())
@@ -101,8 +102,13 @@ TEST(StorageMockingSamples, MockWriteObject) {
                                         /*object_metadata=*/expected_metadata,
                                         {}})));
 
-        std::unique_ptr<gcs::internal::ResumableUploadSession> result(
-            mock_result);
+        auto result = gcs::internal::CreateResumableSessionResponse{
+            std::move(mock_result),
+            ResumableUploadResponse{"fake-url",
+                                    ResumableUploadResponse::kInProgress,
+                                    /*committed_size=*/absl::nullopt,
+                                    /*object_metadata=*/absl::nullopt,
+                                    /*.annotations=*/std::string{}}};
         return google::cloud::make_status_or(std::move(result));
       });
 
@@ -156,7 +162,8 @@ TEST(StorageMockingSamples, MockWriteObjectFailure) {
   EXPECT_CALL(*mock, CreateResumableSession)
       .WillOnce([](gcs::internal::ResumableUploadRequest const& request) {
         EXPECT_EQ(request.bucket_name(), "mock-bucket-name") << request;
-        auto* mock_result = new gcs::testing::MockResumableUploadSession;
+        auto mock_result =
+            absl::make_unique<gcs::testing::MockResumableUploadSession>();
         using gcs::internal::ResumableUploadResponse;
         EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(false));
         EXPECT_CALL(*mock_result, next_expected_byte())
@@ -170,8 +177,13 @@ TEST(StorageMockingSamples, MockWriteObjectFailure) {
                 google::cloud::StatusCode::kInvalidArgument,
                 "Invalid Argument")));
 
-        std::unique_ptr<gcs::internal::ResumableUploadSession> result(
-            mock_result);
+        auto result = gcs::internal::CreateResumableSessionResponse{
+            std::move(mock_result),
+            ResumableUploadResponse{"fake-url",
+                                    ResumableUploadResponse::kInProgress,
+                                    /*committed_size=*/absl::nullopt,
+                                    /*object_metadata=*/absl::nullopt,
+                                    /*.annotations=*/std::string{}}};
         return google::cloud::make_status_or(std::move(result));
       });
 

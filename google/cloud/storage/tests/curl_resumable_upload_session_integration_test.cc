@@ -51,14 +51,13 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      client->CreateResumableSession(request);
-
-  ASSERT_STATUS_OK(session);
+  auto create = client->CreateResumableSession(request);
+  ASSERT_STATUS_OK(create);
+  auto session = std::move(create->session);
 
   std::string const contents = LoremIpsum();
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadFinalChunk({{contents}}, contents.size(), HashValues{});
+      session->UploadFinalChunk({{contents}}, contents.size(), HashValues{});
 
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->payload.has_value());
@@ -78,21 +77,20 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      client->CreateResumableSession(request);
-
-  ASSERT_STATUS_OK(session);
+  auto create = client->CreateResumableSession(request);
+  ASSERT_STATUS_OK(create);
+  auto session = std::move(create->session);
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk({{contents}});
+      session->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
 
-  response = (*session)->ResetSession();
+  response = session->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size(),
-                                          HashValues{});
+  response = session->UploadFinalChunk({{contents}}, 2 * contents.size(),
+                                       HashValues{});
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -112,28 +110,28 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> old_session;
-  old_session = client->CreateResumableSession(request);
-
-  ASSERT_STATUS_OK(old_session);
+  auto old_create = client->CreateResumableSession(request);
+  ASSERT_STATUS_OK(old_create);
+  auto old_session = std::move(old_create->session);
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
 
   StatusOr<ResumableUploadResponse> response =
-      (*old_session)->UploadChunk({{contents}});
+      old_session->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      client->FullyRestoreResumableSession(request,
-                                           (*old_session)->session_id());
-  EXPECT_EQ(contents.size(), (*session)->next_expected_byte());
-  old_session->reset();
+  auto restore =
+      client->FullyRestoreResumableSession(request, old_session->session_id());
+  ASSERT_STATUS_OK(restore);
+  auto session = std::move(restore->session);
 
-  response = (*session)->UploadChunk({{contents}});
+  old_session.reset();
+
+  response = session->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 3 * contents.size(),
-                                          HashValues{});
+  response = session->UploadFinalChunk({{contents}}, 3 * contents.size(),
+                                       HashValues{});
   ASSERT_STATUS_OK(response);
 
   EXPECT_TRUE(response->payload.has_value());
@@ -153,17 +151,16 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      client->CreateResumableSession(request);
-
-  ASSERT_STATUS_OK(session);
+  auto create = client->CreateResumableSession(request);
+  ASSERT_STATUS_OK(create);
+  auto session = std::move(create->session);
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   // Send 2 chunks sized to be round quantums.
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk({{contents}});
+      session->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
-  response = (*session)->UploadChunk({{contents}});
+  response = session->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response.status());
 
   // Consider a streaming upload where the application flushes before closing
@@ -172,8 +169,7 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   // upload quantum. In this case the stream is terminated by sending an empty
   // chunk at the end, with the size of the previous chunks as an indication
   // of "done".
-  response =
-      (*session)->UploadFinalChunk({}, 2 * contents.size(), HashValues{});
+  response = session->UploadFinalChunk({}, 2 * contents.size(), HashValues{});
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());
@@ -193,12 +189,11 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
   ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      client->CreateResumableSession(request);
+  auto create = client->CreateResumableSession(request);
+  ASSERT_STATUS_OK(create);
+  auto session = std::move(create->session);
 
-  ASSERT_STATUS_OK(session);
-
-  auto response = (*session)->UploadFinalChunk({}, 0, HashValues{});
+  auto response = session->UploadFinalChunk({}, 0, HashValues{});
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_TRUE(response->payload.has_value());
@@ -241,21 +236,20 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
                                QuotaUser("test-quota-user"), Fields("name"),
                                UserProject(project_id_), EncryptionKey(csek));
 
-  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-      raw_client->CreateResumableSession(request);
-
-  ASSERT_STATUS_OK(session);
+  auto create = raw_client->CreateResumableSession(request);
+  ASSERT_STATUS_OK(create);
+  auto session = std::move(create->session);
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk({{contents}});
+      session->UploadChunk({{contents}});
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->ResetSession();
+  response = session->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadFinalChunk({{contents}}, 2 * contents.size(),
-                                          HashValues{});
+  response = session->UploadFinalChunk({{contents}}, 2 * contents.size(),
+                                       HashValues{});
   ASSERT_STATUS_OK(response);
   ASSERT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;

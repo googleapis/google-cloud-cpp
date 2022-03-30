@@ -78,7 +78,7 @@ class MockClient : public google::cloud::storage::internal::RawClient {
               (internal::ComposeObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::RewriteObjectResponse>, RewriteObject,
               (internal::RewriteObjectRequest const&), (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,
+  MOCK_METHOD(StatusOr<internal::CreateResumableSessionResponse>,
               CreateResumableSession, (internal::ResumableUploadRequest const&),
               (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,
@@ -200,6 +200,20 @@ Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
                       Policies&&... p) {
   return internal::ClientImplDetails::CreateClient(
       mock, std::forward<Policies>(p)...);
+}
+
+/// Simulate an initial resumable upload session response.
+inline internal::ResumableUploadResponse MockResumableUploadSessionInit() {
+  return internal::ResumableUploadResponse{
+      "", internal::ResumableUploadResponse::kInProgress, absl::nullopt,
+      absl::nullopt, std::string{}};
+}
+
+/// Simulate the final resumable upload session response.
+inline internal::ResumableUploadResponse MockResumableUploadSessionFinal() {
+  return internal::ResumableUploadResponse{
+      "", internal::ResumableUploadResponse::kDone, absl::nullopt,
+      ObjectMetadata(), std::string{}};
 }
 
 }  // namespace testing
