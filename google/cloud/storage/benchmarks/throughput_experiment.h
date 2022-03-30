@@ -60,7 +60,7 @@ using ClientProvider =
  * Create the list of upload experiments based on the @p options.
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
-    ThroughputOptions const& options, ClientProvider provider);
+    ThroughputOptions const& options, ClientProvider const& provider);
 
 /**
  * Create the list of download experiments based on the @p options.
@@ -69,7 +69,8 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
  * they depend on the upload experiment to create the objects to be downloaded.
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
-    ThroughputOptions const& options, ClientProvider provider, int thread_id);
+    ThroughputOptions const& options, ClientProvider const& provider,
+    int thread_id);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud
