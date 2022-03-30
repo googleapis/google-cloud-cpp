@@ -26,6 +26,7 @@
 #include <cstdint>
 #include <exception>
 #include <functional>
+#include <iostream>
 #include <map>
 #include <string>
 #include <utility>
@@ -174,7 +175,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
                            std::int64_t budget) {
     auto sql = google::cloud::spanner::SqlStatement(
         "UPDATE Albums SET MarketingBudget = $1"
-        "  WHERE SingerId = $3 AND AlbumId = $2",
+        "  WHERE AlbumId = $2 AND SingerId = $3",
         {{"p1", google::cloud::spanner::Value(budget)},
          {"p2", google::cloud::spanner::Value(album_id)},
          {"p3", google::cloud::spanner::Value(singer_id)}});
@@ -247,7 +248,17 @@ CommandType Command(void (*sample)(google::cloud::spanner::Client)) {
   };
 }
 
-int RunOneCommand(std::vector<std::string> argv) {
+CommandType HelpCommand(std::map<std::string, CommandType>& commands) {
+  return [&commands](std::vector<std::string> const&) {
+    std::cout << "Available commands are:\n";
+    for (auto const& command : commands) {
+      std::cout << "  " << command.first << "\n";
+    }
+  };
+}
+
+int RunOneCommand(std::vector<std::string> argv,
+                  std::string const& extra_help) {
   std::map<std::string, CommandType> commands = {
       {"create-database", Command(samples::CreateDatabase)},
       {"create-tables", Command(samples::CreateTables)},
@@ -257,10 +268,11 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"query-with-parameter", Command(samples::QueryWithParameter)},
       {"dml-getting-started-update", Command(samples::DmlGettingStartedUpdate)},
       {"drop-database", Command(samples::DropDatabase)},
+      {"help", HelpCommand(commands)},
   };
   auto it = commands.find(argv[0]);
   if (it == commands.end()) {
-    throw std::runtime_error(argv[0] + ": Unknown command");
+    throw std::runtime_error(argv[0] + ": Unknown command" + extra_help);
   }
   it->second(std::move(argv));
   return 0;
@@ -359,11 +371,13 @@ int main(int ac, char* av[]) try {
     return RunAll();
   }
   std::string program(ac ? (ac--, *av++) : "pg_samples");
+  auto extra_help =
+      "\nUse \"" + program + " help\" to list the available commands.";
   if (ac == 0) {
     throw std::runtime_error("Usage: " + program +
-                             " <command> [<argument> ...]");
+                             " <command> [<argument> ...]" + extra_help);
   }
-  return RunOneCommand({av, av + ac});
+  return RunOneCommand({av, av + ac}, extra_help);
 } catch (std::exception const& ex) {
   std::cerr << ex.what() << "\n";
   google::cloud::LogSink::Instance().Flush();
