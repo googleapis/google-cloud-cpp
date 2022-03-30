@@ -39,6 +39,24 @@ StatusOr<ResumableUploadResponse> ReturnError(Status const& last_status,
 }
 }  // namespace
 
+RetryResumableUploadSession::RetryResumableUploadSession(
+    std::unique_ptr<ResumableUploadSession> session,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy)
+    : session_(std::move(session)),
+      retry_policy_prototype_(std::move(retry_policy)),
+      backoff_policy_prototype_(std::move(backoff_policy)) {}
+
+RetryResumableUploadSession::RetryResumableUploadSession(
+    std::unique_ptr<ResumableUploadSession> session,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    ResumableUploadResponse const& last_response)
+    : session_(std::move(session)),
+      committed_size_(last_response.committed_size.value_or(0)),
+      retry_policy_prototype_(std::move(retry_policy)),
+      backoff_policy_prototype_(std::move(backoff_policy)) {}
+
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
     ConstBufferSequence const& buffers) {
   return UploadGenericChunk(__func__, buffers,

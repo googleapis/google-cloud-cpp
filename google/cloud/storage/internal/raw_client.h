@@ -95,8 +95,9 @@ class RawClient {
       ComposeObjectRequest const&) = 0;
   virtual StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) = 0;
-  virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
-  CreateResumableSession(ResumableUploadRequest const& request) = 0;
+
+  virtual StatusOr<CreateResumableSessionResponse> CreateResumableSession(
+      ResumableUploadRequest const& request) = 0;
   /// @deprecated this function is no longer used, see #7282 for details.
   GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()
   virtual StatusOr<std::unique_ptr<ResumableUploadSession>>

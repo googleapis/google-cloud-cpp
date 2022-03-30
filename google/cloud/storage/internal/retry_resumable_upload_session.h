@@ -42,10 +42,13 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   explicit RetryResumableUploadSession(
       std::unique_ptr<ResumableUploadSession> session,
       std::unique_ptr<RetryPolicy> retry_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy)
-      : session_(std::move(session)),
-        retry_policy_prototype_(std::move(retry_policy)),
-        backoff_policy_prototype_(std::move(backoff_policy)) {}
+      std::unique_ptr<BackoffPolicy> backoff_policy);
+
+  explicit RetryResumableUploadSession(
+      std::unique_ptr<ResumableUploadSession> session,
+      std::unique_ptr<RetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      ResumableUploadResponse const& last_response);
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& buffers) override;
@@ -68,7 +71,7 @@ class RetryResumableUploadSession : public ResumableUploadSession {
       char const* caller, ConstBufferSequence buffers,
       UploadChunkFunction upload);
 
-  // Handle a response that uncommits some bytes
+  // Handle a response that un-commits some bytes
   Status HandleUncommitError(char const* caller,
                              ResumableUploadResponse const&);
 

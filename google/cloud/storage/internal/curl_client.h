@@ -79,9 +79,8 @@ class CurlClient : public RawClient,
       UploadChunkRequest const&);
   virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
       QueryResumableUploadRequest const&);
-  StatusOr<std::unique_ptr<ResumableUploadSession>>
-  FullyRestoreResumableSession(ResumableUploadRequest const& request,
-                               std::string const& session_id);
+  StatusOr<CreateResumableSessionResponse> FullyRestoreResumableSession(
+      ResumableUploadRequest const& request, std::string const& session_id);
   //@}
 
   ClientOptions const& client_options() const override {
@@ -124,7 +123,7 @@ class CurlClient : public RawClient,
       PatchObjectRequest const& request) override;
   StatusOr<ObjectMetadata> ComposeObject(
       ComposeObjectRequest const& request) override;
-  StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
+  StatusOr<CreateResumableSessionResponse> CreateResumableSession(
       ResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;

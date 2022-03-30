@@ -86,10 +86,11 @@ ObjectReadStream Client::ReadObjectImpl(
 
 ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
-  auto session = raw_client_->CreateResumableSession(request);
-  if (!session) {
-    auto error = absl::make_unique<internal::ResumableUploadSessionError>(
-        std::move(session).status());
+  auto create = raw_client_->CreateResumableSession(request);
+  if (!create) {
+    auto status = std::move(create).status();
+    auto error =
+        absl::make_unique<internal::ResumableUploadSessionError>(status);
 
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
@@ -103,7 +104,8 @@ ObjectWriteStream Client::WriteObjectImpl(
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
       raw_client_->client_options().upload_buffer_size());
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
-      *std::move(session), buffer_size, internal::CreateHashFunction(request),
+      std::move(create->session), buffer_size,
+      internal::CreateHashFunction(request),
       internal::HashValues{
           request.GetOption<Crc32cChecksumValue>().value_or(""),
           request.GetOption<MD5HashValue>().value_or(""),
@@ -219,15 +221,14 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 // NOLINTNEXTLINE(readability-make-member-function-const)
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::istream& source, internal::ResumableUploadRequest const& request) {
-  StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
-      raw_client_->CreateResumableSession(request);
-  if (!session_status) {
-    return std::move(session_status).status();
-  }
+  auto create = raw_client_->CreateResumableSession(request);
+  if (!create) return std::move(create).status();
 
-  auto session = std::move(*session_status);
+  // The upload is already done.
+  if (create->state.payload) return std::move(create->state.payload.value());
+
   // How many bytes of the local file are uploaded to the GCS server.
-  auto server_size = session->next_expected_byte();
+  auto server_size = create->state.committed_size.value_or(0);
   auto upload_limit = request.GetOption<UploadLimit>().value_or(
       (std::numeric_limits<std::uint64_t>::max)());
   // If `server_size == upload_limit`, we will upload an empty string and
@@ -244,8 +245,9 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
       raw_client_->client_options().upload_buffer_size());
 
-  StatusOr<internal::ResumableUploadResponse> upload_response(
-      internal::ResumableUploadResponse{});
+  auto session = std::move(create->session);
+  StatusOr<internal::ResumableUploadResponse> upload_response =
+      std::move(create->state);
   // We iterate while `source` is good, the upload size does not reach the
   // `UploadLimit` and the retry policy has not been exhausted.
   bool reach_upload_limit = false;
@@ -262,7 +264,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     source.read(buffer.data(), buffer.size());
     auto gcount = static_cast<std::size_t>(source.gcount());
     bool final_chunk = (gcount < buffer.size()) || reach_upload_limit;
-    auto source_size = session->next_expected_byte() + gcount;
+    auto source_size = upload_response->committed_size.value_or(0) + gcount;
     auto expected = source_size;
     buffers[0] = internal::ConstBuffer{buffer.data(), gcount};
     if (final_chunk) {
@@ -273,13 +275,18 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     if (!upload_response) {
       return std::move(upload_response).status();
     }
-    if (session->next_expected_byte() != expected) {
+    if (upload_response->upload_state ==
+        internal::ResumableUploadResponse::kDone) {
+      break;
+    }
+    auto const actual_committed_size =
+        upload_response->committed_size.value_or(0);
+    if (actual_committed_size != expected) {
       // Defensive programming: unless there is a bug, this should be dead code.
       return Status(
           StatusCode::kInternal,
-          "Unexpected last committed byte expected=" +
-              std::to_string(expected) +
-              " got=" + std::to_string(session->next_expected_byte()) +
+          "Mismatch in committed size expected=" + std::to_string(expected) +
+              " got=" + std::to_string(actual_committed_size) +
               ". This is a bug, please report it at "
               "https://github.com/googleapis/google-cloud-cpp/issues/new");
     }

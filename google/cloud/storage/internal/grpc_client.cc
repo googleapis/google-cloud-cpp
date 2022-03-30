@@ -132,7 +132,7 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
   return GrpcObjectRequestParser::FromProto(*response, options());
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
+StatusOr<CreateResumableSessionResponse>
 GrpcClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
                                          std::string const& upload_url) {
   auto self = shared_from_this();
@@ -141,8 +141,9 @@ GrpcClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
   auto session = std::unique_ptr<ResumableUploadSession>(
       new GrpcResumableUploadSession(self, request, *upload_session_params));
   auto response = session->ResetSession();
-  if (!response) std::move(response).status();
-  return session;
+  if (!response) return std::move(response).status();
+  return CreateResumableSessionResponse{std::move(session),
+                                        *std::move(response)};
 }
 
 ClientOptions const& GrpcClient::client_options() const {
@@ -436,8 +437,8 @@ StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
   return GrpcObjectRequestParser::FromProto(*response, options_);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
+StatusOr<CreateResumableSessionResponse> GrpcClient::CreateResumableSession(
+    ResumableUploadRequest const& request) {
   OptionsSpan span(options_);
   auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
   if (!session_id.empty()) {
@@ -457,8 +458,15 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
   if (!response.ok()) return std::move(response).status();
 
   auto self = shared_from_this();
-  return std::unique_ptr<ResumableUploadSession>(
-      new GrpcResumableUploadSession(self, request, {response->upload_id()}));
+  return CreateResumableSessionResponse{
+      absl::make_unique<GrpcResumableUploadSession>(
+          self, request,
+          ResumableUploadSessionGrpcParams{response->upload_id()}),
+      ResumableUploadResponse{/*.upload_session_url=*/std::string{},
+                              ResumableUploadResponse::kInProgress,
+                              /*.committed_size=*/0,
+                              /*.payload=*/absl::nullopt,
+                              /*.annotations=*/std::string{}}};
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(

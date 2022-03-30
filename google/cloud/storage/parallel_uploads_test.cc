@@ -250,25 +250,28 @@ class ParallelUploadTest
       absl::optional<std::string> const& resumable_session_id =
           absl::optional<std::string>()) {
     EXPECT_CALL(*mock_, CreateResumableSession)
-        .WillOnce(
-            [this, object_name, resumable_session_id](
-                internal::ResumableUploadRequest const& request)
-                -> StatusOr<std::unique_ptr<internal::ResumableUploadSession>> {
-              EXPECT_EQ(object_name, request.object_name());
-              EXPECT_EQ(kBucketName, request.bucket_name());
+        .WillOnce([this, object_name, resumable_session_id](
+                      internal::ResumableUploadRequest const& request) {
+          EXPECT_EQ(object_name, request.object_name());
+          EXPECT_EQ(kBucketName, request.bucket_name());
 
-              if (resumable_session_id) {
-                EXPECT_TRUE(request.HasOption<UseResumableUploadSession>());
-                auto actual_resumable_session_id =
-                    request.GetOption<UseResumableUploadSession>();
-                EXPECT_EQ(*resumable_session_id,
-                          actual_resumable_session_id.value());
-              }
+          if (resumable_session_id) {
+            EXPECT_TRUE(request.HasOption<UseResumableUploadSession>());
+            auto actual_resumable_session_id =
+                request.GetOption<UseResumableUploadSession>();
+            EXPECT_EQ(*resumable_session_id,
+                      actual_resumable_session_id.value());
+          }
 
-              auto res = std::move(session_mocks_.top());
-              session_mocks_.pop();
-              return res;
-            })
+          auto res = std::move(session_mocks_.top());
+          session_mocks_.pop();
+          if (!res) {
+            return StatusOr<CreateResumableSessionResponse>(
+                std::move(res).status());
+          }
+          return make_status_or(CreateResumableSessionResponse{
+              *std::move(res), ResumableUploadResponse{}});
+        })
         .RetiresOnSaturation();
   }
 };

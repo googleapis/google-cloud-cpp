@@ -72,7 +72,7 @@ class LoggingClient : public RawClient {
       ComposeObjectRequest const& request) override;
   StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) override;
-  StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
+  StatusOr<CreateResumableSessionResponse> CreateResumableSession(
       ResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
