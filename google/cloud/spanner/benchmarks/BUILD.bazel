@@ -21,6 +21,7 @@ load(":spanner_client_benchmark_programs.bzl", "spanner_client_benchmark_program
 
 cc_library(
     name = "spanner_client_benchmarks",
+    testonly = 1,
     srcs = spanner_client_benchmarks_srcs,
     hdrs = spanner_client_benchmarks_hdrs,
     deps = [
@@ -35,6 +36,7 @@ cc_library(
 
 [cc_binary(
     name = program.replace("/", "_").replace(".cc", ""),
+    testonly = 1,
     srcs = [program],
     deps = [
         ":spanner_client_benchmarks",

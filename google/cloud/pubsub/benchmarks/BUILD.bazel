@@ -20,6 +20,7 @@ load(":pubsub_client_benchmark_programs.bzl", "pubsub_client_benchmark_programs"
 
 [cc_binary(
     name = program.replace("/", "_").replace(".cc", ""),
+    testonly = 1,
     srcs = [program],
     tags = [
         "integration-test",

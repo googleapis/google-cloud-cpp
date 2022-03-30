@@ -20,6 +20,7 @@ load(":bigtable_benchmark_common.bzl", "bigtable_benchmark_common_hdrs", "bigtab
 
 cc_library(
     name = "bigtable_benchmark_common",
+    testonly = 1,
     srcs = bigtable_benchmark_common_srcs,
     hdrs = bigtable_benchmark_common_hdrs,
     deps = [
@@ -34,6 +35,7 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
 
 [cc_binary(
     name = program.replace("/", "_").replace(".cc", ""),
+    testonly = 1,
     srcs = [program],
     linkopts = select({
         "@platforms//os:windows": [],

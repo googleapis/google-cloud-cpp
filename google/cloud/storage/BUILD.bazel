@@ -85,6 +85,7 @@ load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_clie
 
 cc_library(
     name = "storage_client_testing",
+    testonly = 1,
     srcs = storage_client_testing_srcs,
     hdrs = storage_client_testing_hdrs,
     copts = select({

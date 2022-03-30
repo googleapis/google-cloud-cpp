@@ -43,6 +43,7 @@ load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hd
 
 cc_library(
     name = "google_cloud_cpp_bigtable_mocks",
+    testonly = 1,
     srcs = google_cloud_cpp_bigtable_mocks_srcs,
     hdrs = google_cloud_cpp_bigtable_mocks_hdrs,
     visibility = [
@@ -61,6 +62,7 @@ load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_c
 
 cc_library(
     name = "bigtable_client_testing",
+    testonly = 1,
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
     visibility = ["//visibility:public"],
