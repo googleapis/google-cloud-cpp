@@ -36,8 +36,8 @@ TEST(MessageMetadata, ValidParse) {
   std::string input = std::to_string(partition) + ":" + std::to_string(offset);
   auto mm = MessageMetadata::Parse(input);
   EXPECT_TRUE(mm.ok());
-  EXPECT_EQ(partition, mm->Partition());
-  EXPECT_THAT(cursor, IsProtoEqual(mm->Cursor()));
+  EXPECT_EQ(mm->partition_, partition);
+  EXPECT_THAT(mm->cursor_, IsProtoEqual(cursor));
 }
 
 TEST(MessageMetadata, InvalidParseBadPartition) {
@@ -62,8 +62,8 @@ TEST(MessageMetadata, Getters) {
   Cursor cursor;
   cursor.set_offset(offset);
   MessageMetadata mm{partition, cursor};
-  EXPECT_EQ(partition, mm.Partition());
-  EXPECT_THAT(cursor, IsProtoEqual(mm.Cursor()));
+  EXPECT_EQ(mm.partition_, partition);
+  EXPECT_THAT(mm.cursor_, IsProtoEqual(cursor));
 }
 
 TEST(MessageMetadata, Serialize) {
@@ -83,7 +83,7 @@ TEST(MessageMetadata, RoundTrip) {
   MessageMetadata mm{partition, cursor};
   auto mm1 = MessageMetadata::Parse(mm.Serialize());
   EXPECT_TRUE(mm1.ok());
-  EXPECT_EQ(mm, *mm1);
+  EXPECT_EQ(*mm1, mm);
 }
 
 }  // namespace

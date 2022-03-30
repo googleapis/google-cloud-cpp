@@ -28,7 +28,7 @@ TEST(CloudRegion, ValidRegion) {
   auto region = CloudRegion::Parse(str);
   EXPECT_TRUE(region.ok());
   EXPECT_EQ(*region, (CloudRegion{str}));
-  EXPECT_EQ(str, region->ToString());
+  EXPECT_EQ(region->ToString(), str);
 }
 
 TEST(CloudRegion, InvalidRegionNoDash) {
@@ -54,7 +54,7 @@ TEST(CloudZone, ValidZone) {
   auto zone = CloudZone::Parse(formatted_zone);
   EXPECT_TRUE(zone.ok());
   EXPECT_EQ(*zone, (CloudZone{CloudRegion{region}, zone_id}));
-  EXPECT_EQ(formatted_zone, zone->ToString());
+  EXPECT_EQ(zone->ToString(), formatted_zone);
 }
 
 TEST(CloudZone, InvalidZoneNoDash) {

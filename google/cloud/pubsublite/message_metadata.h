@@ -29,19 +29,10 @@ namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * This class stores the partition and `Cursor` of a published Pub/Sub Lite
+ * This struct stores the partition and `Cursor` of a published Pub/Sub Lite
  * message.
  */
-class MessageMetadata {
- public:
-  MessageMetadata(std::int64_t partition,
-                  google::cloud::pubsublite::v1::Cursor cursor)
-      : partition_{partition}, cursor_{std::move(cursor)} {}
-
-  std::int64_t Partition() const { return partition_; }
-
-  google::cloud::pubsublite::v1::Cursor Cursor() const { return cursor_; }
-
+struct MessageMetadata {
   /**
    * Parses a string into a MessageMetadata object. The formatting of this
    * string is not stable cross-binary.
@@ -68,14 +59,13 @@ class MessageMetadata {
                         std::to_string(cursor_.offset()));
   }
 
- private:
-  std::int64_t const partition_;
+  std::int64_t partition_;
   google::cloud::pubsublite::v1::Cursor cursor_;
 };
 
 inline bool operator==(MessageMetadata const& a, MessageMetadata const& b) {
-  return a.Partition() == b.Partition() &&
-         a.Cursor().offset() == b.Cursor().offset();
+  return a.partition_ == b.partition_ &&
+         a.cursor_.offset() == b.cursor_.offset();
 }
 
 inline bool operator!=(MessageMetadata const& a, MessageMetadata const& b) {
