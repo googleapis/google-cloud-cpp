@@ -272,6 +272,21 @@ AdminServiceLogging::ListReservationTopics(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+AdminServiceLogging::AsyncGetTopicPartitions(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
+                 request) {
+        return child_->AsyncGetTopicPartitions(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -207,6 +207,25 @@ AdminServiceAuth::ListReservationTopics(
   return child_->ListReservationTopics(context, request);
 }
 
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+AdminServiceAuth::AsyncGetTopicPartitions(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+  using ReturnType = StatusOr<google::cloud::pubsublite::v1::TopicPartitions>;
+  auto child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncGetTopicPartitions(cq, *std::move(context), request);
+      });
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

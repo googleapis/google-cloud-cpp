@@ -649,6 +649,7 @@ service {
   service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2021"
+  gen_async_rpcs: ["GetTopicPartitions"]
   retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 

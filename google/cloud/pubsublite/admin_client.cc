@@ -341,6 +341,23 @@ StreamRange<std::string> AdminServiceClient::ListReservationTopics(
   return connection_->ListReservationTopics(std::move(request));
 }
 
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+AdminServiceClient::AsyncGetTopicPartitions(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::pubsublite::v1::GetTopicPartitionsRequest request;
+  request.set_name(name);
+  return connection_->AsyncGetTopicPartitions(request);
+}
+
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+AdminServiceClient::AsyncGetTopicPartitions(
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncGetTopicPartitions(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
