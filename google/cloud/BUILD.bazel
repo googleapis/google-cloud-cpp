@@ -16,19 +16,14 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-genrule(
+load(":capture_build_info.bzl", "capture_build_info")
+
+capture_build_info(
     name = "generate_build_info",
-    srcs = ["internal/build_info.cc.in"],
-    outs = ["internal/build_info.cc"],
-    cmd = """
-sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
-    -e "s;\\$${CMAKE_CXX_FLAGS_.*};$(COMPILATION_MODE);" \
-    -e "s;@GOOGLE_CLOUD_CPP_BUILD_METADATA@;;" < $< > $@
-  """,
-    stamp = True,
+    source_file = "internal/build_info.cc",
+    template = "internal/build_info.cc.in",
     toolchains = [
         "@bazel_tools//tools/cpp:current_cc_toolchain",
-        "@bazel_tools//tools/cpp:cc_flags",
     ],
 )
 
