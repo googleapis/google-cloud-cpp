@@ -38,9 +38,9 @@ export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
 
 # A number of options to improve logging during the CI builds. They are useful
 # when troubleshooting problems.
-export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
+export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,256,WARNING"
 export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
-export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"
+export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="single_line_mode=off,truncate_string_field_longer_than=512"
 export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 
 # Cloud Bigtable configuration parameters
