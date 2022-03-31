@@ -34,24 +34,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct MessageMetadata {
   /**
-   * Parses a string into a MessageMetadata object. The formatting of this
-   * string is not stable cross-binary.
-   */
-  static StatusOr<MessageMetadata> Parse(std::string const& input) {
-    std::vector<std::string> splits = absl::StrSplit(input, ':');
-    std::int64_t partition;
-    std::int64_t offset;
-    if (splits.size() == 2 && absl::SimpleAtoi(splits[0], &partition) &&
-        absl::SimpleAtoi(splits[1], &offset)) {
-      google::cloud::pubsublite::v1::Cursor cursor;
-      cursor.set_offset(offset);
-      return MessageMetadata{partition, std::move(cursor)};
-    }
-    return Status{StatusCode::kInvalidArgument,
-                  "Not able to parse `MessageMetadata`"};
-  }
-
-  /**
    * Serializes current object. Serialization format is not stable cross-binary.
    */
   std::string Serialize() const {
@@ -62,6 +44,24 @@ struct MessageMetadata {
   std::int64_t partition_;
   google::cloud::pubsublite::v1::Cursor cursor_;
 };
+
+/**
+ * Parses a string into a MessageMetadata object. The formatting of this
+ * string is not stable cross-binary.
+ */
+StatusOr<MessageMetadata> MakeMessageMetadata(std::string const& input) {
+  std::vector<std::string> splits = absl::StrSplit(input, ':');
+  std::int64_t partition;
+  std::int64_t offset;
+  if (splits.size() == 2 && absl::SimpleAtoi(splits[0], &partition) &&
+      absl::SimpleAtoi(splits[1], &offset)) {
+    google::cloud::pubsublite::v1::Cursor cursor;
+    cursor.set_offset(offset);
+    return MessageMetadata{partition, std::move(cursor)};
+  }
+  return Status{StatusCode::kInvalidArgument,
+                "Not able to parse `MessageMetadata`"};
+}
 
 inline bool operator==(MessageMetadata const& a, MessageMetadata const& b) {
   return a.partition_ == b.partition_ &&

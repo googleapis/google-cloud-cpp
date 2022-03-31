@@ -18,6 +18,7 @@
 #include <gmock/gmock.h>
 #include <deque>
 
+using google::cloud::pubsublite::MakeMessageMetadata;
 using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite::v1::Cursor;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -34,7 +35,7 @@ TEST(MessageMetadata, ValidParse) {
   Cursor cursor;
   cursor.set_offset(offset);
   std::string input = std::to_string(partition) + ":" + std::to_string(offset);
-  auto mm = MessageMetadata::Parse(input);
+  auto mm = MakeMessageMetadata(input);
   EXPECT_TRUE(mm.ok());
   EXPECT_EQ(mm->partition_, partition);
   EXPECT_THAT(mm->cursor_, IsProtoEqual(cursor));
@@ -42,7 +43,7 @@ TEST(MessageMetadata, ValidParse) {
 
 TEST(MessageMetadata, InvalidParseBadPartition) {
   std::string input = "q2432asdf:324572368";
-  auto mm = MessageMetadata::Parse(input);
+  auto mm = MakeMessageMetadata(input);
   EXPECT_FALSE(mm.ok());
   EXPECT_EQ(mm.status(), Status(StatusCode::kInvalidArgument,
                                 "Not able to parse `MessageMetadata`"));
@@ -50,20 +51,10 @@ TEST(MessageMetadata, InvalidParseBadPartition) {
 
 TEST(MessageMetadata, InvalidParseBadOffset) {
   std::string input = "324572368:q243223423f";
-  auto mm = MessageMetadata::Parse(input);
+  auto mm = MakeMessageMetadata(input);
   EXPECT_FALSE(mm.ok());
   EXPECT_EQ(mm.status(), Status(StatusCode::kInvalidArgument,
                                 "Not able to parse `MessageMetadata`"));
-}
-
-TEST(MessageMetadata, Getters) {
-  std::int64_t partition = 2389457;
-  std::int64_t offset = 945678234;
-  Cursor cursor;
-  cursor.set_offset(offset);
-  MessageMetadata mm{partition, cursor};
-  EXPECT_EQ(mm.partition_, partition);
-  EXPECT_THAT(mm.cursor_, IsProtoEqual(cursor));
 }
 
 TEST(MessageMetadata, Serialize) {
@@ -81,7 +72,7 @@ TEST(MessageMetadata, RoundTrip) {
   Cursor cursor;
   cursor.set_offset(offset);
   MessageMetadata mm{partition, cursor};
-  auto mm1 = MessageMetadata::Parse(mm.Serialize());
+  auto mm1 = MakeMessageMetadata(mm.Serialize());
   EXPECT_TRUE(mm1.ok());
   EXPECT_EQ(*mm1, mm);
 }
