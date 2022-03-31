@@ -50,6 +50,7 @@ MultipartitionPublisher::~MultipartitionPublisher() {
 }
 
 future<Status> MultipartitionPublisher::Start() {
+  CreatePublishers();
   return service_composite_.Start();
 }
 
@@ -78,13 +79,20 @@ void MultipartitionPublisher::CreatePublishers() {
 future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     PubSubMessage m) {
   std::lock_guard<std::mutex> g{mu_};
+  if (partition_publishers_.empty()) {
+    return make_ready_future(StatusOr<MessageMetadata>{
+        Status{StatusCode::kFailedPrecondition,
+               "Publishers haven't been created yet."}});
+  }
   std::int64_t partition =
       m.key().empty()
-          ? routing_policy_->Route(partition_publishers_.size())
-          : routing_policy_->Route(m.key(), partition_publishers_.size());
+          ? routing_policy_->Route(
+                static_cast<std::uint32_t>(partition_publishers_.size()))
+          : routing_policy_->Route(m.key(), static_cast<std::uint32_t>(
+                                                partition_publishers_.size()));
   // TODO(18suresha) handle invalid partition?
   return partition_publishers_[partition]->Publish(m).then(
-      [partition](future<StatusOr<Cursor>> publish_future) {
+      [=](future<StatusOr<Cursor>> publish_future) {
         auto publish_response = publish_future.get();
         if (!publish_response) {
           return StatusOr<MessageMetadata>{publish_response.status()};
