@@ -41,8 +41,8 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts,
   // strict limit.
   args.SetMaxSendMessageSize(16 * 1024 * 1024);
   args.SetMaxReceiveMessageSize(16 * 1024 * 1024);
-  // Pub/Sub messages with EOS (Exactly Once Semantics) may have a larger
-  // metadata size than is allowed by default.  Increase to 4 MiB.
+  // Pub/Sub messages with exactly-once delivery may have a larger metadata size
+  // than is allowed by default.  Increase to 4 MiB.
   args.SetInt("grpc.max_metadata_size", 4 * 1024 * 1024);
   return args;
 }
