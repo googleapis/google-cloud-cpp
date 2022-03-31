@@ -32,7 +32,9 @@ RUN dnf makecache && \
         python-pip \
         ShellCheck
 
-RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier && \
+RUN cargo install typos-cli --version 1.3.9 --root /usr/local
+
+RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/5.0.1/buildifier-linux-amd64 && \
     chmod 755 /usr/bin/buildifier
 
 RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64 && \
@@ -41,8 +43,6 @@ RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/downloa
 RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.8
 RUN pip3 install black==22.3.0
-
-RUN cargo install typos-cli --version 1.3.9 --root /usr/local
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64" && \
     chmod +x /usr/bin/bazelisk && \
