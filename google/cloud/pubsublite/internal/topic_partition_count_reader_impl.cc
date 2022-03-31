@@ -34,20 +34,26 @@ future<StatusOr<std::uint32_t>> TopicPartitionCountReaderImpl::Read(
     google::cloud::pubsublite::Topic topic) {
   GetTopicPartitionsRequest req;
   *req.mutable_name() = topic.FullName();
-  auto p = std::make_shared<promise<StatusOr<TopicPartitions>>>();
+  auto result = std::make_shared<promise<StatusOr<TopicPartitions>>>();
   auto connection = connection_;
   // creating stack-based variables and copying to avoid lifetime issues with
   // `this`
-  std::thread t{[connection, p, topic, req]() {
+  std::thread t{[=]() {
     auto partition_count = connection->GetTopicPartitions(req);
-    p->set_value(std::move(partition_count));
+    result->set_value(std::move(partition_count));
   }};
   t.detach();
-  return p->get_future().then([](future<StatusOr<TopicPartitions>> f) {
+  return result->get_future().then([](future<StatusOr<TopicPartitions>> f) {
     auto partitions = f.get();
     if (!partitions) return StatusOr<std::uint32_t>{partitions.status()};
+    if (partitions->partition_count() >= UINT32_MAX) {
+      return StatusOr<std::uint32_t>{
+          Status{StatusCode::kFailedPrecondition,
+                 absl::StrCat("Returned partition count is too big: ",
+                              std::to_string(partitions->partition_count()))}};
+    }
     return StatusOr<std::uint32_t>{
-        static_cast<std::uint32_t>(partitions.value().partition_count())};
+        static_cast<std::uint32_t>(partitions->partition_count())};
   });
 }
 

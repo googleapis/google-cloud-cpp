@@ -38,41 +38,91 @@ TEST(TestAsyncRead, Valid) {
   Topic topic{"project", "location", "name"};
   GetTopicPartitionsRequest req;
   *req.mutable_name() = topic.FullName();
-  auto p = std::make_shared<promise<void>>();
+  promise<void> request_blocker;
   EXPECT_CALL(*connection, GetTopicPartitions(IsProtoEqual(req)))
-      .WillOnce([=](GetTopicPartitionsRequest const&) {
-        p->get_future().get();
+      .WillOnce([&](GetTopicPartitionsRequest const&) {
+        request_blocker.get_future().get();
         TopicPartitions tp;
         tp.set_partition_count(num_partitions);
         return tp;
       });
   future<StatusOr<std::uint32_t>> f = reader.Read(topic);
   EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
-  p->set_value();
+  request_blocker.set_value();
   auto val = f.get();
   EXPECT_TRUE(val);
   EXPECT_EQ(*val, num_partitions);
 }
 
-TEST(TestAsyncRead, Error) {
+TEST(TestAsyncRead, PartitionReadStatusError) {
   Status error_status = Status{StatusCode::kAborted, "123"};
   auto connection = std::make_shared<MockAdminServiceConnection>();
   TopicPartitionCountReaderImpl reader{connection};
   Topic topic{"project1", "location1", "name1"};
   GetTopicPartitionsRequest req;
   *req.mutable_name() = topic.FullName();
-  auto p = std::make_shared<promise<void>>();
+  promise<void> request_blocker;
   EXPECT_CALL(*connection, GetTopicPartitions(IsProtoEqual(req)))
-      .WillOnce([=](GetTopicPartitionsRequest const&) {
-        p->get_future().get();
+      .WillOnce([&](GetTopicPartitionsRequest const&) {
+        request_blocker.get_future().get();
         return error_status;
       });
   future<StatusOr<std::uint32_t>> f = reader.Read(topic);
   EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
-  p->set_value();
+  request_blocker.set_value();
   auto val = f.get();
   EXPECT_FALSE(val);
   EXPECT_EQ(val.status(), error_status);
+}
+
+TEST(TestAsyncRead, PartitionReadPartitionCountError) {
+  std::int64_t const num_partitions = UINT32_MAX + static_cast<std::int64_t>(1);
+  auto connection = std::make_shared<MockAdminServiceConnection>();
+  TopicPartitionCountReaderImpl reader{connection};
+  Topic topic{"project", "location", "name"};
+  GetTopicPartitionsRequest req;
+  *req.mutable_name() = topic.FullName();
+  promise<void> request_blocker;
+  EXPECT_CALL(*connection, GetTopicPartitions(IsProtoEqual(req)))
+      .WillOnce([&](GetTopicPartitionsRequest const&) {
+        request_blocker.get_future().get();
+        TopicPartitions tp;
+        tp.set_partition_count(num_partitions);
+        return tp;
+      });
+  future<StatusOr<std::uint32_t>> f = reader.Read(topic);
+  EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
+  request_blocker.set_value();
+  auto val = f.get();
+  EXPECT_FALSE(val);
+  EXPECT_EQ(val.status(), Status(StatusCode::kFailedPrecondition,
+                                 "Returned partition count is too big: " +
+                                     std::to_string(num_partitions)));
+}
+
+TEST(TestAsyncRead, PartitionReadPartitionCountErrorBoundary) {
+  std::int64_t const num_partitions = UINT32_MAX;
+  auto connection = std::make_shared<MockAdminServiceConnection>();
+  TopicPartitionCountReaderImpl reader{connection};
+  Topic topic{"project", "location", "name"};
+  GetTopicPartitionsRequest req;
+  *req.mutable_name() = topic.FullName();
+  promise<void> request_blocker;
+  EXPECT_CALL(*connection, GetTopicPartitions(IsProtoEqual(req)))
+      .WillOnce([&](GetTopicPartitionsRequest const&) {
+        request_blocker.get_future().get();
+        TopicPartitions tp;
+        tp.set_partition_count(num_partitions);
+        return tp;
+      });
+  future<StatusOr<std::uint32_t>> f = reader.Read(topic);
+  EXPECT_EQ(f.wait_for(std::chrono::seconds(2)), std::future_status::timeout);
+  request_blocker.set_value();
+  auto val = f.get();
+  EXPECT_FALSE(val);
+  EXPECT_EQ(val.status(), Status(StatusCode::kFailedPrecondition,
+                                 "Returned partition count is too big: " +
+                                     std::to_string(num_partitions)));
 }
 
 }  // namespace pubsublite_internal
