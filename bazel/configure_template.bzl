@@ -16,7 +16,7 @@
 Define a rule to configure .in template files.
 
 We use custom *.BUILD files for two external dependencies that do not natively support Bazel: crc32c and libcurl.
-Both require configuring a `.in` file, this creates a rules to perform this configuration.
+Both require configuring a `.in` file. This creates a rules to perform this configuration.
 """
 
 def _configure_template_impl(ctx):
