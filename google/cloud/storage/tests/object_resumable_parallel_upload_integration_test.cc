@@ -108,9 +108,12 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
   auto object_metadata = ParallelUploadFile(
       *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), IfGenerationMatch(0),
-      UseResumableUploadSession(resumable_session_id));
+      UseResumableUploadSession(resumable_session_id),
+      WithObjectMetadata(
+          ObjectMetadata().set_content_type("application/binary")));
   ASSERT_STATUS_OK(object_metadata);
   ScheduleForDelete(*object_metadata);
+  EXPECT_EQ("application/binary", object_metadata->content_type());
 
   auto stream =
       client->ReadObject(bucket_name_, dest_object_name,
