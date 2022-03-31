@@ -39,7 +39,7 @@ RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/downloa
 
 RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.8
-RUN pip3 install black==19.3b0
+RUN pip3 install black==22.3.0
 
 RUN cargo install typos-cli --version 1.3.9 --root /usr/local
 
