@@ -26,6 +26,7 @@ RUN dnf makecache && \
         clang-tools-extra \
         diffutils \
         findutils \
+        gcc-c++ \
         git \
         patch \
         python-pip \
