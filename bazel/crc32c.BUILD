@@ -89,22 +89,23 @@ sse42_enabled = select({
     "//conditions:default": "0",
 })
 
-genrule(
+load("@com_github_googleapis_google_cloud_cpp//bazel:configure_template.bzl", "configure_template")
+
+configure_template(
     name = "generate_config",
-    srcs = ["src/crc32c_config.h.in"],
-    outs = ["crc32c/crc32c_config.h"],
-    cmd = """
-sed -e 's/#cmakedefine01/#define/' \
-    -e 's/ BYTE_ORDER_BIG_ENDIAN/ BYTE_ORDER_BIG_ENDIAN 0/' \
-    -e 's/ HAVE_BUILTIN_PREFETCH/ HAVE_BUILTIN_PREFETCH 0/' \
-    -e 's/ HAVE_MM_PREFETCH/ HAVE_MM_PREFETCH 0/' \
-    -e 's/ HAVE_SSE42/ HAVE_SSE42 1/' \
-    -e 's/ HAVE_ARM64_CRC32C/ HAVE_ARM64_CRC32C 0/' \
-    -e 's/ HAVE_STRONG_GETAUXVAL/ HAVE_STRONG_GETAUXVAL 0/' \
-    -e 's/ HAVE_WEAK_GETAUXVAL/ HAVE_WEAK_GETAUXVAL 0/' \
-    -e 's/ CRC32C_TESTS_BUILT_WITH_GLOG/ CRC32C_TESTS_BUILT_WITH_GLOG 0/' \
-    < $< > $@
-""",
+    output = "crc32c/crc32c_config.h",
+    substitutions = {
+        "#cmakedefine01": "#define",
+        " BYTE_ORDER_BIG_ENDIAN": " BYTE_ORDER_BIG_ENDIAN 0",
+        " HAVE_BUILTIN_PREFETCH": " HAVE_BUILTIN_PREFETCH 0",
+        " HAVE_MM_PREFETCH": " HAVE_MM_PREFETCH 0",
+        " HAVE_SSE42": " HAVE_SSE42 1",
+        " HAVE_ARM64_CRC32C": " HAVE_ARM64_CRC32C 0",
+        " HAVE_STRONG_GETAUXVAL": " HAVE_STRONG_GETAUXVAL 0",
+        " HAVE_WEAK_GETAUXVAL": " HAVE_WEAK_GETAUXVAL 0",
+        " CRC32C_TESTS_BUILT_WITH_GLOG": " CRC32C_TESTS_BUILT_WITH_GLOG 0",
+    },
+    template = "src/crc32c_config.h.in",
 )
 
 cc_library(
