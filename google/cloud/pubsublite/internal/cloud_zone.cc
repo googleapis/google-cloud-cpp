@@ -12,33 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
-
-#include "google/cloud/pubsublite/topic.h"
-#include "google/cloud/future.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <utility>
+#include "google/cloud/pubsublite/internal/cloud_zone.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-/**
- * This interface declares an asynchronous method to get the number of
- * partitions for a Pub/Sub Lite topic.
- */
-class TopicPartitionCountReader {
- public:
-  virtual future<StatusOr<std::uint32_t>> Read(
-      google::cloud::pubsublite::Topic topic) = 0;
-};
+StatusOr<CloudZone> MakeCloudZone(std::string const& zone) {
+  std::vector<std::string> splits = absl::StrSplit(zone, '-');
+  if (splits.size() != 3 || splits[2].length() != 1) {
+    return Status{StatusCode::kInvalidArgument, "Invalid zone name"};
+  }
+  return CloudZone{CloudRegion{absl::StrCat(splits[0], "-", splits[1])},
+                   splits[2][0]};
+}
 
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H

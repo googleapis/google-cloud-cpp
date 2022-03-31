@@ -12,33 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
-
 #include "google/cloud/pubsublite/topic.h"
-#include "google/cloud/future.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <utility>
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include <gmock/gmock.h>
+#include <deque>
+
+using google::cloud::pubsublite::Topic;
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+namespace {
 
-/**
- * This interface declares an asynchronous method to get the number of
- * partitions for a Pub/Sub Lite topic.
- */
-class TopicPartitionCountReader {
- public:
-  virtual future<StatusOr<std::uint32_t>> Read(
-      google::cloud::pubsublite::Topic topic) = 0;
-};
+TEST(Topic, BasicTopic) {
+  std::string project = "project";
+  std::string location = "location";
+  std::string topic_name = "topic_name";
 
+  Topic topic{project, location, topic_name};
+  EXPECT_EQ(project, topic.project());
+  EXPECT_EQ(location, topic.location());
+  EXPECT_EQ(topic_name, topic.topic_name());
+  EXPECT_EQ(topic.FullName(),
+            "projects/project/locations/location/topics/topic_name");
+}
+
+}  // namespace
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H

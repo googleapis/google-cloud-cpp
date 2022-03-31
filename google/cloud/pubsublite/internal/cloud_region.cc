@@ -12,33 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
-
-#include "google/cloud/pubsublite/topic.h"
-#include "google/cloud/future.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <utility>
+#include "google/cloud/pubsublite/internal/cloud_region.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-/**
- * This interface declares an asynchronous method to get the number of
- * partitions for a Pub/Sub Lite topic.
- */
-class TopicPartitionCountReader {
- public:
-  virtual future<StatusOr<std::uint32_t>> Read(
-      google::cloud::pubsublite::Topic topic) = 0;
-};
+StatusOr<CloudRegion> MakeCloudRegion(std::string const& region) {
+  std::vector<std::string> splits = absl::StrSplit(region, '-');
+  if (splits.size() != 2) {
+    return Status{StatusCode::kInvalidArgument, "Invalid region name"};
+  }
+  return CloudRegion{region};
+}
 
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H

@@ -1,3 +1,5 @@
+
+
 // Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,11 +39,6 @@ class Topic {
         location_{std::move(location)},
         topic_name_(std::move(topic_name)) {}
 
-  Topic(Topic const&) = default;
-  Topic& operator=(Topic const&) = default;
-  Topic(Topic&&) = default;
-  Topic& operator=(Topic&&) = default;
-
   std::string const& project() const { return project_; }
 
   std::string const& location() const { return location_; }
@@ -57,23 +54,20 @@ class Topic {
                         "/topics/", topic_name_);
   }
 
-  friend bool operator==(Topic const& a, Topic const& b);
-  friend bool operator!=(Topic const& a, Topic const& b) { return !(a == b); }
-
-  friend std::ostream& operator<<(std::ostream& os, Topic const& rhs);
-
  private:
   std::string project_;
   std::string location_;
   std::string topic_name_;
 };
 
-bool operator==(Topic const& a, Topic const& b) {
+inline bool operator==(Topic const& a, Topic const& b) {
   return a.project() == b.project() && a.location() == b.location() &&
          a.topic_name() == b.topic_name();
 }
 
-std::ostream& operator<<(std::ostream& os, Topic const& rhs) {
+inline bool operator!=(Topic const& a, Topic const& b) { return !(a == b); }
+
+inline std::ostream& operator<<(std::ostream& os, Topic const& rhs) {
   return os << rhs.FullName();
 }
 

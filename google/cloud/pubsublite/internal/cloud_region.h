@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H
 
-#include "google/cloud/pubsublite/topic.h"
-#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_split.h"
+#include <string>
 #include <utility>
 
 namespace google {
@@ -27,18 +27,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 /**
- * This interface declares an asynchronous method to get the number of
- * partitions for a Pub/Sub Lite topic.
+ * A wrapped string representing a Google Cloud region.
  */
-class TopicPartitionCountReader {
- public:
-  virtual future<StatusOr<std::uint32_t>> Read(
-      google::cloud::pubsublite::Topic topic) = 0;
+struct CloudRegion {
+  std::string ToString() const { return region; }
+
+  std::string region;
 };
+
+/**
+ * Construct a `CloudRegion` from a valid `region` string. `region` must be
+ * formatted as: <location>-<direction><number>.
+ */
+StatusOr<CloudRegion> MakeCloudRegion(std::string const& region);
+
+inline bool operator==(CloudRegion const& a, CloudRegion const& b) {
+  return a.region == b.region;
+}
+
+inline bool operator!=(CloudRegion const& a, CloudRegion const& b) {
+  return !(a == b);
+}
 
 }  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_PARTITION_COUNT_READER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CLOUD_REGION_H

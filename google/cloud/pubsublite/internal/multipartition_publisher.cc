@@ -54,15 +54,20 @@ future<Status> MultipartitionPublisher::Start() {
 }
 
 void MultipartitionPublisher::CreatePublishers() {
-  future<std::uint64_t> read_future;
+  future<StatusOr<std::uint32_t>> read_future;
   {
     std::lock_guard<std::mutex> g{mu_};
     read_future = reader_->Read(topic_);
   }
-  read_future.then([this](future<std::uint64_t> num_partitions_future) {
-    std::uint64_t num_partitions = num_partitions_future.get();
+  read_future.then([this](future<StatusOr<std::uint32_t>> f) {
+    auto num_partitions = f.get();
+    if (!num_partitions.ok()) {
+      GCP_LOG(INFO) << "Reading number of partitions for " << topic_.FullName()
+                    << "failed: " << num_partitions.status();
+      return;
+    }
     std::lock_guard<std::mutex> g{mu_};
-    while (partition_publishers_.size() < num_partitions) {
+    while (partition_publishers_.size() < num_partitions.value()) {
       partition_publishers_.push_back(
           publisher_factory_(partition_publishers_.size()));
       service_composite_.AddServiceObject(partition_publishers_.back().get());
