@@ -66,6 +66,7 @@ class MultipartitionPublisher
   std::unique_ptr<TopicPartitionCountReader> reader_;  // ABSL_GUARDED_BY(mu_)
   ServiceComposite service_composite_;
   std::unique_ptr<RoutingPolicy> routing_policy_;  // ABSL_GUARDED_BY(mu_)
+  bool updating_partitions_ = false;               // ABSL_GUARDED_BY(mu_)
   google::cloud::pubsublite::Topic topic_;
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 };

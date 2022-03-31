@@ -36,10 +36,14 @@ MultipartitionPublisher::MultipartitionPublisher(
       routing_policy_{std::move(routing_policy)},
       topic_{std::move(topic)},
       cancel_token_{alarm_registry.RegisterAlarm(
-          std::chrono::milliseconds{60 * 1000},
+          std::chrono::seconds{60},
           std::bind(&MultipartitionPublisher::CreatePublishers, this))} {}
 
 MultipartitionPublisher::~MultipartitionPublisher() {
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (cancel_token_ != nullptr) cancel_token_ = nullptr;
+  }
   future<void> shutdown = Shutdown();
   if (!shutdown.is_ready()) {
     GCP_LOG(WARNING) << "`Shutdown` must be called and finished before object "
@@ -63,16 +67,31 @@ void MultipartitionPublisher::CreatePublishers() {
   read_future.then([this](future<StatusOr<std::uint32_t>> f) {
     auto num_partitions = f.get();
     if (!num_partitions.ok()) {
-      GCP_LOG(INFO) << "Reading number of partitions for " << topic_.FullName()
-                    << "failed: " << num_partitions.status();
+      GCP_LOG(WARNING) << "Reading number of partitions for "
+                       << topic_.FullName()
+                       << "failed: " << num_partitions.status();
       return;
     }
-    std::lock_guard<std::mutex> g{mu_};
-    while (partition_publishers_.size() < num_partitions.value()) {
-      partition_publishers_.push_back(
-          publisher_factory_(partition_publishers_.size()));
-      service_composite_.AddServiceObject(partition_publishers_.back().get());
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      if (updating_partitions_ ||
+          partition_publishers_.size() == *num_partitions) {
+        return;
+      }
+      updating_partitions_ = true;
     }
+    std::vector<std::unique_ptr<PartitionPublisher>> new_partition_publishers;
+    for (std::uint64_t i = partition_publishers_.size(); i < *num_partitions;
+         ++i) {
+      new_partition_publishers.push_back(publisher_factory_(i));
+      service_composite_.AddServiceObject(
+          new_partition_publishers.back().get());
+    }
+    std::lock_guard<std::mutex> g{mu_};
+    for (auto& partition_publisher : new_partition_publishers) {
+      partition_publishers_.push_back(std::move(partition_publisher));
+    }
+    updating_partitions_ = false;
   });
 }
 
@@ -91,8 +110,8 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
           : routing_policy_->Route(m.key(), static_cast<std::uint32_t>(
                                                 partition_publishers_.size()));
   // TODO(18suresha) handle invalid partition?
-  return partition_publishers_[partition]->Publish(m).then(
-      [=](future<StatusOr<Cursor>> publish_future) {
+  return partition_publishers_.at(partition)->Publish(m).then(
+      [partition](future<StatusOr<Cursor>> publish_future) {
         auto publish_response = publish_future.get();
         if (!publish_response) {
           return StatusOr<MessageMetadata>{publish_response.status()};
