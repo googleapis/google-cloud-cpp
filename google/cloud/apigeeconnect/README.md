@@ -1,7 +1,5 @@
 # Apigee Connect API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Apigee Hybrid][cloud-service-docs] management APIs. Apigee Hybrid is a platform
 for developing and managing API proxies that features a hybrid deployment model.
@@ -12,7 +10,7 @@ a runtime plane that you install and manage on one of the
 <!-- TODO(#7900) - consider the lack of quickstart testing before GA -->
 This library is **experimental**. Its APIs are subject to change without notice.
 
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

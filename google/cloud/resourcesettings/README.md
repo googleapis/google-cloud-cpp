@@ -1,7 +1,5 @@
 # Resource Settings API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Resource Settings API][cloud-service-docs]. The Resource Settings API allows
 users to control and modify the behavior of their GCP resources (e.g., VM,
@@ -9,7 +7,7 @@ firewall, Project, etc.) across the Cloud Resource Hierarchy.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Supported Platforms

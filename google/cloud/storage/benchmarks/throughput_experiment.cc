@@ -343,26 +343,12 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
   ExperimentTransport transport_;
 };
 
-using ::google::cloud::storage::Client;
-
-ClientProvider PerTransport(ClientProvider const& provider) {
-  std::map<ExperimentTransport, Client> clients;
-  return [clients, provider](ExperimentTransport t) mutable {
-    auto l = clients.find(t);
-    if (l != clients.end()) return l->second;
-    auto p = clients.emplace(t, provider(t));
-    return p.first->second;
-  };
-}
-
 }  // namespace
 
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
-    ThroughputOptions const& options, ClientProvider provider) {
+    ThroughputOptions const& options, ClientProvider const& provider) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto contents = MakeRandomData(generator, options.maximum_write_size);
-
-  if (!options.client_per_thread) provider = PerTransport(provider);
 
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
   for (auto l : options.libs) {
@@ -378,9 +364,8 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
 }
 
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
-    ThroughputOptions const& options, ClientProvider provider, int thread_id) {
-  if (!options.client_per_thread) provider = PerTransport(provider);
-
+    ThroughputOptions const& options, ClientProvider const& provider,
+    int thread_id) {
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
   for (auto l : options.libs) {
     if (l != ExperimentLibrary::kRaw) {

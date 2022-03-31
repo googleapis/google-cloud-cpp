@@ -37,11 +37,6 @@ class Topic {
         location_{std::move(location)},
         topic_name_(std::move(topic_name)) {}
 
-  Topic(Topic const&) = default;
-  Topic& operator=(Topic const&) = default;
-  Topic(Topic&&) = default;
-  Topic& operator=(Topic&&) = default;
-
   std::string const& project() const { return project_; }
 
   std::string const& location() const { return location_; }

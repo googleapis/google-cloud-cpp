@@ -17,8 +17,8 @@
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
@@ -53,8 +53,8 @@ class GrpcIntegrationTest
 
   void SetUp() override {
     std::string const grpc_config_value = GetParam();
-    google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                    grpc_config_value);
+    google::cloud::testing_util::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                        grpc_config_value);
     project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_THAT(project_id_, Not(IsEmpty()))
         << "GOOGLE_CLOUD_PROJECT is not set";

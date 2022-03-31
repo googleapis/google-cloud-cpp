@@ -20,7 +20,7 @@ set(DOXYGEN_PROJECT_NAME
 set(DOXYGEN_PROJECT_BRIEF
     "A C++ Client Library for the Managed Service for Microsoft Active Directory API"
 )
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "managedidentities_internal"
                             "managedidentities_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -76,13 +76,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_managedidentities)
 set_target_properties(
     google_cloud_cpp_managedidentities
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-managedidentities
+    PROPERTIES EXPORT_NAME google-cloud-cpp::managedidentities
                VERSION "${PROJECT_VERSION}" SOVERSION
                                             "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_managedidentities
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-managedidentities ALIAS
+add_library(google-cloud-cpp::managedidentities ALIAS
             google_cloud_cpp_managedidentities)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -102,12 +102,11 @@ add_library(google_cloud_cpp_managedidentities_mocks INTERFACE)
 target_sources(google_cloud_cpp_managedidentities_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_managedidentities_mocks
-    INTERFACE google-cloud-cpp::experimental-managedidentities
-              GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::managedidentities GTest::gmock_main
+              GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_managedidentities_mocks
-    PROPERTIES EXPORT_NAME
-               google-cloud-cpp::experimental-managedidentities_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::managedidentities_mocks)
 target_include_directories(
     google_cloud_cpp_managedidentities_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -119,9 +118,8 @@ target_compile_options(google_cloud_cpp_managedidentities_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(managedidentities_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        managedidentities_quickstart
-        PRIVATE google-cloud-cpp::experimental-managedidentities)
+    target_link_libraries(managedidentities_quickstart
+                          PRIVATE google-cloud-cpp::managedidentities)
     google_cloud_cpp_add_common_options(managedidentities_quickstart)
     add_test(
         NAME managedidentities_quickstart

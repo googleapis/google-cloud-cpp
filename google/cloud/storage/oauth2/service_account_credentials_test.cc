@@ -20,7 +20,6 @@
 #include "google/cloud/storage/testing/write_base64.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/mock_fake_clock.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"

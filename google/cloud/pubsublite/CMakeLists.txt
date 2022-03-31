@@ -89,6 +89,10 @@ add_library(
     internal/alarm_registry_impl.cc
     internal/alarm_registry_impl.h
     internal/batching_options.h
+    internal/cloud_region.cc
+    internal/cloud_region.h
+    internal/cloud_zone.cc
+    internal/cloud_zone.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc
@@ -102,6 +106,8 @@ add_library(
     internal/default_routing_policy.cc
     internal/default_routing_policy.h
     internal/futures.h
+    internal/location.cc
+    internal/location.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -158,6 +164,8 @@ add_library(
     internal/topic_stats_stub.h
     internal/topic_stats_stub_factory.cc
     internal/topic_stats_stub_factory.h
+    message_metadata.cc
+    message_metadata.h
     topic.h
     topic_stats_client.cc
     topic_stats_client.h
@@ -253,11 +261,14 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         endpoint_test.cc
         internal/alarm_registry_impl_test.cc
         internal/default_routing_policy_test.cc
+        internal/location_test.cc
         internal/partition_publisher_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
         internal/stream_factory_test.cc
         internal/topic_partition_count_reader_impl_test.cc)
+        message_metadata_test.cc
+        topic_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"
                          YEAR "2021")

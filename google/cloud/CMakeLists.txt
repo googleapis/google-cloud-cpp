@@ -114,8 +114,6 @@ add_library(
     internal/random.h
     internal/retry_policy.cc
     internal/retry_policy.h
-    internal/setenv.cc
-    internal/setenv.h
     internal/sha256_hash.cc
     internal/sha256_hash.h
     internal/status_payload_keys.cc
@@ -230,7 +228,6 @@ if (BUILD_TESTING)
         internal/compiler_info_test.cc
         internal/compute_engine_util_test.cc
         internal/credentials_impl_test.cc
-        internal/env_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc

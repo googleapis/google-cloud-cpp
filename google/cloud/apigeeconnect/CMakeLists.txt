@@ -17,7 +17,7 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Apigee Connect API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Apigee Connect API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "apigeeconnect_internal"
                             "apigeeconnect_testing" "examples")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -72,13 +72,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_apigeeconnect)
 set_target_properties(
     google_cloud_cpp_apigeeconnect
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-apigeeconnect
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::apigeeconnect VERSION
+                                                           "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_apigeeconnect
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-apigeeconnect ALIAS
+add_library(google-cloud-cpp::apigeeconnect ALIAS
             google_cloud_cpp_apigeeconnect)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -98,11 +98,11 @@ add_library(google_cloud_cpp_apigeeconnect_mocks INTERFACE)
 target_sources(google_cloud_cpp_apigeeconnect_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_apigeeconnect_mocks
-    INTERFACE google-cloud-cpp::experimental-apigeeconnect GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::apigeeconnect GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_apigeeconnect_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-apigeeconnect_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::apigeeconnect_mocks)
 target_include_directories(
     google_cloud_cpp_apigeeconnect_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -115,7 +115,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(apigeeconnect_quickstart "quickstart/quickstart.cc")
     target_link_libraries(apigeeconnect_quickstart
-                          PRIVATE google-cloud-cpp::experimental-apigeeconnect)
+                          PRIVATE google-cloud-cpp::apigeeconnect)
     google_cloud_cpp_add_common_options(apigeeconnect_quickstart)
     add_test(
         NAME apigeeconnect_quickstart

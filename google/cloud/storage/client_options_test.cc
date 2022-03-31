@@ -16,8 +16,8 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
@@ -176,7 +176,7 @@ TEST_F(ClientOptionsTest, EndpointsEmulator) {
 }
 
 TEST_F(ClientOptionsTest, OldEndpointsEmulator) {
-  google::cloud::internal::UnsetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  google::cloud::testing_util::UnsetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
                                            "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
@@ -216,13 +216,14 @@ TEST_F(ClientOptionsTest, SetCredentials) {
 }
 
 TEST_F(ClientOptionsTest, ProjectIdFromEnvironment) {
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_PROJECT", "test-project-id");
+  google::cloud::testing_util::SetEnv("GOOGLE_CLOUD_PROJECT",
+                                      "test-project-id");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("test-project-id", options.project_id());
 }
 
 TEST_F(ClientOptionsTest, ProjectIdFromEnvironmentNotSet) {
-  google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_PROJECT");
+  google::cloud::testing_util::UnsetEnv("GOOGLE_CLOUD_PROJECT");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("", options.project_id());
 }
@@ -307,7 +308,8 @@ TEST_F(ClientOptionsTest, SetMaximumDownloadStall) {
 }
 
 TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_PROJECT", "test-project-id");
+  google::cloud::testing_util::SetEnv("GOOGLE_CLOUD_PROJECT",
+                                      "test-project-id");
   auto const opts = internal::MakeOptions(
       ClientOptions(oauth2::CreateAnonymousCredentials()));
   EXPECT_EQ("https://storage.googleapis.com", opts.get<RestEndpointOption>());

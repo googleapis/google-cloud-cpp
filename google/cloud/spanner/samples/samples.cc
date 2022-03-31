@@ -899,7 +899,7 @@ void UpdateBackupCommand(std::vector<std::string> argv) {
   UpdateBackup(std::move(client), argv[0], argv[1], argv[2], absl::Hours(7));
 }
 
-// [START spanner_create_copy_backup]
+// [START spanner_copy_backup]
 void CopyBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
                 std::string const& src_project_id,
                 std::string const& src_instance_id,
@@ -929,7 +929,7 @@ void CopyBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
                    .value()
             << ".\n";
 }
-// [END spanner_create_copy_backup]
+// [END spanner_copy_backup]
 
 void CopyBackupCommand(std::vector<std::string> argv) {
   if (argv.size() != 5) {
@@ -3813,7 +3813,7 @@ void RunAllSlowInstanceTests(
       UpdateBackup(database_admin_client, project_id, crud_instance_id,
                    backup_id, absl::Hours(1));
 
-      SampleBanner("spanner_create_copy_backup");
+      SampleBanner("spanner_copy_backup");
       CopyBackup(database_admin_client, project_id, crud_instance_id, backup_id,
                  project_id, crud_instance_id, copy_backup_id, expire_time);
 

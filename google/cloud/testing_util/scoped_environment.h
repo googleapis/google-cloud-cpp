@@ -26,6 +26,10 @@ namespace testing_util {
 
 /**
  * Helper class to (un)set and restore the value of an environment variable.
+ *
+ * @warning A modification to the environment must be serialized with all
+ *   other environment reads and writes, so this should only be used when
+ *   we are single-threaded.
  */
 class ScopedEnvironment {
  public:
