@@ -37,6 +37,12 @@
 #  -bugprone-narrowing-conversions: too many false positives around
 #      `std::size_t`  vs. `*::difference_type`.
 #
+#  -bugprone-easily-swappable-parameters: too many false positives.
+#
+#  -bugprone-implicit-widening-of-multiplication-result: too many false positives.
+#     Almost any expression of the form `2 * variable` or `long x = a_int * b_int;`
+#     generates an error.
+#
 Checks: >
   -*,
   bugprone-*,
@@ -60,7 +66,9 @@ Checks: >
   -readability-named-parameter,
   -readability-redundant-declaration,
   -readability-function-cognitive-complexity,
-  -bugprone-narrowing-conversions
+  -bugprone-narrowing-conversions,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-implicit-widening-of-multiplication-result
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
