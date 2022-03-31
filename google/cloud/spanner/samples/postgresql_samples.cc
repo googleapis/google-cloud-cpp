@@ -60,42 +60,6 @@ void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
 }
 // [END spanner_postgresql_create_database]
 
-void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
-                  google::cloud::spanner::Database const& database) {
-  std::vector<std::string> statements = {
-      R"""(
-        CREATE TABLE Singers (
-            SingerId   BIGINT NOT NULL,
-            FirstName  CHARACTER VARYING(1024),
-            LastName   CHARACTER VARYING(1024),
-            SingerInfo BYTEA,
-            PRIMARY KEY(singerid)
-        )
-      )""",
-      R"""(
-        CREATE TABLE Albums (
-            AlbumId    BIGINT NOT NULL,
-            SingerId   BIGINT NOT NULL,
-            AlbumTitle CHARACTER VARYING,
-            PRIMARY KEY(SingerId, AlbumId),
-            FOREIGN KEY(SingerId) REFERENCES Singers(SingerId)
-        )
-      )""",
-      R"""(
-        CREATE TABLE users (
-            user_id    BIGINT NOT NULL,
-            user_name  CHARACTER VARYING(1024),
-            active     BOOLEAN,
-            PRIMARY KEY(user_id)
-        )
-      )""",
-  };
-  auto metadata =
-      client.UpdateDatabaseDdl(database.FullName(), statements).get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
-  std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
-}
-
 // [START spanner_postgresql_add_column]
 void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
                google::cloud::spanner::Database const& database) {
@@ -250,22 +214,6 @@ void BatchDml(google::cloud::spanner::Client client) {
   std::cout << "Update was successful.\n";
 }
 // [END spanner_postgresql_batch_dml]
-
-void DropTables(google::cloud::spanner_admin::DatabaseAdminClient client,
-                google::cloud::spanner::Database const& database) {
-  std::vector<std::string> statements = {
-      R"""(
-        DROP TABLE Albums
-      )""",
-      R"""(
-        DROP TABLE Singers
-      )""",
-  };
-  auto metadata =
-      client.UpdateDatabaseDdl(database.FullName(), statements).get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
-  std::cout << "Tables dropped.\nNew DDL:\n" << metadata->DebugString();
-}
 
 // [START spanner_postgresql_case_sensitivity]
 void CaseSensitivity(
@@ -608,17 +556,16 @@ void InformationSchema(
 }
 // [END spanner_postgresql_information_schema]
 
+/*
+ * Remaining samples to add:
+ *   - Insert a Venue with a valid for the Revenues column.
+ *   - Insert a Venue with a NULL value for the Revenues column.
+ *   - Insert a Venue with a NaN value for the Revenues column.
+ *   - Mutations can also be used to insert/update NUMERIC values,
+ *     including NaN values.
+ */
 // [START spanner_postgresql_numeric_data_type]
 void NumericDataType(google::cloud::spanner::Client client) {
-  /*
-   * Remaining samples to add:
-   *   - Insert a Venue with a valid for the Revenues column.
-   *   - insert a Venue with a NULL value for the Revenues column.
-   *   - insert a Venue with a NaN value for the Revenues column.
-   *   - Mutations can also be used to insert/update NUMERIC values,
-   *     including NaN values.
-   */
-
   // Get all Venues and inspect the Revenues values.
   auto sql = google::cloud::spanner::SqlStatement(R"""(
       SELECT Name, Revenues FROM Venues
@@ -661,6 +608,62 @@ void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
 }
 
 }  // namespace samples
+
+namespace helpers {
+
+void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
+                  google::cloud::spanner::Database const& database) {
+  std::vector<std::string> statements = {
+      R"""(
+        CREATE TABLE Singers (
+            SingerId   BIGINT NOT NULL,
+            FirstName  CHARACTER VARYING(1024),
+            LastName   CHARACTER VARYING(1024),
+            SingerInfo BYTEA,
+            PRIMARY KEY(singerid)
+        )
+      )""",
+      R"""(
+        CREATE TABLE Albums (
+            AlbumId    BIGINT NOT NULL,
+            SingerId   BIGINT NOT NULL,
+            AlbumTitle CHARACTER VARYING,
+            PRIMARY KEY(SingerId, AlbumId),
+            FOREIGN KEY(SingerId) REFERENCES Singers(SingerId)
+        )
+      )""",
+      R"""(
+        CREATE TABLE users (
+            user_id    BIGINT NOT NULL,
+            user_name  CHARACTER VARYING(1024),
+            active     BOOLEAN,
+            PRIMARY KEY(user_id)
+        )
+      )""",
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
+}
+
+void DropTables(google::cloud::spanner_admin::DatabaseAdminClient client,
+                google::cloud::spanner::Database const& database) {
+  std::vector<std::string> statements = {
+      R"""(
+        DROP TABLE Albums
+      )""",
+      R"""(
+        DROP TABLE Singers
+      )""",
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Tables dropped.\nNew DDL:\n" << metadata->DebugString();
+}
+
+}  // namespace helpers
 
 google::cloud::spanner::Database Database(std::vector<std::string> argv) {
   if (argv.size() != 4) {
@@ -728,13 +731,13 @@ int RunOneCommand(std::vector<std::string> argv,
   std::map<std::string, CommandType> commands = {
       {"create-clients", Command(samples::CreateClients)},
       {"create-database", Command(samples::CreateDatabase)},
-      {"create-tables", Command(samples::CreateTables)},
+      {"create-tables", Command(helpers::CreateTables)},
       {"add-column", Command(samples::AddColumn)},
       {"insert-data", Command(samples::InsertData)},
       {"query-with-parameter", Command(samples::QueryWithParameter)},
       {"dml-getting-started-update", Command(samples::DmlGettingStartedUpdate)},
       {"batch-dml", Command(samples::BatchDml)},
-      {"drop-tables", Command(samples::DropTables)},
+      {"drop-tables", Command(helpers::DropTables)},
       {"case-sensitivity", Command(samples::CaseSensitivity)},
       {"cast-data-type", Command(samples::CastDataType)},
       {"dml-with-parameters", Command(samples::DmlWithParameters)},
@@ -799,8 +802,7 @@ int RunAll() {
   samples::CreateDatabase(database_admin_client, database);
 
   try {
-    SampleBanner("spanner_postgresql_create_tables");
-    samples::CreateTables(database_admin_client, database);
+    helpers::CreateTables(database_admin_client, database);
 
     SampleBanner("spanner_postgresql_add_column");
     samples::AddColumn(database_admin_client, database);
@@ -820,8 +822,7 @@ int RunAll() {
     SampleBanner("spanner_postgresql_batch_dml");
     samples::BatchDml(client);
 
-    SampleBanner("spanner_postgresql_drop_tables");
-    samples::DropTables(database_admin_client, database);
+    helpers::DropTables(database_admin_client, database);
 
     SampleBanner("spanner_postgresql_case_sensitivity");
     samples::CaseSensitivity(database_admin_client, database, client);
@@ -838,8 +839,7 @@ int RunAll() {
     SampleBanner("spanner_postgresql_functions");
     samples::Functions(client);
 
-    SampleBanner("spanner_postgresql_drop_tables");
-    samples::DropTables(database_admin_client, database);
+    helpers::DropTables(database_admin_client, database);
 
     SampleBanner("spanner_postgresql_interleaved_table");
     samples::InterleavedTable(database_admin_client, database);
