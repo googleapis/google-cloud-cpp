@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/admin/database_admin_client.h"
+#include "google/cloud/spanner/bytes.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/instance.h"
+#include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
@@ -34,6 +36,15 @@
 
 namespace {
 namespace samples {
+
+// [START spanner_postgresql_create_clients]
+void CreateClients(google::cloud::spanner::Database const& database) {
+  google::cloud::spanner_admin::DatabaseAdminClient database_admin_client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  google::cloud::spanner::Client client(
+      google::cloud::spanner::MakeConnection(database));
+}
+// [END spanner_postgresql_create_clients]
 
 // [START spanner_postgresql_create_database]
 void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
@@ -57,7 +68,7 @@ void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
             SingerId   BIGINT NOT NULL,
             FirstName  CHARACTER VARYING(1024),
             LastName   CHARACTER VARYING(1024),
-            singerInfo BYTEA,
+            SingerInfo BYTEA,
             PRIMARY KEY(singerid)
         )
       )""",
@@ -66,8 +77,16 @@ void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
             AlbumId    BIGINT NOT NULL,
             SingerId   BIGINT NOT NULL,
             AlbumTitle CHARACTER VARYING,
-            PRIMARY KEY(AlbumId, SingerId),
+            PRIMARY KEY(SingerId, AlbumId),
             FOREIGN KEY(SingerId) REFERENCES Singers(SingerId)
+        )
+      )""",
+      R"""(
+        CREATE TABLE users (
+            user_id    BIGINT NOT NULL,
+            user_name  CHARACTER VARYING(1024),
+            active     BOOLEAN,
+            PRIMARY KEY(user_id)
         )
       )""",
   };
@@ -93,33 +112,15 @@ void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
 }
 // [END spanner_postgresql_add_column]
 
-// [START spanner_postgresql_create_storing_index]
-void CreateStoringIndex(
-    google::cloud::spanner_admin::DatabaseAdminClient client,
-    google::cloud::spanner::Database const& database) {
-  std::vector<std::string> statements = {
-      R"""(
-        CREATE INDEX AlbumsByAlbumTitle2
-            ON Albums (AlbumTitle NULLS FIRST)
-            INCLUDE (MarketingBudget)
-      )""",
-  };
-  auto metadata =
-      client.UpdateDatabaseDdl(database.FullName(), statements).get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
-  std::cout << "Index added.\nNew DDL:\n" << metadata->DebugString();
-}
-// [END spanner_postgresql_create_storing_index]
-
 void InsertData(google::cloud::spanner::Client client) {
   auto insert_singers =  //
-      google::cloud::spanner::InsertOrUpdateMutationBuilder(
+      google::cloud::spanner::InsertMutationBuilder(
           "Singers", {"SingerId", "FirstName", "LastName"})
-          .EmplaceRow(1, "Bruce", "Allison")
-          .EmplaceRow(2, "Alice", "Bruxelles")
+          .EmplaceRow(1, "Marc", "Richards")
+          .EmplaceRow(2, "Catalina", "Smith")
           .Build();
-  auto insert_albums =
-      google::cloud::spanner::InsertOrUpdateMutationBuilder(
+  auto insert_albums =  //
+      google::cloud::spanner::InsertMutationBuilder(
           "Albums", {"SingerId", "AlbumId", "AlbumTitle", "MarketingBudget"})
           .EmplaceRow(1, 1, "Total Junk", 100000)
           .EmplaceRow(1, 2, "Go, Go, Go", 200000)
@@ -127,21 +128,28 @@ void InsertData(google::cloud::spanner::Client client) {
           .EmplaceRow(2, 2, "Forever Hold Your Peace", 400000)
           .EmplaceRow(2, 3, "Terrified", 500000)
           .Build();
-  auto commit = client.Commit(
-      google::cloud::spanner::Mutations{insert_singers, insert_albums});
+  auto insert_users =  //
+      google::cloud::spanner::InsertMutationBuilder(
+          "users", {"user_id", "user_name", "active"})
+          .EmplaceRow(1, "User 1", false)
+          .EmplaceRow(2, "User 2", false)
+          .EmplaceRow(3, "User 3", true)
+          .Build();
+  auto commit = client.Commit(google::cloud::spanner::Mutations{
+      insert_singers, insert_albums, insert_users});
   if (!commit) throw std::runtime_error(commit.status().message());
   std::cout << "Insert was successful.\n";
 }
 
 // [START spanner_postgresql_query_with_parameter]
 void QueryWithParameter(google::cloud::spanner::Client client) {
-  std::cout << "Listing all singers with a last name that starts with 'A'\n";
-  google::cloud::spanner::SqlStatement select(
+  std::cout << "Listing all singers with a last name that starts with 'S'\n";
+  auto sql = google::cloud::spanner::SqlStatement(
       "SELECT SingerId, FirstName, LastName FROM Singers"
-      " WHERE LastName LIKE $1",
-      {{"p1", google::cloud::spanner::Value("A%")}});
+      "  WHERE LastName LIKE $1",
+      {{"p1", google::cloud::spanner::Value("S%")}});
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
-  auto rows = client.ExecuteQuery(std::move(select));
+  auto rows = client.ExecuteQuery(std::move(sql));
   for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
@@ -171,14 +179,14 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
 
   // A helper to update the budget for the given album and singer.
   auto update_budget = [&](google::cloud::spanner::Transaction txn,
-                           std::int64_t album_id, std::int64_t singer_id,
+                           std::int64_t singer_id, std::int64_t album_id,
                            std::int64_t budget) {
     auto sql = google::cloud::spanner::SqlStatement(
         "UPDATE Albums SET MarketingBudget = $1"
-        "  WHERE AlbumId = $2 AND SingerId = $3",
+        "  WHERE SingerId = $2 AND AlbumId = $3",
         {{"p1", google::cloud::spanner::Value(budget)},
-         {"p2", google::cloud::spanner::Value(album_id)},
-         {"p3", google::cloud::spanner::Value(singer_id)}});
+         {"p2", google::cloud::spanner::Value(singer_id)},
+         {"p3", google::cloud::spanner::Value(album_id)}});
     return client.ExecuteDml(std::move(txn), std::move(sql));
   };
 
@@ -207,6 +215,444 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
 }
 // [END spanner_postgresql_dml_getting_started_update]
 
+// [START spanner_postgresql_batch_dml]
+void BatchDml(google::cloud::spanner::Client client) {
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction const& txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        std::vector<google::cloud::spanner::SqlStatement> sql = {
+            google::cloud::spanner::SqlStatement(
+                "INSERT INTO Singers (SingerId, FirstName, LastName)"
+                "    VALUES ($1, $2, $3)",
+                {{"p1", google::cloud::spanner::Value(3)},
+                 {"p2", google::cloud::spanner::Value("Alice")},
+                 {"p3", google::cloud::spanner::Value("Trentor")}}),
+            google::cloud::spanner::SqlStatement(
+                "INSERT INTO Singers (SingerId, FirstName, LastName)"
+                "    VALUES ($1, $2, $3)",
+                {{"p1", google::cloud::spanner::Value(4)},
+                 {"p2", google::cloud::spanner::Value("Lea")},
+                 {"p3", google::cloud::spanner::Value("Martin")}}),
+        };
+        auto result = client.ExecuteBatchDml(txn, std::move(sql));
+        if (!result) return std::move(result).status();
+        for (std::size_t i = 0; i < result->stats.size(); ++i) {
+          std::cout << result->stats[i].row_count << " row(s) affected"
+                    << " for statement " << (i + 1) << ".\n";
+        }
+        // Batch operations may have partial failures, in which case
+        // ExecuteBatchDml() returns with success, but the application
+        // should verify that all statements completed successfully.
+        if (!result->status.ok()) return result->status;
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Update was successful.\n";
+}
+// [END spanner_postgresql_batch_dml]
+
+void DropTables(google::cloud::spanner_admin::DatabaseAdminClient client,
+                google::cloud::spanner::Database const& database) {
+  std::vector<std::string> statements = {
+      R"""(
+        DROP TABLE Albums
+      )""",
+      R"""(
+        DROP TABLE Singers
+      )""",
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Tables dropped.\nNew DDL:\n" << metadata->DebugString();
+}
+
+// [START spanner_postgresql_case_sensitivity]
+void CaseSensitivity(
+    google::cloud::spanner_admin::DatabaseAdminClient admin_client,
+    google::cloud::spanner::Database const& database,
+    google::cloud::spanner::Client client) {
+  std::vector<std::string> statements = {
+      R"""(
+        CREATE TABLE Singers (
+            -- SingerId will be folded to "singerid"
+            SingerId        BIGINT NOT NULL,
+            -- FirstName and LastName are double-quoted and will therefore
+            -- retain their mixed case and are case-sensitive. This means
+            -- that any statement that references any of these columns must
+            -- use double quotes.
+            "FirstName"     CHARACTER VARYING(1024),
+            "LastName"      CHARACTER VARYING(1024),
+            SingerInfo      BYTEA,
+            PRIMARY KEY(singerid)
+        )
+      )""",
+      R"""(
+        CREATE TABLE Albums (
+            SingerId        BIGINT NOT NULL,
+            AlbumId         BIGINT NOT NULL,
+            AlbumTitle      CHARACTER VARYING,
+            MarketingBudget BIGINT,
+            PRIMARY KEY(SingerId, AlbumId),
+            FOREIGN KEY(SingerId) REFERENCES Singers(SingerId)
+        )
+      )""",
+  };
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
+
+  // Column names in mutations are always case-insensitive, regardless
+  // of whether the columns were double-quoted or not during creation.
+  auto insert_singers =  //
+      google::cloud::spanner::InsertMutationBuilder(
+          "Singers", {"singerid", "firstname", "lastname"})
+          .EmplaceRow(1, "Marc", "Richards")
+          .EmplaceRow(2, "Catalina", "Smith")
+          .Build();
+  auto commit =
+      client.Commit(google::cloud::spanner::Mutations{insert_singers});
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Insert was successful.\n";
+
+  // DML statements must also follow the PostgreSQL case rules.
+  commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(
+            R"""(
+                INSERT INTO Singers (SingerId, "FirstName", "LastName")
+                    VALUES (3, 'Alice', 'Trentor')
+            )""");
+        auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
+        if (!insert) return std::move(insert).status();
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Insert was successful.\n";
+
+  auto sql = google::cloud::spanner::SqlStatement("SELECT * FROM Singers");
+  auto rows = client.ExecuteQuery(std::move(sql));
+  for (auto const& row : rows) {
+    if (!row) throw std::runtime_error(row.status().message());
+
+    // SingerId is automatically folded to lower case. Accessing the
+    // column by its name must therefore use all lower-case letters.
+    if (auto singer_id = row->get<std::int64_t>("singerid")) {
+      std::cout << "SingerId: " << *singer_id << "\t";
+    } else {
+      std::cerr << singer_id.status();
+    }
+
+    // FirstName and LastName were double-quoted during creation,
+    // and retain their mixed case when returned in a row.
+    if (auto first_name = row->get<std::string>("FirstName")) {
+      std::cout << "FirstName: " << *first_name << "\t";
+    } else {
+      std::cerr << first_name.status();
+    }
+    if (auto last_name = row->get<std::string>("LastName")) {
+      std::cout << "LastName: " << *last_name;
+    } else {
+      std::cerr << last_name.status();
+    }
+    std::cout << "\n";
+  }
+
+  // Aliases are also identifiers, and specifying an alias in
+  // double quotes will make the alias retain its case.
+  sql = google::cloud::spanner::SqlStatement(R"""(
+      SELECT singerid AS "SingerId",
+          CONCAT("FirstName", ' '::VARCHAR, "LastName") AS "FullName"
+          FROM Singers
+  )""");
+  rows = client.ExecuteQuery(std::move(sql));
+  for (auto const& row : rows) {
+    if (!row) throw std::runtime_error(row.status().message());
+
+    // The aliases are double-quoted and therefore retain their mixed case.
+    if (auto singer_id = row->get<std::int64_t>("SingerId")) {
+      std::cout << "SingerId: " << *singer_id << "\t";
+    } else {
+      std::cerr << singer_id.status();
+    }
+    if (auto full_name = row->get<std::string>("FullName")) {
+      std::cout << "FullName: " << *full_name;
+    } else {
+      std::cerr << full_name.status();
+    }
+    std::cout << "\n";
+  }
+}
+// [END spanner_postgresql_case_sensitivity]
+
+// [START spanner_postgresql_cast_data_type]
+void CastDataType(google::cloud::spanner::Client client) {
+  // The `::` operator can be used to cast from one data type to another.
+  auto sql = google::cloud::spanner::SqlStatement(R"""(
+      SELECT 1::VARCHAR as str,
+             '2'::INT as int,
+             3::DECIMAL as dec,
+             '4'::BYTEA as bytes,
+             5::FLOAT as float,
+             'true'::BOOL as bool,
+             '2021-11-03T09:35:01UTC'::TIMESTAMPTZ as timestamp
+  )""");
+  using RowType =
+      std::tuple<std::string, std::int64_t, google::cloud::spanner::Numeric,
+                 google::cloud::spanner::Bytes, double, bool,
+                 google::cloud::spanner::Timestamp>;
+  auto rows = client.ExecuteQuery(std::move(sql));
+  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "String:    " << std::get<0>(*row) << "\n";
+    std::cout << "Int:       " << std::get<1>(*row) << "\n";
+    std::cout << "Decimal:   " << std::get<2>(*row) << "\n";
+    std::cout << "Bytes:     " << std::get<3>(*row) << "\n";
+    std::cout << "Float:     " << std::get<4>(*row) << "\n";
+    std::cout << "Bool:      " << std::boolalpha << std::get<5>(*row) << "\n";
+    std::cout << "Timestamp: " << std::get<6>(*row) << "\n";
+  }
+}
+// [END spanner_postgresql_cast_data_type]
+
+// [START spanner_postgresql_order_nulls]
+void OrderNulls(google::cloud::spanner::Client client) {
+  // Spanner PostgreSQL follows the ORDER BY rules for NULL values of
+  // PostgreSQL. This means that:
+  //   1. NULL values are ordered last by default when a query result is
+  //      ordered in ascending order.
+  //   2. NULL values are ordered first by default when a query result is
+  //      ordered in descending order.
+  //   3. NULL values can be order first or last by specifying NULLS FIRST
+  //      or NULLS LAST in the ORDER BY clause.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(
+            R"""(
+                INSERT INTO Singers (SingerId, "FirstName", "LastName")
+                    VALUES (4, 'Cher', NULL)
+            )""");
+        auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
+        if (!insert) return std::move(insert).status();
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Insertion of NULL LastName was successful.\n";
+
+  using RowType = std::tuple<absl::optional<std::string>>;
+  for (std::string option : {"", " DESC", " NULLS FIRST", " NULLS LAST"}) {
+    auto sql = google::cloud::spanner::SqlStatement(
+        R"""(SELECT "LastName" FROM Singers ORDER BY "LastName")""" + option);
+    std::cout << sql.sql() << "\n";
+    auto rows = client.ExecuteQuery(std::move(sql));
+    for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      if (std::get<0>(*row).has_value()) {
+        std::cout << "    " << *std::get<0>(*row) << "\n";
+      } else {
+        std::cout << "    NULL\n";
+      }
+    }
+  }
+}
+// [END spanner_postgresql_order_nulls]
+
+// [START spanner_postgresql_dml_with_parameters]
+void DmlWithParameters(google::cloud::spanner::Client client) {
+  google::cloud::spanner::DmlResult dml_result;
+  auto commit = client.Commit(
+      [&client, &dml_result](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(
+            R"""(
+                INSERT INTO Singers (SingerId, "FirstName", "LastName")
+                    VALUES ($1, $2, $3),
+                           ($4, $5, $6)
+            )""",
+            {{"p1", google::cloud::spanner::Value(5)},
+             {"p2", google::cloud::spanner::Value("Alice")},
+             {"p3", google::cloud::spanner::Value("Henderson")},
+             {"p4", google::cloud::spanner::Value(6)},
+             {"p5", google::cloud::spanner::Value("Bruce")},
+             {"p6", google::cloud::spanner::Value("Allison")}});
+        auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
+        if (!insert) return std::move(insert).status();
+        dml_result = *std::move(insert);
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Inserted " << dml_result.RowsModified() << " singers\n";
+}
+// [END spanner_postgresql_dml_with_parameters]
+
+// [START spanner_postgresql_functions]
+void Functions(google::cloud::spanner::Client client) {
+  // Use the PostgreSQL `to_timestamp` function to convert a number of
+  // seconds after the Unix epoch to a timestamp.
+  //   $ date --utc --iso-8601=seconds --date=@1284352323
+  //   2010-09-13T04:32:03+00:00
+  auto sql = google::cloud::spanner::SqlStatement(R"""(
+      SELECT to_timestamp(1284352323) AS t
+  )""");
+  using RowType = std::tuple<google::cloud::spanner::Timestamp>;
+  auto rows = client.ExecuteQuery(std::move(sql));
+  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "1284352323 seconds after the epoch is " << std::get<0>(*row)
+              << "\n";
+  }
+}
+// [END spanner_postgresql_functions]
+
+// [START spanner_postgresql_interleaved_table]
+void InterleavedTable(google::cloud::spanner_admin::DatabaseAdminClient client,
+                      google::cloud::spanner::Database const& database) {
+  // The Spanner PostgreSQL dialect extends the PostgreSQL dialect with
+  // certain Spanner specific features, such as interleaved tables. See
+  // https://cloud.google.com/spanner/docs/postgresql/data-definition-language#create_table
+  // for the full CREATE TABLE syntax.
+  std::vector<std::string> statements = {
+      R"""(
+        CREATE TABLE Singers (
+            SingerId        BIGINT NOT NULL,
+            FirstName       CHARACTER VARYING(1024) NOT NULL,
+            LastName        CHARACTER VARYING(1024) NOT NULL,
+            PRIMARY KEY(SingerId)
+        )
+      )""",
+      R"""(
+        CREATE TABLE Albums (
+            SingerId        BIGINT NOT NULL,
+            AlbumId         BIGINT NOT NULL,
+            AlbumTitle      CHARACTER VARYING NOT NULL,
+            MarketingBudget BIGINT,
+            PRIMARY KEY(SingerId, AlbumId)
+        ) INTERLEAVE IN PARENT Singers ON DELETE CASCADE
+      )""",
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Tables created.\nNew DDL:\n" << metadata->DebugString();
+}
+// [END spanner_postgresql_interleaved_table]
+
+// [START spanner_postgresql_create_storing_index]
+void CreateStoringIndex(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    google::cloud::spanner::Database const& database) {
+  std::vector<std::string> statements = {
+      R"""(
+        CREATE INDEX AlbumsByAlbumTitle
+            ON Albums (AlbumTitle NULLS FIRST)
+            INCLUDE (MarketingBudget)
+      )""",
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Index added.\nNew DDL:\n" << metadata->DebugString();
+}
+// [END spanner_postgresql_create_storing_index]
+
+// [START spanner_postgresql_information_schema]
+void InformationSchema(
+    google::cloud::spanner_admin::DatabaseAdminClient admin_client,
+    google::cloud::spanner::Database const& database,
+    google::cloud::spanner::Client client) {
+  std::vector<std::string> statements = {
+      R"""(
+        CREATE TABLE Venues (
+            VenueId  BIGINT NOT NULL PRIMARY KEY,
+            Name     CHARACTER VARYING(1024) NOT NULL,
+            Revenues NUMERIC,
+            Picture  BYTEA
+        )
+      )""",
+  };
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  if (!metadata) throw std::runtime_error(metadata.status().message());
+  std::cout << "Table created.\nNew DDL:\n" << metadata->DebugString();
+
+  // Get all the user tables in the database. PostgreSQL uses the `public`
+  // schema for user tables. The table_catalog is equal to the database name.
+  // The `user_defined_` columns are only available for PostgreSQL databases.
+  auto sql = google::cloud::spanner::SqlStatement(R"""(
+      SELECT table_catalog, table_schema, table_name,
+             user_defined_type_catalog,
+             user_defined_type_schema,
+             user_defined_type_name
+          FROM INFORMATION_SCHEMA.tables
+          WHERE table_schema = 'public'
+  )""");
+  using RowType =
+      std::tuple<absl::optional<std::string>, std::string, std::string,
+                 absl::optional<std::string>, absl::optional<std::string>,
+                 absl::optional<std::string>>;
+  auto rows = client.ExecuteQuery(std::move(sql));
+  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::string user_defined_type = "null";
+    if (std::get<3>(*row).has_value()) {
+      user_defined_type = std::get<3>(*row).value() + "." +
+                          std::get<4>(*row).value() + "." +
+                          std::get<5>(*row).value();
+    }
+    std::cout << "Table: " << std::get<2>(*row)
+              << " (User defined type: " << user_defined_type << ")\n";
+  }
+}
+// [END spanner_postgresql_information_schema]
+
+// [START spanner_postgresql_numeric_data_type]
+void NumericDataType(google::cloud::spanner::Client client) {
+  /*
+   * Remaining samples to add:
+   *   - Insert a Venue with a valid for the Revenues column.
+   *   - insert a Venue with a NULL value for the Revenues column.
+   *   - insert a Venue with a NaN value for the Revenues column.
+   *   - Mutations can also be used to insert/update NUMERIC values,
+   *     including NaN values.
+   */
+
+  // Get all Venues and inspect the Revenues values.
+  auto sql = google::cloud::spanner::SqlStatement(R"""(
+      SELECT Name, Revenues FROM Venues
+  )""");
+  using RowType =
+      std::tuple<std::string, absl::optional<google::cloud::spanner::Numeric>>;
+  auto rows = client.ExecuteQuery(std::move(sql));
+  for (auto const& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    if (!std::get<1>(*row).has_value()) continue;
+    std::cout << "Revenues of " << std::get<0>(*row) << ": "
+              << *std::get<1>(*row) << "\n";
+  }
+}
+// [END spanner_postgresql_numeric_data_type]
+
+// [START spanner_postgresql_partitioned_dml]
+void PartitionedDml(google::cloud::spanner::Client client) {
+  // Spanner PostgreSQL has the same transaction limits as normal
+  // Spanner. This includes a maximum of 20,000 mutations in a single
+  // read/write transaction. Large update operations can be executed using
+  // Partitioned DML. This is also supported on Spanner PostgreSQL. See
+  // https://cloud.google.com/spanner/docs/dml-partitioned for information.
+  auto sql = google::cloud::spanner::SqlStatement(R"""(
+      DELETE FROM users WHERE active = FALSE
+  )""");
+  auto result = client.ExecutePartitionedDml(std::move(sql));
+  if (!result) throw std::runtime_error(result.status().message());
+  // The returned count is the lower bound on the number of rows modified.
+  std::cout << "Deleted at least " << result->row_count_lower_bound
+            << " inactive users\n";
+}
+// [END spanner_postgresql_partitioned_dml]
+
 void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                   google::cloud::spanner::Database const& database) {
   auto status = client.DropDatabase(database.FullName());
@@ -228,6 +674,13 @@ google::cloud::spanner::Database Database(std::vector<std::string> argv) {
 
 using CommandType = std::function<void(std::vector<std::string>)>;
 
+CommandType Command(void (*sample)(google::cloud::spanner::Database const&)) {
+  return [sample](std::vector<std::string> argv) {
+    auto database = Database(std::move(argv));
+    sample(database);
+  };
+}
+
 CommandType Command(
     void (*sample)(google::cloud::spanner_admin::DatabaseAdminClient,
                    google::cloud::spanner::Database const&)) {
@@ -248,6 +701,19 @@ CommandType Command(void (*sample)(google::cloud::spanner::Client)) {
   };
 }
 
+CommandType Command(void (*sample)(
+    google::cloud::spanner_admin::DatabaseAdminClient,
+    google::cloud::spanner::Database const&, google::cloud::spanner::Client)) {
+  return [sample](std::vector<std::string> argv) {
+    auto database = Database(std::move(argv));
+    google::cloud::spanner_admin::DatabaseAdminClient admin_client(
+        google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+    google::cloud::spanner::Client client(
+        google::cloud::spanner::MakeConnection(database));
+    sample(std::move(admin_client), database, std::move(client));
+  };
+}
+
 CommandType HelpCommand(std::map<std::string, CommandType>& commands) {
   return [&commands](std::vector<std::string> const&) {
     std::cout << "Available commands are:\n";
@@ -260,13 +726,25 @@ CommandType HelpCommand(std::map<std::string, CommandType>& commands) {
 int RunOneCommand(std::vector<std::string> argv,
                   std::string const& extra_help) {
   std::map<std::string, CommandType> commands = {
+      {"create-clients", Command(samples::CreateClients)},
       {"create-database", Command(samples::CreateDatabase)},
       {"create-tables", Command(samples::CreateTables)},
       {"add-column", Command(samples::AddColumn)},
-      {"create-storing-index", Command(samples::CreateStoringIndex)},
       {"insert-data", Command(samples::InsertData)},
       {"query-with-parameter", Command(samples::QueryWithParameter)},
       {"dml-getting-started-update", Command(samples::DmlGettingStartedUpdate)},
+      {"batch-dml", Command(samples::BatchDml)},
+      {"drop-tables", Command(samples::DropTables)},
+      {"case-sensitivity", Command(samples::CaseSensitivity)},
+      {"cast-data-type", Command(samples::CastDataType)},
+      {"dml-with-parameters", Command(samples::DmlWithParameters)},
+      {"order-nulls", Command(samples::OrderNulls)},
+      {"functions", Command(samples::Functions)},
+      {"interleaved-table", Command(samples::InterleavedTable)},
+      {"create-storing-index", Command(samples::CreateStoringIndex)},
+      {"numeric-data-type", Command(samples::NumericDataType)},
+      {"information-schema", Command(samples::InformationSchema)},
+      {"partitioned-dml", Command(samples::PartitionedDml)},
       {"drop-database", Command(samples::DropDatabase)},
       {"help", HelpCommand(commands)},
   };
@@ -311,47 +789,77 @@ int RunAll() {
   google::cloud::spanner::Instance instance(project_id, instance_id);
   google::cloud::spanner::Database database(instance, database_id);
 
+  SampleBanner("spanner_postgresql_create_clients");
+  samples::CreateClients(database);
+
   google::cloud::spanner_admin::DatabaseAdminClient database_admin_client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
 
   SampleBanner("spanner_postgresql_create_database");
   samples::CreateDatabase(database_admin_client, database);
 
-  SampleBanner("spanner_postgresql_create_tables");
-  samples::CreateTables(database_admin_client, database);
+  try {
+    SampleBanner("spanner_postgresql_create_tables");
+    samples::CreateTables(database_admin_client, database);
 
-  SampleBanner("spanner_postgresql_add_column");
-  samples::AddColumn(database_admin_client, database);
+    SampleBanner("spanner_postgresql_add_column");
+    samples::AddColumn(database_admin_client, database);
 
-  SampleBanner("spanner_postgresql_create_storing_index");
-  samples::CreateStoringIndex(database_admin_client, database);
+    google::cloud::spanner::Client client(
+        google::cloud::spanner::MakeConnection(database));
 
-  google::cloud::spanner::Client client(
-      google::cloud::spanner::MakeConnection(database));
+    SampleBanner("spanner_insert_data");
+    samples::InsertData(client);
 
-  SampleBanner("spanner_insert_data");
-  samples::InsertData(client);
+    SampleBanner("spanner_postgresql_query_with_parameter");
+    samples::QueryWithParameter(client);
 
-  SampleBanner("spanner_postgresql_query_with_parameter");
-  samples::QueryWithParameter(client);
+    SampleBanner("spanner_postgresql_dml_getting_started_update");
+    samples::DmlGettingStartedUpdate(client);
 
-  SampleBanner("spanner_postgresql_dml_getting_started_update");
-  samples::DmlGettingStartedUpdate(client);
+    SampleBanner("spanner_postgresql_batch_dml");
+    samples::BatchDml(client);
 
-  /*
-   * Remaining samples to add:
-   *   spanner_postgresql_batch_dml
-   *   spanner_postgresql_case_sensitivity
-   *   spanner_postgresql_cast_data_type
-   *   spanner_postgresql_create_clients
-   *   spanner_postgresql_dml_with_parameters
-   *   spanner_postgresql_functions
-   *   spanner_postgresql_information_schema
-   *   spanner_postgresql_interleaved_table
-   *   spanner_postgresql_order_nulls
-   *   spanner_postgresql_partitioned_dml
-   *   spanner_postgresql_numeric_data_type
-   */
+    SampleBanner("spanner_postgresql_drop_tables");
+    samples::DropTables(database_admin_client, database);
+
+    SampleBanner("spanner_postgresql_case_sensitivity");
+    samples::CaseSensitivity(database_admin_client, database, client);
+
+    SampleBanner("spanner_postgresql_cast_data_type");
+    samples::CastDataType(client);
+
+    SampleBanner("spanner_postgresql_dml_with_parameters");
+    samples::DmlWithParameters(client);
+
+    SampleBanner("spanner_postgresql_order_nulls");
+    samples::OrderNulls(client);
+
+    SampleBanner("spanner_postgresql_functions");
+    samples::Functions(client);
+
+    SampleBanner("spanner_postgresql_drop_tables");
+    samples::DropTables(database_admin_client, database);
+
+    SampleBanner("spanner_postgresql_interleaved_table");
+    samples::InterleavedTable(database_admin_client, database);
+
+    SampleBanner("spanner_postgresql_create_storing_index");
+    samples::CreateStoringIndex(database_admin_client, database);
+
+    SampleBanner("spanner_postgresql_information_schema");
+    samples::InformationSchema(database_admin_client, database, client);
+
+    SampleBanner("spanner_postgresql_numeric_data_type");
+    samples::NumericDataType(client);
+
+    SampleBanner("spanner_postgresql_partitioned_dml");
+    samples::PartitionedDml(client);
+  } catch (...) {
+    // Try to clean up after a failure.
+    samples::DropDatabase(database_admin_client, database);
+    throw;
+  }
 
   SampleBanner("spanner_drop_database");
   samples::DropDatabase(database_admin_client, database);
@@ -379,7 +887,7 @@ int main(int ac, char* av[]) try {
   }
   return RunOneCommand({av, av + ac}, extra_help);
 } catch (std::exception const& ex) {
-  std::cerr << ex.what() << "\n";
+  std::cerr << "\n" << ex.what() << "\n";
   google::cloud::LogSink::Instance().Flush();
   return 1;
 }
