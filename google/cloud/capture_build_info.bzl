@@ -18,7 +18,7 @@ Define a rule to capture the compile-time options.
 Our benchmarks report the compile-time build flags, as these are important to evaluate and compiler benchmark results.
 With Bazel we need to create a new rule that captures these flags.  This rule substitutes some magic strings in
 `google/cloud/internal/build_info.cc.in` to the values of several interesting compilation parameters.  The substitution
-is easy, we simply a native function in Bazel: `ctx.actions.expand_template()`.  Finding the values of the compilation
+is easy, we simply use a native Bazel function: `ctx.actions.expand_template()`.  Finding the values of the compilation
 flags requires digging into the C++ toolchain definition.  This is documented (at a high-level) here:
 
 https://bazel.build/docs/integrating-with-rules-cc
@@ -30,7 +30,6 @@ https://github.com/bazelbuild/rules_cc/blob/main/examples/my_c_compile/my_c_comp
 I found this fragment particularly useful:
 
 https://github.com/bazelbuild/rules_cc/blob/58f8e026c00a8a20767e3dc669f46ba23bc93bdb/examples/my_c_compile/my_c_compile.bzl#L40-L51
-
 """
 
 load("@rules_cc//cc:action_names.bzl", "CPP_COMPILE_ACTION_NAME")
