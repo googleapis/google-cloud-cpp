@@ -123,6 +123,7 @@ google_cloud_cpp_pubsublite_srcs = [
     "internal/topic_stats_option_defaults.cc",
     "internal/topic_stats_stub.cc",
     "internal/topic_stats_stub_factory.cc",
+    "message_metadata.cc",
     "topic_stats_client.cc",
     "topic_stats_connection.cc",
     "topic_stats_connection_idempotency_policy.cc",

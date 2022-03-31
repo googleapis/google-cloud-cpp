@@ -37,8 +37,8 @@ TEST(MessageMetadata, ValidParse) {
   std::string input = std::to_string(partition) + ":" + std::to_string(offset);
   auto mm = MakeMessageMetadata(input);
   EXPECT_TRUE(mm.ok());
-  EXPECT_EQ(mm->partition_, partition);
-  EXPECT_THAT(mm->cursor_, IsProtoEqual(cursor));
+  EXPECT_EQ(mm->partition, partition);
+  EXPECT_THAT(mm->cursor, IsProtoEqual(cursor));
 }
 
 TEST(MessageMetadata, InvalidParseBadPartition) {

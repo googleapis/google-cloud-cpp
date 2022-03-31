@@ -37,35 +37,22 @@ struct MessageMetadata {
    * Serializes current object. Serialization format is not stable cross-binary.
    */
   std::string Serialize() const {
-    return absl::StrCat(std::to_string(partition_), ":",
-                        std::to_string(cursor_.offset()));
+    return absl::StrCat(std::to_string(partition), ":",
+                        std::to_string(cursor.offset()));
   }
 
-  std::int64_t partition_;
-  google::cloud::pubsublite::v1::Cursor cursor_;
+  std::int64_t partition;
+  google::cloud::pubsublite::v1::Cursor cursor;
 };
 
 /**
  * Parses a string into a MessageMetadata object. The formatting of this
  * string is not stable cross-binary.
  */
-StatusOr<MessageMetadata> MakeMessageMetadata(std::string const& input) {
-  std::vector<std::string> splits = absl::StrSplit(input, ':');
-  std::int64_t partition;
-  std::int64_t offset;
-  if (splits.size() == 2 && absl::SimpleAtoi(splits[0], &partition) &&
-      absl::SimpleAtoi(splits[1], &offset)) {
-    google::cloud::pubsublite::v1::Cursor cursor;
-    cursor.set_offset(offset);
-    return MessageMetadata{partition, std::move(cursor)};
-  }
-  return Status{StatusCode::kInvalidArgument,
-                "Not able to parse `MessageMetadata`"};
-}
+StatusOr<MessageMetadata> MakeMessageMetadata(std::string const& input);
 
 inline bool operator==(MessageMetadata const& a, MessageMetadata const& b) {
-  return a.partition_ == b.partition_ &&
-         a.cursor_.offset() == b.cursor_.offset();
+  return a.partition == b.partition && a.cursor.offset() == b.cursor.offset();
 }
 
 inline bool operator!=(MessageMetadata const& a, MessageMetadata const& b) {
