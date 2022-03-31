@@ -49,9 +49,9 @@ VpcAccessServiceConnection::GetConnector(
 }
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>
-    VpcAccessServiceConnection::ListConnectors(
-        google::cloud::vpcaccess::v1::
-            ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VpcAccessServiceConnection::ListConnectors(
+    google::cloud::vpcaccess::v1::
+        ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vpcaccess::v1::Connector>>();
 }

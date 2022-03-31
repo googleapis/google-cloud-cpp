@@ -36,9 +36,9 @@ GameServerClustersServiceConnection::~GameServerClustersServiceConnection() =
     default;
 
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
-    GameServerClustersServiceConnection::ListGameServerClusters(
-        google::cloud::gaming::v1::
-            ListGameServerClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+GameServerClustersServiceConnection::ListGameServerClusters(
+    google::cloud::gaming::v1::
+        ListGameServerClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::GameServerCluster>>();
 }

@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudFunctionsServiceConnection::~CloudFunctionsServiceConnection() = default;
 
 StreamRange<google::cloud::functions::v1::CloudFunction>
-    CloudFunctionsServiceConnection::ListFunctions(
-        google::cloud::functions::v1::
-            ListFunctionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudFunctionsServiceConnection::ListFunctions(
+    google::cloud::functions::v1::
+        ListFunctionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::functions::v1::CloudFunction>>();
 }

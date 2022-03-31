@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageVersionsConnection::~ImageVersionsConnection() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-    ImageVersionsConnection::ListImageVersions(
-        google::cloud::orchestration::airflow::service::v1::
-            ListImageVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ImageVersionsConnection::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::orchestration::airflow::service::v1::ImageVersion>>();
 }

@@ -71,9 +71,9 @@ WorkflowTemplateServiceConnection::UpdateWorkflowTemplate(
 }
 
 StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-    WorkflowTemplateServiceConnection::ListWorkflowTemplates(
-        google::cloud::dataproc::v1::
-            ListWorkflowTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+WorkflowTemplateServiceConnection::ListWorkflowTemplates(
+    google::cloud::dataproc::v1::
+        ListWorkflowTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>>();
 }

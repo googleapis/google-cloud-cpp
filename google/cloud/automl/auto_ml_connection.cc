@@ -153,9 +153,9 @@ AutoMlConnection::GetModelEvaluation(
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
-    AutoMlConnection::ListModelEvaluations(
-        google::cloud::automl::v1::
-            ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AutoMlConnection::ListModelEvaluations(
+    google::cloud::automl::v1::
+        ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::automl::v1::ModelEvaluation>>();
 }

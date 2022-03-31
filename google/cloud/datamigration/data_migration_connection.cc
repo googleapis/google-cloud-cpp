@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataMigrationServiceConnection::~DataMigrationServiceConnection() = default;
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
-    DataMigrationServiceConnection::ListMigrationJobs(
-        google::cloud::clouddms::v1::
-            ListMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataMigrationServiceConnection::ListMigrationJobs(
+    google::cloud::clouddms::v1::
+        ListMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::MigrationJob>>();
 }
@@ -127,9 +127,9 @@ DataMigrationServiceConnection::GenerateSshScript(
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-    DataMigrationServiceConnection::ListConnectionProfiles(
-        google::cloud::clouddms::v1::
-            ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataMigrationServiceConnection::ListConnectionProfiles(
+    google::cloud::clouddms::v1::
+        ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>();
 }

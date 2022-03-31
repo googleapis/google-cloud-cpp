@@ -62,9 +62,9 @@ Status GroupServiceConnection::DeleteGroup(
 }
 
 StreamRange<google::api::MonitoredResource>
-    GroupServiceConnection::ListGroupMembers(
-        google::monitoring::v3::
-            ListGroupMembersRequest) {  // NOLINT(performance-unnecessary-value-param)
+GroupServiceConnection::ListGroupMembers(
+    google::monitoring::v3::
+        ListGroupMembersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResource>>();
 }

@@ -17,7 +17,7 @@
 # than to the extent that certain distros offer certain versions of software
 # that the build needs. It's fine to add more deps that are needed by the
 # `checkers.sh` build.
-FROM fedora:34
+FROM fedora:35
 ARG NCPU=4
 
 RUN dnf makecache && \

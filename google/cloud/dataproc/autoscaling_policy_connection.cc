@@ -54,9 +54,9 @@ AutoscalingPolicyServiceConnection::GetAutoscalingPolicy(
 }
 
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-    AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
-        google::cloud::dataproc::v1::
-            ListAutoscalingPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
+    google::cloud::dataproc::v1::
+        ListAutoscalingPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>>();
 }

@@ -36,9 +36,9 @@ ResourceSettingsServiceConnection::~ResourceSettingsServiceConnection() =
     default;
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
-    ResourceSettingsServiceConnection::ListSettings(
-        google::cloud::resourcesettings::v1::
-            ListSettingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ResourceSettingsServiceConnection::ListSettings(
+    google::cloud::resourcesettings::v1::
+        ListSettingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcesettings::v1::Setting>>();
 }

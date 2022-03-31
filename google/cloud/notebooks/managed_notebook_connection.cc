@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ManagedNotebookServiceConnection::~ManagedNotebookServiceConnection() = default;
 
 StreamRange<google::cloud::notebooks::v1::Runtime>
-    ManagedNotebookServiceConnection::ListRuntimes(
-        google::cloud::notebooks::v1::
-            ListRuntimesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ManagedNotebookServiceConnection::ListRuntimes(
+    google::cloud::notebooks::v1::
+        ListRuntimesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Runtime>>();
 }

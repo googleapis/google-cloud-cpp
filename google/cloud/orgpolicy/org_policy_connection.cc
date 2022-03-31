@@ -35,17 +35,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OrgPolicyConnection::~OrgPolicyConnection() = default;
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
-    OrgPolicyConnection::ListConstraints(
-        google::cloud::orgpolicy::v2::
-            ListConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+OrgPolicyConnection::ListConstraints(
+    google::cloud::orgpolicy::v2::
+        ListConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Constraint>>();
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
-    OrgPolicyConnection::ListPolicies(
-        google::cloud::orgpolicy::v2::
-            ListPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+OrgPolicyConnection::ListPolicies(
+    google::cloud::orgpolicy::v2::
+        ListPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Policy>>();
 }

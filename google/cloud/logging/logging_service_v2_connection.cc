@@ -46,17 +46,17 @@ LoggingServiceV2Connection::WriteLogEntries(
 }
 
 StreamRange<google::logging::v2::LogEntry>
-    LoggingServiceV2Connection::ListLogEntries(
-        google::logging::v2::
-            ListLogEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+LoggingServiceV2Connection::ListLogEntries(
+    google::logging::v2::
+        ListLogEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::logging::v2::LogEntry>>();
 }
 
 StreamRange<google::api::MonitoredResourceDescriptor>
-    LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
-        google::logging::v2::
-            ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
+    google::logging::v2::
+        ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>();
 }

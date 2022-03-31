@@ -36,9 +36,9 @@ NotificationChannelServiceConnection::~NotificationChannelServiceConnection() =
     default;
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-    NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
-        google::monitoring::v3::
-            ListNotificationChannelDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
+    google::monitoring::v3::
+        ListNotificationChannelDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannelDescriptor>>();
 }
@@ -50,9 +50,9 @@ NotificationChannelServiceConnection::GetNotificationChannelDescriptor(
 }
 
 StreamRange<google::monitoring::v3::NotificationChannel>
-    NotificationChannelServiceConnection::ListNotificationChannels(
-        google::monitoring::v3::
-            ListNotificationChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotificationChannelServiceConnection::ListNotificationChannels(
+    google::monitoring::v3::
+        ListNotificationChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannel>>();
 }

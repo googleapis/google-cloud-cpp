@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
 
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-    ArtifactRegistryConnection::ListDockerImages(
-        google::devtools::artifactregistry::v1::
-            ListDockerImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ArtifactRegistryConnection::ListDockerImages(
+    google::devtools::artifactregistry::v1::
+        ListDockerImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::DockerImage>>();
 }
@@ -67,9 +67,9 @@ ArtifactRegistryConnection::ImportYumArtifacts(
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
-    ArtifactRegistryConnection::ListRepositories(
-        google::devtools::artifactregistry::v1::
-            ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ArtifactRegistryConnection::ListRepositories(
+    google::devtools::artifactregistry::v1::
+        ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Repository>>();
 }
@@ -103,9 +103,9 @@ ArtifactRegistryConnection::DeleteRepository(
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Package>
-    ArtifactRegistryConnection::ListPackages(
-        google::devtools::artifactregistry::v1::
-            ListPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ArtifactRegistryConnection::ListPackages(
+    google::devtools::artifactregistry::v1::
+        ListPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Package>>();
 }
@@ -125,9 +125,9 @@ ArtifactRegistryConnection::DeletePackage(
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Version>
-    ArtifactRegistryConnection::ListVersions(
-        google::devtools::artifactregistry::v1::
-            ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ArtifactRegistryConnection::ListVersions(
+    google::devtools::artifactregistry::v1::
+        ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Version>>();
 }
@@ -147,9 +147,9 @@ ArtifactRegistryConnection::DeleteVersion(
 }
 
 StreamRange<google::devtools::artifactregistry::v1::File>
-    ArtifactRegistryConnection::ListFiles(
-        google::devtools::artifactregistry::v1::
-            ListFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ArtifactRegistryConnection::ListFiles(
+    google::devtools::artifactregistry::v1::
+        ListFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::File>>();
 }
@@ -161,9 +161,9 @@ ArtifactRegistryConnection::GetFile(
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Tag>
-    ArtifactRegistryConnection::ListTags(
-        google::devtools::artifactregistry::v1::
-            ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ArtifactRegistryConnection::ListTags(
+    google::devtools::artifactregistry::v1::
+        ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Tag>>();
 }
