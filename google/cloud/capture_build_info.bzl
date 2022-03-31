@@ -43,7 +43,7 @@ def _capture_build_info_impl(ctx):
         requested_features = ctx.features,
         unsupported_features = ["module_maps"] + ctx.disabled_features,
     )
-    cc_source = ctx.outputs.source_file
+    cc_source = ctx.outputs.output_file
     cc_vars = cc_common.create_compile_variables(
         feature_configuration = feature_configuration,
         cc_toolchain = toolchain,
@@ -63,7 +63,7 @@ def _capture_build_info_impl(ctx):
     compilation_mode = ctx.var.get("COMPILATION_MODE", "fastbuild")
     ctx.actions.expand_template(
         template = ctx.file.template,
-        output = ctx.outputs.source_file,
+        output = ctx.outputs.output_file,
         substitutions = {
             "@CMAKE_CXX_FLAGS@": "bazel:" + compilation_mode,
             "${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}}": cc_flags,
@@ -78,7 +78,7 @@ capture_build_info = rule(
             allow_single_file = True,
             mandatory = True,
         ),
-        "source_file": attr.output(mandatory = True),
+        "output_file": attr.output(mandatory = True),
         "_cc_toolchain": attr.label(default = Label("@bazel_tools//tools/cpp:current_cc_toolchain")),
     },
     toolchains = ["@bazel_tools//tools/cpp:toolchain_type"],

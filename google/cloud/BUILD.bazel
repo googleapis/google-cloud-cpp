@@ -20,7 +20,7 @@ load(":capture_build_info.bzl", "capture_build_info")
 
 capture_build_info(
     name = "generate_build_info",
-    source_file = "internal/build_info.cc",
+    output_file = "internal/build_info.cc",
     template = "internal/build_info.cc.in",
     toolchains = [
         "@bazel_tools//tools/cpp:current_cc_toolchain",
