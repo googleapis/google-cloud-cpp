@@ -747,8 +747,7 @@ Composer ResumableParallelUploadState::CreateComposer(
                 UserIp, UserProject, WithObjectMetadata>::TPred>(options),
       std::make_tuple(IfGenerationMatch(expected_generation)));
   auto get_metadata_options = StaticTupleFilter<
-      Among<DestinationPredefinedAcl, EncryptionKey, KmsKeyName, QuotaUser,
-            UserIp, UserProject, WithObjectMetadata>::TPred>(options);
+      Among<EncryptionKey, QuotaUser, UserIp, UserProject>::TPred>(options);
   auto composer = [client, bucket_name, object_name, compose_options,
                    get_metadata_options,
                    prefix](std::vector<ComposeSourceObject> sources) mutable
