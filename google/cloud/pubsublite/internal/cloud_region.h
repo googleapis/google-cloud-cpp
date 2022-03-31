@@ -36,8 +36,8 @@ struct CloudRegion {
 };
 
 /**
- * Construct a CloudRegion from a valid region string. `region` must be
- * formatted as: <location>-<direction><number>
+ * Construct a `CloudRegion` from a valid `region` string. `region` must be
+ * formatted as: <location>-<direction><number>.
  */
 StatusOr<CloudRegion> MakeCloudRegion(std::string const& region);
 

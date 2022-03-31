@@ -40,8 +40,8 @@ struct CloudZone {
 };
 
 /**
- * Construct a CloudZone from a valid zone string. `zone` must be formatted
- * as: <location>-<direction><number>-<letter>
+ * Construct a `CloudZone` from a valid `zone` string. `zone` must be formatted
+ * as: <location>-<direction><number>-<letter>.
  */
 StatusOr<CloudZone> MakeCloudZone(std::string const& zone);
 
