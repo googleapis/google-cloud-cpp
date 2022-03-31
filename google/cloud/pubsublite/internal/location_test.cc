@@ -23,9 +23,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 namespace {
 
+using google::cloud::pubsublite_internal::MakeCloudRegion;
+using google::cloud::pubsublite_internal::MakeCloudZone;
+using google::cloud::pubsublite_internal::MakeLocation;
+
 TEST(CloudRegion, ValidRegion) {
   std::string str = "first-second";
-  auto region = CloudRegion::Parse(str);
+  auto region = MakeCloudRegion(str);
   EXPECT_TRUE(region.ok());
   EXPECT_EQ(*region, (CloudRegion{str}));
   EXPECT_EQ(region->ToString(), str);
@@ -33,7 +37,7 @@ TEST(CloudRegion, ValidRegion) {
 
 TEST(CloudRegion, InvalidRegionNoDash) {
   std::string str = "firstsecond";
-  auto region = CloudRegion::Parse(str);
+  auto region = MakeCloudRegion(str);
   EXPECT_FALSE(region.ok());
   EXPECT_EQ(region.status(),
             Status(StatusCode::kInvalidArgument, "Invalid region name"));
@@ -41,7 +45,7 @@ TEST(CloudRegion, InvalidRegionNoDash) {
 
 TEST(CloudRegion, InvalidRegionTooManyDashes) {
   std::string str = "first-second-third";
-  auto region = CloudRegion::Parse(str);
+  auto region = MakeCloudRegion(str);
   EXPECT_FALSE(region.ok());
   EXPECT_EQ(region.status(),
             Status(StatusCode::kInvalidArgument, "Invalid region name"));
@@ -51,7 +55,7 @@ TEST(CloudZone, ValidZone) {
   std::string region = "first-second";
   char zone_id = 't';
   std::string formatted_zone = region + "-" + zone_id;
-  auto zone = CloudZone::Parse(formatted_zone);
+  auto zone = MakeCloudZone(formatted_zone);
   EXPECT_TRUE(zone.ok());
   EXPECT_EQ(*zone, (CloudZone{CloudRegion{region}, zone_id}));
   EXPECT_EQ(zone->ToString(), formatted_zone);
@@ -59,7 +63,7 @@ TEST(CloudZone, ValidZone) {
 
 TEST(CloudZone, InvalidZoneNoDash) {
   std::string str = "firstsecond";
-  auto zone = CloudZone::Parse(str);
+  auto zone = MakeCloudZone(str);
   EXPECT_FALSE(zone.ok());
   EXPECT_EQ(zone.status(),
             Status(StatusCode::kInvalidArgument, "Invalid zone name"));
@@ -67,7 +71,7 @@ TEST(CloudZone, InvalidZoneNoDash) {
 
 TEST(CloudZone, InvalidZoneNoTerminalLetter) {
   std::string str = "first-second-notaletter";
-  auto zone = CloudZone::Parse(str);
+  auto zone = MakeCloudZone(str);
   EXPECT_FALSE(zone.ok());
   EXPECT_EQ(zone.status(),
             Status(StatusCode::kInvalidArgument, "Invalid zone name"));
@@ -75,7 +79,7 @@ TEST(CloudZone, InvalidZoneNoTerminalLetter) {
 
 TEST(CloudZone, InvalidZoneTooManyDashes) {
   std::string str = "first-second-t-t";
-  auto zone = CloudZone::Parse(str);
+  auto zone = MakeCloudZone(str);
   EXPECT_FALSE(zone.ok());
   EXPECT_EQ(zone.status(),
             Status(StatusCode::kInvalidArgument, "Invalid zone name"));
@@ -83,7 +87,7 @@ TEST(CloudZone, InvalidZoneTooManyDashes) {
 
 TEST(Location, ValidCloudRegion) {
   std::string str = "first-second";
-  auto location = Location::Parse(str);
+  auto location = MakeLocation(str);
   EXPECT_TRUE(location.ok());
   EXPECT_EQ(location->GetCloudRegion(), (CloudRegion{str}));
   EXPECT_EQ(location->ToString(), str);
@@ -92,7 +96,7 @@ TEST(Location, ValidCloudRegion) {
 
 TEST(Location, InvalidCloudRegion) {
   std::string str = "firstsecond";
-  auto location = Location::Parse(str);
+  auto location = MakeLocation(str);
   EXPECT_FALSE(location.ok());
   EXPECT_EQ(location.status(),
             Status(StatusCode::kInvalidArgument, "Invalid location"));
@@ -101,7 +105,7 @@ TEST(Location, InvalidCloudRegion) {
 TEST(Location, ValidCloudZone) {
   std::string region = "first-second";
   char zone_id = 't';
-  auto location = Location::Parse(region + "-" + zone_id);
+  auto location = MakeLocation(region + "-" + zone_id);
   EXPECT_TRUE(location.ok());
   EXPECT_EQ(location->GetCloudRegion(), (CloudRegion{region}));
   EXPECT_EQ(location->ToString(), region + "-" + zone_id);
@@ -110,7 +114,7 @@ TEST(Location, ValidCloudZone) {
 
 TEST(Location, InvalidCloudZone) {
   std::string str = "first-second-notaletter";
-  auto location = Location::Parse(str);
+  auto location = MakeLocation(str);
   EXPECT_FALSE(location.ok());
   EXPECT_EQ(location.status(),
             Status(StatusCode::kInvalidArgument, "Invalid location"));

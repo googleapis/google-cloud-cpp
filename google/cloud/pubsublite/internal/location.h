@@ -52,17 +52,14 @@ class Location {
     return absl::get<CloudZone>(value_).ToString();
   }
 
-  static StatusOr<Location> Parse(std::string const& location) {
-    auto possible_zone = CloudZone::Parse(location);
-    if (possible_zone.ok()) return Location{*possible_zone};
-    auto possible_region = CloudRegion::Parse(location);
-    if (possible_region.ok()) return Location{*possible_region};
-    return Status{StatusCode::kInvalidArgument, "Invalid location"};
-  }
-
  private:
   absl::variant<CloudRegion, CloudZone> const value_;
 };
+
+/**
+ * Attempts to parse a `CloudZone` or `CloudRegion` from `location`.
+ */
+StatusOr<Location> MakeLocation(std::string const& location);
 
 inline bool operator==(Location const& a, Location const& b) {
   return a.ToString() == b.ToString();

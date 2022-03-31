@@ -89,7 +89,9 @@ add_library(
     internal/alarm_registry_impl.cc
     internal/alarm_registry_impl.h
     internal/batching_options.h
+    internal/cloud_region.cc
     internal/cloud_region.h
+    internal/cloud_zone.cc
     internal/cloud_zone.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
@@ -104,6 +106,7 @@ add_library(
     internal/default_routing_policy.cc
     internal/default_routing_policy.h
     internal/futures.h
+    internal/location.cc
     internal/location.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h

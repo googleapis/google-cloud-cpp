@@ -30,18 +30,16 @@ namespace pubsublite_internal {
  * A wrapped string representing a Google Cloud region.
  */
 struct CloudRegion {
-  static StatusOr<CloudRegion> Parse(std::string const& region) {
-    std::vector<std::string> splits = absl::StrSplit(region, '-');
-    if (splits.size() != 2) {
-      return Status{StatusCode::kInvalidArgument, "Invalid region name"};
-    }
-    return CloudRegion{region};
-  }
-
   std::string ToString() const { return region; }
 
   std::string region;
 };
+
+/**
+ * Construct a CloudRegion from a valid region string. `region` must be
+ * formatted as: <location>-<direction><number>
+ */
+StatusOr<CloudRegion> MakeCloudRegion(std::string const& region);
 
 inline bool operator==(CloudRegion const& a, CloudRegion const& b) {
   return a.region == b.region;
