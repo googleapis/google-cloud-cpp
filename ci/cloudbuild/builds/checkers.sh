@@ -56,10 +56,6 @@ function sed_edit() {
 }
 export -f sed_edit
 
-# TODO(#6513): Delete this once we have clang-format version 13 and can use:
-# https://github.com/googleapis/google-cloud-cpp/issues/6513
-cp .clang-format generator/integration_tests/golden/tests
-
 # This controls the output format from bash's `time` command, which we use
 # below to time blocks of the script. A newline is automatically included.
 readonly TIMEFORMAT="... %R seconds"
