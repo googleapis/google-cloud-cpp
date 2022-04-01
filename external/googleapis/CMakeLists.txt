@@ -106,7 +106,7 @@ endforeach ()
 
 include(ExternalProject)
 
-ExternalProject_Add(
+externalproject_add(
     googleapis_download
     EXCLUDE_FROM_ALL ON
     PREFIX "${PROJECT_BINARY_DIR}/external/googleapis"
@@ -182,8 +182,8 @@ function (external_googleapis_set_version_and_alias short_name)
     set_target_properties(
         "google_cloud_cpp_${short_name}"
         PROPERTIES EXPORT_NAME google-cloud-cpp::${short_name}
-                   VERSION "${PROJECT_VERSION}" SOVERSION
-                                                ${PROJECT_VERSION_MAJOR})
+                   VERSION "${PROJECT_VERSION}"
+                   SOVERSION ${PROJECT_VERSION_MAJOR})
     add_library("google-cloud-cpp::${short_name}" ALIAS
                 "google_cloud_cpp_${short_name}")
 endfunction ()

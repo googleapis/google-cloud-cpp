@@ -37,7 +37,7 @@ add_custom_target(verify-quickstart-make ALL)
 include(ExternalProject)
 
 foreach (library IN LISTS LIBRARIES)
-    ExternalProject_Add(
+    externalproject_add(
         verify-quickstart-cmake-${library}
         EXCLUDE_FROM_ALL ON
         PREFIX "${PROJECT_BINARY_DIR}/cmake-${library}-prefix"
@@ -53,7 +53,7 @@ foreach (library IN LISTS LIBRARIES)
         LOG_OUTPUT_ON_FAILURE ON)
     add_dependencies(verify-quickstart-cmake verify-quickstart-cmake-${library})
 
-    ExternalProject_Add(
+    externalproject_add(
         verify-quickstart-makefile-${library}
         EXCLUDE_FROM_ALL ON
         PREFIX "${PROJECT_BINARY_DIR}/makefile-${library}-prefix"

@@ -105,7 +105,8 @@ if (Protobuf_FOUND)
             TARGET protobuf::libprotobuf PROPERTY INTERFACE_INCLUDE_DIRECTORIES
                                                   ${Protobuf_INCLUDE_DIR})
         set_property(
-            TARGET protobuf::libprotobuf APPEND
+            TARGET protobuf::libprotobuf
+            APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LIBRARY}
                      Threads::Threads)
     endif ()
@@ -116,7 +117,8 @@ if (Protobuf_FOUND)
             TARGET protobuf::libprotobuf-lite
             PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${Protobuf_INCLUDE_DIR})
         set_property(
-            TARGET protobuf::libprotobuf-lite APPEND
+            TARGET protobuf::libprotobuf-lite
+            APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LITE_LIBRARY}
                      Threads::Threads)
     endif ()
@@ -127,7 +129,8 @@ if (Protobuf_FOUND)
             TARGET protobuf::libprotoc PROPERTY INTERFACE_INCLUDE_DIRECTORIES
                                                 ${Protobuf_INCLUDE_DIR})
         set_property(
-            TARGET protobuf::libprotoc APPEND
+            TARGET protobuf::libprotoc
+            APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_PROTOC_LIBRARY}
                      Threads::Threads)
     endif ()
@@ -197,4 +200,4 @@ endif ()
 
 find_package_handle_standard_args(
     ProtobufWithTargets REQUIRED_VARS ProtobufWithTargets_FOUND
-    ProtobufWithTargets_VERSION)
+                                      ProtobufWithTargets_VERSION)

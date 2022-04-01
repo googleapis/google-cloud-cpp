@@ -41,7 +41,7 @@ RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/downloa
     chmod 755 /usr/local/bin/shfmt
 
 RUN pip3 install --upgrade pip
-RUN pip3 install cmake_format==0.6.8
+RUN pip3 install cmake_format==0.6.13
 RUN pip3 install black==22.3.0
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64" && \
