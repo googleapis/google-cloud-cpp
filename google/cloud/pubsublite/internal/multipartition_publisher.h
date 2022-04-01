@@ -36,6 +36,7 @@ namespace pubsublite_internal {
 class MultipartitionPublisher
     : public Publisher<google::cloud::pubsublite::MessageMetadata> {
  private:
+  // TODO(18suresha): find more appropriate/common place for this alias
   using Partition = std::uint32_t;
   using PartitionPublisherFactory =
       std::function<std::unique_ptr<PartitionPublisher>(Partition)>;
