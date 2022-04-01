@@ -7,7 +7,7 @@ github:
 name: asan-ci
 substitutions:
   _BUILD_NAME: asan
-  _DISTRO: fedora-34
+  _DISTRO: fedora-35
   _TRIGGER_TYPE: ci
 tags:
 - ci
