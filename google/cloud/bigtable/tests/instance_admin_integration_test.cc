@@ -26,8 +26,6 @@
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
-// TODO(#5929) - remove once deprecated functions are removed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -340,38 +338,6 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
 
   // Delete instance
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
-}
-
-/// @test Verify that IAM Policy APIs work as expected.
-TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
-  auto const instance_id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-
-  // Create instance prerequisites for cluster operations
-  auto config = IntegrationTestConfig(instance_id, zone_a_,
-                                      bigtable::InstanceConfig::PRODUCTION, 3);
-  ASSERT_STATUS_OK(instance_admin_->CreateInstance(config).get());
-
-  auto iam_bindings = google::cloud::IamBindings(
-      "roles/bigtable.reader", {"serviceAccount:" + service_account_});
-
-  auto initial_policy =
-      instance_admin_->SetIamPolicy(instance_id, iam_bindings);
-  ASSERT_STATUS_OK(initial_policy);
-
-  auto fetched_policy = instance_admin_->GetIamPolicy(instance_id);
-  ASSERT_STATUS_OK(fetched_policy);
-
-  EXPECT_EQ(initial_policy->version, fetched_policy->version);
-  EXPECT_EQ(initial_policy->etag, fetched_policy->etag);
-
-  auto permission_set = instance_admin_->TestIamPermissions(
-      instance_id, {"bigtable.tables.list", "bigtable.tables.delete"});
-  ASSERT_STATUS_OK(permission_set);
-
-  EXPECT_EQ(2, permission_set->size());
-  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 
 /// @test Verify that IAM Policy Native APIs work as expected.
