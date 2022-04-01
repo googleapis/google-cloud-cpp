@@ -60,7 +60,7 @@ class MultipartitionPublisher
 
  private:
   struct PublishState {
-    std::uint32_t num_partitions;
+    Partition num_partitions;
     google::cloud::pubsublite::v1::PubSubMessage message;
     std::shared_ptr<
         promise<StatusOr<google::cloud::pubsublite::MessageMetadata>>>
@@ -69,7 +69,7 @@ class MultipartitionPublisher
 
   void TriggerPublisherCreation();
 
-  future<StatusOr<std::uint32_t>> GetNumPartitions();
+  future<StatusOr<Partition>> GetNumPartitions();
 
   void RouteAndPublish(PublishState& state);
 

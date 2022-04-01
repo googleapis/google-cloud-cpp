@@ -58,20 +58,20 @@ future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
       admin_connection_->AsyncGetTopicPartitions(topic_partitions_request_);
   return topic_partitions_request.then([](future<StatusOr<TopicPartitions>> f) {
     auto partitions = f.get();
-    if (!partitions) return StatusOr<std::uint32_t>{partitions.status()};
+    if (!partitions) return StatusOr<Partition>{partitions.status()};
     if (partitions->partition_count() >= UINT32_MAX) {
-      return StatusOr<std::uint32_t>{
+      return StatusOr<Partition>{
           Status{StatusCode::kFailedPrecondition,
                  absl::StrCat("Returned partition count is too big: ",
                               std::to_string(partitions->partition_count()))}};
     }
-    return StatusOr<std::uint32_t>{
-        static_cast<std::uint32_t>(partitions->partition_count())};
+    return StatusOr<Partition>{
+        static_cast<Partition>(partitions->partition_count())};
   });
 }
 
 void MultipartitionPublisher::TriggerPublisherCreation() {
-  GetNumPartitions().then([this](future<StatusOr<std::uint32_t>> f) {
+  GetNumPartitions().then([this](future<StatusOr<Partition>> f) {
     auto num_partitions = f.get();
     if (!num_partitions.ok()) {
       GCP_LOG(WARNING) << "Reading number of partitions for "
@@ -153,8 +153,7 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
       initial_publish_buffer_.push_back(std::move(state));
       return initial_publish_buffer_.back().publish_promise->get_future();
     }
-    state.num_partitions =
-        static_cast<std::uint32_t>(partition_publishers_.size());
+    state.num_partitions = static_cast<Partition>(partition_publishers_.size());
   }
 
   RouteAndPublish(state);
