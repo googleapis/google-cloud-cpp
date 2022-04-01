@@ -148,7 +148,6 @@ add_library(
     internal/subscriber_stub.h
     internal/subscriber_stub_factory.cc
     internal/subscriber_stub_factory.h
-    internal/topic_partition_count_reader.h
     internal/topic_stats_auth_decorator.cc
     internal/topic_stats_auth_decorator.h
     internal/topic_stats_connection_impl.cc

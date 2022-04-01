@@ -20,28 +20,37 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
+using google::cloud::pubsublite::AdminServiceConnection;
 using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite::Topic;
 using google::cloud::pubsublite::v1::Cursor;
+using google::cloud::pubsublite::v1::GetTopicPartitionsRequest;
 using google::cloud::pubsublite::v1::PubSubMessage;
+using google::cloud::pubsublite::v1::TopicPartitions;
 
 MultipartitionPublisher::MultipartitionPublisher(
     std::function<std::unique_ptr<PartitionPublisher>(Partition)>
         publisher_factory,
-    std::unique_ptr<TopicPartitionCountReader> reader,
+    std::shared_ptr<AdminServiceConnection> admin_connection,
     AlarmRegistry& alarm_registry,
     std::unique_ptr<RoutingPolicy> routing_policy, Topic topic)
     : publisher_factory_{std::move(publisher_factory)},
-      reader_{std::move(reader)},
+      admin_connection_{std::move(admin_connection)},
       routing_policy_{std::move(routing_policy)},
       topic_{std::move(topic)},
+      // initialize `cancel_token_` in constructor rather than `Start` so that
+      // we don't need to store alarm_registry as member variable as it's only
+      // used once
       cancel_token_{alarm_registry.RegisterAlarm(
           std::chrono::seconds{60},
-          std::bind(&MultipartitionPublisher::CreatePublishers, this))} {}
+          std::bind(&MultipartitionPublisher::CreatePublishers, this))} {
+  *topic_partitions_request_.mutable_name() = topic_.FullName();
+}
 
 MultipartitionPublisher::~MultipartitionPublisher() {
   {
     std::lock_guard<std::mutex> g{mu_};
+    // perform check in case `Start` wasn't called
     if (cancel_token_ != nullptr) cancel_token_ = nullptr;
   }
   future<void> shutdown = Shutdown();
@@ -58,13 +67,29 @@ future<Status> MultipartitionPublisher::Start() {
   return service_composite_.Start();
 }
 
-void MultipartitionPublisher::CreatePublishers() {
-  future<StatusOr<std::uint32_t>> read_future;
+future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
+  future<StatusOr<TopicPartitions>> topic_partitions_request;
   {
     std::lock_guard<std::mutex> g{mu_};
-    read_future = reader_->Read(topic_);
+    topic_partitions_request =
+        admin_connection_->AsyncGetTopicPartitions(topic_partitions_request_);
   }
-  read_future.then([this](future<StatusOr<std::uint32_t>> f) {
+  return topic_partitions_request.then([](future<StatusOr<TopicPartitions>> f) {
+    auto partitions = f.get();
+    if (!partitions) return StatusOr<std::uint32_t>{partitions.status()};
+    if (partitions->partition_count() >= UINT32_MAX) {
+      return StatusOr<std::uint32_t>{
+          Status{StatusCode::kFailedPrecondition,
+                 absl::StrCat("Returned partition count is too big: ",
+                              std::to_string(partitions->partition_count()))}};
+    }
+    return StatusOr<std::uint32_t>{
+        static_cast<std::uint32_t>(partitions->partition_count())};
+  });
+}
+
+void MultipartitionPublisher::CreatePublishers() {
+  GetNumPartitions().then([this](future<StatusOr<std::uint32_t>> f) {
     auto num_partitions = f.get();
     if (!num_partitions.ok()) {
       GCP_LOG(WARNING) << "Reading number of partitions for "
