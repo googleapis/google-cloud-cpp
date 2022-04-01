@@ -177,17 +177,6 @@ StatusOr<BucketMetadata> RetryClient::PatchBucket(
                   &RawClient::PatchBucket, request, __func__);
 }
 
-StatusOr<IamPolicy> RetryClient::GetBucketIamPolicy(
-    GetBucketIamPolicyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
-                               ? Idempotency::kIdempotent
-                               : Idempotency::kNonIdempotent;
-  return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
-                  &RawClient::GetBucketIamPolicy, request, __func__);
-}
-
 StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   auto retry_policy = retry_policy_prototype_->clone();
@@ -197,17 +186,6 @@ StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
                   &RawClient::GetNativeBucketIamPolicy, request, __func__);
-}
-
-StatusOr<IamPolicy> RetryClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
-                               ? Idempotency::kIdempotent
-                               : Idempotency::kNonIdempotent;
-  return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
-                  &RawClient::SetBucketIamPolicy, request, __func__);
 }
 
 StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(

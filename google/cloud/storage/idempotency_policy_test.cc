@@ -113,21 +113,6 @@ TEST(StrictIdempotencyPolicyTest, GetIamPolicy) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
-TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicy) {
-  StrictIdempotencyPolicy policy;
-  internal::SetBucketIamPolicyRequest request("test-bucket-name",
-                                              google::cloud::IamPolicy{});
-  EXPECT_FALSE(policy.IsIdempotent(request));
-}
-
-TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicyIfEtag) {
-  StrictIdempotencyPolicy policy;
-  internal::SetBucketIamPolicyRequest request("test-bucket-name",
-                                              google::cloud::IamPolicy{});
-  request.set_option(IfMatchEtag("ABC123="));
-  EXPECT_TRUE(policy.IsIdempotent(request));
-}
-
 TEST(StrictIdempotencyPolicyTest, SetNativeBucketIamPolicy) {
   StrictIdempotencyPolicy policy;
   internal::SetNativeBucketIamPolicyRequest request(

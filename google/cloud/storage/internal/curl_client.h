@@ -99,12 +99,8 @@ class CurlClient : public RawClient,
       UpdateBucketRequest const& request) override;
   StatusOr<BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) override;
-  StatusOr<IamPolicy> GetBucketIamPolicy(
-      GetBucketIamPolicyRequest const& request) override;
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) override;
-  StatusOr<IamPolicy> SetBucketIamPolicy(
-      SetBucketIamPolicyRequest const& request) override;
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
       SetNativeBucketIamPolicyRequest const& request) override;
   StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(

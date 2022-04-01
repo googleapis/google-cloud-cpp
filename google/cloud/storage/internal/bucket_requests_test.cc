@@ -23,8 +23,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
-// TODO(#5929) - remove after decommission is completed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -34,7 +32,6 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -733,165 +730,6 @@ TEST(BucketRequestsTest, GetIamPolicy) {
   GetBucketIamPolicyRequest request("my-bucket");
   request.set_multiple_options(UserProject("project-for-billing"));
   EXPECT_EQ("my-bucket", request.bucket_name());
-  std::ostringstream os;
-  os << request;
-  auto actual = os.str();
-  EXPECT_THAT(actual, HasSubstr("my-bucket"));
-  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
-}
-
-TEST(BucketRequestsTest, ParseIamPolicyFromString) {
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"bindings",
-       {
-           // The order of these elements matters, SetBucketIamPolicyRequest
-           // generates them sorted by role. If we ever change that, we will
-           // need to change this test, and it will be a bit more difficult to
-           // write it.
-           nlohmann::json{{"role", "roles/storage.admin"},
-                          {"members", std::vector<std::string>{"test-user-1"}}},
-           nlohmann::json{{"role", "roles/storage.objectViewer"},
-                          {"members", std::vector<std::string>{"test-user-2",
-                                                               "test-user-3"}}},
-       }},
-  };
-
-  IamBindings expected_bindings;
-  expected_bindings.AddMember("roles/storage.admin", "test-user-1");
-  expected_bindings.AddMember("roles/storage.objectViewer", "test-user-2");
-  expected_bindings.AddMember("roles/storage.objectViewer", "test-user-3");
-  google::cloud::IamPolicy expected{0, expected_bindings, "XYZ="};
-
-  auto actual = ParseIamPolicyFromString(expected_payload.dump()).value();
-  EXPECT_EQ(expected, actual);
-}
-
-TEST(ListBucketsResponseTest, ParseIamPolicyFromStringFailure) {
-  std::string text("{123");
-  StatusOr<google::cloud::IamPolicy> actual = ParseIamPolicyFromString(text);
-  EXPECT_THAT(actual, Not(IsOk()));
-}
-
-TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"bindings",
-       std::vector<nlohmann::json>{
-           nlohmann::json{{"members", std::vector<std::string>{"test-user-1"}}},
-
-       }},
-  };
-  auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("expected 'role' and 'members'")));
-}
-
-TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"bindings", std::vector<nlohmann::json>{nlohmann::json{
-                       {"role", "roles/storage.objectViewer"},
-                   }}},
-  };
-
-  auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("expected 'role' and 'members'")));
-}
-
-TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"bindings", std::vector<nlohmann::json>{nlohmann::json{
-                       {"role", "roles/storage.objectViewer"},
-                       {"members", "invalid"},
-                   }}},
-  };
-
-  auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("expected array for 'members'")));
-}
-
-TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"bindings", "invalid"},
-  };
-
-  auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("expected array for 'bindings'")));
-}
-
-TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindingsEntries) {
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"bindings", std::vector<nlohmann::json>{"not_an_object"}},
-  };
-
-  auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(res,
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("expected objects for 'bindings' entries")));
-}
-
-TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidExtras) {
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"bindings",
-       {
-           nlohmann::json{{"role", "roles/storage.admin"},
-                          {"members", std::vector<std::string>{"test-user-1"}},
-                          {"condition", "some_condition"}},
-       }},
-  };
-
-  auto res = ParseIamPolicyFromString(expected_payload.dump());
-  EXPECT_THAT(
-      res, StatusIs(StatusCode::kInvalidArgument,
-                    HasSubstr("unexpected member 'condition' in element #0")));
-}
-
-TEST(BucketRequestsTest, SetIamPolicy) {
-  google::cloud::IamBindings bindings;
-  bindings.AddMember("roles/storage.admin", "test-user-1");
-  bindings.AddMember("roles/storage.objectViewer", "test-user-2");
-  bindings.AddMember("roles/storage.objectViewer", "test-user-3");
-  google::cloud::IamPolicy policy{1, bindings, "XYZ="};
-
-  SetBucketIamPolicyRequest request("my-bucket", policy);
-  request.set_multiple_options(UserProject("project-for-billing"));
-  EXPECT_EQ("my-bucket", request.bucket_name());
-
-  nlohmann::json expected_payload{
-      {"kind", "storage#policy"},
-      {"etag", "XYZ="},
-      {"version", 1},
-      {"bindings",
-       {
-           // The order of these elements matters, SetBucketIamPolicyRequest
-           // generates them sorted by role. If we ever change that, we will
-           // need to change this test, and it will be a bit more difficult to
-           // write it.
-           nlohmann::json{{"role", "roles/storage.admin"},
-                          {"members", std::vector<std::string>{"test-user-1"}}},
-           nlohmann::json{{"role", "roles/storage.objectViewer"},
-                          {"members", std::vector<std::string>{"test-user-2",
-                                                               "test-user-3"}}},
-       }},
-  };
-  auto actual_payload = nlohmann::json::parse(request.json_payload());
-  EXPECT_EQ(expected_payload, actual_payload)
-      << nlohmann::json::diff(expected_payload, actual_payload);
   std::ostringstream os;
   os << request;
   auto actual = os.str();
