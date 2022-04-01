@@ -367,6 +367,17 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
       GTEST_SKIP();
     }
   }
+  {
+    // TODO(#8616): Remove this when we know how to deal with the issue.
+    auto matcher = testing_util::StatusIs(
+        StatusCode::kDeadlineExceeded,
+        testing::HasSubstr("terminated by polling policy"));
+    testing::StringMatchResultListener listener;
+    if (matcher.impl().MatchAndExplain(backup, &listener)) {
+      EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+      GTEST_SKIP();
+    }
+  }
   ASSERT_STATUS_OK(backup);
   EXPECT_TRUE(backup->has_encryption_info());
   if (backup->has_encryption_info()) {
