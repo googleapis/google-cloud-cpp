@@ -121,7 +121,7 @@ void MultipartitionPublisher::RouteAndPublish(PublishState& state) {
     std::lock_guard<std::mutex> g{mu_};
     publisher = partition_publishers_.at(partition).get();
   }
-  auto message_promise = state.to_set;
+  auto message_promise = state.publish_promise;
   publisher->Publish(std::move(state.message))
       .then([partition,
              message_promise](future<StatusOr<Cursor>> publish_future) {
@@ -145,14 +145,14 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     // `initial_publish_buffer_` is flushed when publishers are created
     if (partition_publishers_.empty()) {
       initial_publish_buffer_.push_back(std::move(state));
-      return initial_publish_buffer_.back().to_set->get_future();
+      return initial_publish_buffer_.back().publish_promise->get_future();
     }
     state.num_partitions =
         static_cast<std::uint32_t>(partition_publishers_.size());
   }
 
   RouteAndPublish(state);
-  return state.to_set->get_future();
+  return state.publish_promise->get_future();
 }
 
 void MultipartitionPublisher::Flush() {

@@ -64,7 +64,7 @@ class MultipartitionPublisher
     google::cloud::pubsublite::v1::PubSubMessage message;
     std::shared_ptr<
         promise<StatusOr<google::cloud::pubsublite::MessageMetadata>>>
-        to_set;
+        publish_promise;
   };
 
   void CreatePublishers();
