@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VERSION_H
 
 #include "google/cloud/bigtable/version_info.h"
-#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <string>
 

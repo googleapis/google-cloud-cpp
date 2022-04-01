@@ -23,7 +23,6 @@ google_cloud_cpp_common_unit_tests = [
     "future_generic_then_test.cc",
     "future_void_test.cc",
     "future_void_then_test.cc",
-    "iam_bindings_test.cc",
     "internal/algorithm_test.cc",
     "internal/api_client_header_test.cc",
     "internal/backoff_policy_test.cc",

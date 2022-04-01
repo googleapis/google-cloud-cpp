@@ -28,8 +28,6 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/iam_policy.h"
-#include "google/cloud/internal/attributes.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"

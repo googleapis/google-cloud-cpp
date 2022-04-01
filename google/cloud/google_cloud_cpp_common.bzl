@@ -24,9 +24,6 @@ google_cloud_cpp_common_hdrs = [
     "future.h",
     "future_generic.h",
     "future_void.h",
-    "iam_binding.h",
-    "iam_bindings.h",
-    "iam_policy.h",
     "idempotency.h",
     "internal/absl_str_cat_quiet.h",
     "internal/absl_str_join_quiet.h",
@@ -89,8 +86,6 @@ google_cloud_cpp_common_hdrs = [
 
 google_cloud_cpp_common_srcs = [
     "credentials.cc",
-    "iam_bindings.cc",
-    "iam_policy.cc",
     "internal/api_client_header.cc",
     "internal/backoff_policy.cc",
     "internal/base64_transforms.cc",

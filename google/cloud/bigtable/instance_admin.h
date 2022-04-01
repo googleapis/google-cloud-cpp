@@ -31,7 +31,6 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
-#include "google/cloud/iam_policy.h"
 #include "google/cloud/project.h"
 #include "google/cloud/status_or.h"
 #include <future>
@@ -715,9 +714,6 @@ class InstanceAdmin {
   }
   void ChangePolicies() {}
   //@}
-
-  static StatusOr<google::cloud::IamPolicy> ProtoToWrapper(
-      google::iam::v1::Policy proto);
 
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
   std::string project_id_;
