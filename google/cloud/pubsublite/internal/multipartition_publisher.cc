@@ -83,7 +83,7 @@ void MultipartitionPublisher::CreatePublishers() {
       updating_partitions_ = true;
     }
     std::vector<std::unique_ptr<PartitionPublisher>> new_partition_publishers;
-    auto orig_num_publishers = partition_publishers_.size();
+    bool was_empty = partition_publishers_.empty();
     for (std::uint64_t i = partition_publishers_.size(); i < *num_partitions;
          ++i) {
       new_partition_publishers.push_back(publisher_factory_(i));
@@ -97,7 +97,7 @@ void MultipartitionPublisher::CreatePublishers() {
         partition_publishers_.push_back(std::move(partition_publisher));
       }
       updating_partitions_ = false;
-      if (orig_num_publishers == 0) {
+      if (was_empty) {
         for (auto& state : initial_publish_buffer_) {
           state.num_partitions = *num_partitions;
           initial_publish_buffer.push_back(std::move(state));
