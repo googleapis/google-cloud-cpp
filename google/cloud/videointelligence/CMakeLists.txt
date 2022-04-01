@@ -73,8 +73,8 @@ google_cloud_cpp_add_common_options(google_cloud_cpp_videointelligence)
 set_target_properties(
     google_cloud_cpp_videointelligence
     PROPERTIES EXPORT_NAME google-cloud-cpp::videointelligence
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_videointelligence
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 

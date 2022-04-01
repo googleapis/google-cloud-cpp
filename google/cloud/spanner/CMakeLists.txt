@@ -208,8 +208,8 @@ target_link_libraries(
            google-cloud-cpp::spanner_protos)
 set_target_properties(
     google_cloud_cpp_spanner
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::spanner" VERSION
-                                                       "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::spanner"
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_spanner
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})

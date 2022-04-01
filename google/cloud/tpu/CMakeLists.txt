@@ -71,7 +71,8 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_tpu)
 set_target_properties(
     google_cloud_cpp_tpu
-    PROPERTIES EXPORT_NAME google-cloud-cpp::tpu VERSION "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME google-cloud-cpp::tpu
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_tpu
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})

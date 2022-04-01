@@ -71,8 +71,8 @@ google_cloud_cpp_add_common_options(google_cloud_cpp_accessapproval)
 set_target_properties(
     google_cloud_cpp_accessapproval
     PROPERTIES EXPORT_NAME google-cloud-cpp::accessapproval
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_accessapproval
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 

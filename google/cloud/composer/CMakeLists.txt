@@ -75,8 +75,8 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_composer)
 set_target_properties(
     google_cloud_cpp_composer
-    PROPERTIES EXPORT_NAME google-cloud-cpp::composer VERSION
-                                                      "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME google-cloud-cpp::composer
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_composer
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})

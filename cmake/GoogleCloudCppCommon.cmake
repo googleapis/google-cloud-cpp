@@ -134,12 +134,9 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         endif ()
     endforeach ()
     doxygen_add_docs(
-        ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
-        "${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS}"
-        WORKING_DIRECTORY
-        ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT
-        "Generate ${GOOGLE_CLOUD_CPP_SUBPROJECT} HTML documentation")
+        ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS}"
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generate ${GOOGLE_CLOUD_CPP_SUBPROJECT} HTML documentation")
     add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
 
     # Extra dependencies needed by this subproject's docs target.

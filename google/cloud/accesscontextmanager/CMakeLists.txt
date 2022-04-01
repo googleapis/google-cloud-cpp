@@ -80,8 +80,8 @@ google_cloud_cpp_add_common_options(google_cloud_cpp_accesscontextmanager)
 set_target_properties(
     google_cloud_cpp_accesscontextmanager
     PROPERTIES EXPORT_NAME google-cloud-cpp::accesscontextmanager
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_accesscontextmanager
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 

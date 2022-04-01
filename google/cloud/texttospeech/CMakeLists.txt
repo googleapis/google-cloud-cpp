@@ -66,8 +66,8 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_texttospeech)
 set_target_properties(
     google_cloud_cpp_texttospeech
-    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech VERSION
-                                                          "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_texttospeech
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})

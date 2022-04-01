@@ -293,8 +293,8 @@ endif ()
 
 set_target_properties(
     google_cloud_cpp_storage
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::storage" VERSION
-                                                       ${PROJECT_VERSION}
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::storage"
+               VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
 add_library(google-cloud-cpp::storage ALIAS google_cloud_cpp_storage)
 
@@ -381,8 +381,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc"
-                   VERSION ${PROJECT_VERSION} SOVERSION
-                                              ${PROJECT_VERSION_MAJOR})
+                   VERSION ${PROJECT_VERSION}
+                   SOVERSION ${PROJECT_VERSION_MAJOR})
 
     create_bazel_config(google_cloud_cpp_storage_grpc)
 else ()

@@ -73,8 +73,8 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_debugger)
 set_target_properties(
     google_cloud_cpp_debugger
-    PROPERTIES EXPORT_NAME google-cloud-cpp::debugger VERSION
-                                                      "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME google-cloud-cpp::debugger
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_debugger
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})

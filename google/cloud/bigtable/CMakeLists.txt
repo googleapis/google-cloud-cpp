@@ -227,8 +227,8 @@ target_compile_options(google_cloud_cpp_bigtable
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
     google_cloud_cpp_bigtable
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::bigtable" VERSION
-                                                        ${PROJECT_VERSION}
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::bigtable"
+               VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
 add_library(google-cloud-cpp::bigtable ALIAS google_cloud_cpp_bigtable)
 
