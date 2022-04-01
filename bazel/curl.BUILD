@@ -55,7 +55,9 @@ config_setting(
 
 # This just generates a header file with the right value for the CURL_CA_BUNDLE
 # macro. The file is included by curl_config.h if the macro is *not* provided
-# in the build line using -DCURL_CA_BUNDLE=<some-path>:
+# in the build line using -DCURL_CA_BUNDLE=<some-path>.  Note that this rule
+# only runs on Linux; the dependency is suppressed (via a `select()`) on other
+# platforms.
 genrule(
     name = "gen-ca-bundle-linux",
     outs = ["include/curl_ca_bundle_location.h"],
@@ -450,11 +452,12 @@ cc_library(
     }),
 )
 
-genrule(
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+
+write_file(
     name = "configure",
-    outs = ["include/curl_config.h"],
-    cmd = "\n".join([
-        "cat <<'EOF' >$@",
+    out = "include/curl_config.h",
+    content = [
         "#ifndef EXTERNAL_CURL_INCLUDE_CURL_CONFIG_H_",
         "#define EXTERNAL_CURL_INCLUDE_CURL_CONFIG_H_",
         "",
@@ -719,6 +722,5 @@ genrule(
         "#endif",
         "",
         "#endif  // EXTERNAL_CURL_INCLUDE_CURL_CONFIG_H_",
-        "EOF",
-    ]),
+    ],
 )
