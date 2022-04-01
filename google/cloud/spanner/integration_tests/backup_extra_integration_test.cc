@@ -82,7 +82,7 @@ class BackupExtraIntegrationTest
                                      std::chrono::minutes(1), 2.0)
                 .clone(),
             GenericPollingPolicy<>(
-                LimitedTimeRetryPolicy(std::chrono::hours(3)),
+                LimitedTimeRetryPolicy(std::chrono::minutes(90)),
                 ExponentialBackoffPolicy(std::chrono::seconds(1),
                                          std::chrono::minutes(1), 2.0))
                 .clone())) {}

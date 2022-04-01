@@ -120,6 +120,10 @@ class AdminServiceConnection {
 
   virtual StreamRange<std::string> ListReservationTopics(
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request);
+
+  virtual future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+  AsyncGetTopicPartitions(
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
 };
 
 std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(
