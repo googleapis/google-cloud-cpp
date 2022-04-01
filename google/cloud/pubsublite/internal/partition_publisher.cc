@@ -45,9 +45,6 @@ PartitionPublisher::PartitionPublisher(
           std::bind(&PartitionPublisher::Flush, this))} {}
 
 PartitionPublisher::~PartitionPublisher() {
-  // set to nullptr in case `Shutdown` wasn't called so that alarm function
-  // doesn't still execute
-  if (cancel_token_ != nullptr) cancel_token_ = nullptr;
   future<void> shutdown = Shutdown();
   if (!shutdown.is_ready()) {
     GCP_LOG(WARNING) << "`Shutdown` must be called and finished before object "
