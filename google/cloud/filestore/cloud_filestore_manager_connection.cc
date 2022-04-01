@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudFilestoreManagerConnection::~CloudFilestoreManagerConnection() = default;
 
 StreamRange<google::cloud::filestore::v1::Instance>
-    CloudFilestoreManagerConnection::ListInstances(
-        google::cloud::filestore::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudFilestoreManagerConnection::ListInstances(
+    google::cloud::filestore::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::filestore::v1::Instance>>();
 }
@@ -81,9 +81,9 @@ CloudFilestoreManagerConnection::DeleteInstance(
 }
 
 StreamRange<google::cloud::filestore::v1::Backup>
-    CloudFilestoreManagerConnection::ListBackups(
-        google::cloud::filestore::v1::
-            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudFilestoreManagerConnection::ListBackups(
+    google::cloud::filestore::v1::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::filestore::v1::Backup>>();
 }

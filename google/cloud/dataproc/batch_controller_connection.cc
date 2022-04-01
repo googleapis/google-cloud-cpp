@@ -49,9 +49,9 @@ BatchControllerConnection::GetBatch(
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
-    BatchControllerConnection::ListBatches(
-        google::cloud::dataproc::v1::
-            ListBatchesRequest) {  // NOLINT(performance-unnecessary-value-param)
+BatchControllerConnection::ListBatches(
+    google::cloud::dataproc::v1::
+        ListBatchesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Batch>>();
 }

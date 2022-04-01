@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EkmServiceConnection::~EkmServiceConnection() = default;
 
 StreamRange<google::cloud::kms::v1::EkmConnection>
-    EkmServiceConnection::ListEkmConnections(
-        google::cloud::kms::v1::
-            ListEkmConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+EkmServiceConnection::ListEkmConnections(
+    google::cloud::kms::v1::
+        ListEkmConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::EkmConnection>>();
 }

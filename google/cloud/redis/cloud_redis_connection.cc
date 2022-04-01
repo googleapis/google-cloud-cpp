@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudRedisConnection::~CloudRedisConnection() = default;
 
 StreamRange<google::cloud::redis::v1::Instance>
-    CloudRedisConnection::ListInstances(
-        google::cloud::redis::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudRedisConnection::ListInstances(
+    google::cloud::redis::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::redis::v1::Instance>>();
 }

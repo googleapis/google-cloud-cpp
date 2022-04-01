@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
 StreamRange<google::spanner::admin::database::v1::Database>
-    DatabaseAdminConnection::ListDatabases(
-        google::spanner::admin::database::v1::
-            ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListDatabases(
+    google::spanner::admin::database::v1::
+        ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::database::v1::Database>>();
 }
@@ -126,9 +126,9 @@ Status DatabaseAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::spanner::admin::database::v1::Backup>
-    DatabaseAdminConnection::ListBackups(
-        google::spanner::admin::database::v1::
-            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListBackups(
+    google::spanner::admin::database::v1::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::database::v1::Backup>>();
 }
@@ -142,17 +142,17 @@ DatabaseAdminConnection::RestoreDatabase(
 }
 
 StreamRange<google::longrunning::Operation>
-    DatabaseAdminConnection::ListDatabaseOperations(
-        google::spanner::admin::database::v1::
-            ListDatabaseOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListDatabaseOperations(
+    google::spanner::admin::database::v1::
+        ListDatabaseOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
 StreamRange<google::longrunning::Operation>
-    DatabaseAdminConnection::ListBackupOperations(
-        google::spanner::admin::database::v1::
-            ListBackupOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListBackupOperations(
+    google::spanner::admin::database::v1::
+        ListBackupOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }

@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WorkflowsConnection::~WorkflowsConnection() = default;
 
 StreamRange<google::cloud::workflows::v1::Workflow>
-    WorkflowsConnection::ListWorkflows(
-        google::cloud::workflows::v1::
-            ListWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
+WorkflowsConnection::ListWorkflows(
+    google::cloud::workflows::v1::
+        ListWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::v1::Workflow>>();
 }

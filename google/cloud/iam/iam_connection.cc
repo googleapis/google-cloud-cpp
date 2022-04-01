@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMConnection::~IAMConnection() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
-    IAMConnection::ListServiceAccounts(
-        google::iam::admin::v1::
-            ListServiceAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
+IAMConnection::ListServiceAccounts(
+    google::iam::admin::v1::
+        ListServiceAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::ServiceAccount>>();
 }
@@ -166,9 +166,9 @@ StatusOr<google::iam::admin::v1::Role> IAMConnection::UndeleteRole(
 }
 
 StreamRange<google::iam::admin::v1::Permission>
-    IAMConnection::QueryTestablePermissions(
-        google::iam::admin::v1::
-            QueryTestablePermissionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+IAMConnection::QueryTestablePermissions(
+    google::iam::admin::v1::
+        QueryTestablePermissionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::Permission>>();
 }

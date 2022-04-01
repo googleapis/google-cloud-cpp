@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudMemcacheConnection::~CloudMemcacheConnection() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>
-    CloudMemcacheConnection::ListInstances(
-        google::cloud::memcache::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudMemcacheConnection::ListInstances(
+    google::cloud::memcache::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::memcache::v1::Instance>>();
 }

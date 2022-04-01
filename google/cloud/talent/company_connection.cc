@@ -58,9 +58,9 @@ Status CompanyServiceConnection::DeleteCompany(
 }
 
 StreamRange<google::cloud::talent::v4::Company>
-    CompanyServiceConnection::ListCompanies(
-        google::cloud::talent::v4::
-            ListCompaniesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CompanyServiceConnection::ListCompanies(
+    google::cloud::talent::v4::
+        ListCompaniesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::talent::v4::Company>>();
 }

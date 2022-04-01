@@ -81,9 +81,9 @@ ClusterControllerConnection::GetCluster(
 }
 
 StreamRange<google::cloud::dataproc::v1::Cluster>
-    ClusterControllerConnection::ListClusters(
-        google::cloud::dataproc::v1::
-            ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+ClusterControllerConnection::ListClusters(
+    google::cloud::dataproc::v1::
+        ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Cluster>>();
 }

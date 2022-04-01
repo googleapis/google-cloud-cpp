@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConnectionServiceConnection::~ConnectionServiceConnection() = default;
 
 StreamRange<google::cloud::apigeeconnect::v1::Connection>
-    ConnectionServiceConnection::ListConnections(
-        google::cloud::apigeeconnect::v1::
-            ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ConnectionServiceConnection::ListConnections(
+    google::cloud::apigeeconnect::v1::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigeeconnect::v1::Connection>>();
 }

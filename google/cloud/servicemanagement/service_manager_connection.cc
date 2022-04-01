@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceManagerConnection::~ServiceManagerConnection() = default;
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>
-    ServiceManagerConnection::ListServices(
-        google::api::servicemanagement::v1::
-            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ServiceManagerConnection::ListServices(
+    google::api::servicemanagement::v1::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::ManagedService>>();
 }
@@ -98,9 +98,9 @@ ServiceManagerConnection::SubmitConfigSource(
 }
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
-    ServiceManagerConnection::ListServiceRollouts(
-        google::api::servicemanagement::v1::
-            ListServiceRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ServiceManagerConnection::ListServiceRollouts(
+    google::api::servicemanagement::v1::
+        ListServiceRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::Rollout>>();
 }

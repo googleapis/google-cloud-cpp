@@ -41,9 +41,9 @@ DataTransferServiceConnection::GetDataSource(
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
-    DataTransferServiceConnection::ListDataSources(
-        google::cloud::bigquery::datatransfer::v1::
-            ListDataSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataTransferServiceConnection::ListDataSources(
+    google::cloud::bigquery::datatransfer::v1::
+        ListDataSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>>();
 }
@@ -76,9 +76,9 @@ DataTransferServiceConnection::GetTransferConfig(
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-    DataTransferServiceConnection::ListTransferConfigs(
-        google::cloud::bigquery::datatransfer::v1::
-            ListTransferConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataTransferServiceConnection::ListTransferConfigs(
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>>();
 }
@@ -112,17 +112,17 @@ Status DataTransferServiceConnection::DeleteTransferRun(
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
-    DataTransferServiceConnection::ListTransferRuns(
-        google::cloud::bigquery::datatransfer::v1::
-            ListTransferRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataTransferServiceConnection::ListTransferRuns(
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>>();
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
-    DataTransferServiceConnection::ListTransferLogs(
-        google::cloud::bigquery::datatransfer::v1::
-            ListTransferLogsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataTransferServiceConnection::ListTransferLogs(
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferLogsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::bigquery::datatransfer::v1::TransferMessage>>();
 }

@@ -51,9 +51,9 @@ ManagedIdentitiesServiceConnection::ResetAdminPassword(
 }
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
-    ManagedIdentitiesServiceConnection::ListDomains(
-        google::cloud::managedidentities::v1::
-            ListDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ManagedIdentitiesServiceConnection::ListDomains(
+    google::cloud::managedidentities::v1::
+        ListDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedidentities::v1::Domain>>();
 }

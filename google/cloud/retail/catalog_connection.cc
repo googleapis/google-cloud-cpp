@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CatalogServiceConnection::~CatalogServiceConnection() = default;
 
 StreamRange<google::cloud::retail::v2::Catalog>
-    CatalogServiceConnection::ListCatalogs(
-        google::cloud::retail::v2::
-            ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CatalogServiceConnection::ListCatalogs(
+    google::cloud::retail::v2::
+        ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Catalog>>();
 }

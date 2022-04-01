@@ -57,9 +57,9 @@ Status TenantServiceConnection::DeleteTenant(
 }
 
 StreamRange<google::cloud::talent::v4::Tenant>
-    TenantServiceConnection::ListTenants(
-        google::cloud::talent::v4::
-            ListTenantsRequest) {  // NOLINT(performance-unnecessary-value-param)
+TenantServiceConnection::ListTenants(
+    google::cloud::talent::v4::
+        ListTenantsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::talent::v4::Tenant>>();
 }

@@ -41,9 +41,9 @@ OrganizationsConnection::GetOrganization(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Organization>
-    OrganizationsConnection::SearchOrganizations(
-        google::cloud::resourcemanager::v3::
-            SearchOrganizationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+OrganizationsConnection::SearchOrganizations(
+    google::cloud::resourcemanager::v3::
+        SearchOrganizationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Organization>>();
 }

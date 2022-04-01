@@ -59,9 +59,9 @@ StorageTransferServiceConnection::GetTransferJob(
 }
 
 StreamRange<google::storagetransfer::v1::TransferJob>
-    StorageTransferServiceConnection::ListTransferJobs(
-        google::storagetransfer::v1::
-            ListTransferJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StorageTransferServiceConnection::ListTransferJobs(
+    google::storagetransfer::v1::
+        ListTransferJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storagetransfer::v1::TransferJob>>();
 }

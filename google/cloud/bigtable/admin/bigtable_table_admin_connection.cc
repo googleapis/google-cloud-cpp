@@ -41,9 +41,9 @@ BigtableTableAdminConnection::CreateTable(
 }
 
 StreamRange<google::bigtable::admin::v2::Table>
-    BigtableTableAdminConnection::ListTables(
-        google::bigtable::admin::v2::
-            ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
+BigtableTableAdminConnection::ListTables(
+    google::bigtable::admin::v2::
+        ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::Table>>();
 }
@@ -108,9 +108,9 @@ Status BigtableTableAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::bigtable::admin::v2::Backup>
-    BigtableTableAdminConnection::ListBackups(
-        google::bigtable::admin::v2::
-            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+BigtableTableAdminConnection::ListBackups(
+    google::bigtable::admin::v2::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::Backup>>();
 }

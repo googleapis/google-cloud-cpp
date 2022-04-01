@@ -41,9 +41,9 @@ ReservationServiceConnection::CreateReservation(
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
-    ReservationServiceConnection::ListReservations(
-        google::cloud::bigquery::reservation::v1::
-            ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ReservationServiceConnection::ListReservations(
+    google::cloud::bigquery::reservation::v1::
+        ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Reservation>>();
 }
@@ -73,9 +73,9 @@ ReservationServiceConnection::CreateCapacityCommitment(
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-    ReservationServiceConnection::ListCapacityCommitments(
-        google::cloud::bigquery::reservation::v1::
-            ListCapacityCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ReservationServiceConnection::ListCapacityCommitments(
+    google::cloud::bigquery::reservation::v1::
+        ListCapacityCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::bigquery::reservation::v1::CapacityCommitment>>();
 }
@@ -122,9 +122,9 @@ ReservationServiceConnection::CreateAssignment(
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-    ReservationServiceConnection::ListAssignments(
-        google::cloud::bigquery::reservation::v1::
-            ListAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ReservationServiceConnection::ListAssignments(
+    google::cloud::bigquery::reservation::v1::
+        ListAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>();
 }
@@ -135,17 +135,17 @@ Status ReservationServiceConnection::DeleteAssignment(
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-    ReservationServiceConnection::SearchAssignments(
-        google::cloud::bigquery::reservation::v1::
-            SearchAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ReservationServiceConnection::SearchAssignments(
+    google::cloud::bigquery::reservation::v1::
+        SearchAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>();
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-    ReservationServiceConnection::SearchAllAssignments(
-        google::cloud::bigquery::reservation::v1::
-            SearchAllAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ReservationServiceConnection::SearchAllAssignments(
+    google::cloud::bigquery::reservation::v1::
+        SearchAllAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>();
 }
