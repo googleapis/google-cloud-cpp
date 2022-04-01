@@ -91,7 +91,8 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
     bool was_empty = partition_publishers_.empty();
     for (std::uint64_t i = partition_publishers_.size(); i < *num_partitions;
          ++i) {
-      new_partition_publishers.push_back(publisher_factory_(i));
+      new_partition_publishers.push_back(
+          publisher_factory_(static_cast<Partition>(i)));
       service_composite_.AddServiceObject(
           new_partition_publishers.back().get());
     }
