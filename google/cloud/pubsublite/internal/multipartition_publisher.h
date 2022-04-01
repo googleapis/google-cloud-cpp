@@ -36,7 +36,7 @@ namespace pubsublite_internal {
 class MultipartitionPublisher
     : public Publisher<google::cloud::pubsublite::MessageMetadata> {
  private:
-  using Partition = std::int64_t;
+  using Partition = std::uint32_t;
   using PartitionPublisherFactory =
       std::function<std::unique_ptr<PartitionPublisher>(Partition)>;
 
@@ -45,7 +45,7 @@ class MultipartitionPublisher
       PartitionPublisherFactory publisher_factory,
       std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection>
           admin_connection,
-      AlarmRegistry& alarm_registry,
+      std::shared_ptr<AlarmRegistry> alarm_registry,
       std::unique_ptr<RoutingPolicy> routing_policy,
       google::cloud::pubsublite::Topic topic);
 
@@ -67,28 +67,28 @@ class MultipartitionPublisher
         publish_promise;
   };
 
-  void CreatePublishers();
+  void TriggerPublisherCreation();
 
   future<StatusOr<std::uint32_t>> GetNumPartitions();
 
   void RouteAndPublish(PublishState& state);
 
-  std::function<std::unique_ptr<PartitionPublisher>(Partition)>
-      publisher_factory_;
+  PartitionPublisherFactory publisher_factory_;
 
   std::mutex mu_;
 
   std::vector<std::unique_ptr<PartitionPublisher>>
-      partition_publishers_;          // ABSL_GUARDED_BY(mu_)
-  bool updating_partitions_ = false;  // ABSL_GUARDED_BY(mu_)
+      partition_publishers_;                          // ABSL_GUARDED_BY(mu_)
+  bool updating_partitions_ = false;                  // ABSL_GUARDED_BY(mu_)
+  std::vector<PublishState> initial_publish_buffer_;  // ABSL_GUARDED_BY(mu_)
   std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection> const
       admin_connection_;
   ServiceComposite service_composite_;
+  std::shared_ptr<AlarmRegistry> alarm_registry_;
   std::unique_ptr<RoutingPolicy> const routing_policy_;
   google::cloud::pubsublite::Topic const topic_;
   google::cloud::pubsublite::v1::GetTopicPartitionsRequest
       topic_partitions_request_;
-  std::vector<PublishState> initial_publish_buffer_;  // ABSL_GUARDED_BY(mu_)
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 };
 

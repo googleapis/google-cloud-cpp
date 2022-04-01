@@ -30,20 +30,25 @@ using google::cloud::pubsublite::v1::TopicPartitions;
 MultipartitionPublisher::MultipartitionPublisher(
     PartitionPublisherFactory publisher_factory,
     std::shared_ptr<AdminServiceConnection> admin_connection,
-    AlarmRegistry& alarm_registry,
+    std::shared_ptr<AlarmRegistry> alarm_registry,
     std::unique_ptr<RoutingPolicy> routing_policy, Topic topic)
     : publisher_factory_{std::move(publisher_factory)},
       admin_connection_{std::move(admin_connection)},
+      alarm_registry_{std::move(alarm_registry)},
       routing_policy_{std::move(routing_policy)},
-      topic_{std::move(topic)},
-      cancel_token_{alarm_registry.RegisterAlarm(
-          std::chrono::seconds{60},
-          std::bind(&MultipartitionPublisher::CreatePublishers, this))} {
+      topic_{std::move(topic)} {
   *topic_partitions_request_.mutable_name() = topic_.FullName();
 }
 
 future<Status> MultipartitionPublisher::Start() {
-  CreatePublishers();
+  TriggerPublisherCreation();
+  cancel_token_ =
+      alarm_registry_->RegisterAlarm(std::chrono::seconds{60}, [this]() {
+        if (!service_composite_.status().ok()) return;
+        TriggerPublisherCreation();
+      });
+  // not needed anymore
+  alarm_registry_ = nullptr;
   return service_composite_.Start();
 }
 
@@ -65,7 +70,7 @@ future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
   });
 }
 
-void MultipartitionPublisher::CreatePublishers() {
+void MultipartitionPublisher::TriggerPublisherCreation() {
   GetNumPartitions().then([this](future<StatusOr<std::uint32_t>> f) {
     auto num_partitions = f.get();
     if (!num_partitions.ok()) {
