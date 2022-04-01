@@ -42,7 +42,7 @@ class MultipartitionPublisher
       AlarmRegistry&, std::unique_ptr<RoutingPolicy>,
       google::cloud::pubsublite::Topic);
 
-  ~MultipartitionPublisher() override;
+  ~MultipartitionPublisher() override = default;
 
   future<Status> Start() override;
 

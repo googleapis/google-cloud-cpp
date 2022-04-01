@@ -24,7 +24,6 @@ using google::cloud::pubsublite::AdminServiceConnection;
 using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite::Topic;
 using google::cloud::pubsublite::v1::Cursor;
-using google::cloud::pubsublite::v1::GetTopicPartitionsRequest;
 using google::cloud::pubsublite::v1::PubSubMessage;
 using google::cloud::pubsublite::v1::TopicPartitions;
 
@@ -38,28 +37,10 @@ MultipartitionPublisher::MultipartitionPublisher(
       admin_connection_{std::move(admin_connection)},
       routing_policy_{std::move(routing_policy)},
       topic_{std::move(topic)},
-      // initialize `cancel_token_` in constructor rather than `Start` so that
-      // we don't need to store alarm_registry as member variable as it's only
-      // used once
       cancel_token_{alarm_registry.RegisterAlarm(
           std::chrono::seconds{60},
           std::bind(&MultipartitionPublisher::CreatePublishers, this))} {
   *topic_partitions_request_.mutable_name() = topic_.FullName();
-}
-
-MultipartitionPublisher::~MultipartitionPublisher() {
-  {
-    std::lock_guard<std::mutex> g{mu_};
-    // perform check in case `Start` wasn't called
-    if (cancel_token_ != nullptr) cancel_token_ = nullptr;
-  }
-  future<void> shutdown = Shutdown();
-  if (!shutdown.is_ready()) {
-    GCP_LOG(WARNING) << "`Shutdown` must be called and finished before object "
-                        "goes out of scope.";
-    assert(false);
-  }
-  shutdown.get();
 }
 
 future<Status> MultipartitionPublisher::Start() {
