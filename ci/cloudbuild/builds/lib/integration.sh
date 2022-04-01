@@ -24,6 +24,7 @@ fi # include guard
 
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
+source module ci/cloudbuild/builds/lib/git.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
