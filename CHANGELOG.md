@@ -94,6 +94,15 @@ The library has been expanded to include the following services:
 
 * [External Key Manager](https://cloud.google.com/kms/docs/ekm)
 
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+**BREAKING CHANGES**
+
+* `Client::GetBucketIamPolicy` and `Client::SetBucketIamPolicy` have been
+  retired. If you are affected by this removal, please use
+  `Client::GetNativeBucketIamPolicy` and `Client::SetNativeBucketIamPolicy`
+  instead. See [#5929] for more details.
+
 ## v1.38.0 - 2022-03
 
 ### [Service Management API](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicemanagement/README.md)

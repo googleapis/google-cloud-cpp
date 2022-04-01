@@ -51,8 +51,6 @@ struct GrpcBucketRequestParser {
 
   static google::iam::v1::SetIamPolicyRequest ToProto(
       SetNativeBucketIamPolicyRequest const& request);
-  static google::iam::v1::SetIamPolicyRequest ToProto(
-      SetBucketIamPolicyRequest const& request);
 
   static google::iam::v1::TestIamPermissionsRequest ToProto(
       TestBucketIamPermissionsRequest const& request);

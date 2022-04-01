@@ -20,13 +20,6 @@
 #include "google/cloud/version.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED(alternative)                   \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
-      "this function predates IAM conditions and does not work with policies " \
-      "that include IAM conditions. Please use " alternative                   \
-      " instead. The function will be removed on 2022-04-01 or shortly "       \
-      "after. See GitHub issue #5929 for more information.")
-
 #if defined(_MSC_VER) && _MSC_VER < 1929
 #define GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED() /**/
 #else

@@ -216,27 +216,6 @@ StatusOr<BucketMetadata> GrpcClient::PatchBucket(
   return GrpcBucketMetadataParser::FromProto(*response);
 }
 
-// TODO(#5929) - remove this function and `.inc` includes
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
-
-StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(
-    GetBucketIamPolicyRequest const& request) {
-  OptionsSpan span(options_);
-  auto proto = GrpcBucketRequestParser::ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->GetIamPolicy(context, proto);
-  if (!response) return std::move(response).status();
-  IamBindings bindings;
-  for (auto const& b : response->bindings()) {
-    bindings.AddMembers(b.role(), std::set<std::string>(b.members().begin(),
-                                                        b.members().end()));
-  }
-  return IamPolicy{response->version(), std::move(bindings), response->etag()};
-}
-
-#include "google/cloud/internal/diagnostics_pop.inc"
-
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   OptionsSpan span(options_);
@@ -247,27 +226,6 @@ StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
   if (!response) return std::move(response).status();
   return GrpcBucketRequestParser::FromProto(*response);
 }
-
-// TODO(#5929) - remove this function and `.inc` includes
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
-
-StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const& request) {
-  OptionsSpan span(options_);
-  auto proto = GrpcBucketRequestParser::ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->SetIamPolicy(context, proto);
-  if (!response) return std::move(response).status();
-  IamBindings bindings;
-  for (auto const& b : response->bindings()) {
-    bindings.AddMembers(b.role(), std::set<std::string>(b.members().begin(),
-                                                        b.members().end()));
-  }
-  return IamPolicy{response->version(), std::move(bindings), response->etag()};
-}
-
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {

@@ -22,8 +22,6 @@
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-// TODO(#5929) - remove once deprecated functions are removed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -35,8 +33,16 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using ::testing::Property;
 using ::testing::Return;
 using ::testing::ReturnRef;
+
+auto match_binding = [](NativeIamBinding const& b) {
+  return AllOf(
+      Property(&NativeIamBinding::role, b.role()),
+      Property(&NativeIamBinding::members, ElementsAreArray(b.members())),
+      Property(&NativeIamBinding::has_condition, b.has_condition()));
+};
 
 /**
  * Test the functions in Storage::Client related to 'Buckets: *'.
@@ -308,85 +314,93 @@ TEST_F(BucketTest, PatchBucketPermanentFailure) {
       "PatchBucket");
 }
 
-TEST_F(BucketTest, GetBucketIamPolicy) {
-  IamBindings bindings;
-  bindings.AddMember("roles/storage.admin", "test-user");
-  IamPolicy expected{0, bindings, "XYZ="};
+TEST_F(BucketTest, GetNativeBucketIamPolicy) {
+  NativeIamBinding b0{"roles/storage.admin", {"test-user"}};
+  NativeIamPolicy expected{{b0}, "XYZ=", 0};
 
-  EXPECT_CALL(*mock_, GetBucketIamPolicy)
-      .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
+  EXPECT_CALL(*mock_, GetNativeBucketIamPolicy)
+      .WillOnce(Return(StatusOr<NativeIamPolicy>(TransientError())))
       .WillOnce([&expected](internal::GetBucketIamPolicyRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         return make_status_or(expected);
       });
   auto client = ClientForMock();
-  auto actual = client.GetBucketIamPolicy("test-bucket-name");
+  auto actual = client.GetNativeBucketIamPolicy("test-bucket-name");
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(expected, *actual);
+  EXPECT_EQ(0, actual->version());
+  EXPECT_EQ("XYZ=", actual->etag());
+  EXPECT_THAT(actual->bindings(), ElementsAre(match_binding(b0)));
 }
 
-TEST_F(BucketTest, GetBucketIamPolicyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<IamPolicy>(
-      mock_, EXPECT_CALL(*mock_, GetBucketIamPolicy),
+TEST_F(BucketTest, GetNativeBucketIamPolicyTooManyFailures) {
+  testing::TooManyFailuresStatusTest<NativeIamPolicy>(
+      mock_, EXPECT_CALL(*mock_, GetNativeBucketIamPolicy),
       [](Client& client) {
-        return client.GetBucketIamPolicy("test-bucket-name").status();
+        return client.GetNativeBucketIamPolicy("test-bucket-name").status();
       },
-      "GetBucketIamPolicy");
+      "GetNativeBucketIamPolicy");
 }
 
-TEST_F(BucketTest, GetBucketIamPolicyPermanentFailure) {
+TEST_F(BucketTest, GetNativeBucketIamPolicyPermanentFailure) {
   auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<IamPolicy>(
-      client, EXPECT_CALL(*mock_, GetBucketIamPolicy),
+  testing::PermanentFailureStatusTest<NativeIamPolicy>(
+      client, EXPECT_CALL(*mock_, GetNativeBucketIamPolicy),
       [](Client& client) {
-        return client.GetBucketIamPolicy("test-bucket-name").status();
+        return client.GetNativeBucketIamPolicy("test-bucket-name").status();
       },
-      "GetBucketIamPolicy");
+      "GetNativeBucketIamPolicy");
 }
 
-TEST_F(BucketTest, SetBucketIamPolicy) {
-  IamBindings bindings;
-  bindings.AddMember("roles/storage.admin", "test-user");
-  IamPolicy expected{0, bindings, "XYZ="};
+TEST_F(BucketTest, SetNativeBucketIamPolicy) {
+  NativeIamBinding b0{"roles/storage.admin", {"test-user"}};
+  NativeIamPolicy expected{{b0}, "XYZ=", 0};
 
-  EXPECT_CALL(*mock_, SetBucketIamPolicy)
-      .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
-      .WillOnce([&expected](internal::SetBucketIamPolicyRequest const& r) {
-        EXPECT_EQ("test-bucket-name", r.bucket_name());
-        EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
-        return make_status_or(expected);
-      });
+  EXPECT_CALL(*mock_, SetNativeBucketIamPolicy)
+      .WillOnce(Return(StatusOr<NativeIamPolicy>(TransientError())))
+      .WillOnce(
+          [&expected](internal::SetNativeBucketIamPolicyRequest const& r) {
+            EXPECT_EQ("test-bucket-name", r.bucket_name());
+            EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
+            return make_status_or(expected);
+          });
   auto client = ClientForMock();
-  auto actual = client.SetBucketIamPolicy("test-bucket-name", expected);
+  auto actual = client.SetNativeBucketIamPolicy("test-bucket-name", expected);
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(expected, *actual);
+  EXPECT_EQ(0, actual->version());
+  EXPECT_EQ("XYZ=", actual->etag());
+  EXPECT_THAT(actual->bindings(), ElementsAre(match_binding(b0)));
 }
 
-TEST_F(BucketTest, SetBucketIamPolicyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<IamPolicy>(
-      mock_, EXPECT_CALL(*mock_, SetBucketIamPolicy),
+TEST_F(BucketTest, SetNativeBucketIamPolicyTooManyFailures) {
+  testing::TooManyFailuresStatusTest<NativeIamPolicy>(
+      mock_, EXPECT_CALL(*mock_, SetNativeBucketIamPolicy),
       [](Client& client) {
-        return client.SetBucketIamPolicy("test-bucket-name", IamPolicy{})
+        return client
+            .SetNativeBucketIamPolicy("test-bucket-name",
+                                      NativeIamPolicy{{}, ""})
             .status();
       },
       [](Client& client) {
         return client
-            .SetBucketIamPolicy("test-bucket-name", IamPolicy{},
-                                IfMatchEtag("ABC="))
+            .SetNativeBucketIamPolicy("test-bucket-name",
+                                      NativeIamPolicy{{}, ""},
+                                      IfMatchEtag("ABC="))
             .status();
       },
-      "SetBucketIamPolicy");
+      "SetNativeBucketIamPolicy");
 }
 
-TEST_F(BucketTest, SetBucketIamPolicyPermanentFailure) {
+TEST_F(BucketTest, SetNativeBucketIamPolicyPermanentFailure) {
   auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<IamPolicy>(
-      client, EXPECT_CALL(*mock_, SetBucketIamPolicy),
+  testing::PermanentFailureStatusTest<NativeIamPolicy>(
+      client, EXPECT_CALL(*mock_, SetNativeBucketIamPolicy),
       [](Client& client) {
-        return client.SetBucketIamPolicy("test-bucket-name", IamPolicy{})
+        return client
+            .SetNativeBucketIamPolicy("test-bucket-name",
+                                      NativeIamPolicy{{}, ""})
             .status();
       },
-      "SetBucketIamPolicy");
+      "SetNativeBucketIamPolicy");
 }
 
 TEST_F(BucketTest, TestBucketIamPermissions) {
