@@ -375,6 +375,10 @@ class PartitionPublisherTest : public ::testing::Test {
   std::unique_ptr<Publisher<Cursor>> publisher_;
 };
 
+TEST_F(PartitionPublisherTest, StartNotCalled) {
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+}
+
 TEST_F(PartitionPublisherTest, SatisfyOutstandingMessages) {
   InSequence seq;
 
