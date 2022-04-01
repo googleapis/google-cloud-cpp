@@ -79,6 +79,15 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   * This only changes the default C++ version, we continue to test and support C++11.
   * For more details, see [#6767](https://github.com/googleapis/google-cloud-cpp/issues/6767).
 
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+**BREAKING CHANGES**
+
+* `InstanceAdmin::GetIamPolicy` and `InstanceAdmin::SetIamPolicy` have been
+  retired. If you are affected by this removal, please use
+  `InstanceAdmin::GetNativeIamPolicy` and `InstanceAdmin::SetNativeIamPolicy`
+  instead. See [#5929] for more details.
+
 ### [KMS](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/kms/README.md)
 
 The library has been expanded to include the following services:

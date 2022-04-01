@@ -16,8 +16,6 @@
 #include <sstream>
 #include <string>
 #include <type_traits>
-// TODO(#5929) - remove after deprecation is completed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
@@ -192,45 +190,12 @@ Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
   return connection_->DeleteAppProfile(request);
 }
 
-StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
-    std::string const& instance_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
-  google::iam::v1::GetIamPolicyRequest request;
-  request.set_resource(InstanceName(instance_id));
-  auto sor = connection_->GetIamPolicy(request);
-  if (!sor) return std::move(sor).status();
-  return ProtoToWrapper(*std::move(sor));
-}
-
 StatusOr<google::iam::v1::Policy> InstanceAdmin::GetNativeIamPolicy(
     std::string const& instance_id) {
   google::cloud::internal::OptionsSpan span(policies_);
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(InstanceName(instance_id));
   return connection_->GetIamPolicy(request);
-}
-
-StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
-    std::string const& instance_id,
-    google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
-  google::cloud::internal::OptionsSpan span(policies_);
-  google::iam::v1::Policy policy;
-  policy.set_etag(etag);
-  auto role_bindings = iam_bindings.bindings();
-  for (auto& binding : role_bindings) {
-    auto& new_binding = *policy.add_bindings();
-    new_binding.set_role(binding.first);
-    for (auto const& member : binding.second) {
-      new_binding.add_members(member);
-    }
-  }
-
-  google::iam::v1::SetIamPolicyRequest request;
-  request.set_resource(InstanceName(instance_id));
-  *request.mutable_policy() = std::move(policy);
-  auto sor = connection_->SetIamPolicy(request);
-  if (!sor) return std::move(sor).status();
-  return ProtoToWrapper(*std::move(sor));
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdmin::SetIamPolicy(
@@ -257,32 +222,6 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
   std::vector<std::string> result;
   auto& ps = *response.mutable_permissions();
   std::move(ps.begin(), ps.end(), std::back_inserter(result));
-  return result;
-}
-
-StatusOr<google::cloud::IamPolicy> InstanceAdmin::ProtoToWrapper(
-    google::iam::v1::Policy proto) {
-  google::cloud::IamPolicy result;
-  result.version = proto.version();
-  result.etag = std::move(*proto.mutable_etag());
-  for (auto& binding : *proto.mutable_bindings()) {
-    std::vector<google::protobuf::FieldDescriptor const*> field_descs;
-    google::iam::v1::Binding::GetReflection()->ListFields(binding,
-                                                          &field_descs);
-    for (auto const* field_desc : field_descs) {
-      if (field_desc->name() != "members" && field_desc->name() != "role") {
-        std::stringstream os;
-        os << "IamBinding field \"" << field_desc->name()
-           << "\" is unknown to Bigtable C++ client. Please use "
-              "GetNativeIamPolicy() and its"
-              "SetIamPolicy() overload.";
-        return Status(StatusCode::kUnimplemented, os.str());
-      }
-    }
-    for (auto& member : *binding.mutable_members()) {
-      result.bindings.AddMember(binding.role(), std::move(member));
-    }
-  }
   return result;
 }
 

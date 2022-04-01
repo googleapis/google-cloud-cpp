@@ -17,8 +17,6 @@
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-// TODO(#5929) - remove after deprecation is completed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -584,39 +582,6 @@ TEST_F(InstanceAdminTest, DeleteAppProfile) {
   EXPECT_STATUS_OK(tested.DeleteAppProfile(kInstanceId, kProfileId, true));
 }
 
-TEST_F(InstanceAdminTest, GetIamPolicySuccess) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
-
-  EXPECT_CALL(*connection_, GetIamPolicy)
-      .WillOnce([&](iamproto::GetIamPolicyRequest const& request) {
-        CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(kInstanceName, request.resource());
-        iamproto::Policy p;
-        p.set_version(3);
-        p.set_etag("tag");
-        return p;
-      });
-
-  auto policy = tested.GetIamPolicy(kInstanceId);
-  ASSERT_STATUS_OK(policy);
-  EXPECT_EQ(3, policy->version);
-  EXPECT_EQ("tag", policy->etag);
-}
-
-TEST_F(InstanceAdminTest, GetIamPolicyFailure) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
-
-  EXPECT_CALL(*connection_, GetIamPolicy)
-      .WillOnce([&](iamproto::GetIamPolicyRequest const& request) {
-        CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(kInstanceName, request.resource());
-        return FailingStatus();
-      });
-
-  EXPECT_THAT(tested.GetIamPolicy(kInstanceId),
-              StatusIs(StatusCode::kPermissionDenied));
-}
-
 TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
   auto tested = InstanceAdmin(connection_, kProjectId);
 
@@ -628,25 +593,6 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
       });
 
   EXPECT_THAT(tested.GetNativeIamPolicy(kInstanceId),
-              StatusIs(StatusCode::kPermissionDenied));
-}
-
-TEST_F(InstanceAdminTest, SetIamPolicy) {
-  auto tested = InstanceAdmin(connection_, kProjectId);
-  google::cloud::IamBinding b1({"role1", {"m1", "m2"}});
-  google::cloud::IamBinding b2({"role2", {"m1", "m3"}});
-  google::cloud::IamBindings bindings({b1, b2});
-
-  EXPECT_CALL(*connection_, SetIamPolicy)
-      .WillOnce([&](iamproto::SetIamPolicyRequest const& request) {
-        CheckPolicies(google::cloud::internal::CurrentOptions());
-        EXPECT_EQ(kInstanceName, request.resource());
-        EXPECT_EQ("tag", request.policy().etag());
-        EXPECT_EQ(2, request.policy().bindings_size());
-        return FailingStatus();
-      });
-
-  EXPECT_THAT(tested.SetIamPolicy(kInstanceId, bindings, "tag"),
               StatusIs(StatusCode::kPermissionDenied));
 }
 
