@@ -185,6 +185,15 @@ AdminServiceMetadata::ListReservationTopics(
   return child_->ListReservationTopics(context, request);
 }
 
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+AdminServiceMetadata::AsyncGetTopicPartitions(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetTopicPartitions(cq, std::move(context), request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

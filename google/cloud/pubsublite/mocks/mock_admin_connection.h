@@ -125,6 +125,12 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       StreamRange<std::string>, ListReservationTopics,
       (google::cloud::pubsublite::v1::ListReservationTopicsRequest request),
       (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>,
+      AsyncGetTopicPartitions,
+      (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

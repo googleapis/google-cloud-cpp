@@ -154,6 +154,14 @@ StreamRange<std::string> AdminServiceConnection::ListReservationTopics(
       StreamRange<std::string>>();
 }
 
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+AdminServiceConnection::AsyncGetTopicPartitions(
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
