@@ -45,7 +45,7 @@ class MultipartitionPublisher
       PartitionPublisherFactory publisher_factory,
       std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection>
           admin_connection,
-      std::shared_ptr<AlarmRegistry> alarm_registry,
+      AlarmRegistry& alarm_registry,
       std::unique_ptr<RoutingPolicy> routing_policy,
       google::cloud::pubsublite::Topic topic);
 
@@ -64,7 +64,8 @@ class MultipartitionPublisher
     google::cloud::pubsublite::v1::PubSubMessage message;
     std::shared_ptr<
         promise<StatusOr<google::cloud::pubsublite::MessageMetadata>>>
-        publish_promise;
+        publish_promise = std::make_shared<
+            promise<StatusOr<google::cloud::pubsublite::MessageMetadata>>>();
   };
 
   void TriggerPublisherCreation();
@@ -78,13 +79,16 @@ class MultipartitionPublisher
   std::mutex mu_;
 
   std::vector<std::unique_ptr<PartitionPublisher>>
-      partition_publishers_;                          // ABSL_GUARDED_BY(mu_)
-  bool updating_partitions_ = false;                  // ABSL_GUARDED_BY(mu_)
+      partition_publishers_;          // ABSL_GUARDED_BY(mu_)
+  bool updating_partitions_ = false;  // ABSL_GUARDED_BY(mu_)
+  // stores messages intended to be `Publish`ed when there were no partition
+  // publishers available
+  // this buffer will be cleared and messages will be sent when the first
+  // partition publisher becomes available
   std::vector<PublishState> initial_publish_buffer_;  // ABSL_GUARDED_BY(mu_)
   std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection> const
       admin_connection_;
   ServiceComposite service_composite_;
-  std::shared_ptr<AlarmRegistry> alarm_registry_;
   std::unique_ptr<RoutingPolicy> const routing_policy_;
   google::cloud::pubsublite::Topic const topic_;
   google::cloud::pubsublite::v1::GetTopicPartitionsRequest
