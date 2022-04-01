@@ -104,11 +104,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-3.19.4",
+            strip_prefix = "protobuf-3.20.0",
             urls = [
-                "https://github.com/protocolbuffers/protobuf/archive/v3.19.4.tar.gz",
+                "https://github.com/protocolbuffers/protobuf/archive/v3.20.0.tar.gz",
             ],
-            sha256 = "3bd7828aa5af4b13b99c191e8b1e884ebfa9ad371b0ce264605d347f135d2568",
+            sha256 = "b07772d38ab07e55eca4d50f4b53da2d998bb221575c60a4f81100242d4b4889",
         )
 
     # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by
