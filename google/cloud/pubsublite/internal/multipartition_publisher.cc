@@ -103,6 +103,7 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
         partition_publishers_.push_back(std::move(partition_publisher));
       }
       updating_partitions_ = false;
+
       if (was_empty) {
         for (auto& state : initial_publish_buffer_) {
           state.num_partitions = *num_partitions;
