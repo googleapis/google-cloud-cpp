@@ -579,7 +579,14 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   ASSERT_STATUS_OK(undelete_response);
   EXPECT_EQ(undelete_response->restored_account().unique_id(), unique_id);
 
-  auto really_delete_response = client.DeleteServiceAccount(delete_request);
+  // Retry this operation a few times to give the service time to update
+  // permissions on the undeleted account.
+  Status really_delete_response;
+  for (auto delay : {10, 30, 60, 60}) {
+    really_delete_response = client.DeleteServiceAccount(delete_request);
+    if (really_delete_response.code() == StatusCode::kOk) break;
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
+  }
   EXPECT_STATUS_OK(really_delete_response);
 }
 

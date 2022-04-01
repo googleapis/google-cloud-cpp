@@ -7,7 +7,7 @@ github:
 name: generate-libraries-ci
 substitutions:
   _BUILD_NAME: generate-libraries
-  _DISTRO: fedora-34
+  _DISTRO: checkers
   _TRIGGER_TYPE: ci
 tags:
 - ci

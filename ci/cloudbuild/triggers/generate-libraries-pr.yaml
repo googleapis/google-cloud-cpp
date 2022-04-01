@@ -8,7 +8,7 @@ github:
 name: generate-libraries-pr
 substitutions:
   _BUILD_NAME: generate-libraries
-  _DISTRO: fedora-34
+  _DISTRO: checkers
   _TRIGGER_TYPE: pr
 tags:
 - pr
