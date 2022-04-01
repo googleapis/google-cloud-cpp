@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FirewallConnection::~FirewallConnection() = default;
 
 StreamRange<google::appengine::v1::FirewallRule>
-    FirewallConnection::ListIngressRules(
-        google::appengine::v1::
-            ListIngressRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+FirewallConnection::ListIngressRules(
+    google::appengine::v1::
+        ListIngressRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::FirewallRule>>();
 }

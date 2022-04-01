@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 QueryServiceConnection::~QueryServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
-    QueryServiceConnection::QueryTimeSeries(
-        google::monitoring::v3::
-            QueryTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+QueryServiceConnection::QueryTimeSeries(
+    google::monitoring::v3::
+        QueryTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::TimeSeriesData>>();
 }

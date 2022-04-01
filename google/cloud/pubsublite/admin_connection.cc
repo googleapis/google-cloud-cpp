@@ -52,9 +52,9 @@ AdminServiceConnection::GetTopicPartitions(
 }
 
 StreamRange<google::cloud::pubsublite::v1::Topic>
-    AdminServiceConnection::ListTopics(
-        google::cloud::pubsublite::v1::
-            ListTopicsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AdminServiceConnection::ListTopics(
+    google::cloud::pubsublite::v1::
+        ListTopicsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Topic>>();
 }
@@ -90,9 +90,9 @@ AdminServiceConnection::GetSubscription(
 }
 
 StreamRange<google::cloud::pubsublite::v1::Subscription>
-    AdminServiceConnection::ListSubscriptions(
-        google::cloud::pubsublite::v1::
-            ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AdminServiceConnection::ListSubscriptions(
+    google::cloud::pubsublite::v1::
+        ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Subscription>>();
 }
@@ -129,9 +129,9 @@ AdminServiceConnection::GetReservation(
 }
 
 StreamRange<google::cloud::pubsublite::v1::Reservation>
-    AdminServiceConnection::ListReservations(
-        google::cloud::pubsublite::v1::
-            ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AdminServiceConnection::ListReservations(
+    google::cloud::pubsublite::v1::
+        ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::pubsublite::v1::Reservation>>();
 }

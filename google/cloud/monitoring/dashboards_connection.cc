@@ -41,9 +41,9 @@ DashboardsServiceConnection::CreateDashboard(
 }
 
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
-    DashboardsServiceConnection::ListDashboards(
-        google::monitoring::dashboard::v1::
-            ListDashboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DashboardsServiceConnection::ListDashboards(
+    google::monitoring::dashboard::v1::
+        ListDashboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::dashboard::v1::Dashboard>>();
 }

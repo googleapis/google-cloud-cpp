@@ -40,9 +40,9 @@ StatusOr<google::cloud::eventarc::v1::Trigger> EventarcConnection::GetTrigger(
 }
 
 StreamRange<google::cloud::eventarc::v1::Trigger>
-    EventarcConnection::ListTriggers(
-        google::cloud::eventarc::v1::
-            ListTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+EventarcConnection::ListTriggers(
+    google::cloud::eventarc::v1::
+        ListTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::eventarc::v1::Trigger>>();
 }
@@ -77,9 +77,9 @@ StatusOr<google::cloud::eventarc::v1::Channel> EventarcConnection::GetChannel(
 }
 
 StreamRange<google::cloud::eventarc::v1::Channel>
-    EventarcConnection::ListChannels(
-        google::cloud::eventarc::v1::
-            ListChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+EventarcConnection::ListChannels(
+    google::cloud::eventarc::v1::
+        ListChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::eventarc::v1::Channel>>();
 }
@@ -115,9 +115,9 @@ EventarcConnection::GetChannelConnection(
 }
 
 StreamRange<google::cloud::eventarc::v1::ChannelConnection>
-    EventarcConnection::ListChannelConnections(
-        google::cloud::eventarc::v1::
-            ListChannelConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+EventarcConnection::ListChannelConnections(
+    google::cloud::eventarc::v1::
+        ListChannelConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::eventarc::v1::ChannelConnection>>();
 }

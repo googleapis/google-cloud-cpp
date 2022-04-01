@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VmMigrationConnection::~VmMigrationConnection() = default;
 
 StreamRange<google::cloud::vmmigration::v1::Source>
-    VmMigrationConnection::ListSources(
-        google::cloud::vmmigration::v1::
-            ListSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListSources(
+    google::cloud::vmmigration::v1::
+        ListSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Source>>();
 }
@@ -79,9 +79,9 @@ VmMigrationConnection::FetchInventory(
 }
 
 StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
-    VmMigrationConnection::ListUtilizationReports(
-        google::cloud::vmmigration::v1::
-            ListUtilizationReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListUtilizationReports(
+    google::cloud::vmmigration::v1::
+        ListUtilizationReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::UtilizationReport>>();
 }
@@ -109,9 +109,9 @@ VmMigrationConnection::DeleteUtilizationReport(
 }
 
 StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
-    VmMigrationConnection::ListDatacenterConnectors(
-        google::cloud::vmmigration::v1::
-            ListDatacenterConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListDatacenterConnectors(
+    google::cloud::vmmigration::v1::
+        ListDatacenterConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>>();
 }
@@ -147,9 +147,9 @@ VmMigrationConnection::CreateMigratingVm(
 }
 
 StreamRange<google::cloud::vmmigration::v1::MigratingVm>
-    VmMigrationConnection::ListMigratingVms(
-        google::cloud::vmmigration::v1::
-            ListMigratingVmsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListMigratingVms(
+    google::cloud::vmmigration::v1::
+        ListMigratingVmsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::MigratingVm>>();
 }
@@ -225,9 +225,9 @@ VmMigrationConnection::CancelCloneJob(
 }
 
 StreamRange<google::cloud::vmmigration::v1::CloneJob>
-    VmMigrationConnection::ListCloneJobs(
-        google::cloud::vmmigration::v1::
-            ListCloneJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListCloneJobs(
+    google::cloud::vmmigration::v1::
+        ListCloneJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CloneJob>>();
 }
@@ -255,9 +255,9 @@ VmMigrationConnection::CancelCutoverJob(
 }
 
 StreamRange<google::cloud::vmmigration::v1::CutoverJob>
-    VmMigrationConnection::ListCutoverJobs(
-        google::cloud::vmmigration::v1::
-            ListCutoverJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListCutoverJobs(
+    google::cloud::vmmigration::v1::
+        ListCutoverJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CutoverJob>>();
 }
@@ -269,9 +269,9 @@ VmMigrationConnection::GetCutoverJob(
 }
 
 StreamRange<google::cloud::vmmigration::v1::Group>
-    VmMigrationConnection::ListGroups(
-        google::cloud::vmmigration::v1::
-            ListGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListGroups(
+    google::cloud::vmmigration::v1::
+        ListGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Group>>();
 }
@@ -322,9 +322,9 @@ VmMigrationConnection::RemoveGroupMigration(
 }
 
 StreamRange<google::cloud::vmmigration::v1::TargetProject>
-    VmMigrationConnection::ListTargetProjects(
-        google::cloud::vmmigration::v1::
-            ListTargetProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VmMigrationConnection::ListTargetProjects(
+    google::cloud::vmmigration::v1::
+        ListTargetProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmmigration::v1::TargetProject>>();
 }

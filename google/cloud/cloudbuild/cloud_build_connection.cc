@@ -49,9 +49,9 @@ CloudBuildConnection::GetBuild(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::Build>
-    CloudBuildConnection::ListBuilds(
-        google::devtools::cloudbuild::v1::
-            ListBuildsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBuildConnection::ListBuilds(
+    google::devtools::cloudbuild::v1::
+        ListBuildsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::Build>>();
 }
@@ -91,9 +91,9 @@ CloudBuildConnection::GetBuildTrigger(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
-    CloudBuildConnection::ListBuildTriggers(
-        google::devtools::cloudbuild::v1::
-            ListBuildTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBuildConnection::ListBuildTriggers(
+    google::devtools::cloudbuild::v1::
+        ListBuildTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>();
 }
@@ -155,9 +155,9 @@ CloudBuildConnection::UpdateWorkerPool(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
-    CloudBuildConnection::ListWorkerPools(
-        google::devtools::cloudbuild::v1::
-            ListWorkerPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBuildConnection::ListWorkerPools(
+    google::devtools::cloudbuild::v1::
+        ListWorkerPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>();
 }

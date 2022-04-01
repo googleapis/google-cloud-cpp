@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReachabilityServiceConnection::~ReachabilityServiceConnection() = default;
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-    ReachabilityServiceConnection::ListConnectivityTests(
-        google::cloud::networkmanagement::v1::
-            ListConnectivityTestsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ReachabilityServiceConnection::ListConnectivityTests(
+    google::cloud::networkmanagement::v1::
+        ListConnectivityTestsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>();
 }

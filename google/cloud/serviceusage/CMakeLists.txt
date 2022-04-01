@@ -81,8 +81,8 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_serviceusage)
 set_target_properties(
     google_cloud_cpp_serviceusage
-    PROPERTIES EXPORT_NAME google-cloud-cpp::serviceusage VERSION
-                                                          "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME google-cloud-cpp::serviceusage
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_serviceusage
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})

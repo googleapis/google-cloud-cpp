@@ -41,17 +41,17 @@ ProjectsConnection::GetProject(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-    ProjectsConnection::ListProjects(
-        google::cloud::resourcemanager::v3::
-            ListProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProjectsConnection::ListProjects(
+    google::cloud::resourcemanager::v3::
+        ListProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-    ProjectsConnection::SearchProjects(
-        google::cloud::resourcemanager::v3::
-            SearchProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProjectsConnection::SearchProjects(
+    google::cloud::resourcemanager::v3::
+        SearchProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }

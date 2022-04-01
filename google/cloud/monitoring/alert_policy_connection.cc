@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AlertPolicyServiceConnection::~AlertPolicyServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::AlertPolicy>
-    AlertPolicyServiceConnection::ListAlertPolicies(
-        google::monitoring::v3::
-            ListAlertPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AlertPolicyServiceConnection::ListAlertPolicies(
+    google::monitoring::v3::
+        ListAlertPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::AlertPolicy>>();
 }

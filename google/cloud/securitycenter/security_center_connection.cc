@@ -112,26 +112,26 @@ SecurityCenterConnection::GetSource(
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
-    SecurityCenterConnection::GroupAssets(
-        google::cloud::securitycenter::v1::
-            GroupAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::GroupAssets(
+    google::cloud::securitycenter::v1::
+        GroupAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
-    SecurityCenterConnection::GroupFindings(
-        google::cloud::securitycenter::v1::
-            GroupFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::GroupFindings(
+    google::cloud::securitycenter::v1::
+        GroupFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::GroupResult>>();
 }
 
 StreamRange<
     google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
-    SecurityCenterConnection::ListAssets(
-        google::cloud::securitycenter::v1::
-            ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::ListAssets(
+    google::cloud::securitycenter::v1::
+        ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::
                       ListAssetsResult>>();
@@ -139,34 +139,34 @@ StreamRange<
 
 StreamRange<
     google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
-    SecurityCenterConnection::ListFindings(
-        google::cloud::securitycenter::v1::
-            ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::ListFindings(
+    google::cloud::securitycenter::v1::
+        ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
                       ListFindingsResult>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::MuteConfig>
-    SecurityCenterConnection::ListMuteConfigs(
-        google::cloud::securitycenter::v1::
-            ListMuteConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::ListMuteConfigs(
+    google::cloud::securitycenter::v1::
+        ListMuteConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::MuteConfig>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
-    SecurityCenterConnection::ListNotificationConfigs(
-        google::cloud::securitycenter::v1::
-            ListNotificationConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::ListNotificationConfigs(
+    google::cloud::securitycenter::v1::
+        ListNotificationConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::Source>
-    SecurityCenterConnection::ListSources(
-        google::cloud::securitycenter::v1::
-            ListSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::ListSources(
+    google::cloud::securitycenter::v1::
+        ListSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::Source>>();
 }
@@ -263,9 +263,9 @@ SecurityCenterConnection::UpdateBigQueryExport(
 }
 
 StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
-    SecurityCenterConnection::ListBigQueryExports(
-        google::cloud::securitycenter::v1::
-            ListBigQueryExportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecurityCenterConnection::ListBigQueryExports(
+    google::cloud::securitycenter::v1::
+        ListBigQueryExportsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::BigQueryExport>>();
 }

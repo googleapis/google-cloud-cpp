@@ -127,9 +127,9 @@ BigtableInstanceAdminConnection::GetAppProfile(
 }
 
 StreamRange<google::bigtable::admin::v2::AppProfile>
-    BigtableInstanceAdminConnection::ListAppProfiles(
-        google::bigtable::admin::v2::
-            ListAppProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+BigtableInstanceAdminConnection::ListAppProfiles(
+    google::bigtable::admin::v2::
+        ListAppProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::AppProfile>>();
 }
@@ -164,9 +164,9 @@ BigtableInstanceAdminConnection::TestIamPermissions(
 }
 
 StreamRange<google::bigtable::admin::v2::HotTablet>
-    BigtableInstanceAdminConnection::ListHotTablets(
-        google::bigtable::admin::v2::
-            ListHotTabletsRequest) {  // NOLINT(performance-unnecessary-value-param)
+BigtableInstanceAdminConnection::ListHotTablets(
+    google::bigtable::admin::v2::
+        ListHotTabletsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::HotTablet>>();
 }

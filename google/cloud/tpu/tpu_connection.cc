@@ -82,9 +82,9 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnection::StartNode(
 }
 
 StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
-    TpuConnection::ListTensorFlowVersions(
-        google::cloud::tpu::v1::
-            ListTensorFlowVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+TpuConnection::ListTensorFlowVersions(
+    google::cloud::tpu::v1::
+        ListTensorFlowVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tpu::v1::TensorFlowVersion>>();
 }
@@ -96,9 +96,9 @@ TpuConnection::GetTensorFlowVersion(
 }
 
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
-    TpuConnection::ListAcceleratorTypes(
-        google::cloud::tpu::v1::
-            ListAcceleratorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+TpuConnection::ListAcceleratorTypes(
+    google::cloud::tpu::v1::
+        ListAcceleratorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tpu::v1::AcceleratorType>>();
 }

@@ -174,7 +174,8 @@ target_compile_options(google_cloud_cpp_common
 set_target_properties(
     google_cloud_cpp_common
     PROPERTIES EXPORT_NAME "google-cloud-cpp::common"
-               VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+               VERSION ${PROJECT_VERSION}
+               SOVERSION ${PROJECT_VERSION_MAJOR})
 add_library(google-cloud-cpp::common ALIAS google_cloud_cpp_common)
 
 include(CreateBazelConfig)
@@ -431,8 +432,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     set_target_properties(
         google_cloud_cpp_grpc_utils
         PROPERTIES EXPORT_NAME "google-cloud-cpp::grpc_utils"
-                   VERSION ${PROJECT_VERSION} SOVERSION
-                                              ${PROJECT_VERSION_MAJOR})
+                   VERSION ${PROJECT_VERSION}
+                   SOVERSION ${PROJECT_VERSION_MAJOR})
     add_library(google-cloud-cpp::grpc_utils ALIAS google_cloud_cpp_grpc_utils)
 
     include(CreateBazelConfig)
@@ -708,8 +709,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
     set_target_properties(
         google_cloud_cpp_rest_internal
         PROPERTIES EXPORT_NAME "google-cloud-cpp::rest-internal"
-                   VERSION ${PROJECT_VERSION} SOVERSION
-                                              ${PROJECT_VERSION_MAJOR})
+                   VERSION ${PROJECT_VERSION}
+                   SOVERSION ${PROJECT_VERSION_MAJOR})
     add_library(google-cloud-cpp::rest-internal ALIAS
                 google_cloud_cpp_rest_internal)
 

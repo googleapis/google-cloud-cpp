@@ -48,9 +48,9 @@ CertificateAuthorityServiceConnection::GetCertificate(
 }
 
 StreamRange<google::cloud::security::privateca::v1::Certificate>
-    CertificateAuthorityServiceConnection::ListCertificates(
-        google::cloud::security::privateca::v1::
-            ListCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificates(
+    google::cloud::security::privateca::v1::
+        ListCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::security::privateca::v1::Certificate>>();
 }
@@ -119,9 +119,9 @@ CertificateAuthorityServiceConnection::GetCertificateAuthority(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
-    CertificateAuthorityServiceConnection::ListCertificateAuthorities(
-        google::cloud::security::privateca::v1::
-            ListCertificateAuthoritiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificateAuthorities(
+    google::cloud::security::privateca::v1::
+        ListCertificateAuthoritiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateAuthority>>();
 }
@@ -176,9 +176,9 @@ CertificateAuthorityServiceConnection::GetCaPool(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CaPool>
-    CertificateAuthorityServiceConnection::ListCaPools(
-        google::cloud::security::privateca::v1::
-            ListCaPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCaPools(
+    google::cloud::security::privateca::v1::
+        ListCaPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::security::privateca::v1::CaPool>>();
 }
@@ -205,9 +205,9 @@ CertificateAuthorityServiceConnection::GetCertificateRevocationList(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
-    CertificateAuthorityServiceConnection::ListCertificateRevocationLists(
-        google::cloud::security::privateca::v1::
-            ListCertificateRevocationListsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificateRevocationLists(
+    google::cloud::security::privateca::v1::
+        ListCertificateRevocationListsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateRevocationList>>();
 }
@@ -248,9 +248,9 @@ CertificateAuthorityServiceConnection::GetCertificateTemplate(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
-    CertificateAuthorityServiceConnection::ListCertificateTemplates(
-        google::cloud::security::privateca::v1::
-            ListCertificateTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificateTemplates(
+    google::cloud::security::privateca::v1::
+        ListCertificateTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateTemplate>>();
 }

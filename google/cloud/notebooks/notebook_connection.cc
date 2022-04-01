@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NotebookServiceConnection::~NotebookServiceConnection() = default;
 
 StreamRange<google::cloud::notebooks::v1::Instance>
-    NotebookServiceConnection::ListInstances(
-        google::cloud::notebooks::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListInstances(
+    google::cloud::notebooks::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Instance>>();
 }
@@ -181,9 +181,9 @@ NotebookServiceConnection::UpgradeInstanceInternal(
 }
 
 StreamRange<google::cloud::notebooks::v1::Environment>
-    NotebookServiceConnection::ListEnvironments(
-        google::cloud::notebooks::v1::
-            ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListEnvironments(
+    google::cloud::notebooks::v1::
+        ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Environment>>();
 }
@@ -211,9 +211,9 @@ NotebookServiceConnection::DeleteEnvironment(
 }
 
 StreamRange<google::cloud::notebooks::v1::Schedule>
-    NotebookServiceConnection::ListSchedules(
-        google::cloud::notebooks::v1::
-            ListSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListSchedules(
+    google::cloud::notebooks::v1::
+        ListSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Schedule>>();
 }
@@ -249,9 +249,9 @@ NotebookServiceConnection::TriggerSchedule(
 }
 
 StreamRange<google::cloud::notebooks::v1::Execution>
-    NotebookServiceConnection::ListExecutions(
-        google::cloud::notebooks::v1::
-            ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListExecutions(
+    google::cloud::notebooks::v1::
+        ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Execution>>();
 }

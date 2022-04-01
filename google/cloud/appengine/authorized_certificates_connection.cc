@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AuthorizedCertificatesConnection::~AuthorizedCertificatesConnection() = default;
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>
-    AuthorizedCertificatesConnection::ListAuthorizedCertificates(
-        google::appengine::v1::
-            ListAuthorizedCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AuthorizedCertificatesConnection::ListAuthorizedCertificates(
+    google::appengine::v1::
+        ListAuthorizedCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedCertificate>>();
 }

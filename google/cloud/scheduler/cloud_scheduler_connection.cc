@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudSchedulerConnection::~CloudSchedulerConnection() = default;
 
 StreamRange<google::cloud::scheduler::v1::Job>
-    CloudSchedulerConnection::ListJobs(
-        google::cloud::scheduler::v1::
-            ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudSchedulerConnection::ListJobs(
+    google::cloud::scheduler::v1::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::scheduler::v1::Job>>();
 }

@@ -43,8 +43,10 @@ else ()
             TARGET CURL::libcurl
             APPEND
             PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
-        set_property(TARGET CURL::libcurl APPEND PROPERTY IMPORTED_LOCATION
-                                                          "${CURL_LIBRARY}")
+        set_property(
+            TARGET CURL::libcurl
+            APPEND
+            PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
     endif ()
     # If the library is static, we need to explicitly link its dependencies. The
     # CMake module does not do so. However, we should not do so for shared
@@ -54,7 +56,8 @@ else ()
         find_package(OpenSSL REQUIRED)
         find_package(ZLIB REQUIRED)
         set_property(
-            TARGET CURL::libcurl APPEND
+            TARGET CURL::libcurl
+            APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES OpenSSL::SSL OpenSSL::Crypto
                      ZLIB::ZLIB)
         message(STATUS "CURL linkage will be static")
@@ -62,12 +65,15 @@ else ()
         # linking.
         if (WIN32)
             set_property(
-                TARGET CURL::libcurl APPEND PROPERTY INTERFACE_LINK_LIBRARIES
-                                                     crypt32 wsock32 ws2_32)
+                TARGET CURL::libcurl
+                APPEND
+                PROPERTY INTERFACE_LINK_LIBRARIES crypt32 wsock32 ws2_32)
         endif ()
         if (APPLE)
-            set_property(TARGET CURL::libcurl APPEND
-                         PROPERTY INTERFACE_LINK_LIBRARIES ldap)
+            set_property(
+                TARGET CURL::libcurl
+                APPEND
+                PROPERTY INTERFACE_LINK_LIBRARIES ldap)
         endif ()
     else ()
         message(STATUS "CURL linkage will be non-static")

@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsConnection::~ExecutionsConnection() = default;
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
-    ExecutionsConnection::ListExecutions(
-        google::cloud::workflows::executions::v1::
-            ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ExecutionsConnection::ListExecutions(
+    google::cloud::workflows::executions::v1::
+        ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::executions::v1::Execution>>();
 }

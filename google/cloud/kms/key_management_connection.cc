@@ -35,33 +35,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyManagementServiceConnection::~KeyManagementServiceConnection() = default;
 
 StreamRange<google::cloud::kms::v1::KeyRing>
-    KeyManagementServiceConnection::ListKeyRings(
-        google::cloud::kms::v1::
-            ListKeyRingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListKeyRings(
+    google::cloud::kms::v1::
+        ListKeyRingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::KeyRing>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-    KeyManagementServiceConnection::ListCryptoKeys(
-        google::cloud::kms::v1::
-            ListCryptoKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListCryptoKeys(
+    google::cloud::kms::v1::
+        ListCryptoKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKey>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-    KeyManagementServiceConnection::ListCryptoKeyVersions(
-        google::cloud::kms::v1::
-            ListCryptoKeyVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListCryptoKeyVersions(
+    google::cloud::kms::v1::
+        ListCryptoKeyVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>();
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
-    KeyManagementServiceConnection::ListImportJobs(
-        google::cloud::kms::v1::
-            ListImportJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListImportJobs(
+    google::cloud::kms::v1::
+        ListImportJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::ImportJob>>();
 }

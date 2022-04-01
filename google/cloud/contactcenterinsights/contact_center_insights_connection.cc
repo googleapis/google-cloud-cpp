@@ -55,9 +55,9 @@ ContactCenterInsightsConnection::GetConversation(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
-    ContactCenterInsightsConnection::ListConversations(
-        google::cloud::contactcenterinsights::v1::
-            ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListConversations(
+    google::cloud::contactcenterinsights::v1::
+        ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Conversation>>();
 }
@@ -83,9 +83,9 @@ ContactCenterInsightsConnection::GetAnalysis(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
-    ContactCenterInsightsConnection::ListAnalyses(
-        google::cloud::contactcenterinsights::v1::
-            ListAnalysesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListAnalyses(
+    google::cloud::contactcenterinsights::v1::
+        ListAnalysesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Analysis>>();
 }
@@ -199,9 +199,9 @@ ContactCenterInsightsConnection::GetPhraseMatcher(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-    ContactCenterInsightsConnection::ListPhraseMatchers(
-        google::cloud::contactcenterinsights::v1::
-            ListPhraseMatchersRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListPhraseMatchers(
+    google::cloud::contactcenterinsights::v1::
+        ListPhraseMatchersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>>();
 }
@@ -250,9 +250,9 @@ ContactCenterInsightsConnection::GetView(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::View>
-    ContactCenterInsightsConnection::ListViews(
-        google::cloud::contactcenterinsights::v1::
-            ListViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListViews(
+    google::cloud::contactcenterinsights::v1::
+        ListViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::View>>();
 }
