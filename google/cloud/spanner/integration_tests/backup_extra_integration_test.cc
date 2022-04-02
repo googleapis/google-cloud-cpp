@@ -374,7 +374,9 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
         testing::HasSubstr("terminated by polling policy"));
     testing::StringMatchResultListener listener;
     if (matcher.impl().MatchAndExplain(backup, &listener)) {
-      EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+      // The backup is still in progress (and may eventually complete),
+      // and we can't drop the database while it has pending backups, so
+      // we simply abandon them, to be cleaned up offline.
       GTEST_SKIP();
     }
   }
