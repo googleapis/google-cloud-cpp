@@ -7,7 +7,7 @@ github:
 name: cmake-install-ci
 substitutions:
   _BUILD_NAME: cmake-install
-  _DISTRO: fedora-34
+  _DISTRO: fedora-35
   _TRIGGER_TYPE: ci
 tags:
 - ci
