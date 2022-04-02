@@ -657,8 +657,8 @@ class Client {
   }
 
   /**
-   * Fetches the native [IAM policy](@ref google::cloud::NativeIamPolicy) for a
-   * Bucket.
+   * Fetches the native
+   * [IAM policy](@ref google::cloud::storage::NativeIamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -686,7 +686,7 @@ class Client {
    * @par Example
    * @snippet storage_bucket_iam_samples.cc native get bucket iam policy
    *
-   * @see #google::cloud::NativeIamPolicy for details about the
+   * @see #google::cloud::storage::NativeIamPolicy for details about the
    *     `NativeIamPolicy` class.
    */
   template <typename... Options>
@@ -698,8 +698,8 @@ class Client {
   }
 
   /**
-   * Sets the native [IAM Policy](@ref google::cloud::NativeIamPolicy) for a
-   * Bucket.
+   * Sets the native
+   * [IAM Policy](@ref google::cloud::storage::NativeIamPolicy) for a Bucket.
    *
    * Google Cloud Identity & Access Management (IAM) lets administrators
    * authorize who can take action on specific resources, including Google
@@ -740,7 +740,7 @@ class Client {
    * @par Example: removing a IAM member
    * @snippet storage_bucket_iam_samples.cc native remove bucket iam member
    *
-   * @see #google::cloud::NativeIamPolicy for details about the
+   * @see #google::cloud::storage::NativeIamPolicy for details about the
    *     `NativeIamPolicy` class.
    */
   template <typename... Options>
