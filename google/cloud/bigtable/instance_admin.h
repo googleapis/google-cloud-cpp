@@ -31,7 +31,6 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
-#include "google/cloud/iam_policy.h"
 #include "google/cloud/project.h"
 #include "google/cloud/status_or.h"
 #include <future>
@@ -617,10 +616,6 @@ class InstanceAdmin {
   /**
    * Gets the native policy for @p instance_id.
    *
-   * This is the preferred way to `GetIamPolicy()`. This is more closely coupled
-   * to the underlying protocol, enable more actions and is more likely to
-   * tolerate future protocol changes.
-   *
    * @param instance_id the instance to query.
    * @return google::iam::v1::Policy the full IAM policy for the instance.
    *
@@ -640,10 +635,6 @@ class InstanceAdmin {
 
   /**
    * Sets the IAM policy for an instance.
-   *
-   * This is the preferred way to the overload for `IamBindings`. This is more
-   * closely coupled to the underlying protocol, enable more actions and is more
-   * likely to tolerate future protocol changes.
    *
    * @param instance_id which instance to set the IAM policy for.
    * @param iam_policy google::iam::v1::Policy object containing role and
@@ -715,9 +706,6 @@ class InstanceAdmin {
   }
   void ChangePolicies() {}
   //@}
-
-  static StatusOr<google::cloud::IamPolicy> ProtoToWrapper(
-      google::iam::v1::Policy proto);
 
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
   std::string project_id_;

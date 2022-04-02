@@ -57,11 +57,6 @@ add_library(
     future.h
     future_generic.h
     future_void.h
-    iam_binding.h
-    iam_bindings.cc
-    iam_bindings.h
-    iam_policy.cc
-    iam_policy.h
     idempotency.h
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
@@ -220,7 +215,6 @@ if (BUILD_TESTING)
         future_generic_then_test.cc
         future_void_test.cc
         future_void_then_test.cc
-        iam_bindings_test.cc
         internal/algorithm_test.cc
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
