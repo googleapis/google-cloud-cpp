@@ -7,7 +7,7 @@ github:
 name: gcs-grpc-ci
 substitutions:
   _BUILD_NAME: gcs-grpc
-  _DISTRO: fedora-34
+  _DISTRO: fedora-35
   _TRIGGER_TYPE: ci
 tags:
 - ci
