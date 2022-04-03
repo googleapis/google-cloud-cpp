@@ -56,6 +56,7 @@ RoutingPolicy::Partition GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
     result += (val_mod * mult_offset_mod) % mod;
     result %= mod;
   }
+  // within bounds because `mod`ed by a std::uint32_t value
   return static_cast<std::uint32_t>(result);
 }
 
