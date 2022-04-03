@@ -57,7 +57,7 @@ std::uint64_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
 
 std::uint32_t DefaultRoutingPolicy::Route(Partition num_partitions) {
   // atomic operation
-  return counter_++ % num_partitions;
+  return static_cast<std::uint32_t>(counter_++ % num_partitions);
 }
 
 std::uint32_t DefaultRoutingPolicy::Route(std::string const& message_key,
