@@ -12,33 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ROUTING_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ROUTING_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ROUTING_POLICY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ROUTING_POLICY_H
 
+#include "google/cloud/pubsublite/internal/routing_policy.h"
 #include "google/cloud/version.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace pubsublite_internal {
+namespace pubsublite_testing {
 
-/**
- * Interface for a Pub/Sub Lite routing policy that determines the partition
- * that a message should be sent to, either depending on the message's key or
- * not.
- */
-class RoutingPolicy {
+class MockRoutingPolicy : public pubsublite_internal::RoutingPolicy {
  public:
-  using Partition = std::uint32_t;
-  virtual ~RoutingPolicy() = default;
-  virtual std::uint64_t Route(Partition num_partitions) = 0;
-  virtual std::uint64_t Route(std::string const& message_key,
-                              Partition num_partitions) = 0;
+  MOCK_METHOD(std::uint64_t, Route, (RoutingPolicy::Partition), (override));
+  MOCK_METHOD(std::uint64_t, Route,
+              (std::string const&, RoutingPolicy::Partition), (override));
 };
 
-}  // namespace pubsublite_internal
+}  // namespace pubsublite_testing
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ROUTING_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TESTING_MOCK_ROUTING_POLICY_H

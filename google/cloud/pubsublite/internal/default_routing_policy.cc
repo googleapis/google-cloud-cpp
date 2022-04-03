@@ -22,7 +22,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
-std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod) {
+std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow,
+                     RoutingPolicy::Partition mod) {
   std::uint64_t result = 1;
   for (std::uint32_t i = 0; i < pow; ++i) {
     result *= (val % mod);
@@ -33,7 +34,8 @@ std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod) {
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
 // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
-std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod) {
+std::uint64_t GetMod(std::array<uint8_t, 32> big_endian,
+                     RoutingPolicy::Partition mod) {
   std::uint64_t result = 0;
   for (std::uint64_t i = 0; i < big_endian.size(); ++i) {
     std::uint64_t val_mod = big_endian[i] % mod;
@@ -49,13 +51,13 @@ std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod) {
   return result;
 }
 
-std::uint64_t DefaultRoutingPolicy::Route(std::uint32_t num_partitions) {
+std::uint64_t DefaultRoutingPolicy::Route(Partition num_partitions) {
   // atomic operation
   return counter_++ % num_partitions;
 }
 
 std::uint64_t DefaultRoutingPolicy::Route(std::string const& message_key,
-                                          std::uint32_t num_partitions) {
+                                          Partition num_partitions) {
   return GetMod(google::cloud::internal::Sha256Hash(message_key),
                 num_partitions);
 }

@@ -37,7 +37,7 @@ class MultipartitionPublisher
     : public Publisher<google::cloud::pubsublite::MessageMetadata> {
  private:
   // TODO(18suresha): find more appropriate/common place for this alias
-  using Partition = std::uint32_t;
+  using Partition = RoutingPolicy::Partition;
   using PartitionPublisherFactory =
       std::function<std::unique_ptr<PartitionPublisher>(Partition)>;
 
@@ -92,7 +92,7 @@ class MultipartitionPublisher
   ServiceComposite service_composite_;
   std::unique_ptr<RoutingPolicy> const routing_policy_;
   google::cloud::pubsublite::Topic const topic_;
-  google::cloud::pubsublite::v1::GetTopicPartitionsRequest
+  google::cloud::pubsublite::v1::GetTopicPartitionsRequest const
       topic_partitions_request_;
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 };
