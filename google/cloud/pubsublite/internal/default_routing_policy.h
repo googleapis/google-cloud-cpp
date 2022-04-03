@@ -32,7 +32,7 @@ namespace pubsublite_internal {
 std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod);
 
 // returns <integer value of `big_endian`> % `mod` while accounting for overflow
-std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
+std::uint32_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
 
 /**
  * Implements the same routing policy as all the other Pub/Sub Lite client

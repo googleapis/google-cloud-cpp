@@ -37,7 +37,7 @@ std::uint64_t ModPow(std::uint64_t val, unsigned int pow, std::uint32_t mod) {
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
 // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
-std::uint64_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
+std::uint32_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
                      std::uint32_t mod) {
   std::uint64_t result = 0;
   for (unsigned int i = 0; i != kNumBytesSha256; ++i) {
