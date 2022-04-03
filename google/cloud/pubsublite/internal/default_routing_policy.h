@@ -53,7 +53,7 @@ class DefaultRoutingPolicy : public RoutingPolicy {
                   Partition num_partitions) override;
 
  private:
-  std::atomic<std::uint64_t> counter_{0};
+  std::atomic<std::int64_t> counter_{0};
 };
 
 }  // namespace pubsublite_internal
