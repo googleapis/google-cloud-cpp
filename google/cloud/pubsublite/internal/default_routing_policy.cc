@@ -28,7 +28,7 @@ auto constexpr kNumBytesSha256 = 32;
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
 std::uint64_t ModPow(std::uint64_t val, unsigned int pow, std::uint32_t mod) {
   std::uint64_t result = 1;
-  for (unsigned int i = 0; i < pow; ++i) {
+  for (unsigned int i = 0; i != pow; ++i) {
     result *= (val % mod);
     result %= mod;
   }
@@ -40,7 +40,7 @@ std::uint64_t ModPow(std::uint64_t val, unsigned int pow, std::uint32_t mod) {
 std::uint64_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
                      std::uint32_t mod) {
   std::uint64_t result = 0;
-  for (unsigned int i = 0; i < kNumBytesSha256; ++i) {
+  for (unsigned int i = 0; i != kNumBytesSha256; ++i) {
     std::uint32_t val_mod = big_endian[i] % mod;
 
     unsigned int pow = kNumBytesSha256 - (i + 1);
