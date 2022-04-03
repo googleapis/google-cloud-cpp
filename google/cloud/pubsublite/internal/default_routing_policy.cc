@@ -26,12 +26,15 @@ namespace pubsublite_internal {
 auto constexpr kNumBytesSha256 = 32;
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
-RoutingPolicy::Partition GetBinaryMultOffset(std::uint32_t num_bytes,
-                                             RoutingPolicy::Partition mod) {
-  std::uint32_t result = 1;
-  for (std::uint32_t i = 0; i < num_bytes; ++i) {
-    // 2^8
-    result *= (static_cast<std::uint32_t>(1 << 8) % mod);
+std::uint64_t GetBinaryMultOffset(unsigned int num_bytes,
+                                  RoutingPolicy::Partition mod) {
+  // use uint64_t in case intermediate result (before mod) is larger than
+  // UINT32_MAX
+  std::uint64_t result = 1;
+  // 2^8
+  std::uint32_t offset = (1 << 8) % mod;
+  for (unsigned int i = 0; i < num_bytes; ++i) {
+    result *= offset;
     result %= mod;
   }
   return result;
@@ -41,17 +44,19 @@ RoutingPolicy::Partition GetBinaryMultOffset(std::uint32_t num_bytes,
 // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
 RoutingPolicy::Partition GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
                                 RoutingPolicy::Partition mod) {
-  std::uint32_t result = 0;
-  for (std::uint32_t i = 0; i < kNumBytesSha256; ++i) {
+  // use uint64_t in case intermediate result (before mod) is larger than
+  // UINT32_MAX
+  std::uint64_t result = 0;
+  for (unsigned int i = 0; i < kNumBytesSha256; ++i) {
     std::uint32_t val_mod = big_endian[i] % mod;
 
-    std::uint32_t num_bytes = kNumBytesSha256 - (i + 1);
-    std::uint32_t mult_offset_mod = GetBinaryMultOffset(num_bytes, mod);
+    unsigned int num_bytes = kNumBytesSha256 - (i + 1);
+    std::uint64_t mult_offset_mod = GetBinaryMultOffset(num_bytes, mod);
 
     result += (val_mod * mult_offset_mod) % mod;
     result %= mod;
   }
-  return result;
+  return static_cast<std::uint32_t>(result);
 }
 
 RoutingPolicy::Partition DefaultRoutingPolicy::Route(Partition num_partitions) {
