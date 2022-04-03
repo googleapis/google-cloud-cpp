@@ -26,15 +26,10 @@ namespace pubsublite_internal {
 auto constexpr kNumBytesSha256 = 32;
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
-std::uint64_t GetBinaryMultOffset(unsigned int num_bytes,
-                                  RoutingPolicy::Partition mod) {
-  // use uint64_t in case intermediate result (before mod) is larger than
-  // UINT32_MAX
+std::uint64_t ModPow(std::uint64_t val, unsigned int pow, std::uint32_t mod) {
   std::uint64_t result = 1;
-  // 2^8
-  std::uint32_t offset = (1 << 8) % mod;
-  for (unsigned int i = 0; i < num_bytes; ++i) {
-    result *= offset;
+  for (unsigned int i = 0; i < pow; ++i) {
+    result *= (val % mod);
     result %= mod;
   }
   return result;
@@ -42,31 +37,31 @@ std::uint64_t GetBinaryMultOffset(unsigned int num_bytes,
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
 // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
-RoutingPolicy::Partition GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
-                                RoutingPolicy::Partition mod) {
-  // use uint64_t in case intermediate result (before mod) is larger than
-  // UINT32_MAX
+std::uint64_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
+                     std::uint32_t mod) {
   std::uint64_t result = 0;
   for (unsigned int i = 0; i < kNumBytesSha256; ++i) {
     std::uint32_t val_mod = big_endian[i] % mod;
 
-    unsigned int num_bytes = kNumBytesSha256 - (i + 1);
-    std::uint64_t mult_offset_mod = GetBinaryMultOffset(num_bytes, mod);
+    unsigned int pow = kNumBytesSha256 - (i + 1);
+    std::uint64_t pow_mod = ModPow(
+        // 2^8
+        static_cast<std::uint64_t>(1 << 8), pow, mod);
 
-    result += (val_mod * mult_offset_mod) % mod;
+    result += (val_mod * pow_mod) % mod;
     result %= mod;
   }
   // within bounds because `mod`ed by a std::uint32_t value
   return static_cast<std::uint32_t>(result);
 }
 
-RoutingPolicy::Partition DefaultRoutingPolicy::Route(Partition num_partitions) {
+std::uint32_t DefaultRoutingPolicy::Route(Partition num_partitions) {
   // atomic operation
   return counter_++ % num_partitions;
 }
 
-RoutingPolicy::Partition DefaultRoutingPolicy::Route(
-    std::string const& message_key, Partition num_partitions) {
+std::uint32_t DefaultRoutingPolicy::Route(std::string const& message_key,
+                                          Partition num_partitions) {
   return GetMod(google::cloud::internal::Sha256Hash(message_key),
                 num_partitions);
 }

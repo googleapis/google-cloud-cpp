@@ -26,16 +26,13 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
 
-// Calculates the (2^8)^num_bytes % mod while accounting for overflow.
+// Calculates the val^pow % mod while accounting for overflow.
 // Needed because after calculating `big_endian[i]` % `mod` in `GetMod`, we need
-// to account for its position in the array by multiplying it by the offset,
-// 2^8.
-std::uint64_t GetBinaryMultOffset(std::uint32_t num_bytes,
-                                  RoutingPolicy::Partition mod);
+// to account for its position in the array by multiplying it by an offset.
+std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod);
 
 // returns <integer value of `big_endian`> % `mod` while accounting for overflow
-RoutingPolicy::Partition GetMod(std::array<uint8_t, 32> big_endian,
-                                RoutingPolicy::Partition mod);
+std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
 
 /**
  * Implements the same routing policy as all the other Pub/Sub Lite client
