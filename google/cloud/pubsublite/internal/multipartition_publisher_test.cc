@@ -40,6 +40,7 @@ using ::testing::WithArg;
 
 using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::GetTopicPartitionsRequest;
+using google::cloud::pubsublite::v1::PubSubMessage;
 using google::cloud::pubsublite::v1::TopicPartitions;
 
 using google::cloud::pubsublite::Topic;
@@ -128,16 +129,16 @@ TEST_F(SinglePublisherTest, PublisherCreatedFromStartGood) {
 TEST_F(SinglePublisherTest, PublisherCreatedFromAlarmGood) {
   InSequence seq;
 
-  promise<StatusOr<TopicPartitions>> num_partitions;
-  EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
-      .WillOnce(Return(ByMove(num_partitions.get_future())));
-  auto start = multipartition_publisher_->Start();
-
   promise<StatusOr<TopicPartitions>> num_partitions1;
   EXPECT_CALL(*admin_connection_,
               AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
       .WillOnce(Return(ByMove(num_partitions1.get_future())));
+  auto start = multipartition_publisher_->Start();
+
+  promise<StatusOr<TopicPartitions>> num_partitions2;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions2.get_future())));
   on_alarm_();
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
@@ -146,8 +147,9 @@ TEST_F(SinglePublisherTest, PublisherCreatedFromAlarmGood) {
   EXPECT_CALL(partition_publisher_ref_, Start)
       .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
 
+  // satisfy on_alarm_ future first
+  num_partitions2.set_value(topic_partitions_response_);
   num_partitions1.set_value(topic_partitions_response_);
-  num_partitions.set_value(topic_partitions_response_);
 
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(partition_publisher_ref_, Shutdown)
@@ -177,6 +179,132 @@ TEST_F(SinglePublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
       .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
 
   num_partitions.set_value(topic_partitions_response_);
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+TEST_F(SinglePublisherTest, PublishBeforePublisherCreatedGood) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+
+  auto start = multipartition_publisher_->Start();
+
+  PubSubMessage m1;
+  *m1.mutable_data() = "data1";
+  future<StatusOr<MessageMetadata>> message1 =
+      multipartition_publisher_->Publish(m1);
+  PubSubMessage m2;
+  *m2.mutable_data() = "data2";
+  future<StatusOr<MessageMetadata>> message2 =
+      multipartition_publisher_->Publish(m2);
+
+  EXPECT_CALL(partition_publisher_factory_, Call(0))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+  promise<Status> partition_publisher_start;
+  EXPECT_CALL(partition_publisher_ref_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+
+  EXPECT_CALL(routing_policy_ref_, Route(1)).WillOnce(Return(0));
+  promise<StatusOr<Cursor>> m1_promise;
+  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m1)))
+      .WillOnce(Return(ByMove(m1_promise.get_future())));
+
+  EXPECT_CALL(routing_policy_ref_, Route(1)).WillOnce(Return(0));
+  promise<StatusOr<Cursor>> m2_promise;
+  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m2)))
+      .WillOnce(Return(ByMove(m2_promise.get_future())));
+
+  num_partitions.set_value(topic_partitions_response_);
+
+  Cursor m1_cursor;
+  m1_cursor.set_offset(0);
+  Cursor m2_cursor;
+  m2_cursor.set_offset(1);
+
+  m1_promise.set_value(m1_cursor);
+  m2_promise.set_value(m2_cursor);
+
+  EXPECT_EQ(*message1.get(), (MessageMetadata{0, m1_cursor}));
+  EXPECT_EQ(*message2.get(), (MessageMetadata{0, m2_cursor}));
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+TEST_F(SinglePublisherTest, PublishBeforePublisherCreatedOneAfterGood) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+
+  auto start = multipartition_publisher_->Start();
+
+  PubSubMessage m1;
+  *m1.mutable_data() = "data1";
+  future<StatusOr<MessageMetadata>> message1 =
+      multipartition_publisher_->Publish(m1);
+  PubSubMessage m2;
+  *m2.mutable_data() = "data2";
+  future<StatusOr<MessageMetadata>> message2 =
+      multipartition_publisher_->Publish(m2);
+
+  EXPECT_CALL(partition_publisher_factory_, Call(0))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+  promise<Status> partition_publisher_start;
+  EXPECT_CALL(partition_publisher_ref_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+
+  EXPECT_CALL(routing_policy_ref_, Route(1)).WillOnce(Return(0));
+  promise<StatusOr<Cursor>> m1_promise;
+  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m1)))
+      .WillOnce(Return(ByMove(m1_promise.get_future())));
+
+  EXPECT_CALL(routing_policy_ref_, Route(1)).WillOnce(Return(0));
+  promise<StatusOr<Cursor>> m2_promise;
+  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m2)))
+      .WillOnce(Return(ByMove(m2_promise.get_future())));
+
+  num_partitions.set_value(topic_partitions_response_);
+
+  Cursor m1_cursor;
+  m1_cursor.set_offset(0);
+  Cursor m2_cursor;
+  m2_cursor.set_offset(1);
+
+  m1_promise.set_value(m1_cursor);
+  m2_promise.set_value(m2_cursor);
+
+  EXPECT_EQ(*message1.get(), (MessageMetadata{0, m1_cursor}));
+  EXPECT_EQ(*message2.get(), (MessageMetadata{0, m2_cursor}));
+
+  PubSubMessage m3;
+  *m3.mutable_key() = "key";
+  *m3.mutable_data() = "data3";
+  EXPECT_CALL(routing_policy_ref_, Route(m3.key(), 1)).WillOnce(Return(0));
+  Cursor m3_cursor;
+  m1_cursor.set_offset(2);
+  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m3)))
+      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m3_cursor)))));
+  future<StatusOr<MessageMetadata>> message3 =
+      multipartition_publisher_->Publish(m3);
+  EXPECT_EQ(*message3.get(), (MessageMetadata{0, m3_cursor}));
 
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(partition_publisher_ref_, Shutdown)
