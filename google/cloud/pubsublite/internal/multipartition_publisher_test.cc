@@ -25,7 +25,6 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using Partition = RoutingPolicy::Partition;
 using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite_mocks::MockAdminServiceConnection;
 

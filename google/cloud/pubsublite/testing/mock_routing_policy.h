@@ -26,9 +26,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockRoutingPolicy : public pubsublite_internal::RoutingPolicy {
  public:
-  MOCK_METHOD(std::uint64_t, Route, (RoutingPolicy::Partition), (override));
-  MOCK_METHOD(std::uint64_t, Route,
-              (std::string const&, RoutingPolicy::Partition), (override));
+  MOCK_METHOD(google::cloud::pubsublite_internal::Partition, Route,
+              (google::cloud::pubsublite_internal::Partition), (override));
+  MOCK_METHOD(google::cloud::pubsublite_internal::Partition, Route,
+              (std::string const&,
+               google::cloud::pubsublite_internal::Partition),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

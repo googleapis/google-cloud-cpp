@@ -36,8 +36,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MultipartitionPublisher
     : public Publisher<google::cloud::pubsublite::MessageMetadata> {
  private:
-  // TODO(18suresha): find more appropriate/common place for this alias
-  using Partition = RoutingPolicy::Partition;
   using PartitionPublisherFactory = std::function<std::unique_ptr<
       Publisher<google::cloud::pubsublite::v1::Cursor>>(Partition)>;
 

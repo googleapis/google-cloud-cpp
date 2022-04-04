@@ -52,7 +52,7 @@ future<Status> MultipartitionPublisher::Start() {
   return service_composite_.Start();
 }
 
-future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
+future<StatusOr<Partition>> MultipartitionPublisher::GetNumPartitions() {
   return admin_connection_->AsyncGetTopicPartitions(topic_partitions_request_)
       .then([](future<StatusOr<TopicPartitions>> f) -> StatusOr<Partition> {
         auto partitions = f.get();
@@ -76,18 +76,19 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
                        << "failed: " << num_partitions.status();
       return;
     }
-    std::uint64_t current_num_partitions;
+    Partition current_num_partitions;
     {
       std::lock_guard<std::mutex> g{mu_};
       if (updating_partitions_ ||
           partition_publishers_.size() == *num_partitions) {
         return;
       }
-      current_num_partitions = partition_publishers_.size();
+      current_num_partitions =
+          static_cast<Partition>(partition_publishers_.size());
       updating_partitions_ = true;
     }
     std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
-    for (std::uint64_t i = current_num_partitions; i < *num_partitions; ++i) {
+    for (Partition i = current_num_partitions; i < *num_partitions; ++i) {
       new_partition_publishers.push_back(
           publisher_factory_(static_cast<Partition>(i)));
       service_composite_.AddServiceObject(
@@ -110,7 +111,7 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
 }
 
 void MultipartitionPublisher::RouteAndPublish(PublishState& state) {
-  std::int64_t partition =
+  Partition partition =
       state.message.key().empty()
           ? routing_policy_->Route(state.num_partitions)
           : routing_policy_->Route(state.message.key(), state.num_partitions);
