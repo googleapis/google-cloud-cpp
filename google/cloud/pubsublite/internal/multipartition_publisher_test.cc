@@ -25,8 +25,8 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using google::cloud::pubsublite::MessageMetadata;
-using google::cloud::pubsublite_mocks::MockAdminServiceConnection;
+using ::google::cloud::pubsublite::MessageMetadata;
+using ::google::cloud::pubsublite_mocks::MockAdminServiceConnection;
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::_;
@@ -37,19 +37,20 @@ using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::WithArg;
 
-using google::cloud::pubsublite::v1::Cursor;
-using google::cloud::pubsublite::v1::GetTopicPartitionsRequest;
-using google::cloud::pubsublite::v1::PubSubMessage;
-using google::cloud::pubsublite::v1::TopicPartitions;
+using ::google::cloud::pubsublite::v1::Cursor;
+using ::google::cloud::pubsublite::v1::GetTopicPartitionsRequest;
+using ::google::cloud::pubsublite::v1::PubSubMessage;
+using ::google::cloud::pubsublite::v1::TopicPartitions;
 
-using google::cloud::pubsublite::Topic;
+using ::google::cloud::pubsublite::Topic;
 
 using ::google::cloud::pubsublite_testing::MockAlarmRegistry;
 using ::google::cloud::pubsublite_testing::MockAlarmRegistryCancelToken;
 using ::google::cloud::pubsublite_testing::MockPartitionPublisher;
 using ::google::cloud::pubsublite_testing::MockRoutingPolicy;
 
-auto const kAlarmDuration = std::chrono::milliseconds{std::chrono::seconds{60}};
+constexpr std::chrono::milliseconds kAlarmDuration =
+    std::chrono::milliseconds{std::chrono::seconds{60}};
 
 class SinglePublisherTest : public ::testing::Test {
  protected:

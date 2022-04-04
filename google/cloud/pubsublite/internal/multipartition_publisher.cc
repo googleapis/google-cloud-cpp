@@ -20,12 +20,12 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using google::cloud::pubsublite::AdminServiceConnection;
-using google::cloud::pubsublite::MessageMetadata;
-using google::cloud::pubsublite::Topic;
-using google::cloud::pubsublite::v1::Cursor;
-using google::cloud::pubsublite::v1::PubSubMessage;
-using google::cloud::pubsublite::v1::TopicPartitions;
+using ::google::cloud::pubsublite::AdminServiceConnection;
+using ::google::cloud::pubsublite::MessageMetadata;
+using ::google::cloud::pubsublite::Topic;
+using ::google::cloud::pubsublite::v1::Cursor;
+using ::google::cloud::pubsublite::v1::PubSubMessage;
+using ::google::cloud::pubsublite::v1::TopicPartitions;
 
 MultipartitionPublisher::MultipartitionPublisher(
     PartitionPublisherFactory publisher_factory,
