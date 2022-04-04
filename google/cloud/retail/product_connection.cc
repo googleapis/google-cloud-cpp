@@ -97,6 +97,22 @@ ProductServiceConnection::RemoveFulfillmentPlaces(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceConnection::AddLocalInventories(
+    google::cloud::retail::v2::AddLocalInventoriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceConnection::RemoveLocalInventories(
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

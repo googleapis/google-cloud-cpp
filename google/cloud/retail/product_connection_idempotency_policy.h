@@ -66,6 +66,13 @@ class ProductServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RemoveFulfillmentPlaces(
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
           request) = 0;
+
+  virtual google::cloud::Idempotency AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request) = 0;
+
+  virtual google::cloud::Idempotency RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const&
+          request) = 0;
 };
 
 std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>

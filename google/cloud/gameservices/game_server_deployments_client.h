@@ -100,12 +100,12 @@ class GameServerDeploymentsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.ListGameServerDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L31}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L30}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerDeployment>
   ListGameServerDeployments(std::string const& parent, Options opts = {});
@@ -114,16 +114,16 @@ class GameServerDeploymentsServiceClient {
   /// Lists game server deployments in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::ListGameServerDeploymentsRequest,google/cloud/gaming/v1/game_server_deployments.proto#L31}
+  /// @googleapis_link{google::cloud::gaming::v1::ListGameServerDeploymentsRequest,google/cloud/gaming/v1/game_server_deployments.proto#L30}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.ListGameServerDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L31}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L30}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerDeployment>
   ListGameServerDeployments(
@@ -139,12 +139,12 @@ class GameServerDeploymentsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.GetGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L74}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L73}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeployment>
   GetGameServerDeployment(std::string const& name, Options opts = {});
@@ -153,16 +153,16 @@ class GameServerDeploymentsServiceClient {
   /// Gets details of a single game server deployment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::GetGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L74}
+  /// @googleapis_link{google::cloud::gaming::v1::GetGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L73}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.GetGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L74}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L73}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeployment>
   GetGameServerDeployment(
@@ -179,12 +179,12 @@ class GameServerDeploymentsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.CreateGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L99}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L98}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   CreateGameServerDeployment(
@@ -197,16 +197,16 @@ class GameServerDeploymentsServiceClient {
   /// Creates a new game server deployment in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::CreateGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L99}
+  /// @googleapis_link{google::cloud::gaming::v1::CreateGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L98}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.CreateGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L99}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L98}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   CreateGameServerDeployment(
@@ -223,12 +223,12 @@ class GameServerDeploymentsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L28}
   ///
   /// [google.cloud.gaming.v1.DeleteGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L117}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L116}
   /// [google.cloud.gaming.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L28}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
   DeleteGameServerDeployment(std::string const& name, Options opts = {});
@@ -237,16 +237,16 @@ class GameServerDeploymentsServiceClient {
   /// Deletes a single game server deployment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::DeleteGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L117}
+  /// @googleapis_link{google::cloud::gaming::v1::DeleteGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L116}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L28}
   ///
   /// [google.cloud.gaming.v1.DeleteGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L117}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L116}
   /// [google.cloud.gaming.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L28}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
   DeleteGameServerDeployment(
@@ -267,12 +267,12 @@ class GameServerDeploymentsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L130}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L129}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeployment(
@@ -284,16 +284,16 @@ class GameServerDeploymentsServiceClient {
   /// Patches a game server deployment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::UpdateGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L130}
+  /// @googleapis_link{google::cloud::gaming::v1::UpdateGameServerDeploymentRequest,google/cloud/gaming/v1/game_server_deployments.proto#L129}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L130}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L129}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeployment(
@@ -310,12 +310,12 @@ class GameServerDeploymentsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeploymentRollout,google/cloud/gaming/v1/game_server_deployments.proto#L227}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeploymentRollout,google/cloud/gaming/v1/game_server_deployments.proto#L226}
   ///
   /// [google.cloud.gaming.v1.GetGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L87}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L86}
   /// [google.cloud.gaming.v1.GameServerDeploymentRollout]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L227}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L226}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
   GetGameServerDeploymentRollout(std::string const& name, Options opts = {});
@@ -324,16 +324,16 @@ class GameServerDeploymentsServiceClient {
   /// Gets details a single game server deployment rollout.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest,google/cloud/gaming/v1/game_server_deployments.proto#L87}
+  /// @googleapis_link{google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest,google/cloud/gaming/v1/game_server_deployments.proto#L86}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeploymentRollout,google/cloud/gaming/v1/game_server_deployments.proto#L227}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeploymentRollout,google/cloud/gaming/v1/game_server_deployments.proto#L226}
   ///
   /// [google.cloud.gaming.v1.GetGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L87}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L86}
   /// [google.cloud.gaming.v1.GameServerDeploymentRollout]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L227}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L226}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
   GetGameServerDeploymentRollout(
@@ -359,12 +359,12 @@ class GameServerDeploymentsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L143}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L142}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeploymentRollout(
@@ -380,16 +380,16 @@ class GameServerDeploymentsServiceClient {
   /// game_server_config_overrides field, that will also not result in an error.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest,google/cloud/gaming/v1/game_server_deployments.proto#L143}
+  /// @googleapis_link{google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest,google/cloud/gaming/v1/game_server_deployments.proto#L142}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L143}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L142}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L181}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeploymentRollout(
@@ -402,16 +402,16 @@ class GameServerDeploymentsServiceClient {
   /// rollout resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest,google/cloud/gaming/v1/game_server_deployments.proto#L261}
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest,google/cloud/gaming/v1/game_server_deployments.proto#L260}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse,google/cloud/gaming/v1/game_server_deployments.proto#L278}
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse,google/cloud/gaming/v1/game_server_deployments.proto#L277}
   ///
   /// [google.cloud.gaming.v1.PreviewGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L261}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L260}
   /// [google.cloud.gaming.v1.PreviewGameServerDeploymentRolloutResponse]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L278}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L277}
   ///
   StatusOr<
       google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
@@ -426,16 +426,16 @@ class GameServerDeploymentsServiceClient {
   /// including fleets running an older version of the game server deployment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::FetchDeploymentStateRequest,google/cloud/gaming/v1/game_server_deployments.proto#L155}
+  /// @googleapis_link{google::cloud::gaming::v1::FetchDeploymentStateRequest,google/cloud/gaming/v1/game_server_deployments.proto#L154}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::FetchDeploymentStateResponse,google/cloud/gaming/v1/game_server_deployments.proto#L162}
+  /// @googleapis_link{google::cloud::gaming::v1::FetchDeploymentStateResponse,google/cloud/gaming/v1/game_server_deployments.proto#L161}
   ///
   /// [google.cloud.gaming.v1.FetchDeploymentStateRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L155}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L154}
   /// [google.cloud.gaming.v1.FetchDeploymentStateResponse]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L162}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L161}
   ///
   StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
   FetchDeploymentState(

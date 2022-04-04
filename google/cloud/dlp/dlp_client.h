@@ -102,16 +102,16 @@ class DlpServiceClient {
   /// and https://cloud.google.com/dlp/docs/inspecting-text,
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::InspectContentRequest,google/privacy/dlp/v2/dlp.proto#L1372}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectContentRequest,google/privacy/dlp/v2/dlp.proto#L1380}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectContentResponse,google/privacy/dlp/v2/dlp.proto#L1412}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectContentResponse,google/privacy/dlp/v2/dlp.proto#L1420}
   ///
   /// [google.privacy.dlp.v2.InspectContentRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1372}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1380}
   /// [google.privacy.dlp.v2.InspectContentResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1412}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1420}
   ///
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       google::privacy::dlp::v2::InspectContentRequest const& request,
@@ -128,16 +128,16 @@ class DlpServiceClient {
   /// may be all types, but may change over time as detectors are updated.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::RedactImageRequest,google/privacy/dlp/v2/dlp.proto#L1153}
+  /// @googleapis_link{google::privacy::dlp::v2::RedactImageRequest,google/privacy/dlp/v2/dlp.proto#L1161}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::RedactImageResponse,google/privacy/dlp/v2/dlp.proto#L1224}
+  /// @googleapis_link{google::privacy::dlp::v2::RedactImageResponse,google/privacy/dlp/v2/dlp.proto#L1232}
   ///
   /// [google.privacy.dlp.v2.RedactImageRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1153}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1161}
   /// [google.privacy.dlp.v2.RedactImageResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1224}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1232}
   ///
   StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
       google::privacy::dlp::v2::RedactImageRequest const& request,
@@ -154,16 +154,16 @@ class DlpServiceClient {
   /// may be all types, but may change over time as detectors are updated.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyContentRequest,google/privacy/dlp/v2/dlp.proto#L1238}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyContentRequest,google/privacy/dlp/v2/dlp.proto#L1246}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyContentResponse,google/privacy/dlp/v2/dlp.proto#L1291}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyContentResponse,google/privacy/dlp/v2/dlp.proto#L1299}
   ///
   /// [google.privacy.dlp.v2.DeidentifyContentRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1238}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1246}
   /// [google.privacy.dlp.v2.DeidentifyContentResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1291}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1299}
   ///
   StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
   DeidentifyContent(
@@ -177,16 +177,16 @@ class DlpServiceClient {
   /// to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ReidentifyContentRequest,google/privacy/dlp/v2/dlp.proto#L1300}
+  /// @googleapis_link{google::privacy::dlp::v2::ReidentifyContentRequest,google/privacy/dlp/v2/dlp.proto#L1308}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::ReidentifyContentResponse,google/privacy/dlp/v2/dlp.proto#L1363}
+  /// @googleapis_link{google::privacy::dlp::v2::ReidentifyContentResponse,google/privacy/dlp/v2/dlp.proto#L1371}
   ///
   /// [google.privacy.dlp.v2.ReidentifyContentRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1300}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1308}
   /// [google.privacy.dlp.v2.ReidentifyContentResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1363}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1371}
   ///
   StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
   ReidentifyContent(
@@ -204,12 +204,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesResponse,google/privacy/dlp/v2/dlp.proto#L1574}
+  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesResponse,google/privacy/dlp/v2/dlp.proto#L1582}
   ///
   /// [google.privacy.dlp.v2.ListInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1552}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1560}
   /// [google.privacy.dlp.v2.ListInfoTypesResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1574}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1582}
   ///
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
       std::string const& parent, Options opts = {});
@@ -220,16 +220,16 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesRequest,google/privacy/dlp/v2/dlp.proto#L1552}
+  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesRequest,google/privacy/dlp/v2/dlp.proto#L1560}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesResponse,google/privacy/dlp/v2/dlp.proto#L1574}
+  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesResponse,google/privacy/dlp/v2/dlp.proto#L1582}
   ///
   /// [google.privacy.dlp.v2.ListInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1552}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1560}
   /// [google.privacy.dlp.v2.ListInfoTypesResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1574}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1582}
   ///
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
       google::privacy::dlp::v2::ListInfoTypesRequest const& request,
@@ -260,12 +260,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3180}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3188}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
       std::string const& parent,
@@ -278,16 +278,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3180}
+  /// @googleapis_link{google::privacy::dlp::v2::CreateInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3188}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3180}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3188}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
       google::privacy::dlp::v2::CreateInspectTemplateRequest const& request,
@@ -306,12 +306,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3222}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3230}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
       std::string const& name,
@@ -323,16 +323,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3222}
+  /// @googleapis_link{google::privacy::dlp::v2::UpdateInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3230}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3222}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3230}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
       google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request,
@@ -349,12 +349,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.GetInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3241}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3249}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
       std::string const& name, Options opts = {});
@@ -364,16 +364,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3241}
+  /// @googleapis_link{google::privacy::dlp::v2::GetInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3249}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.GetInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3241}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3249}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
       google::privacy::dlp::v2::GetInspectTemplateRequest const& request,
@@ -402,12 +402,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3254}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3262}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
       std::string const& parent, Options opts = {});
@@ -417,16 +417,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListInspectTemplatesRequest,google/privacy/dlp/v2/dlp.proto#L3254}
+  /// @googleapis_link{google::privacy::dlp::v2::ListInspectTemplatesRequest,google/privacy/dlp/v2/dlp.proto#L3262}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3254}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3262}
   /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2935}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2943}
   ///
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
       google::privacy::dlp::v2::ListInspectTemplatesRequest request,
@@ -444,7 +444,7 @@ class DlpServiceClient {
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3320}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3328}
   ///
   Status DeleteInspectTemplate(std::string const& name, Options opts = {});
 
@@ -453,12 +453,12 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3320}
+  /// @googleapis_link{google::privacy::dlp::v2::DeleteInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3328}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3320}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3328}
   ///
   Status DeleteInspectTemplate(
       google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request,
@@ -490,12 +490,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3788}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3924}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   CreateDeidentifyTemplate(
@@ -510,16 +510,16 @@ class DlpServiceClient {
   /// more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3788}
+  /// @googleapis_link{google::privacy::dlp::v2::CreateDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3924}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3788}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3924}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   CreateDeidentifyTemplate(
@@ -540,12 +540,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3830}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3966}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   UpdateDeidentifyTemplate(
@@ -559,16 +559,16 @@ class DlpServiceClient {
   /// more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3830}
+  /// @googleapis_link{google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3966}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3830}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3966}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   UpdateDeidentifyTemplate(
@@ -587,12 +587,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3849}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3985}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
       std::string const& name, Options opts = {});
@@ -603,16 +603,16 @@ class DlpServiceClient {
   /// more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3849}
+  /// @googleapis_link{google::privacy::dlp::v2::GetDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3985}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3849}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3985}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
       google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request,
@@ -642,12 +642,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3862}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3998}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
   ListDeidentifyTemplates(std::string const& parent, Options opts = {});
@@ -658,16 +658,16 @@ class DlpServiceClient {
   /// more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListDeidentifyTemplatesRequest,google/privacy/dlp/v2/dlp.proto#L3862}
+  /// @googleapis_link{google::privacy::dlp::v2::ListDeidentifyTemplatesRequest,google/privacy/dlp/v2/dlp.proto#L3998}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3862}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3998}
   /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2969}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2977}
   ///
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
   ListDeidentifyTemplates(
@@ -687,7 +687,7 @@ class DlpServiceClient {
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3929}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
   Status DeleteDeidentifyTemplate(std::string const& name, Options opts = {});
 
@@ -697,12 +697,12 @@ class DlpServiceClient {
   /// more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3929}
+  /// @googleapis_link{google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L4065}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3929}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
   Status DeleteDeidentifyTemplate(
       google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request,
@@ -729,12 +729,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.CreateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3333}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3341}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
       std::string const& parent,
@@ -747,16 +747,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3333}
+  /// @googleapis_link{google::privacy::dlp::v2::CreateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3341}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.CreateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3333}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3341}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
       google::privacy::dlp::v2::CreateJobTriggerRequest const& request,
@@ -774,12 +774,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3383}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3391}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
       std::string const& name,
@@ -791,16 +791,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3383}
+  /// @googleapis_link{google::privacy::dlp::v2::UpdateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3391}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3383}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3391}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
       google::privacy::dlp::v2::UpdateJobTriggerRequest const& request,
@@ -817,12 +817,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4213}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4349}
   /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectJobTrigger(std::string const& name, Options opts = {});
@@ -833,16 +833,16 @@ class DlpServiceClient {
   /// jobs within the trigger.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L4213}
+  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L4349}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4213}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4349}
   /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectJobTrigger(
@@ -859,12 +859,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.GetJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3401}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3409}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
       std::string const& name, Options opts = {});
@@ -874,16 +874,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3401}
+  /// @googleapis_link{google::privacy::dlp::v2::GetJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3409}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.GetJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3401}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3409}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
       google::privacy::dlp::v2::GetJobTriggerRequest const& request,
@@ -908,12 +908,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.ListJobTriggersRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3460}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3468}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
       std::string const& parent, Options opts = {});
@@ -923,16 +923,16 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListJobTriggersRequest,google/privacy/dlp/v2/dlp.proto#L3460}
+  /// @googleapis_link{google::privacy::dlp::v2::ListJobTriggersRequest,google/privacy/dlp/v2/dlp.proto#L3468}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   /// [google.privacy.dlp.v2.ListJobTriggersRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3460}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3468}
   /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3013}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3021}
   ///
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
       google::privacy::dlp::v2::ListJobTriggersRequest request,
@@ -949,7 +949,7 @@ class DlpServiceClient {
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3553}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3561}
   ///
   Status DeleteJobTrigger(std::string const& name, Options opts = {});
 
@@ -958,12 +958,12 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3553}
+  /// @googleapis_link{google::privacy::dlp::v2::DeleteJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3561}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3553}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3561}
   ///
   Status DeleteJobTrigger(
       google::privacy::dlp::v2::DeleteJobTriggerRequest const& request,
@@ -974,16 +974,16 @@ class DlpServiceClient {
   /// instead of waiting on the trigger event to occur.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ActivateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3371}
+  /// @googleapis_link{google::privacy::dlp::v2::ActivateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3379}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.ActivateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3371}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3379}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request,
@@ -1015,12 +1015,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.CreateDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3415}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3423}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       std::string const& parent,
@@ -1054,12 +1054,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.CreateDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3415}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3423}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       std::string const& parent,
@@ -1076,16 +1076,16 @@ class DlpServiceClient {
   /// may be all types, but may change over time as detectors are updated.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3415}
+  /// @googleapis_link{google::privacy::dlp::v2::CreateDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3423}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.CreateDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3415}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3423}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       google::privacy::dlp::v2::CreateDlpJobRequest const& request,
@@ -1111,12 +1111,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.ListDlpJobsRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3663}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3799}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
       std::string const& parent, Options opts = {});
@@ -1127,16 +1127,16 @@ class DlpServiceClient {
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListDlpJobsRequest,google/privacy/dlp/v2/dlp.proto#L3663}
+  /// @googleapis_link{google::privacy::dlp::v2::ListDlpJobsRequest,google/privacy/dlp/v2/dlp.proto#L3799}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.ListDlpJobsRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3663}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3799}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
       google::privacy::dlp::v2::ListDlpJobsRequest request, Options opts = {});
@@ -1150,12 +1150,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.GetDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3652}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3788}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(std::string const& name,
                                                        Options opts = {});
@@ -1166,16 +1166,16 @@ class DlpServiceClient {
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3652}
+  /// @googleapis_link{google::privacy::dlp::v2::GetDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3788}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   /// [google.privacy.dlp.v2.GetDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3652}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3788}
   /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3582}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3718}
   ///
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
       google::privacy::dlp::v2::GetDlpJobRequest const& request,
@@ -1193,7 +1193,7 @@ class DlpServiceClient {
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3777}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3913}
   ///
   Status DeleteDlpJob(std::string const& name, Options opts = {});
 
@@ -1205,12 +1205,12 @@ class DlpServiceClient {
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3777}
+  /// @googleapis_link{google::privacy::dlp::v2::DeleteDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3913}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3777}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3913}
   ///
   Status DeleteDlpJob(
       google::privacy::dlp::v2::DeleteDlpJobRequest const& request,
@@ -1224,12 +1224,12 @@ class DlpServiceClient {
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CancelDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3755}
+  /// @googleapis_link{google::privacy::dlp::v2::CancelDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3891}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.CancelDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3755}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3891}
   ///
   Status CancelDlpJob(
       google::privacy::dlp::v2::CancelDlpJobRequest const& request,
@@ -1260,12 +1260,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4057}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4193}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
       std::string const& parent,
@@ -1278,16 +1278,16 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4057}
+  /// @googleapis_link{google::privacy::dlp::v2::CreateStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4193}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4057}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4193}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
       google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request,
@@ -1310,12 +1310,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4099}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4235}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
       std::string const& name,
@@ -1328,16 +1328,16 @@ class DlpServiceClient {
   /// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4099}
+  /// @googleapis_link{google::privacy::dlp::v2::UpdateStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4235}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4099}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4235}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
       google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request,
@@ -1355,12 +1355,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4120}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4256}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
       std::string const& name, Options opts = {});
@@ -1371,16 +1371,16 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4120}
+  /// @googleapis_link{google::privacy::dlp::v2::GetStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4256}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4120}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4256}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
       google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request,
@@ -1410,12 +1410,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4133}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4269}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
       std::string const& parent, Options opts = {});
@@ -1426,16 +1426,16 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListStoredInfoTypesRequest,google/privacy/dlp/v2/dlp.proto#L4133}
+  /// @googleapis_link{google::privacy::dlp::v2::ListStoredInfoTypesRequest,google/privacy/dlp/v2/dlp.proto#L4269}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4133}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4269}
   /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4036}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4172}
   ///
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
       google::privacy::dlp::v2::ListStoredInfoTypesRequest request,
@@ -1454,7 +1454,7 @@ class DlpServiceClient {
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4200}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4336}
   ///
   Status DeleteStoredInfoType(std::string const& name, Options opts = {});
 
@@ -1464,12 +1464,12 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4200}
+  /// @googleapis_link{google::privacy::dlp::v2::DeleteStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4336}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4200}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4336}
   ///
   Status DeleteStoredInfoType(
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request,
@@ -1486,12 +1486,12 @@ class DlpServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4228}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4364}
   /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
       std::string const& name, Options opts = {});
@@ -1502,16 +1502,16 @@ class DlpServiceClient {
   /// asynchronously.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4228}
+  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4364}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4228}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4364}
   /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4295}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4431}
   ///
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request,
@@ -1522,12 +1522,12 @@ class DlpServiceClient {
   /// running of any enabled actions that have not yet run.
   ///
   /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::FinishDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3766}
+  /// @googleapis_link{google::privacy::dlp::v2::FinishDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L3902}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.privacy.dlp.v2.FinishDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3766}
+  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3902}
   ///
   Status FinishDlpJob(
       google::privacy::dlp::v2::FinishDlpJobRequest const& request,

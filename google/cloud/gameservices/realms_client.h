@@ -95,12 +95,12 @@ class RealmsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.ListRealmsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L31}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L30}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   StreamRange<google::cloud::gaming::v1::Realm> ListRealms(
       std::string const& parent, Options opts = {});
@@ -109,16 +109,16 @@ class RealmsServiceClient {
   /// Lists realms in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::ListRealmsRequest,google/cloud/gaming/v1/realms.proto#L31}
+  /// @googleapis_link{google::cloud::gaming::v1::ListRealmsRequest,google/cloud/gaming/v1/realms.proto#L30}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.ListRealmsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L31}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L30}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   StreamRange<google::cloud::gaming::v1::Realm> ListRealms(
       google::cloud::gaming::v1::ListRealmsRequest request, Options opts = {});
@@ -132,12 +132,12 @@ class RealmsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.GetRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L74}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L73}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   StatusOr<google::cloud::gaming::v1::Realm> GetRealm(std::string const& name,
                                                       Options opts = {});
@@ -146,16 +146,16 @@ class RealmsServiceClient {
   /// Gets details of a single realm.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::GetRealmRequest,google/cloud/gaming/v1/realms.proto#L74}
+  /// @googleapis_link{google::cloud::gaming::v1::GetRealmRequest,google/cloud/gaming/v1/realms.proto#L73}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.GetRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L74}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L73}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   StatusOr<google::cloud::gaming::v1::Realm> GetRealm(
       google::cloud::gaming::v1::GetRealmRequest const& request,
@@ -171,12 +171,12 @@ class RealmsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.CreateRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L86}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L85}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   future<StatusOr<google::cloud::gaming::v1::Realm>> CreateRealm(
       std::string const& parent, google::cloud::gaming::v1::Realm const& realm,
@@ -186,16 +186,16 @@ class RealmsServiceClient {
   /// Creates a new realm in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::CreateRealmRequest,google/cloud/gaming/v1/realms.proto#L86}
+  /// @googleapis_link{google::cloud::gaming::v1::CreateRealmRequest,google/cloud/gaming/v1/realms.proto#L85}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.CreateRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L86}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L85}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   future<StatusOr<google::cloud::gaming::v1::Realm>> CreateRealm(
       google::cloud::gaming::v1::CreateRealmRequest const& request,
@@ -210,12 +210,12 @@ class RealmsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L28}
   ///
   /// [google.cloud.gaming.v1.DeleteRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L104}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L103}
   /// [google.cloud.gaming.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L28}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>> DeleteRealm(
       std::string const& name, Options opts = {});
@@ -224,16 +224,16 @@ class RealmsServiceClient {
   /// Deletes a single realm.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::DeleteRealmRequest,google/cloud/gaming/v1/realms.proto#L104}
+  /// @googleapis_link{google::cloud::gaming::v1::DeleteRealmRequest,google/cloud/gaming/v1/realms.proto#L103}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_link{google::cloud::gaming::v1::OperationMetadata,google/cloud/gaming/v1/common.proto#L28}
   ///
   /// [google.cloud.gaming.v1.DeleteRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L104}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L103}
   /// [google.cloud.gaming.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L29}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/common.proto#L28}
   ///
   future<StatusOr<google::cloud::gaming::v1::OperationMetadata>> DeleteRealm(
       google::cloud::gaming::v1::DeleteRealmRequest const& request,
@@ -251,12 +251,12 @@ class RealmsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.UpdateRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L116}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L115}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
       google::cloud::gaming::v1::Realm const& realm,
@@ -266,16 +266,16 @@ class RealmsServiceClient {
   /// Patches a single realm.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::UpdateRealmRequest,google/cloud/gaming/v1/realms.proto#L116}
+  /// @googleapis_link{google::cloud::gaming::v1::UpdateRealmRequest,google/cloud/gaming/v1/realms.proto#L115}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
   /// [google.cloud.gaming.v1.UpdateRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L116}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L115}
   /// [google.cloud.gaming.v1.Realm]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L152}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
   ///
   future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
       google::cloud::gaming::v1::UpdateRealmRequest const& request,
@@ -285,16 +285,16 @@ class RealmsServiceClient {
   /// Previews patches to a single realm.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateRequest,google/cloud/gaming/v1/realms.proto#L128}
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateRequest,google/cloud/gaming/v1/realms.proto#L127}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateResponse,google/cloud/gaming/v1/realms.proto#L143}
+  /// @googleapis_link{google::cloud::gaming::v1::PreviewRealmUpdateResponse,google/cloud/gaming/v1/realms.proto#L142}
   ///
   /// [google.cloud.gaming.v1.PreviewRealmUpdateRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L128}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L127}
   /// [google.cloud.gaming.v1.PreviewRealmUpdateResponse]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L143}
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L142}
   ///
   StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
   PreviewRealmUpdate(
