@@ -79,7 +79,11 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 **Other Changes**
 
-* fix: treat `kDeadlineExceeded` as permanent error in all services ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525))
+* fix: treat `kDeadlineExceeded` as permanent error in all services except ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525)):
+  * BigQuery
+  * Bigtable Admin
+  * IAM
+  * Spanner Admin
 
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
