@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class PartitionPublisher
     : public Publisher<google::cloud::pubsublite::v1::Cursor> {
@@ -105,8 +105,8 @@ class PartitionPublisher
   friend class PartitionPublisherBatchingTest;
 };
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 

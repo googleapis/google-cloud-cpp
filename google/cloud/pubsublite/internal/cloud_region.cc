@@ -16,8 +16,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<CloudRegion> MakeCloudRegion(std::string const& region) {
   std::vector<std::string> splits = absl::StrSplit(region, '-');
@@ -27,7 +27,7 @@ StatusOr<CloudRegion> MakeCloudRegion(std::string const& region) {
   return CloudRegion{region};
 }
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
