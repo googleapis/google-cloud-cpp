@@ -116,13 +116,16 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
     }
   });
 }
-void MultipartitionPublisher::SatisfyInitialPublishBuffer(Status const& status) {
-  std::lock_guard<std::mutex> g{mu_};
-  for (auto& state : initial_publish_buffer_) {
+void MultipartitionPublisher::SatisfyInitialPublishBuffer(
+    Status const& status) {
+  std::vector<PublishState> initial_publish_buffer;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    initial_publish_buffer.swap(initial_publish_buffer_);
+  }
+  for (auto& state : initial_publish_buffer) {
     state.publish_promise.set_value(status);
   }
-  // clear so destructor doesn't try to satisfy again
-  initial_publish_buffer_.clear();
 }
 
 void MultipartitionPublisher::RouteAndPublish(PublishState state) {
