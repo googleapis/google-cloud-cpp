@@ -48,12 +48,8 @@ class MockClient : public google::cloud::storage::internal::RawClient {
               (internal::UpdateBucketRequest const&), (override));
   MOCK_METHOD(StatusOr<storage::BucketMetadata>, PatchBucket,
               (internal::PatchBucketRequest const&), (override));
-  MOCK_METHOD(StatusOr<IamPolicy>, GetBucketIamPolicy,
-              (internal::GetBucketIamPolicyRequest const&), (override));
   MOCK_METHOD(StatusOr<NativeIamPolicy>, GetNativeBucketIamPolicy,
               (internal::GetBucketIamPolicyRequest const&), (override));
-  MOCK_METHOD(StatusOr<IamPolicy>, SetBucketIamPolicy,
-              (internal::SetBucketIamPolicyRequest const&), (override));
   MOCK_METHOD(StatusOr<NativeIamPolicy>, SetNativeBucketIamPolicy,
               (internal::SetNativeBucketIamPolicyRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::TestBucketIamPermissionsResponse>,

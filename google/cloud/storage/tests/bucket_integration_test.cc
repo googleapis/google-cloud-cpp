@@ -23,8 +23,6 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
-// TODO(#5929) - remove once deprecated functions are removed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -753,62 +751,6 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(BucketIntegrationTest, IamCRUD) {
-  std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeBucketIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  // Create a new bucket to run the test.
-  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                             BucketMetadata());
-  ASSERT_STATUS_OK(meta);
-
-  StatusOr<IamPolicy> policy = client->GetBucketIamPolicy(bucket_name);
-  ASSERT_STATUS_OK(policy);
-  auto const& bindings = policy->bindings;
-  // There must always be at least an OWNER for the Bucket.
-  ASSERT_FALSE(bindings.end() ==
-               bindings.find("roles/storage.legacyBucketOwner"));
-
-  StatusOr<std::vector<BucketAccessControl>> acl =
-      client->ListBucketAcl(bucket_name);
-  ASSERT_STATUS_OK(acl);
-  // Unfortunately we cannot compare the values in the ACL to the values in the
-  // IamPolicy directly. The ids for entities have different formats, for
-  // example: in ACL 'project-editors-123456789' and in IAM
-  // 'projectEditors:my-project'. We can compare the counts though:
-  std::set<std::string> expected_owners;
-  for (auto const& entry : *acl) {
-    if (entry.role() == "OWNER") {
-      expected_owners.insert(entry.entity());
-    }
-  }
-  std::set<std::string> actual_owners =
-      bindings.at("roles/storage.legacyBucketOwner");
-  EXPECT_EQ(expected_owners.size(), actual_owners.size());
-
-  IamPolicy update = *policy;
-  update.bindings.AddMember("roles/storage.objectViewer",
-                            "allAuthenticatedUsers");
-
-  StatusOr<IamPolicy> updated_policy =
-      client->SetBucketIamPolicy(bucket_name, update);
-  ASSERT_STATUS_OK(updated_policy);
-  EXPECT_EQ(update.bindings, updated_policy->bindings);
-  EXPECT_NE(update.etag, updated_policy->etag);
-
-  std::vector<std::string> expected_permissions{
-      "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
-  StatusOr<std::vector<std::string>> actual_permissions =
-      client->TestBucketIamPermissions(bucket_name, expected_permissions);
-  ASSERT_STATUS_OK(actual_permissions);
-  EXPECT_THAT(*actual_permissions,
-              UnorderedElementsAreArray(expected_permissions));
-
-  auto status = client->DeleteBucket(bucket_name);
-  ASSERT_STATUS_OK(status);
-}
-
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
@@ -991,25 +933,26 @@ TEST_F(BucketIntegrationTest, PatchFailure) {
   ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
-TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
+TEST_F(BucketIntegrationTest, GetNativeBucketIamPolicyFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to get information about a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  auto policy = client->GetBucketIamPolicy(bucket_name);
+  auto policy = client->GetNativeBucketIamPolicy(bucket_name);
   EXPECT_THAT(policy, Not(IsOk())) << "value=" << policy.value();
 }
 
-TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
+TEST_F(BucketIntegrationTest, SetNativeBucketIamPolicyFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  auto policy = client->SetBucketIamPolicy(bucket_name, IamPolicy{});
+  auto policy =
+      client->SetNativeBucketIamPolicy(bucket_name, NativeIamPolicy{{}, ""});
   EXPECT_THAT(policy, Not(IsOk())) << "value=" << policy.value();
 }
 

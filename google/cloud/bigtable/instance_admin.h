@@ -31,7 +31,6 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
-#include "google/cloud/iam_policy.h"
 #include "google/cloud/project.h"
 #include "google/cloud/status_or.h"
 #include <future>
@@ -615,36 +614,7 @@ class InstanceAdmin {
                           bool ignore_warnings = true);
 
   /**
-   * Gets the policy for @p instance_id.
-   *
-   * @param instance_id the instance to query.
-   * @return Policy the full IAM policy for the instance.
-   *
-   * @deprecated this function is deprecated; it doesn't support conditional
-   *     bindings and will not support any other features to come; please use
-   *     `GetNativeIamPolicy` instead.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #GetNativeIamPolicy() instead.
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED("GetNativeIamPolicy")
-  StatusOr<google::cloud::IamPolicy> GetIamPolicy(
-      std::string const& instance_id);
-
-  /**
    * Gets the native policy for @p instance_id.
-   *
-   * This is the preferred way to `GetIamPolicy()`. This is more closely coupled
-   * to the underlying protocol, enable more actions and is more likely to
-   * tolerate future protocol changes.
    *
    * @param instance_id the instance to query.
    * @return google::iam::v1::Policy the full IAM policy for the instance.
@@ -665,47 +635,6 @@ class InstanceAdmin {
 
   /**
    * Sets the IAM policy for an instance.
-   *
-   * Applications can provide the @p etag to implement optimistic concurrency
-   * control. If @p etag is not empty, the server will reject calls where the
-   * provided ETag does not match the ETag value stored in the server.
-   *
-   * @param instance_id which instance to set the IAM policy for.
-   * @param iam_bindings IamBindings object containing role and members.
-   * @param etag the expected ETag value for the current policy.
-   * @return Policy the current IAM bindings for the instance.
-   *
-   * @deprecated this function is deprecated; it doesn't support conditional
-   *     bindings and will not support any other features to come; please use
-   *     the overload for `google::iam::v1::Policy` instead.
-   *
-   * @warning ETags are currently not used by Cloud Bigtable.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Thread-safety
-   * Two threads concurrently calling this member function on the same instance
-   * of this class are **not** guaranteed to work. Consider copying the object
-   * and using different copies in each thread.
-   *
-   * @par Example
-   * Use #SetIamPolicy(std::string const&, google::iam::v1::Policy const&)
-   * instead.
-   */
-  GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(
-      "SetIamPolicy(std::string const&, google::iam::v1::Policy const&)")
-  StatusOr<google::cloud::IamPolicy> SetIamPolicy(
-      std::string const& instance_id,
-      google::cloud::IamBindings const& iam_bindings,
-      std::string const& etag = std::string{});
-
-  /**
-   * Sets the IAM policy for an instance.
-   *
-   * This is the preferred way to the overload for `IamBindings`. This is more
-   * closely coupled to the underlying protocol, enable more actions and is more
-   * likely to tolerate future protocol changes.
    *
    * @param instance_id which instance to set the IAM policy for.
    * @param iam_policy google::iam::v1::Policy object containing role and
@@ -777,9 +706,6 @@ class InstanceAdmin {
   }
   void ChangePolicies() {}
   //@}
-
-  static StatusOr<google::cloud::IamPolicy> ProtoToWrapper(
-      google::iam::v1::Policy proto);
 
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
   std::string project_id_;

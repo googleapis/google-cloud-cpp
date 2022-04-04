@@ -201,24 +201,10 @@ TEST_P(CurlClientTest, PatchBucket) {
   CheckStatus(actual);
 }
 
-TEST_P(CurlClientTest, GetBucketIamPolicy) {
-  auto actual =
-      client_->GetBucketIamPolicy(GetBucketIamPolicyRequest("bkt")).status();
-  CheckStatus(actual);
-}
-
 TEST_P(CurlClientTest, GetNativeBucketIamPolicy) {
   auto actual =
       client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"))
           .status();
-  CheckStatus(actual);
-}
-
-TEST_P(CurlClientTest, SetBucketIamPolicy) {
-  auto actual = client_
-                    ->SetBucketIamPolicy(SetBucketIamPolicyRequest(
-                        "bkt", google::cloud::IamPolicy{}))
-                    .status();
   CheckStatus(actual);
 }
 

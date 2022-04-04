@@ -67,12 +67,8 @@ class RawClient {
   virtual StatusOr<BucketMetadata> UpdateBucket(UpdateBucketRequest const&) = 0;
   virtual StatusOr<BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) = 0;
-  virtual StatusOr<google::cloud::IamPolicy> GetBucketIamPolicy(
-      GetBucketIamPolicyRequest const& request) = 0;
   virtual StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) = 0;
-  virtual StatusOr<google::cloud::IamPolicy> SetBucketIamPolicy(
-      SetBucketIamPolicyRequest const& request) = 0;
   virtual StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
       SetNativeBucketIamPolicyRequest const& request) = 0;
   virtual StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(

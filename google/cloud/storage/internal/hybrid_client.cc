@@ -62,19 +62,9 @@ StatusOr<BucketMetadata> HybridClient::PatchBucket(
   return curl_->PatchBucket(request);
 }
 
-StatusOr<IamPolicy> HybridClient::GetBucketIamPolicy(
-    GetBucketIamPolicyRequest const& request) {
-  return curl_->GetBucketIamPolicy(request);
-}
-
 StatusOr<NativeIamPolicy> HybridClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   return curl_->GetNativeBucketIamPolicy(request);
-}
-
-StatusOr<IamPolicy> HybridClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const& request) {
-  return curl_->SetBucketIamPolicy(request);
 }
 
 StatusOr<NativeIamPolicy> HybridClient::SetNativeBucketIamPolicy(

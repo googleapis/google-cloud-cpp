@@ -259,27 +259,6 @@ TEST_F(GrpcClientTest, PatchBucket) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST_F(GrpcClientTest, GetBucketIamPolicy) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, GetIamPolicy)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::GetIamPolicyRequest const& request) {
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
-        return PermanentError();
-      });
-  auto client = CreateTestClient(mock);
-  auto response = client->GetBucketIamPolicy(
-      GetBucketIamPolicyRequest("test-bucket")
-          .set_multiple_options(Fields("field1,field2"),
-                                QuotaUser("test-quota-user")));
-  EXPECT_EQ(response.status(), PermanentError());
-}
-
 TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
   auto mock = std::make_shared<testing::MockStorageStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
@@ -296,29 +275,6 @@ TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
   auto client = CreateTestClient(mock);
   auto response = client->GetNativeBucketIamPolicy(
       GetBucketIamPolicyRequest("test-bucket")
-          .set_multiple_options(Fields("field1,field2"),
-                                QuotaUser("test-quota-user")));
-  EXPECT_EQ(response.status(), PermanentError());
-}
-
-TEST_F(GrpcClientTest, SetBucketIamPolicy) {
-  auto mock = std::make_shared<testing::MockStorageStub>();
-  EXPECT_CALL(*mock, SetIamPolicy)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::SetIamPolicyRequest const& request) {
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
-        return PermanentError();
-      });
-  auto client = CreateTestClient(mock);
-  auto response = client->SetBucketIamPolicy(
-      SetBucketIamPolicyRequest(
-          "test-bucket",
-          IamPolicy{/*.version=*/1, /*.bindings=*/{}, /*.etag=*/""})
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());

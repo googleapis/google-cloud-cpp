@@ -193,27 +193,6 @@ google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(
   return result;
 }
 
-// TODO(#5929) - remove this function and `.inc` includes
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
-
-google::iam::v1::SetIamPolicyRequest GrpcBucketRequestParser::ToProto(
-    SetBucketIamPolicyRequest const& request) {
-  google::iam::v1::SetIamPolicyRequest result;
-  result.set_resource("projects/_/buckets/" + request.bucket_name());
-  auto& policy = *result.mutable_policy();
-  policy.set_version(request.policy().version);
-  policy.set_etag(request.policy().etag);
-  for (auto const& b : request.policy().bindings) {
-    google::iam::v1::Binding binding;
-    binding.set_role(b.first);
-    for (auto const& m : b.second) binding.add_members(m);
-    *policy.add_bindings() = std::move(binding);
-  }
-  return result;
-}
-
-#include "google/cloud/internal/diagnostics_pop.inc"
-
 google::iam::v1::TestIamPermissionsRequest GrpcBucketRequestParser::ToProto(
     TestBucketIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsRequest result;

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_testing {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockRetryPolicy : public google::cloud::internal::RetryPolicy {
  public:
@@ -31,8 +31,8 @@ class MockRetryPolicy : public google::cloud::internal::RetryPolicy {
   MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
 };
 
-}  // namespace pubsublite_testing
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_testing
 }  // namespace cloud
 }  // namespace google
 

@@ -85,11 +85,6 @@ std::ostream& operator<<(std::ostream& stream, NativeExpression const&);
  *
  * For more information about a Binding please refer to:
  * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding
- *
- * Compared to `IamBinding`, `NativeIamBinding` is a more future-proof
- * solution - it gracefully tolerates changes in the underlying protocol.
- * If IamBinding contains more fields than just a role and members, in the
- * future, `NativeIamBinding` will preserve them (contrary to IamBinding).
  */
 class NativeIamBinding {
  public:

@@ -5,19 +5,6 @@
 <!-- Keep these sorted by estimated date -->
 
 <details>
-<summary>2022-04-01: retiring legacy IAM functions</summary>
-<br>
-
-* On 2022-04-01 (or shortly after) we are planning to remove a number of
-  IAM functions designed before [IAM conditions][iam-conditions-link]. These
-  functions do not work with IAM policies that include IAM conditions, and
-  have been marked as deprecated since before 2019-08-01, albeit in Doxygen
-  comments only. Starting with the v1.25.0 release, and depending on your
-  compiler settings, using these functions may issue a deprecation warning at
-  the call site. See [#5929] for more details.
-</details>
-
-<details>
 <summary>2022-10-01: retiring legacy Spanner admin APIs</summary>
 <br>
 
@@ -79,11 +66,35 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   * This only changes the default C++ version, we continue to test and support C++11.
   * For more details, see [#6767](https://github.com/googleapis/google-cloud-cpp/issues/6767).
 
+* The following deprecated, legacy IAM classes have been removed:
+  `google::cloud::IamPolicy`, `google::cloud::IamBinding`,
+  `google::cloud::IamBindings`. They were designed before
+  [IAM conditions][iam-conditions-link]. They did not work with IAM policies
+  that include IAM conditions. See [#5929] for more details.
+
+### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
+
+**BREAKING CHANGES**
+
+* `InstanceAdmin::GetIamPolicy` and `InstanceAdmin::SetIamPolicy` have been
+  retired. If you are affected by this removal, please use
+  `InstanceAdmin::GetNativeIamPolicy` and `InstanceAdmin::SetNativeIamPolicy`
+  instead. See [#5929] for more details.
+
 ### [KMS](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/kms/README.md)
 
 The library has been expanded to include the following services:
 
 * [External Key Manager](https://cloud.google.com/kms/docs/ekm)
+
+### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
+
+**BREAKING CHANGES**
+
+* `Client::GetBucketIamPolicy` and `Client::SetBucketIamPolicy` have been
+  retired. If you are affected by this removal, please use
+  `Client::GetNativeBucketIamPolicy` and `Client::SetNativeBucketIamPolicy`
+  instead. See [#5929] for more details.
 
 ## v1.38.0 - 2022-03
 

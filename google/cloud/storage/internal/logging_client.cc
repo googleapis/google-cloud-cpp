@@ -114,20 +114,10 @@ StatusOr<BucketMetadata> LoggingClient::PatchBucket(
   return MakeCall(*client_, &RawClient::PatchBucket, request, __func__);
 }
 
-StatusOr<IamPolicy> LoggingClient::GetBucketIamPolicy(
-    GetBucketIamPolicyRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetBucketIamPolicy, request, __func__);
-}
-
 StatusOr<NativeIamPolicy> LoggingClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   return MakeCall(*client_, &RawClient::GetNativeBucketIamPolicy, request,
                   __func__);
-}
-
-StatusOr<IamPolicy> LoggingClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const& request) {
-  return MakeCall(*client_, &RawClient::SetBucketIamPolicy, request, __func__);
 }
 
 StatusOr<NativeIamPolicy> LoggingClient::SetNativeBucketIamPolicy(

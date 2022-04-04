@@ -16,16 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VERSION_H
 
 #include "google/cloud/bigtable/version_info.h"
-#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <string>
-
-#define GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(alternative)                  \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
-      "this function predates IAM conditions and does not work with policies " \
-      "that include IAM conditions. Please use " alternative                   \
-      " instead. The function will be removed on 2022-04-01 or shortly "       \
-      "after. See GitHub issue #5929 for more information.")
 
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
