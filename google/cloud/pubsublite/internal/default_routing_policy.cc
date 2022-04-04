@@ -23,12 +23,12 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // will always be 32 as specified in sha256_hash.h
-auto constexpr kNumBytesSha256 = 32;
+std::uint32_t constexpr kNumBytesSha256 = 32;
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
-std::uint64_t ModPow(std::uint64_t val, unsigned int pow, std::uint32_t mod) {
+std::uint64_t ModPow(std::uint64_t val, std::uint32_t pow, Partition mod) {
   std::uint64_t result = 1;
-  for (unsigned int i = 0; i != pow; ++i) {
+  for (std::uint32_t i = 0; i != pow; ++i) {
     result *= (val % mod);
     result %= mod;
   }
@@ -37,16 +37,14 @@ std::uint64_t ModPow(std::uint64_t val, unsigned int pow, std::uint32_t mod) {
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
 // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
-std::uint32_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
-                     std::uint32_t mod) {
+Partition GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
+                 Partition mod) {
   std::uint64_t result = 0;
-  for (unsigned int i = 0; i != kNumBytesSha256; ++i) {
+  for (std::uint32_t i = 0; i != kNumBytesSha256; ++i) {
     std::uint32_t val_mod = big_endian[i] % mod;
 
-    unsigned int pow = kNumBytesSha256 - (i + 1);
-    std::uint64_t pow_mod = ModPow(
-        // 2^8
-        static_cast<std::uint64_t>(1 << 8), pow, mod);
+    std::uint32_t pow = kNumBytesSha256 - (i + 1);
+    std::uint64_t pow_mod = ModPow(256, pow, mod);
 
     result += (val_mod * pow_mod) % mod;
     result %= mod;
@@ -55,13 +53,13 @@ std::uint32_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
   return static_cast<std::uint32_t>(result);
 }
 
-std::uint32_t DefaultRoutingPolicy::Route(Partition num_partitions) {
+Partition DefaultRoutingPolicy::Route(Partition num_partitions) {
   // atomic operation
   return static_cast<std::uint32_t>(counter_++ % num_partitions);
 }
 
-std::uint32_t DefaultRoutingPolicy::Route(std::string const& message_key,
-                                          Partition num_partitions) {
+Partition DefaultRoutingPolicy::Route(std::string const& message_key,
+                                      Partition num_partitions) {
   return GetMod(google::cloud::internal::Sha256Hash(message_key),
                 num_partitions);
 }

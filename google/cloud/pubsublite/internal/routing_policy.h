@@ -23,13 +23,17 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * A partition should be an integer in the range [0, UINT32_MAX).
+ */
+using Partition = std::uint32_t;
+
+/**
  * Interface for a Pub/Sub Lite routing policy that determines the partition
  * that a message should be sent to, either depending on the message's key or
  * not.
  */
 class RoutingPolicy {
  public:
-  using Partition = std::uint32_t;
   virtual ~RoutingPolicy() = default;
   virtual Partition Route(Partition num_partitions) = 0;
   virtual Partition Route(std::string const& message_key,
