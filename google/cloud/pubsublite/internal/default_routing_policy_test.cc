@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
 #include <gmock/gmock.h>
+#include <array>
 #include <unordered_map>
 
 namespace google {
@@ -50,9 +51,9 @@ TEST(DefaultRoutingPolicyTest, RouteWithKey) {
 TEST(DefaultRoutingPolicyTest, RouteWithoutKey) {
   unsigned int num_partitions = 29;
   DefaultRoutingPolicy rp;
-  uint64_t initial_partition = rp.Route(num_partitions);
+  std::uint32_t initial_partition = rp.Route(num_partitions);
   for (unsigned int i = 0; i < num_partitions; ++i) {
-    uint64_t next_partition = rp.Route(num_partitions);
+    std::uint32_t next_partition = rp.Route(num_partitions);
     EXPECT_EQ((initial_partition + 1) % num_partitions,
               next_partition % num_partitions);
     initial_partition = next_partition;
@@ -70,6 +71,7 @@ TEST(TestGetMod, MaxValue) {
   EXPECT_EQ(GetMod(arr, 100), 35);
   EXPECT_EQ(GetMod(arr, 10023), 5397);
   EXPECT_EQ(GetMod(arr, UINT8_MAX), 0);
+  EXPECT_EQ(GetMod(arr, UINT32_MAX - 1), 255);
 }
 
 TEST(TestGetMod, OneLessThanMaxValue) {
@@ -82,6 +84,7 @@ TEST(TestGetMod, OneLessThanMaxValue) {
   EXPECT_EQ(GetMod(arr, 100), 34);
   EXPECT_EQ(GetMod(arr, 10023), 5396);
   EXPECT_EQ(GetMod(arr, UINT8_MAX), 254);
+  EXPECT_EQ(GetMod(arr, UINT32_MAX - 1), 254);
 }
 
 TEST(TestGetMod, Zeros) {
@@ -93,6 +96,7 @@ TEST(TestGetMod, Zeros) {
   EXPECT_EQ(GetMod(arr, 100), 0);
   EXPECT_EQ(GetMod(arr, 10023), 0);
   EXPECT_EQ(GetMod(arr, UINT8_MAX), 0);
+  EXPECT_EQ(GetMod(arr, UINT32_MAX - 1), 0);
 }
 
 TEST(TestGetMod, ArbitraryValue) {
@@ -105,6 +109,7 @@ TEST(TestGetMod, ArbitraryValue) {
   EXPECT_EQ(GetMod(arr, 10023), 3346);
   EXPECT_EQ(GetMod(arr, 109000), 60390);
   EXPECT_EQ(GetMod(arr, UINT8_MAX), 100);
+  EXPECT_EQ(GetMod(arr, UINT32_MAX - 1), 1136793478);
 }
 
 TEST(TestGetMod, ArbitraryValue1) {
@@ -115,6 +120,7 @@ TEST(TestGetMod, ArbitraryValue1) {
   EXPECT_EQ(GetMod(arr, 102301), 93535);
   EXPECT_EQ(GetMod(arr, 23), 13);
   EXPECT_EQ(GetMod(arr, UINT8_MAX), 37);
+  EXPECT_EQ(GetMod(arr, UINT32_MAX - 1), 3416191692);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_DEFAULT_ROUTING_POLICY_H
 
 #include "google/cloud/pubsublite/internal/routing_policy.h"
-#include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/version.h"
 #include <atomic>
 #include <cstddef>
@@ -33,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod);
 
 // returns <integer value of `big_endian`> % `mod` while accounting for overflow
-std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
+std::uint32_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
 
 /**
  * Implements the same routing policy as all the other Pub/Sub Lite client
@@ -49,9 +48,9 @@ std::uint64_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
  */
 class DefaultRoutingPolicy : public RoutingPolicy {
  public:
-  std::uint64_t Route(std::uint32_t num_partitions) override;
-  std::uint64_t Route(std::string const& message_key,
-                      std::uint32_t num_partitions) override;
+  Partition Route(Partition num_partitions) override;
+  Partition Route(std::string const& message_key,
+                  Partition num_partitions) override;
 
  private:
   std::atomic<std::int64_t> counter_{0};
