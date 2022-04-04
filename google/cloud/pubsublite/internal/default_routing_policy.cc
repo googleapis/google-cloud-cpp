@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::uint32_t constexpr kNumBytesSha256 = 32;
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
-std::uint64_t ModPow(std::uint64_t val, std::uint32_t pow, Partition mod) {
+std::uint64_t ModPow(std::uint64_t val, std::uint32_t pow, std::uint32_t mod) {
   std::uint64_t result = 1;
   for (std::uint32_t i = 0; i != pow; ++i) {
     result *= (val % mod);
@@ -37,8 +37,8 @@ std::uint64_t ModPow(std::uint64_t val, std::uint32_t pow, Partition mod) {
 
 // Uses the identity that `(a*b) % m == ((a % m) * (b % m)) % m`
 // Uses the identity that `(a+b) % m == ((a % m) + (b % m)) % m`
-Partition GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
-                 Partition mod) {
+std::uint32_t GetMod(std::array<uint8_t, kNumBytesSha256> big_endian,
+                     std::uint32_t mod) {
   std::uint64_t result = 0;
   for (std::uint32_t i = 0; i != kNumBytesSha256; ++i) {
     std::uint32_t val_mod = big_endian[i] % mod;

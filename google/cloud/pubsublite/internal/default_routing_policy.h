@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Calculates the val^pow % mod while accounting for overflow.
 // Needed because after calculating `big_endian[i]` % `mod` in `GetMod`, we need
 // to account for its position in the array by multiplying it by an offset.
-std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, Partition mod);
+std::uint64_t ModPow(std::uint64_t val, std::uint64_t pow, std::uint32_t mod);
 
 // returns <integer value of `big_endian`> % `mod` while accounting for overflow
-Partition GetMod(std::array<uint8_t, 32> big_endian, Partition mod);
+std::uint32_t GetMod(std::array<uint8_t, 32> big_endian, std::uint32_t mod);
 
 /**
  * Implements the same routing policy as all the other Pub/Sub Lite client
