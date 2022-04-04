@@ -72,6 +72,8 @@ void GenerateQuickstartWorkspace(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartBuild(
     std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartBazelrc(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
 
 }  // namespace generator_internal
 }  // namespace cloud

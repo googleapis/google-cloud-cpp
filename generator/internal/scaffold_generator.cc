@@ -172,6 +172,7 @@ void GenerateScaffold(
       {"quickstart/Makefile", GenerateQuickstartMakefile},
       {"quickstart/WORKSPACE.bazel", GenerateQuickstartWorkspace},
       {"quickstart/BUILD.bazel", GenerateQuickstartBuild},
+      {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
   };
 
   auto const vars = ScaffoldVars(googleapis_path, output_path, service);
@@ -1087,6 +1088,37 @@ cc_binary(
         "@com_github_googleapis_google_cloud_cpp//:experimental-$library$",
     ],
 )
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateQuickstartBazelrc(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# To workaround a bug in Bazel [1], gRPC requires this flag on macOS builds,
+# and there is (AFAIK) no way to "inherit" their definitions.
+#   [1]: https://github.com/bazelbuild/bazel/issues/4341
+build --copt=-DGRPC_BAZEL_BUILD
+
+# Do not create the convenience links, they are inconvenient when the build
+# runs inside a docker image or if one builds a quickstart and then builds
+# the project separately.
+build --experimental_convenience_symlinks=ignore
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
