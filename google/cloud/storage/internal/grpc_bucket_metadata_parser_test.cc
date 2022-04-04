@@ -30,26 +30,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::ElementsAreArray;
 
-TEST(GrpcBucketMetadataParser, PublicAccessPreventionToProto) {
-  using google::storage::v2::Bucket;
-  EXPECT_EQ(
-      Bucket::IamConfig::INHERITED,
-      GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("inherited"));
-  EXPECT_EQ(
-      Bucket::IamConfig::ENFORCED,
-      GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("enforced"));
-  EXPECT_EQ(Bucket::IamConfig::PUBLIC_ACCESS_PREVENTION_UNSPECIFIED,
-            GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("invalid"));
-}
-
-TEST(GrpcBucketMetadataParser, PublicAccessPreventionFromProto) {
-  using google::storage::v2::Bucket;
-  EXPECT_EQ("inherited",
-            GrpcBucketMetadataParser::FromProto(Bucket::IamConfig::INHERITED));
-  EXPECT_EQ("enforced",
-            GrpcBucketMetadataParser::FromProto(Bucket::IamConfig::ENFORCED));
-}
-
 TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
   google::storage::v2::Bucket input;
   // Keep the proto fields in the order they show up in the proto file. It is
@@ -125,7 +105,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
         enabled: true
         lock_time { seconds: 1565194927 nanos: 123456000 }
       }
-      public_access_prevention: INHERITED
+      public_access_prevention: "inherited"
     }
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
@@ -293,7 +273,7 @@ TEST(GrpcBucketMetadataParser, BucketIamConfigRoundtrip) {
       enabled: true
       lock_time { seconds: 1234 nanos: 5678000 }
     }
-    public_access_prevention: ENFORCED
+    public_access_prevention: "enforced"
   )pb";
   google::storage::v2::Bucket::IamConfig start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
