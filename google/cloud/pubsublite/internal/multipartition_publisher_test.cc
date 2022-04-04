@@ -496,7 +496,7 @@ class InitializedMultipartitionPublisherTest
     num_partitions.set_value(ExamplePartitionsResponse(2));
   }
 
-  ~InitializedMultipartitionPublisherTest() {
+  ~InitializedMultipartitionPublisherTest() override {
     EXPECT_CALL(alarm_token_, Destroy);
     EXPECT_CALL(partition_publisher_0_, Shutdown)
         .WillOnce(Return(ByMove(make_ready_future())));
