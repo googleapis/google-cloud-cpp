@@ -53,7 +53,9 @@ namespace. For status on this see
 https://github.com/googleapis/google-cloud-cpp/issues/8234.
 </details>
 
-## v1.39.0 - TBD
+## v1.40.0 - TBD
+
+## v1.39.0 - 2022-04
 
 **BREAKING CHANGES**
 
@@ -72,6 +74,9 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   [IAM conditions][iam-conditions-link]. They did not work with IAM policies
   that include IAM conditions. See [#5929] for more details.
 
+* cleanup!: restrict testing_util build visibility ([#8584](https://github.com/googleapis/google-cloud-cpp/pull/8584))
+* cleanup!: change bazel visibility to private for {tests,quickstarts,examples,samples,benchmarks} ([#8578](https://github.com/googleapis/google-cloud-cpp/pull/8578))
+
 ### [Bigtable](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/README.md)
 
 **BREAKING CHANGES**
@@ -80,12 +85,41 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   retired. If you are affected by this removal, please use
   `InstanceAdmin::GetNativeIamPolicy` and `InstanceAdmin::SetNativeIamPolicy`
   instead. See [#5929] for more details.
+* cleanup(common)!: remove legacy IAM classes ([#8667](https://github.com/googleapis/google-cloud-cpp/pull/8667))
+* cleanup(bigtable)!: remove deprecated InstanceAdmin IAM functions ([#8652](https://github.com/googleapis/google-cloud-cpp/pull/8652))
+
+**Other Changes**
+
+* fix: treat `kDeadlineExceeded` as permanent error ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525))
+
+### [BigQuery](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/README.md)
+
+* fix: treat `kDeadlineExceeded` as permanent error ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525))
+
+### [IAM](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/README.md)
+
+* fix: treat `kDeadlineExceeded` as permanent error ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525))
 
 ### [KMS](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/kms/README.md)
 
-The library has been expanded to include the following services:
+The library has been expanded to include the following services ([#8530](https://github.com/googleapis/google-cloud-cpp/pull/8530)):
 
 * [External Key Manager](https://cloud.google.com/kms/docs/ekm)
+
+### [Pub/Sub](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/README.md)
+
+* fix(pubsub): increase grpc.max_metadata_size limit ([#8626](https://github.com/googleapis/google-cloud-cpp/pull/8626))
+* fix: treat `kDeadlineExceeded` as permanent error ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525))
+
+### [Spanner](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/README.md)
+
+* feat(spanner): add remaining PostgreSQL samples ([#8627](https://github.com/googleapis/google-cloud-cpp/pull/8627))
+* feat(spanner): add initial PostgreSQL samples ([#8617](https://github.com/googleapis/google-cloud-cpp/pull/8617))
+* feat(spanner): integration tests for Database.database_dialect ([#8589](https://github.com/googleapis/google-cloud-cpp/pull/8589))
+* feat(spanner): integration tests and sample for CopyBackup() ([#8574](https://github.com/googleapis/google-cloud-cpp/pull/8574))
+* fix: treat `kDeadlineExceeded` as permanent error ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525))
+* fix(spanner): correct handling of PartialResultSet.resume_token ([#8521](https://github.com/googleapis/google-cloud-cpp/pull/8521))
+* fix(spanner): capture the ReadRequest by value in the reader factory ([#8515](https://github.com/googleapis/google-cloud-cpp/pull/8515))
 
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
 
@@ -95,6 +129,38 @@ The library has been expanded to include the following services:
   retired. If you are affected by this removal, please use
   `Client::GetNativeBucketIamPolicy` and `Client::SetNativeBucketIamPolicy`
   instead. See [#5929] for more details.
+* cleanup(common)!: remove legacy IAM classes ([#8667](https://github.com/googleapis/google-cloud-cpp/pull/8667))
+* cleanup(storage)!: remove deprecated IAM functions ([#8664](https://github.com/googleapis/google-cloud-cpp/pull
+* cleanup!: change storage bazel visibility to private by default ([#8583](https://github.com/googleapis/google-cloud-cpp/pull/8583))
+
+**Other Changes**
+
+* doc(storage): add custom-dual regions example ([#8595](https://github.com/googleapis/google-cloud-cpp/pull/8595))
+/8664))
+* fix(storage): `ParallelUploadFile()` and `WithObjectMetadata` ([#8629](https://github.com/googleapis/google-cloud-cpp/pull/8629))
+* fix(storage): return an error on short writes ([#8562](https://github.com/googleapis/google-cloud-cpp/pull/8562))
+* fix(storage): use correct offset and size types ([#8538](https://github.com/googleapis/google-cloud-cpp/pull/8538))
+
+### [Common Libraries](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/README.md)
+
+**BREAKING CHANGES**
+
+* cleanup(common)!: remove legacy IAM classes ([#8667](https://github.com/googleapis/google-cloud-cpp/pull/8667))
+
+**Other Changes**
+
+* fix(pubsublite): internal namespaces ([#8680](https://github.com/googleapis/google-cloud-cpp/pull/8680))
+* feat(pubsublite): add async version of `GetTopicPartitions()` ([#8640](https://github.com/googleapis/google-cloud-cpp/pull/8640))
+* feat(pubsublite): implementation of user-facing and helper PSL types ([#8591](https://github.com/googleapis/google-cloud-cpp/pull/8591))
+* feat(pubsublite): alarm registry implementation ([#8575](https://github.com/googleapis/google-cloud-cpp/pull/8575))
+* feat(pubsublite): default routing policy ([#8553](https://github.com/googleapis/google-cloud-cpp/pull/8553))
+* feat(pubsublite): partition publisher implementation ([#8478](https://github.com/googleapis/google-cloud-cpp/pull/8478))
+* feat(pubsublite): single partition publisher boilerplate and `Start`/`Shutdown` implementation ([#8531](https://github.com/googleapis/google-cloud-cpp/pull/8531))
+* feat(pubsublite): service composite implementation ([#8529](https://github.com/googleapis/google-cloud-cpp/pull/8529))
+* feat(common): `g::c::future` support for coroutines ([#8532](https://github.com/googleapis/google-cloud-cpp/pull/8532))
+* fix: treat `kDeadlineExceeded` as permanent error ([#8525](https://github.com/googleapis/google-cloud-cpp/pull/8525))
+* clean(pubsublite): add service class ([#8504](https://github.com/googleapis/google-cloud-cpp/pull/8504))
+* fix(pubsublite): Cancel in Shutdown ([#8498](https://github.com/googleapis/google-cloud-cpp/pull/8498))
 
 ## v1.38.0 - 2022-03
 
