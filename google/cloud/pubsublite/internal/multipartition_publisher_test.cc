@@ -160,6 +160,42 @@ TEST_F(SinglePublisherTest, PublisherCreatedFromAlarmGood) {
   EXPECT_EQ(start.get(), Status());
 }
 
+TEST_F(SinglePublisherTest,
+       PublisherCreatedFromAlarmGoodAfterInvalidValueFromStart) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions1;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions1.get_future())));
+  auto start = multipartition_publisher_->Start();
+
+  promise<StatusOr<TopicPartitions>> num_partitions2;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions2.get_future())));
+  on_alarm_();
+
+  EXPECT_CALL(partition_publisher_factory_, Call(0))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+  promise<Status> partition_publisher_start;
+  EXPECT_CALL(partition_publisher_ref_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+
+  TopicPartitions tp;
+  tp.set_partition_count(UINT32_MAX);  // out of bounds
+  num_partitions1.set_value(tp);
+  num_partitions2.set_value(topic_partitions_response_);
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  EXPECT_EQ(start.get(), Status());
+}
+
 TEST_F(SinglePublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
   InSequence seq;
 
