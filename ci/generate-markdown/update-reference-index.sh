@@ -17,8 +17,8 @@
 set -euo pipefail
 
 if ! type /usr/bin/sponge >/dev/null 2>&1; then
-  echo "This script requires sponge(1) to produce its output"
-  echo "Please install this tool and try again"
+  echo "This script requires sponge(1) to produce its output."
+  echo "Please install this tool and try again."
   exit 1
 fi
 
