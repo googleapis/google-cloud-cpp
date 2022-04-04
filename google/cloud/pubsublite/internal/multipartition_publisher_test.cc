@@ -160,8 +160,7 @@ TEST_F(SinglePublisherTest, PublisherCreatedFromAlarmGood) {
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(SinglePublisherTest,
-       PublisherCreatedFromAlarmGoodAfterInvalidValueFromStart) {
+TEST_F(SinglePublisherTest, PublisherCreatedFromAlarmGoodAfterInvalidValueFromStart) {
   InSequence seq;
 
   promise<StatusOr<TopicPartitions>> num_partitions1;
@@ -176,15 +175,15 @@ TEST_F(SinglePublisherTest,
       .WillOnce(Return(ByMove(num_partitions2.get_future())));
   on_alarm_();
 
+  TopicPartitions tp;
+  tp.set_partition_count(UINT32_MAX); // out of bounds
+  num_partitions1.set_value(tp);
+
   EXPECT_CALL(partition_publisher_factory_, Call(0))
       .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
   promise<Status> partition_publisher_start;
   EXPECT_CALL(partition_publisher_ref_, Start)
       .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
-
-  TopicPartitions tp;
-  tp.set_partition_count(UINT32_MAX);  // out of bounds
-  num_partitions1.set_value(tp);
   num_partitions2.set_value(topic_partitions_response_);
 
   EXPECT_CALL(alarm_token_ref_, Destroy);
