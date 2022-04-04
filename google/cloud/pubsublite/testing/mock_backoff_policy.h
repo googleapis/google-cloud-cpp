@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_testing {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockBackoffPolicy : public google::cloud::internal::BackoffPolicy {
  public:
@@ -30,8 +30,8 @@ class MockBackoffPolicy : public google::cloud::internal::BackoffPolicy {
   MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
 };
 
-}  // namespace pubsublite_testing
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_testing
 }  // namespace cloud
 }  // namespace google
 

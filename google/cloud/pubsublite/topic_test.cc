@@ -22,7 +22,7 @@ using google::cloud::pubsublite::Topic;
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
+namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -41,6 +41,6 @@ TEST(Topic, BasicTopic) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
+}  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google
