@@ -125,10 +125,10 @@ void MultipartitionPublisher::RouteAndPublish(PublishState& state) {
              message_promise](future<StatusOr<Cursor>> publish_future) {
         auto publish_response = publish_future.get();
         if (!publish_response) {
-          message_promise->set_value(
+          return message_promise->set_value(
               StatusOr<MessageMetadata>{publish_response.status()});
         }
-        return message_promise->set_value(StatusOr<MessageMetadata>{
+        message_promise->set_value(StatusOr<MessageMetadata>{
             MessageMetadata{partition, std::move(*publish_response)}});
       });
 }
