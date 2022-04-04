@@ -19,8 +19,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // will always be 32 as specified in sha256_hash.h
 auto constexpr kNumBytesSha256 = 32;
@@ -66,7 +66,7 @@ std::uint32_t DefaultRoutingPolicy::Route(std::string const& message_key,
                 num_partitions);
 }
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google

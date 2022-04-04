@@ -16,8 +16,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<Location> MakeLocation(std::string const& location) {
   auto possible_zone = MakeCloudZone(location);
@@ -27,7 +27,7 @@ StatusOr<Location> MakeLocation(std::string const& location) {
   return Status{StatusCode::kInvalidArgument, "Invalid location"};
 }
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google

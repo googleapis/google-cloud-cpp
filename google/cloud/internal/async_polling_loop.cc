@@ -137,6 +137,10 @@ class AsyncPollingLoopImpl
     // after too many polling attempts.
     if (!polling_policy_->OnFailure(op.status())) {
       if (op) {
+        // We should not be fabricating a `Status` value here. Rather, we
+        // should cancel the operation and wait for the next poll to return
+        // an accurate status to the user, otherwise they will have no idea
+        // how to react.
         return promise_.set_value(Status(
             StatusCode::kDeadlineExceeded,
             location_ + "() - polling loop terminated by polling policy"));

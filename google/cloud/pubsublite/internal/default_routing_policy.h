@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Calculates the val^pow % mod while accounting for overflow.
 // Needed because after calculating `big_endian[i]` % `mod` in `GetMod`, we need
@@ -56,8 +56,8 @@ class DefaultRoutingPolicy : public RoutingPolicy {
   std::atomic<std::int64_t> counter_{0};
 };
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 

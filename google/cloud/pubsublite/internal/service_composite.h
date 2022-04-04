@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ServiceComposite : public Service {
  public:
@@ -155,8 +155,8 @@ class ServiceComposite : public Service {
                           "`Start` not called"};  // ABSL_GUARDED_BY(mu_)
 };
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 

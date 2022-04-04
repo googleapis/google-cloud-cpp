@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using google::cloud::internal::BackoffPolicy;
 using google::cloud::internal::RetryPolicy;
@@ -593,8 +593,8 @@ MakeResumableAsyncStreamingReadWriteRpcImpl(
       std::move(stream_factory), std::move(initializer));
 }
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 
