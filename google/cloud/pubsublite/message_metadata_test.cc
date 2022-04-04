@@ -25,8 +25,8 @@ using ::google::cloud::testing_util::IsProtoEqual;
 
 namespace google {
 namespace cloud {
+namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace pubsublite_internal {
 namespace {
 
 TEST(MessageMetadata, ValidParse) {
@@ -78,7 +78,7 @@ TEST(MessageMetadata, RoundTrip) {
 }
 
 }  // namespace
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google

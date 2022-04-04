@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * An `AlarmRegistry` allows the user to run a function at their own defined
@@ -59,8 +59,8 @@ class AlarmRegistry {
       std::chrono::milliseconds period, std::function<void()> on_alarm) = 0;
 };
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 

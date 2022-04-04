@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_testing {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockAlarmRegistry
     : public google::cloud::pubsublite_internal::AlarmRegistry {
@@ -38,8 +38,8 @@ class MockAlarmRegistryCancelToken
   MOCK_METHOD(void, Destroy, (), ());
 };
 
-}  // namespace pubsublite_testing
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_testing
 }  // namespace cloud
 }  // namespace google
 

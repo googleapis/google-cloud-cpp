@@ -20,8 +20,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AlarmRegistryImpl::AlarmRegistryImpl(google::cloud::CompletionQueue cq)
     : cq_{std::move(cq)} {}
@@ -74,7 +74,7 @@ std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
   return absl::make_unique<CancelTokenImpl>(state);
 }
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
