@@ -116,7 +116,7 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
     }
   });
 }
-void MultipartitionPublisher::SatisfyInitialPublishBuffer(Status status) {
+void MultipartitionPublisher::SatisfyInitialPublishBuffer(Status const& status) {
   std::lock_guard<std::mutex> g{mu_};
   for (auto& state : initial_publish_buffer_) {
     state.publish_promise.set_value(status);

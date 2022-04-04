@@ -73,7 +73,7 @@ class MultipartitionPublisher
 
   void RouteAndPublish(PublishState state);
 
-  void SatisfyInitialPublishBuffer(Status status);
+  void SatisfyInitialPublishBuffer(Status const& status);
 
   PartitionPublisherFactory publisher_factory_;
 
