@@ -13,20 +13,23 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/internal/multipartition_publisher.h"
+#include "google/cloud/pubsublite/mocks/mock_admin_connection.h"
 #include "google/cloud/pubsublite/testing/mock_alarm_registry.h"
 #include "google/cloud/pubsublite/testing/mock_partition_publisher.h"
 #include "google/cloud/pubsublite/testing/mock_routing_policy.h"
-#include "google/cloud/pubsublite/mocks/mock_admin_connection.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
 
 using Partition = RoutingPolicy::Partition;
 using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite_mocks::MockAdminServiceConnection;
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::InSequence;
@@ -34,6 +37,10 @@ using ::testing::MockFunction;
 using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::WithArg;
+
+using google::cloud::pubsublite::v1::Cursor;
+using google::cloud::pubsublite::v1::GetTopicPartitionsRequest;
+using google::cloud::pubsublite::v1::TopicPartitions;
 
 using google::cloud::pubsublite::Topic;
 
@@ -52,7 +59,17 @@ class SinglePublisherTest : public ::testing::Test {
             std::make_shared<StrictMock<MockAdminServiceConnection>>()},
         alarm_token_ref_{*(new StrictMock<MockAlarmRegistryCancelToken>())},
         routing_policy_ref_{*(new StrictMock<MockRoutingPolicy>())},
-        topic_{"project", "location", "name"} {
+        topic_{"project", "location", "name"},
+        topic_partitions_request_{[&] {
+          GetTopicPartitionsRequest req;
+          *req.mutable_name() = topic_.FullName();
+          return req;
+        }()},
+        topic_partitions_response_{[] {
+          TopicPartitions tp;
+          tp.set_partition_count(1);
+          return tp;
+        }()} {
     EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
           // as this is a unit test, we mock the AlarmRegistry behavior
@@ -61,9 +78,13 @@ class SinglePublisherTest : public ::testing::Test {
           on_alarm_ = std::move(on_alarm);
           return absl::WrapUnique(&alarm_token_ref_);
         }));
+
+    multipartition_publisher_ = absl::make_unique<MultipartitionPublisher>(
+        partition_publisher_factory_.AsStdFunction(), admin_connection_,
+        alarm_registry_, absl::WrapUnique(&routing_policy_ref_), topic_);
   }
 
-  StrictMock<MockFunction<std::unique_ptr<PartitionPublisher>(Partition)>>
+  StrictMock<MockFunction<std::unique_ptr<Publisher<Cursor>>(Partition)>>
       partition_publisher_factory_;
   StrictMock<MockPartitionPublisher>& partition_publisher_ref_;
   std::shared_ptr<StrictMock<MockAdminServiceConnection>> admin_connection_;
@@ -71,11 +92,103 @@ class SinglePublisherTest : public ::testing::Test {
   StrictMock<MockAlarmRegistryCancelToken>& alarm_token_ref_;
   StrictMock<MockRoutingPolicy>& routing_policy_ref_;
   Topic const topic_;
+  GetTopicPartitionsRequest const topic_partitions_request_;
+  TopicPartitions topic_partitions_response_;
   std::function<void()> on_alarm_;
   std::unique_ptr<Publisher<MessageMetadata>> multipartition_publisher_;
 };
 
-}  // namespace pubsublite_internal
+TEST_F(SinglePublisherTest, PublisherCreatedFromStartGood) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+
+  auto start = multipartition_publisher_->Start();
+
+  EXPECT_CALL(partition_publisher_factory_, Call(0))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+  promise<Status> partition_publisher_start;
+  EXPECT_CALL(partition_publisher_ref_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+
+  num_partitions.set_value(topic_partitions_response_);
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+TEST_F(SinglePublisherTest, PublisherCreatedFromAlarmGood) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+  auto start = multipartition_publisher_->Start();
+
+  promise<StatusOr<TopicPartitions>> num_partitions1;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions1.get_future())));
+  on_alarm_();
+
+  EXPECT_CALL(partition_publisher_factory_, Call(0))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+  promise<Status> partition_publisher_start;
+  EXPECT_CALL(partition_publisher_ref_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+
+  num_partitions1.set_value(topic_partitions_response_);
+  num_partitions.set_value(topic_partitions_response_);
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+TEST_F(SinglePublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
+  InSequence seq;
+
+  // doesn't invoke `AsyncGetTopicPartitions` b/c not `Start`ed yet
+  on_alarm_();
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+  auto start = multipartition_publisher_->Start();
+
+  EXPECT_CALL(partition_publisher_factory_, Call(0))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+  promise<Status> partition_publisher_start;
+  EXPECT_CALL(partition_publisher_ref_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+
+  num_partitions.set_value(topic_partitions_response_);
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+}  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google

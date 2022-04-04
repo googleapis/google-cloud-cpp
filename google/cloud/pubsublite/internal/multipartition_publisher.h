@@ -30,16 +30,16 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MultipartitionPublisher
     : public Publisher<google::cloud::pubsublite::MessageMetadata> {
  private:
   // TODO(18suresha): find more appropriate/common place for this alias
   using Partition = RoutingPolicy::Partition;
-  using PartitionPublisherFactory =
-      std::function<std::unique_ptr<PartitionPublisher>(Partition)>;
+  using PartitionPublisherFactory = std::function<std::unique_ptr<
+      Publisher<google::cloud::pubsublite::v1::Cursor>>(Partition)>;
 
  public:
   MultipartitionPublisher(
@@ -79,7 +79,7 @@ class MultipartitionPublisher
 
   std::mutex mu_;
 
-  std::vector<std::unique_ptr<PartitionPublisher>>
+  std::vector<std::unique_ptr<Publisher<google::cloud::pubsublite::v1::Cursor>>>
       partition_publishers_;          // ABSL_GUARDED_BY(mu_)
   bool updating_partitions_ = false;  // ABSL_GUARDED_BY(mu_)
   // stores messages intended to be `Publish`ed when there were no partition
@@ -97,8 +97,8 @@ class MultipartitionPublisher
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 };
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 

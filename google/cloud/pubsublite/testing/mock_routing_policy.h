@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_testing {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockRoutingPolicy : public pubsublite_internal::RoutingPolicy {
  public:
@@ -31,8 +31,8 @@ class MockRoutingPolicy : public pubsublite_internal::RoutingPolicy {
               (std::string const&, RoutingPolicy::Partition), (override));
 };
 
-}  // namespace pubsublite_testing
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_testing
 }  // namespace cloud
 }  // namespace google
 

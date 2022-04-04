@@ -17,8 +17,8 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace pubsublite_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using google::cloud::pubsublite::AdminServiceConnection;
 using google::cloud::pubsublite::MessageMetadata;
@@ -86,7 +86,7 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
       current_num_partitions = partition_publishers_.size();
       updating_partitions_ = true;
     }
-    std::vector<std::unique_ptr<PartitionPublisher>> new_partition_publishers;
+    std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
     for (std::uint64_t i = current_num_partitions; i < *num_partitions; ++i) {
       new_partition_publishers.push_back(
           publisher_factory_(static_cast<Partition>(i)));
@@ -164,7 +164,7 @@ future<void> MultipartitionPublisher::Shutdown() {
   return service_composite_.Shutdown();
 }
 
-}  // namespace pubsublite_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
