@@ -31,7 +31,7 @@ std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator,
                                    std::chrono::system_clock::now());
 
 /// Return a regular expression (as a string) suitable to match the random
-/// database IDs
+/// database IDs using std::regex_search().
 std::string RandomDatabasePrefixRegex();
 
 // The prefix for databases created on the (UTC) day at @p tp.
