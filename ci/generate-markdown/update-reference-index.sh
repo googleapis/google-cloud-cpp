@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-if ! type /usr/bin/sponge >/dev/null 2>&1; then
+if ! type sponge >/dev/null 2>&1; then
   echo "This script requires sponge(1) to produce its output."
   echo "Please install this tool and try again."
   exit 1
@@ -35,4 +35,4 @@ file="doc/reference/index.html"
     printf '    <li><a href="https://googleapis.dev/cpp/google-cloud-%s/latest/">%s</a></li>\n' "${library}" "${description}"
   done
   sed -n '/<!-- inject-GA-libraries-end -->/,$p' "${file}"
-) | /usr/bin/sponge "${file}"
+) | sponge "${file}"
