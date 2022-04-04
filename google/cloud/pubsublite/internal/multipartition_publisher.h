@@ -48,6 +48,8 @@ class MultipartitionPublisher
       std::unique_ptr<RoutingPolicy> routing_policy,
       google::cloud::pubsublite::Topic topic);
 
+  ~MultipartitionPublisher() override;
+
   future<Status> Start() override;
 
   future<StatusOr<google::cloud::pubsublite::MessageMetadata>> Publish(
@@ -61,17 +63,17 @@ class MultipartitionPublisher
   struct PublishState {
     Partition num_partitions;
     google::cloud::pubsublite::v1::PubSubMessage message;
-    std::shared_ptr<
-        promise<StatusOr<google::cloud::pubsublite::MessageMetadata>>>
-        publish_promise = std::make_shared<
-            promise<StatusOr<google::cloud::pubsublite::MessageMetadata>>>();
+    promise<StatusOr<google::cloud::pubsublite::MessageMetadata>>
+        publish_promise;
   };
 
   void TriggerPublisherCreation();
 
   future<StatusOr<Partition>> GetNumPartitions();
 
-  void RouteAndPublish(PublishState& state);
+  void RouteAndPublish(PublishState state);
+
+  void SatisfyInitialPublishBuffer(Status status);
 
   PartitionPublisherFactory publisher_factory_;
 

@@ -18,6 +18,7 @@
 #include "google/cloud/pubsublite/testing/mock_partition_publisher.h"
 #include "google/cloud/pubsublite/testing/mock_routing_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include <limits>
 
 namespace google {
 namespace cloud {
@@ -52,315 +53,530 @@ using ::google::cloud::pubsublite_testing::MockRoutingPolicy;
 constexpr std::chrono::milliseconds kAlarmDuration =
     std::chrono::milliseconds{std::chrono::seconds{60}};
 
-class SinglePublisherTest : public ::testing::Test {
+Topic ExampleTopic(std::string const& project, std::string const& location,
+                   std::string const& name) {
+  return Topic{project, location, name};
+}
+
+GetTopicPartitionsRequest ExamplePartitionsRequest(Topic const& topic) {
+  GetTopicPartitionsRequest req;
+  *req.mutable_name() = topic.FullName();
+  return req;
+}
+
+TopicPartitions ExamplePartitionsResponse(Partition partition_count) {
+  TopicPartitions tp;
+  tp.set_partition_count(partition_count);
+  return tp;
+}
+
+class MultipartitionPublisherTest : public ::testing::Test {
  protected:
-  SinglePublisherTest()
-      : partition_publisher_ref_{*(new StrictMock<MockPartitionPublisher>())},
+  MultipartitionPublisherTest()
+      : partition_publisher_0_{*(new StrictMock<MockPartitionPublisher>())},
+        partition_publisher_1_{*(new StrictMock<MockPartitionPublisher>())},
         admin_connection_{
             std::make_shared<StrictMock<MockAdminServiceConnection>>()},
-        alarm_token_ref_{*(new StrictMock<MockAlarmRegistryCancelToken>())},
-        routing_policy_ref_{*(new StrictMock<MockRoutingPolicy>())},
-        topic_{"project", "location", "name"},
-        topic_partitions_request_{[&] {
-          GetTopicPartitionsRequest req;
-          *req.mutable_name() = topic_.FullName();
-          return req;
-        }()},
-        topic_partitions_response_{[] {
-          TopicPartitions tp;
-          tp.set_partition_count(1);
-          return tp;
-        }()} {
+        alarm_token_{*(new StrictMock<MockAlarmRegistryCancelToken>())},
+        routing_policy_{*(new StrictMock<MockRoutingPolicy>())} {
     EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
           // as this is a unit test, we mock the AlarmRegistry behavior
           // this enables the test suite to control when the alarm is
           // rung/messages are flushed
           on_alarm_ = std::move(on_alarm);
-          return absl::WrapUnique(&alarm_token_ref_);
+          return absl::WrapUnique(&alarm_token_);
         }));
 
     multipartition_publisher_ = absl::make_unique<MultipartitionPublisher>(
         partition_publisher_factory_.AsStdFunction(), admin_connection_,
-        alarm_registry_, absl::WrapUnique(&routing_policy_ref_), topic_);
+        alarm_registry_, absl::WrapUnique(&routing_policy_),
+        ExampleTopic("project", "location", "name"));
   }
 
   StrictMock<MockFunction<std::unique_ptr<Publisher<Cursor>>(Partition)>>
       partition_publisher_factory_;
-  StrictMock<MockPartitionPublisher>& partition_publisher_ref_;
+  StrictMock<MockPartitionPublisher>& partition_publisher_0_;
+  StrictMock<MockPartitionPublisher>& partition_publisher_1_;
   std::shared_ptr<StrictMock<MockAdminServiceConnection>> admin_connection_;
   StrictMock<MockAlarmRegistry> alarm_registry_;
-  StrictMock<MockAlarmRegistryCancelToken>& alarm_token_ref_;
-  StrictMock<MockRoutingPolicy>& routing_policy_ref_;
-  Topic const topic_;
-  GetTopicPartitionsRequest const topic_partitions_request_;
-  TopicPartitions topic_partitions_response_;
+  StrictMock<MockAlarmRegistryCancelToken>& alarm_token_;
+  StrictMock<MockRoutingPolicy>& routing_policy_;
   std::function<void()> on_alarm_;
   std::unique_ptr<Publisher<MessageMetadata>> multipartition_publisher_;
 };
 
-TEST_F(SinglePublisherTest, PublisherCreatedFromStartGood) {
+TEST_F(MultipartitionPublisherTest, StartNotCalled) {
+  EXPECT_CALL(alarm_token_, Destroy);
+}
+
+TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
   InSequence seq;
 
   promise<StatusOr<TopicPartitions>> num_partitions;
   EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
       .WillOnce(Return(ByMove(num_partitions.get_future())));
 
   auto start = multipartition_publisher_->Start();
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
-      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
   promise<Status> partition_publisher_start;
-  EXPECT_CALL(partition_publisher_ref_, Start)
+  EXPECT_CALL(partition_publisher_0_, Start)
       .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
 
-  num_partitions.set_value(topic_partitions_response_);
+  num_partitions.set_value(ExamplePartitionsResponse(1));
 
-  EXPECT_CALL(alarm_token_ref_, Destroy);
-  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+  EXPECT_CALL(alarm_token_, Destroy);
+  EXPECT_CALL(partition_publisher_0_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
 
   multipartition_publisher_->Shutdown();
 
+  partition_publisher_start.set_value(Status());
+
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(SinglePublisherTest, PublisherCreatedFromAlarmGood) {
+TEST_F(MultipartitionPublisherTest, PublisherCreatedFromAlarmGood) {
   InSequence seq;
 
-  promise<StatusOr<TopicPartitions>> num_partitions1;
+  promise<StatusOr<TopicPartitions>> start_num_partitions;
   EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
-      .WillOnce(Return(ByMove(num_partitions1.get_future())));
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(start_num_partitions.get_future())));
   auto start = multipartition_publisher_->Start();
 
-  promise<StatusOr<TopicPartitions>> num_partitions2;
+  promise<StatusOr<TopicPartitions>> alarm_num_partitions;
   EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
-      .WillOnce(Return(ByMove(num_partitions2.get_future())));
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(alarm_num_partitions.get_future())));
   on_alarm_();
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
-      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
   promise<Status> partition_publisher_start;
-  EXPECT_CALL(partition_publisher_ref_, Start)
+  EXPECT_CALL(partition_publisher_0_, Start)
       .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+  EXPECT_CALL(partition_publisher_factory_, Call(1))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_1_))));
+  promise<Status> partition_publisher_start1;
+  EXPECT_CALL(partition_publisher_1_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start1.get_future())));
 
   // satisfy on_alarm_ future first
-  num_partitions2.set_value(topic_partitions_response_);
-  num_partitions1.set_value(topic_partitions_response_);
+  alarm_num_partitions.set_value(ExamplePartitionsResponse(2));
+  start_num_partitions.set_value(ExamplePartitionsResponse(1));
 
-  EXPECT_CALL(alarm_token_ref_, Destroy);
-  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+  EXPECT_CALL(alarm_token_, Destroy);
+  EXPECT_CALL(partition_publisher_0_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
 
   multipartition_publisher_->Shutdown();
 
+  partition_publisher_start.set_value(Status());
+  partition_publisher_start1.set_value(Status());
+
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(SinglePublisherTest,
+TEST_F(MultipartitionPublisherTest,
        PublisherCreatedFromAlarmGoodAfterInvalidValueFromStart) {
   InSequence seq;
 
-  promise<StatusOr<TopicPartitions>> num_partitions1;
+  promise<StatusOr<TopicPartitions>> num_partitions_0;
   EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
-      .WillOnce(Return(ByMove(num_partitions1.get_future())));
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(num_partitions_0.get_future())));
   auto start = multipartition_publisher_->Start();
 
-  promise<StatusOr<TopicPartitions>> num_partitions2;
+  promise<StatusOr<TopicPartitions>> num_partitions_1;
   EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
-      .WillOnce(Return(ByMove(num_partitions2.get_future())));
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(num_partitions_1.get_future())));
   on_alarm_();
 
   TopicPartitions tp;
-  tp.set_partition_count(UINT32_MAX);  // out of bounds
-  num_partitions1.set_value(tp);
+  tp.set_partition_count(std::numeric_limits<std::uint32_t>::max() +
+                         1);  // out of bounds
+  num_partitions_0.set_value(tp);
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
-      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
   promise<Status> partition_publisher_start;
-  EXPECT_CALL(partition_publisher_ref_, Start)
+  EXPECT_CALL(partition_publisher_0_, Start)
       .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
-  num_partitions2.set_value(topic_partitions_response_);
+  num_partitions_1.set_value(ExamplePartitionsResponse(1));
 
-  EXPECT_CALL(alarm_token_ref_, Destroy);
-  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+  EXPECT_CALL(alarm_token_, Destroy);
+  EXPECT_CALL(partition_publisher_0_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
 
   multipartition_publisher_->Shutdown();
 
+  partition_publisher_start.set_value(Status());
+
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(SinglePublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
+TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
   InSequence seq;
 
   // doesn't invoke `AsyncGetTopicPartitions` b/c not `Start`ed yet
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(make_ready_future(
+          StatusOr<TopicPartitions>(ExamplePartitionsResponse(1))))));
   on_alarm_();
 
   promise<StatusOr<TopicPartitions>> num_partitions;
   EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
       .WillOnce(Return(ByMove(num_partitions.get_future())));
   auto start = multipartition_publisher_->Start();
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
-      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
-  promise<Status> partition_publisher_start;
-  EXPECT_CALL(partition_publisher_ref_, Start)
-      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
+  promise<Status> partition_publisher_start_0;
+  EXPECT_CALL(partition_publisher_0_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start_0.get_future())));
+  EXPECT_CALL(partition_publisher_factory_, Call(1))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_1_))));
+  promise<Status> partition_publisher_start_1;
+  EXPECT_CALL(partition_publisher_1_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start_1.get_future())));
 
-  num_partitions.set_value(topic_partitions_response_);
+  num_partitions.set_value(ExamplePartitionsResponse(2));
 
-  EXPECT_CALL(alarm_token_ref_, Destroy);
-  EXPECT_CALL(partition_publisher_ref_, Shutdown)
+  EXPECT_CALL(alarm_token_, Destroy);
+  EXPECT_CALL(partition_publisher_0_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
 
   multipartition_publisher_->Shutdown();
 
+  partition_publisher_start_0.set_value(Status());
+  partition_publisher_start_1.set_value(Status());
+
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(SinglePublisherTest, PublishBeforePublisherCreatedOneAfterGood) {
+TEST_F(MultipartitionPublisherTest, PublishBeforePublisherCreatedOneAfterGood) {
   InSequence seq;
 
   promise<StatusOr<TopicPartitions>> num_partitions;
   EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
       .WillOnce(Return(ByMove(num_partitions.get_future())));
 
   auto start = multipartition_publisher_->Start();
 
+  PubSubMessage m0;
+  *m0.mutable_data() = "data0";
+  future<StatusOr<MessageMetadata>> message0 =
+      multipartition_publisher_->Publish(m0);
   PubSubMessage m1;
   *m1.mutable_data() = "data1";
   future<StatusOr<MessageMetadata>> message1 =
       multipartition_publisher_->Publish(m1);
-  PubSubMessage m2;
-  *m2.mutable_data() = "data2";
-  future<StatusOr<MessageMetadata>> message2 =
-      multipartition_publisher_->Publish(m2);
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
-      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
   promise<Status> partition_publisher_start;
-  EXPECT_CALL(partition_publisher_ref_, Start)
+  EXPECT_CALL(partition_publisher_0_, Start)
       .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
 
-  EXPECT_CALL(routing_policy_ref_, Route(1)).WillOnce(Return(0));
+  EXPECT_CALL(routing_policy_, Route(1)).WillOnce(Return(0));
+  promise<StatusOr<Cursor>> m0_promise;
+  EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m0)))
+      .WillOnce(Return(ByMove(m0_promise.get_future())));
+
+  EXPECT_CALL(routing_policy_, Route(1)).WillOnce(Return(0));
   promise<StatusOr<Cursor>> m1_promise;
-  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m1)))
+  EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m1)))
       .WillOnce(Return(ByMove(m1_promise.get_future())));
 
-  EXPECT_CALL(routing_policy_ref_, Route(1)).WillOnce(Return(0));
-  promise<StatusOr<Cursor>> m2_promise;
-  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m2)))
-      .WillOnce(Return(ByMove(m2_promise.get_future())));
+  num_partitions.set_value(ExamplePartitionsResponse(1));
 
-  num_partitions.set_value(topic_partitions_response_);
-
+  Cursor m0_cursor;
+  m0_cursor.set_offset(0);
   Cursor m1_cursor;
-  m1_cursor.set_offset(0);
-  Cursor m2_cursor;
-  m2_cursor.set_offset(1);
+  m1_cursor.set_offset(1);
 
+  m0_promise.set_value(m0_cursor);
   m1_promise.set_value(m1_cursor);
-  m2_promise.set_value(m2_cursor);
 
+  EXPECT_EQ(*message0.get(), (MessageMetadata{0, m0_cursor}));
   EXPECT_EQ(*message1.get(), (MessageMetadata{0, m1_cursor}));
+
+  PubSubMessage m2;
+  *m2.mutable_key() = "key";
+  *m2.mutable_data() = "data2";
+  EXPECT_CALL(routing_policy_, Route(m2.key(), 1)).WillOnce(Return(0));
+  Cursor m2_cursor;
+  m2_cursor.set_offset(2);
+  EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m2)))
+      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m2_cursor)))));
+  future<StatusOr<MessageMetadata>> message2 =
+      multipartition_publisher_->Publish(m2);
   EXPECT_EQ(*message2.get(), (MessageMetadata{0, m2_cursor}));
 
-  PubSubMessage m3;
-  *m3.mutable_key() = "key";
-  *m3.mutable_data() = "data3";
-  EXPECT_CALL(routing_policy_ref_, Route(m3.key(), 1)).WillOnce(Return(0));
-  Cursor m3_cursor;
+  EXPECT_CALL(alarm_token_, Destroy);
+  EXPECT_CALL(partition_publisher_0_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  partition_publisher_start.set_value(Status());
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+TEST_F(MultipartitionPublisherTest, PublishAndShutdownBeforePublisherCreated) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+
+  auto start = multipartition_publisher_->Start();
+
+  PubSubMessage m0;
+  *m0.mutable_data() = "data1";
+  future<StatusOr<MessageMetadata>> message0 =
+      multipartition_publisher_->Publish(m0);
+  PubSubMessage m1;
+  *m1.mutable_data() = "data2";
+  future<StatusOr<MessageMetadata>> message1 =
+      multipartition_publisher_->Publish(m1);
+
+  EXPECT_CALL(alarm_token_, Destroy);
+
+  multipartition_publisher_->Shutdown();
+
+  num_partitions.set_value(
+      ExamplePartitionsResponse(1));  // shouldn't do anything
+
+  EXPECT_EQ(message0.get().status(),
+            Status(StatusCode::kFailedPrecondition,
+                   "Multipartition publisher shutdown"));
+  EXPECT_EQ(message1.get().status(),
+            Status(StatusCode::kFailedPrecondition,
+                   "Multipartition publisher shutdown"));
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+TEST_F(MultipartitionPublisherTest, GetNumPartitionsCalledMultipleTimes) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions_0;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(num_partitions_0.get_future())));
+
+  auto start = multipartition_publisher_->Start();
+
+  PubSubMessage m0;
+  *m0.mutable_data() = "data0";
+  future<StatusOr<MessageMetadata>> message0 =
+      multipartition_publisher_->Publish(m0);
+  PubSubMessage m1;
+  *m1.mutable_data() = "data2";
+  future<StatusOr<MessageMetadata>> message1 =
+      multipartition_publisher_->Publish(m1);
+
+  EXPECT_CALL(partition_publisher_factory_, Call(0))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
+  promise<Status> partition_publisher_start_0;
+  EXPECT_CALL(partition_publisher_0_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start_0.get_future())));
+
+  EXPECT_CALL(routing_policy_, Route(1)).WillOnce(Return(0));
+  promise<StatusOr<Cursor>> m0_promise;
+  EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m0)))
+      .WillOnce(Return(ByMove(m0_promise.get_future())));
+
+  EXPECT_CALL(routing_policy_, Route(1)).WillOnce(Return(0));
+  promise<StatusOr<Cursor>> m1_promise;
+  EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m1)))
+      .WillOnce(Return(ByMove(m1_promise.get_future())));
+
+  num_partitions_0.set_value(ExamplePartitionsResponse(1));
+
+  Cursor m0_cursor;
+  m0_cursor.set_offset(0);
+  Cursor m1_cursor;
+  m1_cursor.set_offset(1);
+
+  m0_promise.set_value(m0_cursor);
+  m1_promise.set_value(m1_cursor);
+
+  EXPECT_EQ(*message0.get(), (MessageMetadata{0, m0_cursor}));
+  EXPECT_EQ(*message1.get(), (MessageMetadata{0, m1_cursor}));
+
+  promise<StatusOr<TopicPartitions>> num_partitions_1;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                  ExampleTopic("project", "location", "name")))))
+      .WillOnce(Return(ByMove(num_partitions_1.get_future())));
+  on_alarm_();
+
+  EXPECT_CALL(partition_publisher_factory_, Call(1))
+      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_1_))));
+  promise<Status> partition_publisher_start_1;
+  EXPECT_CALL(partition_publisher_1_, Start)
+      .WillOnce(Return(ByMove(partition_publisher_start_1.get_future())));
+  num_partitions_1.set_value(ExamplePartitionsResponse(2));
+
+  PubSubMessage m2;
+  *m2.mutable_key() = "key";
+  *m2.mutable_data() = "data3";
+  EXPECT_CALL(routing_policy_, Route(m2.key(), 2)).WillOnce(Return(1));
+  Cursor m2_cursor;
+  m2_cursor.set_offset(2);
+  EXPECT_CALL(partition_publisher_1_, Publish(IsProtoEqual(m2)))
+      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m2_cursor)))));
+  future<StatusOr<MessageMetadata>> message2 =
+      multipartition_publisher_->Publish(m2);
+  EXPECT_EQ(*message2.get(), (MessageMetadata{1, m2_cursor}));
+
+  EXPECT_CALL(alarm_token_, Destroy);
+  EXPECT_CALL(partition_publisher_0_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  EXPECT_CALL(partition_publisher_1_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+
+  multipartition_publisher_->Shutdown();
+
+  partition_publisher_start_0.set_value(Status());
+  partition_publisher_start_1.set_value(Status());
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+class InitializedMultipartitionPublisherTest
+    : public MultipartitionPublisherTest {
+ protected:
+  InitializedMultipartitionPublisherTest() {
+    InSequence seq;
+
+    promise<StatusOr<TopicPartitions>> num_partitions;
+    EXPECT_CALL(*admin_connection_,
+                AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
+                    ExampleTopic("project", "location", "name")))))
+        .WillOnce(Return(ByMove(num_partitions.get_future())));
+
+    start_ = multipartition_publisher_->Start();
+
+    EXPECT_CALL(partition_publisher_factory_, Call(0))
+        .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
+    EXPECT_CALL(partition_publisher_0_, Start)
+        .WillOnce(Return(ByMove(partition_publisher_start_0_.get_future())));
+    EXPECT_CALL(partition_publisher_factory_, Call(1))
+        .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_1_))));
+    EXPECT_CALL(partition_publisher_1_, Start)
+        .WillOnce(Return(ByMove(partition_publisher_start_1_.get_future())));
+
+    num_partitions.set_value(ExamplePartitionsResponse(2));
+  }
+
+  ~InitializedMultipartitionPublisherTest() {
+    EXPECT_CALL(alarm_token_, Destroy);
+    EXPECT_CALL(partition_publisher_0_, Shutdown)
+        .WillOnce(Return(ByMove(make_ready_future())));
+    EXPECT_CALL(partition_publisher_1_, Shutdown)
+        .WillOnce(Return(ByMove(make_ready_future())));
+
+    multipartition_publisher_->Shutdown();
+
+    partition_publisher_start_0_.set_value(Status());
+    partition_publisher_start_1_.set_value(Status());
+
+    EXPECT_EQ(start_.get(), Status());
+  }
+
+  future<Status> start_;
+  promise<Status> partition_publisher_start_0_;
+  promise<Status> partition_publisher_start_1_;
+};
+
+TEST_F(InitializedMultipartitionPublisherTest, Flush) {
+  InSequence seq;
+
+  EXPECT_CALL(partition_publisher_0_, Flush);
+  EXPECT_CALL(partition_publisher_1_, Flush);
+  multipartition_publisher_->Flush();
+}
+
+TEST_F(InitializedMultipartitionPublisherTest, RegularPublishes) {
+  InSequence seq;
+
+  PubSubMessage m1;
+  *m1.mutable_key() = "key";
+  *m1.mutable_data() = "data";
+  EXPECT_CALL(routing_policy_, Route(m1.key(), 2)).WillOnce(Return(1));
+  Cursor m1_cursor;
   m1_cursor.set_offset(2);
-  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m3)))
+  EXPECT_CALL(partition_publisher_1_, Publish(IsProtoEqual(m1)))
+      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m1_cursor)))));
+  future<StatusOr<MessageMetadata>> message1 =
+      multipartition_publisher_->Publish(m1);
+  EXPECT_EQ(*message1.get(), (MessageMetadata{1, m1_cursor}));
+
+  PubSubMessage m2;
+  *m2.mutable_key() = "key";
+  *m2.mutable_data() = "data1";
+  EXPECT_CALL(routing_policy_, Route(m2.key(), 2)).WillOnce(Return(1));
+  Cursor m2_cursor;
+  m2_cursor.set_offset(0);
+  EXPECT_CALL(partition_publisher_1_, Publish(IsProtoEqual(m2)))
+      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m2_cursor)))));
+  future<StatusOr<MessageMetadata>> message2 =
+      multipartition_publisher_->Publish(m2);
+  EXPECT_EQ(*message2.get(), (MessageMetadata{1, m2_cursor}));
+
+  PubSubMessage m3;
+  *m3.mutable_data() = "data1";
+  EXPECT_CALL(routing_policy_, Route(2)).WillOnce(Return(0));
+  Cursor m3_cursor;
+  m2_cursor.set_offset(1);
+  EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m3)))
       .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m3_cursor)))));
   future<StatusOr<MessageMetadata>> message3 =
       multipartition_publisher_->Publish(m3);
   EXPECT_EQ(*message3.get(), (MessageMetadata{0, m3_cursor}));
-
-  EXPECT_CALL(alarm_token_ref_, Destroy);
-  EXPECT_CALL(partition_publisher_ref_, Shutdown)
-      .WillOnce(Return(ByMove(make_ready_future())));
-
-  multipartition_publisher_->Shutdown();
-
-  EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(SinglePublisherTest, Flush) {
+TEST_F(InitializedMultipartitionPublisherTest, PublishFail) {
   InSequence seq;
-
-  promise<StatusOr<TopicPartitions>> num_partitions;
-  EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
-      .WillOnce(Return(ByMove(num_partitions.get_future())));
-
-  auto start = multipartition_publisher_->Start();
-
-  EXPECT_CALL(partition_publisher_factory_, Call(0))
-      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
-  promise<Status> partition_publisher_start;
-  EXPECT_CALL(partition_publisher_ref_, Start)
-      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
-
-  num_partitions.set_value(topic_partitions_response_);
-
-  EXPECT_CALL(partition_publisher_ref_, Flush);
-  multipartition_publisher_->Flush();
-
-  EXPECT_CALL(alarm_token_ref_, Destroy);
-  EXPECT_CALL(partition_publisher_ref_, Shutdown)
-      .WillOnce(Return(ByMove(make_ready_future())));
-
-  multipartition_publisher_->Shutdown();
-
-  EXPECT_EQ(start.get(), Status());
-}
-
-TEST_F(SinglePublisherTest, PublishFail) {
-  InSequence seq;
-
-  promise<StatusOr<TopicPartitions>> num_partitions;
-  EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(topic_partitions_request_)))
-      .WillOnce(Return(ByMove(num_partitions.get_future())));
-
-  auto start = multipartition_publisher_->Start();
-
-  EXPECT_CALL(partition_publisher_factory_, Call(0))
-      .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_ref_))));
-  promise<Status> partition_publisher_start;
-  EXPECT_CALL(partition_publisher_ref_, Start)
-      .WillOnce(Return(ByMove(partition_publisher_start.get_future())));
-
-  num_partitions.set_value(topic_partitions_response_);
 
   PubSubMessage m;
   *m.mutable_key() = "key";
   *m.mutable_data() = "data";
-  EXPECT_CALL(routing_policy_ref_, Route(m.key(), 1)).WillOnce(Return(0));
-  EXPECT_CALL(partition_publisher_ref_, Publish(IsProtoEqual(m)))
+  EXPECT_CALL(routing_policy_, Route(m.key(), 2)).WillOnce(Return(0));
+  EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m)))
       .WillOnce(Return(ByMove(make_ready_future(
           StatusOr<Cursor>(Status(StatusCode::kAborted, "abort abort"))))));
   future<StatusOr<MessageMetadata>> message =
       multipartition_publisher_->Publish(m);
   EXPECT_EQ(message.get().status(),
             Status(StatusCode::kAborted, "abort abort"));
-
-  EXPECT_CALL(alarm_token_ref_, Destroy);
-  EXPECT_CALL(partition_publisher_ref_, Shutdown)
-      .WillOnce(Return(ByMove(make_ready_future())));
-
-  multipartition_publisher_->Shutdown();
-
-  EXPECT_EQ(start.get(), Status());
 }
 
 }  // namespace

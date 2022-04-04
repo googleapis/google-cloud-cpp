@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsublite/internal/multipartition_publisher.h"
 #include <functional>
+#include <limits>
 
 namespace google {
 namespace cloud {
@@ -41,15 +42,20 @@ MultipartitionPublisher::MultipartitionPublisher(
         *request.mutable_name() = topic_.FullName();
         return request;
       }()},
-      cancel_token_{
-          alarm_registry.RegisterAlarm(std::chrono::seconds{60}, [this]() {
-            if (!service_composite_.status().ok()) return;
-            TriggerPublisherCreation();
-          })} {}
+      cancel_token_{alarm_registry.RegisterAlarm(
+          std::chrono::seconds{60}, [this]() { TriggerPublisherCreation(); })} {
+}
+
+MultipartitionPublisher::~MultipartitionPublisher() {
+  SatisfyInitialPublishBuffer(
+      Status{StatusCode::kFailedPrecondition,
+             "Multipartition publisher destructed before publishers created"});
+}
 
 future<Status> MultipartitionPublisher::Start() {
+  auto start = service_composite_.Start();
   TriggerPublisherCreation();
-  return service_composite_.Start();
+  return start;
 }
 
 future<StatusOr<Partition>> MultipartitionPublisher::GetNumPartitions() {
@@ -57,11 +63,11 @@ future<StatusOr<Partition>> MultipartitionPublisher::GetNumPartitions() {
       .then([](future<StatusOr<TopicPartitions>> f) -> StatusOr<Partition> {
         auto partitions = f.get();
         if (!partitions) return partitions.status();
-        if (partitions->partition_count() >= UINT32_MAX) {
-          return Status{
-              StatusCode::kFailedPrecondition,
-              absl::StrCat("Returned partition count is too big: ",
-                           std::to_string(partitions->partition_count()))};
+        if (partitions->partition_count() >=
+            std::numeric_limits<std::uint32_t>::max()) {
+          return Status{StatusCode::kFailedPrecondition,
+                        absl::StrCat("Returned partition count is too big: ",
+                                     partitions->partition_count())};
         }
         return static_cast<Partition>(partitions->partition_count());
       });
@@ -77,14 +83,15 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
       return;
     }
     Partition current_num_partitions;
+    bool composite_ok = service_composite_.status().ok();
     {
       std::lock_guard<std::mutex> g{mu_};
-      if (updating_partitions_ ||
-          partition_publishers_.size() == *num_partitions) {
-        return;
-      }
       current_num_partitions =
           static_cast<Partition>(partition_publishers_.size());
+      if (updating_partitions_ || !composite_ok ||
+          current_num_partitions >= *num_partitions) {
+        return;
+      }
       updating_partitions_ = true;
     }
     std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
@@ -105,12 +112,20 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
     }
     for (auto& state : initial_publish_buffer) {
       state.num_partitions = *num_partitions;
-      RouteAndPublish(state);
+      RouteAndPublish(std::move(state));
     }
   });
 }
+void MultipartitionPublisher::SatisfyInitialPublishBuffer(Status status) {
+  std::lock_guard<std::mutex> g{mu_};
+  for (auto& state : initial_publish_buffer_) {
+    state.publish_promise.set_value(status);
+  }
+  // clear so destructor doesn't try to satisfy again
+  initial_publish_buffer_.clear();
+}
 
-void MultipartitionPublisher::RouteAndPublish(PublishState& state) {
+void MultipartitionPublisher::RouteAndPublish(PublishState state) {
   Partition partition =
       state.message.key().empty()
           ? routing_policy_->Route(state.num_partitions)
@@ -120,17 +135,18 @@ void MultipartitionPublisher::RouteAndPublish(PublishState& state) {
     std::lock_guard<std::mutex> g{mu_};
     publisher = partition_publishers_.at(partition).get();
   }
-  auto message_promise = state.publish_promise;
+  auto shared_promise = std::make_shared<promise<StatusOr<MessageMetadata>>>(
+      std::move(state.publish_promise));
   publisher->Publish(std::move(state.message))
-      .then([partition,
-             message_promise](future<StatusOr<Cursor>> publish_future) {
-        auto publish_response = publish_future.get();
-        if (!publish_response) {
-          return message_promise->set_value(publish_response.status());
-        }
-        message_promise->set_value(
-            MessageMetadata{partition, std::move(*publish_response)});
-      });
+      .then(
+          [partition, shared_promise](future<StatusOr<Cursor>> publish_future) {
+            auto publish_response = publish_future.get();
+            if (!publish_response) {
+              return shared_promise->set_value(publish_response.status());
+            }
+            shared_promise->set_value(
+                MessageMetadata{partition, std::move(*publish_response)});
+          });
 }
 
 future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
@@ -143,13 +159,14 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
     // `initial_publish_buffer_` is flushed when publishers are created
     if (partition_publishers_.empty()) {
       initial_publish_buffer_.push_back(std::move(state));
-      return initial_publish_buffer_.back().publish_promise->get_future();
+      return initial_publish_buffer_.back().publish_promise.get_future();
     }
     state.num_partitions = static_cast<Partition>(partition_publishers_.size());
   }
 
-  RouteAndPublish(state);
-  return state.publish_promise->get_future();
+  auto to_return = state.publish_promise.get_future();
+  RouteAndPublish(std::move(state));
+  return to_return;
 }
 
 void MultipartitionPublisher::Flush() {
@@ -161,6 +178,8 @@ void MultipartitionPublisher::Flush() {
 
 future<void> MultipartitionPublisher::Shutdown() {
   cancel_token_ = nullptr;
+  SatisfyInitialPublishBuffer(Status{StatusCode::kFailedPrecondition,
+                                     "Multipartition publisher shutdown"});
   return service_composite_.Shutdown();
 }
 
