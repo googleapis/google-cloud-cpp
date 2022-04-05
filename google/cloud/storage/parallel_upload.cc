@@ -76,22 +76,23 @@ ParallelUploadStateImpl::~ParallelUploadStateImpl() {
 
 StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
     RawClient& raw_client, ResumableUploadRequest const& request) {
-  auto session = raw_client.CreateResumableSession(request);
+  auto create = raw_client.CreateResumableSession(request);
   std::unique_lock<std::mutex> lk(mu_);
-  if (!session) {
+  if (!create) {
     // Preserve the first error.
-    res_ = session.status();
-    return std::move(session).status();
+    res_ = create.status();
+    return std::move(create).status();
   }
 
+  auto session = std::move(create->session);
   auto idx = streams_.size();
   ++num_unfinished_streams_;
   streams_.emplace_back(
-      StreamInfo{request.object_name(), (*session)->session_id(), {}, false});
+      StreamInfo{request.object_name(), session->session_id(), {}, false});
   assert(idx < streams_.size());
   lk.unlock();
   return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
-      shared_from_this(), idx, *std::move(session),
+      shared_from_this(), idx, std::move(session),
       raw_client.client_options().upload_buffer_size(), request));
 }
 

@@ -78,7 +78,7 @@ class MockClient : public google::cloud::storage::internal::RawClient {
               (internal::ComposeObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::RewriteObjectResponse>, RewriteObject,
               (internal::RewriteObjectRequest const&), (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,
+  MOCK_METHOD(StatusOr<internal::CreateResumableSessionResponse>,
               CreateResumableSession, (internal::ResumableUploadRequest const&),
               (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,

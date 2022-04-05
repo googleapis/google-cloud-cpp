@@ -108,6 +108,21 @@ bool operator!=(ResumableUploadResponse const& lhs,
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 
 /**
+ * The return type for functions creating or restoring resumable upload
+ * sessions.
+ *
+ * Restoring a session produces both a new object to manage the session and the
+ * initial result of querying the session state.
+ *
+ * TODO(#8559) - this will become simply the resumable upload response as the
+ *   code evolves towards session-less resumable uploads.
+ */
+struct CreateResumableSessionResponse {
+  std::unique_ptr<ResumableUploadSession> session;
+  ResumableUploadResponse state;
+};
+
+/**
  * A resumable upload session that always returns an error.
  *
  * When an unrecoverable error is detected (or the policies to recover from an

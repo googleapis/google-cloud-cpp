@@ -190,16 +190,17 @@ StatusOr<RewriteObjectResponse> LoggingClient::RewriteObject(
   return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
+StatusOr<CreateResumableSessionResponse> LoggingClient::CreateResumableSession(
+    ResumableUploadRequest const& request) {
   auto result = MakeCallNoResponseLogging(
       *client_, &RawClient::CreateResumableSession, request, __func__);
   if (!result.ok()) {
     GCP_LOG(INFO) << __func__ << "() >> status={" << result.status() << "}";
     return std::move(result).status();
   }
-  return std::unique_ptr<ResumableUploadSession>(
-      absl::make_unique<LoggingResumableUploadSession>(*std::move(result)));
+  result->session = absl::make_unique<LoggingResumableUploadSession>(
+      std::move(result->session));
+  return result;
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(

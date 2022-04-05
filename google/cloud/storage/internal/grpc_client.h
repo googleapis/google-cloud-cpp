@@ -69,9 +69,8 @@ class GrpcClient : public RawClient,
       std::unique_ptr<grpc::ClientContext> context);
   virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
       QueryResumableUploadRequest const&);
-  StatusOr<std::unique_ptr<ResumableUploadSession>>
-  FullyRestoreResumableSession(ResumableUploadRequest const& request,
-                               std::string const& upload_url);
+  StatusOr<CreateResumableSessionResponse> FullyRestoreResumableSession(
+      ResumableUploadRequest const& request, std::string const& upload_url);
   //@}
 
   Options const& options() const { return options_; }
@@ -118,7 +117,7 @@ class GrpcClient : public RawClient,
       ComposeObjectRequest const& request) override;
   StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) override;
-  StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
+  StatusOr<CreateResumableSessionResponse> CreateResumableSession(
       ResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;

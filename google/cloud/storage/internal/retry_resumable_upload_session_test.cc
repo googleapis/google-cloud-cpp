@@ -35,11 +35,19 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
-using ::testing::Return;
 using ::testing::ReturnRef;
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
   return ExponentialBackoffPolicy(1_us, 2_us, 2).clone();
+}
+
+ResumableUploadResponse TestResume(
+    absl::optional<std::uint64_t> committed_size = absl::nullopt) {
+  return ResumableUploadResponse{/*.upload_session_url=*/std::string{},
+                                 ResumableUploadResponse::kInProgress,
+                                 std::move(committed_size),
+                                 /*.payload=*/absl::nullopt,
+                                 /*.annotations=*/std::string{}};
 }
 
 /// @test Verify that transient failures are handled as expected.
@@ -94,7 +102,7 @@ TEST(RetryResumableUploadSessionTest, HandleTransient) {
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response;
   response = session.UploadChunk({{payload}});
@@ -110,6 +118,104 @@ TEST(RetryResumableUploadSessionTest, HandleTransient) {
   EXPECT_EQ(3 * quantum, response->committed_size.value_or(0));
 }
 
+/// @test Verify that we can restore a session and continue writing.
+TEST(RetryResumableUploadSessionTest, RestoreSession) {
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const p0(quantum, '0');
+  std::string const p1(quantum, '1');
+
+  // We are going to simulate a resumable session that already has received and
+  // committed some data.
+  auto const restored_committed_size = std::uint64_t{4 * quantum};
+  auto committed_size = restored_committed_size;
+
+  ::testing::InSequence sequence;
+
+  EXPECT_CALL(*mock, UploadChunk(ElementsAre(ConstBuffer{p0})))
+      .WillOnce([&](ConstBufferSequence const&) {
+        committed_size += quantum;
+        return make_status_or(ResumableUploadResponse{
+            "", ResumableUploadResponse::kInProgress, committed_size, {}, {}});
+      });
+  EXPECT_CALL(*mock, UploadChunk(ElementsAre(ConstBuffer{p1})))
+      .WillOnce([&](ConstBufferSequence const&) {
+        committed_size += quantum;
+        return make_status_or(ResumableUploadResponse{
+            "", ResumableUploadResponse::kInProgress, committed_size, {}, {}});
+      });
+
+  RetryResumableUploadSession session(
+      std::move(mock), LimitedErrorCountRetryPolicy(10).clone(),
+      TestBackoffPolicy(), TestResume(restored_committed_size));
+
+  auto response = session.UploadChunk({{p0}});
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(restored_committed_size + quantum,
+            response->committed_size.value_or(0));
+
+  response = session.UploadChunk({{p1}});
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(restored_committed_size + 2 * quantum,
+            response->committed_size.value_or(0));
+}
+
+/// @test Verify that we can restore a session and continue writing.
+TEST(RetryResumableUploadSessionTest, RestoreSessionThenTransient) {
+  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const p0(quantum, '0');
+  std::string const p1(quantum, '1');
+
+  // We are going to simulate a resumable session that already has received and
+  // committed some data.
+  auto const restored_committed_size = std::uint64_t{4 * quantum};
+  auto committed_size = restored_committed_size;
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, UploadChunk(ElementsAre(ConstBuffer{p0})))
+      .WillOnce([&](ConstBufferSequence const&) {
+        return StatusOr<ResumableUploadResponse>(TransientError());
+      });
+  EXPECT_CALL(*mock, ResetSession)
+      .WillOnce(
+          [&]() { return StatusOr<ResumableUploadResponse>(TransientError()); })
+      .WillOnce([&]() {
+        return make_status_or(ResumableUploadResponse{
+            "", ResumableUploadResponse::kInProgress, committed_size, {}, {}});
+      });
+
+  EXPECT_CALL(*mock, UploadChunk(ElementsAre(ConstBuffer{p0})))
+      .WillOnce([&](ConstBufferSequence const&) {
+        committed_size += quantum;
+        return make_status_or(ResumableUploadResponse{
+            "", ResumableUploadResponse::kInProgress, committed_size, {}, {}});
+      });
+  EXPECT_CALL(*mock, UploadChunk(ElementsAre(ConstBuffer{p1})))
+      .WillOnce([&](ConstBufferSequence const&) {
+        committed_size += quantum;
+        return make_status_or(ResumableUploadResponse{
+            "", ResumableUploadResponse::kInProgress, committed_size, {}, {}});
+      });
+
+  RetryResumableUploadSession session(
+      std::move(mock), LimitedErrorCountRetryPolicy(10).clone(),
+      TestBackoffPolicy(), TestResume(restored_committed_size));
+
+  StatusOr<ResumableUploadResponse> response;
+  response = session.UploadChunk({{p0}});
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(restored_committed_size + quantum,
+            response->committed_size.value_or(0));
+
+  response = session.UploadChunk({{p1}});
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(restored_committed_size + 2 * quantum,
+            response->committed_size.value_or(0));
+}
+
 /// @test Verify that a permanent error on UploadChunk results in a failure.
 TEST(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
@@ -122,13 +228,11 @@ TEST(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
     return StatusOr<ResumableUploadResponse>(PermanentError());
   });
 
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
-
   // The exact number transient errors tolerated by the policy is not relevant,
   // as the expectations will return a permanent error.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
   EXPECT_THAT(response, Not(IsOk()));
@@ -150,13 +254,11 @@ TEST(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
     return StatusOr<ResumableUploadResponse>(PermanentError());
   });
 
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
-
   // The exact number transient errors tolerated by the policy is not relevant,
   // as the expectations will return a permanent error.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
   EXPECT_THAT(response, Not(IsOk()));
@@ -168,8 +270,6 @@ TEST(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
-
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
@@ -197,7 +297,7 @@ TEST(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
   // to return 3 transients.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
   EXPECT_THAT(response, StatusIs(TransientError().code(),
@@ -210,8 +310,6 @@ TEST(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
 
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
-
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
@@ -228,7 +326,7 @@ TEST(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
   // budget.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
   EXPECT_THAT(response, Not(IsOk()));
@@ -243,14 +341,6 @@ TEST(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
   std::string const payload(quantum, '0');
 
   std::uint64_t next_expected_byte = 0;
-
-  // In this test we do not care about how many times or when
-  // next_expected_byte() is called, but it does need to return the right
-  // values, the other mock functions set the correct return value using a local
-  // variable.
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
-    return next_expected_byte;
-  });
 
   // There are a lot of calls expected. Basically we want to verify that the
   // transient error count is reset after each UploadChunk() succeeds, even
@@ -307,7 +397,7 @@ TEST(RetryResumableUploadSessionTest, HandleTransiensOnSeparateChunks) {
   // the calls to UploadChunk() should use more than these.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(response);
@@ -338,13 +428,11 @@ TEST(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
         return StatusOr<ResumableUploadResponse>(PermanentError());
       });
 
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
-
   // The retry policy settings are irrelevant, as the first permanent error
   // should break the retry loop.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   auto response = session.UploadFinalChunk({{payload}}, quantum, HashValues{});
   EXPECT_THAT(response, StatusIs(PermanentError().code()));
@@ -401,43 +489,18 @@ TEST(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
   // failures in UploadFinalChunk.
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   auto response = session.UploadFinalChunk({{payload}}, quantum,
                                            HashValues{"crc32c", "md5"});
   EXPECT_THAT(response, Not(IsOk()));
 }
 
-TEST(RetryResumableUploadSession, Done) {
-  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-  EXPECT_CALL(*mock, done()).WillOnce(Return(true));
-
-  RetryResumableUploadSession session(
-      std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
-      TestBackoffPolicy());
-  EXPECT_TRUE(session.done());
-}
-
-TEST(RetryResumableUploadSession, LastResponse) {
-  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-  StatusOr<ResumableUploadResponse> const last_response(ResumableUploadResponse{
-      "url", ResumableUploadResponse::kDone, 1, {}, {}});
-  EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
-
-  RetryResumableUploadSession session(
-      std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
-      TestBackoffPolicy());
-  StatusOr<ResumableUploadResponse> const& result = session.last_response();
-  ASSERT_STATUS_OK(result);
-  EXPECT_EQ(result.value(), last_response.value());
-}
-
 TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
-      TestBackoffPolicy());
+      TestBackoffPolicy(), TestResume());
 
   std::string data(UploadChunkRequest::kChunkSizeQuantum, 'X');
   auto res = session.UploadChunk({{data}});
@@ -448,10 +511,9 @@ TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
 
 TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
-      TestBackoffPolicy());
+      TestBackoffPolicy(), TestResume());
 
   auto res =
       session.UploadFinalChunk({ConstBuffer{"blah", 4}}, 4, HashValues{});
@@ -464,7 +526,7 @@ TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
-      TestBackoffPolicy());
+      TestBackoffPolicy(), TestResume());
   auto res = session.ResetSession();
   EXPECT_THAT(
       res, StatusIs(StatusCode::kDeadlineExceeded,
@@ -547,7 +609,7 @@ TEST(RetryResumableUploadSessionTest, HandleTransientPartialFailures) {
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response;
   response = session.UploadChunk({{payload}});
@@ -605,7 +667,7 @@ TEST(RetryResumableUploadSessionTest, MissingRangeHeaderInUpload) {
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   auto response = session.UploadChunk({{payload}});
   ASSERT_STATUS_OK(response);
@@ -657,7 +719,7 @@ TEST(RetryResumableUploadSessionTest, MissingRangeHeaderInReset) {
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   auto response = session.UploadChunk({{payload}});
   ASSERT_STATUS_OK(response);
@@ -697,7 +759,7 @@ TEST(RetryResumableUploadSessionTest, UploadFinalChunkUncommitted) {
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   auto response = session.UploadChunk({{payload}});
   ASSERT_STATUS_OK(response);
@@ -744,7 +806,7 @@ TEST(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(2).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response;
   response = session.UploadChunk({{payload}});
@@ -778,7 +840,7 @@ TEST(RetryResumableUploadSessionTest, ShortWriteRetrySucceeds) {
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
-                                      TestBackoffPolicy());
+                                      TestBackoffPolicy(), TestResume());
 
   StatusOr<ResumableUploadResponse> response;
   response = session.UploadChunk({{payload}});

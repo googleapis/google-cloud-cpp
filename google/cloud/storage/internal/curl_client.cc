@@ -228,14 +228,15 @@ StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
   return AsStatus(*response);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
+StatusOr<CreateResumableSessionResponse>
 CurlClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
                                          std::string const& session_id) {
   auto session = absl::make_unique<CurlResumableUploadSession>(
       shared_from_this(), request, session_id);
   auto response = session->ResetSession();
-  if (!response) std::move(response).status();
-  return std::unique_ptr<ResumableUploadSession>(std::move(session));
+  if (!response) return std::move(response).status();
+  return CreateResumableSessionResponse{std::move(session),
+                                        *std::move(response)};
 }
 
 StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
@@ -597,8 +598,8 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   return RewriteObjectResponse::FromHttpResponse(response->payload);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
+StatusOr<CreateResumableSessionResponse> CurlClient::CreateResumableSession(
+    ResumableUploadRequest const& request) {
   auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
   if (!session_id.empty()) {
     return FullyRestoreResumableSession(request, session_id);
@@ -659,10 +660,14 @@ CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
     os << __func__ << " - invalid server response, parsed to " << *response;
     return Status(StatusCode::kInternal, std::move(os).str());
   }
-  return std::unique_ptr<ResumableUploadSession>(
-      absl::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), request,
-          std::move(response->upload_session_url)));
+  auto session_url = response->upload_session_url;
+  return CreateResumableSessionResponse{
+      absl::make_unique<CurlResumableUploadSession>(shared_from_this(), request,
+                                                    std::move(session_url)),
+      ResumableUploadResponse{std::move(response->upload_session_url),
+                              ResumableUploadResponse::kInProgress,
+                              /*.committed_size=*/0, /*.payload=*/absl::nullopt,
+                              /*.annotations=*/{}}};
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(

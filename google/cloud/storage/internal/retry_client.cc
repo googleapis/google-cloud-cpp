@@ -345,8 +345,8 @@ StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
                   &RawClient::RewriteObject, request, __func__);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
+StatusOr<CreateResumableSessionResponse> RetryClient::CreateResumableSession(
+    ResumableUploadRequest const& request) {
   auto retry_policy = retry_policy_prototype_->clone();
   auto backoff_policy = backoff_policy_prototype_->clone();
   auto const idempotency = idempotency_policy_->IsIdempotent(request)
@@ -354,14 +354,13 @@ RetryClient::CreateResumableSession(ResumableUploadRequest const& request) {
                                : Idempotency::kNonIdempotent;
   auto result = MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
                          &RawClient::CreateResumableSession, request, __func__);
-  if (!result.ok()) {
-    return result;
-  }
+  if (!result.ok()) return result;
 
-  return std::unique_ptr<ResumableUploadSession>(
+  result->session = std::unique_ptr<ResumableUploadSession>(
       absl::make_unique<RetryResumableUploadSession>(
-          *std::move(result), std::move(retry_policy),
-          std::move(backoff_policy)));
+          std::move(result->session), std::move(retry_policy),
+          std::move(backoff_policy), result->state));
+  return result;
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
