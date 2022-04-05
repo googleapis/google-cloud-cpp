@@ -80,7 +80,6 @@ class MultipartitionPublisher
 
   std::vector<std::unique_ptr<Publisher<google::cloud::pubsublite::v1::Cursor>>>
       partition_publishers_;          // ABSL_GUARDED_BY(mu_)
-  bool updating_partitions_ = false;  // ABSL_GUARDED_BY(mu_)
   // stores messages intended to be `Publish`ed when there were no partition
   // publishers available
   // this buffer will be cleared and messages will be sent when the first

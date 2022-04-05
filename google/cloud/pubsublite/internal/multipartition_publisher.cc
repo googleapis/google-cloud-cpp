@@ -83,11 +83,8 @@ void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
     std::lock_guard<std::mutex> g{mu_};
     current_num_partitions =
         static_cast<Partition>(partition_publishers_.size());
-    if (updating_partitions_ || current_num_partitions >= num_partitions) {
-      return;
-    }
-    updating_partitions_ = true;
   }
+  if (num_partitions == current_num_partitions) return;
   std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
   for (Partition i = current_num_partitions; i < num_partitions; ++i) {
     new_partition_publishers.push_back(
@@ -100,7 +97,6 @@ void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
     for (auto& partition_publisher : new_partition_publishers) {
       partition_publishers_.push_back(std::move(partition_publisher));
     }
-    updating_partitions_ = false;
     initial_publish_buffer.swap(initial_publish_buffer_);
   }
   for (auto& state : initial_publish_buffer) {
