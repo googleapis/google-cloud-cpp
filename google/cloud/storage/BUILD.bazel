@@ -62,12 +62,14 @@ cc_library(
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
+    defines = ["GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST"],
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
     ],
     deps = [
         "//:common",
+        "//google/cloud:google_cloud_cpp_rest_internal",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",

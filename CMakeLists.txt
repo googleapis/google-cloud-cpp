@@ -179,6 +179,12 @@ option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
        "${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT}")
 mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
+# TODO(sdhart): ON should not be the production default
+option(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST
+       "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)"
+       ON)
+mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST)
+
 # We no longer build the generator by default, but if it was explicitly
 # requested, we add it to the list of enabled libraries.
 if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
