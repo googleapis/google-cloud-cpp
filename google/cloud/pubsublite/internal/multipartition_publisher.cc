@@ -109,6 +109,15 @@ void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
   }
 }
 
+struct SetAndClearOnDestroy {
+  ~SetAndClearOnDestroy() {
+    assert(*request);
+    (*request)->set_value();
+    request->reset();
+  }
+  absl::optional<promise<void>>* request;
+};
+
 void MultipartitionPublisher::TriggerPublisherCreation() {
   {
     std::lock_guard<std::mutex> g{mu_};
@@ -116,13 +125,11 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
     outstanding_num_partitions_req_.emplace();
   }
   GetNumPartitions().then([this](future<StatusOr<Partition>> f) {
-    absl::optional<promise<void>> outstanding_num_partitions_req;
+    SetAndClearOnDestroy outstanding_num_partitions_req;
     {
       std::lock_guard<std::mutex> g{mu_};
-      outstanding_num_partitions_req.swap(outstanding_num_partitions_req_);
+      outstanding_num_partitions_req.request = &outstanding_num_partitions_req_;
     }
-    assert(outstanding_num_partitions_req);
-    AsyncRoot set_on_destroy{std::move(*outstanding_num_partitions_req)};
     if (!service_composite_.status().ok()) return;
     auto num_partitions = f.get();
     if (num_partitions.ok()) return HandleNumPartitions(*num_partitions);
