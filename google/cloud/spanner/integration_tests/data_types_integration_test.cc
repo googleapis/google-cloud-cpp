@@ -471,7 +471,7 @@ TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
   std::vector<Json> const bad_data = {Json(bad_json)};
   result = WriteReadData(*client_, bad_data, "JsonValue");
   // NOTE: The backend is currently dropping a more specific "Max nesting
-  // of 100 had been exceeded [INVALID_ARGUMENT]" error, so expect this
+  // of 90 had been exceeded [INVALID_ARGUMENT]" error, so expect this
   // expectation to change when that problem is fixed.
   EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition,
                                HasSubstr("Expected JSON")));
