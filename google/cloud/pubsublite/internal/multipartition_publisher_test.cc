@@ -81,9 +81,6 @@ class MultipartitionPublisherTest : public ::testing::Test {
         routing_policy_{*(new StrictMock<MockRoutingPolicy>())} {
     EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
-          // as this is a unit test, we mock the AlarmRegistry behavior
-          // this enables the test suite to control when the alarm is
-          // rung/messages are flushed
           on_alarm_ = std::move(on_alarm);
           return absl::WrapUnique(&alarm_token_);
         }));
@@ -108,6 +105,9 @@ class MultipartitionPublisherTest : public ::testing::Test {
 
 TEST_F(MultipartitionPublisherTest, StartNotCalled) {
   EXPECT_CALL(alarm_token_, Destroy);
+  // need to explicitly delete since they're never wrapped by std::unique_ptr<>
+  delete &partition_publisher_0_;
+  delete &partition_publisher_1_;
 }
 
 TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
@@ -118,7 +118,6 @@ TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest(
                   ExampleTopic("project", "location", "name")))))
       .WillOnce(Return(ByMove(num_partitions.get_future())));
-
   auto start = multipartition_publisher_->Start();
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
@@ -139,7 +138,6 @@ TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
       .WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-
   multipartition_publisher_->Shutdown();
 
   partition_publisher_start_0.set_value(Status());
@@ -185,7 +183,6 @@ TEST_F(MultipartitionPublisherTest, PublisherCreatedFromAlarmGood) {
       .WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-
   multipartition_publisher_->Shutdown();
 
   partition_publisher_start.set_value(Status());
@@ -234,7 +231,6 @@ TEST_F(MultipartitionPublisherTest,
       .WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-
   multipartition_publisher_->Shutdown();
 
   partition_publisher_start_0.set_value(Status());
@@ -279,7 +275,6 @@ TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
       .WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-
   multipartition_publisher_->Shutdown();
 
   partition_publisher_start_0.set_value(Status());
@@ -359,7 +354,6 @@ TEST_F(MultipartitionPublisherTest, PublishBeforePublisherCreatedOneAfterGood) {
       .WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-
   multipartition_publisher_->Shutdown();
 
   partition_publisher_start_0.set_value(Status());
@@ -404,7 +398,6 @@ TEST_F(MultipartitionPublisherTest, PublishAndShutdownBeforePublisherCreated) {
 
   EXPECT_EQ(start.get(), Status());
 
-  // need to explicitly delete since they're never wrapped by std::unique_ptr<>
   delete &partition_publisher_0_;
   delete &partition_publisher_1_;
 }
@@ -489,7 +482,6 @@ TEST_F(MultipartitionPublisherTest, GetNumPartitionsCalledMultipleTimes) {
       .WillOnce(Return(ByMove(make_ready_future())));
   EXPECT_CALL(partition_publisher_1_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-
   multipartition_publisher_->Shutdown();
 
   partition_publisher_start_0.set_value(Status());
