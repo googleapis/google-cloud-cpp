@@ -77,10 +77,19 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
   GetNumPartitions().then([this](future<StatusOr<Partition>> f) {
     auto num_partitions = f.get();
     if (!num_partitions.ok()) {
-      GCP_LOG(WARNING) << "Reading number of partitions for "
-                       << topic_.FullName()
-                       << "failed: " << num_partitions.status();
-      return;
+      {
+        std::lock_guard<std::mutex> g{mu_};
+        if (!partition_publishers_.empty()) {
+          GCP_LOG(WARNING) << "Reading number of partitions for "
+                           << topic_.FullName()
+                           << "failed: " << num_partitions.status();
+          return;
+        }
+      }
+      // fail client if first poll fails
+      return service_composite_.Abort(
+          Status{StatusCode::kFailedPrecondition,
+                 "First num partitions poll failed."});
     }
     Partition current_num_partitions;
     bool composite_ok = service_composite_.status().ok();
