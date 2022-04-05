@@ -202,20 +202,6 @@ Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
       mock, std::forward<Policies>(p)...);
 }
 
-/// Simulate an initial resumable upload session response.
-inline internal::ResumableUploadResponse MockResumableUploadSessionInit() {
-  return internal::ResumableUploadResponse{
-      "", internal::ResumableUploadResponse::kInProgress, absl::nullopt,
-      absl::nullopt, std::string{}};
-}
-
-/// Simulate the final resumable upload session response.
-inline internal::ResumableUploadResponse MockResumableUploadSessionFinal() {
-  return internal::ResumableUploadResponse{
-      "", internal::ResumableUploadResponse::kDone, absl::nullopt,
-      ObjectMetadata(), std::string{}};
-}
-
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud

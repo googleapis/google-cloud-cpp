@@ -88,9 +88,8 @@ ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
   auto create = raw_client_->CreateResumableSession(request);
   if (!create) {
-    auto status = std::move(create).status();
-    auto error =
-        absl::make_unique<internal::ResumableUploadSessionError>(status);
+    auto error = absl::make_unique<internal::ResumableUploadSessionError>(
+        std::move(create).status());
 
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
@@ -225,7 +224,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   if (!create) return std::move(create).status();
 
   // The upload is already done.
-  if (create->state.payload) return std::move(create->state.payload.value());
+  if (create->state.payload) return *std::move(create->state.payload);
 
   // How many bytes of the local file are uploaded to the GCS server.
   auto server_size = create->state.committed_size.value_or(0);

@@ -664,7 +664,7 @@ StatusOr<CreateResumableSessionResponse> CurlClient::CreateResumableSession(
   return CreateResumableSessionResponse{
       absl::make_unique<CurlResumableUploadSession>(shared_from_this(), request,
                                                     std::move(session_url)),
-      ResumableUploadResponse{response->upload_session_url,
+      ResumableUploadResponse{std::move(response->upload_session_url),
                               ResumableUploadResponse::kInProgress,
                               /*.committed_size=*/0, /*.payload=*/absl::nullopt,
                               /*.annotations=*/{}}};
