@@ -178,6 +178,40 @@ ProductServiceClient::RemoveFulfillmentPlaces(
   return connection_->RemoveFulfillmentPlaces(request);
 }
 
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceClient::AddLocalInventories(std::string const& product,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::AddLocalInventoriesRequest request;
+  request.set_product(product);
+  return connection_->AddLocalInventories(request);
+}
+
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceClient::AddLocalInventories(
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddLocalInventories(request);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceClient::RemoveLocalInventories(std::string const& product,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::RemoveLocalInventoriesRequest request;
+  request.set_product(product);
+  return connection_->RemoveLocalInventories(request);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceClient::RemoveLocalInventories(
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveLocalInventories(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
 }  // namespace cloud

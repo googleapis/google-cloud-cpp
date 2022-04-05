@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/grpc_common_request_params.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
-#include "google/cloud/storage/internal/grpc_predefined_acl_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
@@ -60,14 +59,13 @@ struct GetPredefinedAcl {
 template <
     typename GrpcRequest, typename StorageRequest,
     typename std::enable_if<
-        std::is_same<google::storage::v2::PredefinedObjectAcl,
+        std::is_same<std::string const&,
                      google::cloud::internal::invoke_result_t<
                          GetPredefinedAcl<GrpcRequest>, GrpcRequest>>::value,
         int>::type = 0>
 void SetPredefinedAcl(GrpcRequest& request, StorageRequest const& req) {
   if (req.template HasOption<PredefinedAcl>()) {
-    request.set_predefined_acl(GrpcPredefinedAclParser::ToProtoObject(
-        req.template GetOption<PredefinedAcl>()));
+    request.set_predefined_acl(req.template GetOption<PredefinedAcl>().value());
   }
 }
 
@@ -203,8 +201,7 @@ GrpcObjectRequestParser::ToProto(ComposeObjectRequest const& request) {
   }
   if (request.HasOption<DestinationPredefinedAcl>()) {
     result.set_destination_predefined_acl(
-        GrpcPredefinedAclParser::ToProtoObject(
-            request.GetOption<DestinationPredefinedAcl>()));
+        request.GetOption<DestinationPredefinedAcl>().value());
   }
   if (request.HasOption<IfGenerationMatch>()) {
     result.set_if_generation_match(
@@ -564,8 +561,7 @@ GrpcObjectRequestParser::ToProto(RewriteObjectRequest const& request) {
   result.set_rewrite_token(request.rewrite_token());
   if (request.HasOption<DestinationPredefinedAcl>()) {
     result.set_destination_predefined_acl(
-        GrpcPredefinedAclParser::ToProtoObject(
-            request.GetOption<DestinationPredefinedAcl>()));
+        request.GetOption<DestinationPredefinedAcl>().value());
   }
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
@@ -662,8 +658,7 @@ GrpcObjectRequestParser::ToProto(CopyObjectRequest const& request) {
       request.GetOption<SourceGeneration>().value_or(0));
   if (request.HasOption<DestinationPredefinedAcl>()) {
     result.set_destination_predefined_acl(
-        GrpcPredefinedAclParser::ToProtoObject(
-            request.GetOption<DestinationPredefinedAcl>()));
+        request.GetOption<DestinationPredefinedAcl>().value());
   }
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);

@@ -227,28 +227,6 @@ BucketEncryption GrpcBucketMetadataParser::FromProto(
   return result;
 }
 
-google::storage::v2::Bucket::IamConfig::PublicAccessPrevention
-GrpcBucketMetadataParser::ToProtoPublicAccessPrevention(
-    std::string const& pap) {
-  if (pap == PublicAccessPreventionEnforced()) {
-    return google::storage::v2::Bucket::IamConfig::ENFORCED;
-  }
-  if (pap == PublicAccessPreventionInherited()) {
-    return google::storage::v2::Bucket::IamConfig::INHERITED;
-  }
-  return google::storage::v2::Bucket::IamConfig::
-      PUBLIC_ACCESS_PREVENTION_UNSPECIFIED;
-}
-
-std::string GrpcBucketMetadataParser::FromProto(
-    google::storage::v2::Bucket::IamConfig::PublicAccessPrevention pap) {
-  auto name =
-      google::storage::v2::Bucket::IamConfig::PublicAccessPrevention_Name(pap);
-  std::transform(name.begin(), name.end(), name.begin(),
-                 [](char c) { return static_cast<char>(std::tolower(c)); });
-  return name;
-}
-
 google::storage::v2::Bucket::IamConfig GrpcBucketMetadataParser::ToProto(
     BucketIamConfiguration const& rhs) {
   google::storage::v2::Bucket::IamConfig result;
@@ -259,8 +237,7 @@ google::storage::v2::Bucket::IamConfig GrpcBucketMetadataParser::ToProto(
     ubla.set_enabled(rhs.uniform_bucket_level_access->enabled);
   }
   if (rhs.public_access_prevention.has_value()) {
-    result.set_public_access_prevention(
-        ToProtoPublicAccessPrevention(*rhs.public_access_prevention));
+    result.set_public_access_prevention(*rhs.public_access_prevention);
   }
   return result;
 }
@@ -275,10 +252,8 @@ BucketIamConfiguration GrpcBucketMetadataParser::FromProto(
         rhs.uniform_bucket_level_access().lock_time());
     result.uniform_bucket_level_access = std::move(ubla);
   }
-  if (rhs.public_access_prevention() !=
-      google::storage::v2::Bucket::IamConfig::
-          PUBLIC_ACCESS_PREVENTION_UNSPECIFIED) {
-    result.public_access_prevention = FromProto(rhs.public_access_prevention());
+  if (!rhs.public_access_prevention().empty()) {
+    result.public_access_prevention = rhs.public_access_prevention();
   }
   return result;
 }

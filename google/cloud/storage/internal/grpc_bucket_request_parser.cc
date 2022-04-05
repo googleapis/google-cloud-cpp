@@ -18,7 +18,6 @@
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_common_request_params.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
-#include "google/cloud/storage/internal/grpc_predefined_acl_parser.h"
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
@@ -71,13 +70,11 @@ google::storage::v2::CreateBucketRequest GrpcBucketRequestParser::ToProto(
   result.set_parent("projects/" + request.project_id());
   result.set_bucket_id(request.metadata().name());
   if (request.HasOption<PredefinedAcl>()) {
-    result.set_predefined_acl(GrpcPredefinedAclParser::ToProtoBucket(
-        request.GetOption<PredefinedAcl>()));
+    result.set_predefined_acl(request.GetOption<PredefinedAcl>().value());
   }
   if (request.HasOption<PredefinedDefaultObjectAcl>()) {
     result.set_predefined_default_object_acl(
-        GrpcPredefinedAclParser::ToProtoObject(
-            request.GetOption<PredefinedDefaultObjectAcl>()));
+        request.GetOption<PredefinedDefaultObjectAcl>().value());
   }
   *result.mutable_bucket() =
       GrpcBucketMetadataParser::ToProto(request.metadata());
@@ -358,8 +355,7 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
          }
          if (i.contains("publicAccessPrevention")) {
            auto pap = i.value("publicAccessPrevention", "");
-           iam_config.set_public_access_prevention(
-               GrpcBucketMetadataParser::ToProtoPublicAccessPrevention(pap));
+           iam_config.set_public_access_prevention(pap);
          }
          return Status{};
        }},
@@ -382,13 +378,11 @@ GrpcBucketRequestParser::ToProto(PatchBucketRequest const& request) {
         request.GetOption<IfMetagenerationNotMatch>().value());
   }
   if (request.HasOption<PredefinedAcl>()) {
-    result.set_predefined_acl(GrpcPredefinedAclParser::ToProtoBucket(
-        request.GetOption<PredefinedAcl>()));
+    result.set_predefined_acl(request.GetOption<PredefinedAcl>().value());
   }
   if (request.HasOption<PredefinedDefaultObjectAcl>()) {
     result.set_predefined_default_object_acl(
-        GrpcPredefinedAclParser::ToProtoObject(
-            request.GetOption<PredefinedDefaultObjectAcl>()));
+        request.GetOption<PredefinedDefaultObjectAcl>().value());
   }
   SetCommonParameters(result, request);
 
@@ -493,8 +487,7 @@ google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
     }
     if (i.public_access_prevention.has_value()) {
       auto pap = i.public_access_prevention.value();
-      iam_config.set_public_access_prevention(
-          GrpcBucketMetadataParser::ToProtoPublicAccessPrevention(pap));
+      iam_config.set_public_access_prevention(pap);
     }
   }
 
@@ -507,13 +500,11 @@ google::storage::v2::UpdateBucketRequest GrpcBucketRequestParser::ToProto(
         request.GetOption<IfMetagenerationNotMatch>().value());
   }
   if (request.HasOption<PredefinedAcl>()) {
-    result.set_predefined_acl(GrpcPredefinedAclParser::ToProtoBucket(
-        request.GetOption<PredefinedAcl>()));
+    result.set_predefined_acl(request.GetOption<PredefinedAcl>().value());
   }
   if (request.HasOption<PredefinedDefaultObjectAcl>()) {
     result.set_predefined_default_object_acl(
-        GrpcPredefinedAclParser::ToProtoObject(
-            request.GetOption<PredefinedDefaultObjectAcl>()));
+        request.GetOption<PredefinedDefaultObjectAcl>().value());
   }
   SetCommonParameters(result, request);
 

@@ -37,8 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Auto-completion service for retail.
 ///
 /// This feature is only available for users who have Retail Search enabled.
-/// Please submit a form [here](https://cloud.google.com/contact) to contact
-/// cloud sales if you are interested in using Retail Search.
+/// Please enable Retail Search on Cloud Console before using this feature.
 ///
 /// @par Equality
 ///
@@ -94,20 +93,19 @@ class CompletionServiceClient {
   /// Completes the specified prefix with keyword suggestions.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Please enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::CompleteQueryRequest,google/cloud/retail/v2/completion_service.proto#L78}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L151}
+  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L150}
   ///
   /// [google.cloud.retail.v2.CompleteQueryRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L78}
   /// [google.cloud.retail.v2.CompleteQueryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L151}
+  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L150}
   ///
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request,
@@ -116,23 +114,25 @@ class CompletionServiceClient {
   ///
   /// Bulk import of processed completion dataset.
   ///
-  /// Request processing may be synchronous. Partial updating is not supported.
+  /// Request processing is asynchronous. Partial updating is not supported.
+  ///
+  /// The operation is successfully finished only after the imported suggestions
+  /// are indexed successfully and ready for serving. The process takes hours.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Please enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L238}
+  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L247}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L383}
+  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L391}
   ///
   /// [google.cloud.retail.v2.ImportCompletionDataRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L238}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L247}
   /// [google.cloud.retail.v2.ImportCompletionDataResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L383}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L391}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(

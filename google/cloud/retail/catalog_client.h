@@ -100,7 +100,7 @@ class CatalogServiceClient {
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.ListCatalogsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L126}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L118}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
@@ -112,14 +112,14 @@ class CatalogServiceClient {
   /// the project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ListCatalogsRequest,google/cloud/retail/v2/catalog_service.proto#L126}
+  /// @googleapis_link{google::cloud::retail::v2::ListCatalogsRequest,google/cloud/retail/v2/catalog_service.proto#L118}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.ListCatalogsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L126}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L118}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
@@ -147,7 +147,7 @@ class CatalogServiceClient {
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.UpdateCatalogRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L177}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L169}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
@@ -159,14 +159,14 @@ class CatalogServiceClient {
   /// Updates the [Catalog][google.cloud.retail.v2.Catalog]s.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::UpdateCatalogRequest,google/cloud/retail/v2/catalog_service.proto#L177}
+  /// @googleapis_link{google::cloud::retail::v2::UpdateCatalogRequest,google/cloud/retail/v2/catalog_service.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L86}
   ///
   /// [google.cloud.retail.v2.UpdateCatalogRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L177}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L169}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L86}
   ///
@@ -210,17 +210,13 @@ class CatalogServiceClient {
   /// * UserEventService will only join events with products from branch
   ///   {newBranch}.
   ///
-  /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
-  ///
   /// @param catalog  Full resource name of the catalog, such as
   ///  `projects/*/locations/global/catalogs/default_catalog`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L197}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L189}
   ///
   Status SetDefaultBranch(std::string const& catalog, Options opts = {});
 
@@ -260,17 +256,13 @@ class CatalogServiceClient {
   /// * UserEventService will only join events with products from branch
   ///   {newBranch}.
   ///
-  /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
-  ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::SetDefaultBranchRequest,google/cloud/retail/v2/catalog_service.proto#L197}
+  /// @googleapis_link{google::cloud::retail::v2::SetDefaultBranchRequest,google/cloud/retail/v2/catalog_service.proto#L189}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L197}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L189}
   ///
   Status SetDefaultBranch(
       google::cloud::retail::v2::SetDefaultBranchRequest const& request,
@@ -281,21 +273,17 @@ class CatalogServiceClient {
   /// [CatalogService.SetDefaultBranch][google.cloud.retail.v2.CatalogService.SetDefaultBranch]
   /// method under a specified parent catalog.
   ///
-  /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
-  ///
   /// @param catalog  The parent catalog resource name, such as
   ///  `projects/*/locations/global/catalogs/default_catalog`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L232}
+  /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L233}
   ///
   /// [google.cloud.retail.v2.GetDefaultBranchRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L222}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L223}
   /// [google.cloud.retail.v2.GetDefaultBranchResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L232}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L233}
   ///
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
   GetDefaultBranch(std::string const& catalog, Options opts = {});
@@ -305,21 +293,17 @@ class CatalogServiceClient {
   /// [CatalogService.SetDefaultBranch][google.cloud.retail.v2.CatalogService.SetDefaultBranch]
   /// method under a specified parent catalog.
   ///
-  /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
-  ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchRequest,google/cloud/retail/v2/catalog_service.proto#L222}
+  /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchRequest,google/cloud/retail/v2/catalog_service.proto#L223}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L232}
+  /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L233}
   ///
   /// [google.cloud.retail.v2.GetDefaultBranchRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L222}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L223}
   /// [google.cloud.retail.v2.GetDefaultBranchResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L232}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L233}
   ///
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
   GetDefaultBranch(

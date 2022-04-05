@@ -46,6 +46,7 @@ google_cloud_cpp_grpcpp_library(
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/retail/v2/prediction_service.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/retail/v2/product.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/retail/v2/product_service.proto
+    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/retail/v2/promotion.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/retail/v2/purge_config.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/retail/v2/search_service.proto
     ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/retail/v2/user_event.proto

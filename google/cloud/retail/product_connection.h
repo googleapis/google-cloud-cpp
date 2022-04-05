@@ -86,6 +86,16 @@ class ProductServiceConnection {
       StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+  AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+  RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
 };
 
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(

@@ -242,6 +242,67 @@ ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
       __func__);
 }
 
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceConnectionImpl::AddLocalInventories(
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  auto stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::AddLocalInventoriesResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::AddLocalInventoriesRequest const&
+                 request) {
+        return stub->AsyncAddLocalInventories(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::AddLocalInventoriesResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->AddLocalInventories(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceConnectionImpl::RemoveLocalInventories(
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  auto stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::retail::v2::RemoveLocalInventoriesResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::retail::v2::RemoveLocalInventoriesRequest const&
+                 request) {
+        return stub->AsyncRemoveLocalInventories(cq, std::move(context),
+                                                 request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::RemoveLocalInventoriesResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RemoveLocalInventories(request), polling_policy(),
+      __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
 }  // namespace cloud

@@ -92,7 +92,7 @@ TEST(GrpcObjectRequestParser, ComposeObjectRequestAllOptions) {
           name: "source-object-4"
           object_preconditions { if_generation_match: 48 }
         }
-        destination_predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        destination_predefined_acl: "projectPrivate"
         if_generation_match: 1
         if_metageneration_match: 3
         kms_key: "test-only-kms-key"
@@ -305,7 +305,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
           event_based_hold: true
           custom_time { seconds: 1643126687 nanos: 123000000 }
         }
-        predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        predefined_acl: "projectPrivate"
         if_generation_match: 1
         if_generation_not_match: 2
         if_metageneration_match: 3
@@ -378,7 +378,7 @@ TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
           event_based_hold: true
           custom_time { seconds: 1643126687 nanos: 123000000 }
         }
-        predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        predefined_acl: "projectPrivate"
         if_generation_match: 1
         if_generation_not_match: 2
         if_metageneration_match: 3
@@ -579,7 +579,7 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
             #     md5_hash:
             kms_key: "test-kms-key-name"
           }
-          predefined_acl: OBJECT_ACL_PRIVATE
+          predefined_acl: "private"
           if_generation_match: 0
           if_generation_not_match: 7
           if_metageneration_match: 42
@@ -784,7 +784,7 @@ TEST(GrpcObjectRequestParser, RewriteObjectRequestAllOptions) {
         source_object: "source-object"
         source_generation: 7
         rewrite_token: "test-only-rewrite-token"
-        destination_predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        destination_predefined_acl: "projectPrivate"
         if_generation_match: 1
         if_generation_not_match: 2
         if_metageneration_match: 3
@@ -850,7 +850,7 @@ TEST(GrpcObjectRequestParser, RewriteObjectRequestNoDestination) {
         source_object: "source-object"
         source_generation: 7
         rewrite_token: "test-only-rewrite-token"
-        destination_predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        destination_predefined_acl: "projectPrivate"
         if_generation_match: 1
         if_generation_not_match: 2
         if_metageneration_match: 3
@@ -937,7 +937,7 @@ TEST(GrpcObjectRequestParser, CopyObjectRequestAllOptions) {
         source_bucket: "projects/_/buckets/source-bucket"
         source_object: "source-object"
         source_generation: 7
-        destination_predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        destination_predefined_acl: "projectPrivate"
         if_generation_match: 1
         if_generation_not_match: 2
         if_metageneration_match: 3
@@ -1000,7 +1000,7 @@ TEST(GrpcObjectRequestParser, CopyObjectRequestNoDestination) {
         source_bucket: "projects/_/buckets/source-bucket"
         source_object: "source-object"
         source_generation: 7
-        destination_predefined_acl: OBJECT_ACL_PROJECT_PRIVATE
+        destination_predefined_acl: "projectPrivate"
         if_generation_match: 1
         if_generation_not_match: 2
         if_metageneration_match: 3
@@ -1072,7 +1072,7 @@ TEST(GrpcObjectRequestParser, ResumableUploadRequestAllFields) {
             #     md5_hash:
             kms_key: "test-kms-key-name"
           }
-          predefined_acl: OBJECT_ACL_PRIVATE
+          predefined_acl: "private"
           if_generation_match: 0
           if_generation_not_match: 7
           if_metageneration_match: 42

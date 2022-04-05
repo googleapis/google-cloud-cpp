@@ -81,6 +81,19 @@ class ProductServiceStub {
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncAddLocalInventories(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRemoveLocalInventories(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -141,6 +154,18 @@ class DefaultProductServiceStub : public ProductServiceStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncAddLocalInventories(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRemoveLocalInventories(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -121,8 +121,8 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           versioning { enabled: true }
           website { main_page_suffix: "index.html" not_found_page: "404.html" }
         }
-        predefined_acl: BUCKET_ACL_PROJECT_PRIVATE
-        predefined_default_object_acl: OBJECT_ACL_PRIVATE
+        predefined_acl: "projectPrivate"
+        predefined_default_object_acl: "private"
       )pb",
       &expected));
 
@@ -423,11 +423,11 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           retention_policy { retention_period: 123000 }
           iam_config {
             uniform_bucket_level_access { enabled: true }
-            public_access_prevention: ENFORCED
+            public_access_prevention: "enforced"
           }
         }
-        predefined_acl: BUCKET_ACL_PROJECT_PRIVATE
-        predefined_default_object_acl: OBJECT_ACL_PROJECT_PRIVATE
+        predefined_acl: "projectPrivate"
+        predefined_default_object_acl: "projectPrivate"
         if_metageneration_match: 3
         if_metageneration_not_match: 4
         common_request_params: { user_project: "test-user-project" }
@@ -572,11 +572,11 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
           retention_policy { retention_period: 123000 }
           iam_config {
             uniform_bucket_level_access { enabled: true }
-            public_access_prevention: ENFORCED
+            public_access_prevention: "enforced"
           }
         }
-        predefined_acl: BUCKET_ACL_PROJECT_PRIVATE
-        predefined_default_object_acl: OBJECT_ACL_PROJECT_PRIVATE
+        predefined_acl: "projectPrivate"
+        predefined_default_object_acl: "projectPrivate"
         if_metageneration_match: 3
         if_metageneration_not_match: 4
         common_request_params: { user_project: "test-user-project" }

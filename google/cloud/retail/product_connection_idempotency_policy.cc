@@ -88,6 +88,17 @@ class DefaultProductServiceConnectionIdempotencyPolicy
       override {
     return Idempotency::kNonIdempotent;
   }
+
+  Idempotency AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const&) override {
+    return Idempotency::kNonIdempotent;
+  }
+
+  Idempotency RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const&)
+      override {
+    return Idempotency::kNonIdempotent;
+  }
 };
 }  // namespace
 
