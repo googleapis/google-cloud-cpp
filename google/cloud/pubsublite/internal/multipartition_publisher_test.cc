@@ -140,7 +140,7 @@ TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(MultipartitionPublisherTest, StartRunsOnAlarmNot) {
+TEST_F(MultipartitionPublisherTest, StartRunsOnAlarmDoesNot) {
   InSequence seq;
 
   promise<StatusOr<TopicPartitions>> num_partitions;
@@ -149,7 +149,8 @@ TEST_F(MultipartitionPublisherTest, StartRunsOnAlarmNot) {
       .WillOnce(Return(ByMove(num_partitions.get_future())));
   auto start = multipartition_publisher_->Start();
 
-  on_alarm_();
+  on_alarm_();  // doesn't do anything because `Start` already invoked
+                // TriggerPublisherCreation and is waiting on it
 
   EXPECT_CALL(partition_publisher_factory_, Call(0))
       .WillOnce(Return(ByMove(absl::WrapUnique(&partition_publisher_0_))));
@@ -478,16 +479,12 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
 }
 
 TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitionsFails) {
-  InSequence seq;
-
-  promise<StatusOr<TopicPartitions>> num_partitions;
   EXPECT_CALL(*admin_connection_,
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
-      .WillOnce(Return(ByMove(num_partitions.get_future())));
+      .WillOnce(Return(ByMove(make_ready_future(StatusOr<TopicPartitions>(
+          ExamplePartitionsResponse(std::numeric_limits<std::uint32_t>::max() +
+                                    static_cast<std::int64_t>(1)))))));
   on_alarm_();
-  num_partitions.set_value(
-      ExamplePartitionsResponse(std::numeric_limits<std::uint32_t>::max() +
-                                static_cast<std::int64_t>(1)));
   // everything finishes validly as only second poll failed
 }
 
