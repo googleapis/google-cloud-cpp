@@ -109,13 +109,9 @@ void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
   }
 }
 
-struct SetAndClearOnDestroy {
-  ~SetAndClearOnDestroy() {
-    assert(*request);
-    (*request)->set_value();
-    request->reset();
-  }
-  absl::optional<promise<void>>* request;
+struct ExecOnDestroy {
+  ~ExecOnDestroy() { exec(); }
+  std::function<void()> exec;
 };
 
 void MultipartitionPublisher::TriggerPublisherCreation() {
@@ -125,11 +121,13 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
     outstanding_num_partitions_req_.emplace();
   }
   GetNumPartitions().then([this](future<StatusOr<Partition>> f) {
-    SetAndClearOnDestroy outstanding_num_partitions_req;
-    {
+    ExecOnDestroy exec_on_destroy{[this]() {
       std::lock_guard<std::mutex> g{mu_};
-      outstanding_num_partitions_req.request = &outstanding_num_partitions_req_;
-    }
+      assert(outstanding_num_partitions_req_);
+      // safe b/c we don't consume future under lock
+      outstanding_num_partitions_req_->set_value();
+      outstanding_num_partitions_req_.reset();
+    }};
     if (!service_composite_.status().ok()) return;
     auto num_partitions = f.get();
     if (num_partitions.ok()) return HandleNumPartitions(*num_partitions);
