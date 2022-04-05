@@ -179,7 +179,6 @@ printf "%-30s" "Running markdown generators:" >&2
 time {
   declare -A -r GENERATOR_MAP=(
     ["ci/generate-markdown/generate-readme.sh"]="/dev/null"
-    ["ci/generate-markdown/update-reference-index.sh"]="/dev/null"
     ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
   )
   for generator in "${!GENERATOR_MAP[@]}"; do
