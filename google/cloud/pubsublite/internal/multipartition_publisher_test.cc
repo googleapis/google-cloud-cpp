@@ -383,10 +383,10 @@ TEST_F(MultipartitionPublisherTest, PublishAndShutdownBeforePublisherCreated) {
 
   EXPECT_EQ(message0.get().status(),
             Status(StatusCode::kFailedPrecondition,
-                   "Multipartition publisher shutdown"));
+                   "Multipartition publisher shutdown."));
   EXPECT_EQ(message1.get().status(),
             Status(StatusCode::kFailedPrecondition,
-                   "Multipartition publisher shutdown"));
+                   "Multipartition publisher shutdown."));
 
   EXPECT_EQ(start.get(), Status());
 

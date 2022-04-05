@@ -205,7 +205,7 @@ future<void> MultipartitionPublisher::Shutdown() {
   }
   for (auto& state : initial_publish_buffer) {
     state.publish_promise.set_value(Status{
-        StatusCode::kFailedPrecondition, "Multipartition publisher shutdown"});
+        StatusCode::kFailedPrecondition, "Multipartition publisher shutdown."});
   }
   // invoke shutdown state first so more publishers aren't created
   auto shutdown = service_composite_.Shutdown();
