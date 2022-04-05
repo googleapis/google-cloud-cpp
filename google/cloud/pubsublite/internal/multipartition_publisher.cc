@@ -84,7 +84,7 @@ void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
     current_num_partitions =
         static_cast<Partition>(partition_publishers_.size());
   }
-  assert(num_partitions >= current_num_partitions); // should be no race
+  assert(num_partitions >= current_num_partitions);  // should be no race
   if (num_partitions == current_num_partitions) return;
   std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
   for (Partition i = current_num_partitions; i < num_partitions; ++i) {
