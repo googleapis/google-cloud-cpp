@@ -445,12 +445,12 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
 }
 
 // Verify maximum JSON nesting.
-TEST_F(DataTypeIntegrationTest, DISABLED_JsonMaxNesting) {
+TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
   // TODO(#6873): Remove this check when the emulator supports JSON.
   if (UsingEmulator()) GTEST_SKIP();
 
   // The default value of the backend max-nesting-level flag.
-  int const k_spanner_json_max_nesting_level = 100;
+  int const k_spanner_json_max_nesting_level = 90;
 
   // Nested arrays that exceed `k_spanner_json_max_nesting_level` by one.
   std::string bad_json;
