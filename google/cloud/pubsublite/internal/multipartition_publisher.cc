@@ -109,40 +109,40 @@ void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
   }
 }
 
-struct ExecOnDestroy {
-  ~ExecOnDestroy() { exec(); }
-  std::function<void()> exec;
-};
-
 void MultipartitionPublisher::TriggerPublisherCreation() {
   {
     std::lock_guard<std::mutex> g{mu_};
     if (outstanding_num_partitions_req_) return;
     outstanding_num_partitions_req_.emplace();
   }
-  GetNumPartitions().then([this](future<StatusOr<Partition>> f) {
-    ExecOnDestroy exec_on_destroy{[this]() {
-      std::lock_guard<std::mutex> g{mu_};
-      assert(outstanding_num_partitions_req_);
-      // safe b/c we don't consume future under lock
-      outstanding_num_partitions_req_->set_value();
-      outstanding_num_partitions_req_.reset();
-    }};
-    if (!service_composite_.status().ok()) return;
-    auto num_partitions = f.get();
-    if (num_partitions.ok()) return HandleNumPartitions(*num_partitions);
-    bool first_poll;
-    {
-      std::lock_guard<std::mutex> g{mu_};
-      first_poll = partition_publishers_.empty();
-    }
-    if (first_poll) {
-      // fail client if first poll fails
-      return service_composite_.Abort(num_partitions.status());
-    }
-    GCP_LOG(WARNING) << "Reading number of partitions for " << topic_.FullName()
-                     << "failed: " << num_partitions.status();
-  });
+  GetNumPartitions()
+      .then([this](future<StatusOr<Partition>> f) {
+        if (!service_composite_.status().ok()) return;
+        auto num_partitions = f.get();
+        if (num_partitions.ok()) return HandleNumPartitions(*num_partitions);
+        bool first_poll;
+        {
+          std::lock_guard<std::mutex> g{mu_};
+          first_poll = partition_publishers_.empty();
+        }
+        if (first_poll) {
+          // fail client if first poll fails
+          return service_composite_.Abort(num_partitions.status());
+        }
+        GCP_LOG(WARNING) << "Reading number of partitions for "
+                         << topic_.FullName()
+                         << "failed: " << num_partitions.status();
+      })
+      .then([this](future<void>) {
+        absl::optional<promise<void>> p;
+        {
+          std::lock_guard<std::mutex> g{mu_};
+          assert(outstanding_num_partitions_req_);
+          p.swap(outstanding_num_partitions_req_);
+        }
+        // only set value after done touching member variables
+        p->set_value();
+      });
 }
 
 void MultipartitionPublisher::RouteAndPublish(PublishState state) {
