@@ -29,7 +29,7 @@ TEST(RandomDatabaseNameTest, PrefixMatchesRegexp) {
   auto const prefix = RandomDatabasePrefix(std::chrono::system_clock::now());
   auto const re = RandomDatabasePrefixRegex();
 
-  EXPECT_TRUE(std::regex_match(prefix, std::regex(re)));
+  EXPECT_TRUE(std::regex_search(prefix, std::regex(re)));
 }
 
 TEST(RandomDatabaseNameTest, NameMatchesRegexp) {
@@ -37,7 +37,7 @@ TEST(RandomDatabaseNameTest, NameMatchesRegexp) {
   auto const name = RandomDatabaseName(generator);
   auto const re = RandomDatabasePrefixRegex();
 
-  EXPECT_TRUE(std::regex_match(name, std::regex(re)));
+  EXPECT_TRUE(std::regex_search(name, std::regex(re)));
 }
 
 TEST(RandomDatabaseNameTest, RandomNameHasPrefix) {

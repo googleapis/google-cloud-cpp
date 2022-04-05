@@ -397,7 +397,8 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
   google::spanner::admin::database::v1::CreateDatabaseRequest creq;
   creq.set_parent(db.instance().FullName());
-  creq.set_create_statement(absl::StrCat("CREATE DATABASE ", db.database_id()));
+  creq.set_create_statement(
+      absl::StrCat("CREATE DATABASE \"", db.database_id(), "\""));
   creq.mutable_encryption_config()->set_kms_key_name(encryption_key.FullName());
   creq.set_database_dialect(
       google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);

@@ -583,21 +583,22 @@ TEST_F(DatabaseAdminClientTest, DatabasePostgreSQLBasics) {
   google::spanner::admin::database::v1::CreateDatabaseRequest creq;
   creq.set_parent(database_.instance().FullName());
   creq.set_create_statement(
-      absl::StrCat("CREATE DATABASE ", database_.database_id()));
+      absl::StrCat("CREATE DATABASE \"", database_.database_id(), "\""));
   creq.set_database_dialect(
       google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
   auto database = client_.CreateDatabase(creq).get();
+  if (emulator_) {
+    // This will let us know when the emulator starts supporting PostgreSQL
+    // syntax to quote identifiers.
+    EXPECT_THAT(database,
+                StatusIs(StatusCode::kInvalidArgument,
+                         HasSubstr("Error parsing Spanner DDL statement")));
+    GTEST_SKIP() << "emulator does not support PostgreSQL";
+  }
   ASSERT_STATUS_OK(database);
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
-  if (emulator_) {
-    EXPECT_EQ(database->database_dialect(),
-              google::spanner::admin::database::v1::DatabaseDialect::
-                  DATABASE_DIALECT_UNSPECIFIED);
-  } else {
-    EXPECT_EQ(
-        database->database_dialect(),
-        google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
-  }
+  EXPECT_EQ(database->database_dialect(),
+            google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
 
   // Verify that GetDatabase() returns the correct dialect.
   auto get = client_.GetDatabase(database->name());

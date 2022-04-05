@@ -38,7 +38,7 @@ Status CleanupStaleDatabases(
     if (!db) return std::move(db).status();
     auto id = spanner::MakeDatabase(db->name())->database_id();
     // Skip databases that do not look like a randomly created DB.
-    if (!std::regex_match(id, re)) continue;
+    if (!std::regex_search(id, re)) continue;
     // Skip databases that are relatively recent
     if (id > expired) continue;
     // Drop the database and ignore errors.

@@ -51,7 +51,8 @@ void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                     google::cloud::spanner::Database const& database) {
   google::spanner::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent(database.instance().FullName());
-  request.set_create_statement("CREATE DATABASE " + database.database_id());
+  request.set_create_statement("CREATE DATABASE \"" + database.database_id() +
+                               "\"");
   request.set_database_dialect(
       google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
   auto db = client.CreateDatabase(request).get();
