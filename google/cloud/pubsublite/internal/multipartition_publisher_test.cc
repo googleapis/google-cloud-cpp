@@ -459,6 +459,20 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
   partition_publisher_start.set_value(Status());
 }
 
+TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitionsFails) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+  on_alarm_();
+  num_partitions.set_value(
+      ExamplePartitionsResponse(std::numeric_limits<std::uint32_t>::max() +
+                                static_cast<std::int64_t>(1)));
+  // everything finishes validly as only second poll failed
+}
+
 TEST_F(InitializedMultipartitionPublisherTest, Flush) {
   InSequence seq;
 
