@@ -62,6 +62,8 @@ ChainFutureImpl<T> ChainFuture(future<T> f) {
 // }).then(...);
 class AsyncRoot {
  public:
+  explicit AsyncRoot(promise<void> root = promise<void>{})
+      : root_{std::move(root)} {}
   ~AsyncRoot() { root_.set_value(); }
   // Call at most once.
   future<void> get_future() { return root_.get_future(); }

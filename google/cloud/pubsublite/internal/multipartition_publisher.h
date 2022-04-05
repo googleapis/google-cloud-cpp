@@ -72,7 +72,7 @@ class MultipartitionPublisher
 
   void RouteAndPublish(PublishState state);
 
-  void SatisfyInitialPublishBuffer(Status const& status);
+  void HandleNumPartitions(Partition num_partitions);
 
   PartitionPublisherFactory publisher_factory_;
 
@@ -86,6 +86,8 @@ class MultipartitionPublisher
   // this buffer will be cleared and messages will be sent when the first
   // partition publisher becomes available
   std::vector<PublishState> initial_publish_buffer_;  // ABSL_GUARDED_BY(mu_)
+  absl::optional<promise<void>>
+      outstanding_num_partitions_req_;  // ABSL_GUARDED_BY(mu_)
   std::shared_ptr<google::cloud::pubsublite::AdminServiceConnection> const
       admin_connection_;
   ServiceComposite service_composite_;

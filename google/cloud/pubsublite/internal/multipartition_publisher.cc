@@ -47,9 +47,13 @@ MultipartitionPublisher::MultipartitionPublisher(
 }
 
 MultipartitionPublisher::~MultipartitionPublisher() {
-  SatisfyInitialPublishBuffer(
-      Status{StatusCode::kFailedPrecondition,
-             "Multipartition publisher destructed before publishers created"});
+  future<void> shutdown = Shutdown();
+  if (!shutdown.is_ready()) {
+    GCP_LOG(WARNING) << "`Shutdown` must be called and finished before object "
+                        "goes out of scope.";
+    assert(false);
+  }
+  shutdown.get();
 }
 
 future<Status> MultipartitionPublisher::Start() {
@@ -64,7 +68,7 @@ future<StatusOr<Partition>> MultipartitionPublisher::GetNumPartitions() {
         auto partitions = f.get();
         if (!partitions) return partitions.status();
         if (partitions->partition_count() >=
-            std::numeric_limits<std::uint32_t>::max()) {
+            std::numeric_limits<Partition>::max()) {
           return Status{StatusCode::kFailedPrecondition,
                         absl::StrCat("Returned partition count is too big: ",
                                      partitions->partition_count())};
@@ -73,70 +77,67 @@ future<StatusOr<Partition>> MultipartitionPublisher::GetNumPartitions() {
       });
 }
 
-void MultipartitionPublisher::TriggerPublisherCreation() {
-  GetNumPartitions().then([this](future<StatusOr<Partition>> f) {
-    auto num_partitions = f.get();
-    if (!num_partitions.ok()) {
-      bool first_poll;
-      {
-        std::lock_guard<std::mutex> g{mu_};
-        first_poll = partition_publishers_.empty();
-      }
-      if (first_poll) {
-        // fail client if first poll fails
-        return service_composite_.Abort(
-            Status{StatusCode::kFailedPrecondition,
-                   "First num partitions poll failed."});
-      }
-      GCP_LOG(WARNING) << "Reading number of partitions for "
-                       << topic_.FullName()
-                       << "failed: " << num_partitions.status();
+void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
+  Partition current_num_partitions;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    current_num_partitions =
+        static_cast<Partition>(partition_publishers_.size());
+    if (updating_partitions_ || current_num_partitions >= num_partitions) {
       return;
     }
-    Partition current_num_partitions;
-    bool composite_ok = service_composite_.status().ok();
-    {
-      std::lock_guard<std::mutex> g{mu_};
-      current_num_partitions =
-          static_cast<Partition>(partition_publishers_.size());
-      if (updating_partitions_ || !composite_ok ||
-          current_num_partitions >= *num_partitions) {
-        return;
-      }
-      updating_partitions_ = true;
-    }
-    std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
-    for (Partition i = current_num_partitions; i < *num_partitions; ++i) {
-      new_partition_publishers.push_back(
-          publisher_factory_(static_cast<Partition>(i)));
-      service_composite_.AddServiceObject(
-          new_partition_publishers.back().get());
-    }
-    std::vector<PublishState> initial_publish_buffer;
-    {
-      std::lock_guard<std::mutex> g{mu_};
-      for (auto& partition_publisher : new_partition_publishers) {
-        partition_publishers_.push_back(std::move(partition_publisher));
-      }
-      updating_partitions_ = false;
-      initial_publish_buffer.swap(initial_publish_buffer_);
-    }
-    for (auto& state : initial_publish_buffer) {
-      state.num_partitions = *num_partitions;
-      RouteAndPublish(std::move(state));
-    }
-  });
-}
-void MultipartitionPublisher::SatisfyInitialPublishBuffer(
-    Status const& status) {
+    updating_partitions_ = true;
+  }
+  std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
+  for (Partition i = current_num_partitions; i < num_partitions; ++i) {
+    new_partition_publishers.push_back(
+        publisher_factory_(static_cast<Partition>(i)));
+    service_composite_.AddServiceObject(new_partition_publishers.back().get());
+  }
   std::vector<PublishState> initial_publish_buffer;
   {
     std::lock_guard<std::mutex> g{mu_};
+    for (auto& partition_publisher : new_partition_publishers) {
+      partition_publishers_.push_back(std::move(partition_publisher));
+    }
+    updating_partitions_ = false;
     initial_publish_buffer.swap(initial_publish_buffer_);
   }
   for (auto& state : initial_publish_buffer) {
-    state.publish_promise.set_value(status);
+    state.num_partitions = num_partitions;
+    RouteAndPublish(std::move(state));
   }
+}
+
+void MultipartitionPublisher::TriggerPublisherCreation() {
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (outstanding_num_partitions_req_) return;
+    outstanding_num_partitions_req_.emplace();
+  }
+  GetNumPartitions().then([this](future<StatusOr<Partition>> f) {
+    absl::optional<promise<void>> outstanding_num_partitions_req;
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      outstanding_num_partitions_req.swap(outstanding_num_partitions_req_);
+    }
+    assert(outstanding_num_partitions_req);
+    AsyncRoot set_on_destroy{std::move(*outstanding_num_partitions_req)};
+    if (!service_composite_.status().ok()) return;
+    auto num_partitions = f.get();
+    if (num_partitions.ok()) return HandleNumPartitions(*num_partitions);
+    bool first_poll;
+    {
+      std::lock_guard<std::mutex> g{mu_};
+      first_poll = partition_publishers_.empty();
+    }
+    if (first_poll) {
+      // fail client if first poll fails
+      return service_composite_.Abort(num_partitions.status());
+    }
+    GCP_LOG(WARNING) << "Reading number of partitions for " << topic_.FullName()
+                     << "failed: " << num_partitions.status();
+  });
 }
 
 void MultipartitionPublisher::RouteAndPublish(PublishState state) {
@@ -192,9 +193,23 @@ void MultipartitionPublisher::Flush() {
 
 future<void> MultipartitionPublisher::Shutdown() {
   cancel_token_ = nullptr;
-  SatisfyInitialPublishBuffer(Status{StatusCode::kFailedPrecondition,
-                                     "Multipartition publisher shutdown"});
-  return service_composite_.Shutdown();
+  std::vector<PublishState> initial_publish_buffer;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    initial_publish_buffer.swap(initial_publish_buffer_);
+  }
+  for (auto& state : initial_publish_buffer) {
+    state.publish_promise.set_value(Status{
+        StatusCode::kFailedPrecondition, "Multipartition publisher shutdown"});
+  }
+  // intentionally invoke shutdown state first
+  auto shutdown = service_composite_.Shutdown();
+  std::lock_guard<std::mutex> g{mu_};
+  if (outstanding_num_partitions_req_) {
+    return outstanding_num_partitions_req_->get_future().then(
+        ChainFuture(std::move(shutdown)));
+  }
+  return shutdown;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
