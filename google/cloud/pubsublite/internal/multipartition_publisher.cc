@@ -207,7 +207,7 @@ future<void> MultipartitionPublisher::Shutdown() {
     state.publish_promise.set_value(Status{
         StatusCode::kFailedPrecondition, "Multipartition publisher shutdown"});
   }
-  // intentionally invoke shutdown state first
+  // invoke shutdown state first so more publishers aren't created
   auto shutdown = service_composite_.Shutdown();
   std::lock_guard<std::mutex> g{mu_};
   if (outstanding_num_partitions_req_) {
