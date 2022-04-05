@@ -478,6 +478,14 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
   partition_publisher_start.set_value(Status());
 }
 
+TEST_F(InitializedMultipartitionPublisherTest, GetNumPartitionsSame) {
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(Return(ByMove(make_ready_future(
+          StatusOr<TopicPartitions>(ExamplePartitionsResponse(2))))));
+  on_alarm_();
+}
+
 TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitionsFails) {
   EXPECT_CALL(*admin_connection_,
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
