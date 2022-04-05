@@ -277,6 +277,15 @@ TEST_F(ScaffoldGenerator, QuickstartBuild) {
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
 }
 
+TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
+  auto const vars = ScaffoldVars(path(), path(), service());
+  std::ostringstream os;
+  GenerateQuickstartBazelrc(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
