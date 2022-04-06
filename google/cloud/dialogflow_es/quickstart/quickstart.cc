@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/dialogflow_es/ EDIT HERE .h"
+#include "google/cloud/dialogflow_es/agents_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -25,10 +25,10 @@ int main(int argc, char* argv[]) try {
 
   namespace dialogflow_es = ::google::cloud::dialogflow_es;
   auto client =
-      dialogflow_es::Client(dialogflow_es::MakeConnection(/* EDIT HERE */));
+      dialogflow_es::AgentsClient(dialogflow_es::MakeAgentsConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.SearchAgents(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

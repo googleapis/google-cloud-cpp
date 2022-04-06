@@ -127,9 +127,14 @@ class ContextsClient {
   /// Retrieves the specified context.
   ///
   /// @param name  Required. The name of the context. Format:
-  ///  `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
-  ///  or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  ///  ID>/sessions/<Session ID>/contexts/<Context ID>`.
+  ///  @code
+  ///  projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
+  ///  @endcode
+  ///  or
+  ///  @code
+  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  ///  ID>/sessions/<Session ID>/contexts/<Context ID>`
+  ///  @endcode
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -254,9 +259,14 @@ class ContextsClient {
   /// Deletes the specified context.
   ///
   /// @param name  Required. The name of the context to delete. Format:
-  ///  `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
-  ///  or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  ///  ID>/sessions/<Session ID>/contexts/<Context ID>`.
+  ///  @code
+  ///  projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
+  ///  @endcode
+  ///  or
+  ///  @code
+  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  ///  ID>/sessions/<Session ID>/contexts/<Context ID>`
+  ///  @endcode
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -287,9 +297,14 @@ class ContextsClient {
   ///
   /// @param parent  Required. The name of the session to delete all contexts
   /// from. Format:
-  ///  `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project
-  ///  ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
-  ///  ID>`.
+  ///  @code
+  ///  projects/<Project ID>/agent/sessions/<Session ID>
+  ///  @endcode
+  ///  or
+  ///  @code
+  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  ///  ID>/sessions/<Session ID>
+  ///  @endcode
   ///  If `Environment ID` is not specified we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and

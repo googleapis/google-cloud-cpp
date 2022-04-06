@@ -67,7 +67,7 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ### New Libraries
 
-We are introducing client libraries for 2 more GCP services. While we do not
+We are introducing 2 new client libraries for GCP services. While we do not
 anticipate any API changes to these libraries before declaring them GA, we are
 releasing them early in case they elicit some feedback that requires changes.
 

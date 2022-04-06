@@ -1,9 +1,13 @@
-# Dialogflow API C++ Client Library
+# Dialogflow ES API C++ Client Library
 
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Dialogflow API][cloud-service-docs], a service to Builds conversational interfaces (for example, chatbots, and voice-powered apps and devices).
+[Dialogflow ES API][cloud-service-docs], a service to build conversational
+interfaces (for example, chatbots, and voice-powered apps and devices).
+There are [two editions] of Dialogflow, this library supports the ES edition.
+
+[two editions]: https://cloud.google.com/dialogflow/docs/editions
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -20,12 +24,13 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Documentation
 
-* Official documentation about the [Dialogflow API][cloud-service-docs] service
+* Official documentation about the [Dialogflow ES API][cloud-service-docs]
+  service
 * [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/dialogflow_es
+[cloud-service-docs]: https://cloud.google.com/dialogflow/es/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-dialogflow_es/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/dialogflow_es
 
@@ -38,7 +43,7 @@ this library.
 
 <!-- inject-quickstart-start -->
 ```cc
-#include "google/cloud/dialogflow_es/ EDIT HERE .h"
+#include "google/cloud/dialogflow_es/agents_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <stdexcept>
@@ -51,10 +56,10 @@ int main(int argc, char* argv[]) try {
 
   namespace dialogflow_es = ::google::cloud::dialogflow_es;
   auto client =
-      dialogflow_es::Client(dialogflow_es::MakeConnection(/* EDIT HERE */));
+      dialogflow_es::AgentsClient(dialogflow_es::MakeAgentsConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.SearchAgents(project.FullName())) {
     if (!r) throw std::runtime_error(r.status().message());
     std::cout << r->DebugString() << "\n";
   }

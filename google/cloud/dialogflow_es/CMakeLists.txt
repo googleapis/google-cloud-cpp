@@ -35,8 +35,12 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
-google_cloud_cpp_load_protolist(proto_list "protolists/dialogflow_es.list")
-google_cloud_cpp_load_protodeps(proto_deps "protodeps/dialogflow_es.deps")
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/dialogflow.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/dialogflow.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_dialogflow_es_protos # cmake-format: sort
     ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"

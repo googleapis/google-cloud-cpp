@@ -146,12 +146,17 @@ class SessionEntityTypesClient {
   /// with Google Assistant integration.
   ///
   /// @param name  Required. The name of the session entity type. Format:
-  ///  `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity
-  ///  Type Display Name>` or `projects/<Project
-  ///  ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
-  ///  ID>/entityTypes/<Entity Type Display Name>`. If `Environment ID` is not
-  ///  specified, we assume default 'draft' environment. If `User ID` is not
-  ///  specified, we assume default '-' user.
+  ///  @code
+  ///  projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity
+  ///  Type Display Name>
+  ///  @endcode
+  ///  or
+  ///  @code
+  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  ///  ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
+  ///  @endcode
+  ///  If `Environment ID` is not specified, we assume default 'draft'
+  ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -334,12 +339,17 @@ class SessionEntityTypesClient {
   /// with Google Assistant integration.
   ///
   /// @param name  Required. The name of the entity type to delete. Format:
-  ///  `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity
-  ///  Type Display Name>` or `projects/<Project
-  ///  ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
-  ///  ID>/entityTypes/<Entity Type Display Name>`. If `Environment ID` is not
-  ///  specified, we assume default 'draft' environment. If `User ID` is not
-  ///  specified, we assume default '-' user.
+  ///  @code
+  ///  projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity
+  ///  Type Display Name>
+  ///  @endcode
+  ///  or
+  ///  @code
+  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+  ///  ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
+  ///  @endcode
+  ///  If `Environment ID` is not specified, we assume default 'draft'
+  ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
