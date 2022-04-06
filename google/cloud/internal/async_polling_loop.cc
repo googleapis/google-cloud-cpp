@@ -137,6 +137,7 @@ class AsyncPollingLoopImpl
     // cancel the operation after too many polling attempts.
     if (!polling_policy_->OnFailure(op.status())) {
       if (!op) {
+        // This could be a transient error if the policy is exhausted.
         return promise_.set_value(std::move(op).status());
       }
       // Consider trying to reset the backoff wait period.
