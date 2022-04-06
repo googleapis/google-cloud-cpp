@@ -220,9 +220,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadJson) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
   std::vector<Json> const data = {
       Json(),                     //
       Json(R"("Hello world!")"),  //
@@ -345,9 +342,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
   std::vector<std::vector<Json>> const data = {
       std::vector<Json>{},
       std::vector<Json>{Json()},
@@ -446,9 +440,6 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
 
 // Verify maximum JSON nesting.
 TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
   // The default value of the backend max-nesting-level flag.
   int const k_spanner_json_max_nesting_level = 90;
 
@@ -470,11 +461,16 @@ TEST_F(DataTypeIntegrationTest, JsonMaxNesting) {
 
   std::vector<Json> const bad_data = {Json(bad_json)};
   result = WriteReadData(*client_, bad_data, "JsonValue");
-  // NOTE: The backend is currently dropping a more specific "Max nesting
-  // of 90 had been exceeded [INVALID_ARGUMENT]" error, so expect this
-  // expectation to change when that problem is fixed.
-  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition,
-                               HasSubstr("Expected JSON")));
+  if (UsingEmulator()) {
+    // The emulator has no such limitation, so it tries to re-insert.
+    EXPECT_THAT(result, StatusIs(StatusCode::kAlreadyExists));
+  } else {
+    // NOTE: The backend is currently dropping a more specific "Max nesting
+    // of 90 had been exceeded [INVALID_ARGUMENT]" error, so expect this
+    // expectation to change when that problem is fixed.
+    EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition,
+                                 HasSubstr("Expected JSON")));
+  }
 }
 
 }  // namespace

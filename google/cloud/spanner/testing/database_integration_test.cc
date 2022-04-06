@@ -79,11 +79,8 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           BytesValue BYTES(1024),
           TimestampValue TIMESTAMP,
           DateValue DATE,
+          JsonValue JSON,
       )sql";
-  if (!emulator) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    create_datatypes.append(R"sql(JsonValue JSON,)sql");
-  }
   if (!emulator) {
     // TODO(#5024): Remove this check when the emulator supports NUMERIC.
     create_datatypes.append(R"sql(NumericValue NUMERIC,)sql");
@@ -95,12 +92,9 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           ArrayStringValue ARRAY<STRING(1024)>,
           ArrayBytesValue ARRAY<BYTES(1024)>,
           ArrayTimestampValue ARRAY<TIMESTAMP>,
-          ArrayDateValue ARRAY<DATE>
+          ArrayDateValue ARRAY<DATE>,
+          ArrayJsonValue ARRAY<JSON>
       )sql");
-  if (!emulator) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    create_datatypes.append(R"sql(,ArrayJsonValue ARRAY<JSON>)sql");
-  }
   if (!emulator) {
     // TODO(#5024): Remove this check when the emulator supports NUMERIC.
     create_datatypes.append(R"sql(,ArrayNumericValue ARRAY<NUMERIC>)sql");

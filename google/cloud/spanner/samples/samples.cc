@@ -4126,17 +4126,14 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_query_data_with_timestamp_column");
   QueryDataWithTimestamp(client);
 
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (!emulator) {
-    SampleBanner("spanner_add_json_column");
-    AddJsonColumn(database_admin_client, project_id, instance_id, database_id);
+  SampleBanner("spanner_add_json_column");
+  AddJsonColumn(database_admin_client, project_id, instance_id, database_id);
 
-    SampleBanner("spanner_update_data_with_json_column");
-    UpdateDataWithJson(client);
+  SampleBanner("spanner_update_data_with_json_column");
+  UpdateDataWithJson(client);
 
-    SampleBanner("spanner_query_with_json_parameter");
-    QueryWithJsonParameter(client);
-  }
+  SampleBanner("spanner_query_with_json_parameter");
+  QueryWithJsonParameter(client);
 
   // TODO(#5024): Remove this check when the emulator supports NUMERIC.
   if (!emulator) {

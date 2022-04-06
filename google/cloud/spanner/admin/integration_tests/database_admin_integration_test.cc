@@ -240,16 +240,11 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   }
   statements.emplace_back(R"""(
         CREATE TABLE Singers (
-          SingerId   INT64 NOT NULL,
-          FirstName  STRING(1024),
-          LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
-      )""");
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    statements.back().append(R"""(,SingerDetails JSON)""");
-  }
-  statements.back().append(R"""(
+          SingerId      INT64 NOT NULL,
+          FirstName     STRING(1024),
+          LastName      STRING(1024),
+          SingerInfo    BYTES(MAX),
+          SingerDetails JSON
         ) PRIMARY KEY (SingerId)
       )""");
   auto metadata =
@@ -273,20 +268,8 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
           ON Singers(SingerDetails)
       )""");
   metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kFailedPrecondition,
-                         AllOf(HasSubstr("Index SingersByDetail"),
-                               HasSubstr("column of unsupported type JSON"))));
-  } else {
-    EXPECT_THAT(
-        metadata,
-        StatusIs(
-            StatusCode::kInvalidArgument,
-            AllOf(HasSubstr("Index SingersByDetail"),
-                  HasSubstr("column SingerDetails which does not exist"))));
-  }
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition,
+                                 HasSubstr("SingersByDetail")));
 
   // Verify that a JSON column cannot be used as a primary key.
   statements.clear();
@@ -296,15 +279,9 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
         ) PRIMARY KEY (Key)
       )""");
   metadata = client_.UpdateDatabaseDdl(database_.FullName(), statements).get();
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kInvalidArgument,
-                         AllOf(HasSubstr("Key has type JSON"),
-                               HasSubstr("part of the primary key"))));
-  } else {
-    EXPECT_THAT(metadata, Not(IsOk()));
-  }
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("Key has type JSON"),
+                                       HasSubstr("part of the primary key"))));
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_.FullName());
