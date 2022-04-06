@@ -90,7 +90,7 @@ class AuthorizedUserCredentials : public Credentials {
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
                                      ChannelOptions const& channel_options = {})
       : impl_(std::move(info), Options{}.set<CARootsFilePathOption>(
-            channel_options.ssl_root_path())) {}
+                                   channel_options.ssl_root_path())) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
     auto header = impl_.AuthorizationHeader();

@@ -134,21 +134,22 @@ absl::Span<T> WriteToBuffer(absl::Span<T> destination,
 
 }  // namespace
 
-extern "C" std::size_t RestCurlRequestWrite(char* ptr, size_t size, size_t nmemb,
-                                        void* userdata) {
+extern "C" std::size_t RestCurlRequestWrite(char* ptr, size_t size,
+                                            size_t nmemb, void* userdata) {
   auto* request = reinterpret_cast<CurlImpl*>(userdata);
   return request->WriteCallback(ptr, size, nmemb);
 }
 
 extern "C" std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
-                                         std::size_t nitems, void* userdata) {
+                                             std::size_t nitems,
+                                             void* userdata) {
   auto* request = reinterpret_cast<CurlImpl*>(userdata);
   return request->HeaderCallback(contents, size, nitems);
 }
 
 extern "C" std::size_t RestCurlRequestOnReadData(char* ptr, std::size_t size,
-                                             std::size_t nitems,
-                                             void* userdata) {
+                                                 std::size_t nitems,
+                                                 void* userdata) {
   auto* v = reinterpret_cast<WriteVector*>(userdata);
   return v->OnRead(ptr, size, nitems);
 }

@@ -32,8 +32,9 @@ using ::google::cloud::rest_internal::BinaryDataAsDebugString;
 
 std::size_t const kMaxDataDebugSize = 48;
 
-extern "C" int RestCurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
-                                       std::size_t size, void* userptr) {
+extern "C" int RestCurlHandleDebugCallback(CURL*, curl_infotype type,
+                                           char* data, std::size_t size,
+                                           void* userptr) {
   auto* debug_info = reinterpret_cast<CurlHandle::DebugInfo*>(userptr);
   switch (type) {
     case CURLINFO_TEXT:
@@ -77,7 +78,7 @@ extern "C" int RestCurlHandleDebugCallback(CURL*, curl_infotype type, char* data
 }
 
 extern "C" int RestCurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
-                                    curlsocktype purpose) {
+                                        curlsocktype purpose) {
   auto errno_msg = [] { return google::cloud::internal::strerror(errno); };
   auto* options = reinterpret_cast<CurlHandle::SocketOptions*>(userdata);
   switch (purpose) {

@@ -278,8 +278,7 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_storage
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 target_compile_definitions(google_cloud_cpp_storage
-                               PUBLIC GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST)
-
+                           PUBLIC GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST)
 
 # GCC-7.3 (the default GCC version on Ubuntu:18.04) issues a warning (a member
 # variable may be used without being initialized), in this file. GCC-8.0 no

@@ -181,8 +181,7 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
 # TODO(sdhart): ON should not be the production default
 option(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST
-       "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)"
-       ON)
+       "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)" ON)
 mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST)
 
 # We no longer build the generator by default, but if it was explicitly
