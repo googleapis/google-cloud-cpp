@@ -117,6 +117,9 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
         if (!service_composite_.status().ok()) return;
         auto num_partitions = f.get();
         if (num_partitions.ok()) return HandleNumPartitions(*num_partitions);
+        GCP_LOG(WARNING) << "Reading number of partitions for "
+                         << topic_.FullName()
+                         << "failed: " << num_partitions.status();
         bool first_poll;
         {
           std::lock_guard<std::mutex> g{mu_};
@@ -126,9 +129,6 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
           // fail client if first poll fails
           return service_composite_.Abort(num_partitions.status());
         }
-        GCP_LOG(WARNING) << "Reading number of partitions for "
-                         << topic_.FullName()
-                         << "failed: " << num_partitions.status();
       })
       .then([this](future<void>) {
         absl::optional<promise<void>> p;
@@ -204,7 +204,7 @@ future<void> MultipartitionPublisher::Shutdown() {
     state.publish_promise.set_value(Status{
         StatusCode::kFailedPrecondition, "Multipartition publisher shutdown."});
   }
-  // invoke shutdown state first so more publishers aren't created
+
   auto shutdown = service_composite_.Shutdown();
   std::lock_guard<std::mutex> g{mu_};
   if (outstanding_num_partitions_req_) {
