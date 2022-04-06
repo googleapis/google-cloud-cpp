@@ -21,6 +21,7 @@ datamigration
 dataproc
 debugger
 dialogflow_cx
+dialogflow_es
 dlp
 documentai
 eventarc
