@@ -3,7 +3,8 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Dialogflow API][cloud-service-docs], a service to Builds conversational interfaces (for example, chatbots, and voice-powered apps and devices).
+[Dialogflow API][cloud-service-docs], a service to build conversational
+interfaces (for example, chatbots, and voice-powered apps and devices).
 
 This library is **experimental**. Its APIs are subject to change without notice.
 

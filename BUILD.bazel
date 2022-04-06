@@ -21,6 +21,7 @@ exports_files([
 ])
 
 EXPERIMENTAL_LIBRARIES = [
+    "dialogflow",
     "logging",
     "osconfig",
     "speech",
