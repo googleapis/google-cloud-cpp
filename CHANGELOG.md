@@ -55,6 +55,19 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.40.0 - TBD
 
+### New Libraries
+
+We are introducing client libraries for 2 more GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
+
+<details>
+<summary> Expand to see the full list of new libraries...</summary>
+<br>
+
+* [Dialog Flow](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow/README.md)
+
+
 ## v1.39.0 - 2022-04
 
 **BREAKING CHANGES**
