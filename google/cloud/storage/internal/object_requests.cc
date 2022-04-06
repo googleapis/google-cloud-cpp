@@ -376,6 +376,26 @@ std::ostream& operator<<(std::ostream& os,
   return os << "}";
 }
 
+StatusOr<CreateResumableUploadResponse>
+CreateResumableUploadResponse::FromHttpResponse(HttpResponse response) {
+  if (response.headers.find("location") == response.headers.end()) {
+    return Status(StatusCode::kInternal, "Missing location header");
+  }
+  return CreateResumableUploadResponse{
+      response.headers.find("location")->second};
+}
+
+bool operator==(CreateResumableUploadResponse const& lhs,
+                CreateResumableUploadResponse const& rhs) {
+  return lhs.upload_id == rhs.upload_id;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         CreateResumableUploadResponse const& r) {
+  return os << "CreateResumableUploadResponse={upload_id=" << r.upload_id
+            << "}";
+}
+
 std::string UploadChunkRequest::RangeHeader() const {
   std::ostringstream os;
   os << "Content-Range: bytes ";
@@ -400,7 +420,8 @@ std::string UploadChunkRequest::RangeHeader() const {
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
   os << "UploadChunkRequest={upload_session_url=" << r.upload_session_url()
-     << ", range=<" << r.RangeHeader() << ">";
+     << ", range=<" << r.RangeHeader() << ">"
+     << ", full_object_hashes={" << Format(r.full_object_hashes()) << "}";
   r.DumpOptions(os, ", ");
   os << ", payload={";
   auto constexpr kMaxOutputBytes = 128;
@@ -418,6 +439,75 @@ std::ostream& operator<<(std::ostream& os,
   os << "QueryResumableUploadRequest={upload_session_url="
      << r.upload_session_url();
   r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
+StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
+  // We expect a `Range:` header in the format described here:
+  //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
+  // that is the value should match `bytes=0-[0-9]+`:
+  char const prefix[] = "bytes=0-";
+  auto constexpr kPrefixLen = sizeof(prefix) - 1;
+  if (range.rfind(prefix, 0) != 0) {
+    return Status(
+        StatusCode::kInternal,
+        "cannot parse Range header in resumable upload response, value=" +
+            range);
+  }
+  char const* buffer = range.data() + kPrefixLen;
+  char* endptr;
+  auto constexpr kBytesBase = 10;
+  auto last = std::strtoll(buffer, &endptr, kBytesBase);
+  if (buffer != endptr && *endptr == '\0' && 0 <= last) {
+    return last;
+  }
+  return Status(
+      StatusCode::kInternal,
+      "cannot parse Range header in resumable upload response, value=" + range);
+}
+
+StatusOr<QueryResumableUploadResponse>
+QueryResumableUploadResponse::FromHttpResponse(HttpResponse response) {
+  QueryResumableUploadResponse result;
+  auto done = response.status_code == HttpStatusCode::kOk ||
+              response.status_code == HttpStatusCode::kCreated;
+
+  // For the JSON API, the payload contains the object resource when the upload
+  // is finished. In that case, we try to parse it.
+  if (done && !response.payload.empty()) {
+    auto contents = ObjectMetadataParser::FromString(response.payload);
+    if (!contents) return std::move(contents).status();
+    result.payload = *std::move(contents);
+  }
+  auto r = response.headers.find("range");
+  if (r == response.headers.end()) return result;
+
+  auto last_committed_byte = ParseRangeHeader(r->second);
+  if (!last_committed_byte) return std::move(last_committed_byte).status();
+  result.committed_size = *last_committed_byte + 1;
+
+  return result;
+}
+
+bool operator==(QueryResumableUploadResponse const& lhs,
+                QueryResumableUploadResponse const& rhs) {
+  return lhs.committed_size == rhs.committed_size && lhs.payload == rhs.payload;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         QueryResumableUploadResponse const& r) {
+  os << "UploadChunkResponse={committed_size=";
+  if (r.committed_size.has_value()) {
+    os << *r.committed_size;
+  } else {
+    os << "{}";
+  }
+  os << ", payload=";
+  if (r.payload.has_value()) {
+    os << *r.payload;
+  } else {
+    os << "{}";
+  }
   return os << "}";
 }
 

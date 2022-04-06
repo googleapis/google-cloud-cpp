@@ -24,31 +24,6 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-namespace {
-StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range) {
-  // We expect a `Range:` header in the format described here:
-  //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
-  // that is the value should match `bytes=0-[0-9]+`:
-  char const prefix[] = "bytes=0-";
-  auto constexpr kPrefixLen = sizeof(prefix) - 1;
-  if (range.rfind(prefix, 0) != 0) {
-    return Status(
-        StatusCode::kInternal,
-        "cannot parse Range header in resumable upload response, value=" +
-            range);
-  }
-  char const* buffer = range.data() + kPrefixLen;
-  char* endptr;
-  auto constexpr kBytesBase = 10;
-  auto last = std::strtoll(buffer, &endptr, kBytesBase);
-  if (buffer != endptr && *endptr == '\0' && 0 <= last) {
-    return last;
-  }
-  return Status(
-      StatusCode::kInternal,
-      "cannot parse Range header in resumable upload response, value=" + range);
-}
-}  // namespace
 
 StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     HttpResponse response) {
