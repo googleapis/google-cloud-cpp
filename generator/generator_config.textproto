@@ -467,6 +467,130 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Dialogflow ES
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/fulfillment.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/environment.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/session_entity_type.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/version.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/context.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/conversation_profile.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/answer_record.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/participant.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/session.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/conversation_dataset.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/intent.proto"
+  additional_proto_files: ["google/protobuf/struct.proto"]
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/agent.proto"
+  additional_proto_files: ["google/protobuf/struct.proto"]
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/document.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/conversation_model.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/knowledge_base.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/entity_type.proto"
+  additional_proto_files: ["google/protobuf/struct.proto"]
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/conversation.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+
 # Document AI
 service {
   service_proto_path: "google/cloud/documentai/v1/document_processor_service.proto"
