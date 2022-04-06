@@ -35,8 +35,12 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
-google_cloud_cpp_load_protolist(proto_list "protolists/dialogflow_cx.list")
-google_cloud_cpp_load_protodeps(proto_deps "protodeps/dialogflow_cx.deps")
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/dialogflow_cx.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/dialogflow_cx.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_dialogflow_cx_protos # cmake-format: sort
     ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
@@ -110,11 +114,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(dialogflow_cx_quickstart)
     add_test(
         NAME dialogflow_cx_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:dialogflow_cx_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:dialogflow_cx_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(dialogflow_cx_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

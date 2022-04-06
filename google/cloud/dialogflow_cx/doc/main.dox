@@ -1,9 +1,12 @@
 /*!
 
-@mainpage Dialogflow API C++ Client Library
+@mainpage Dialogflow CX API C++ Client Library
 
 An idiomatic C++ client library for the [Dialogflow API][cloud-service-docs], a service
-to Builds conversational interfaces (for example, chatbots, and voice-powered apps and devices).
+to build conversational interfaces (for example, chatbots, and voice-powered apps and devices).
+Dialogflow supports two [editions], this library supports the CX edition.
+
+[editions]: https://cloud.google.com/dialogflow/docs/editions
 
 This library is **experimental**. Its APIs are subject to change without notice.
 

@@ -38,7 +38,7 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_googleapis//google/cloud/dialogflow/cx/v3:dialogflow_cx_cc_grpc",
+        "@com_google_googleapis//google/cloud/dialogflow/cx/v3:cx_cc_grpc",
     ],
 )
 
