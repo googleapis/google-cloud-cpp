@@ -35,10 +35,9 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
+using ::testing::AllOf;
 using ::testing::AtLeast;
-using ::testing::Eq;
 using ::testing::HasSubstr;
-using ::testing::Not;
 using ::testing::Return;
 
 struct StringOption {
@@ -290,12 +289,10 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
   instance.set_name("test-instance-name");
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
-  google::longrunning::Operation expected = starting_op;
-  expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(instance);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(3)
       .WillRepeatedly([](std::chrono::nanoseconds) {
         return make_ready_future(
             make_status_or(std::chrono::system_clock::now()));
@@ -304,33 +301,60 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .Times(AtLeast(2))
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                    google::longrunning::GetOperationRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenExhaustedPollingPolicy");
+        return make_ready_future(StatusOr<Operation>(Status{
+            StatusCode::kCancelled, "test-function: operation cancelled"}));
+      });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(2)
       .WillRepeatedly([&](CompletionQueue&,
                           std::unique_ptr<grpc::ClientContext>,
                           google::longrunning::GetOperationRequest const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "PollThenExhaustedPollingPolicy");
         return make_ready_future(make_status_or(starting_op));
+      })
+      .RetiresOnSaturation();
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::CancelOperationRequest const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+                  "PollThenExhaustedPollingPolicy");
+        EXPECT_EQ(request.name(), "test-op-name");
+        return make_ready_future(Status{});
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
-      .WillOnce(Return(true))
-      .WillOnce(Return(true))
-      .WillOnce(Return(false));
+      .WillOnce([](Status const& status) {
+        EXPECT_THAT(status, IsOk());
+        return true;  // retry
+      })
+      .WillOnce([](Status const& status) {
+        EXPECT_THAT(status, IsOk());
+        return false;  // exhausted
+      })
+      .WillOnce([](Status const& status) {
+        EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
+        return false;  // permanent
+      });
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+
   OptionsSpan span(
       Options{}.set<StringOption>("PollThenExhaustedPollingPolicy"));
   auto pending = AsyncPollingLoop(
       cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
       MakeCancel(mock), std::move(policy), "test-function");
+
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
-  EXPECT_THAT(actual,
-              StatusIs(Not(Eq(StatusCode::kOk)),
-                       AllOf(HasSubstr("test-function"),
-                             HasSubstr("terminated by polling policy"))));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
+                               AllOf(HasSubstr("test-function"),
+                                     HasSubstr("operation cancelled"))));
 }
 
 TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {

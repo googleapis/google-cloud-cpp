@@ -41,9 +41,7 @@ using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::AnyOf;
 using ::testing::AtLeast;
-using ::testing::AtMost;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Return;
@@ -373,6 +371,7 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseErrorInPoll) {
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
+        op.set_name(r.name());
         op.set_done(true);
         op.mutable_error()->set_code(
             static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
@@ -403,6 +402,7 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseGetOperationError) {
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
+        op.set_name(r.name());
         op.set_done(true);
         op.mutable_error()->set_code(
             static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
@@ -1061,6 +1061,7 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   promise<void> p;
 
+  testing::Sequence s;
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    gsad::v1::CreateBackupRequest const&) {
@@ -1069,22 +1070,27 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
         op.set_done(false);
         return make_ready_future(make_status_or(std::move(op)));
       });
-  EXPECT_CALL(*mock, AsyncCancelOperation)
-      .Times(AtMost(1))
-      .WillRepeatedly(
-          [](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-             google::longrunning::CancelOperationRequest const& request) {
-            EXPECT_EQ("test-operation-name", request.name());
-            return make_ready_future(Status());
-          });
   EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        op.mutable_error()->set_code(
+            static_cast<int>(grpc::StatusCode::CANCELLED));
+        op.mutable_error()->set_message("operation cancelled");
+        return make_ready_future(make_status_or(std::move(op)));
+      });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .InSequence(s)
       .WillOnce([&p](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                      google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(false);
-        p.set_value();  // enable `cancel()` call in the main thread.
+        p.set_value();  // enable `cancel()` call in the main thread
         return make_ready_future(make_status_or(std::move(op)));
       })
       .WillRepeatedly([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
@@ -1095,6 +1101,13 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
         op.set_done(false);
         return make_ready_future(make_status_or(std::move(op)));
       });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .InSequence(s)  // start returning CANCELLED from AsyncGetOperation()
+      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+                   google::longrunning::CancelOperationRequest const& request) {
+        EXPECT_EQ("test-operation-name", request.name());
+        return make_ready_future(Status());
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-database");
@@ -1103,8 +1116,7 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
   p.get_future().get();  // await first poll before `cancel()`
   fut.cancel();
   auto backup = fut.get();
-  EXPECT_THAT(backup, StatusIs(AnyOf(StatusCode::kCancelled,
-                                     StatusCode::kDeadlineExceeded)));
+  EXPECT_THAT(backup, StatusIs(StatusCode::kCancelled));
 }
 
 /// @test Verify that a permanent error in CreateBackup is immediately
