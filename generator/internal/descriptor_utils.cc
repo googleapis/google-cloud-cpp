@@ -339,6 +339,52 @@ std::string FormatClassCommentsFromServiceComments(
   return absl::StrReplaceAll(doxygen_formatted_comments, {{"///  ", "/// "}});
 }
 
+auto constexpr kDialogflowSesionIdProto = R"""(
+ Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+ ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location
+ ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
+)""";
+
+auto constexpr kDialogflowSesionIdCpp = R"""(
+ Format:
+
+ @code
+ projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>
+ @endcode
+
+ or
+
+ @code
+ projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>
+ @endcode
+)""";
+
+auto constexpr kDialogflowEntityTypeIdProto = R"""(
+ Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+ ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
+ `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+ ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity
+ Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
+ environment.
+)""";
+
+auto constexpr kDialogflowEntityTypeIdCpp = R"""(
+ Format:
+
+ @code
+ projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
+ @endcode
+
+ or
+
+ @code
+ projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
+ @endcode
+
+ If `Environment ID` is not specified, we assume the default 'draft'
+ environment.
+)""";
+
 std::string FormatApiMethodSignatureParameters(
     google::protobuf::MethodDescriptor const& method,
     std::string const& signature) {
@@ -352,13 +398,24 @@ std::string FormatApiMethodSignatureParameters(
         input_type->FindFieldByName(parameter);
     google::protobuf::SourceLocation loc;
     parameter_descriptor->GetSourceLocation(&loc);
+    if (loc.leading_comments.find("Session ID>`") != std::string::npos) {
+      std::cerr << "lead\n" << loc.leading_comments << std::endl;
+    }
     auto comment = absl::StrReplaceAll(
-        EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
-        {{"\n\n", "\n  /// "},
-         {"\n", "\n  /// "},
-         // Doxygen cannot process this tag. One proto uses it in a comment.
-         {"<tbody>", "<!--<tbody>-->"},
-         {"</tbody>", "<!--</tbody>-->"}});
+        loc.leading_comments,
+        {
+            {kDialogflowSesionIdProto, kDialogflowSesionIdCpp},
+            {kDialogflowEntityTypeIdProto, kDialogflowEntityTypeIdCpp},
+        });
+    comment = absl::StrReplaceAll(
+        EscapePrinterDelimiter(ChompByValue(comment)),
+        {
+            {"\n\n", "\n  /// "},
+            {"\n", "\n  /// "},
+            // Doxygen cannot process this tag. One proto uses it in a comment.
+            {"<tbody>", "<!--<tbody>-->"},
+            {"</tbody>", "<!--</tbody>-->"},
+        });
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
   }
