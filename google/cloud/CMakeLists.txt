@@ -854,7 +854,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
 
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
-    configure_file("config.cmake.in"
+    configure_file("config-rest.cmake.in"
                    "google_cloud_cpp_rest_internal-config.cmake" @ONLY)
     write_basic_package_version_file(
         "google_cloud_cpp_rest_internal-config-version.cmake"
