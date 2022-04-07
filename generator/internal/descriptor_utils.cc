@@ -339,13 +339,13 @@ std::string FormatClassCommentsFromServiceComments(
   return absl::StrReplaceAll(doxygen_formatted_comments, {{"///  ", "/// "}});
 }
 
-auto constexpr kDialogflowCXSesionIdProto = R"""(
+auto constexpr kDialogflowCXSessionIdProto = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
  ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location
  ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
 )""";
 
-auto constexpr kDialogflowCXSesionIdCpp = R"""(
+auto constexpr kDialogflowCXSessionIdCpp = R"""(
  Format:
 
  @code
@@ -452,7 +452,7 @@ std::string FormatApiMethodSignatureParameters(
     parameter_descriptor->GetSourceLocation(&loc);
     auto comment = absl::StrReplaceAll(
         loc.leading_comments,
-        {{kDialogflowCXSesionIdProto, kDialogflowCXSesionIdCpp},
+        {{kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
          {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
          {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
          {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},
