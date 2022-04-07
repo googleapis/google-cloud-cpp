@@ -339,13 +339,13 @@ std::string FormatClassCommentsFromServiceComments(
   return absl::StrReplaceAll(doxygen_formatted_comments, {{"///  ", "/// "}});
 }
 
-auto constexpr kDialogflowSesionIdProto = R"""(
+auto constexpr kDialogflowCXSesionIdProto = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
  ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location
  ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
 )""";
 
-auto constexpr kDialogflowSesionIdCpp = R"""(
+auto constexpr kDialogflowCXSesionIdCpp = R"""(
  Format:
 
  @code
@@ -359,7 +359,7 @@ auto constexpr kDialogflowSesionIdCpp = R"""(
  @endcode
 )""";
 
-auto constexpr kDialogflowEntityTypeIdProto = R"""(
+auto constexpr kDialogflowCXEntityTypeIdProto = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
  ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
@@ -368,7 +368,7 @@ auto constexpr kDialogflowEntityTypeIdProto = R"""(
  environment.
 )""";
 
-auto constexpr kDialogflowEntityTypeIdCpp = R"""(
+auto constexpr kDialogflowCXEntityTypeIdCpp = R"""(
  Format:
 
  @code
@@ -385,6 +385,58 @@ auto constexpr kDialogflowEntityTypeIdCpp = R"""(
  environment.
 )""";
 
+auto constexpr kDialogflowESSessionIdProto =
+    R"""( `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project
+ ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
+ ID>`.)""";
+
+auto constexpr kDialogflowESSessionIdCpp = R"""(
+ @code
+ projects/<Project ID>/agent/sessions/<Session ID>
+ @endcode
+
+ or
+
+ @code
+ projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>
+ @endcode
+)""";
+
+auto constexpr kDialogflowESContextIdProto =
+    R"""( `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
+ or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
+ ID>/sessions/<Session ID>/contexts/<Context ID>`.)""";
+
+auto constexpr kDialogflowESContextIdCpp = R"""(
+ @code
+ projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
+ @endcode
+
+ or
+
+ @code
+ projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`
+ @endcode
+)""";
+
+auto constexpr kDialogflowESSessionEntityTypeDisplayNameProto =
+    R"""( `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type
+ Display Name>` or `projects/<Project ID>/agent/environments/<Environment
+ ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display
+ Name>`.)""";
+
+auto constexpr kDialogflowESSessionEntityTypeDisplayNameCpp = R"""(
+ @code
+ projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
+ @endcode
+
+ or
+
+ @code
+ projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
+ @endcode
+)""";
+
 std::string FormatApiMethodSignatureParameters(
     google::protobuf::MethodDescriptor const& method,
     std::string const& signature) {
@@ -398,15 +450,17 @@ std::string FormatApiMethodSignatureParameters(
         input_type->FindFieldByName(parameter);
     google::protobuf::SourceLocation loc;
     parameter_descriptor->GetSourceLocation(&loc);
-    if (loc.leading_comments.find("Session ID>`") != std::string::npos) {
-      std::cerr << "lead\n" << loc.leading_comments << std::endl;
-    }
+    //    if (loc.leading_comments.find("Context ID>`") != std::string::npos) {
+    //      std::cerr << "DEBUG DEBUG\n" << loc.leading_comments << std::endl;
+    //    }
     auto comment = absl::StrReplaceAll(
         loc.leading_comments,
-        {
-            {kDialogflowSesionIdProto, kDialogflowSesionIdCpp},
-            {kDialogflowEntityTypeIdProto, kDialogflowEntityTypeIdCpp},
-        });
+        {{kDialogflowCXSesionIdProto, kDialogflowCXSesionIdCpp},
+         {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
+         {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
+         {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},
+         {kDialogflowESSessionEntityTypeDisplayNameProto,
+          kDialogflowESSessionEntityTypeDisplayNameCpp}});
     comment = absl::StrReplaceAll(
         EscapePrinterDelimiter(ChompByValue(comment)),
         {
