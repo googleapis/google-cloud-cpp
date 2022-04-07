@@ -13,22 +13,30 @@
 // limitations under the License.
 
 #include "google/cloud/dialogflow_cx/agents_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/common_options.h"
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id region-id\n";
     return 1;
   }
 
+  auto const project = std::string{argv[1]};
+  auto const region = std::string{argv[2]};
   namespace dialogflow_cx = ::google::cloud::dialogflow_cx;
-  auto client =
-      dialogflow_cx::AgentsClient(dialogflow_cx::MakeAgentsConnection());
+  namespace gc = ::google::cloud;
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto a : client.ListAgents(project.FullName())) {
+  auto options =
+      gc::Options{}
+          .set<gc::EndpointOption>(region + "-dialogflow.googleapis.com")
+          .set<gc::AuthorityOption>(region + "-dialogflow.googleapis.com");
+  auto client = dialogflow_cx::AgentsClient(
+      dialogflow_cx::MakeAgentsConnection(std::move(options)));
+
+  auto const location = "projects/" + project + "/locations/" + region;
+  for (auto a : client.ListAgents(location)) {
     if (!a) throw std::runtime_error(a.status().message());
     std::cout << a->DebugString() << "\n";
   }
