@@ -141,7 +141,9 @@ class Publisher {
    * @snippet samples.cc publisher-retry-settings
    *
    * @return a future that becomes satisfied when the message is published or on
-   *     a unrecoverable error.
+   *     a unrecoverable error. On success, the future is satisfied with the
+   *     server-assigned ID of the message. IDs are guaranteed to be unique
+   *     within the topic.
    */
   future<StatusOr<std::string>> Publish(Message m) {
     return connection_->Publish({std::move(m)});
