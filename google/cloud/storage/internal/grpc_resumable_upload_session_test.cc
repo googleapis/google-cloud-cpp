@@ -281,7 +281,11 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
               EXPECT_TRUE(r.finish_write());
               return true;
             });
-        EXPECT_CALL(*writer, Close).WillOnce(Return(MockCloseSuccess(size)));
+        // The last stream should finalize this upload.
+        auto response = MockCloseSuccess(size);
+        response->mutable_resource()->set_name("test-object");
+        response->mutable_resource()->set_size(size);
+        EXPECT_CALL(*writer, Close).WillOnce(Return(std::move(response)));
 
         return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       });
@@ -308,8 +312,9 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
 
   upload = session.UploadFinalChunk({{payload}}, size, HashValues{});
   ASSERT_STATUS_OK(upload);
-  EXPECT_EQ(size, upload->committed_size.value_or(0));
-  EXPECT_EQ(ResumableUploadResponse::kInProgress, upload->upload_state);
+  EXPECT_EQ(ResumableUploadResponse::kDone, upload->upload_state);
+  ASSERT_TRUE(upload->payload.has_value());
+  EXPECT_EQ(size, upload->payload->size());
 }
 
 }  // namespace

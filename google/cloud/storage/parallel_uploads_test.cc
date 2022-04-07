@@ -1815,14 +1815,22 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResume) {
 }
 
 TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
+  // The number of bytes previously committed does not matter, just has to be
+  // greater than the size of the shard.
+  auto constexpr kCommittedSize = 7;
+  auto constexpr kShardSize = 3;
+  auto constexpr kShardCount = 3;
+  auto const content = std::string{"abcdefghi"};
+  EXPECT_EQ(content.size(), kShardSize * kShardCount);
+  EXPECT_GT(kCommittedSize, kShardSize);
+
   // The expectations need to be reversed.
-  ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_2",
-                               kIndividualSessionId);
-  ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_1",
-                               kIndividualSessionId);
+  (void)ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_2",
+                                     kIndividualSessionId);
+  (void)ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_1",
+                                     kIndividualSessionId);
   (void)ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_0",
-                                     kIndividualSessionId,
-                                     /*initial_committed_size=*/7);
+                                     kIndividualSessionId, kCommittedSize);
   nlohmann::json state_json{
       {"destination", "final-object"},
       {"expected_generation", 0},
@@ -1839,15 +1847,16 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
       .WillOnce(create_state_read_expectation(
           kPersistentStateName, kPersistentStateGeneration, state_json));
 
-  testing::TempFile temp_file("abcdefghi");
+  testing::TempFile temp_file(content);
 
   auto client = ClientForMock();
   auto uploaders = CreateParallelUploadShards::Create(
       client, temp_file.name(), kBucketName, kDestObjectName, kPrefix,
-      MinStreamSize(3), UseResumableUploadSession(kParallelResumableId));
+      MinStreamSize(kShardSize),
+      UseResumableUploadSession(kParallelResumableId));
 
   EXPECT_STATUS_OK(uploaders);
-  ASSERT_EQ(3U, uploaders->size());
+  ASSERT_EQ(kShardCount, uploaders->size());
 
   auto res_future = (*uploaders)[0].WaitForCompletion();
   EXPECT_TRUE(Unsatisfied(res_future));

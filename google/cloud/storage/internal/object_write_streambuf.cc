@@ -193,7 +193,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
       pbump(static_cast<int>(b.size()));
     }
 
-    // If the upload completed, the stream was implicitly "closed", there is
+    // If the upload completed, the stream was implicitly "closed". There is
     // no need to verify anything else.
     if (last_response_->upload_state == ResumableUploadResponse::kDone) {
       committed_size_ =
@@ -209,7 +209,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
                     << expected_committed_size;
       last_response_ = Status(StatusCode::kAborted, error_message.str());
     }
-    committed_size_ = expected_committed_size;
+    committed_size_ = actual_committed_size;
   }
 
   // Upload failures are irrecoverable because the internal buffer is opaque

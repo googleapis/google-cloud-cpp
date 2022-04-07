@@ -118,7 +118,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::string computed_hash_;
   std::string received_hash_;
 
-  // TODO(coryan) - this may need to be refactored
+  // TODO(#8621) - with no sessions, this may need a different representation.
   StatusOr<ResumableUploadResponse> last_response_;
   std::uint64_t committed_size_ = 0;
 };

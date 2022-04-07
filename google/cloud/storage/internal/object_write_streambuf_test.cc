@@ -48,8 +48,7 @@ TEST(ObjectWriteStreambufTest, EmptyStream) {
                     HashValues const&) {
         EXPECT_EQ(0, TotalBytes(p));
         EXPECT_EQ(0, s);
-        return make_status_or(ResumableUploadResponse{
-            "{}", ResumableUploadResponse::kDone, 0, {}, {}});
+        return make_status_or(MockResumableUploadSessionFinal());
       });
 
   ObjectWriteStream stream(absl::make_unique<ObjectWriteStreambuf>(
@@ -71,8 +70,7 @@ TEST(ObjectWriteStreambufTest, AutoFinalizeEnabled) {
                     HashValues const&) {
         EXPECT_EQ(0, TotalBytes(p));
         EXPECT_EQ(0, s);
-        return make_status_or(ResumableUploadResponse{
-            {}, ResumableUploadResponse::kDone, 0, {}, {}});
+        return make_status_or(MockResumableUploadSessionFinal());
       });
 
   {
@@ -111,16 +109,13 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
                     HashValues const&) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         EXPECT_EQ(payload.size(), s);
-        return make_status_or(ResumableUploadResponse{
-            "{}", ResumableUploadResponse::kDone, payload.size(), {}, {}});
+        return make_status_or(MockResumableUploadSessionFinal());
       });
 
   ObjectWriteStreambuf streambuf(
-      std::move(mock),
-      ResumableUploadResponse{"", ResumableUploadResponse::kInProgress,
-                              absl::nullopt, absl::nullopt, std::string{}},
-      quantum, CreateNullHashFunction(), HashValues{},
-      CreateNullHashValidator(), AutoFinalizeConfig::kEnabled);
+      std::move(mock), MockResumableUploadSessionInit(), quantum,
+      CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
+      AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload.data(), payload.size());
   auto response = streambuf.Close();
@@ -149,8 +144,7 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
                     HashValues const&) {
         EXPECT_EQ(0, TotalBytes(p));
         EXPECT_EQ(quantum, s);
-        return make_status_or(ResumableUploadResponse{
-            "{}", ResumableUploadResponse::kDone, quantum, {}, {}});
+        return make_status_or(MockResumableUploadSessionFinal());
       });
 
   ObjectWriteStreambuf streambuf(
@@ -223,9 +217,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
         auto expected = payload_2.substr(payload_2.size() - payload_1.size());
         EXPECT_THAT(p, ElementsAre(ConstBuffer{expected}));
         EXPECT_EQ(payload_1.size() + payload_2.size(), s);
-        auto last_committed_byte = payload_1.size() + payload_2.size() - 1;
-        return make_status_or(ResumableUploadResponse{
-            "{}", ResumableUploadResponse::kDone, last_committed_byte, {}, {}});
+        return make_status_or(MockResumableUploadSessionFinal());
       });
 
   ObjectWriteStreambuf streambuf(
@@ -247,7 +239,6 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
   std::string const payload(quantum, '*');
 
   std::size_t next_byte = 0;
-  bool mock_done = false;
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
@@ -263,9 +254,7 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{expected}));
         next_byte += 1;
         EXPECT_EQ(next_byte, s);
-        mock_done = true;
-        return make_status_or(ResumableUploadResponse{
-            "{}", ResumableUploadResponse::kDone, next_byte, {}, {}});
+        return make_status_or(MockResumableUploadSessionFinal());
       });
 
   ObjectWriteStreambuf streambuf(
@@ -552,8 +541,7 @@ TEST(ObjectWriteStreambufTest, KnownSizeUpload) {
         // UploadFinalChunk(). Furthermore, the response does not have a
         // committed size.
         mock_is_done = true;
-        return make_status_or(ResumableUploadResponse{
-            "", ResumableUploadResponse::kDone, absl::nullopt, {}, {}});
+        return make_status_or(MockResumableUploadSessionFinal());
       });
 
   ObjectWriteStreambuf streambuf(
@@ -594,8 +582,7 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
             EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
             mock_next_byte += TotalBytes(p);
             mock_is_done = true;
-            return make_status_or(ResumableUploadResponse{
-                "", ResumableUploadResponse::kDone, mock_next_byte, {}, {}});
+            return make_status_or(MockResumableUploadSessionFinal());
           });
 
   ObjectWriteStreambuf streambuf(
