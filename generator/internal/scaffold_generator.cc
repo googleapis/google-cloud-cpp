@@ -363,8 +363,8 @@ cc_library(
     ),
     visibility = ["//:__pkg__"],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_googleapis//$directory$:$library$_cc_grpc",
     ],
 )
@@ -380,8 +380,8 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_$library$",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
     ],
 )
 )""";
@@ -429,14 +429,19 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "$${PROJECT_SOURCE_DIR}/external/googleapis/protolists/$library$.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "$${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/$library$.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_$library$_protos # cmake-format: sort
-    $proto_files$
+    $${proto_list}
     PROTO_PATH_DIRECTORIES
     "$${EXTERNAL_GOOGLEAPIS_SOURCE}" "$${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias($library$_protos)
-target_link_libraries(google_cloud_cpp_$library$_protos PUBLIC #
-    $proto_deps$)
+target_link_libraries(google_cloud_cpp_$library$_protos PUBLIC $${proto_deps})
 
 file(GLOB source_files
      RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"

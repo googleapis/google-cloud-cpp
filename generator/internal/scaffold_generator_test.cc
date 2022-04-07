@@ -185,21 +185,19 @@ TEST_F(ScaffoldGenerator, CMakeLists) {
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
   EXPECT_THAT(actual, HasSubstr(R"""(include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/test.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/test.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_test_protos # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/test/v1/foo.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/test/v1/admin.proto
+    ${proto_list}
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(test_protos)
-target_link_libraries(google_cloud_cpp_test_protos PUBLIC #
-    google-cloud-cpp::longrunning_operations_protos
-    google-cloud-cpp::rpc_status_protos
-    google-cloud-cpp::api_resource_protos
-    google-cloud-cpp::api_field_behavior_protos
-    google-cloud-cpp::api_client_protos
-    google-cloud-cpp::api_annotations_protos
-    google-cloud-cpp::api_http_protos)
+target_link_libraries(google_cloud_cpp_test_protos PUBLIC ${proto_deps})
 )"""));
 
   EXPECT_THAT(actual, HasSubstr(R"""(add_executable(test_quickstart)"""));
