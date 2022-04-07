@@ -185,8 +185,12 @@ TEST_F(ScaffoldGenerator, CMakeLists) {
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
   EXPECT_THAT(actual, HasSubstr(R"""(include(CompileProtos)
-google_cloud_cpp_load_protolist(proto_list "protolists/test.list")
-google_cloud_cpp_load_protodeps(proto_deps "protodeps/test.deps")
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/test.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/test.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_test_protos # cmake-format: sort
     ${proto_list}
