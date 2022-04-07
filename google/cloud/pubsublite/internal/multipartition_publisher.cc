@@ -62,42 +62,41 @@ future<Status> MultipartitionPublisher::Start() {
   return start;
 }
 
-future<StatusOr<Partition>> MultipartitionPublisher::GetNumPartitions() {
+future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
   return admin_connection_->AsyncGetTopicPartitions(topic_partitions_request_)
-      .then([](future<StatusOr<TopicPartitions>> f) -> StatusOr<Partition> {
+      .then([](future<StatusOr<TopicPartitions>> f) -> StatusOr<std::uint32_t> {
         auto partitions = f.get();
-        if (!partitions) return partitions.status();
+        if (!partitions) return std::move(partitions.status());
         if (partitions->partition_count() >=
             std::numeric_limits<Partition>::max()) {
-          return Status{StatusCode::kFailedPrecondition,
+          return Status{StatusCode::kInternal,
                         absl::StrCat("Returned partition count is too big: ",
                                      partitions->partition_count())};
         }
-        return static_cast<Partition>(partitions->partition_count());
+        return static_cast<std::uint32_t>(partitions->partition_count());
       });
 }
 
-void MultipartitionPublisher::HandleNumPartitions(Partition num_partitions) {
-  Partition current_num_partitions;
+void MultipartitionPublisher::HandleNumPartitions(
+    std::uint32_t num_partitions) {
+  std::uint32_t current_num_partitions;
   {
     std::lock_guard<std::mutex> g{mu_};
     current_num_partitions =
-        static_cast<Partition>(partition_publishers_.size());
+        static_cast<std::uint32_t>(partition_publishers_.size());
   }
   assert(num_partitions >= current_num_partitions);  // should be no race
   if (num_partitions == current_num_partitions) return;
   std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
   for (Partition i = current_num_partitions; i < num_partitions; ++i) {
-    new_partition_publishers.push_back(
-        publisher_factory_(static_cast<Partition>(i)));
+    new_partition_publishers.push_back(publisher_factory_(i));
     service_composite_.AddServiceObject(new_partition_publishers.back().get());
   }
   std::vector<PublishState> initial_publish_buffer;
   {
     std::lock_guard<std::mutex> g{mu_};
-    for (auto& partition_publisher : new_partition_publishers) {
-      partition_publishers_.push_back(std::move(partition_publisher));
-    }
+    std::move(new_partition_publishers.begin(), new_partition_publishers.end(),
+              std::back_inserter(partition_publishers_));
     initial_publish_buffer.swap(initial_publish_buffer_);
   }
   for (auto& state : initial_publish_buffer) {
@@ -113,7 +112,7 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
     outstanding_num_partitions_req_.emplace();
   }
   GetNumPartitions()
-      .then([this](future<StatusOr<Partition>> f) {
+      .then([this](future<StatusOr<std::uint32_t>> f) {
         if (!service_composite_.status().ok()) return;
         auto num_partitions = f.get();
         if (num_partitions.ok()) return HandleNumPartitions(*num_partitions);
@@ -152,18 +151,8 @@ void MultipartitionPublisher::RouteAndPublish(PublishState state) {
     std::lock_guard<std::mutex> g{mu_};
     publisher = partition_publishers_.at(partition).get();
   }
-  auto shared_promise = std::make_shared<promise<StatusOr<MessageMetadata>>>(
-      std::move(state.publish_promise));
   publisher->Publish(std::move(state.message))
-      .then(
-          [partition, shared_promise](future<StatusOr<Cursor>> publish_future) {
-            auto publish_response = publish_future.get();
-            if (!publish_response) {
-              return shared_promise->set_value(publish_response.status());
-            }
-            shared_promise->set_value(
-                MessageMetadata{partition, std::move(*publish_response)});
-          });
+      .then(OnPublish{std::move(state.publish_promise), partition});
 }
 
 future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
@@ -187,9 +176,16 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
 }
 
 void MultipartitionPublisher::Flush() {
-  std::lock_guard<std::mutex> g{mu_};
-  for (auto& partition_publisher : partition_publishers_) {
-    partition_publisher->Flush();
+  std::vector<Publisher<Cursor>*> publishers;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    publishers.reserve(partition_publishers_.size());
+    for (auto& publisher : partition_publishers_) {
+      publishers.push_back(publisher.get());
+    }
+  }
+  for (auto* publisher : publishers) {
+    publisher->Flush();
   }
 }
 

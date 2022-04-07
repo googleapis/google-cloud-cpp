@@ -51,6 +51,8 @@ using ::google::cloud::pubsublite_testing::MockPartitionPublisher;
 using ::google::cloud::pubsublite_testing::MockRoutingPolicy;
 
 constexpr std::chrono::milliseconds kAlarmDuration{std::chrono::seconds{60}};
+constexpr std::uint64_t kOutOfBoundsPartition =
+    static_cast<std::uint64_t>(std::numeric_limits<Partition>::max()) + 1;
 
 Topic ExampleTopic() { return Topic{"project", "location", "name"}; }
 
@@ -66,13 +68,17 @@ TopicPartitions ExamplePartitionsResponse(std::int64_t partition_count) {
   return tp;
 }
 
-class MultipartitionPublisherTest : public ::testing::Test {
+future<StatusOr<TopicPartitions>> ReadyTopicPartitionsFuture(
+    std::int64_t partition_count) {
+  return make_ready_future(
+      make_status_or(ExamplePartitionsResponse(partition_count)));
+}
+
+class MultipartitionPublisherNoneInitializedTest : public ::testing::Test {
  protected:
-  MultipartitionPublisherTest()
-      : partition_publisher_0_{*(new StrictMock<MockPartitionPublisher>())},
-        partition_publisher_1_{*(new StrictMock<MockPartitionPublisher>())},
-        admin_connection_{
-            std::make_shared<StrictMock<MockAdminServiceConnection>>()},
+  MultipartitionPublisherNoneInitializedTest()
+      : admin_connection_{std::make_shared<
+            StrictMock<MockAdminServiceConnection>>()},
         alarm_token_{*(new StrictMock<MockAlarmRegistryCancelToken>())},
         routing_policy_{*(new StrictMock<MockRoutingPolicy>())} {
     EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
@@ -88,8 +94,6 @@ class MultipartitionPublisherTest : public ::testing::Test {
 
   StrictMock<MockFunction<std::unique_ptr<Publisher<Cursor>>(Partition)>>
       partition_publisher_factory_;
-  StrictMock<MockPartitionPublisher>& partition_publisher_0_;
-  StrictMock<MockPartitionPublisher>& partition_publisher_1_;
   std::shared_ptr<StrictMock<MockAdminServiceConnection>> admin_connection_;
   StrictMock<MockAlarmRegistry> alarm_registry_;
   StrictMock<MockAlarmRegistryCancelToken>& alarm_token_;
@@ -98,12 +102,75 @@ class MultipartitionPublisherTest : public ::testing::Test {
   std::unique_ptr<Publisher<MessageMetadata>> multipartition_publisher_;
 };
 
-TEST_F(MultipartitionPublisherTest, StartNotCalled) {
+TEST_F(MultipartitionPublisherNoneInitializedTest, StartNotCalled) {
   EXPECT_CALL(alarm_token_, Destroy);
-  // need to explicitly delete since they're never wrapped by std::unique_ptr<>
-  delete &partition_publisher_0_;
-  delete &partition_publisher_1_;
 }
+
+TEST_F(MultipartitionPublisherNoneInitializedTest,
+       FirstPollInvalidValuePublisherAborts) {
+  InSequence seq;
+
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(
+          Return(ByMove(ReadyTopicPartitionsFuture(kOutOfBoundsPartition))));
+  auto start = multipartition_publisher_->Start();
+
+  EXPECT_EQ(start.get(), Status(StatusCode::kInternal,
+                                "Returned partition count is too big: " +
+                                    std::to_string(kOutOfBoundsPartition)));
+
+  EXPECT_CALL(alarm_token_, Destroy);
+  multipartition_publisher_->Shutdown().get();
+}
+
+TEST_F(MultipartitionPublisherNoneInitializedTest,
+       PublishAndShutdownBeforePublisherCreated) {
+  InSequence seq;
+
+  promise<StatusOr<TopicPartitions>> num_partitions;
+  EXPECT_CALL(*admin_connection_,
+              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
+      .WillOnce(Return(ByMove(num_partitions.get_future())));
+
+  auto start = multipartition_publisher_->Start();
+
+  PubSubMessage m0;
+  *m0.mutable_data() = "data1";
+  future<StatusOr<MessageMetadata>> message0 =
+      multipartition_publisher_->Publish(m0);
+  PubSubMessage m1;
+  *m1.mutable_data() = "data2";
+  future<StatusOr<MessageMetadata>> message1 =
+      multipartition_publisher_->Publish(m1);
+
+  EXPECT_CALL(alarm_token_, Destroy);
+
+  multipartition_publisher_->Shutdown();
+
+  num_partitions.set_value(
+      ExamplePartitionsResponse(1));  // shouldn't do anything
+
+  EXPECT_EQ(message0.get().status(),
+            Status(StatusCode::kFailedPrecondition,
+                   "Multipartition publisher shutdown."));
+  EXPECT_EQ(message1.get().status(),
+            Status(StatusCode::kFailedPrecondition,
+                   "Multipartition publisher shutdown."));
+
+  EXPECT_EQ(start.get(), Status());
+}
+
+class MultipartitionPublisherTest
+    : public MultipartitionPublisherNoneInitializedTest {
+ protected:
+  MultipartitionPublisherTest()
+      : partition_publisher_0_{*(new StrictMock<MockPartitionPublisher>())},
+        partition_publisher_1_{*(new StrictMock<MockPartitionPublisher>())} {}
+
+  StrictMock<MockPartitionPublisher>& partition_publisher_0_;
+  StrictMock<MockPartitionPublisher>& partition_publisher_1_;
+};
 
 TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
   InSequence seq;
@@ -178,37 +245,13 @@ TEST_F(MultipartitionPublisherTest, StartRunsOnAlarmDoesNot) {
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(MultipartitionPublisherTest, FirstPollInvalidValuePublisherAborts) {
-  InSequence seq;
-
-  std::int64_t out_of_bounds_partition =
-      std::numeric_limits<std::uint32_t>::max() +
-      static_cast<std::int64_t>(1);  // out of bounds
-  EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
-      .WillOnce(Return(ByMove(make_ready_future(StatusOr<TopicPartitions>(
-          ExamplePartitionsResponse(out_of_bounds_partition))))));
-  auto start = multipartition_publisher_->Start();
-
-  EXPECT_EQ(start.get(), Status(StatusCode::kFailedPrecondition,
-                                "Returned partition count is too big: " +
-                                    std::to_string(out_of_bounds_partition)));
-
-  EXPECT_CALL(alarm_token_, Destroy);
-  multipartition_publisher_->Shutdown().get();
-
-  delete &partition_publisher_0_;
-  delete &partition_publisher_1_;
-}
-
 TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
   InSequence seq;
 
   // doesn't invoke `AsyncGetTopicPartitions` b/c not `Start`ed yet
   EXPECT_CALL(*admin_connection_,
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
-      .WillOnce(Return(ByMove(make_ready_future(
-          StatusOr<TopicPartitions>(ExamplePartitionsResponse(1))))));
+      .WillOnce(Return(ByMove(ReadyTopicPartitionsFuture(1))));
   on_alarm_();
 
   promise<StatusOr<TopicPartitions>> num_partitions;
@@ -355,45 +398,6 @@ TEST_F(MultipartitionPublisherTest, PublishBeforePublisherCreatedGood) {
   EXPECT_EQ(start.get(), Status());
 }
 
-TEST_F(MultipartitionPublisherTest, PublishAndShutdownBeforePublisherCreated) {
-  InSequence seq;
-
-  promise<StatusOr<TopicPartitions>> num_partitions;
-  EXPECT_CALL(*admin_connection_,
-              AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
-      .WillOnce(Return(ByMove(num_partitions.get_future())));
-
-  auto start = multipartition_publisher_->Start();
-
-  PubSubMessage m0;
-  *m0.mutable_data() = "data1";
-  future<StatusOr<MessageMetadata>> message0 =
-      multipartition_publisher_->Publish(m0);
-  PubSubMessage m1;
-  *m1.mutable_data() = "data2";
-  future<StatusOr<MessageMetadata>> message1 =
-      multipartition_publisher_->Publish(m1);
-
-  EXPECT_CALL(alarm_token_, Destroy);
-
-  multipartition_publisher_->Shutdown();
-
-  num_partitions.set_value(
-      ExamplePartitionsResponse(1));  // shouldn't do anything
-
-  EXPECT_EQ(message0.get().status(),
-            Status(StatusCode::kFailedPrecondition,
-                   "Multipartition publisher shutdown."));
-  EXPECT_EQ(message1.get().status(),
-            Status(StatusCode::kFailedPrecondition,
-                   "Multipartition publisher shutdown."));
-
-  EXPECT_EQ(start.get(), Status());
-
-  delete &partition_publisher_0_;
-  delete &partition_publisher_1_;
-}
-
 class InitializedMultipartitionPublisherTest
     : public MultipartitionPublisherTest {
  protected:
@@ -468,7 +472,7 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
   Cursor cursor;
   cursor.set_offset(208);
   EXPECT_CALL(partition_publisher_2_ref, Publish(IsProtoEqual(m)))
-      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(cursor)))));
+      .WillOnce(Return(ByMove(make_ready_future(make_status_or(cursor)))));
   future<StatusOr<MessageMetadata>> message =
       multipartition_publisher_->Publish(m);
   EXPECT_EQ(*message.get(), (MessageMetadata{2, cursor}));
@@ -481,17 +485,15 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
 TEST_F(InitializedMultipartitionPublisherTest, GetNumPartitionsSame) {
   EXPECT_CALL(*admin_connection_,
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
-      .WillOnce(Return(ByMove(make_ready_future(
-          StatusOr<TopicPartitions>(ExamplePartitionsResponse(2))))));
+      .WillOnce(Return(ByMove(ReadyTopicPartitionsFuture(2))));
   on_alarm_();
 }
 
 TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitionsFails) {
   EXPECT_CALL(*admin_connection_,
               AsyncGetTopicPartitions(IsProtoEqual(ExamplePartitionsRequest())))
-      .WillOnce(Return(ByMove(make_ready_future(StatusOr<TopicPartitions>(
-          ExamplePartitionsResponse(std::numeric_limits<std::uint32_t>::max() +
-                                    static_cast<std::int64_t>(1)))))));
+      .WillOnce(
+          Return(ByMove(ReadyTopicPartitionsFuture(kOutOfBoundsPartition))));
   on_alarm_();
   // everything finishes validly as only second poll failed
 }
@@ -514,7 +516,7 @@ TEST_F(InitializedMultipartitionPublisherTest, RegularPublishes) {
   Cursor m1_cursor;
   m1_cursor.set_offset(876);
   EXPECT_CALL(partition_publisher_1_, Publish(IsProtoEqual(m1)))
-      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m1_cursor)))));
+      .WillOnce(Return(ByMove(make_ready_future(make_status_or(m1_cursor)))));
   future<StatusOr<MessageMetadata>> message1 =
       multipartition_publisher_->Publish(m1);
   EXPECT_EQ(*message1.get(), (MessageMetadata{1, m1_cursor}));
@@ -526,7 +528,7 @@ TEST_F(InitializedMultipartitionPublisherTest, RegularPublishes) {
   Cursor m2_cursor;
   m2_cursor.set_offset(10);
   EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m2)))
-      .WillOnce(Return(ByMove(make_ready_future(StatusOr<Cursor>(m2_cursor)))));
+      .WillOnce(Return(ByMove(make_ready_future(make_status_or(m2_cursor)))));
   future<StatusOr<MessageMetadata>> message2 =
       multipartition_publisher_->Publish(m2);
   EXPECT_EQ(*message2.get(), (MessageMetadata{0, m2_cursor}));
