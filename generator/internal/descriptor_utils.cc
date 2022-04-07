@@ -450,9 +450,6 @@ std::string FormatApiMethodSignatureParameters(
         input_type->FindFieldByName(parameter);
     google::protobuf::SourceLocation loc;
     parameter_descriptor->GetSourceLocation(&loc);
-    //    if (loc.leading_comments.find("Context ID>`") != std::string::npos) {
-    //      std::cerr << "DEBUG DEBUG\n" << loc.leading_comments << std::endl;
-    //    }
     auto comment = absl::StrReplaceAll(
         loc.leading_comments,
         {{kDialogflowCXSesionIdProto, kDialogflowCXSesionIdCpp},
