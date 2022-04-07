@@ -57,27 +57,14 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
   QueryResumableUploadRequest request(session_id_params_.upload_id);
   auto result = client_->QueryResumableUpload(request);
-  last_response_ = std::move(result);
-  if (!last_response_) return last_response_;
+  if (!result) return result;
 
-  done_ = (last_response_->upload_state == ResumableUploadResponse::kDone);
-  next_expected_ = last_response_->committed_size.value_or(0);
-  return last_response_;
-}
-
-std::uint64_t GrpcResumableUploadSession::next_expected_byte() const {
-  return next_expected_;
+  committed_size_ = result->committed_size.value_or(0);
+  return result;
 }
 
 std::string const& GrpcResumableUploadSession::session_id() const {
   return session_url_;
-}
-
-bool GrpcResumableUploadSession::done() const { return done_; }
-
-StatusOr<ResumableUploadResponse> const&
-GrpcResumableUploadSession::last_response() const {
-  return last_response_;
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
@@ -97,7 +84,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     google::storage::v2::WriteObjectRequest request;
     request.set_upload_id(session_id_params_.upload_id);
     request.set_write_offset(
-        static_cast<google::protobuf::int64>(next_expected_));
+        static_cast<google::protobuf::int64>(committed_size_));
     request.set_finish_write(false);
 
     auto& data = *request.mutable_checksummed_data();
@@ -131,21 +118,16 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     request.clear_write_object_spec();
     request.clear_object_checksums();
 
-    next_expected_ += n;
+    committed_size_ += n;
     return true;
   };
 
-  auto close_writer = [&] {
+  auto close_writer = [&]() -> StatusOr<ResumableUploadResponse> {
     auto result = writer->Close();
     writer.reset();
-    if (!result) {
-      last_response_ = std::move(result).status();
-      return last_response_;
-    }
-    done_ = final_chunk;
-    last_response_ = GrpcObjectRequestParser::FromProto(*std::move(result),
-                                                        client_->options());
-    return last_response_;
+    if (!result) return std::move(result).status();
+    return GrpcObjectRequestParser::FromProto(*std::move(result),
+                                              client_->options());
   };
 
   do {

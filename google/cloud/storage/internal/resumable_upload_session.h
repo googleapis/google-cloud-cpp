@@ -65,26 +65,11 @@ class ResumableUploadSession {
   virtual StatusOr<ResumableUploadResponse> ResetSession() = 0;
 
   /**
-   * Returns the next expected byte in the server.
-   *
-   * Users of this class should check this value in case a previous
-   * UploadChunk() has partially failed and the application (or the component
-   * using this class) needs to re-send a chunk.
-   */
-  virtual std::uint64_t next_expected_byte() const = 0;
-
-  /**
    * Returns the current upload session id.
    *
    * Note that the session id might change during an upload.
    */
   virtual std::string const& session_id() const = 0;
-
-  /// Returns whether the upload session has completed.
-  virtual bool done() const = 0;
-
-  /// Returns the last upload response encountered during the upload.
-  virtual StatusOr<ResumableUploadResponse> const& last_response() const = 0;
 };
 
 struct ResumableUploadResponse {
@@ -133,45 +118,29 @@ struct CreateResumableSessionResponse {
 class ResumableUploadSessionError : public ResumableUploadSession {
  public:
   explicit ResumableUploadSessionError(Status status)
-      : last_response_(std::move(status)) {}
+      : error_(std::move(status)) {}
 
-  ResumableUploadSessionError(Status status, std::uint64_t next_expected_byte,
-                              std::string id)
-      : last_response_(std::move(status)),
-        next_expected_byte_(next_expected_byte),
-        id_(std::move(id)) {}
+  ResumableUploadSessionError(Status status, std::string id)
+      : error_(std::move(status)), id_(std::move(id)) {}
 
   ~ResumableUploadSessionError() override = default;
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const&) override {
-    return last_response_;
+    return error_;
   }
 
   StatusOr<ResumableUploadResponse> UploadFinalChunk(
       ConstBufferSequence const&, std::uint64_t, HashValues const&) override {
-    return last_response_;
+    return error_;
   }
 
-  StatusOr<ResumableUploadResponse> ResetSession() override {
-    return last_response_;
-  }
-
-  std::uint64_t next_expected_byte() const override {
-    return next_expected_byte_;
-  }
+  StatusOr<ResumableUploadResponse> ResetSession() override { return error_; }
 
   std::string const& session_id() const override { return id_; }
 
-  bool done() const override { return true; }
-
-  StatusOr<ResumableUploadResponse> const& last_response() const override {
-    return last_response_;
-  }
-
  private:
-  StatusOr<ResumableUploadResponse> last_response_;
-  std::uint64_t next_expected_byte_ = 0;
+  Status error_;
   std::string id_;
 };
 

@@ -65,33 +65,12 @@ LoggingResumableUploadSession::ResetSession() {
   return response;
 }
 
-std::uint64_t LoggingResumableUploadSession::next_expected_byte() const {
-  GCP_LOG(INFO) << __func__ << "() << {}";
-  auto response = session_->next_expected_byte();
-  GCP_LOG(INFO) << __func__ << "() >> " << response;
-  return response;
-}
-
 std::string const& LoggingResumableUploadSession::session_id() const {
   GCP_LOG(INFO) << __func__ << "() << {}";
   auto const& response = session_->session_id();
   GCP_LOG(INFO) << __func__ << "() >> " << response;
   return response;
 }
-
-StatusOr<ResumableUploadResponse> const&
-LoggingResumableUploadSession::last_response() const {
-  GCP_LOG(INFO) << __func__ << "() << {}";
-  auto const& response = session_->last_response();
-  if (response.ok()) {
-    GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
-  } else {
-    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
-  }
-  return response;
-}
-
-bool LoggingResumableUploadSession::done() const { return session_->done(); }
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

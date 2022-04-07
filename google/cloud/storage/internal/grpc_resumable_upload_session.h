@@ -42,13 +42,7 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
 
   StatusOr<ResumableUploadResponse> ResetSession() override;
 
-  std::uint64_t next_expected_byte() const override;
-
   std::string const& session_id() const override;
-
-  bool done() const override;
-
-  StatusOr<ResumableUploadResponse> const& last_response() const override;
 
  private:
   /**
@@ -65,10 +59,9 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
   ResumableUploadSessionGrpcParams session_id_params_;
   std::string session_url_;
 
-  std::uint64_t next_expected_ = 0;
-  bool done_ = false;
-  StatusOr<ResumableUploadResponse> last_response_;
+  std::uint64_t committed_size_ = 0;
 };
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

@@ -32,7 +32,6 @@ using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-using ::testing::ReturnRef;
 
 class LoggingResumableUploadSessionTest : public ::testing::Test {
  protected:
@@ -94,55 +93,6 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
 
   auto result = session.ResetSession();
   EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition, "uh oh"));
-
-  EXPECT_THAT(log_backend_.ExtractLines(),
-              ContainsOnce(HasSubstr("FAILED_PRECONDITION:")));
-}
-
-TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
-  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-
-  EXPECT_CALL(*mock, next_expected_byte()).WillOnce([&]() {
-    return 512 * 1024U;
-  });
-
-  LoggingResumableUploadSession session(std::move(mock));
-
-  auto result = session.next_expected_byte();
-  EXPECT_EQ(512 * 1024, result);
-
-  EXPECT_THAT(log_backend_.ExtractLines(),
-              ContainsOnce(HasSubstr(std::to_string(512 * 1024))));
-}
-
-TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
-  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-
-  StatusOr<ResumableUploadResponse> const last_response(ResumableUploadResponse{
-      "upload url", ResumableUploadResponse::kInProgress, 1, {}, {}});
-  EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
-
-  LoggingResumableUploadSession session(std::move(mock));
-
-  auto result = session.last_response();
-  ASSERT_STATUS_OK(result);
-  EXPECT_EQ(result.value(), last_response.value());
-  auto const log_lines = log_backend_.ExtractLines();
-  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("upload url")));
-  EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("payload={}")));
-}
-
-TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
-  auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-
-  StatusOr<ResumableUploadResponse> const last_response(
-      Status(StatusCode::kFailedPrecondition, "something bad"));
-  EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
-
-  LoggingResumableUploadSession session(std::move(mock));
-
-  EXPECT_THAT(session.last_response(),
-              StatusIs(StatusCode::kFailedPrecondition, "something bad"));
 
   EXPECT_THAT(log_backend_.ExtractLines(),
               ContainsOnce(HasSubstr("FAILED_PRECONDITION:")));
