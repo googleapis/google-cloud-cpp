@@ -182,50 +182,29 @@ CurlClient::CurlClient(google::cloud::Options options)
 
 StatusOr<ResumableUploadResponse> CurlClient::UploadSessionChunk(
     UploadChunkRequest const& request) {
-  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-  builder.AddHeader(request.RangeHeader());
-  builder.AddHeader("Content-Type: application/octet-stream");
-  builder.AddHeader("Content-Length: " +
-                    std::to_string(request.payload_size()));
-  // We need to explicitly disable chunked transfer encoding. libcurl uses is by
-  // default (at least in this case), and that wastes bandwidth as the content
-  // length is known.
-  builder.AddHeader("Transfer-Encoding:");
-  auto response =
-      std::move(builder).BuildRequest().MakeUploadRequest(request.payload());
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
-      response->status_code == HttpStatusCode::kResumeIncomplete) {
-    return ResumableUploadResponse::FromHttpResponse(*std::move(response));
-  }
-  return AsStatus(*response);
+  auto response = UploadChunk(request);
+  if (!response) return std::move(response).status();
+  auto state = response->payload.has_value()
+                   ? ResumableUploadResponse::kDone
+                   : ResumableUploadResponse::kInProgress;
+  return ResumableUploadResponse{request.upload_session_url(), state,
+                                 std::move(response->committed_size),
+                                 std::move(response->payload),
+                                 /*.annotations=*/std::string{}};
 }
 
 StatusOr<ResumableUploadResponse> CurlClient::QueryResumableSession(
     QueryResumableUploadRequest const& request) {
-  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-  builder.AddHeader("Content-Range: bytes */*");
-  builder.AddHeader("Content-Type: application/octet-stream");
-  builder.AddHeader("Content-Length: 0");
-  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
-      response->status_code == HttpStatusCode::kResumeIncomplete) {
-    return ResumableUploadResponse::FromHttpResponse(*std::move(response));
-  }
-  return AsStatus(*response);
+  auto response = QueryResumableUpload(request);
+  if (!response) return std::move(response).status();
+
+  auto state = response->payload.has_value()
+                   ? ResumableUploadResponse::kDone
+                   : ResumableUploadResponse::kInProgress;
+  return ResumableUploadResponse{request.upload_session_url(), state,
+                                 std::move(response->committed_size),
+                                 std::move(response->payload),
+                                 /*.annotations=*/std::string{}};
 }
 
 StatusOr<CreateResumableSessionResponse>
@@ -605,6 +584,21 @@ StatusOr<CreateResumableSessionResponse> CurlClient::CreateResumableSession(
     return FullyRestoreResumableSession(request, session_id);
   }
 
+  auto create = CreateResumableUpload(request);
+  if (!create) return std::move(create).status();
+
+  auto session_url = create->upload_id;
+  return CreateResumableSessionResponse{
+      absl::make_unique<CurlResumableUploadSession>(shared_from_this(), request,
+                                                    std::move(session_url)),
+      ResumableUploadResponse{std::move(create->upload_id),
+                              ResumableUploadResponse::kInProgress,
+                              /*.committed_size=*/0, /*.payload=*/absl::nullopt,
+                              /*.annotations=*/{}}};
+}
+
+StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
+    ResumableUploadRequest const& request) {
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   auto status = SetupBuilderCommon(builder, "POST");
@@ -644,40 +638,30 @@ StatusOr<CreateResumableSessionResponse> CurlClient::CreateResumableSession(
 
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
-  auto http_response =
-      std::move(builder).BuildRequest().MakeRequest(request_payload);
-  if (!http_response.ok()) {
-    return std::move(http_response).status();
-  }
-  if (http_response->status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(*http_response);
-  }
   auto response =
-      ResumableUploadResponse::FromHttpResponse(*std::move(http_response));
+      std::move(builder).BuildRequest().MakeRequest(request_payload);
   if (!response.ok()) return std::move(response).status();
-  if (response->upload_session_url.empty()) {
-    std::ostringstream os;
-    os << __func__ << " - invalid server response, parsed to " << *response;
-    return Status(StatusCode::kInternal, std::move(os).str());
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
+    return AsStatus(*response);
   }
-  auto session_url = response->upload_session_url;
-  return CreateResumableSessionResponse{
-      absl::make_unique<CurlResumableUploadSession>(shared_from_this(), request,
-                                                    std::move(session_url)),
-      ResumableUploadResponse{std::move(response->upload_session_url),
-                              ResumableUploadResponse::kInProgress,
-                              /*.committed_size=*/0, /*.payload=*/absl::nullopt,
-                              /*.annotations=*/{}}};
-}
-
-StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
-    ResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+  return CreateResumableUploadResponse::FromHttpResponse(*std::move(response));
 }
 
 StatusOr<QueryResumableUploadResponse> CurlClient::QueryResumableUpload(
-    QueryResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    QueryResumableUploadRequest const& request) {
+  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
+  auto status = SetupBuilder(builder, request, "PUT");
+  if (!status.ok()) return status;
+  builder.AddHeader("Content-Range: bytes */*");
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("Content-Length: 0");
+  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
+  if (!response.ok()) return std::move(response).status();
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
+    return QueryResumableUploadResponse::FromHttpResponse(*std::move(response));
+  }
+  return AsStatus(*response);
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
@@ -699,8 +683,26 @@ StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
 }
 
 StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
-    UploadChunkRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    UploadChunkRequest const& request) {
+  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
+  auto status = SetupBuilder(builder, request, "PUT");
+  if (!status.ok()) return status;
+  builder.AddHeader(request.RangeHeader());
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("Content-Length: " +
+                    std::to_string(request.payload_size()));
+  // We need to explicitly disable chunked transfer encoding. libcurl uses is by
+  // default (at least in this case), and that wastes bandwidth as the content
+  // length is known.
+  builder.AddHeader("Transfer-Encoding:");
+  auto response =
+      std::move(builder).BuildRequest().MakeUploadRequest(request.payload());
+  if (!response.ok()) return std::move(response).status();
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
+    return QueryResumableUploadResponse::FromHttpResponse(*std::move(response));
+  }
+  return AsStatus(*response);
 }
 
 StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(

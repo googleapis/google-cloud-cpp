@@ -399,7 +399,8 @@ std::ostream& operator<<(std::ostream& os,
 /**
  * A request to send one chunk in an upload session.
  */
-class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
+class UploadChunkRequest
+    : public GenericRequest<UploadChunkRequest, UserProject> {
  public:
   UploadChunkRequest() = default;
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
@@ -421,6 +422,7 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
   std::uint64_t range_begin() const { return range_begin_; }
   std::uint64_t range_end() const { return range_begin_ + payload_size() - 1; }
   std::uint64_t source_size() const { return source_size_; }
+  bool last_chunk() const { return last_chunk_; }
   std::size_t payload_size() const { return TotalBytes(payload_); }
   ConstBufferSequence const& payload() const { return payload_; }
   HashValues const& full_object_hashes() const { return full_object_hashes_; }

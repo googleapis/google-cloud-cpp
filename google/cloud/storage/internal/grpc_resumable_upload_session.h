@@ -45,14 +45,8 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
   std::string const& session_id() const override;
 
  private:
-  /**
-   * Uploads a multiple of the upload quantum bytes from @p buffers
-   *
-   * This function is used by both UploadChunk() and UploadFinalChunk()
-   */
-  StatusOr<ResumableUploadResponse> UploadGeneric(ConstBufferSequence buffers,
-                                                  bool final_chunk,
-                                                  HashValues const& hashes);
+  StatusOr<ResumableUploadResponse> HandleResponse(
+      StatusOr<QueryResumableUploadResponse> response);
 
   std::shared_ptr<GrpcClient> client_;
   ResumableUploadRequest request_;
