@@ -108,6 +108,8 @@ add_library(
     internal/futures.h
     internal/location.cc
     internal/location.h
+    internal/multipartition_publisher.cc
+    internal/multipartition_publisher.h
     internal/partition_assignment_auth_decorator.cc
     internal/partition_assignment_auth_decorator.h
     internal/partition_assignment_logging_decorator.cc
@@ -236,8 +238,10 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm_registry.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_partition_publisher.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_resumable_async_reader_writer_stream.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_routing_policy.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_service.h)
 
     target_link_libraries(
@@ -259,6 +263,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         internal/alarm_registry_impl_test.cc
         internal/default_routing_policy_test.cc
         internal/location_test.cc
+        internal/multipartition_publisher_test.cc
         internal/partition_publisher_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
