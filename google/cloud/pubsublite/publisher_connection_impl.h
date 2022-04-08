@@ -33,7 +33,8 @@ struct PublishMessageTransformer {
 class PublisherConnectionImpl
     : public ::google::cloud::pubsub::PublisherConnection {
   PublisherConnectionImpl(
-      std::unique_ptr<google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
+      std::unique_ptr<
+          google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
           publisher,
       Options const& opts);
 
@@ -46,7 +47,8 @@ class PublisherConnectionImpl
   void ResumePublish(ResumePublishParams p) override{};
 
  private:
-  std::unique_ptr<google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
+  std::unique_ptr<
+      google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
       publisher_;
   std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
       google::cloud::pubsub::Message)>

@@ -163,7 +163,7 @@ add_library(
     internal/topic_stats_stub_factory.h
     message_metadata.cc
     message_metadata.h
-        publisher_connection_impl.cc
+    publisher_connection_impl.cc
     publisher_connection_impl.h
     topic.h
     topic_stats_client.cc
