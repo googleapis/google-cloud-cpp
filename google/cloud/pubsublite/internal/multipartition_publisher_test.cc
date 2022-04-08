@@ -51,8 +51,9 @@ using ::google::cloud::pubsublite_testing::MockPartitionPublisher;
 using ::google::cloud::pubsublite_testing::MockRoutingPolicy;
 
 constexpr std::chrono::milliseconds kAlarmDuration{std::chrono::seconds{60}};
-constexpr std::uint64_t kOutOfBoundsPartition =
-    static_cast<std::uint64_t>(std::numeric_limits<Partition>::max()) + 1;
+constexpr std::int64_t kOutOfBoundsPartition =
+    static_cast<std::int64_t>(std::numeric_limits<Partition>::max()) + 1;
+constexpr std::int64_t kOffsetPlaceholder = 42;
 
 Topic ExampleTopic() { return Topic{"project", "location", "name"}; }
 
@@ -375,9 +376,9 @@ TEST_F(MultipartitionPublisherTest, PublishBeforePublisherCreatedGood) {
   num_partitions.set_value(ExamplePartitionsResponse(2));
 
   Cursor m0_cursor;
-  m0_cursor.set_offset(580);
+  m0_cursor.set_offset(kOffsetPlaceholder);
   Cursor m1_cursor;
-  m1_cursor.set_offset(176);
+  m1_cursor.set_offset(kOffsetPlaceholder);
 
   m0_promise.set_value(m0_cursor);
   m1_promise.set_value(m1_cursor);
@@ -470,7 +471,7 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
   *m.mutable_data() = "data3";
   EXPECT_CALL(routing_policy_, Route(m.key(), 3)).WillOnce(Return(2));
   Cursor cursor;
-  cursor.set_offset(208);
+  cursor.set_offset(kOffsetPlaceholder);
   EXPECT_CALL(partition_publisher_2_ref, Publish(IsProtoEqual(m)))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(cursor)))));
   future<StatusOr<MessageMetadata>> message =
@@ -514,7 +515,7 @@ TEST_F(InitializedMultipartitionPublisherTest, RegularPublishes) {
   *m1.mutable_data() = "data";
   EXPECT_CALL(routing_policy_, Route(m1.key(), 2)).WillOnce(Return(1));
   Cursor m1_cursor;
-  m1_cursor.set_offset(876);
+  m1_cursor.set_offset(kOffsetPlaceholder);
   EXPECT_CALL(partition_publisher_1_, Publish(IsProtoEqual(m1)))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(m1_cursor)))));
   future<StatusOr<MessageMetadata>> message1 =
@@ -526,7 +527,7 @@ TEST_F(InitializedMultipartitionPublisherTest, RegularPublishes) {
   *m2.mutable_data() = "data1";
   EXPECT_CALL(routing_policy_, Route(m2.key(), 2)).WillOnce(Return(0));
   Cursor m2_cursor;
-  m2_cursor.set_offset(10);
+  m2_cursor.set_offset(kOffsetPlaceholder);
   EXPECT_CALL(partition_publisher_0_, Publish(IsProtoEqual(m2)))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(m2_cursor)))));
   future<StatusOr<MessageMetadata>> message2 =

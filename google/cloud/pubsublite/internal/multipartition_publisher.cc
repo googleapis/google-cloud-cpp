@@ -66,7 +66,7 @@ future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
   return admin_connection_->AsyncGetTopicPartitions(topic_partitions_request_)
       .then([](future<StatusOr<TopicPartitions>> f) -> StatusOr<std::uint32_t> {
         auto partitions = f.get();
-        if (!partitions) return std::move(partitions.status());
+        if (!partitions) return std::move(partitions).status();
         if (partitions->partition_count() >=
             std::numeric_limits<Partition>::max()) {
           return Status{StatusCode::kInternal,
@@ -151,6 +151,19 @@ void MultipartitionPublisher::RouteAndPublish(PublishState state) {
     std::lock_guard<std::mutex> g{mu_};
     publisher = partition_publishers_.at(partition).get();
   }
+
+  struct OnPublish {
+    promise<StatusOr<MessageMetadata>> p;
+    Partition partition;
+    void operator()(future<StatusOr<Cursor>> f) {
+      auto publish_response = f.get();
+      if (!publish_response) {
+        return p.set_value(std::move(publish_response).status());
+      }
+      p.set_value(MessageMetadata{partition, *std::move(publish_response)});
+    }
+  };
+
   publisher->Publish(std::move(state.message))
       .then(OnPublish{std::move(state.publish_promise), partition});
 }
