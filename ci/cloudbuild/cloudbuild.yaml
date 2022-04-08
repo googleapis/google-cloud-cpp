@@ -62,7 +62,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 
 steps:
   # Builds the docker image that will be used by the main build step.
-- name: 'gcr.io/kaniko-project/executor:v1.8.1-debug'
+- name: 'gcr.io/kaniko-project/executor:v1.8.1'
   args: [
     '--log-format=text',
     '--context=dir:///workspace/ci',
