@@ -2,11 +2,11 @@
 
 @mainpage Dialogflow CX API C++ Client Library
 
-An idiomatic C++ client library for the [Dialogflow API][cloud-service-docs], a service
+An idiomatic C++ client library for the [Dialogflow CX API][cloud-service-docs], a service
 to build conversational interfaces (for example, chatbots, and voice-powered apps and devices).
-Dialogflow supports two [editions], this library supports the CX edition.
+There are [two editions] of Dialogflow, this library supports the CX edition.
 
-[editions]: https://cloud.google.com/dialogflow/docs/editions
+[two editions]: https://cloud.google.com/dialogflow/docs/editions
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -87,7 +87,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/dialogflow_cx
+[cloud-service-docs]: https://cloud.google.com/dialogflow/cx/docs
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

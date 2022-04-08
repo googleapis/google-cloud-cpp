@@ -3,11 +3,11 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for the
-[Dialogflow API][cloud-service-docs], a service to build conversational
+[Dialogflow CX API][cloud-service-docs], a service to build conversational
 interfaces (for example, chatbots, and voice-powered apps and devices).
-Dialogflow supports two [editions], this library supports the CX edition.
+There are [two editions] of Dialogflow, this library supports the CX edition.
 
-[editions]: https://cloud.google.com/dialogflow/docs/editions
+[two editions]: https://cloud.google.com/dialogflow/docs/editions
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -29,7 +29,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
   client library
 * Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/dialogflow
+[cloud-service-docs]: https://cloud.google.com/dialogflow/cx/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-dialogflow_cx/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/dialogflow_cx
 
