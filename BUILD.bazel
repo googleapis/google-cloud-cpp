@@ -21,6 +21,7 @@ exports_files([
 ])
 
 EXPERIMENTAL_LIBRARIES = [
+    "dialogflow_cx",
     "logging",
     "osconfig",
     "speech",
