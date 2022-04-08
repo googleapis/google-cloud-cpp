@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsublite/internal/publisher_connection_impl.h"
+#include "google/cloud/pubsublite/publisher_connection_impl.h"
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
+namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using google::cloud::pubsublite::MessageMetadata;
 using google::cloud::pubsublite_internal::Publisher;
 
 PublisherConnectionImpl::PublisherConnectionImpl(
@@ -48,6 +47,6 @@ future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
 void PublisherConnectionImpl::Flush(FlushParams) { publisher_->Flush(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
+}  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google

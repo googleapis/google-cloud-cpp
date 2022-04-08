@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsublite/endpoint.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/pubsublite/publisher_connection_impl.h"
 #include <gmock/gmock.h>
 
 namespace google {

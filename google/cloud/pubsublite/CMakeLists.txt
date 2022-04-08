@@ -123,8 +123,6 @@ add_library(
     internal/publisher.h
     internal/publisher_auth_decorator.cc
     internal/publisher_auth_decorator.h
-    internal/publisher_connection_impl.cc
-    internal/publisher_connection_impl.h
     internal/publisher_logging_decorator.cc
     internal/publisher_logging_decorator.h
     internal/publisher_metadata_decorator.cc
@@ -165,6 +163,8 @@ add_library(
     internal/topic_stats_stub_factory.h
     message_metadata.cc
     message_metadata.h
+        publisher_connection_impl.cc
+    publisher_connection_impl.h
     topic.h
     topic_stats_client.cc
     topic_stats_client.h

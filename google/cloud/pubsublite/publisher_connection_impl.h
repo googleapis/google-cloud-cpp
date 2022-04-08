@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PUBLISHER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PUBLISHER_CONNECTION_IMPL_H
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsublite/internal/publisher.h"
@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
+namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct PublishMessageTransformer {
@@ -33,8 +33,7 @@ struct PublishMessageTransformer {
 class PublisherConnectionImpl
     : public ::google::cloud::pubsub::PublisherConnection {
   PublisherConnectionImpl(
-      std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
-          google::cloud::pubsublite::MessageMetadata>>
+      std::unique_ptr<google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
           publisher,
       Options const& opts);
 
@@ -47,8 +46,7 @@ class PublisherConnectionImpl
   void ResumePublish(ResumePublishParams p) override{};
 
  private:
-  std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
-      google::cloud::pubsublite::MessageMetadata>>
+  std::unique_ptr<google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
       publisher_;
   std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
       google::cloud::pubsub::Message)>
@@ -56,8 +54,8 @@ class PublisherConnectionImpl
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
+}  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PUBLISHER_CONNECTION_IMPL_H
