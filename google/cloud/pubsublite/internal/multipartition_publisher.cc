@@ -68,7 +68,7 @@ future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
         auto partitions = f.get();
         if (!partitions) return std::move(partitions).status();
         if (partitions->partition_count() >=
-            std::numeric_limits<Partition>::max()) {
+            std::numeric_limits<std::uint32_t>::max()) {
           return Status{StatusCode::kInternal,
                         absl::StrCat("Returned partition count is too big: ",
                                      partitions->partition_count())};
@@ -88,8 +88,9 @@ void MultipartitionPublisher::HandleNumPartitions(
   assert(num_partitions >= current_num_partitions);  // should be no race
   if (num_partitions == current_num_partitions) return;
   std::vector<std::shared_ptr<Publisher<Cursor>>> new_partition_publishers;
-  for (Partition i = current_num_partitions; i < num_partitions; ++i) {
-    new_partition_publishers.push_back(publisher_factory_(i));
+  for (std::uint32_t partition = current_num_partitions;
+       partition < num_partitions; ++partition) {
+    new_partition_publishers.push_back(publisher_factory_(partition));
     service_composite_.AddServiceObject(new_partition_publishers.back().get());
   }
   std::vector<PublishState> initial_publish_buffer;
@@ -142,7 +143,7 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
 }
 
 void MultipartitionPublisher::RouteAndPublish(PublishState state) {
-  Partition partition =
+  std::uint32_t partition =
       state.message.key().empty()
           ? routing_policy_->Route(state.num_partitions)
           : routing_policy_->Route(state.message.key(), state.num_partitions);
@@ -154,7 +155,7 @@ void MultipartitionPublisher::RouteAndPublish(PublishState state) {
 
   struct OnPublish {
     promise<StatusOr<MessageMetadata>> p;
-    Partition partition;
+    std::uint32_t partition;
     void operator()(future<StatusOr<Cursor>> f) {
       auto publish_response = f.get();
       if (!publish_response) {
@@ -180,7 +181,8 @@ future<StatusOr<MessageMetadata>> MultipartitionPublisher::Publish(
       initial_publish_buffer_.push_back(std::move(state));
       return initial_publish_buffer_.back().publish_promise.get_future();
     }
-    state.num_partitions = static_cast<Partition>(partition_publishers_.size());
+    state.num_partitions =
+        static_cast<std::uint32_t>(partition_publishers_.size());
   }
 
   auto to_return = state.publish_promise.get_future();

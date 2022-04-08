@@ -38,7 +38,7 @@ class MultipartitionPublisher
   // This returns a uniquely owned Publisher, but is a shared_ptr for testing
   // purposes.
   using PartitionPublisherFactory = std::function<std::shared_ptr<
-      Publisher<google::cloud::pubsublite::v1::Cursor>>(Partition)>;
+      Publisher<google::cloud::pubsublite::v1::Cursor>>(std::uint32_t)>;
 
  public:
   MultipartitionPublisher(
