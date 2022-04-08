@@ -174,6 +174,12 @@ class MultipartitionPublisherTest
 
   std::shared_ptr<StrictMock<MockPartitionPublisher>> partition_publisher_0_;
   std::shared_ptr<StrictMock<MockPartitionPublisher>> partition_publisher_1_;
+
+  ~MultipartitionPublisherTest() override {
+    // https://stackoverflow.com/questions/10286514/why-is-googlemock-leaking-my-shared-ptr
+    EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_0_.get()));
+    EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_1_.get()));
+  }
 };
 
 TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
@@ -209,10 +215,6 @@ TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGood) {
   partition_publisher_start_1.set_value(Status());
 
   EXPECT_EQ(start.get(), Status());
-
-  // https://stackoverflow.com/questions/10286514/why-is-googlemock-leaking-my-shared-ptr
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_0_.get()));
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_1_.get()));
 }
 
 TEST_F(MultipartitionPublisherTest, StartRunsOnAlarmDoesNot) {
@@ -251,9 +253,6 @@ TEST_F(MultipartitionPublisherTest, StartRunsOnAlarmDoesNot) {
   partition_publisher_start_1.set_value(Status());
 
   EXPECT_EQ(start.get(), Status());
-
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_0_.get()));
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_1_.get()));
 }
 
 TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
@@ -295,9 +294,6 @@ TEST_F(MultipartitionPublisherTest, PublisherCreatedFromStartGoodAlarmFail) {
   partition_publisher_start_1.set_value(Status());
 
   EXPECT_EQ(start.get(), Status());
-
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_0_.get()));
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_1_.get()));
 }
 
 TEST_F(MultipartitionPublisherTest, ShutdownWhileGettingNumPartitions) {
@@ -344,9 +340,6 @@ TEST_F(MultipartitionPublisherTest, ShutdownWhileGettingNumPartitions) {
   partition_publisher_start_1.set_value(Status());
 
   EXPECT_EQ(start.get(), Status());
-
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_0_.get()));
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_1_.get()));
 }
 
 TEST_F(MultipartitionPublisherTest, PublishBeforePublisherCreatedGood) {
@@ -413,9 +406,6 @@ TEST_F(MultipartitionPublisherTest, PublishBeforePublisherCreatedGood) {
   partition_publisher_start_1.set_value(Status());
 
   EXPECT_EQ(start.get(), Status());
-
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_0_.get()));
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_1_.get()));
 }
 
 class InitializedMultipartitionPublisherTest
@@ -459,9 +449,6 @@ class InitializedMultipartitionPublisherTest
     partition_publisher_start_1_.set_value(Status());
 
     EXPECT_EQ(start_.get(), Status());
-
-    EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_0_.get()));
-    EXPECT_TRUE(Mock::VerifyAndClearExpectations(partition_publisher_1_.get()));
   }
 
   future<Status> start_;
