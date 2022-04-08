@@ -804,26 +804,18 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         endforeach ()
     endif ()
 
-    # Install the libraries and headers in the locations determined by
-    # GNUInstallDirs
-    install(
-        TARGETS
-        EXPORT rest-internal-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
-
     # Export the CMake targets to make it easy to create configuration files.
     install(
-        EXPORT rest-internal-targets
+        EXPORT google_cloud_cpp_rest_internal-targets
         DESTINATION
             "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_rest_internal"
         COMPONENT google_cloud_cpp_development)
 
+    # Install the libraries and headers in the locations determined by
+    # GNUInstallDirs
     install(
         TARGETS google_cloud_cpp_rest_internal
-        EXPORT rest-internal-targets
+        EXPORT google_cloud_cpp_rest_internal-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -861,7 +853,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST)
         COMPONENT google_cloud_cpp_development)
 
     # Create and install the CMake configuration files.
-    configure_file("grpc_utils/config.cmake.in"
+    include(CMakePackageConfigHelpers)
+    configure_file("config-rest.cmake.in"
                    "google_cloud_cpp_rest_internal-config.cmake" @ONLY)
     write_basic_package_version_file(
         "google_cloud_cpp_rest_internal-config-version.cmake"
