@@ -36,8 +36,7 @@ class PublisherConnectionImpl
       std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
           google::cloud::pubsublite::MessageMetadata>>
           publisher,
-      Options opts)
-      : publisher_{std::move(publisher)}, opts_{std::move(opts)} {}
+      Options const& opts);
 
   ~PublisherConnectionImpl() override = default;
 
@@ -51,7 +50,9 @@ class PublisherConnectionImpl
   std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
       google::cloud::pubsublite::MessageMetadata>>
       publisher_;
-  Options opts_;
+  std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
+      google::cloud::pubsub::Message)>
+      message_transformer_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

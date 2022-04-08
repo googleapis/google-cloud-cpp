@@ -20,14 +20,22 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using google::cloud::pubsublite::MessageMetadata;
+using google::cloud::pubsublite_internal::Publisher;
+
+PublisherConnectionImpl::PublisherConnectionImpl(
+    std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
+        google::cloud::pubsublite::MessageMetadata>>
+        publisher,
+    Options const& opts)
+    : publisher_{std::move(publisher)},
+      message_transformer_{opts.get<PublishMessageTransformer>()} {}
 
 future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
     PublishParams p) {
-  auto pubsub_message =
-      opts_.get<PublishMessageTransformer>()(std::move(p.message));
+  auto pubsub_message = message_transformer_(std::move(p.message));
   if (!pubsub_message) {
-    return make_ready_future(StatusOr<std::string>{Status{
-        StatusCode::kInvalidArgument, "Not able to convert message."}});
+    return make_ready_future(StatusOr<std::string>{
+        Status{StatusCode::kInvalidArgument, "Not able to convert message."}});
   }
   return publisher_->Publish(*std::move(pubsub_message))
       .then([](future<StatusOr<MessageMetadata>> f) -> StatusOr<std::string> {
