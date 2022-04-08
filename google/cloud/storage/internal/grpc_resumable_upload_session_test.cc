@@ -57,7 +57,7 @@ class MockGrpcClient : public GrpcClient {
   MOCK_METHOD(std::unique_ptr<GrpcClient::WriteObjectStream>,
               CreateUploadWriter, (std::unique_ptr<grpc::ClientContext>),
               (override));
-  MOCK_METHOD(StatusOr<ResumableUploadResponse>, QueryResumableUpload,
+  MOCK_METHOD(StatusOr<ResumableUploadResponse>, QueryResumableSession,
               (QueryResumableUploadRequest const&), (override));
 };
 
@@ -219,7 +219,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
         return std::unique_ptr<GrpcClient::WriteObjectStream>(writer.release());
       });
 
-  EXPECT_CALL(*mock, QueryResumableUpload)
+  EXPECT_CALL(*mock, QueryResumableSession)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-upload-id", request.upload_session_url());
         return make_status_or(ResumableUploadResponse{
@@ -292,7 +292,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
 
   ResumableUploadResponse const resume_response{
       {}, ResumableUploadResponse::kInProgress, 0, {}, {}};
-  EXPECT_CALL(*mock, QueryResumableUpload)
+  EXPECT_CALL(*mock, QueryResumableSession)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-upload-id", request.upload_session_url());
         return make_status_or(resume_response);

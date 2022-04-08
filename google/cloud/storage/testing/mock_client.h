@@ -83,8 +83,17 @@ class MockClient : public google::cloud::storage::internal::RawClient {
               (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,
               RestoreResumableSession, (std::string const&), (override));
+
+  MOCK_METHOD(StatusOr<internal::CreateResumableUploadResponse>,
+              CreateResumableUpload, (internal::ResumableUploadRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<internal::QueryResumableUploadResponse>,
+              QueryResumableUpload,
+              (internal::QueryResumableUploadRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::EmptyResponse>, DeleteResumableUpload,
               (internal::DeleteResumableUploadRequest const&), (override));
+  MOCK_METHOD(StatusOr<internal::QueryResumableUploadResponse>, UploadChunk,
+              (internal::UploadChunkRequest const&), (override));
 
   MOCK_METHOD(StatusOr<internal::ListBucketAclResponse>, ListBucketAcl,
               (internal::ListBucketAclRequest const&), (override));

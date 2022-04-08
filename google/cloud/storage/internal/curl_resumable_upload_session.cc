@@ -27,7 +27,7 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadChunk(
       request_.GetOption<CustomHeader>(), request_.GetOption<Fields>(),
       request_.GetOption<IfMatchEtag>(), request_.GetOption<IfNoneMatchEtag>(),
       request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
-  auto result = client_->UploadChunk(request);
+  auto result = client_->UploadSessionChunk(request);
   Update(result, TotalBytes(buffers));
   return result;
 }
@@ -40,7 +40,7 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadFinalChunk(
       request_.GetOption<CustomHeader>(), request_.GetOption<Fields>(),
       request_.GetOption<IfMatchEtag>(), request_.GetOption<IfNoneMatchEtag>(),
       request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
-  auto result = client_->UploadChunk(request);
+  auto result = client_->UploadSessionChunk(request);
   Update(result, TotalBytes(buffers));
   return result;
 }
@@ -51,7 +51,7 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::ResetSession() {
       request_.GetOption<CustomHeader>(), request_.GetOption<Fields>(),
       request_.GetOption<IfMatchEtag>(), request_.GetOption<IfNoneMatchEtag>(),
       request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
-  auto result = client_->QueryResumableUpload(request);
+  auto result = client_->QueryResumableSession(request);
   Update(result, 0);
   return result;
 }

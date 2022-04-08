@@ -203,10 +203,25 @@ StatusOr<CreateResumableSessionResponse> LoggingClient::CreateResumableSession(
   return result;
 }
 
+StatusOr<CreateResumableUploadResponse> LoggingClient::CreateResumableUpload(
+    ResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
+StatusOr<QueryResumableUploadResponse> LoggingClient::QueryResumableUpload(
+    QueryResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
 StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteResumableUpload, request,
                   __func__);
+}
+
+StatusOr<QueryResumableUploadResponse> LoggingClient::UploadChunk(
+    UploadChunkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
 }
 
 StatusOr<ListBucketAclResponse> LoggingClient::ListBucketAcl(

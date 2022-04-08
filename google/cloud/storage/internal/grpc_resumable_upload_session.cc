@@ -56,7 +56,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
   QueryResumableUploadRequest request(session_id_params_.upload_id);
-  auto result = client_->QueryResumableUpload(request);
+  auto result = client_->QueryResumableSession(request);
   if (!result) return result;
 
   committed_size_ = result->committed_size.value_or(0);

@@ -38,9 +38,9 @@ class MockCurlClient : public CurlClient {
       : CurlClient(internal::DefaultOptions(
             oauth2::CreateAnonymousCredentials(), {})) {}
 
-  MOCK_METHOD(StatusOr<ResumableUploadResponse>, UploadChunk,
+  MOCK_METHOD(StatusOr<ResumableUploadResponse>, UploadSessionChunk,
               (UploadChunkRequest const&), (override));
-  MOCK_METHOD(StatusOr<ResumableUploadResponse>, QueryResumableUpload,
+  MOCK_METHOD(StatusOr<ResumableUploadResponse>, QueryResumableSession,
               (QueryResumableUploadRequest const&), (override));
 };
 
@@ -66,7 +66,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_CALL(*mock, UploadChunk)
+  EXPECT_CALL(*mock, UploadSessionChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
                   "custom-value");
@@ -115,7 +115,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_CALL(*mock, UploadChunk)
+  EXPECT_CALL(*mock, UploadSessionChunk)
       .WillOnce([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
             "", ResumableUploadResponse::kInProgress, size, {}, {}});
@@ -126,7 +126,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
       });
   const ResumableUploadResponse resume_response{
       url2, ResumableUploadResponse::kInProgress, 2 * size, {}, {}};
-  EXPECT_CALL(*mock, QueryResumableUpload)
+  EXPECT_CALL(*mock, QueryResumableSession)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ(request.GetOption<CustomHeader>().value_or(""),
                   "custom-value");
@@ -164,7 +164,7 @@ TEST(CurlResumableUploadSessionTest, Empty) {
   std::string const payload{};
   auto const size = payload.size();
 
-  EXPECT_CALL(*mock, UploadChunk)
+  EXPECT_CALL(*mock, UploadSessionChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));

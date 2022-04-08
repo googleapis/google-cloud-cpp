@@ -363,6 +363,16 @@ StatusOr<CreateResumableSessionResponse> RetryClient::CreateResumableSession(
   return result;
 }
 
+StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
+    ResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
+StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
+    QueryResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   auto retry_policy = retry_policy_prototype_->clone();
@@ -370,6 +380,11 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
   return MakeCall(*retry_policy, *backoff_policy, Idempotency::kIdempotent,
                   *client_, &RawClient::DeleteResumableUpload, request,
                   __func__);
+}
+
+StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
+    UploadChunkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
 }
 
 StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(

@@ -102,8 +102,15 @@ class RawClient {
   GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()
   virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
   RestoreResumableSession(std::string const& session_id);
+
+  virtual StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
+      ResumableUploadRequest const& request) = 0;
+  virtual StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const& request) = 0;
   virtual StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) = 0;
+  virtual StatusOr<QueryResumableUploadResponse> UploadChunk(
+      UploadChunkRequest const& request) = 0;
   //@}
 
   //@{
