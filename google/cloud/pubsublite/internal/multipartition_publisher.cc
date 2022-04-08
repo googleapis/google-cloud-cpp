@@ -87,7 +87,7 @@ void MultipartitionPublisher::HandleNumPartitions(
   }
   assert(num_partitions >= current_num_partitions);  // should be no race
   if (num_partitions == current_num_partitions) return;
-  std::vector<std::unique_ptr<Publisher<Cursor>>> new_partition_publishers;
+  std::vector<std::shared_ptr<Publisher<Cursor>>> new_partition_publishers;
   for (Partition i = current_num_partitions; i < num_partitions; ++i) {
     new_partition_publishers.push_back(publisher_factory_(i));
     service_composite_.AddServiceObject(new_partition_publishers.back().get());

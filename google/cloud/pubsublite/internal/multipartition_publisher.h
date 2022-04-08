@@ -35,7 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MultipartitionPublisher
     : public Publisher<google::cloud::pubsublite::MessageMetadata> {
  private:
-  using PartitionPublisherFactory = std::function<std::unique_ptr<
+  // This returns a uniquely owned Publisher, but is a shared_ptr for testing
+  // purposes.
+  using PartitionPublisherFactory = std::function<std::shared_ptr<
       Publisher<google::cloud::pubsublite::v1::Cursor>>(Partition)>;
 
  public:
@@ -78,7 +80,7 @@ class MultipartitionPublisher
 
   std::mutex mu_;
 
-  std::vector<std::unique_ptr<Publisher<google::cloud::pubsublite::v1::Cursor>>>
+  std::vector<std::shared_ptr<Publisher<google::cloud::pubsublite::v1::Cursor>>>
       partition_publishers_;  // ABSL_GUARDED_BY(mu_)
   // stores messages intended to be `Publish`ed when there were no partition
   // publishers available
