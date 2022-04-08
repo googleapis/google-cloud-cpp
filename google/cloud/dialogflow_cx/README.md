@@ -58,10 +58,9 @@ int main(int argc, char* argv[]) try {
   namespace dialogflow_cx = ::google::cloud::dialogflow_cx;
   namespace gc = ::google::cloud;
 
-  auto options =
-      gc::Options{}
-          .set<gc::EndpointOption>(region + "-dialogflow.googleapis.com")
-          .set<gc::AuthorityOption>(region + "-dialogflow.googleapis.com");
+  // For regional resources Dialogflow requires overriding the Authority option.
+  auto options = gc::Options{}.set<gc::AuthorityOption>(
+      region + "-dialogflow.googleapis.com");
   auto client = dialogflow_cx::AgentsClient(
       dialogflow_cx::MakeAgentsConnection(std::move(options)));
 
