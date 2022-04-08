@@ -44,7 +44,7 @@ class PublisherConnectionImpl
 
   void Flush(FlushParams) override;
 
-  void ResumePublish(ResumePublishParams p) override{};
+  void ResumePublish(ResumePublishParams) override{};
 
  private:
   std::unique_ptr<
