@@ -111,9 +111,13 @@
 ./include/google/cloud/dialogflow
 ./include/google/cloud/dialogflow/cx
 ./include/google/cloud/dialogflow/cx/v3
+./include/google/cloud/dialogflow/v2
 ./include/google/cloud/dialogflow_cx
 ./include/google/cloud/dialogflow_cx/internal
 ./include/google/cloud/dialogflow_cx/mocks
+./include/google/cloud/dialogflow_es
+./include/google/cloud/dialogflow_es/internal
+./include/google/cloud/dialogflow_es/mocks
 ./include/google/cloud/dlp
 ./include/google/cloud/dlp/internal
 ./include/google/cloud/dlp/mocks
@@ -407,6 +411,7 @@
 ./lib64/cmake/google_cloud_cpp_dataproc
 ./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
+./lib64/cmake/google_cloud_cpp_dialogflow_es
 ./lib64/cmake/google_cloud_cpp_dlp
 ./lib64/cmake/google_cloud_cpp_documentai
 ./lib64/cmake/google_cloud_cpp_eventarc

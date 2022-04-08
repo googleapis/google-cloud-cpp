@@ -69,7 +69,6 @@ expected_dirs+=(
   ./include/google/cloud/clouddms/logging/v1
   # no RPC services in google/cloud/common
   ./include/google/cloud/common
-  ./include/google/cloud/dialogflow/v2
   ./include/google/cloud/gkehub/v1/configmanagement
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils

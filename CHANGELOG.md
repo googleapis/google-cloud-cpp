@@ -65,6 +65,21 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
   necessarily depends on these implementation details. We updated the
   [mocking examples][storage-mocking-link] to guide you in changing any tests.
 
+### New Libraries
+
+We are introducing 2 new client libraries for GCP services. While we do not
+anticipate any API changes to these libraries before declaring them GA, we are
+releasing them early in case they elicit some feedback that requires changes.
+
+<details>
+<summary> Expand to see the full list of new libraries...</summary>
+<br>
+
+* [Dialog Flow CX](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_cx/README.md)
+* [Dialog Flow ES](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_es/README.md)
+
+</details>
+
 ## v1.39.0 - 2022-04
 
 **BREAKING CHANGES**
