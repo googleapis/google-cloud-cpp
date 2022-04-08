@@ -35,11 +35,12 @@ if (PROTO_INCLUDE_DIR)
 endif ()
 
 include(CompileProtos)
-add_library(
-    google_cloud_cpp_dialogflow_es_protos INTERFACE)
+add_library(google_cloud_cpp_dialogflow_es_protos INTERFACE)
 external_googleapis_set_version_and_alias(dialogflow_es_protos)
-target_link_libraries(google_cloud_cpp_dialogflow_es_protos
-                      PUBLIC INTERFACE google-cloud-cpp::cloud_dialogflow_v2_protos)
+target_link_libraries(
+    google_cloud_cpp_dialogflow_es_protos
+    PUBLIC
+    INTERFACE google-cloud-cpp::cloud_dialogflow_v2_protos)
 
 file(
     GLOB source_files
