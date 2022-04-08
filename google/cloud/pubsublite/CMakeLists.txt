@@ -181,6 +181,7 @@ target_include_directories(
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
+    google_cloud_cpp_pubsub
     google_cloud_cpp_pubsublite
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
            google-cloud-cpp::pubsublite_protos)
