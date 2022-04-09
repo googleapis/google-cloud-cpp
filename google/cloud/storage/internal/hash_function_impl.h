@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/version.h"
-#include <openssl/md5.h>
+#include <openssl/evp.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -73,7 +73,11 @@ class MD5HashFunction : public HashFunction {
   HashValues Finish() && override;
 
  private:
-  MD5_CTX context_;
+  struct ContextDeleter {
+    void operator()(EVP_MD_CTX*);
+  };
+
+  std::unique_ptr<EVP_MD_CTX, ContextDeleter> impl_;
 };
 
 /**
