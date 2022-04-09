@@ -310,7 +310,7 @@ class AsyncRetryLoopImpl
     return State{true, 0};
   }
 
-  void Cancel() { return Cancel(std::unique_lock<std::mutex>(mu_)); }
+  void Cancel() { return Cancel(std::unique_lock<std::mutex>{mu_}); }
 
   void Cancel(std::unique_lock<std::mutex> lk) {
     cancelled_ = true;

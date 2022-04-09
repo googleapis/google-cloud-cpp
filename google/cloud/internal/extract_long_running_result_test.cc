@@ -29,7 +29,6 @@ using ::google::bigtable::admin::v2::Instance;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::longrunning::Operation;
 using ::testing::HasSubstr;
 
 TEST(ExtractLongRunningResultTest, MetadataDoneWithSuccess) {

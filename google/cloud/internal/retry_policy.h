@@ -121,7 +121,7 @@ class LimitedErrorCountRetryPolicy
   using BaseType = TraitBasedRetryPolicy<RetryablePolicy>;
 
   explicit LimitedErrorCountRetryPolicy(int maximum_failures)
-      : failure_count_(0), maximum_failures_(maximum_failures) {}
+      : maximum_failures_(maximum_failures) {}
 
   LimitedErrorCountRetryPolicy(LimitedErrorCountRetryPolicy&& rhs) noexcept
       : LimitedErrorCountRetryPolicy(rhs.maximum_failures_) {}
@@ -141,7 +141,7 @@ class LimitedErrorCountRetryPolicy
   void OnFailureImpl() override { ++failure_count_; }
 
  private:
-  int failure_count_;
+  int failure_count_ = 0;
   int maximum_failures_;
 };
 

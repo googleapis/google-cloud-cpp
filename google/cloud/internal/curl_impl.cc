@@ -172,18 +172,11 @@ CurlImpl::CurlImpl(CurlHandle handle,
                    std::shared_ptr<CurlHandleFactory> factory, Options options)
     : factory_(std::move(factory)),
       request_headers_(nullptr, &curl_slist_free_all),
-      logging_enabled_(false),
       transfer_stall_timeout_(0),
       download_stall_timeout_(0),
-      closing_(false),
-      curl_closed_(false),
       handle_(std::move(handle)),
       multi_(factory_->CreateMultiHandle()),
-      in_multi_(false),
-      paused_(false),
-      all_headers_received_(false),
       buffer_({nullptr, 0}),
-      spill_offset_(0),
       options_(std::move(options)) {
   CurlInitializeOnce(options_);
   ApplyOptions(options_);

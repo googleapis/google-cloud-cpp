@@ -56,7 +56,7 @@ struct Base64Decoder {
     using reference = value_type&;
 
     Iterator(std::string::const_iterator begin, std::string::const_iterator end)
-        : pos_(begin), end_(end), len_(0) {
+        : pos_(begin), end_(end) {
       Fill();
     }
 
@@ -85,7 +85,7 @@ struct Base64Decoder {
    private:
     std::string::const_iterator pos_;  // [pos_ .. end_) pending decode
     std::string::const_iterator end_;
-    std::size_t len_;  // buf_[len_ .. 1] decoded
+    std::size_t len_ = 0;  // buf_[len_ .. 1] decoded
     std::array<value_type, 1 + 3> buf_;
   };
 

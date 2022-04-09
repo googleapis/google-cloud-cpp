@@ -28,7 +28,6 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -71,8 +70,8 @@ class RestClientIntegrationTest : public ::testing::Test {
     ASSERT_TRUE(content_length != headers.end());
     EXPECT_GT(std::stoi(content_length->second), 0);
 
-    EXPECT_THAT(headers, testing::Contains(std::make_pair("content-type",
-                                                          "application/json")));
+    EXPECT_THAT(headers,
+                Contains(std::make_pair("content-type", "application/json")));
     std::unique_ptr<HttpPayload> payload =
         std::move(*response).ExtractPayload();
     auto body = ReadAll(std::move(payload));
