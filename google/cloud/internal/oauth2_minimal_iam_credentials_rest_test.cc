@@ -91,7 +91,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
 
   EXPECT_CALL(*mock_rest_client_,
               Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
+      .WillOnce([&](RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload) {
         EXPECT_THAT(request.path(),
                     Eq(absl::StrCat("projects/-/serviceAccounts/",
@@ -149,7 +149,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenNonRfc3339Time) {
 
   EXPECT_CALL(*mock_rest_client_,
               Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
+      .WillOnce([&](RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload) {
         EXPECT_THAT(request.path(),
                     Eq(absl::StrCat("projects/-/serviceAccounts/",
@@ -205,7 +205,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenInvalidResponse) {
 
   EXPECT_CALL(*mock_rest_client_,
               Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
+      .WillOnce([&](RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload) {
         EXPECT_THAT(request.path(),
                     Eq(absl::StrCat("projects/-/serviceAccounts/",
@@ -254,7 +254,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenPostFailure) {
 
   EXPECT_CALL(*mock_rest_client_,
               Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
+      .WillOnce([&](RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload) {
         EXPECT_THAT(request.path(),
                     Eq(absl::StrCat("projects/-/serviceAccounts/",

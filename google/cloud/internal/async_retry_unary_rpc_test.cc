@@ -33,7 +33,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::testing::HasSubstr;
 using ::testing::Return;
 

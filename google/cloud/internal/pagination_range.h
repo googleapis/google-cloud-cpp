@@ -80,8 +80,7 @@ class PagedStreamReader {
                     std::function<std::vector<T>(Response)> extractor)
       : request_(std::move(request)),
         loader_(std::move(loader)),
-        extractor_(std::move(extractor)),
-        last_page_(false) {
+        extractor_(std::move(extractor)) {
     current_ = page_.begin();
   }
 
@@ -132,7 +131,7 @@ class PagedStreamReader {
   std::vector<T> page_;
   typename std::vector<T>::iterator current_;
   std::string token_;
-  bool last_page_;
+  bool last_page_ = false;
 };
 
 /**
