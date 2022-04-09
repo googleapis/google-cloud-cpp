@@ -63,8 +63,9 @@ ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
       metadata_(std::move(rhs.metadata_)),
       headers_(std::move(rhs.headers_)),
       payload_(std::move(rhs.payload_)) {
-  rhs.buf_ = MakeErrorStreambuf();
-  rhs.set_rdbuf(rhs.buf_.get());
+  auto buf = MakeErrorStreambuf();
+  rhs.set_rdbuf(buf.get());  // NOLINT(bugprone-use-after-move)
+  rhs.buf_ = std::move(buf);
   set_rdbuf(buf_.get());
   if (!buf_) {
     setstate(std::ios::badbit | std::ios::eofbit);

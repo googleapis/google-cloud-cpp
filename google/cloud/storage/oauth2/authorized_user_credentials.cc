@@ -80,8 +80,7 @@ ParseAuthorizedUserRefreshResponse(
   header += ' ';
   header += access_token.value("access_token", "");
   std::string new_id = access_token.value("id_token", "");
-  auto expires_in =
-      std::chrono::seconds(access_token.value("expires_in", int(0)));
+  auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
   return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                       new_expiration};

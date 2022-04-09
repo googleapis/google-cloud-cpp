@@ -42,7 +42,6 @@ CurlRequestBuilder::CurlRequestBuilder(
       headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
       query_parameter_separator_(InitialQueryParameterSeparator(url_)),
-      logging_enabled_(false),
       transfer_stall_timeout_(0),
       download_stall_timeout_(0) {}
 

@@ -139,7 +139,7 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
           .upsert_label("k0", "v0")
           .set_default_event_based_hold(true)
           .set_cors({CorsEntry{
-              /*.max_age_seconds=*/absl::make_optional(std::uint64_t(1800)),
+              /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
               /*.method=*/{"GET", "PUT"},
               /*.origin=*/{"test-origin-0", "test-origin-1"},
               /*.response_header=*/{"test-header-0", "test-header-1"},
@@ -459,7 +459,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
               LifecycleRule::Delete())}})
           .SetCors({
               CorsEntry{
-                  /*.max_age_seconds=*/absl::make_optional(std::uint64_t(1800)),
+                  /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
                   /*.method=*/{"GET", "PUT"},
                   /*.origin=*/{"test-origin-0", "test-origin-1"},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
@@ -476,11 +476,10 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
                   /*.method=*/{},
                   /*.origin=*/{},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
-              CorsEntry{
-                  /*.max_age_seconds=*/absl::make_optional(std::uint64_t(1800)),
-                  /*.method=*/{},
-                  /*.origin=*/{},
-                  /*.response_header=*/{}},
+              CorsEntry{/*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
+                        /*.method=*/{},
+                        /*.origin=*/{},
+                        /*.response_header=*/{}},
           })
           .SetDefaultEventBasedHold(true)
           .SetLabel("key0", "value0")
@@ -608,7 +607,7 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
               LifecycleRule::Delete())}})
           .set_cors({
               CorsEntry{
-                  /*.max_age_seconds=*/absl::make_optional(std::uint64_t(1800)),
+                  /*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
                   /*.method=*/{"GET", "PUT"},
                   /*.origin=*/{"test-origin-0", "test-origin-1"},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
@@ -625,11 +624,10 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
                   /*.method=*/{},
                   /*.origin=*/{},
                   /*.response_header=*/{"test-header-0", "test-header-1"}},
-              CorsEntry{
-                  /*.max_age_seconds=*/absl::make_optional(std::uint64_t(1800)),
-                  /*.method=*/{},
-                  /*.origin=*/{},
-                  /*.response_header=*/{}},
+              CorsEntry{/*.max_age_seconds=*/static_cast<std::uint64_t>(1800),
+                        /*.method=*/{},
+                        /*.origin=*/{},
+                        /*.response_header=*/{}},
           })
           .set_default_event_based_hold(true)
           .upsert_label("key0", "value0")

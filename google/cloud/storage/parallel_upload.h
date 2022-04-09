@@ -225,9 +225,9 @@ class ParallelUploadStateImpl
   std::string destination_object_name_;
   std::int64_t expected_generation_;
   // Set when all streams are closed and composed but before cleanup.
-  bool finished_;
+  bool finished_ = false;
   // Tracks how many streams are still written to.
-  std::size_t num_unfinished_streams_;
+  std::size_t num_unfinished_streams_ = 0;
   std::vector<StreamInfo> streams_;
   absl::optional<StatusOr<ObjectMetadata>> res_;
   Status cleanup_status_;

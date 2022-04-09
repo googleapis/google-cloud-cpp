@@ -32,7 +32,7 @@ namespace {
 using ::testing::HasSubstr;
 using testing::MockObjectReadSource;
 using ::testing::Return;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 

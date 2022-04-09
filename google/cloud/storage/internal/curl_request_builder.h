@@ -193,7 +193,7 @@ class CurlRequestBuilder {
   char const* query_parameter_separator_;
 
   std::string user_agent_prefix_;
-  bool logging_enabled_;
+  bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds transfer_stall_timeout_;
   std::chrono::seconds download_stall_timeout_;
