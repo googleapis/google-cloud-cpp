@@ -33,6 +33,7 @@ PublisherConnectionImpl::PublisherConnectionImpl(
 }
 
 PublisherConnectionImpl::~PublisherConnectionImpl() {
+  // isn't safe b/c object should only be destroyed after future is satisfied
   service_composite_.Shutdown();
 }
 
