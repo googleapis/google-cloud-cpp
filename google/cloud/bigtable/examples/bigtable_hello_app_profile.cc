@@ -37,10 +37,10 @@ void HelloWorldAppProfile(std::vector<std::string> const& argv) {
         "hello-world-app-profile <project-id> <instance-id>"
         " <table-id> <profile-id>"};
   }
-  std::string const project_id = argv[0];
-  std::string const instance_id = argv[1];
-  std::string const table_id = argv[2];
-  std::string const profile_id = argv[3];
+  std::string const& project_id = argv[0];
+  std::string const& instance_id = argv[1];
+  std::string const& table_id = argv[2];
+  std::string const& profile_id = argv[3];
 
   // Create an object to access the Cloud Bigtable Data API.
   auto data_client = cbt::MakeDataClient(project_id, instance_id);

@@ -54,8 +54,7 @@ AsyncRowSampler::AsyncRowSampler(
       metadata_update_policy_(std::move(metadata_update_policy)),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
-      stream_cancelled_(false),
-      promise_([&] { stream_cancelled_ = true; }) {}
+      promise_([this] { stream_cancelled_ = true; }) {}
 
 void AsyncRowSampler::StartIteration() {
   btproto::SampleRowKeysRequest request;

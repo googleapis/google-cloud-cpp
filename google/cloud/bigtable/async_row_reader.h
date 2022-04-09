@@ -104,10 +104,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
         rpc_retry_policy_(std::move(rpc_retry_policy)),
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
-        parser_factory_(std::move(parser_factory)),
-        rows_count_(0),
-        whole_op_finished_(),
-        recursion_level_() {}
+        parser_factory_(std::move(parser_factory)) {}
 
   void MakeRequest() {
     status_ = Status();
@@ -398,7 +395,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
   std::unique_ptr<internal::ReadRowsParserFactory> parser_factory_;
   std::unique_ptr<internal::ReadRowsParser> parser_;
   /// Number of rows read so far, used to set row_limit in retries.
-  std::int64_t rows_count_;
+  std::int64_t rows_count_ = 0;
   /// Holds the last read row key, for retries.
   RowKeyType last_read_row_key_;
   /// The queue of rows which we already received but no one has asked for them.
@@ -414,7 +411,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
    */
   absl::optional<promise<bool>> continue_reading_;
   /// The final status of the operation.
-  bool whole_op_finished_;
+  bool whole_op_finished_ = false;
   /**
    * The status of the last retry attempt_.
    *
@@ -424,7 +421,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
    */
   Status status_;
   /// Tracks the level of recursion of TryGiveRowToUser
-  int recursion_level_;
+  int recursion_level_ = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
