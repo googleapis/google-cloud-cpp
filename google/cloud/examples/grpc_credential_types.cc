@@ -129,7 +129,7 @@ google::iam::credentials::v1::GenerateAccessTokenResponse UseAccessToken(
 void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
                                 std::vector<std::string> const& argv) {
   auto token = UseAccessToken(std::move(client), argv);
-  auto const project_id = argv.at(1);
+  auto const& project_id = argv.at(1);
   auto const expiration =
       std::chrono::system_clock::from_time_t(token.expire_time().seconds());
   auto const deadline = expiration + 4 * kTokenValidationPeriod;
