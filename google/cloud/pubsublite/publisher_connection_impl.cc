@@ -27,7 +27,14 @@ PublisherConnectionImpl::PublisherConnectionImpl(
         publisher,
     Options const& opts)
     : publisher_{std::move(publisher)},
-      message_transformer_{opts.get<PublishMessageTransformer>()} {}
+      service_composite_{publisher_.get()},
+      message_transformer_{opts.get<PublishMessageTransformer>()} {
+  service_composite_.Start();
+}
+
+PublisherConnectionImpl::~PublisherConnectionImpl() {
+  service_composite_.Shutdown();
+}
 
 future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
     PublishParams p) {

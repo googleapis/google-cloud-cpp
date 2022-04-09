@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsublite/internal/publisher.h"
+#include "google/cloud/pubsublite/internal/service_composite.h"
 #include "google/cloud/pubsublite/message_metadata.h"
 
 namespace google {
@@ -39,7 +40,7 @@ class PublisherConnectionImpl
           publisher,
       Options const& opts);
 
-  ~PublisherConnectionImpl() override = default;
+  ~PublisherConnectionImpl() override;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
 
@@ -51,6 +52,7 @@ class PublisherConnectionImpl
   std::unique_ptr<
       google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
       publisher_;
+  google::cloud::pubsublite_internal::ServiceComposite service_composite_;
   std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
       google::cloud::pubsub::Message)>
       message_transformer_;

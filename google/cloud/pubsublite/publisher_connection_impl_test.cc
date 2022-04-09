@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsublite/publisher_connection_impl.h"
 #include "google/cloud/pubsublite/testing/mock_publisher.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -26,27 +27,119 @@ namespace {
 using ::google::cloud::pubsub::Message;
 using ::google::cloud::pubsublite::MessageMetadata;
 using ::google::cloud::pubsublite_testing::MockPublisher;
+using ::google::cloud::testing_util::IsProtoEqual;
 using PublishParams =
     ::google::cloud::pubsub::PublisherConnection::PublishParams;
+using FlushParams = ::google::cloud::pubsub::PublisherConnection::FlushParams;
 using ::google::cloud::pubsub_internal::FromProto;
 
-using google::cloud::pubsublite::v1::PubSubMessage;
+using ::google::cloud::pubsublite::v1::Cursor;
 using ::google::cloud::pubsublite::v1::PubSubMessage;
 using ::google::pubsub::v1::PubsubMessage;
 
+using ::testing::ByMove;
+using ::testing::InSequence;
+using ::testing::MockFunction;
+using ::testing::Return;
 using ::testing::StrictMock;
 
 TEST(PublisherConnectionImplTest, BadMessage) {
+  InSequence seq;
+
   auto publisher =
       absl::make_unique<StrictMock<MockPublisher<MessageMetadata>>>();
-  auto& publisher_ref = *publisher;
-  auto opts = Options{}.set<PublishMessageTransformer>([](Message const&) {
-    return StatusOr<PubSubMessage>{Status{StatusCode::kAborted, "uh ohhh"}};
-  });
+  StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
+  Status status = Status{StatusCode::kAborted, "uh ohhh"};
+  StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer;
+  auto opts =
+      Options{}.set<PublishMessageTransformer>(transformer.AsStdFunction());
+  promise<Status> p;
+  EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
   PublisherConnectionImpl conn{std::move(publisher), opts};
+
+  EXPECT_CALL(transformer, Call).WillOnce(Return(status));
   auto received = conn.Publish(PublishParams{FromProto(PubsubMessage{})});
-  auto status = received.get().status();
-  EXPECT_EQ(status, (Status{StatusCode::kAborted, "uh ohhh"}));
+  auto error = received.get().status();
+  EXPECT_EQ(error, status);
+
+  EXPECT_CALL(publisher_ref, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+}
+
+TEST(PublisherConnectionImplTest, GoodMessageBadPublish) {
+  InSequence seq;
+
+  auto publisher =
+      absl::make_unique<StrictMock<MockPublisher<MessageMetadata>>>();
+  StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
+  StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer;
+  auto opts =
+      Options{}.set<PublishMessageTransformer>(transformer.AsStdFunction());
+  promise<Status> p;
+  EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
+  PublisherConnectionImpl conn{std::move(publisher), opts};
+
+  PubSubMessage message;
+  message.set_key("1");
+  *message.mutable_data() = "dataaaa";
+  EXPECT_CALL(transformer, Call).WillOnce(Return(message));
+  Status status = Status(StatusCode::kUnavailable, "booked");
+  EXPECT_CALL(publisher_ref, Publish(IsProtoEqual(message)))
+      .WillOnce(
+          Return(ByMove(make_ready_future(StatusOr<MessageMetadata>(status)))));
+  auto received = conn.Publish(PublishParams{FromProto(PubsubMessage{})});
+  auto error = received.get().status();
+  EXPECT_EQ(error, status);
+
+  EXPECT_CALL(publisher_ref, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+}
+
+TEST(PublisherConnectionImplTest, GoodMessageGoodPublish) {
+  InSequence seq;
+
+  auto publisher =
+      absl::make_unique<StrictMock<MockPublisher<MessageMetadata>>>();
+  StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
+  StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer;
+  auto opts =
+      Options{}.set<PublishMessageTransformer>(transformer.AsStdFunction());
+  promise<Status> p;
+  EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
+  PublisherConnectionImpl conn{std::move(publisher), opts};
+
+  PubSubMessage message;
+  message.set_key("2");
+  *message.mutable_data() = "hello";
+  EXPECT_CALL(transformer, Call).WillOnce(Return(message));
+  MessageMetadata mm{42, Cursor{}};
+  EXPECT_CALL(publisher_ref, Publish(IsProtoEqual(message)))
+      .WillOnce(
+          Return(ByMove(make_ready_future(StatusOr<MessageMetadata>(mm)))));
+  auto received = conn.Publish(PublishParams{FromProto(PubsubMessage{})}).get();
+  EXPECT_EQ(*received, mm.Serialize());
+
+  EXPECT_CALL(publisher_ref, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+}
+
+TEST(PublisherConnectionImplTest, Flush) {
+  InSequence seq;
+
+  auto publisher =
+      absl::make_unique<StrictMock<MockPublisher<MessageMetadata>>>();
+  StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
+  auto opts = Options{}.set<PublishMessageTransformer>(
+      [](Message const&) { return PubSubMessage{}; });
+  promise<Status> p;
+  EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
+  PublisherConnectionImpl conn{std::move(publisher), opts};
+
+  EXPECT_CALL(publisher_ref, Flush);
+  conn.Flush(FlushParams{});
+
+  EXPECT_CALL(publisher_ref, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
 }
 
 }  // namespace
