@@ -36,7 +36,7 @@ namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 

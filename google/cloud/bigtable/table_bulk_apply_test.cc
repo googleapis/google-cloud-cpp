@@ -28,8 +28,8 @@ namespace {
 namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::testing::Not;
 using ::testing::Return;
 

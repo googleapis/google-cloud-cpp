@@ -43,7 +43,7 @@ grpc::Status GrpcTransientError() {
   return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
 }
 
-using testing_util::chrono_literals::operator"" _ms;
+using testing_util::chrono_literals::operator"" _ms;  // NOLINT
 auto const kLimitedTimeTestPeriod = 100_ms;
 auto const kLimitedTimeTolerance = 20_ms;
 

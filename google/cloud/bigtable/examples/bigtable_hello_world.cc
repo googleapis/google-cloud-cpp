@@ -34,9 +34,9 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw Usage{"hello-world <project-id> <instance-id> <table-id>"};
   }
-  std::string const project_id = argv[0];
-  std::string const instance_id = argv[1];
-  std::string const table_id = argv[2];
+  std::string const& project_id = argv[0];
+  std::string const& instance_id = argv[1];
+  std::string const& table_id = argv[2];
 
   // Create a namespace alias to make the code easier to read.
   //! [aliases]

@@ -68,7 +68,7 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  auto options = bigtable::benchmarks::ParseArgs(argc, argv, kDescription);
+  auto options = ParseArgs(argc, argv, kDescription);
   if (!options) {
     std::cerr << options.status() << "\n";
     return -1;

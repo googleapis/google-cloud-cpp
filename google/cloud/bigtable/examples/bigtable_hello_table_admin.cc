@@ -37,9 +37,9 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
         "hello-world-table-admin <project-id> <instance-id> "
         "<table-id>"};
   }
-  std::string const project_id = argv[0];
-  std::string const instance_id = argv[1];
-  std::string const table_id = argv[2];
+  std::string const& project_id = argv[0];
+  std::string const& instance_id = argv[1];
+  std::string const& table_id = argv[2];
 
   //! [aliases]
   namespace cbt = ::google::cloud::bigtable;

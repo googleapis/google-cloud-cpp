@@ -22,6 +22,7 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::testing::ContainerEq;
 
 using FilterIntegrationTest =
@@ -58,7 +59,6 @@ using FilterIntegrationTest =
  */
 void CreateComplexRows(Table& table, std::string const& prefix) {
   namespace bt = bigtable;
-  using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
   bt::BulkMutation mutation;
   // Prepare a set of rows, with different numbers of cells, columns, and
@@ -353,8 +353,6 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
-  using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-
   auto table = GetTable();
   std::string const prefix = "row-sample-prefix";
 

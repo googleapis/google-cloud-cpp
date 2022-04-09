@@ -41,7 +41,6 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ContainsOnce;
-using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
