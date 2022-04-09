@@ -39,7 +39,7 @@ using ::google::cloud::storage::internal::raw_client_wrapper_utils::Signature;
  * @return the result from making the call;
  */
 template <typename MemberFunction>
-static typename Signature<MemberFunction>::ReturnType MakeCall(
+typename Signature<MemberFunction>::ReturnType MakeCall(
     RawClient& client, MemberFunction function,
     typename Signature<MemberFunction>::RequestType const& request,
     char const* context) {
@@ -67,7 +67,7 @@ static typename Signature<MemberFunction>::ReturnType MakeCall(
  * @return the result from making the call;
  */
 template <typename MemberFunction>
-static typename Signature<MemberFunction>::ReturnType MakeCallNoResponseLogging(
+typename Signature<MemberFunction>::ReturnType MakeCallNoResponseLogging(
     google::cloud::storage::internal::RawClient& client,
     MemberFunction function,
     typename Signature<MemberFunction>::RequestType const& request,

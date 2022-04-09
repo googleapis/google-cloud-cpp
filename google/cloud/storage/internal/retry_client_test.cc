@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;

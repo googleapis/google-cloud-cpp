@@ -3391,7 +3391,7 @@ class ScopedDeleter {
   void Enable(bool enable) { enabled_ = enable; }
 
  private:
-  bool enabled_;
+  bool enabled_ = true;
   std::function<Status(std::string, std::int64_t)> delete_fun_;
   std::vector<std::pair<std::string, std::int64_t>> object_list_;
 };

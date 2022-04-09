@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 struct PatchBuilder::Impl {
+  Impl() = default;  // NOLINT(bugprone-exception-escape)
+
   std::string ToString() const {
     if (empty()) {
       return "{}";

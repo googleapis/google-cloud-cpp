@@ -63,9 +63,7 @@ ParallelUploadStateImpl::ParallelUploadStateImpl(
     : deleter_(std::move(deleter)),
       composer_(std::move(composer)),
       destination_object_name_(std::move(destination_object_name)),
-      expected_generation_(expected_generation),
-      finished_{},
-      num_unfinished_streams_{} {
+      expected_generation_(expected_generation) {
   if (!cleanup_on_failures) {
     deleter_->Enable(false);
   }

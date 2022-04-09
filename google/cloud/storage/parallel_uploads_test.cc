@@ -40,7 +40,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
