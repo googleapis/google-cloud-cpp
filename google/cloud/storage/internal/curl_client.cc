@@ -180,7 +180,7 @@ CurlClient::CurlClient(google::cloud::Options options)
   CurlInitializeOnce(opts_);
 }
 
-StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
+StatusOr<ResumableUploadResponse> CurlClient::UploadSessionChunk(
     UploadChunkRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
   auto status = SetupBuilder(builder, request, "PUT");
@@ -207,7 +207,7 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   return AsStatus(*response);
 }
 
-StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
+StatusOr<ResumableUploadResponse> CurlClient::QueryResumableSession(
     QueryResumableUploadRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
   auto status = SetupBuilder(builder, request, "PUT");
@@ -670,6 +670,16 @@ StatusOr<CreateResumableSessionResponse> CurlClient::CreateResumableSession(
                               /*.annotations=*/{}}};
 }
 
+StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
+    ResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
+StatusOr<QueryResumableUploadResponse> CurlClient::QueryResumableUpload(
+    QueryResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
 StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
@@ -686,6 +696,11 @@ StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
     return AsStatus(*response);
   }
   return EmptyResponse{};
+}
+
+StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
+    UploadChunkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
 }
 
 StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
