@@ -127,7 +127,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
     actual_names.push_back(database->name());
   }
   EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("db-1", "db-2", "db-3", "db-4", "db-5"));
+              ElementsAre("db-1", "db-2", "db-3", "db-4", "db-5"));
 }
 
 TEST(GoldenThingAdminConnectionTest, ListDatabasesPermanentFailure) {
@@ -904,9 +904,8 @@ TEST(GoldenThingAdminConnectionTest, ListBackups) {
     ASSERT_STATUS_OK(backup);
     actual_names.push_back(backup->name());
   }
-  EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("backup-1", "backup-2", "backup-3",
-                                     "backup-4", "backup-5"));
+  EXPECT_THAT(actual_names, ElementsAre("backup-1", "backup-2", "backup-3",
+                                        "backup-4", "backup-5"));
 }
 
 TEST(GoldenThingAdminConnectionTest, ListBackupsPermanentFailure) {
@@ -1067,7 +1066,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperations) {
     actual_names.push_back(operation->name());
   }
   EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
+              ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
 }
 
 TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsPermanentFailure) {
@@ -1149,7 +1148,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperations) {
     actual_names.push_back(operation->name());
   }
   EXPECT_THAT(actual_names,
-              ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
+              ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
 }
 
 TEST(GoldenThingAdminConnectionTest, ListBackupOperationsPermanentFailure) {

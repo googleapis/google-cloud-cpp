@@ -170,8 +170,7 @@ TEST(GoldenKitchenSinkClientTest, WriteLogEntries) {
         EXPECT_EQ(request.log_name(), expected_log_name);
         std::map<std::string, std::string> labels = {request.labels().begin(),
                                                      request.labels().end()};
-        EXPECT_THAT(labels,
-                    testing::UnorderedElementsAreArray(expected_labels));
+        EXPECT_THAT(labels, UnorderedElementsAreArray(expected_labels));
         ::google::test::admin::database::v1::WriteLogEntriesResponse response;
         return response;
       });
