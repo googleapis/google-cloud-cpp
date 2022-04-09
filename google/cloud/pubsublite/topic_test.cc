@@ -18,8 +18,6 @@
 #include <gmock/gmock.h>
 #include <deque>
 
-using google::cloud::pubsublite::Topic;
-
 namespace google {
 namespace cloud {
 namespace pubsublite {
