@@ -164,8 +164,8 @@ TEST(MergeChunk, ErrorMismatchedTypes) {
   auto value = MakeProtoValue(std::vector<std::string>{"hello"});
   auto status = MergeChunk(value, MakeProtoValue("world"));
 
-  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                               testing::HasSubstr("mismatched types")));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("mismatched types")));
 }
 
 //
@@ -180,8 +180,8 @@ TEST(MergeChunk, CannotMergeBools) {
   bool2.set_bool_value(true);
 
   auto status = MergeChunk(bool1, std::move(bool2));
-  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                               testing::HasSubstr("invalid type")));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("invalid type")));
 }
 
 TEST(MergeChunk, CannotMergeNumbers) {
@@ -192,8 +192,8 @@ TEST(MergeChunk, CannotMergeNumbers) {
   number2.set_number_value(2.0);
 
   auto status = MergeChunk(number1, std::move(number2));
-  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                               testing::HasSubstr("invalid type")));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("invalid type")));
 }
 
 TEST(MergeChunk, CannotMergeNull) {
@@ -204,8 +204,8 @@ TEST(MergeChunk, CannotMergeNull) {
   null2.set_null_value(google::protobuf::NullValue::NULL_VALUE);
 
   auto status = MergeChunk(null1, std::move(null2));
-  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                               testing::HasSubstr("invalid type")));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("invalid type")));
 }
 
 TEST(MergeChunk, CannotMergeStruct) {
@@ -216,8 +216,8 @@ TEST(MergeChunk, CannotMergeStruct) {
   struct2.mutable_struct_value();
 
   auto status = MergeChunk(struct1, std::move(struct2));
-  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                               testing::HasSubstr("invalid type")));
+  EXPECT_THAT(status,
+              StatusIs(Not(StatusCode::kOk), HasSubstr("invalid type")));
 }
 
 }  // namespace
