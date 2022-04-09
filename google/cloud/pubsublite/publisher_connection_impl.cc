@@ -33,8 +33,8 @@ future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
     PublishParams p) {
   auto pubsub_message = message_transformer_(std::move(p.message));
   if (!pubsub_message) {
-    return make_ready_future(StatusOr<std::string>{
-        Status{StatusCode::kInvalidArgument, "Not able to convert message."}});
+    return make_ready_future(
+        StatusOr<std::string>{std::move(pubsub_message).status()});
   }
   return publisher_->Publish(*std::move(pubsub_message))
       .then([](future<StatusOr<MessageMetadata>> f) -> StatusOr<std::string> {

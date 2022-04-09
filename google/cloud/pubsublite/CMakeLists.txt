@@ -240,7 +240,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_alarm_registry.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_async_reader_writer.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_backoff_policy.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_partition_publisher.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_publisher.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_resumable_async_reader_writer_stream.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_retry_policy.h
             ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_routing_policy.h
@@ -271,6 +271,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         internal/service_composite_test.cc
         internal/stream_factory_test.cc
         message_metadata_test.cc
+        publisher_connection_impl_test.cc
         topic_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"

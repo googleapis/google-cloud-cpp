@@ -27,5 +27,6 @@ pubsublite_unit_tests = [
     "internal/service_composite_test.cc",
     "internal/stream_factory_test.cc",
     "message_metadata_test.cc",
+    "publisher_connection_impl_test.cc",
     "topic_test.cc",
 ]

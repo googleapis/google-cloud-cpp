@@ -32,6 +32,7 @@ struct PublishMessageTransformer {
 
 class PublisherConnectionImpl
     : public ::google::cloud::pubsub::PublisherConnection {
+ public:
   PublisherConnectionImpl(
       std::unique_ptr<
           google::cloud::pubsublite_internal::Publisher<MessageMetadata>>

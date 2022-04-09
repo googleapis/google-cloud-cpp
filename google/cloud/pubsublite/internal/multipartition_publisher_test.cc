@@ -15,7 +15,7 @@
 #include "google/cloud/pubsublite/internal/multipartition_publisher.h"
 #include "google/cloud/pubsublite/mocks/mock_admin_connection.h"
 #include "google/cloud/pubsublite/testing/mock_alarm_registry.h"
-#include "google/cloud/pubsublite/testing/mock_partition_publisher.h"
+#include "google/cloud/pubsublite/testing/mock_publisher.h"
 #include "google/cloud/pubsublite/testing/mock_routing_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <limits>
@@ -48,7 +48,7 @@ using ::google::cloud::pubsublite::Topic;
 
 using ::google::cloud::pubsublite_testing::MockAlarmRegistry;
 using ::google::cloud::pubsublite_testing::MockAlarmRegistryCancelToken;
-using ::google::cloud::pubsublite_testing::MockPartitionPublisher;
+using ::google::cloud::pubsublite_testing::MockPublisher;
 using ::google::cloud::pubsublite_testing::MockRoutingPolicy;
 
 constexpr std::chrono::milliseconds kAlarmDuration{std::chrono::seconds{60}};
@@ -168,12 +168,12 @@ class MultipartitionPublisherTest
  protected:
   MultipartitionPublisherTest()
       : partition_publisher_0_{std::make_shared<
-            StrictMock<MockPartitionPublisher>>()},
+            StrictMock<MockPublisher<Cursor>>>()},
         partition_publisher_1_{
-            std::make_shared<StrictMock<MockPartitionPublisher>>()} {}
+            std::make_shared<StrictMock<MockPublisher<Cursor>>>()} {}
 
-  std::shared_ptr<StrictMock<MockPartitionPublisher>> partition_publisher_0_;
-  std::shared_ptr<StrictMock<MockPartitionPublisher>> partition_publisher_1_;
+  std::shared_ptr<StrictMock<MockPublisher<Cursor>>> partition_publisher_0_;
+  std::shared_ptr<StrictMock<MockPublisher<Cursor>>> partition_publisher_1_;
 
   ~MultipartitionPublisherTest() override {
     // https://stackoverflow.com/questions/10286514/why-is-googlemock-leaking-my-shared-ptr
@@ -466,7 +466,7 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
   on_alarm_();
 
   auto partition_publisher_2 =
-      absl::make_unique<StrictMock<MockPartitionPublisher>>();
+      absl::make_unique<StrictMock<MockPublisher<Cursor>>>();
   auto& partition_publisher_2_ref = *partition_publisher_2;
   EXPECT_CALL(partition_publisher_factory_, Call(2))
       .WillOnce(Return(ByMove(std::move(partition_publisher_2))));
