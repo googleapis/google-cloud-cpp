@@ -72,11 +72,11 @@ class MD5HashFunction : public HashFunction {
   void Update(char const* buf, std::size_t n) override;
   HashValues Finish() && override;
 
- private:
   struct ContextDeleter {
     void operator()(EVP_MD_CTX*);
   };
 
+ private:
   std::unique_ptr<EVP_MD_CTX, ContextDeleter> impl_;
 };
 

@@ -23,6 +23,30 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+
+using ContextPtr = std::unique_ptr<EVP_MD_CTX, MD5HashFunction::ContextDeleter>;
+
+ContextPtr CreateDigestCtx() {
+// The name of the function to create and delete EVP_MD_CTX objects changed
+// with OpenSSL 1.1.0.
+#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0.
+  return ContextPtr(EVP_MD_CTX_create());
+#else
+  return ContextPtr(EVP_MD_CTX_new());
+#endif
+}
+
+void DeleteDigestCtx(EVP_MD_CTX* context) {
+// The name of the function to free an EVP_MD_CTX changed in OpenSSL 1.1.0.
+#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0.
+  EVP_MD_CTX_destroy(context);
+#else
+  EVP_MD_CTX_free(context);
+#endif  // OPENSSL_VERSION_NUMBER >= 0x10100000L
+}
+
+}  // namespace
 
 std::string CompositeFunction::Name() const {
   return "composite(" + a_->Name() + "," + b_->Name() + ")";
@@ -37,7 +61,7 @@ HashValues CompositeFunction::Finish() && {
   return Merge(std::move(*a_).Finish(), std::move(*b_).Finish());
 }
 
-MD5HashFunction::MD5HashFunction() : impl_(EVP_MD_CTX_new()) {
+MD5HashFunction::MD5HashFunction() : impl_(CreateDigestCtx()) {
   EVP_DigestInit_ex(impl_.get(), EVP_md5(), nullptr);
 }
 
@@ -60,12 +84,7 @@ HashValues MD5HashFunction::Finish() && {
 }
 
 void MD5HashFunction::ContextDeleter::operator()(EVP_MD_CTX* context) {
-// The name of the function to free an EVP_MD_CTX changed in OpenSSL 1.1.0.
-#if (OPENSSL_VERSION_NUMBER < 0x10100000L)  // Older than version 1.1.0.
-  EVP_MD_CTX_destroy(context);
-#else
-  EVP_MD_CTX_free(context);
-#endif  // OPENSSL_VERSION_NUMBER >= 0x10100000L
+  DeleteDigestCtx(context);
 }
 
 void Crc32cHashFunction::Update(char const* buf, std::size_t n) {
