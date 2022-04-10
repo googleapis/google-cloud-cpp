@@ -365,12 +365,12 @@ class PartitionPublisherTest : public ::testing::Test {
   // function that's only called in its destructor which is only called in
   // `Shutdown`
   StrictMock<MockAlarmRegistryCancelToken>& alarm_token_ref_;
-  MockAlarmRegistry alarm_registry_;
+  StrictMock<MockAlarmRegistry> alarm_registry_;
   std::function<void()> on_alarm_;
   // the reference remains valid because the resumable stream object is
   // never destroyed before the publisher goes out of scope at the end of
   // the test case
-  MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>&
+  StrictMock<MockResumableAsyncReaderWriter<PublishRequest, PublishResponse>>&
       resumable_stream_ref_;
   std::unique_ptr<Publisher<Cursor>> publisher_;
 };
