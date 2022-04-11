@@ -11,7 +11,7 @@
   supporting C++11, future releases will require C++ >= 14. We plan to backport
   critical (P0) bugs and security fixes to this release for a year, that is,
   until 2023-06-01.
-  The release following will be v2.1.0, to more clearly communicate this change.
+  The release following will be v2.0.0, to more clearly communicate this change.
   There are no immediate plans to start using C++14 features. However, some of
   our dependencies do plan to use C++14 features.
 </details>
