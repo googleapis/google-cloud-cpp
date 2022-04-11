@@ -1,14 +1,11 @@
 # Cloud Speech-to-Text API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [Cloud Speech-to-Text API][cloud-service-docs], a service which converts audio
 to text by applying powerful neural network models.
 
-<!-- TODO(#7991): verify the StreamingRecognize API is usable before GA -->
-<!-- GA delayed until (at least) 2022-03-31 -->
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
 
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).

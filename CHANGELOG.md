@@ -55,6 +55,19 @@ https://github.com/googleapis/google-cloud-cpp/issues/8234.
 
 ## v1.40.0 - TBD
 
+We are happy to announce that the following GA libraries.  Unless specifically
+noted, the APIs in these libraries are stable, and are ready for production use.
+
+<details>
+<summary> Expand to see the full list of new GA libraries...</summary>
+<br>
+
+* [Compute Engine OS Login](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/oslogin/README.md)
+* [Cloud Speech-to-Text](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/speech/README.md)
+* [Google Cloud Logging](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/logging/README.md)
+
+</details>
+
 ### [Storage](https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/README.md)
 
 **BREAKING CHANGES**
