@@ -16,7 +16,6 @@ include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_common)
 find_dependency(absl)
 find_dependency(CURL)
-find_dependency(Crc32c)
 find_dependency(nlohmann_json)
 find_dependency(OpenSSL)
 
