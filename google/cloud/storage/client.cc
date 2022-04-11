@@ -155,6 +155,8 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
 
   std::string payload(static_cast<std::size_t>(upload_size), char{});
   is.seekg(upload_offset, std::ios::beg);
+  // We need to use `&payload[0]` until C++17
+  // NOLINTNEXTLINE(readability-container-data-pointer)
   is.read(&payload[0], payload.size());
   if (static_cast<std::size_t>(is.gcount()) < payload.size()) {
     std::ostringstream os;
@@ -327,10 +329,10 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
         Status(StatusCode::kInvalidArgument, "ofstream::open()"));
   }
 
-  std::string buffer;
-  buffer.resize(raw_client_->client_options().download_buffer_size(), '\0');
+  std::vector<char> buffer(
+      raw_client_->client_options().download_buffer_size());
   do {
-    stream.read(&buffer[0], buffer.size());
+    stream.read(buffer.data(), buffer.size());
     os.write(buffer.data(), stream.gcount());
   } while (os.good() && stream.good());
   os.close();
@@ -485,7 +487,7 @@ namespace internal {
 
 ScopedDeleter::ScopedDeleter(
     std::function<Status(std::string, std::int64_t)> delete_fun)
-    : enabled_(true), delete_fun_(std::move(delete_fun)) {}
+    : delete_fun_(std::move(delete_fun)) {}
 
 ScopedDeleter::~ScopedDeleter() {
   if (enabled_) {

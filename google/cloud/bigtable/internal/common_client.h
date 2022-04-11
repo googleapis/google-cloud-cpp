@@ -123,7 +123,6 @@ class CommonClient {
 
   explicit CommonClient(Options opts)
       : opts_(std::move(opts)),
-        current_index_(0),
         background_threads_(
             google::cloud::internal::DefaultBackgroundThreads(1)),
         refresh_cq_(
@@ -241,11 +240,11 @@ class CommonClient {
   }
 
   std::mutex mu_;
-  std::size_t num_pending_refreshes_{};
+  std::size_t num_pending_refreshes_ = 0;
   google::cloud::Options opts_;
   std::vector<ChannelPtr> channels_;
   std::vector<StubPtr> stubs_;
-  std::size_t current_index_;
+  std::size_t current_index_ = 0;
   std::unique_ptr<BackgroundThreads> background_threads_;
   // Timers, which we schedule for refreshes, need to reference the completion
   // queue. We cannot make the completion queue's underlying implementation

@@ -46,8 +46,6 @@ class CircularBufferBackend : public LogBackend {
   CircularBufferBackend(std::size_t size, Severity min_flush_severity,
                         std::shared_ptr<LogBackend> backend)
       : buffer_(size),
-        begin_(0),
-        end_(0),
         min_flush_severity_(min_flush_severity),
         backend_(std::move(backend)) {}
 
@@ -66,8 +64,8 @@ class CircularBufferBackend : public LogBackend {
 
   std::mutex mu_;
   std::vector<LogRecord> buffer_;
-  std::size_t begin_;
-  std::size_t end_;
+  std::size_t begin_ = 0;
+  std::size_t end_ = 0;
   Severity min_flush_severity_;
   std::shared_ptr<LogBackend> backend_;
 };

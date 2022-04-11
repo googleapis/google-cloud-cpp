@@ -35,10 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::rest_internal::HttpPayload;
-using ::google::cloud::rest_internal::RestRequest;
-using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::FakeClock;
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;

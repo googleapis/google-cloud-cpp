@@ -21,7 +21,7 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using DataAsyncFutureIntegrationTest = bigtable::testing::TableIntegrationTest;
 
 std::string const kFamily = "family1";

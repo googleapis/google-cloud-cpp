@@ -41,7 +41,7 @@ Status CleanupStaleTables(
     if (!t) return std::move(t).status();
     std::vector<std::string> const components = absl::StrSplit(t->name(), '/');
     if (components.empty()) continue;
-    auto const id = components.back();
+    auto const& id = components.back();
     if (!std::regex_match(id, re)) continue;
     if (id >= max_table_id) continue;
     // Failure to cleanup is not an error.
@@ -65,7 +65,7 @@ Status CleanupStaleBackups(
     if (!b) return std::move(b).status();
     std::vector<std::string> const components = absl::StrSplit(b->name(), '/');
     if (components.empty()) continue;
-    auto const id = components.back();
+    auto const& id = components.back();
     if (!std::regex_match(id, re)) continue;
     if (id >= max_backup_id) continue;
     // Failure to cleanup is not an error.
@@ -89,7 +89,7 @@ Status CleanupStaleInstances(
   for (auto const& i : instances->instances()) {
     std::vector<std::string> const components = absl::StrSplit(i.name(), '/');
     if (components.empty()) continue;
-    auto const id = components.back();
+    auto const& id = components.back();
     if (!std::regex_match(id, re)) continue;
     if (id >= max_instance_id) continue;
     // Failure to cleanup is not an error.

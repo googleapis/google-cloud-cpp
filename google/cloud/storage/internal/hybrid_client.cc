@@ -138,12 +138,27 @@ StatusOr<CreateResumableSessionResponse> HybridClient::CreateResumableSession(
   return grpc_->CreateResumableSession(request);
 }
 
+StatusOr<CreateResumableUploadResponse> HybridClient::CreateResumableUpload(
+    ResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
+StatusOr<QueryResumableUploadResponse> HybridClient::QueryResumableUpload(
+    QueryResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
 StatusOr<EmptyResponse> HybridClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   if (internal::IsGrpcResumableSessionUrl(request.upload_session_url())) {
     return grpc_->DeleteResumableUpload(request);
   }
   return curl_->DeleteResumableUpload(request);
+}
+
+StatusOr<QueryResumableUploadResponse> HybridClient::UploadChunk(
+    UploadChunkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
 }
 
 StatusOr<ListBucketAclResponse> HybridClient::ListBucketAcl(

@@ -39,10 +39,10 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
         "<zone>"};
   }
 
-  std::string const project_id = argv[0];
-  std::string const instance_id = argv[1];
-  std::string const cluster_id = argv[2];
-  std::string const zone = argv[3];
+  std::string const& project_id = argv[0];
+  std::string const& instance_id = argv[1];
+  std::string const& cluster_id = argv[2];
+  std::string const& zone = argv[3];
 
   //! [aliases]
   namespace cbt = ::google::cloud::bigtable;

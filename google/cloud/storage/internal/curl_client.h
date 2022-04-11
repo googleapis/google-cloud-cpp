@@ -75,9 +75,9 @@ class CurlClient : public RawClient,
   // them is very different from the standard retry loop. Also note that some of
   // these member functions are virtual, but only because we need to override
   // them in the *library* unit tests.
-  virtual StatusOr<ResumableUploadResponse> UploadChunk(
+  virtual StatusOr<ResumableUploadResponse> UploadSessionChunk(
       UploadChunkRequest const&);
-  virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
+  virtual StatusOr<ResumableUploadResponse> QueryResumableSession(
       QueryResumableUploadRequest const&);
   StatusOr<CreateResumableSessionResponse> FullyRestoreResumableSession(
       ResumableUploadRequest const& request, std::string const& session_id);
@@ -125,8 +125,15 @@ class CurlClient : public RawClient,
       ComposeObjectRequest const& request) override;
   StatusOr<CreateResumableSessionResponse> CreateResumableSession(
       ResumableUploadRequest const& request) override;
+
+  StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
+      ResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> UploadChunk(
+      UploadChunkRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

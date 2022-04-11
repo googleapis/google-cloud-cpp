@@ -480,7 +480,7 @@ class BasicExperiment : public Experiment {
     int num_stubs = static_cast<int>(stubs.size());
     int task_id = 0;
     for (auto& t : tasks) {
-      auto client = stubs[task_id++ % num_stubs];
+      auto const& client = stubs[task_id++ % num_stubs];
       t = std::async(std::launch::async, [this, &config, thread_count,
                                           num_stubs, client] {
         return ViaStub(config, thread_count, num_stubs,

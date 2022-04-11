@@ -36,7 +36,6 @@ using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::testing::AtLeast;
 using ::testing::AtMost;
-using ::testing::InSequence;
 
 future<Status> CreateTestSubscriptionSession(
     pubsub::Subscription const& subscription, Options opts,

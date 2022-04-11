@@ -38,7 +38,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 

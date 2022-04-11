@@ -36,7 +36,6 @@ namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::ExperimentLibrary;
 using gcs_bm::ExperimentTransport;
 using gcs_bm::ThroughputOptions;
-using gcs_bm::ThroughputResult;
 
 char const kDescription[] = R"""(
 A throughput vs. CPU benchmark for the Google Cloud Storage C++ client library.

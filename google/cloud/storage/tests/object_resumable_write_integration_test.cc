@@ -25,7 +25,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;

@@ -52,8 +52,9 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
-  opts_.set<GrpcNumChannelsOption>(
-      size == 0 ? internal::DefaultConnectionPoolSize() : int(size));
+  opts_.set<GrpcNumChannelsOption>(size == 0
+                                       ? internal::DefaultConnectionPoolSize()
+                                       : static_cast<int>(size));
   return *this;
 }
 

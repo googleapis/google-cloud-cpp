@@ -41,8 +41,6 @@
 #include <string>
 
 using ::google::protobuf::FieldDescriptor;
-using ::google::protobuf::MethodDescriptor;
-using ::google::protobuf::ServiceDescriptor;
 using ::google::protobuf::compiler::cpp::FieldName;
 
 namespace google {

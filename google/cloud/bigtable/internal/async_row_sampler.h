@@ -67,7 +67,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   std::string app_profile_id_;
   std::string table_name_;
 
-  bool stream_cancelled_;
+  bool stream_cancelled_ = false;
   std::vector<RowKeySample> samples_;
   promise<StatusOr<std::vector<RowKeySample>>> promise_;
 };

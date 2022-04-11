@@ -24,7 +24,7 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 
 /// Create a grpc::Status with a status code for transient errors.
 grpc::Status GrpcTransientError() {

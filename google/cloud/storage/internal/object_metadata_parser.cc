@@ -69,7 +69,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
   result.content_type_ = json.value("contentType", "");
   result.crc32c_ = json.value("crc32c", "");
   if (json.count("customerEncryption") != 0) {
-    auto field = json["customerEncryption"];
+    auto const& field = json["customerEncryption"];
     CustomerEncryption e;
     e.encryption_algorithm = field.value("encryptionAlgorithm", "");
     e.key_sha256 = field.value("keySha256", "");

@@ -97,7 +97,7 @@ TEST_F(GrpcClientTest, QueryResumableUpload) {
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
-  auto response = client->QueryResumableUpload(
+  auto response = client->QueryResumableSession(
       QueryResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));

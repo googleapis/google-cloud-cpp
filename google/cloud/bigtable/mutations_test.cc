@@ -27,8 +27,8 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 
 /// @test Verify that SetCell() works as expected.
 TEST(MutationsTest, SetCell) {

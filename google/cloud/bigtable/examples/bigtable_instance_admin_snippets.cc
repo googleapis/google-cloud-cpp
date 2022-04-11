@@ -658,7 +658,7 @@ void DeleteAppProfile(std::vector<std::string> const& argv) {
 
   bool ignore_warnings = true;
   if (argv.size() == 4) {
-    std::string arg = argv[3];
+    std::string const& arg = argv[3];
     if (arg == "true") {
       ignore_warnings = true;
     } else if (arg == "false") {

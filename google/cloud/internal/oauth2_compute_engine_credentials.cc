@@ -72,8 +72,7 @@ ParseComputeEngineRefreshResponse(rest_internal::RestResponse& response,
   std::string header_value = access_token.value("token_type", "");
   header_value += ' ';
   header_value += access_token.value("access_token", "");
-  auto expires_in =
-      std::chrono::seconds(access_token.value("expires_in", int(0)));
+  auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
 
   return RefreshingCredentialsWrapper::TemporaryToken{

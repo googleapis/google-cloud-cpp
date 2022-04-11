@@ -18,16 +18,16 @@
 #include <gmock/gmock.h>
 #include <deque>
 
-using google::cloud::pubsublite::MakeMessageMetadata;
-using google::cloud::pubsublite::MessageMetadata;
-using google::cloud::pubsublite::v1::Cursor;
-using ::google::cloud::testing_util::IsProtoEqual;
-
 namespace google {
 namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::pubsublite::MakeMessageMetadata;
+using ::google::cloud::pubsublite::MessageMetadata;
+using ::google::cloud::pubsublite::v1::Cursor;
+using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(MessageMetadata, ValidParse) {
   std::int64_t partition = 2389457;

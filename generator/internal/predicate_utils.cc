@@ -28,9 +28,8 @@ using ::google::protobuf::FieldDescriptor;
 using ::google::protobuf::MethodDescriptor;
 
 // https://google.aip.dev/client-libraries/4233
-google::cloud::optional<
-    std::pair<std::string, google::protobuf::Descriptor const*>>
-DeterminePagination(google::protobuf::MethodDescriptor const& method) {
+google::cloud::optional<std::pair<std::string, Descriptor const*>>
+DeterminePagination(MethodDescriptor const& method) {
   std::string paginated_type;
   Descriptor const* request_message = method.input_type();
   FieldDescriptor const* page_size =
@@ -89,36 +88,35 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method) {
                         std::get<1>(repeated_message_fields[0]));
 }
 
-bool IsPaginated(google::protobuf::MethodDescriptor const& method) {
+bool IsPaginated(MethodDescriptor const& method) {
   return DeterminePagination(method).has_value();
 }
 
-bool IsNonStreaming(google::protobuf::MethodDescriptor const& method) {
+bool IsNonStreaming(MethodDescriptor const& method) {
   return !method.client_streaming() && !method.server_streaming();
 }
 
-bool IsStreamingRead(google::protobuf::MethodDescriptor const& method) {
+bool IsStreamingRead(MethodDescriptor const& method) {
   return !method.client_streaming() && method.server_streaming();
 }
 
-bool IsStreamingWrite(google::protobuf::MethodDescriptor const& method) {
+bool IsStreamingWrite(MethodDescriptor const& method) {
   return method.client_streaming() && !method.server_streaming();
 }
 
-bool IsBidirStreaming(google::protobuf::MethodDescriptor const& method) {
+bool IsBidirStreaming(MethodDescriptor const& method) {
   return method.client_streaming() && method.server_streaming();
 }
 
-bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method) {
+bool IsLongrunningOperation(MethodDescriptor const& method) {
   return method.output_type()->full_name() == "google.longrunning.Operation";
 }
 
-bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const& method) {
+bool IsResponseTypeEmpty(MethodDescriptor const& method) {
   return method.output_type()->full_name() == "google.protobuf.Empty";
 }
 
-bool IsLongrunningMetadataTypeUsedAsResponse(
-    google::protobuf::MethodDescriptor const& method) {
+bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
@@ -127,7 +125,7 @@ bool IsLongrunningMetadataTypeUsedAsResponse(
   return false;
 }
 
-bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method) {
+bool HasRoutingHeader(MethodDescriptor const& method) {
   auto result = ParseResourceRoutingHeader(method);
   return result.has_value();
 }

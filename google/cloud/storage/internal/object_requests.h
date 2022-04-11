@@ -20,6 +20,7 @@
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
+#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/upload_options.h"
@@ -359,6 +360,23 @@ class ResumableUploadRequest
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
 
+struct CreateResumableUploadResponse {
+  static StatusOr<CreateResumableUploadResponse> FromHttpResponse(
+      HttpResponse response);
+
+  std::string upload_id;
+};
+
+bool operator==(CreateResumableUploadResponse const& lhs,
+                CreateResumableUploadResponse const& rhs);
+inline bool operator!=(CreateResumableUploadResponse const& lhs,
+                       CreateResumableUploadResponse const& rhs) {
+  return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         CreateResumableUploadResponse const& r);
+
 /**
  * A request to cancel a resumable upload.
  */
@@ -390,12 +408,14 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
         range_begin_(range_begin),
         payload_(std::move(payload)) {}
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     ConstBufferSequence payload, std::uint64_t source_size)
+                     ConstBufferSequence payload, std::uint64_t source_size,
+                     HashValues full_object_hashes = {})
       : upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
         source_size_(source_size),
         last_chunk_(true),
-        payload_(std::move(payload)) {}
+        payload_(std::move(payload)),
+        full_object_hashes_(std::move(full_object_hashes)) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
   std::uint64_t range_begin() const { return range_begin_; }
@@ -403,6 +423,7 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
   std::uint64_t source_size() const { return source_size_; }
   std::size_t payload_size() const { return TotalBytes(payload_); }
   ConstBufferSequence const& payload() const { return payload_; }
+  HashValues const& full_object_hashes() const { return full_object_hashes_; }
   std::string RangeHeader() const;
 
   // Chunks must be multiples of 256 KiB:
@@ -426,6 +447,7 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
   std::uint64_t source_size_ = 0;
   bool last_chunk_ = false;
   ConstBufferSequence payload_;
+  HashValues full_object_hashes_;
 };
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);
@@ -448,6 +470,34 @@ class QueryResumableUploadRequest
 
 std::ostream& operator<<(std::ostream& os,
                          QueryResumableUploadRequest const& r);
+
+StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range);
+
+/**
+ * The response from uploading a chunk and querying a resumable upload.
+ *
+ * We use the same type to represent the response for a UploadChunkRequest and a
+ * QueryResumableUploadRequest because they are the same response.  Once a chunk
+ * is successfully uploaded the response is the new status for the resumable
+ * upload.
+ */
+struct QueryResumableUploadResponse {
+  static StatusOr<QueryResumableUploadResponse> FromHttpResponse(
+      HttpResponse response);
+
+  absl::optional<std::uint64_t> committed_size;
+  absl::optional<google::cloud::storage::ObjectMetadata> payload;
+};
+
+bool operator==(QueryResumableUploadResponse const& lhs,
+                QueryResumableUploadResponse const& rhs);
+inline bool operator!=(QueryResumableUploadResponse const& lhs,
+                       QueryResumableUploadResponse const& rhs) {
+  return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         QueryResumableUploadResponse const& r);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

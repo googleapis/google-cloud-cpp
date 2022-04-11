@@ -94,10 +94,6 @@ class MutationBatcher {
   explicit MutationBatcher(Table table, Options options = Options())
       : table_(std::move(table)),
         options_(options),
-        num_outstanding_batches_(),
-        outstanding_size_(),
-        outstanding_mutations_(),
-        num_requests_pending_(),
         cur_batch_(std::make_shared<Batch>()) {}
 
   virtual ~MutationBatcher() = default;
@@ -200,10 +196,9 @@ class MutationBatcher {
    */
   struct MutationData {
     explicit MutationData(PendingSingleRowMutation pending)
-        : completion_promise(std::move(pending.completion_promise)),
-          done(false) {}
+        : completion_promise(std::move(pending.completion_promise)) {}
     CompletionPromise completion_promise;
-    bool done;
+    bool done = false;
   };
 
   /**
@@ -225,8 +220,8 @@ class MutationBatcher {
   struct Batch {
     Batch() = default;
 
-    size_t num_mutations{};
-    size_t requests_size{};
+    std::size_t num_mutations = 0;
+    std::size_t requests_size = 0;
     BulkMutation requests;
     std::vector<MutationData> mutation_data;
   };
@@ -287,13 +282,13 @@ class MutationBatcher {
   Options options_;
 
   /// Num batches sent but not completed.
-  size_t num_outstanding_batches_;
+  std::size_t num_outstanding_batches_ = 0;
   /// Size of admitted but uncompleted mutations.
-  size_t outstanding_size_;
+  std::size_t outstanding_size_ = 0;
   /// Number of admitted but uncompleted mutations.
-  size_t outstanding_mutations_;
+  std::size_t outstanding_mutations_ = 0;
   // Number of uncompleted SingleRowMutations (including not admitted).
-  size_t num_requests_pending_;
+  std::size_t num_requests_pending_ = 0;
 
   /// Currently constructed batch of mutations.
   std::shared_ptr<Batch> cur_batch_;

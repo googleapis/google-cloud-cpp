@@ -67,7 +67,7 @@ class GrpcClient : public RawClient,
       google::storage::v2::WriteObjectResponse>;
   virtual std::unique_ptr<WriteObjectStream> CreateUploadWriter(
       std::unique_ptr<grpc::ClientContext> context);
-  virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
+  virtual StatusOr<ResumableUploadResponse> QueryResumableSession(
       QueryResumableUploadRequest const&);
   StatusOr<CreateResumableSessionResponse> FullyRestoreResumableSession(
       ResumableUploadRequest const& request, std::string const& upload_url);
@@ -119,8 +119,15 @@ class GrpcClient : public RawClient,
       RewriteObjectRequest const&) override;
   StatusOr<CreateResumableSessionResponse> CreateResumableSession(
       ResumableUploadRequest const& request) override;
+
+  StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
+      ResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> UploadChunk(
+      UploadChunkRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;

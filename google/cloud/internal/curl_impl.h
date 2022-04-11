@@ -114,7 +114,7 @@ class CurlImpl {
   CurlReceivedHeaders received_headers_;
   std::string url_;
   std::string user_agent_;
-  bool logging_enabled_;
+  bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds transfer_stall_timeout_;
   std::chrono::seconds download_stall_timeout_;
@@ -132,21 +132,21 @@ class CurlImpl {
   // PerformWork() sets the curl_closed_ flags to true.
   //
   // The closing_ flag is set when we enter step 1.
-  bool closing_;
+  bool closing_ = false;
   // The curl_closed_ flag is set when we enter step 2, or when the transfer
   // completes.
-  bool curl_closed_;
+  bool curl_closed_ = false;
 
   CurlHandle handle_;
   CurlMulti multi_;
   // Track whether `handle_` has been added to `multi_` or not. The exact
   // lifecycle for the handle depends on the libcurl version, and using this
   // flag makes the code less elegant, but less prone to bugs.
-  bool in_multi_;
-  bool paused_;
+  bool in_multi_ = false;
+  bool paused_ = false;
 
   // Track when status and headers from the response are received.
-  bool all_headers_received_;
+  bool all_headers_received_ = false;
 
   // Track the usage of the buffer provided to Read.
   absl::Span<char> buffer_;
@@ -158,7 +158,7 @@ class CurlImpl {
   // additional bytes. We get better performance using a slightly larger buffer
   // (128KiB) than the default buffer size set by libcurl (16KiB).
   std::array<char, 128 * 1024L> spill_;
-  std::size_t spill_offset_;
+  std::size_t spill_offset_ = 0;
 
   Options options_;
 };

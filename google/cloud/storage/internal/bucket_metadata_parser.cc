@@ -85,7 +85,7 @@ Status ParseAcl(std::vector<BucketAccessControl>& acl,
 Status ParseBilling(absl::optional<BucketBilling>& billing,
                     nlohmann::json const& json) {
   if (!json.contains("billing")) return Status{};
-  auto b = json["billing"];
+  auto const& b = json["billing"];
   auto requester_pays = internal::ParseBoolField(b, "requesterPays");
   if (!requester_pays) return std::move(requester_pays).status();
   billing = BucketBilling{*requester_pays};
@@ -156,7 +156,7 @@ Status ParseIamConfiguration(
 Status ParseLifecycle(absl::optional<BucketLifecycle>& lifecycle,
                       nlohmann::json const& json) {
   if (!json.contains("lifecycle")) return Status{};
-  auto l = json["lifecycle"];
+  auto const& l = json["lifecycle"];
   BucketLifecycle value;
   if (l.contains("rule")) {
     for (auto const& kv : l["rule"].items()) {
@@ -172,7 +172,7 @@ Status ParseLifecycle(absl::optional<BucketLifecycle>& lifecycle,
 Status ParseLogging(absl::optional<BucketLogging>& logging,
                     nlohmann::json const& json) {
   if (!json.contains("logging")) return Status{};
-  auto l = json["logging"];
+  auto const& l = json["logging"];
   BucketLogging value;
   value.log_bucket = l.value("logBucket", "");
   value.log_object_prefix = l.value("logObjectPrefix", "");
@@ -201,8 +201,8 @@ Status ParseRetentionPolicy(
     absl::optional<BucketRetentionPolicy>& retention_policy,
     nlohmann::json const& json) {
   if (!json.contains("retentionPolicy")) return Status{};
-  auto r = json["retentionPolicy"];
-  auto is_locked = internal::ParseBoolField(r, "isLocked");
+  auto const& r = json["retentionPolicy"];
+  auto const is_locked = internal::ParseBoolField(r, "isLocked");
   if (!is_locked) return std::move(is_locked).status();
   auto retention_period = internal::ParseLongField(r, "retentionPeriod");
   if (!retention_period) return std::move(retention_period).status();
@@ -216,9 +216,9 @@ Status ParseRetentionPolicy(
 Status ParseVersioning(absl::optional<BucketVersioning>& versioning,
                        nlohmann::json const& json) {
   if (!json.contains("versioning")) return Status{};
-  auto v = json["versioning"];
+  auto const& v = json["versioning"];
   if (!v.contains("enabled")) return Status{};
-  auto enabled = internal::ParseBoolField(v, "enabled");
+  auto const& enabled = internal::ParseBoolField(v, "enabled");
   if (!enabled) return std::move(enabled).status();
   versioning = BucketVersioning{*enabled};
   return Status{};
@@ -227,7 +227,7 @@ Status ParseVersioning(absl::optional<BucketVersioning>& versioning,
 Status ParseWebsite(absl::optional<BucketWebsite>& website,
                     nlohmann::json const& json) {
   if (!json.contains("website")) return Status{};
-  auto w = json["website"];
+  auto const& w = json["website"];
   BucketWebsite value;
   value.main_page_suffix = w.value("mainPageSuffix", "");
   value.not_found_page = w.value("notFoundPage", "");

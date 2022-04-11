@@ -32,7 +32,6 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;

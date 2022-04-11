@@ -49,7 +49,6 @@ using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockPollingPolicy;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
 using ::google::cloud::bigtable_internal::InstanceAdminTester;
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
 using ::testing::Contains;

@@ -28,7 +28,7 @@ namespace {
 namespace bigtable = ::google::cloud::bigtable;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 
 class TableApplyTest : public bigtable::testing::TableTestFixture {
  protected:

@@ -117,7 +117,7 @@ std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
   return stub_->WriteObject(std::move(context));
 }
 
-StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
+StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableSession(
     QueryResumableUploadRequest const& request) {
   OptionsSpan span(options_);
   grpc::ClientContext context;
@@ -469,9 +469,24 @@ StatusOr<CreateResumableSessionResponse> GrpcClient::CreateResumableSession(
                               /*.annotations=*/std::string{}}};
 }
 
+StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(
+    ResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
+StatusOr<QueryResumableUploadResponse> GrpcClient::QueryResumableUpload(
+    QueryResumableUploadRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+}
+
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
+}
+
+StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
+    UploadChunkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
 }
 
 StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
