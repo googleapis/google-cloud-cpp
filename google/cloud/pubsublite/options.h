@@ -17,6 +17,7 @@
 
 #include "google/cloud/version.h"
 #include "absl/status/status.h"
+#include <google/cloud/pubsublite/v1/common.pb.h>
 #include <functional>
 
 namespace google {
