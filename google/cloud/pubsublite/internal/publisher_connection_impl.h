@@ -37,7 +37,7 @@ class PublisherConnectionImpl
           google::cloud::pubsublite::MessageMetadata>>
           publisher,
       google::cloud::pubsublite::PublishMessageTransformer transformer,
-      const google::cloud::pubsublite::FailureHandler& failure_handler);
+      google::cloud::pubsublite::FailureHandler const& failure_handler);
 
   ~PublisherConnectionImpl() override;
 

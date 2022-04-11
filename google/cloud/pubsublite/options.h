@@ -16,10 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_OPTIONS_H
 
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/status/status.h"
 #include <google/cloud/pubsublite/v1/common.pb.h>
+#include <chrono>
 #include <functional>
 
 namespace google {
@@ -35,10 +37,30 @@ using PublishMessageTransformer =
     std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
         google::cloud::pubsub::Message)>;
 
+struct PublishMessageTransformerOption {
+  using Type = PublishMessageTransformer;
+};
+
 /**
  * Handler for if the publisher connection shuts down with a non-`kOk` status.
  */
 using FailureHandler = std::function<void(absl::Status)>;
+
+struct FailureHandlerOption {
+  using Type = FailureHandler;
+};
+
+struct MaximumBatchMessageCountOption {
+  using Type = std::int64_t;
+};
+
+struct MaximumBatchBytesOption {
+  using Type = std::int64_t;
+};
+
+struct PublishFlushAlarmPeriodOption {
+  using Type = std::chrono::milliseconds;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite

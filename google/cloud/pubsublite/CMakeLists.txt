@@ -168,6 +168,8 @@ add_library(
     message_metadata.cc
     message_metadata.h
     options.h
+    publisher_connection.cc
+    publisher_connection.h
     topic.h
     topic_stats_client.cc
     topic_stats_client.h
