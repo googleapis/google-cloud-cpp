@@ -29,10 +29,6 @@ using PublishMessageTransformer =
     std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
         google::cloud::pubsub::Message)>;
 
-struct PublishMessageTransformerOption {
-  using Type = PublishMessageTransformer;
-};
-
 /**
  * A connection implementation for publishing messages to a single `Topic`.
  */
