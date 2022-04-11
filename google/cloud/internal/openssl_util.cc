@@ -113,26 +113,31 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
                       CaptureSslErrors());
   }
 
+  if (EVP_DigestSignUpdate(digest_ctx.get(), str.data(), str.size()) !=
+      kOpenSslSuccess) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials - could not sign blob: " +
+                      CaptureSslErrors());
+  }
+
   // The signed SHA256 size depends on the size (the experts say "modulus") of
   // they key.  First query the size:
-   /*C API, no std::*/ size_t actual_len = 0;
-  if (EVP_DigestSign(digest_ctx.get(), nullptr, &actual_len,
-                     reinterpret_cast<unsigned char const*>(str.data()),
-                     str.size()) != kOpenSslSuccess) {
+  std::size_t actual_len = 0;
+  static_assert(std::is_same<std::size_t, size_t>::value,
+                "Expect std::size_t == size_t");
+  if (EVP_DigestSignFinal(digest_ctx.get(), nullptr, &actual_len) !=
+      kOpenSslSuccess) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - "
-                  "could not sign blob: " +
+                  "Invalid ServiceAccountCredentials - could not sign blob: " +
                       CaptureSslErrors());
   }
 
   // Then compute the actual signed digest:
   std::vector<unsigned char> buffer(actual_len);
-  if (EVP_DigestSign(digest_ctx.get(), nullptr, &actual_len,
-                     reinterpret_cast<unsigned char const*>(str.data()),
-                     str.size()) != kOpenSslSuccess) {
+  if (EVP_DigestSignFinal(digest_ctx.get(), buffer.data(), &actual_len) !=
+      kOpenSslSuccess) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials - "
-                  "could not sign blob: " +
+                  "Invalid ServiceAccountCredentials - could not sign blob: " +
                       CaptureSslErrors());
   }
 
