@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_OPTIONS_H
 
-#include "google/cloud/version.h"
-#include "absl/status/status.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
+#include "absl/status/status.h"
 #include <google/cloud/pubsublite/v1/common.pb.h>
 #include <functional>
 
