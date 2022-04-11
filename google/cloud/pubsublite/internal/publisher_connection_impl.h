@@ -19,18 +19,12 @@
 #include "google/cloud/pubsublite/internal/publisher.h"
 #include "google/cloud/pubsublite/internal/service_composite.h"
 #include "google/cloud/pubsublite/message_metadata.h"
-#include "absl/status/status.h"
+#include "google/cloud/pubsublite/options.h"
 
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using PublishMessageTransformer =
-    std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
-        google::cloud::pubsub::Message)>;
-
-using FailureHandler = std::function<void(absl::Status)>;
 
 /**
  * A connection implementation for publishing messages to a single `Topic`.
@@ -42,8 +36,8 @@ class PublisherConnectionImpl
       std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
           google::cloud::pubsublite::MessageMetadata>>
           publisher,
-      PublishMessageTransformer transformer,
-      const FailureHandler& failure_handler);
+      google::cloud::pubsublite::PublishMessageTransformer transformer,
+      const google::cloud::pubsublite::FailureHandler& failure_handler);
 
   ~PublisherConnectionImpl() override;
 
@@ -57,7 +51,8 @@ class PublisherConnectionImpl
   std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
       google::cloud::pubsublite::MessageMetadata>> const publisher_;
   google::cloud::pubsublite_internal::ServiceComposite service_composite_;
-  PublishMessageTransformer const message_transformer_;
+  google::cloud::pubsublite::PublishMessageTransformer const
+      message_transformer_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

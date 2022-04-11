@@ -76,6 +76,7 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/topic_stats_stub.h",
     "internal/topic_stats_stub_factory.h",
     "message_metadata.h",
+    "options.h",
     "topic.h",
     "topic_stats_client.h",
     "topic_stats_connection.h",

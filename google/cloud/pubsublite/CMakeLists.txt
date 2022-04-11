@@ -167,6 +167,7 @@ add_library(
     internal/topic_stats_stub_factory.h
     message_metadata.cc
     message_metadata.h
+    options.h
     topic.h
     topic_stats_client.cc
     topic_stats_client.h

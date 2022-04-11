@@ -19,7 +19,9 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using google::cloud::pubsublite::FailureHandler;
 using google::cloud::pubsublite::MessageMetadata;
+using google::cloud::pubsublite::PublishMessageTransformer;
 
 PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
