@@ -28,6 +28,13 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+> Please check the [CHANGELOG] for important announcements and upcoming
+> changes.<br>
+> In particular, note that on (or about) **2022-06-01** this library will stop
+> development based on C++11.
+
+[CHANGELOG]: CHANGELOG.md
+
 <!-- inject-GA-libraries-start -->
 * [Access Approval API](google/cloud/accessapproval/README.md)
   [[quickstart]](google/cloud/accessapproval/quickstart/README.md)

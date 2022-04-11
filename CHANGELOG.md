@@ -5,6 +5,18 @@
 <!-- Keep these sorted by estimated date -->
 
 <details>
+<summary>2022-06-01: last release with C++ support</summary>
+
+* The release on 2022-06-01 (tentatively v1.41.0) will be the last release
+  supporting C++11. This we plan to backport critical (P0) bugs and security
+  fixes to this release for a year, that is, until 2023-06-01.
+  The release following will be v2.1.0, to more clearly communicate this change.
+  There are no immediate plans to start using C++14 features. However, some of
+  our dependencies do plan to use C++14 features. We will stop testing with
+  C++11 and only test with C++14 and higher.
+</details>
+
+<details>
 <summary>2022-10-01: retiring legacy Spanner admin APIs</summary>
 <br>
 
