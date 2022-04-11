@@ -16,7 +16,7 @@
 #include "google/cloud/pubsublite/testing/mock_publisher.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <include/gmock/gmock.h>
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
