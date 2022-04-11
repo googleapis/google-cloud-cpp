@@ -125,6 +125,8 @@ add_library(
     internal/publisher.h
     internal/publisher_auth_decorator.cc
     internal/publisher_auth_decorator.h
+    internal/publisher_connection_impl.cc
+    internal/publisher_connection_impl.h
     internal/publisher_logging_decorator.cc
     internal/publisher_logging_decorator.h
     internal/publisher_metadata_decorator.cc
@@ -165,8 +167,6 @@ add_library(
     internal/topic_stats_stub_factory.h
     message_metadata.cc
     message_metadata.h
-    publisher_connection_impl.cc
-    publisher_connection_impl.h
     topic.h
     topic_stats_client.cc
     topic_stats_client.h
@@ -267,11 +267,11 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         internal/location_test.cc
         internal/multipartition_publisher_test.cc
         internal/partition_publisher_test.cc
+        internal/publisher_connection_impl_test.cc
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
         internal/stream_factory_test.cc
         message_metadata_test.cc
-        publisher_connection_impl_test.cc
         topic_test.cc)
 
     export_list_to_bazel("pubsublite_unit_tests.bzl" "pubsublite_unit_tests"

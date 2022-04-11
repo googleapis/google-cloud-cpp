@@ -12,24 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsublite/publisher_connection_impl.h"
+#include "google/cloud/pubsublite/internal/publisher_connection_impl.h"
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
+namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using google::cloud::pubsublite_internal::Publisher;
+using google::cloud::pubsublite::MessageMetadata;
 
 PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
         google::cloud::pubsublite::MessageMetadata>>
         publisher,
-    PublishMessageTransformer transformer)
+    PublishMessageTransformer transformer,
+    FailureHandler const& failure_handler)
     : publisher_{std::move(publisher)},
       service_composite_{publisher_.get()},
       message_transformer_{std::move(transformer)} {
-  service_composite_.Start();
+  service_composite_.Start().then([=](future<Status> f) {
+    auto status = f.get();
+    if (status.ok()) return;
+    auto code = static_cast<absl::StatusCode>(status.code());
+    failure_handler(absl::Status{code, std::move(status).message()});
+  });
 }
 
 PublisherConnectionImpl::~PublisherConnectionImpl() {
@@ -40,6 +46,7 @@ future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
     PublishParams p) {
   auto pubsub_message = message_transformer_(std::move(p.message));
   if (!pubsub_message) {
+    service_composite_.Abort(pubsub_message.status());
     return make_ready_future(
         StatusOr<std::string>{std::move(pubsub_message).status()});
   }
@@ -54,6 +61,6 @@ future<StatusOr<std::string>> PublisherConnectionImpl::Publish(
 void PublisherConnectionImpl::Flush(FlushParams) { publisher_->Flush(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google

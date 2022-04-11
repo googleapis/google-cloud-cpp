@@ -12,22 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PUBLISHER_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PUBLISHER_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_CONNECTION_IMPL_H
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsublite/internal/publisher.h"
 #include "google/cloud/pubsublite/internal/service_composite.h"
 #include "google/cloud/pubsublite/message_metadata.h"
+#include "absl/status/status.h"
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
+namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using PublishMessageTransformer =
     std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
         google::cloud::pubsub::Message)>;
+
+using FailureHandler = std::function<void(absl::Status)>;
 
 /**
  * A connection implementation for publishing messages to a single `Topic`.
@@ -36,10 +39,11 @@ class PublisherConnectionImpl
     : public ::google::cloud::pubsub::PublisherConnection {
  public:
   PublisherConnectionImpl(
-      std::unique_ptr<
-          google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
+      std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
+          google::cloud::pubsublite::MessageMetadata>>
           publisher,
-      PublishMessageTransformer transformer);
+      PublishMessageTransformer transformer,
+      const FailureHandler& failure_handler);
 
   ~PublisherConnectionImpl() override;
 
@@ -50,16 +54,15 @@ class PublisherConnectionImpl
   void ResumePublish(ResumePublishParams) override{};
 
  private:
-  std::unique_ptr<
-      google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
-      publisher_;
+  std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
+      google::cloud::pubsublite::MessageMetadata>> const publisher_;
   google::cloud::pubsublite_internal::ServiceComposite service_composite_;
-  PublishMessageTransformer message_transformer_;
+  PublishMessageTransformer const message_transformer_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite
+}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_PUBLISHER_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PUBLISHER_CONNECTION_IMPL_H

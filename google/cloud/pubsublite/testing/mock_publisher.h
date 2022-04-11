@@ -24,11 +24,12 @@ namespace cloud {
 namespace pubsublite_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-template <class T>
-class MockPublisher : public google::cloud::pubsublite_internal::Publisher<T> {
+template <class ResponseT>
+class MockPublisher
+    : public google::cloud::pubsublite_internal::Publisher<ResponseT> {
  public:
   MOCK_METHOD(future<Status>, Start, (), (override));
-  MOCK_METHOD(future<StatusOr<T>>, Publish,
+  MOCK_METHOD(future<StatusOr<ResponseT>>, Publish,
               (google::cloud::pubsublite::v1::PubSubMessage), (override));
   MOCK_METHOD(void, Flush, (), (override));
   MOCK_METHOD(future<void>, Shutdown, (), (override));
