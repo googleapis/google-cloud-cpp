@@ -25,12 +25,17 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-struct PublishMessageTransformer {
-  using Type =
-      std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
-          google::cloud::pubsub::Message)>;
+using PublishMessageTransformer =
+    std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
+        google::cloud::pubsub::Message)>;
+
+struct PublishMessageTransformerOption {
+  using Type = PublishMessageTransformer;
 };
 
+/**
+ * A connection implementation for publishing messages to a single `Topic`.
+ */
 class PublisherConnectionImpl
     : public ::google::cloud::pubsub::PublisherConnection {
  public:
@@ -38,7 +43,7 @@ class PublisherConnectionImpl
       std::unique_ptr<
           google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
           publisher,
-      Options const& opts);
+      PublishMessageTransformer transformer);
 
   ~PublisherConnectionImpl() override;
 
@@ -53,9 +58,7 @@ class PublisherConnectionImpl
       google::cloud::pubsublite_internal::Publisher<MessageMetadata>>
       publisher_;
   google::cloud::pubsublite_internal::ServiceComposite service_composite_;
-  std::function<StatusOr<google::cloud::pubsublite::v1::PubSubMessage>(
-      google::cloud::pubsub::Message)>
-      message_transformer_;
+  PublishMessageTransformer message_transformer_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

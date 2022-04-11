@@ -25,10 +25,10 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
         google::cloud::pubsublite::MessageMetadata>>
         publisher,
-    Options const& opts)
+    PublishMessageTransformer transformer)
     : publisher_{std::move(publisher)},
       service_composite_{publisher_.get()},
-      message_transformer_{opts.get<PublishMessageTransformer>()} {
+      message_transformer_{std::move(transformer)} {
   service_composite_.Start();
 }
 

@@ -51,11 +51,10 @@ TEST(PublisherConnectionImplTest, BadMessage) {
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
   Status status = Status{StatusCode::kAborted, "uh ohhh"};
   StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer;
-  auto opts =
-      Options{}.set<PublishMessageTransformer>(transformer.AsStdFunction());
   promise<Status> p;
   EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
-  PublisherConnectionImpl conn{std::move(publisher), opts};
+  PublisherConnectionImpl conn{std::move(publisher),
+                               transformer.AsStdFunction()};
 
   EXPECT_CALL(transformer, Call).WillOnce(Return(status));
   auto received = conn.Publish(PublishParams{FromProto(PubsubMessage{})});
@@ -73,11 +72,10 @@ TEST(PublisherConnectionImplTest, GoodMessageBadPublish) {
       absl::make_unique<StrictMock<MockPublisher<MessageMetadata>>>();
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
   StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer;
-  auto opts =
-      Options{}.set<PublishMessageTransformer>(transformer.AsStdFunction());
   promise<Status> p;
   EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
-  PublisherConnectionImpl conn{std::move(publisher), opts};
+  PublisherConnectionImpl conn{std::move(publisher),
+                               transformer.AsStdFunction()};
 
   PubSubMessage message;
   message.set_key("1");
@@ -102,11 +100,10 @@ TEST(PublisherConnectionImplTest, GoodMessageGoodPublish) {
       absl::make_unique<StrictMock<MockPublisher<MessageMetadata>>>();
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
   StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer;
-  auto opts =
-      Options{}.set<PublishMessageTransformer>(transformer.AsStdFunction());
   promise<Status> p;
   EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
-  PublisherConnectionImpl conn{std::move(publisher), opts};
+  PublisherConnectionImpl conn{std::move(publisher),
+                               transformer.AsStdFunction()};
 
   PubSubMessage message;
   message.set_key("2");
@@ -128,12 +125,12 @@ TEST(PublisherConnectionImplTest, Flush) {
 
   auto publisher =
       absl::make_unique<StrictMock<MockPublisher<MessageMetadata>>>();
+  StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer;
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref = *publisher;
-  auto opts = Options{}.set<PublishMessageTransformer>(
-      [](Message const&) { return PubSubMessage{}; });
   promise<Status> p;
   EXPECT_CALL(publisher_ref, Start).WillOnce(Return(ByMove(p.get_future())));
-  PublisherConnectionImpl conn{std::move(publisher), opts};
+  PublisherConnectionImpl conn{std::move(publisher),
+                               transformer.AsStdFunction()};
 
   EXPECT_CALL(publisher_ref, Flush);
   conn.Flush(FlushParams{});
