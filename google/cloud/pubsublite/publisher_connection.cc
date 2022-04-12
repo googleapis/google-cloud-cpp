@@ -86,20 +86,25 @@ const PublishMessageTransformer kDefaultMessageTransformer =
 class PubSubLiteRetryPolicy : public RetryPolicy {
  public:
   bool OnFailure(Status const& s) override {
-    return retryable_codes_.find(s.code()) != retryable_codes_.end();
+    return retryable_codes_.find(static_cast<std::uint8_t>(s.code())) !=
+           retryable_codes_.end();
   }
 
   bool IsExhausted() const override { return false; }
 
   bool IsPermanentFailure(Status const& s) const override {
-    return retryable_codes_.find(s.code()) == retryable_codes_.end();
+    return retryable_codes_.find(static_cast<std::uint8_t>(s.code())) ==
+           retryable_codes_.end();
   }
 
  private:
-  std::unordered_set<StatusCode> retryable_codes_{
-      StatusCode::kDeadlineExceeded, StatusCode::kAborted,
-      StatusCode::kInternal,         StatusCode::kUnavailable,
-      StatusCode::kUnknown,          StatusCode::kResourceExhausted};
+  std::unordered_set<std::uint8_t> retryable_codes_{
+      static_cast<std::uint8_t>(StatusCode::kDeadlineExceeded),
+      static_cast<std::uint8_t>(StatusCode::kAborted),
+      static_cast<std::uint8_t>(StatusCode::kInternal),
+      static_cast<std::uint8_t>(StatusCode::kUnavailable),
+      static_cast<std::uint8_t>(StatusCode::kUnknown),
+      static_cast<std::uint8_t>(StatusCode::kResourceExhausted)};
 };
 
 BatchingOptions CreateBatchingOptions(Options const& opts) {
