@@ -357,17 +357,6 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
                                   absl::nullopt, encryption_config)
                     .get();
   {
-    // TODO(#8594): Remove this when we know how to deal with the issue.
-    auto matcher =
-        StatusIs(StatusCode::kFailedPrecondition,
-                 HasSubstr("exceeded the maximum timestamp staleness"));
-    testing::StringMatchResultListener listener;
-    if (matcher.impl().MatchAndExplain(backup, &listener)) {
-      EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
-      GTEST_SKIP();
-    }
-  }
-  {
     // TODO(#8616): Remove this when we know how to deal with the issue.
     auto matcher = testing_util::StatusIs(
         StatusCode::kDeadlineExceeded,
