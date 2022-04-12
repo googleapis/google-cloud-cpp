@@ -174,7 +174,7 @@ std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                           initializer) {
               ClientMetadata metadata;
               metadata["x-goog-request-params"] = absl::StrCat(
-                  "partition=", partition,
+                  "partition=", partition, "&",
                   "subscription=subscription");  // TODO(18suresha): figure out
                                                  // subscription path
               metadata["x-goog-pubsub-context"] = GetSerializedContext();
