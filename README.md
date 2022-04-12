@@ -30,8 +30,8 @@ This repository contains idiomatic C++ client libraries for the following
 
 > Please check the [CHANGELOG] for important announcements and upcoming
 > changes.<br>
-> In particular, note that on (or about) **2022-06-01** this library will stop
-> development based on C++11.
+> In particular, note that on (or about) **2022-06-01** this library will
+> require C++ >= 14.
 
 [CHANGELOG]: CHANGELOG.md
 
