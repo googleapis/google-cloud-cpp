@@ -57,6 +57,7 @@ std::unique_ptr<EVP_MD_CTX, OpenSslDeleter> GetDigestCtx() {
 
 std::string CaptureSslErrors() {
   std::string msg;
+  char const* sep = "";
   while (auto code = ERR_get_error()) {
     // OpenSSL guarantees that 256 bytes is enough:
     //   https://www.openssl.org/docs/man1.1.1/man3/ERR_error_string_n.html
@@ -65,7 +66,9 @@ std::string CaptureSslErrors() {
     auto constexpr kMaxOpenSslErrorLength = 256;
     std::array<char, kMaxOpenSslErrorLength> buf{};
     ERR_error_string_n(code, buf.data(), buf.size());
+    msg += sep;
     msg += buf.data();
+    sep = ", ";
   }
   return msg;
 }
@@ -124,12 +127,6 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
                       CaptureSslErrors());
   }
 
-  // The OpenSSL "C" APIs uses `size_t`, I (coryan) believe all platforms we
-  // support satisfy this assertion, and suspect this is true in all platforms.
-  // However, if the code ever finds its way to one where it is not true, it
-  // would be better to get a compile-time error.
-  static_assert(std::is_same<std::size_t, size_t>::value,
-                "Expect std::size_t == size_t");
   // The signed SHA256 size depends on the size (the experts say "modulus") of
   // they key.  First query the size:
   std::size_t actual_len = 0;
