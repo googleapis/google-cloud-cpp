@@ -21,16 +21,18 @@ exports_files([
 ])
 
 EXPERIMENTAL_LIBRARIES = [
+    # Introduced around 2022-04-08
     "dialogflow_cx",
     "dialogflow_es",
-    "logging",
-    "osconfig",
-    "speech",
     # This is WIP, it needs a number of hand-crafted APIs.
     "pubsublite",
 ]
 
 TRANSITION_LIBRARIES = [
+    # 2022-04-11
+    "logging",
+    "osconfig",
+    "speech",
     # 2022-03-28
     "apigeeconnect",
     "contactcenterinsights",
