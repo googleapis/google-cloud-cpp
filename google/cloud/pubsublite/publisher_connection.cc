@@ -208,7 +208,7 @@ std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                                     cq, metadata),
                   std::move(initializer));
             },
-            CreateBatchingOptions(opts), ipr, alarm_registry);
+            CreateBatchingOptions(opts), std::move(ipr), alarm_registry);
       };
 
   AlarmRegistryImpl alarm_registry{cq};
