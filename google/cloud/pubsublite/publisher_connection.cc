@@ -143,7 +143,7 @@ std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
     opts.set<PublishMessageTransformerOption>(kDefaultMessageTransformer);
   }
   if (!opts.has<FailureHandlerOption>()) {
-    opts.set<FailureHandlerOption>([](absl::Status const&) {});
+    opts.set<FailureHandlerOption>([](Status const&) {});
   }
   // TODO(18suresha): set EndpointOption
   CompletionQueue cq = MakeBackgroundThreadsFactory(opts)()->cq();
