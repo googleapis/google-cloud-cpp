@@ -18,6 +18,7 @@
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
 #include "google/cloud/pubsublite/internal/batching_options.h"
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
+#include "google/cloud/pubsublite/internal/location.h"
 #include "google/cloud/pubsublite/internal/multipartition_publisher.h"
 #include "google/cloud/pubsublite/internal/publisher_connection_impl.h"
 #include "google/cloud/pubsublite/internal/publisher_stub_factory.h"
@@ -53,6 +54,7 @@ using google::cloud::pubsublite_internal::ClientMetadata;
 using google::cloud::pubsublite_internal::CreateDefaultAdminServiceStub;
 using google::cloud::pubsublite_internal::CreateDefaultPublisherServiceStub;
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
+using google::cloud::pubsublite_internal::MakeLocation;
 using google::cloud::pubsublite_internal::MakeStreamFactory;
 using google::cloud::pubsublite_internal::MultipartitionPublisher;
 using google::cloud::pubsublite_internal::PartitionPublisher;
@@ -126,6 +128,13 @@ BatchingOptions CreateBatchingOptions(Options const& opts) {
   return batching_options;
 }
 
+StatusOr<std::string> GetEndpoint(std::string const& location) {
+  auto parsed_loc = MakeLocation(location);
+  if (!parsed_loc) return parsed_loc.status();
+  return absl::StrCat(parsed_loc->GetCloudRegion().ToString(),
+                      "-pubsublite.googleapis.com");
+}
+
 std::string GetSerializedContext() {
   Struct context;
   auto& metadata_map = *context.mutable_fields();
@@ -154,7 +163,11 @@ std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
   if (!opts.has<FailureHandlerOption>()) {
     opts.set<FailureHandlerOption>([](Status const&) {});
   }
-  // TODO(18suresha): set EndpointOption
+  if (!opts.has<EndpointOption>()) {
+    auto endpoint = GetEndpoint(topic.location());
+    if (!endpoint) return nullptr;
+    opts.set<EndpointOption>(*std::move(endpoint));
+  }
   CompletionQueue cq = MakeBackgroundThreadsFactory(opts)()->cq();
   std::shared_ptr<BackoffPolicy const> backoff_policy =
       std::make_shared<ExponentialBackoffPolicy>(std::chrono::milliseconds{10},
