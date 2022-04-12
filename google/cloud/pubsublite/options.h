@@ -18,7 +18,6 @@
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/status/status.h"
 #include <google/cloud/pubsublite/v1/common.pb.h>
 #include <functional>
 
@@ -36,9 +35,9 @@ using PublishMessageTransformer =
         google::cloud::pubsub::Message)>;
 
 /**
- * Handler for if the publisher connection shuts down with a non-`kOk` status.
+ * Handler to be called if a connection fails with a permanent error.
  */
-using FailureHandler = std::function<void(absl::Status)>;
+using FailureHandler = std::function<void(Status)>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite

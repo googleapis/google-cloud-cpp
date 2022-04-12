@@ -46,27 +46,24 @@ using ::testing::StrictMock;
 class PublisherConnectionImplTest : public ::testing::Test {
  protected:
   PublisherConnectionImplTest()
-      : publisher_{absl::make_unique<
-            StrictMock<MockPublisher<MessageMetadata>>>()},
-        publisher_ref_{[this]() -> StrictMock<MockPublisher<MessageMetadata>>& {
-          EXPECT_CALL(*publisher_, Start)
-              .WillOnce(Return(ByMove(p_.get_future())));
-          return *publisher_;
-        }()},
-        conn_{std::move(publisher_), transformer_.AsStdFunction(),
-              failure_handler_.AsStdFunction()} {}
+      : publisher_ref_{*new StrictMock<MockPublisher<MessageMetadata>>()} {
+    EXPECT_CALL(publisher_ref_, Start)
+        .WillOnce(Return(ByMove(status_promise_.get_future())));
+    conn_ = absl::make_unique<PublisherConnectionImpl>(
+        absl::WrapUnique(&publisher_ref_), transformer_.AsStdFunction(),
+        failure_handler_.AsStdFunction());
+  }
 
   ~PublisherConnectionImplTest() override {
     EXPECT_CALL(publisher_ref_, Shutdown)
         .WillOnce(Return(ByMove(make_ready_future())));
   }
 
-  std::unique_ptr<StrictMock<MockPublisher<MessageMetadata>>> publisher_;
-  promise<Status> p_;
+  promise<Status> status_promise_;
   StrictMock<MockPublisher<MessageMetadata>>& publisher_ref_;
   StrictMock<MockFunction<StatusOr<PubSubMessage>(Message)>> transformer_;
-  StrictMock<MockFunction<void(absl::Status)>> failure_handler_;
-  PublisherConnectionImpl conn_;
+  StrictMock<MockFunction<void(Status)>> failure_handler_;
+  std::unique_ptr<google::cloud::pubsub::PublisherConnection> conn_;
 };
 
 TEST_F(PublisherConnectionImplTest, BadMessage) {
@@ -74,8 +71,8 @@ TEST_F(PublisherConnectionImplTest, BadMessage) {
   Status status = Status{StatusCode::kAborted, "uh ohhh"};
 
   EXPECT_CALL(transformer_, Call).WillOnce(Return(status));
-  EXPECT_CALL(failure_handler_, Call(absl::AbortedError(status.message())));
-  auto received = conn_.Publish(PublishParams{FromProto(PubsubMessage{})});
+  EXPECT_CALL(failure_handler_, Call(status));
+  auto received = conn_->Publish(PublishParams{FromProto(PubsubMessage{})});
   auto error = received.get().status();
   EXPECT_EQ(error, status);
 }
@@ -91,7 +88,7 @@ TEST_F(PublisherConnectionImplTest, GoodMessageBadPublish) {
   EXPECT_CALL(publisher_ref_, Publish(IsProtoEqual(message)))
       .WillOnce(
           Return(ByMove(make_ready_future(StatusOr<MessageMetadata>(status)))));
-  auto received = conn_.Publish(PublishParams{FromProto(PubsubMessage{})});
+  auto received = conn_->Publish(PublishParams{FromProto(PubsubMessage{})});
   auto error = received.get().status();
   EXPECT_EQ(error, status);
 }
@@ -108,7 +105,7 @@ TEST_F(PublisherConnectionImplTest, GoodMessageGoodPublish) {
       .WillOnce(
           Return(ByMove(make_ready_future(StatusOr<MessageMetadata>(mm)))));
   auto received =
-      conn_.Publish(PublishParams{FromProto(PubsubMessage{})}).get();
+      conn_->Publish(PublishParams{FromProto(PubsubMessage{})}).get();
   EXPECT_EQ(*received, mm.Serialize());
 }
 
@@ -116,7 +113,7 @@ TEST_F(PublisherConnectionImplTest, Flush) {
   InSequence seq;
 
   EXPECT_CALL(publisher_ref_, Flush);
-  conn_.Flush(FlushParams{});
+  conn_->Flush(FlushParams{});
 }
 
 }  // namespace
