@@ -35,8 +35,7 @@ PublisherConnectionImpl::PublisherConnectionImpl(
   service_composite_.Start().then([=](future<Status> f) {
     auto status = f.get();
     if (status.ok()) return;
-    auto code = static_cast<absl::StatusCode>(status.code());
-    failure_handler(absl::Status{code, std::move(status).message()});
+    failure_handler(std::move(status));
   });
 }
 

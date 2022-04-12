@@ -19,7 +19,6 @@
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/status/status.h"
 #include <google/cloud/pubsublite/v1/common.pb.h>
 #include <chrono>
 #include <functional>
@@ -42,9 +41,9 @@ struct PublishMessageTransformerOption {
 };
 
 /**
- * Handler for if the publisher connection shuts down with a non-`kOk` status.
+ * Handler to be called if a connection fails with a permanent error.
  */
-using FailureHandler = std::function<void(absl::Status)>;
+using FailureHandler = std::function<void(Status)>;
 
 struct FailureHandlerOption {
   using Type = FailureHandler;
