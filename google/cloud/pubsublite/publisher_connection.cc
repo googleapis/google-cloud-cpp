@@ -191,14 +191,12 @@ std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
         ipr.set_partition(partition);
         AlarmRegistryImpl alarm_registry{cq};
         return std::make_shared<PartitionPublisher>(
-            [backoff_policy, partition, cq, opts,
-             sleeper](StreamInitializer<PublishRequest, PublishResponse>
-                          initializer) {
+            [backoff_policy, partition, cq, opts, sleeper,
+             topic](StreamInitializer<PublishRequest, PublishResponse>
+                        initializer) {
               ClientMetadata metadata;
               metadata["x-goog-request-params"] = absl::StrCat(
-                  "partition=", partition, "&",
-                  "subscription=subscription");  // TODO(18suresha): figure out
-                                                 // subscription path
+                  "partition=", partition, "&", "topic=", topic.FullName());
               metadata["x-goog-pubsub-context"] = GetSerializedContext();
               return absl::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
                   PublishRequest, PublishResponse>>(
