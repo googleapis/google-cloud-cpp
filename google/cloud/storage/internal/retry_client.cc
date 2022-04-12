@@ -91,6 +91,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
      << last_status.message();
   return error(std::move(os).str());
 }
+
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
@@ -364,13 +365,23 @@ StatusOr<CreateResumableSessionResponse> RetryClient::CreateResumableSession(
 }
 
 StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
-    ResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    ResumableUploadRequest const& request) {
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto const idempotency = idempotency_policy_->IsIdempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
+  return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
+                  &RawClient::CreateResumableUpload, request, __func__);
 }
 
 StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
-    QueryResumableUploadRequest const&) {
-  return Status(StatusCode::kUnimplemented, "TODO(#8621)");
+    QueryResumableUploadRequest const& request) {
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
+  auto const idempotency = Idempotency::kIdempotent;
+  return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
+                  &RawClient::QueryResumableUpload, request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
