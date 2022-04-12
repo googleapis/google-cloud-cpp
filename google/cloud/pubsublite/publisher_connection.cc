@@ -25,6 +25,7 @@
 #include "google/cloud/pubsublite/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/struct.pb.h>
@@ -38,6 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using google::cloud::version_major;
 using google::cloud::version_minor;
 
+using google::cloud::internal::Base64Encoder;
 using google::cloud::internal::MakeBackgroundThreadsFactory;
 using google::cloud::internal::RetryPolicy;
 
@@ -136,7 +138,9 @@ std::string GetSerializedContext() {
   major_version.set_number_value(version_major());
   std::string serialized_context;
   context.SerializePartialToString(&serialized_context);
-  return serialized_context;  // TODO(18suresha): base64 encode?
+  Base64Encoder encoder;
+  for (char const c : serialized_context) encoder.PushBack(c);
+  return std::move(encoder).FlushAndPad();
 }
 
 std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
