@@ -258,6 +258,7 @@ target_link_libraries(
            absl::time
            absl::variant
            google-cloud-cpp::common
+           google-cloud-cpp::rest-internal
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
@@ -276,6 +277,10 @@ target_include_directories(
                                     $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_storage
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+if (GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST)
+    target_compile_definitions(google_cloud_cpp_storage
+                               PUBLIC GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST)
+endif ()
 
 # GCC-7.3 (the default GCC version on Ubuntu:18.04) issues a warning (a member
 # variable may be used without being initialized), in this file. GCC-8.0 no
@@ -694,6 +699,7 @@ string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage" " -lcrc32c")
 string(
     CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
            "google_cloud_cpp_common"
+           " google_cloud_cpp_rest_internal"
            " libcurl openssl"
            " absl_memory"
            " absl_strings"

@@ -29,19 +29,21 @@ namespace oauth2 {
 namespace {
 
 using ::google::cloud::storage::internal::HttpResponse;
-using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::testing_util::FakeClock;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::AllOf;
-using ::testing::An;
-using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Not;
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
+using ::google::cloud::storage::testing::MockHttpRequest;
+using ::testing::_;
+using ::testing::An;
+using ::testing::AtLeast;
 using ::testing::Return;
 using ::testing::StrEq;
+#endif
 
 class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
@@ -52,6 +54,7 @@ class AuthorizedUserCredentialsTest : public ::testing::Test {
   void TearDown() override { MockHttpRequestBuilder::mock_.reset(); }
 };
 
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 /// @test Verify that we can create credentials from a JWT string.
 TEST_F(AuthorizedUserCredentialsTest, Simple) {
   std::string response = R"""({
@@ -247,6 +250,7 @@ TEST_F(AuthorizedUserCredentialsTest, UsesCARootsInfo) {
   EXPECT_EQ("Authorization: Mock-Type fake-token",
             credentials.AuthorizationHeader().value());
 }
+#endif
 
 /// @test Verify that parsing an authorized user account JSON string works.
 TEST_F(AuthorizedUserCredentialsTest, ParseSimple) {
