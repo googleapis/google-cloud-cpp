@@ -72,11 +72,11 @@ void MD5HashFunction::Update(char const* buf, std::size_t n) {
 HashValues MD5HashFunction::Finish() && {
   std::vector<std::uint8_t> hash(EVP_MD_size(EVP_md5()));
   unsigned int len = 0;
-  // Note: EVP_DigestFinal_ex() consumes a `unsigned char*` for the output array
-  // (digest.data()) in our case.  On some platforms (PowerPC and ARM read), the
-  // default `char` is unsigned. In those platforms it is possible that
-  // `std::uint8_t != unsigned char` and the `reinterpret_cast<>` is needed, but
-  // it is still safe.
+  // Note: EVP_DigestFinal_ex() consumes an `unsigned char*` for the output
+  // array.  On some platforms (read PowerPC and ARM), the default `char` is
+  // unsigned. In those platforms it is possible that
+  // `std::uint8_t != unsigned char` and the `reinterpret_cast<>` is needed. It
+  // should be safe in any case.
   EVP_DigestFinal_ex(impl_.get(), reinterpret_cast<unsigned char*>(hash.data()),
                      &len);
   hash.resize(len);
