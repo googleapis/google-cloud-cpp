@@ -62,6 +62,7 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/service.h",
     "internal/service_composite.h",
     "internal/stream_factory.h",
+    "internal/stream_retry_policy.h",
     "internal/subscriber_auth_decorator.h",
     "internal/subscriber_logging_decorator.h",
     "internal/subscriber_metadata_decorator.h",

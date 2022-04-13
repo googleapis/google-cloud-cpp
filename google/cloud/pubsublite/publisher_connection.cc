@@ -23,13 +23,14 @@
 #include "google/cloud/pubsublite/internal/publisher_connection_impl.h"
 #include "google/cloud/pubsublite/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsublite/internal/stream_factory.h"
+#include "google/cloud/pubsublite/internal/stream_retry_policy.h"
 #include "google/cloud/pubsublite/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/base64_transforms.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/struct.pb.h>
+#include <functional>
 #include <unordered_set>
 
 namespace google {
@@ -64,6 +65,7 @@ using google::cloud::pubsublite_internal::
     ResumableAsyncStreamingReadWriteRpcImpl;
 using google::cloud::pubsublite_internal::RetryPolicyFactory;
 using google::cloud::pubsublite_internal::StreamInitializer;
+using google::cloud::pubsublite_internal::StreamRetryPolicy;
 
 using google::cloud::pubsublite::v1::AttributeValues;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
@@ -86,30 +88,6 @@ const PublishMessageTransformer kDefaultMessageTransformer =
       }
       return m;
     };
-
-class PubSubLiteRetryPolicy : public RetryPolicy {
- public:
-  bool OnFailure(Status const& s) override {
-    return retryable_codes_.find(static_cast<std::uint8_t>(s.code())) !=
-           retryable_codes_.end();
-  }
-
-  bool IsExhausted() const override { return false; }
-
-  bool IsPermanentFailure(Status const& s) const override {
-    return retryable_codes_.find(static_cast<std::uint8_t>(s.code())) ==
-           retryable_codes_.end();
-  }
-
- private:
-  std::unordered_set<std::uint8_t> retryable_codes_{
-      static_cast<std::uint8_t>(StatusCode::kDeadlineExceeded),
-      static_cast<std::uint8_t>(StatusCode::kAborted),
-      static_cast<std::uint8_t>(StatusCode::kInternal),
-      static_cast<std::uint8_t>(StatusCode::kUnavailable),
-      static_cast<std::uint8_t>(StatusCode::kUnknown),
-      static_cast<std::uint8_t>(StatusCode::kResourceExhausted)};
-};
 
 BatchingOptions CreateBatchingOptions(Options const& opts) {
   BatchingOptions batching_options;
@@ -200,7 +178,7 @@ std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
               metadata["x-goog-pubsub-context"] = GetSerializedContext();
               return absl::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
                   PublishRequest, PublishResponse>>(
-                  []() { return absl::make_unique<PubSubLiteRetryPolicy>(); },
+                  []() { return absl::make_unique<StreamRetryPolicy>(); },
                   backoff_policy, sleeper,
                   MakeStreamFactory(CreateDefaultPublisherServiceStub(cq, opts),
                                     cq, metadata),

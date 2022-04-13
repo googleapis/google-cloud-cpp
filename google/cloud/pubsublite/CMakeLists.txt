@@ -140,6 +140,7 @@ add_library(
     internal/service.h
     internal/service_composite.h
     internal/stream_factory.h
+    internal/stream_retry_policy.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
     internal/subscriber_logging_decorator.cc
@@ -274,6 +275,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         internal/resumable_async_streaming_read_write_rpc_test.cc
         internal/service_composite_test.cc
         internal/stream_factory_test.cc
+        internal/stream_retry_policy_test.cc
         message_metadata_test.cc
         topic_test.cc)
 
