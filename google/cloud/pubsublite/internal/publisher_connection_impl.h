@@ -30,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A connection implementation for publishing messages to a single `Topic`.
  */
 class PublisherConnectionImpl
-    : public ::google::cloud::pubsub::PublisherConnection {
+    : public google::cloud::pubsub::PublisherConnection {
  public:
   PublisherConnectionImpl(
       std::unique_ptr<google::cloud::pubsublite_internal::Publisher<
