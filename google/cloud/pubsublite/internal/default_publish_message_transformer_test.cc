@@ -56,9 +56,8 @@ TEST(DefaultPublishMessageTransformerTest, Timestamp) {
   Timestamp t;
   t.set_seconds(42);
   t.set_nanos(42);
-  std::string serialized = t.SerializeAsString();
   Base64Encoder encoder;
-  for (char const c : serialized) encoder.PushBack(c);
+  encoder.PushBack(t.SerializeAsString());
   PubSubMessage psl_message = ExamplePslMessage();
   *psl_message.mutable_event_time() = std::move(t);
   EXPECT_THAT(*DefaultPublishMessageTransformer(

@@ -41,11 +41,8 @@ class StreamRetryPolicy : public google::cloud::internal::RetryPolicy {
   class StatusCodeHash {
    public:
     std::size_t operator()(StatusCode const& code) const {
-      return hash_(static_cast<std::uint8_t>(code));
+      return std::hash<std::uint8_t>{}(static_cast<std::uint8_t>(code));
     }
-
-   private:
-    std::hash<std::uint8_t> hash_;
   };
   std::unordered_set<StatusCode, StatusCodeHash> retryable_codes_{
       StatusCode::kDeadlineExceeded, StatusCode::kAborted,

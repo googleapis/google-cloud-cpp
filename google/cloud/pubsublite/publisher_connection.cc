@@ -39,9 +39,6 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using google::cloud::version_major;
-using google::cloud::version_minor;
-
 using google::cloud::internal::Base64Encoder;
 using google::cloud::internal::MakeBackgroundThreadsFactory;
 
@@ -72,7 +69,6 @@ using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 
 using google::protobuf::Struct;
-using google::protobuf::Value;
 
 BatchingOptions CreateBatchingOptions(Options const& opts) {
   BatchingOptions batching_options;
@@ -100,20 +96,10 @@ StatusOr<std::string> GetEndpoint(std::string const& location) {
 std::string GetSerializedContext(std::string const& framework) {
   Struct context;
   auto& metadata_map = *context.mutable_fields();
-  Value lang;
-  lang.set_string_value("CPP");
-  metadata_map["language"] = std::move(lang);
-  Value framework_val;
-  framework_val.set_string_value(framework);
-  metadata_map["framework"] = framework_val;
-  Value minor_version;
-  minor_version.set_number_value(version_minor());
-  Value major_version;
-  major_version.set_number_value(version_major());
-  std::string serialized_context;
-  context.SerializePartialToString(&serialized_context);
+  metadata_map["language"].set_string_value("CPP");
+  metadata_map["framework"].set_string_value(framework);
   Base64Encoder encoder;
-  for (char const c : serialized_context) encoder.PushBack(c);
+  encoder.PushBack(context.SerializeAsString());
   return std::move(encoder).FlushAndPad();
 }
 
