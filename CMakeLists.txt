@@ -185,7 +185,7 @@ if (experimental-storage-oauth2-rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
 endif ()
 option(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST
        "Enable compilation for the GCS OAuth2 using REST library (EXPERIMENTAL)"
-        "${GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST_DEFAULT}")
+       "${GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST_DEFAULT}")
 mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST)
 
 # We no longer build the generator by default, but if it was explicitly
