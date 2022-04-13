@@ -684,7 +684,6 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseSimple) {
       &input));
 
   auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
-  EXPECT_EQ(actual.upload_state, ResumableUploadResponse::kInProgress);
   EXPECT_EQ(actual.committed_size.value_or(0), 123456);
   EXPECT_FALSE(actual.payload.has_value());
 }
@@ -701,7 +700,6 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
       &input));
 
   auto const actual = GrpcObjectRequestParser::FromProto(input, Options{});
-  EXPECT_EQ(actual.upload_state, ResumableUploadResponse::kDone);
   EXPECT_FALSE(actual.committed_size.has_value());
   ASSERT_TRUE(actual.payload.has_value());
   EXPECT_EQ(actual.payload->name(), "test-object-name");
