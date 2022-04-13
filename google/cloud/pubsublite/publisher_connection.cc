@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/pubsublite/publisher_connection.h"
+#include "google/cloud/pubsub/internal/containing_publisher_connection.h"
 #include "google/cloud/pubsublite/internal/admin_connection_impl.h"
 #include "google/cloud/pubsublite/internal/admin_stub_factory.h"
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
 #include "google/cloud/pubsublite/internal/batching_options.h"
-#include "google/cloud/pubsublite/internal/containing_publisher_connection.h"
 #include "google/cloud/pubsublite/internal/default_publish_message_transformer.h"
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
 #include "google/cloud/pubsublite/internal/location.h"
@@ -46,12 +46,12 @@ using google::cloud::internal::Base64Encoder;
 using google::cloud::internal::MakeBackgroundThreadsFactory;
 
 using google::cloud::pubsub::PublisherConnection;
+using google::cloud::pubsub_internal::ContainingPublisherConnection;
 
 using google::cloud::pubsublite_internal::AlarmRegistryImpl;
 using google::cloud::pubsublite_internal::AsyncSleeper;
 using google::cloud::pubsublite_internal::BatchingOptions;
 using google::cloud::pubsublite_internal::ClientMetadata;
-using google::cloud::pubsublite_internal::ContainingPublisherConnection;
 using google::cloud::pubsublite_internal::CreateDefaultAdminServiceStub;
 using google::cloud::pubsublite_internal::CreateDefaultPublisherServiceStub;
 using google::cloud::pubsublite_internal::DefaultPublishMessageTransformer;
@@ -102,10 +102,10 @@ std::string GetSerializedContext(std::string const& framework) {
   Struct context;
   auto& metadata_map = *context.mutable_fields();
   Value lang;
-  *lang.mutable_string_value() = "CPP";
+  lang.set_string_value("CPP");
   metadata_map["language"] = std::move(lang);
   Value framework_val;
-  *framework_val.mutable_string_value() = framework;
+  framework_val.set_string_value(framework);
   metadata_map["framework"] = framework_val;
   Value minor_version;
   minor_version.set_number_value(version_minor());
@@ -146,9 +146,10 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
   std::shared_ptr<BackoffPolicy const> backoff_policy =
       std::make_shared<ExponentialBackoffPolicy>(std::chrono::milliseconds{10},
                                                  std::chrono::seconds{10}, 2.0);
-  AsyncSleeper sleeper = [cq](std::chrono::milliseconds dur) mutable {
-    return cq.MakeRelativeTimer(dur).then(
-        [](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+  AsyncSleeper sleeper = [cq](
+                             std::chrono::milliseconds sleep_duration) mutable {
+    return cq.MakeRelativeTimer(sleep_duration)
+        .then([](future<StatusOr<std::chrono::system_clock::time_point>> f) {
           auto status = f.get();
           if (!status.ok()) {
             GCP_LOG(INFO) << "`MakeRelativeTimer` returned a non-ok status: "
@@ -160,30 +161,22 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
   auto publisher_service_stub = CreateDefaultPublisherServiceStub(cq, opts);
   auto batching_options = CreateBatchingOptions(opts);
 
-  std::function<std::shared_ptr<
-      Publisher<google::cloud::pubsublite::v1::Cursor>>(std::uint32_t)>
-      partition_publisher_factory = [topic, backoff_policy, batching_options,
-                                     cq, publisher_service_stub,
-                                     sleeper](std::uint32_t partition) {
-        InitialPublishRequest ipr;
-        *ipr.mutable_topic() = topic.FullName();
-        ipr.set_partition(partition);
-        AlarmRegistryImpl alarm_registry{cq};
-        auto stream_factory = MakeStreamFactory(
-            publisher_service_stub, cq, MakeClientMetadata(topic, partition));
-        return std::make_shared<PartitionPublisher>(
-            [backoff_policy, publisher_service_stub, cq, sleeper,
-             stream_factory,
-             topic](StreamInitializer<PublishRequest, PublishResponse>
-                        initializer) {
-              return absl::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
-                  PublishRequest, PublishResponse>>(
-                  [] { return absl::make_unique<StreamRetryPolicy>(); },
-                  backoff_policy, sleeper, stream_factory,
-                  std::move(initializer));
-            },
-            batching_options, std::move(ipr), alarm_registry);
-      };
+  auto partition_publisher_factory = [=](std::uint32_t partition) {
+    InitialPublishRequest request;
+    request.set_topic(topic.FullName());
+    request.set_partition(partition);
+    AlarmRegistryImpl alarm_registry{cq};
+    auto stream_factory = MakeStreamFactory(
+        publisher_service_stub, cq, MakeClientMetadata(topic, partition));
+    return std::make_shared<PartitionPublisher>(
+        [=](StreamInitializer<PublishRequest, PublishResponse> initializer) {
+          return absl::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
+              PublishRequest, PublishResponse>>(
+              [] { return absl::make_unique<StreamRetryPolicy>(); },
+              backoff_policy, sleeper, stream_factory, std::move(initializer));
+        },
+        batching_options, std::move(request), alarm_registry);
+  };
 
   AlarmRegistryImpl alarm_registry{cq};
   PublishMessageTransformer transformer = &DefaultPublishMessageTransformer;

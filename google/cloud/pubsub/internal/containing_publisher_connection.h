@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CONTAINING_PUBLISHER_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CONTAINING_PUBLISHER_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CONTAINING_PUBLISHER_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CONTAINING_PUBLISHER_CONNECTION_H
 
-#include "google/cloud/pubsub/publisher_connection.h"
-#include "google/cloud/options.h"
+#include "google/cloud/pubsub/publisher.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
+namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// ported from google::cloud::pubsub
 class ContainingPublisherConnection
     : public google::cloud::pubsub::PublisherConnection {
  public:
@@ -47,8 +46,8 @@ class ContainingPublisherConnection
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
+}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CONTAINING_PUBLISHER_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_CONTAINING_PUBLISHER_CONNECTION_H

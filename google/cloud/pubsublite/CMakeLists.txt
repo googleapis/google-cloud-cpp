@@ -93,7 +93,6 @@ add_library(
     internal/cloud_region.h
     internal/cloud_zone.cc
     internal/cloud_zone.h
-    internal/containing_publisher_connection.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc

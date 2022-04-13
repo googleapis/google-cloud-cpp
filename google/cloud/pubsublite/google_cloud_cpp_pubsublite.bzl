@@ -33,7 +33,6 @@ google_cloud_cpp_pubsublite_hdrs = [
     "internal/alarm_registry.h",
     "internal/alarm_registry_impl.h",
     "internal/batching_options.h",
-    "internal/containing_publisher_connection.h",
     "internal/cloud_region.h",
     "internal/cloud_zone.h",
     "internal/cursor_auth_decorator.h",

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Creates a new `PublisherConnection` object to work with `Publisher`.
  *
- * @param topic the Cloud Pub/Sub Lite topic used by the returned
+ * @param sleep_duration the Cloud Pub/Sub Lite topic used by the returned
  *     `PublisherConnection`.
  * @param opts The options to use for this call. Expected options are any of
  *     the types in the following option lists and in
@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *       - `google::cloud::GrpcOptionList`
  */
 StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
-MakePublisherConnection(Topic topic, Options opts);
+MakePublisherConnection(Topic sleep_duration, Options opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite

@@ -29,53 +29,54 @@ using google::cloud::pubsub::MessageBuilder;
 using google::cloud::pubsublite::v1::PubSubMessage;
 using google::protobuf::Timestamp;
 
-class DefaultPublishMessageTransformerTest : public ::testing::Test {
- protected:
-  DefaultPublishMessageTransformerTest()
-      : pubsub_message_{MessageBuilder{}
-                            .SetData("dataaaa")
-                            .SetOrderingKey("keyyyy")
-                            .InsertAttribute("attr1_key", "attr1_key")
-                            .InsertAttribute("lang", "cpp")},
-        psl_message_{[] {
-          PubSubMessage m;
-          m.set_data("dataaaa");
-          m.set_key("keyyyy");
-          (*m.mutable_attributes())["attr1_key"].add_values("attr1_key");
-          (*m.mutable_attributes())["lang"].add_values("cpp");
-          return m;
-        }()} {}
-
-  MessageBuilder pubsub_message_;
-  PubSubMessage psl_message_;
-};
-
-TEST_F(DefaultPublishMessageTransformerTest, NoTimestamp) {
-  EXPECT_THAT(
-      *DefaultPublishMessageTransformer(std::move(pubsub_message_).Build()),
-      IsProtoEqual(psl_message_));
+MessageBuilder ExamplePubSubMessageBuilder() {
+  return MessageBuilder{}
+      .SetData("dataaaa")
+      .SetOrderingKey("keyyyy")
+      .InsertAttribute("attr1_key", "attr1_key")
+      .InsertAttribute("lang", "cpp");
 }
 
-TEST_F(DefaultPublishMessageTransformerTest, Timestamp) {
+PubSubMessage ExamplePslMessage() {
+  PubSubMessage m;
+  m.set_data("dataaaa");
+  m.set_key("keyyyy");
+  (*m.mutable_attributes())["attr1_key"].add_values("attr1_key");
+  (*m.mutable_attributes())["lang"].add_values("cpp");
+  return m;
+}
+
+TEST(DefaultPublishMessageTransformerTest, NoTimestamp) {
+  EXPECT_THAT(
+      *DefaultPublishMessageTransformer(ExamplePubSubMessageBuilder().Build()),
+      IsProtoEqual(ExamplePslMessage()));
+}
+
+TEST(DefaultPublishMessageTransformerTest, Timestamp) {
   Timestamp t;
   t.set_seconds(42);
   t.set_nanos(42);
   std::string serialized = t.SerializeAsString();
   Base64Encoder encoder;
   for (char const c : serialized) encoder.PushBack(c);
-  pubsub_message_.InsertAttribute(kEventTimestampAttribute,
-                                  std::move(encoder).FlushAndPad());
-  *psl_message_.mutable_event_time() = std::move(t);
-  EXPECT_THAT(
-      *DefaultPublishMessageTransformer(std::move(pubsub_message_).Build()),
-      IsProtoEqual(psl_message_));
+  PubSubMessage psl_message = ExamplePslMessage();
+  *psl_message.mutable_event_time() = std::move(t);
+  EXPECT_THAT(*DefaultPublishMessageTransformer(
+                  ExamplePubSubMessageBuilder()
+                      .InsertAttribute(kEventTimestampAttribute,
+                                       std::move(encoder).FlushAndPad())
+                      .Build()),
+              IsProtoEqual(psl_message));
 }
 
-TEST_F(DefaultPublishMessageTransformerTest, InvalidTimestamp) {
-  pubsub_message_.InsertAttribute(kEventTimestampAttribute, "oops");
-  *psl_message_.mutable_event_time() = Timestamp{};
+TEST(DefaultPublishMessageTransformerTest, InvalidTimestamp) {
+  PubSubMessage psl_message = ExamplePslMessage();
+  *psl_message.mutable_event_time() = Timestamp{};
   EXPECT_EQ(
-      DefaultPublishMessageTransformer(std::move(pubsub_message_).Build())
+      DefaultPublishMessageTransformer(
+          ExamplePubSubMessageBuilder()
+              .InsertAttribute(kEventTimestampAttribute, "oops")
+              .Build())
           .status(),
       (Status{StatusCode::kInvalidArgument, "Not able to parse event time."}));
 }

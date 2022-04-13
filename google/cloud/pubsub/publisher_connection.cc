@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/containing_publisher_connection.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/internal/defaults.h"
@@ -37,26 +38,6 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-class ContainingPublisherConnection : public PublisherConnection {
- public:
-  ContainingPublisherConnection(std::shared_ptr<BackgroundThreads> background,
-                                std::shared_ptr<PublisherConnection> child)
-      : background_(std::move(background)), child_(std::move(child)) {}
-
-  ~ContainingPublisherConnection() override = default;
-
-  future<StatusOr<std::string>> Publish(PublishParams p) override {
-    return child_->Publish(std::move(p));
-  }
-  void Flush(FlushParams p) override { child_->Flush(std::move(p)); }
-  void ResumePublish(ResumePublishParams p) override {
-    child_->ResumePublish(std::move(p));
-  }
-
- private:
-  std::shared_ptr<BackgroundThreads> background_;
-  std::shared_ptr<PublisherConnection> child_;
-};
 
 std::shared_ptr<pubsub_internal::PublisherStub> DecoratePublisherStub(
     Options const& opts,
@@ -105,7 +86,8 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     connection = pubsub_internal::FlowControlledPublisherConnection::Create(
         std::move(opts), std::move(connection));
   }
-  return std::make_shared<pubsub::ContainingPublisherConnection>(
+  return std::make_shared<
+      google::cloud::pubsub_internal::ContainingPublisherConnection>(
       std::move(background), std::move(connection));
 }
 }  // namespace
