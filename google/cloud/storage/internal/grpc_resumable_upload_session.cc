@@ -56,9 +56,9 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadChunk(
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
     ConstBufferSequence const& payload, std::uint64_t,
     HashValues const& full_object_hashes) {
-  auto request = UploadChunkRequest(
-      session_id_params_.upload_id, committed_size_, payload,
-      committed_size_ + TotalBytes(payload), full_object_hashes);
+  auto request =
+      UploadChunkRequest(session_id_params_.upload_id, committed_size_, payload,
+                         full_object_hashes);
   request.set_multiple_options(
       request_.GetOption<UserProject>(), request_.GetOption<Fields>(),
       request_.GetOption<QuotaUser>(), request_.GetOption<UserIp>());
