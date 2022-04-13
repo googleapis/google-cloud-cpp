@@ -60,7 +60,6 @@ using google::cloud::pubsublite_internal::MakeLocation;
 using google::cloud::pubsublite_internal::MakeStreamFactory;
 using google::cloud::pubsublite_internal::MultipartitionPublisher;
 using google::cloud::pubsublite_internal::PartitionPublisher;
-using google::cloud::pubsublite_internal::Publisher;
 using google::cloud::pubsublite_internal::PublisherConnectionImpl;
 using google::cloud::pubsublite_internal::
     ResumableAsyncStreamingReadWriteRpcImpl;
