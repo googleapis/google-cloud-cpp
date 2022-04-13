@@ -169,16 +169,17 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
         *ipr.mutable_topic() = topic.FullName();
         ipr.set_partition(partition);
         AlarmRegistryImpl alarm_registry{cq};
+        auto stream_factory = MakeStreamFactory(
+            publisher_service_stub, cq, MakeClientMetadata(topic, partition));
         return std::make_shared<PartitionPublisher>(
-            [backoff_policy, partition, publisher_service_stub, cq, sleeper,
+            [backoff_policy, publisher_service_stub, cq, sleeper,
+             stream_factory,
              topic](StreamInitializer<PublishRequest, PublishResponse>
                         initializer) {
               return absl::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
                   PublishRequest, PublishResponse>>(
                   [] { return absl::make_unique<StreamRetryPolicy>(); },
-                  backoff_policy, sleeper,
-                  MakeStreamFactory(publisher_service_stub, cq,
-                                    MakeClientMetadata(topic, partition)),
+                  backoff_policy, sleeper, stream_factory,
                   std::move(initializer));
             },
             batching_options, std::move(ipr), alarm_registry);
