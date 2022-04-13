@@ -25,9 +25,7 @@ namespace pubsublite_internal {
 using ::google::cloud::testing_util::IsProtoEqual;
 
 using google::cloud::internal::Base64Encoder;
-using google::cloud::pubsub::Message;
 using google::cloud::pubsub::MessageBuilder;
-using google::cloud::pubsublite::v1::AttributeValues;
 using google::cloud::pubsublite::v1::PubSubMessage;
 using google::protobuf::Timestamp;
 
