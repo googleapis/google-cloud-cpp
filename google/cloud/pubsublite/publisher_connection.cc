@@ -17,6 +17,8 @@
 #include "google/cloud/pubsublite/internal/admin_stub_factory.h"
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
 #include "google/cloud/pubsublite/internal/batching_options.h"
+#include "google/cloud/pubsublite/internal/containing_publisher_connection.h"
+#include "google/cloud/pubsublite/internal/default_publish_message_transformer.h"
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
 #include "google/cloud/pubsublite/internal/location.h"
 #include "google/cloud/pubsublite/internal/multipartition_publisher.h"
@@ -31,7 +33,6 @@
 #include "absl/memory/memory.h"
 #include <google/protobuf/struct.pb.h>
 #include <functional>
-#include <unordered_set>
 
 namespace google {
 namespace cloud {
@@ -43,7 +44,6 @@ using google::cloud::version_minor;
 
 using google::cloud::internal::Base64Encoder;
 using google::cloud::internal::MakeBackgroundThreadsFactory;
-using google::cloud::internal::RetryPolicy;
 
 using google::cloud::pubsub::Message;
 using google::cloud::pubsub::PublisherConnection;
@@ -52,8 +52,10 @@ using google::cloud::pubsublite_internal::AlarmRegistryImpl;
 using google::cloud::pubsublite_internal::AsyncSleeper;
 using google::cloud::pubsublite_internal::BatchingOptions;
 using google::cloud::pubsublite_internal::ClientMetadata;
+using google::cloud::pubsublite_internal::ContainingPublisherConnection;
 using google::cloud::pubsublite_internal::CreateDefaultAdminServiceStub;
 using google::cloud::pubsublite_internal::CreateDefaultPublisherServiceStub;
+using google::cloud::pubsublite_internal::DefaultPublishMessageTransformer;
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 using google::cloud::pubsublite_internal::MakeLocation;
 using google::cloud::pubsublite_internal::MakeStreamFactory;
@@ -75,19 +77,6 @@ using google::cloud::pubsublite::v1::PubSubMessage;
 
 using google::protobuf::Struct;
 using google::protobuf::Value;
-
-const PublishMessageTransformer kDefaultMessageTransformer =
-    [](Message const& message) {
-      PubSubMessage m;
-      m.set_key(message.ordering_key());
-      *m.mutable_data() = message.data();
-      for (auto kv : message.attributes()) {
-        AttributeValues av;
-        av.add_values(std::move(kv.second));
-        (*m.mutable_attributes())[kv.first] = std::move(av);
-      }
-      return m;
-    };
 
 BatchingOptions CreateBatchingOptions(Options const& opts) {
   BatchingOptions batching_options;
@@ -113,12 +102,15 @@ StatusOr<std::string> GetEndpoint(std::string const& location) {
                       "-pubsublite.googleapis.com");
 }
 
-std::string GetSerializedContext() {
+std::string GetSerializedContext(std::string const& framework) {
   Struct context;
   auto& metadata_map = *context.mutable_fields();
   Value lang;
-  *lang.mutable_string_value() = "cpp";
+  *lang.mutable_string_value() = "CPP";
   metadata_map["language"] = std::move(lang);
+  Value framework_val;
+  *framework_val.mutable_string_value() = framework;
+  metadata_map["framework"] = framework_val;
   Value minor_version;
   minor_version.set_number_value(version_minor());
   Value major_version;
@@ -130,23 +122,31 @@ std::string GetSerializedContext() {
   return std::move(encoder).FlushAndPad();
 }
 
-std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
-                                                             Options opts) {
+ClientMetadata MakeClientMetadata(Topic const& topic, std::uint32_t partition) {
+  ClientMetadata metadata;
+  metadata["x-goog-request-params"] =
+      absl::StrCat("partition=", partition, "&", "topic=", topic.FullName());
+  metadata["x-goog-pubsub-context"] = GetSerializedContext("CLOUD_PUBSUB_SHIM");
+  return metadata;
+}
+
+StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
+    Topic topic, Options opts) {
   if (!opts.has<GrpcNumChannelsOption>()) {
+    // Default to 20 channels per client to avoid limitations on streams and
+    // requests per-channel.
     opts.set<GrpcNumChannelsOption>(20);
-  }
-  if (!opts.has<PublishMessageTransformerOption>()) {
-    opts.set<PublishMessageTransformerOption>(kDefaultMessageTransformer);
-  }
-  if (!opts.has<FailureHandlerOption>()) {
-    opts.set<FailureHandlerOption>([](Status const&) {});
   }
   if (!opts.has<EndpointOption>()) {
     auto endpoint = GetEndpoint(topic.location());
-    if (!endpoint) return nullptr;
+    if (!endpoint) {
+      return Status{StatusCode::kInvalidArgument, "`topic` not valid"};
+    }
     opts.set<EndpointOption>(*std::move(endpoint));
   }
-  CompletionQueue cq = MakeBackgroundThreadsFactory(opts)()->cq();
+  std::unique_ptr<BackgroundThreads> background_threads =
+      MakeBackgroundThreadsFactory(opts)();
+  CompletionQueue cq = background_threads->cq();
   std::shared_ptr<BackoffPolicy const> backoff_policy =
       std::make_shared<ExponentialBackoffPolicy>(std::chrono::milliseconds{10},
                                                  std::chrono::seconds{10}, 2.0);
@@ -160,43 +160,56 @@ std::unique_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
           };
         });
   };
+
+  auto publisher_service_stub = CreateDefaultPublisherServiceStub(cq, opts);
+  auto batching_options = CreateBatchingOptions(opts);
+
   std::function<std::shared_ptr<
       Publisher<google::cloud::pubsublite::v1::Cursor>>(std::uint32_t)>
-      partition_publisher_factory = [topic, backoff_policy, cq, opts,
+      partition_publisher_factory = [topic, backoff_policy, batching_options,
+                                     cq, publisher_service_stub,
                                      sleeper](std::uint32_t partition) {
         InitialPublishRequest ipr;
         *ipr.mutable_topic() = topic.FullName();
         ipr.set_partition(partition);
         AlarmRegistryImpl alarm_registry{cq};
         return std::make_shared<PartitionPublisher>(
-            [backoff_policy, partition, cq, opts, sleeper,
+            [backoff_policy, partition, publisher_service_stub, cq, sleeper,
              topic](StreamInitializer<PublishRequest, PublishResponse>
                         initializer) {
-              ClientMetadata metadata;
-              metadata["x-goog-request-params"] = absl::StrCat(
-                  "partition=", partition, "&", "topic=", topic.FullName());
-              metadata["x-goog-pubsub-context"] = GetSerializedContext();
               return absl::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
                   PublishRequest, PublishResponse>>(
-                  []() { return absl::make_unique<StreamRetryPolicy>(); },
+                  [] { return absl::make_unique<StreamRetryPolicy>(); },
                   backoff_policy, sleeper,
-                  MakeStreamFactory(CreateDefaultPublisherServiceStub(cq, opts),
-                                    cq, metadata),
+                  MakeStreamFactory(publisher_service_stub, cq,
+                                    MakeClientMetadata(topic, partition)),
                   std::move(initializer));
             },
-            CreateBatchingOptions(opts), std::move(ipr), alarm_registry);
+            batching_options, std::move(ipr), alarm_registry);
       };
 
   AlarmRegistryImpl alarm_registry{cq};
-  return absl::make_unique<PublisherConnectionImpl>(
-      absl::make_unique<MultipartitionPublisher>(
-          partition_publisher_factory,
-          MakeAdminServiceConnection(CreateDefaultAdminServiceStub(cq, opts),
-                                     opts),
-          alarm_registry, absl::make_unique<DefaultRoutingPolicy>(),
-          std::move(topic)),
-      opts.get<PublishMessageTransformerOption>(),
-      opts.get<FailureHandlerOption>());
+  PublishMessageTransformer transformer = &DefaultPublishMessageTransformer;
+  if (opts.has<PublishMessageTransformerOption>()) {
+    transformer = opts.get<PublishMessageTransformerOption>();
+  }
+  FailureHandler failure_handler = [](Status const& s) {
+    GCP_LOG(WARNING) << "Pub/Sub Lite connection failed: " << s;
+  };
+  if (opts.has<FailureHandlerOption>()) {
+    failure_handler = opts.get<FailureHandlerOption>();
+  }
+  return static_cast<std::unique_ptr<PublisherConnection>>(
+      absl::make_unique<ContainingPublisherConnection>(
+          std::move(background_threads),
+          absl::make_unique<PublisherConnectionImpl>(
+              absl::make_unique<MultipartitionPublisher>(
+                  partition_publisher_factory,
+                  MakeAdminServiceConnection(
+                      CreateDefaultAdminServiceStub(cq, opts), opts),
+                  alarm_registry, absl::make_unique<DefaultRoutingPolicy>(),
+                  std::move(topic)),
+              transformer, failure_handler)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

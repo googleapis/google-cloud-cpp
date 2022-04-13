@@ -18,13 +18,14 @@
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsublite/topic.h"
 #include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::unique_ptr<google::cloud::pubsub::PublisherConnection>
+StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
 MakePublisherConnection(Topic topic, Options opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

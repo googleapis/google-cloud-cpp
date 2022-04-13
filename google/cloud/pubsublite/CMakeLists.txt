@@ -93,6 +93,7 @@ add_library(
     internal/cloud_region.h
     internal/cloud_zone.cc
     internal/cloud_zone.h
+    internal/containing_publisher_connection.h
     internal/cursor_auth_decorator.cc
     internal/cursor_auth_decorator.h
     internal/cursor_logging_decorator.cc
@@ -103,6 +104,8 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/default_publish_message_transformer.cc
+    internal/default_publish_message_transformer.h
     internal/default_routing_policy.cc
     internal/default_routing_policy.h
     internal/futures.h
@@ -267,6 +270,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
         # cmake-format: sort
         endpoint_test.cc
         internal/alarm_registry_impl_test.cc
+        internal/default_publish_message_transformer_test.cc
         internal/default_routing_policy_test.cc
         internal/location_test.cc
         internal/multipartition_publisher_test.cc
