@@ -403,25 +403,34 @@ class UploadChunkRequest
     : public GenericRequest<UploadChunkRequest, UserProject> {
  public:
   UploadChunkRequest() = default;
-  UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
+
+  // A non-final chunk
+  UploadChunkRequest(std::string upload_session_url, std::uint64_t offset,
                      ConstBufferSequence payload)
       : upload_session_url_(std::move(upload_session_url)),
-        range_begin_(range_begin),
+        offset_(offset),
         payload_(std::move(payload)) {}
-  UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     ConstBufferSequence payload, std::uint64_t source_size,
-                     HashValues full_object_hashes = {})
+
+  UploadChunkRequest(std::string upload_session_url, std::uint64_t offset,
+                     ConstBufferSequence payload, HashValues full_object_hashes)
       : upload_session_url_(std::move(upload_session_url)),
-        range_begin_(range_begin),
-        source_size_(source_size),
+        offset_(offset),
+        upload_size_(offset + TotalBytes(payload)),
         last_chunk_(true),
         payload_(std::move(payload)),
         full_object_hashes_(std::move(full_object_hashes)) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
-  std::uint64_t range_begin() const { return range_begin_; }
-  std::uint64_t range_end() const { return range_begin_ + payload_size() - 1; }
-  std::uint64_t source_size() const { return source_size_; }
+  std::uint64_t offset() const { return offset_; }
+  absl::optional<std::uint64_t> upload_size() const {
+    return last_chunk_ ? absl::make_optional(upload_size_) : absl::nullopt;
+  }
+
+  UploadChunkRequest RemainingChunk(std::uint64_t new_offset) const;
+
+  std::uint64_t range_begin() const { return offset_; }
+  std::uint64_t range_end() const { return range_begin() + payload_size() - 1; }
+  std::uint64_t source_size() const { return upload_size_; }
   bool last_chunk() const { return last_chunk_; }
   std::size_t payload_size() const { return TotalBytes(payload_); }
   ConstBufferSequence const& payload() const { return payload_; }
@@ -445,8 +454,8 @@ class UploadChunkRequest
 
  private:
   std::string upload_session_url_;
-  std::uint64_t range_begin_ = 0;
-  std::uint64_t source_size_ = 0;
+  std::uint64_t offset_ = 0;
+  std::uint64_t upload_size_ = 0;
   bool last_chunk_ = false;
   ConstBufferSequence payload_;
   HashValues full_object_hashes_;

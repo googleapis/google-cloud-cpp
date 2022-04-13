@@ -396,6 +396,15 @@ std::ostream& operator<<(std::ostream& os,
             << "}";
 }
 
+UploadChunkRequest UploadChunkRequest::RemainingChunk(
+    std::uint64_t new_offset) const {
+  UploadChunkRequest result = *this;
+  if (new_offset < offset()) return result;
+  PopFrontBytes(result.payload_, new_offset - result.offset_);
+  result.offset_ = new_offset;
+  return result;
+}
+
 std::string UploadChunkRequest::RangeHeader() const {
   std::ostringstream os;
   os << "Content-Range: bytes ";
