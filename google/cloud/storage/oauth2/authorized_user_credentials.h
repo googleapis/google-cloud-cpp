@@ -21,7 +21,9 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
+#endif
 #include "google/cloud/status.h"
 #include <chrono>
 #include <iostream>
@@ -34,7 +36,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 /// Object to hold information used to instantiate an AuthorizedUserCredentials.
 using AuthorizedUserCredentialsInfo =
     google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo;
@@ -81,8 +83,7 @@ ParseAuthorizedUserRefreshResponse(
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
  */
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST
-#error "OAUTH2_REST"
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>

@@ -36,7 +36,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
 using ::testing::Not;
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::testing::_;
 using ::testing::An;
@@ -54,7 +54,7 @@ class AuthorizedUserCredentialsTest : public ::testing::Test {
   void TearDown() override { MockHttpRequestBuilder::mock_.reset(); }
 };
 
-#ifndef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_HAVE_REST
 /// @test Verify that we can create credentials from a JWT string.
 TEST_F(AuthorizedUserCredentialsTest, Simple) {
   std::string response = R"""({

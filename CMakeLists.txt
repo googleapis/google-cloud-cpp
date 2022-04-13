@@ -179,6 +179,15 @@ option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
        "${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT}")
 mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
+set(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST_DEFAULT OFF)
+if (experimental-storage-oauth2-rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    set(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST_DEFAULT ON)
+endif ()
+option(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST
+       "Enable compilation for the GCS OAuth2 using REST library (EXPERIMENTAL)"
+        "${GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST_DEFAULT}")
+mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST)
+
 # We no longer build the generator by default, but if it was explicitly
 # requested, we add it to the list of enabled libraries.
 if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)

@@ -27,7 +27,7 @@ mapfile -t cmake_args < <(cmake::common_args)
 INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
 cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-  -DGOOGLE_CLOUD_CPP_STORAGE_OAUTH2_USE_REST=ON \
+  -DGOOGLE_CLOUD_CPP_STORAGE_OAUTH2_ENABLE_REST=ON \
   -DBUILD_SHARED_LIBS=ON
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
