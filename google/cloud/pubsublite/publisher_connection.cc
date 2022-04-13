@@ -45,7 +45,6 @@ using google::cloud::version_minor;
 using google::cloud::internal::Base64Encoder;
 using google::cloud::internal::MakeBackgroundThreadsFactory;
 
-using google::cloud::pubsub::Message;
 using google::cloud::pubsub::PublisherConnection;
 
 using google::cloud::pubsublite_internal::AlarmRegistryImpl;
@@ -69,24 +68,21 @@ using google::cloud::pubsublite_internal::RetryPolicyFactory;
 using google::cloud::pubsublite_internal::StreamInitializer;
 using google::cloud::pubsublite_internal::StreamRetryPolicy;
 
-using google::cloud::pubsublite::v1::AttributeValues;
 using google::cloud::pubsublite::v1::InitialPublishRequest;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
-using google::cloud::pubsublite::v1::PubSubMessage;
 
 using google::protobuf::Struct;
 using google::protobuf::Value;
 
 BatchingOptions CreateBatchingOptions(Options const& opts) {
   BatchingOptions batching_options;
-  if (opts.has<MaximumBatchMessageCountOption>()) {
+  if (opts.has<MaxBatchMessagesOption>()) {
     batching_options.set_maximum_batch_message_count(
-        opts.get<MaximumBatchMessageCountOption>());
+        opts.get<MaxBatchMessagesOption>());
   }
-  if (opts.has<MaximumBatchBytesOption>()) {
-    batching_options.set_maximum_batch_bytes(
-        opts.get<MaximumBatchBytesOption>());
+  if (opts.has<MaxBatchBytesOption>()) {
+    batching_options.set_maximum_batch_bytes(opts.get<MaxBatchBytesOption>());
   }
   if (opts.has<PublishFlushAlarmPeriodOption>()) {
     batching_options.set_alarm_period(

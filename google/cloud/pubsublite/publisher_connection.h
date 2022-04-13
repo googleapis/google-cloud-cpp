@@ -25,6 +25,17 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * Creates a new `PublisherConnection` object to work with `Publisher`.
+ *
+ * @param topic the Cloud Pub/Sub Lite topic used by the returned
+ *     `PublisherConnection`.
+ * @param opts The options to use for this call. Expected options are any of
+ *     the types in the following option lists and in
+ * google/cloud/pubsublite/options.h.
+ *       - `google::cloud::CommonOptionList`
+ *       - `google::cloud::GrpcOptionList`
+ */
 StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
 MakePublisherConnection(Topic topic, Options opts);
 

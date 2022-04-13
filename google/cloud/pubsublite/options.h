@@ -49,14 +49,25 @@ struct FailureHandlerOption {
   using Type = FailureHandler;
 };
 
-struct MaximumBatchMessageCountOption {
+/**
+ * Publish a batch when it has this many messages. The default is 1000 messages.
+ */
+struct MaxBatchMessagesOption {
   using Type = std::int64_t;
 };
 
-struct MaximumBatchBytesOption {
+/**
+ * Publish a batch when its size in bytes reaches this value. The default
+ * is 3.5MiB.
+ */
+struct MaxBatchBytesOption {
   using Type = std::int64_t;
 };
 
+/**
+ * The interval at which `Flush` will be called on single-partition `Publisher`s
+ * to publish all remaining messages. The default is 50 milliseconds.
+ */
 struct PublishFlushAlarmPeriodOption {
   using Type = std::chrono::milliseconds;
 };
