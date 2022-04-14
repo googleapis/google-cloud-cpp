@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include <gmock/gmock.h>
 #include <string>
 
@@ -78,11 +77,6 @@ class MockClient : public google::cloud::storage::internal::RawClient {
               (internal::ComposeObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::RewriteObjectResponse>, RewriteObject,
               (internal::RewriteObjectRequest const&), (override));
-  MOCK_METHOD(StatusOr<internal::CreateResumableSessionResponse>,
-              CreateResumableSession, (internal::ResumableUploadRequest const&),
-              (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,
-              RestoreResumableSession, (std::string const&), (override));
 
   MOCK_METHOD(StatusOr<internal::CreateResumableUploadResponse>,
               CreateResumableUpload, (internal::ResumableUploadRequest const&),
@@ -166,20 +160,6 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   ClientOptions client_options_;
 };
 
-class MockResumableUploadSession
-    : public google::cloud::storage::internal::ResumableUploadSession {
- public:
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, UploadChunk,
-              (internal::ConstBufferSequence const&), (override));
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, UploadFinalChunk,
-              (internal::ConstBufferSequence const&, std::uint64_t,
-               internal::HashValues const&),
-              (override));
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, ResetSession, (),
-              (override));
-  MOCK_METHOD(std::string const&, session_id, (), (const, override));
-};
-
 class MockObjectReadSource : public internal::ObjectReadSource {
  public:
   MOCK_METHOD(bool, IsOpen, (), (const, override));
@@ -205,20 +185,6 @@ Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
                       Policies&&... p) {
   return internal::ClientImplDetails::CreateClient(
       mock, std::forward<Policies>(p)...);
-}
-
-/// Simulate an initial resumable upload session response.
-inline internal::ResumableUploadResponse MockResumableUploadSessionInit() {
-  return internal::ResumableUploadResponse{
-      "", internal::ResumableUploadResponse::kInProgress, absl::nullopt,
-      absl::nullopt, std::string{}};
-}
-
-/// Simulate the final resumable upload session response.
-inline internal::ResumableUploadResponse MockResumableUploadSessionFinal() {
-  return internal::ResumableUploadResponse{
-      "", internal::ResumableUploadResponse::kDone, absl::nullopt,
-      ObjectMetadata(), std::string{}};
 }
 
 }  // namespace testing

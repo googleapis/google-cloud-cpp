@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
-#include "google/cloud/storage/internal/retry_resumable_upload_session.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
 #include <sstream>
@@ -344,24 +343,6 @@ StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
                                : Idempotency::kNonIdempotent;
   return MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
                   &RawClient::RewriteObject, request, __func__);
-}
-
-StatusOr<CreateResumableSessionResponse> RetryClient::CreateResumableSession(
-    ResumableUploadRequest const& request) {
-  auto retry_policy = retry_policy_prototype_->clone();
-  auto backoff_policy = backoff_policy_prototype_->clone();
-  auto const idempotency = idempotency_policy_->IsIdempotent(request)
-                               ? Idempotency::kIdempotent
-                               : Idempotency::kNonIdempotent;
-  auto result = MakeCall(*retry_policy, *backoff_policy, idempotency, *client_,
-                         &RawClient::CreateResumableSession, request, __func__);
-  if (!result.ok()) return result;
-
-  result->session = std::unique_ptr<ResumableUploadSession>(
-      absl::make_unique<RetryResumableUploadSession>(
-          std::move(result->session), std::move(retry_policy),
-          std::move(backoff_policy), result->state));
-  return result;
 }
 
 StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(

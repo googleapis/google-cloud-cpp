@@ -21,9 +21,7 @@
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
-#include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/internal/grpc_service_account_parser.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/big_endian.h"
@@ -115,34 +113,6 @@ std::unique_ptr<GrpcClient::WriteObjectStream> GrpcClient::CreateUploadWriter(
     context->set_deadline(std::chrono::system_clock::now() + timeout);
   }
   return stub_->WriteObject(std::move(context));
-}
-
-StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableSession(
-    QueryResumableUploadRequest const& request) {
-  auto response = QueryResumableUpload(request);
-  if (!response) return std::move(response).status();
-  auto const state = response->payload.has_value()
-                         ? ResumableUploadResponse::kDone
-                         : ResumableUploadResponse::kInProgress;
-  return ResumableUploadResponse{request.upload_session_url(),
-                                 state,
-                                 std::move(response->committed_size),
-                                 std::move(response->payload),
-                                 {}};
-}
-
-StatusOr<CreateResumableSessionResponse>
-GrpcClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
-                                         std::string const& upload_url) {
-  auto self = shared_from_this();
-  auto upload_session_params = DecodeGrpcResumableUploadSessionUrl(upload_url);
-  if (!upload_session_params) return std::move(upload_session_params).status();
-  auto session = std::unique_ptr<ResumableUploadSession>(
-      new GrpcResumableUploadSession(self, request, *upload_session_params));
-  auto response = session->ResetSession();
-  if (!response) return std::move(response).status();
-  return CreateResumableSessionResponse{std::move(session),
-                                        *std::move(response)};
 }
 
 ClientOptions const& GrpcClient::client_options() const {
@@ -434,29 +404,6 @@ StatusOr<RewriteObjectResponse> GrpcClient::RewriteObject(
   auto response = stub_->RewriteObject(context, *proto);
   if (!response) return std::move(response).status();
   return GrpcObjectRequestParser::FromProto(*response, options_);
-}
-
-StatusOr<CreateResumableSessionResponse> GrpcClient::CreateResumableSession(
-    ResumableUploadRequest const& request) {
-  OptionsSpan span(options_);
-  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
-  if (!session_id.empty()) {
-    return FullyRestoreResumableSession(request, session_id);
-  }
-
-  auto create = CreateResumableUpload(request);
-  if (!create) return std::move(create).status();
-
-  auto self = shared_from_this();
-  // We need a temporary to sequence `std::move(create->upload_id)`
-  auto session = absl::make_unique<GrpcResumableUploadSession>(
-      self, request, ResumableUploadSessionGrpcParams{create->upload_id});
-  return CreateResumableSessionResponse{
-      std::move(session),
-      ResumableUploadResponse{std::move(create->upload_id),
-                              ResumableUploadResponse::kInProgress,
-                              /*.committed_size=*/0, /*.payload=*/absl::nullopt,
-                              /*.annotations=*/{}}};
 }
 
 StatusOr<CreateResumableUploadResponse> GrpcClient::CreateResumableUpload(

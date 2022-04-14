@@ -48,7 +48,6 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Property;
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 std::string const kBucketName = "test-bucket";
 std::string const kDestObjectName = "final-object";
@@ -150,43 +149,35 @@ class ParallelUploadTest
     : public ::google::cloud::storage::testing::ClientUnitTest {
  protected:
   std::string ExpectCreateSessionFailure(
-      std::string const& object_name, Status const& status,
+      std::string const& object_name, Status status,
       absl::optional<std::string> const& resumable_session_id =
           absl::optional<std::string>()) {
     auto id = resumable_session_id.value_or(CreateSessionId());
 
     EXPECT_THAT(status, Not(IsOk()));
-    EXPECT_CALL(*mock_, CreateResumableSession(Property(
+    EXPECT_CALL(*mock_, CreateResumableUpload(Property(
                             &ResumableUploadRequest::object_name, object_name)))
-        .WillOnce([=](ResumableUploadRequest const&) { return status; })
+        .WillOnce(Return(std::move(status)))
         .RetiresOnSaturation();
     return id;
   }
 
   std::string ExpectCreateFailingSession(
-      std::string const& object_name, Status const& status,
+      std::string const& object_name, Status status,
       absl::optional<std::string> const& resumable_session_id =
           absl::optional<std::string>()) {
     auto id = resumable_session_id.value_or(CreateSessionId());
-    auto saved = SaveSessionId(id);
-    EXPECT_CALL(*mock_, CreateResumableSession(Property(
+    EXPECT_CALL(*mock_, CreateResumableUpload(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](internal::ResumableUploadRequest const& request) {
           EXPECT_EQ(kBucketName, request.bucket_name());
 
-          auto session =
-              absl::make_unique<testing::MockResumableUploadSession>();
-          EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
-          EXPECT_CALL(*session, UploadFinalChunk)
-              .WillRepeatedly(Return(status));
-          return CreateResumableSessionResponse{
-              std::move(session),
-              ResumableUploadResponse{id, ResumableUploadResponse::kInProgress,
-                                      /*.committed_size=*/0,
-                                      /*.object_metadata=*/absl::nullopt,
-                                      /*.annotations=*/std::string{}}};
+          return internal::CreateResumableUploadResponse{id};
         })
         .RetiresOnSaturation();
+    EXPECT_CALL(*mock_, UploadChunk(Property(
+                            &UploadChunkRequest::upload_session_url, id)))
+        .WillRepeatedly(Return(std::move(status)));
     return id;
   }
 
@@ -194,36 +185,25 @@ class ParallelUploadTest
       std::string const& object_name, int generation,
       absl::optional<std::string> const& expected_content = absl::nullopt) {
     auto id = CreateSessionId();
-    auto saved = SaveSessionId(id);
-    EXPECT_CALL(*mock_, CreateResumableSession(Property(
+    EXPECT_CALL(*mock_, CreateResumableUpload(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](internal::ResumableUploadRequest const& request) {
           EXPECT_EQ(kBucketName, request.bucket_name());
 
-          auto session =
-              absl::make_unique<testing::MockResumableUploadSession>();
-          EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
-          EXPECT_CALL(*session, UploadFinalChunk)
-              .WillRepeatedly([=](ConstBufferSequence const& content,
-                                  std::uint64_t size,
-                                  HashValues const& /*full_object_hashes*/) {
-                if (expected_content) {
-                  EXPECT_THAT(content,
-                              ElementsAre(ConstBuffer(*expected_content)));
-                }
-                return ResumableUploadResponse{
-                    id, ResumableUploadResponse::kDone, size,
-                    MockObject(object_name, generation),
-                    /*annotations=*/std::string{}};
-              });
-          return CreateResumableSessionResponse{
-              std::move(session),
-              ResumableUploadResponse{id, ResumableUploadResponse::kInProgress,
-                                      /*.committed_size=*/0,
-                                      /*.object_metadata=*/absl::nullopt,
-                                      /*.annotations=*/std::string{}}};
+          return internal::CreateResumableUploadResponse{id};
         })
         .RetiresOnSaturation();
+    EXPECT_CALL(*mock_, UploadChunk(Property(
+                            &UploadChunkRequest::upload_session_url, id)))
+        .WillOnce([=](UploadChunkRequest const& r) {
+          if (expected_content) {
+            EXPECT_THAT(r.payload(),
+                        ElementsAre(ConstBuffer(*expected_content)));
+          }
+          return QueryResumableUploadResponse{
+              r.offset() + r.payload_size(),
+              MockObject(object_name, generation)};
+        });
     return id;
   }
 
@@ -231,97 +211,68 @@ class ParallelUploadTest
       std::string const& object_name, int generation, std::string id,
       absl::optional<std::uint64_t> const& committed_size = absl::nullopt,
       absl::optional<std::string> const& expected_content = absl::nullopt) {
-    auto saved = SaveSessionId(id);
-    EXPECT_CALL(*mock_, CreateResumableSession(Property(
-                            &ResumableUploadRequest::object_name, object_name)))
-        .WillOnce([=](internal::ResumableUploadRequest const& request) {
-          EXPECT_THAT(
-              request.GetOption<UseResumableUploadSession>().value_or(""), id);
-          EXPECT_EQ(kBucketName, request.bucket_name());
-
-          auto session =
-              absl::make_unique<testing::MockResumableUploadSession>();
-          EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
-          EXPECT_CALL(*session, UploadFinalChunk)
-              .WillRepeatedly([=](ConstBufferSequence const& content,
-                                  std::uint64_t size,
-                                  HashValues const& /*full_object_hashes*/) {
-                if (expected_content) {
-                  EXPECT_THAT(content,
-                              ElementsAre(ConstBuffer(*expected_content)));
-                }
-                return ResumableUploadResponse{
-                    id, ResumableUploadResponse::kDone, size,
-                    MockObject(object_name, generation),
-                    /*annotations=*/std::string{}};
-              });
-          return CreateResumableSessionResponse{
-              std::move(session),
-              ResumableUploadResponse{id, ResumableUploadResponse::kInProgress,
-                                      /*.committed_size=*/committed_size,
-                                      /*.object_metadata=*/absl::nullopt,
-                                      /*.annotations=*/std::string{}}};
+    EXPECT_CALL(*mock_,
+                QueryResumableUpload(Property(
+                    &QueryResumableUploadRequest::upload_session_url, id)))
+        .WillOnce([=](internal::QueryResumableUploadRequest const&) {
+          return internal::QueryResumableUploadResponse{committed_size,
+                                                        absl::nullopt};
         })
         .RetiresOnSaturation();
+
+    using ::testing::AtMost;
+    EXPECT_CALL(*mock_, UploadChunk(Property(
+                            &UploadChunkRequest::upload_session_url, id)))
+        .Times(AtMost(1))
+        .WillRepeatedly([=](UploadChunkRequest const& r) {
+          if (expected_content) {
+            EXPECT_THAT(r.payload(),
+                        ElementsAre(ConstBuffer(*expected_content)));
+          }
+          return QueryResumableUploadResponse{
+              r.offset() + r.payload_size(),
+              MockObject(object_name, generation)};
+        });
+
     return id;
   }
 
-  std::string ExpectResumeSessionFailure(std::string const& object_name,
-                                         Status const& status, std::string id) {
+  std::string ExpectResumeSessionFailure(std::string const&, Status status,
+                                         std::string id) {
     EXPECT_THAT(status, Not(IsOk()));
-    EXPECT_CALL(*mock_, CreateResumableSession(Property(
-                            &ResumableUploadRequest::object_name, object_name)))
-        .WillOnce([=](ResumableUploadRequest const& r) {
-          EXPECT_THAT(r.GetOption<UseResumableUploadSession>().value_or(""),
-                      id);
-          return status;
-        })
+    EXPECT_CALL(*mock_,
+                QueryResumableUpload(Property(
+                    &QueryResumableUploadRequest::upload_session_url, id)))
+        .WillOnce(Return(std::move(status)))
         .RetiresOnSaturation();
     return id;
   }
 
   std::string ExpectCreateSessionToSuspend(std::string const& object_name) {
     auto id = CreateSessionId();
-    auto saved = SaveSessionId(id);
-    EXPECT_CALL(*mock_, CreateResumableSession(Property(
+    EXPECT_CALL(*mock_, CreateResumableUpload(Property(
                             &ResumableUploadRequest::object_name, object_name)))
         .WillOnce([=](internal::ResumableUploadRequest const& request) {
           EXPECT_EQ(kBucketName, request.bucket_name());
 
-          auto session =
-              absl::make_unique<testing::MockResumableUploadSession>();
-          EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
-          return CreateResumableSessionResponse{
-              std::move(session),
-              ResumableUploadResponse{id, ResumableUploadResponse::kInProgress,
-                                      /*.committed_size=*/0,
-                                      /*.object_metadata=*/absl::nullopt,
-                                      /*.annotations=*/std::string{}}};
+          return internal::CreateResumableUploadResponse{id};
         })
         .RetiresOnSaturation();
     return id;
   }
 
   std::string ExpectResumeSessionToSuspend(
-      std::string const& object_name, std::string id,
+      std::string const&, std::string id,
       absl::optional<std::uint64_t> committed_size) {
-    auto saved = SaveSessionId(id);
-    EXPECT_CALL(*mock_, CreateResumableSession(Property(
-                            &ResumableUploadRequest::object_name, object_name)))
-        .WillOnce([=](ResumableUploadRequest const& r) {
-          EXPECT_THAT(r.GetOption<UseResumableUploadSession>().value_or(""),
-                      id);
-          auto session =
-              absl::make_unique<testing::MockResumableUploadSession>();
-          EXPECT_CALL(*session, session_id).WillRepeatedly(ReturnRef(*saved));
-          return CreateResumableSessionResponse{
-              std::move(session),
-              ResumableUploadResponse{id, ResumableUploadResponse::kInProgress,
-                                      /*.committed_size=*/committed_size,
-                                      /*.object_metadata=*/absl::nullopt,
-                                      /*.annotations=*/std::string{}}};
+    EXPECT_CALL(*mock_,
+                QueryResumableUpload(Property(
+                    &QueryResumableUploadRequest::upload_session_url, id)))
+        .WillOnce([=](internal::QueryResumableUploadRequest const&) {
+          return internal::QueryResumableUploadResponse{committed_size,
+                                                        absl::nullopt};
         })
         .RetiresOnSaturation();
+
     return id;
   }
 
@@ -330,17 +281,6 @@ class ParallelUploadTest
     static int id = 0;
     return "fake-session-id-" + std::to_string(id++);
   }
-
-  // TODO(#8621) - remove this hack.
-  //    To mock `ResumableUploadSession::session_id()` we need a reference, and
-  //    these references must live as long as the test.  This is an ugly hack,
-  //    but it will go away in a few PRs.
-  std::shared_ptr<std::string> SaveSessionId(std::string id) {
-    auto saved = std::make_shared<std::string>(std::move(id));
-    session_ids_.push_back(saved);
-    return saved;
-  }
-  std::vector<std::shared_ptr<std::string>> session_ids_;
 };
 
 auto create_composition_check =

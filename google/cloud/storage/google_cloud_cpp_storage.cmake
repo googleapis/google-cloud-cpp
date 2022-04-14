@@ -75,8 +75,6 @@ add_library(
     internal/curl_request.h
     internal/curl_request_builder.cc
     internal/curl_request_builder.h
-    internal/curl_resumable_upload_session.cc
-    internal/curl_resumable_upload_session.h
     internal/curl_wrappers.cc
     internal/curl_wrappers.h
     internal/default_object_acl_requests.cc
@@ -110,8 +108,6 @@ add_library(
     internal/lifecycle_rule_parser.h
     internal/logging_client.cc
     internal/logging_client.h
-    internal/logging_resumable_upload_session.cc
-    internal/logging_resumable_upload_session.h
     internal/make_jwt_assertion.cc
     internal/make_jwt_assertion.h
     internal/metadata_parser.cc
@@ -148,14 +144,10 @@ add_library(
     internal/raw_client_wrapper_utils.h
     internal/rest_client.cc
     internal/rest_client.h
-    internal/resumable_upload_session.cc
-    internal/resumable_upload_session.h
     internal/retry_client.cc
     internal/retry_client.h
     internal/retry_object_read_source.cc
     internal/retry_object_read_source.h
-    internal/retry_resumable_upload_session.cc
-    internal/retry_resumable_upload_session.h
     internal/self_signing_service_account_credentials.cc
     internal/self_signing_service_account_credentials.h
     internal/service_account_parser.cc
@@ -433,7 +425,6 @@ if (BUILD_TESTING)
         internal/curl_download_request_test.cc
         internal/curl_handle_factory_test.cc
         internal/curl_handle_test.cc
-        internal/curl_resumable_upload_session_test.cc
         internal/curl_wrappers_disable_sigpipe_handler_test.cc
         internal/curl_wrappers_enable_sigpipe_handler_test.cc
         internal/curl_wrappers_locking_already_present_test.cc
@@ -450,7 +441,6 @@ if (BUILD_TESTING)
         internal/http_response_test.cc
         internal/impersonate_service_account_credentials_test.cc
         internal/logging_client_test.cc
-        internal/logging_resumable_upload_session_test.cc
         internal/make_jwt_assertion_test.cc
         internal/metadata_parser_test.cc
         internal/notification_requests_test.cc
@@ -462,10 +452,8 @@ if (BUILD_TESTING)
         internal/parameter_pack_validation_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
-        internal/resumable_upload_session_test.cc
         internal/retry_client_test.cc
         internal/retry_object_read_source_test.cc
-        internal/retry_resumable_upload_session_test.cc
         internal/self_signing_service_account_credentials_test.cc
         internal/service_account_requests_test.cc
         internal/sign_blob_requests_test.cc

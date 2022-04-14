@@ -297,8 +297,8 @@ TEST_P(GrpcClientFailuresTest, RewriteObject) {
                                      StatusCode::kUnimplemented)));
 }
 
-TEST_P(GrpcClientFailuresTest, CreateResumableSession) {
-  auto actual = client_->CreateResumableSession(
+TEST_P(GrpcClientFailuresTest, CreateResumableUpload) {
+  auto actual = client_->CreateResumableUpload(
       ResumableUploadRequest("test-bucket", "test-object"));
   EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
                                      StatusCode::kUnimplemented)));
