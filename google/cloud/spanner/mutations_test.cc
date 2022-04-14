@@ -13,7 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/bytes.h"
+#include "google/cloud/spanner/date.h"
+#include "google/cloud/spanner/json.h"
 #include "google/cloud/spanner/keys.h"
+#include "google/cloud/spanner/numeric.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
@@ -311,6 +316,43 @@ TEST(MutationsTest, DeleteSimple) {
     delete: {
       table: "table-name"
       key_set: { keys: { values { string_value: "key-to-delete" } } }
+    }
+  )pb";
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, SpannerTypes) {
+  Mutation empty;
+  auto bytes = Bytes("bytes");
+  auto date = Date(2022, 3, 30);
+  auto json = Json("{true}");
+  auto numeric = MakeNumeric(42).value();
+  auto timestamp = Timestamp();
+  Mutation insert = MakeInsertMutation(                   //
+      "table-name",                                       //
+      {"bytes", "date", "json", "numeric", "timestamp"},  //
+      bytes, date, json, numeric, timestamp);
+  EXPECT_EQ(insert, insert);
+  EXPECT_NE(insert, empty);
+
+  auto actual = std::move(insert).as_proto();
+  auto constexpr kText = R"pb(
+    insert {
+      table: "table-name"
+      columns: "bytes"
+      columns: "date"
+      columns: "json"
+      columns: "numeric"
+      columns: "timestamp"
+      values {
+        values { string_value: "Ynl0ZXMA" }
+        values { string_value: "2022-03-30" }
+        values { string_value: "{true}" }
+        values { string_value: "42" }
+        values { string_value: "1970-01-01T00:00:00Z" }
+      }
     }
   )pb";
   google::spanner::v1::Mutation expected;
