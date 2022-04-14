@@ -19,7 +19,7 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     # link-line
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
     add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
-            google_cloud_cpp_storage_grpc)
+                google_cloud_cpp_storage_grpc)
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc")
