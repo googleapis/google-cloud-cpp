@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,140 +12,134 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/base64_transforms.h"
-#include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/internal/backoff_policy.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <vector>
 
-namespace google {
-namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-namespace {
+using ::google::cloud::internal::ExponentialBackoffPolicy;
+using ms = std::chrono::milliseconds;
 
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::ContainsRegex;
+using ::testing::ElementsAreArray;
 using ::testing::Not;
 
-TEST(Base64, RoundTrip) {
-  std::vector<std::pair<std::string, std::string>> test_cases = {
-      {"abcd", "YWJjZA=="},
-      {"abcde", "YWJjZGU="},
-      {"abcdef", "YWJjZGVm"},
-      {"abcdefg", "YWJjZGVmZw=="},
-      {"abcdefgh", "YWJjZGVmZ2g="},
-      {"abcdefghi", "YWJjZGVmZ2hp"},
-      {"abcdefghij", "YWJjZGVmZ2hpag=="},
-      {"abcdefghijk", "YWJjZGVmZ2hpams="},
-      {"abcdefghijkl", "YWJjZGVmZ2hpamts"},
-      {"abcdefghijklm", "YWJjZGVmZ2hpamtsbQ=="},
-      {"abcdefghijklmn", "YWJjZGVmZ2hpamtsbW4="},
-      {"abcdefghijklmno", "YWJjZGVmZ2hpamtsbW5v"},
-      {"abcdefghijklmnop", "YWJjZGVmZ2hpamtsbW5vcA=="},
-      {"abcdefghijklmnopq", "YWJjZGVmZ2hpamtsbW5vcHE="},
-      {"abcdefghijklmnopqr", "YWJjZGVmZ2hpamtsbW5vcHFy"},
-      {"abcdefghijklmnopqrs", "YWJjZGVmZ2hpamtsbW5vcHFycw=="},
-      {"abcdefghijklmnopqrst", "YWJjZGVmZ2hpamtsbW5vcHFyc3Q="},
-      {"abcdefghijklmnopqrstu", "YWJjZGVmZ2hpamtsbW5vcHFyc3R1"},
-      {"abcdefghijklmnopqrstuv", "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dg=="},
-      {"abcdefghijklmnopqrstuvw", "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnc="},
-      {"abcdefghijklmnopqrstuvwx", "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4"},
-      {"abcdefghijklmnopqrstuvwxy", "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eQ=="},
-      {"abcdefghijklmnopqrstuvwxyz", "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo="},
-  };
-  for (auto const& test_case : test_cases) {
-    Base64Encoder enc;
-    for (auto c : test_case.first) enc.PushBack(c);
-    auto const encoded = std::move(enc).FlushAndPad();
-    EXPECT_EQ(test_case.second, encoded);
-    EXPECT_STATUS_OK(ValidateBase64String(encoded)) << test_case.first;
-    Base64Decoder dec(encoded);
-    auto const decoded = std::string{dec.begin(), dec.end()};
-    EXPECT_EQ(test_case.first, decoded);
-  }
+/// @test A simple test for the ExponentialBackoffPolicy.
+TEST(ExponentialBackoffPolicy, Simple) {
+  ExponentialBackoffPolicy tested(ms(10), ms(100), 2.0);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(20), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(20), delay);
+  EXPECT_GE(ms(40), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(40), delay);
+  EXPECT_GE(ms(80), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(50), delay);
+  EXPECT_GE(ms(100), delay);
 }
 
-TEST(Base64, RFC4648TestVectors) {
-  // https://tools.ietf.org/html/rfc4648#section-10
-  std::vector<std::pair<std::string, std::string>> test_cases = {
-      {"", ""},
-      {"a", "YQ=="},
-      {"ab", "YWI="},
-      {"abc", "YWJj"},
-      {"abcd", "YWJjZA=="},
-      {"abcde", "YWJjZGU="},
-      {"abcdef", "YWJjZGVm"},
-  };
-  for (auto const& test_case : test_cases) {
-    Base64Encoder enc;
-    for (auto c : test_case.first) enc.PushBack(c);
-    auto const encoded = std::move(enc).FlushAndPad();
-    EXPECT_EQ(test_case.second, encoded);
-    EXPECT_STATUS_OK(ValidateBase64String(encoded)) << test_case.first;
-    Base64Decoder dec(encoded);
-    auto const decoded = std::string{dec.begin(), dec.end()};
-    EXPECT_EQ(test_case.first, decoded);
-  }
+/// @test Verify that the scaling factor is validated.
+TEST(ExponentialBackoffPolicy, ValidateScaling) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(50), 0.0),
+               std::invalid_argument);
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(50), 1.0),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(ExponentialBackoffPolicy(ms(10), ms(50), 0.0),
+                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(ExponentialBackoffPolicy(ms(10), ms(50), 1.0),
+                            "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(Base64, WikiExample) {
-  // https://en.wikipedia.org/wiki/Base64#Examples
-  std::string const plain =
-      "Man is distinguished, not only by his reason, but by this singular "
-      "passion from other animals, which is a lust of the mind, that by a "
-      "perseverance of delight in the continued and indefatigable generation "
-      "of knowledge, exceeds the short vehemence of any carnal pleasure.";
-  std::string const expected =
-      "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0"
-      "aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1"
-      "c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0"
-      "aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdl"
-      "LCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4"
-      "=";
+/// @test Verify that less common arguments work.
+TEST(ExponentialBackoffPolicy, DifferentParameters) {
+  ExponentialBackoffPolicy tested(ms(100), std::chrono::seconds(10), 1.5);
 
-  Base64Encoder enc;
-  for (auto c : plain) enc.PushBack(c);
-  auto actual = std::move(enc).FlushAndPad();
-  EXPECT_EQ(actual, expected);
-  EXPECT_STATUS_OK(ValidateBase64String(actual));
-  Base64Decoder dec(actual);
-  auto const decoded = std::string{dec.begin(), dec.end()};
-  EXPECT_EQ(plain, decoded);
-  // test PushBack(absl::string_view)
-  enc = Base64Encoder{};
-  enc.PushBack(plain);
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(200), delay) << "delay=" << delay.count() << "ms";
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(150), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(300), delay) << "delay=" << delay.count() << "ms";
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(225), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(450), delay) << "delay=" << delay.count() << "ms";
 }
 
-TEST(Base64, ValidateBase64StringFailures) {
-  // Bad lengths.
-  for (std::string const base64 : {"x", "xx", "xxx"}) {
-    auto status = ValidateBase64String(base64);
-    EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                                 ContainsRegex("Invalid base64.*at offset 0")));
-  }
+/// @test Test cloning for ExponentialBackoffPolicy.
+TEST(ExponentialBackoffPolicy, Clone) {
+  ExponentialBackoffPolicy original(ms(10), ms(50), 2.0);
+  auto tested = original.clone();
 
-  for (std::string const base64 : {"xxxxx", "xxxxxx", "xxxxxxx"}) {
-    auto status = ValidateBase64String(base64);
-    EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                                 ContainsRegex("Invalid base64.*at offset 4")));
-  }
+  auto delay = tested->OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(20), delay);
+  delay = tested->OnCompletion();
+  EXPECT_LE(ms(20), delay);
+  EXPECT_GE(ms(40), delay);
+  delay = tested->OnCompletion();
+  EXPECT_LE(ms(25), delay);
+  EXPECT_GE(ms(50), delay);
+  delay = tested->OnCompletion();
+  EXPECT_LE(ms(25), delay);
+  EXPECT_GE(ms(50), delay);
 
-  // Chars outside base64 alphabet.
-  for (std::string const base64 : {".xxx", "x.xx", "xx.x", "xxx.", "xx.="}) {
-    auto status = ValidateBase64String(base64);
-    EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                                 ContainsRegex("Invalid base64.*at offset 0")));
-  }
-
-  // Non-zero padding bits.
-  for (std::string const base64 : {"xx==", "xxx="}) {
-    auto status = ValidateBase64String(base64);
-    EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
-                                 ContainsRegex("Invalid base64.*at offset 0")));
-  }
+  // Ensure the initial state of the policy is cloned, not the current state.
+  tested = tested->clone();
+  delay = tested->OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(20), delay);
 }
 
-}  // namespace
-}  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloud
-}  // namespace google
+/// @test Test for testing randomness for 2 objects of
+/// ExponentialBackoffPolicy such that no two clients have same sleep time.
+TEST(ExponentialBackoffPolicy, Randomness) {
+  ExponentialBackoffPolicy test_object1(ms(10), ms(1500), 2.0);
+  ExponentialBackoffPolicy test_object2(ms(10), ms(1500), 2.0);
+  // The type used to represent a duration varies by platform, better to use
+  // the alias guaranteed by the standard than trying to guess the type or
+  // use a lot of casts.
+  std::vector<std::chrono::milliseconds::rep> output1;
+  std::vector<std::chrono::milliseconds::rep> output2;
+
+  auto delay = test_object1.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(20), delay);
+  test_object2.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(20), delay);
+
+  for (int i = 0; i != 100; ++i) {
+    output1.push_back(test_object1.OnCompletion().count());
+    output2.push_back(test_object2.OnCompletion().count());
+  }
+  EXPECT_NE(output1, output2);
+}
+
+/// @test Test that cloning produces different numbers.
+TEST(ExponentialBackoffPolicy, ClonesHaveDifferentSequences) {
+  // This test could flake, if two pseudo-random number generators seeded with
+  // whatever the C++ library uses for entropy (typically /dev/random and/or the
+  // RND instruction) manage to produce the same 20 numbers. If that happens,
+  // my apologies.... and remember to buy yourself a lottery ticket today.
+  std::size_t test_length = 20;
+  ExponentialBackoffPolicy original(ms(10), ms((1 << 20) * 10), 2.0);
+  auto c1 = original.clone();
+  auto c2 = original.clone();
+
+  using milliseconds_type = std::chrono::milliseconds::rep;
+  std::vector<milliseconds_type> sequence_1(test_length);
+  std::generate_n(sequence_1.begin(), test_length,
+                  [&] { return c1->OnCompletion().count(); });
+
+  std::vector<milliseconds_type> sequence_2(test_length);
+  std::generate_n(sequence_2.begin(), test_length,
+                  [&] { return c2->OnCompletion().count(); });
+
+  EXPECT_THAT(sequence_1, Not(ElementsAreArray(sequence_2)));
+}

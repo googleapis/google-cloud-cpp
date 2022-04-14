@@ -57,7 +57,7 @@ TEST(DefaultPublishMessageTransformerTest, Timestamp) {
   t.set_seconds(42);
   t.set_nanos(42);
   Base64Encoder encoder;
-  encoder.PushBack(t.SerializeAsString());
+  for (unsigned char const c : t.SerializeAsString()) encoder.PushBack(c);
   PubSubMessage psl_message = ExamplePslMessage();
   *psl_message.mutable_event_time() = std::move(t);
   EXPECT_THAT(*DefaultPublishMessageTransformer(

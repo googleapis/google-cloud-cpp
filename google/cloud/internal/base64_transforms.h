@@ -17,7 +17,6 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -36,9 +35,6 @@ class Base64Encoder {
   void PushBack(unsigned char c) {
     buf_[len_++] = c;
     if (len_ == buf_.size()) Flush();
-  }
-  void PushBack(absl::string_view string) {
-    for (char const c : string) PushBack(c);
   }
   std::string FlushAndPad() &&;
 
