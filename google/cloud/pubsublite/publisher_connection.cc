@@ -99,7 +99,7 @@ std::string GetSerializedContext(std::string const& framework) {
   metadata_map["language"].set_string_value("CPP");
   metadata_map["framework"].set_string_value(framework);
   Base64Encoder encoder;
-  encoder.PushBack(context.SerializeAsString());
+  for (unsigned char const c : context.SerializeAsString()) encoder.PushBack(c);
   return std::move(encoder).FlushAndPad();
 }
 
