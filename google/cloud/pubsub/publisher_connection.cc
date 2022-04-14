@@ -90,7 +90,8 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
       auto factory = [topic, opts, sink, cq](std::string const& key) {
         auto used_sink = sink;
         if (!key.empty()) {
-          used_sink = pubsub_internal::SequentialBatchSink::Create(sink);
+          used_sink = pubsub_internal::SequentialBatchSink::Create(
+              std::move(used_sink));
         }
         return pubsub_internal::BatchingPublisherConnection::Create(
             topic, opts, key, std::move(used_sink), cq);
