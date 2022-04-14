@@ -104,12 +104,15 @@ TEST(Base64, WikiExample) {
 
   Base64Encoder enc;
   for (auto c : plain) enc.PushBack(c);
-  auto const actual = std::move(enc).FlushAndPad();
+  auto actual = std::move(enc).FlushAndPad();
   EXPECT_EQ(actual, expected);
   EXPECT_STATUS_OK(ValidateBase64String(actual));
   Base64Decoder dec(actual);
   auto const decoded = std::string{dec.begin(), dec.end()};
   EXPECT_EQ(plain, decoded);
+  // test PushBack(absl::string_view)
+  enc = Base64Encoder{};
+  enc.PushBack(plain);
 }
 
 TEST(Base64, ValidateBase64StringFailures) {
