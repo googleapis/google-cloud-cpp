@@ -17,7 +17,9 @@
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
-#include <regex>
+#include "google/cloud/project.h"
+#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
+#include <functional>
 #include <string>
 
 namespace google {
@@ -25,12 +27,19 @@ namespace cloud {
 namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Pick one instance_config from a list given a PRNG generator, project_id,
-/// and a regex for filtering, if none matches the filter, it will return the
-/// value for the first element.
-std::string PickInstanceConfig(std::string const& project_id,
-                               std::regex const& filter_regex,
-                               google::cloud::internal::DefaultPRNG& generator);
+/**
+ * Returns the name of one instance config that satisfies the given
+ * predicate from amongst all those that exist within the given project.
+ *
+ * If multiple instance configs qualify, the one returned is chosen
+ * at random using the PRNG. If none qualify, the first candidate is
+ * returned. If there are no candidates, the empty string is returned.
+ */
+std::string PickInstanceConfig(
+    Project const& project, google::cloud::internal::DefaultPRNG& generator,
+    std::function<
+        bool(google::spanner::admin::instance::v1::InstanceConfig const&)>
+        predicate);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing

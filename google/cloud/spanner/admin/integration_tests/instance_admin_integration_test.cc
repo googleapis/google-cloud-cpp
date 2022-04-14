@@ -22,6 +22,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <regex>
@@ -158,13 +159,18 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
   ASSERT_FALSE(in.project_id().empty());
   ASSERT_FALSE(in.instance_id().empty());
 
-  auto instance_config = spanner_testing::PickInstanceConfig(
-      in.project_id(), std::regex(".*us-west.*"), generator_);
-  ASSERT_FALSE(instance_config.empty()) << "could not get an instance config";
+  auto instance_config_name = spanner_testing::PickInstanceConfig(
+      in.project(), generator_,
+      [](google::spanner::admin::instance::v1::InstanceConfig const&
+             instance_config) {
+        return absl::StrContains(instance_config.name(), "us-west");
+      });
+  ASSERT_FALSE(instance_config_name.empty())
+      << "could not get an instance config";
 
   auto instance =
       client_
-          .CreateInstance(CreateInstanceRequestBuilder(in, instance_config)
+          .CreateInstance(CreateInstanceRequestBuilder(in, instance_config_name)
                               .SetDisplayName("test-display-name")
                               .SetNodeCount(1)
                               .SetLabels({{"label-key", "label-value"}})
@@ -175,7 +181,7 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
   EXPECT_EQ(instance->name(), in.FullName());
   EXPECT_EQ(instance->display_name(), "test-display-name");
   EXPECT_NE(instance->node_count(), 0);
-  EXPECT_EQ(instance->config(), instance_config);
+  EXPECT_EQ(instance->config(), instance_config_name);
   EXPECT_EQ(instance->labels().at("label-key"), "label-value");
 
   // Then update the instance
