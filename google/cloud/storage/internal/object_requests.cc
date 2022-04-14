@@ -399,7 +399,7 @@ std::ostream& operator<<(std::ostream& os,
 std::string UploadChunkRequest::RangeHeader() const {
   std::ostringstream os;
   os << "Content-Range: bytes ";
-  auto const size = upload_size().value_or(0);
+  auto const size = payload_size();
   if (size == 0) {
     // This typically happens when the sender realizes too late that the
     // previous chunk was really the last chunk (e.g. the file is exactly a
