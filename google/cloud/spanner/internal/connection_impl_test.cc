@@ -707,7 +707,7 @@ TEST(ConnectionImplTest, ExecuteQueryGetSessionFailure) {
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table")});
+       spanner::SqlStatement("SELECT * FROM Table")});
   for (auto& row : rows) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
                               HasSubstr("uh-oh in GetSession")));
@@ -729,7 +729,7 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table")});
+       spanner::SqlStatement("SELECT * FROM Table")});
   for (auto& row : rows) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
                               HasSubstr("uh-oh in GrpcReader::Finish")));
@@ -767,7 +767,7 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table")});
+       spanner::SqlStatement("SELECT * FROM Table")});
   using RowType = std::tuple<std::int64_t, std::string>;
   auto expected = std::vector<RowType>{
       RowType(12, "Steve"),
@@ -797,7 +797,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows =
-      conn->ExecuteQuery({txn, spanner::SqlStatement("select * from table")});
+      conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT * FROM Table")});
   EXPECT_TRUE(ContainsNoRows(rows));
   EXPECT_THAT(txn,
               HasSessionAndTransaction("test-session-name", "00FEDCBA", ""));
@@ -1071,7 +1071,7 @@ TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ExecuteDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
 
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in GetSession")));
@@ -1099,7 +1099,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ExecuteDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
 
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result->RowsModified(), 42);
@@ -1125,7 +1125,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeletePermanentFailure) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ExecuteDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in ExecuteDml")));
 }
@@ -1154,7 +1154,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteTooManyTransientFailures) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ExecuteDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable,
                                HasSubstr("try-again in ExecuteDml")));
 }
@@ -1186,11 +1186,11 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   // The first operation fails with the status of the operation's RPC
   // (`ExecuteSql` in this case).
-  EXPECT_THAT(conn->ExecuteDml({txn, spanner::SqlStatement("some statement")}),
+  EXPECT_THAT(conn->ExecuteDml({txn, spanner::SqlStatement("SOME STATEMENT")}),
               StatusIs(op_status.code(), HasSubstr(op_status.message())));
   // Subsequent operations fail with the status of `BeginTransaction`.
   EXPECT_THAT(
-      conn->ExecuteDml({txn, spanner::SqlStatement("another statement")}),
+      conn->ExecuteDml({txn, spanner::SqlStatement("ANOTHER STATEMENT")}),
       StatusIs(begin_status.code(), HasSubstr(begin_status.message())));
   EXPECT_THAT(conn->Commit({txn, {}}),
               StatusIs(begin_status.code(), HasSubstr(begin_status.message())));
@@ -1213,7 +1213,7 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionMissing) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   EXPECT_THAT(
-      conn->ExecuteDml({txn, spanner::SqlStatement("select 1")}),
+      conn->ExecuteDml({txn, spanner::SqlStatement("SELECT 1")}),
       StatusIs(StatusCode::kInternal,
                HasSubstr(
                    "Begin transaction requested but no transaction returned")));
@@ -1258,7 +1258,7 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table")});
+       spanner::SqlStatement("SELECT * FROM Table")});
   using RowType = std::tuple<std::int64_t, std::string>;
   auto expected = std::vector<RowType>{
       RowType(12, "Steve"),
@@ -1300,7 +1300,7 @@ TEST(ConnectionImplTest, ProfileQueryGetSessionFailure) {
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table")});
+       spanner::SqlStatement("SELECT * FROM Table")});
   for (auto& row : result) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
                               HasSubstr("uh-oh in GetSession")));
@@ -1322,7 +1322,7 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table")});
+       spanner::SqlStatement("SELECT * FROM Table")});
   for (auto& row : result) {
     EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied,
                               HasSubstr("uh-oh in GrpcReader::Finish")));
@@ -1341,7 +1341,7 @@ TEST(ConnectionImplTest, ProfileDmlGetSessionFailure) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ProfileDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ProfileDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in GetSession")));
 }
@@ -1377,7 +1377,7 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ProfileDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ProfileDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
 
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result->RowsModified(), 42);
@@ -1419,7 +1419,7 @@ TEST(ConnectionImplTest, ProfileDmlDeletePermanentFailure) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ProfileDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ProfileDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in ExecuteDml")));
 }
@@ -1448,7 +1448,7 @@ TEST(ConnectionImplTest, ProfileDmlDeleteTooManyTransientFailures) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->ProfileDml({txn, spanner::SqlStatement("delete * from table")});
+      conn->ProfileDml({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable,
                                HasSubstr("try-again in ExecuteDml")));
 }
@@ -1474,7 +1474,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
 
   auto result = conn->AnalyzeSql(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table")});
+       spanner::SqlStatement("SELECT * FROM Table")});
 
   auto constexpr kTextExpectedPlan = R"pb(
     plan_nodes: { index: 42 }
@@ -1498,7 +1498,7 @@ TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->AnalyzeSql({txn, spanner::SqlStatement("delete * from table")});
+      conn->AnalyzeSql({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in GetSession")));
 }
@@ -1523,7 +1523,7 @@ TEST(ConnectionImplTest, AnalyzeSqlDeletePermanentFailure) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->AnalyzeSql({txn, spanner::SqlStatement("delete * from table")});
+      conn->AnalyzeSql({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in ExecuteDml")));
 }
@@ -1552,7 +1552,7 @@ TEST(ConnectionImplTest, AnalyzeSqlDeleteTooManyTransientFailures) {
   spanner::Transaction txn =
       MakeReadWriteTransaction(spanner::Transaction::ReadWriteOptions());
   auto result =
-      conn->AnalyzeSql({txn, spanner::SqlStatement("delete * from table")});
+      conn->AnalyzeSql({txn, spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable,
                                HasSubstr("try-again in ExecuteDml")));
 }
@@ -1583,9 +1583,9 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
       .WillOnce(Return(response));
 
   auto request = {
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
   };
 
   auto conn = MakeConnectionImpl(db, {mock});
@@ -1627,9 +1627,9 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
   EXPECT_CALL(*mock, ExecuteBatchDml).WillOnce(Return(response));
 
   auto request = {
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
   };
 
   auto conn = MakeConnectionImpl(db, {mock});
@@ -1664,9 +1664,9 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPermanentFailure) {
   }
 
   auto request = {
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
   };
 
   auto conn = MakeLimitedRetryConnection(db, mock);
@@ -1698,9 +1698,9 @@ TEST(ConnectionImplTest, ExecuteBatchDmlTooManyTransientFailures) {
   }
 
   auto request = {
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
-      spanner::SqlStatement("update ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
+      spanner::SqlStatement("UPDATE ..."),
   };
 
   auto conn = MakeLimitedRetryConnection(db, mock);
@@ -1735,7 +1735,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
         .WillOnce(Return(response));
   }
 
-  auto request = {spanner::SqlStatement("update ...")};
+  auto request = {spanner::SqlStatement("UPDATE ...")};
   auto conn = MakeConnectionImpl(db, {mock});
   auto txn = spanner::MakeReadWriteTransaction();
   auto result = conn->ExecuteBatchDml({txn, request});
@@ -1767,7 +1767,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto result = conn->ExecutePartitionedDml(
-      {spanner::SqlStatement("delete * from table"),
+      {spanner::SqlStatement("DELETE * FROM Table"),
        spanner::QueryOptions().set_request_tag("tag")});
 
   ASSERT_STATUS_OK(result);
@@ -1784,7 +1784,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlGetSessionFailure) {
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
 
   auto result = conn->ExecutePartitionedDml(
-      {spanner::SqlStatement("delete * from table")});
+      {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in GetSession")));
 }
@@ -1808,7 +1808,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
       .WillOnce(Return(ByMove(
           MakeReader({}, {grpc::StatusCode::INTERNAL, "permanent failure"}))));
   auto result = conn->ExecutePartitionedDml(
-      {spanner::SqlStatement("delete * from table")});
+      {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInternal, HasSubstr("permanent failure")));
 }
@@ -1835,7 +1835,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
       });
 
   auto result = conn->ExecutePartitionedDml(
-      {spanner::SqlStatement("delete * from table")});
+      {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result,
               StatusIs(StatusCode::kUnavailable,
                        HasSubstr("try-again in ExecutePartitionedDml")));
@@ -1870,7 +1870,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto result = conn->ExecutePartitionedDml(
-      {spanner::SqlStatement("delete * from table")});
+      {spanner::SqlStatement("DELETE * FROM Table")});
 
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result->row_count_lower_bound, 99999);
@@ -1891,7 +1891,7 @@ TEST(ConnectionImplTest,
                               "uh-oh in ExecutePartitionedDml")));
 
   auto result = conn->ExecutePartitionedDml(
-      {spanner::SqlStatement("delete * from table")});
+      {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("uh-oh in ExecutePartitionedDml")));
 }
@@ -1912,7 +1912,7 @@ TEST(ConnectionImplTest,
                                     "try-again in ExecutePartitionedDml")));
 
   auto result = conn->ExecutePartitionedDml(
-      {spanner::SqlStatement("delete * from table")});
+      {spanner::SqlStatement("DELETE * FROM Table")});
   EXPECT_THAT(result,
               StatusIs(StatusCode::kUnavailable,
                        HasSubstr("try-again in ExecutePartitionedDml")));
@@ -2447,7 +2447,7 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
     transaction: {
       begin { read_only { strong: true return_read_timestamp: true } }
     }
-    sql: "select * from table"
+    sql: "SELECT * FROM Table"
     params: {}
     partition_options: {}
   )pb";
@@ -2458,7 +2458,7 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
-  spanner::SqlStatement sql_statement("select * from table");
+  spanner::SqlStatement sql_statement("SELECT * FROM Table");
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
        sql_statement, spanner::PartitionOptions()});
@@ -2492,7 +2492,7 @@ TEST(ConnectionImplTest, PartitionQueryPermanentFailure) {
 
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table"),
+       spanner::SqlStatement("SELECT * FROM Table"),
        spanner::PartitionOptions()});
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr(failed_status.message())));
@@ -2522,7 +2522,7 @@ TEST(ConnectionImplTest, PartitionQueryTooManyTransientFailures) {
 
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
-       spanner::SqlStatement("select * from table"),
+       spanner::SqlStatement("SELECT * FROM Table"),
        spanner::PartitionOptions()});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable,
                                HasSubstr(failed_status.message())));
@@ -2950,37 +2950,37 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(conn->ExecuteQuery({txn, spanner::SqlStatement("select 1")})
+  EXPECT_THAT(conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT 1")})
                   .begin()
                   ->status(),
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("BeginTransaction failed")));
 
   EXPECT_THAT(
-      conn->ExecuteDml({txn, spanner::SqlStatement("delete * from table")}),
+      conn->ExecuteDml({txn, spanner::SqlStatement("DELETE * FROM Table")}),
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("BeginTransaction failed")));
 
-  EXPECT_THAT(conn->ProfileQuery({txn, spanner::SqlStatement("select 1")})
+  EXPECT_THAT(conn->ProfileQuery({txn, spanner::SqlStatement("SELECT 1")})
                   .begin()
                   ->status(),
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("BeginTransaction failed")));
 
   EXPECT_THAT(
-      conn->ProfileDml({txn, spanner::SqlStatement("delete * from table")}),
+      conn->ProfileDml({txn, spanner::SqlStatement("DELETE * FROM Table")}),
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("BeginTransaction failed")));
 
   EXPECT_THAT(
-      conn->AnalyzeSql({txn, spanner::SqlStatement("select * from table")}),
+      conn->AnalyzeSql({txn, spanner::SqlStatement("SELECT * FROM Table")}),
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("BeginTransaction failed")));
 
   // ExecutePartitionedDml creates its own transaction so it's not tested here.
 
   EXPECT_THAT(
-      conn->PartitionQuery({txn, spanner::SqlStatement("select * from table"),
+      conn->PartitionQuery({txn, spanner::SqlStatement("SELECT * FROM Table"),
                             spanner::PartitionOptions()}),
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("BeginTransaction failed")));
