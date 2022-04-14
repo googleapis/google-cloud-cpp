@@ -144,7 +144,7 @@ TEST(CurlClientStandaloneFunctions, HostHeader) {
 TEST_P(CurlClientTest, UploadChunk) {
   // Use an invalid port (0) to force a libcurl failure
   auto actual = client_
-                    ->UploadSessionChunk(UploadChunkRequest(
+                    ->UploadChunk(UploadChunkRequest(
                         "http://localhost:1/invalid-session-id", 0,
                         {ConstBuffer{std::string{}}}))
                     .status();
@@ -154,7 +154,7 @@ TEST_P(CurlClientTest, UploadChunk) {
 TEST_P(CurlClientTest, QueryResumableUpload) {
   // Use http://localhost:1 to force a libcurl failure
   auto actual = client_
-                    ->QueryResumableSession(QueryResumableUploadRequest(
+                    ->QueryResumableUpload(QueryResumableUploadRequest(
                         "http://localhost:9/invalid-session-id"))
                     .status();
   CheckStatus(actual);
@@ -421,9 +421,9 @@ TEST_P(CurlClientTest, RewriteObject) {
   CheckStatus(actual);
 }
 
-TEST_P(CurlClientTest, CreateResumableSession) {
+TEST_P(CurlClientTest, CreateResumableUpload) {
   auto actual = client_
-                    ->CreateResumableSession(
+                    ->CreateResumableUpload(
                         ResumableUploadRequest("test-bucket", "test-object"))
                     .status();
   CheckStatus(actual);

@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
@@ -68,21 +67,6 @@ class CurlClient : public RawClient,
       std::function<void(CURL*, curl_lock_data, curl_lock_access)>;
   using UnlockFunction = std::function<void(CURL*, curl_lock_data)>;
 
-  //@{
-  /// @name Implement the CurlResumableSession operations.
-  // Note that these member functions are not inherited from RawClient, they are
-  // called only by `CurlResumableUploadSession`, because the retry loop for
-  // them is very different from the standard retry loop. Also note that some of
-  // these member functions are virtual, but only because we need to override
-  // them in the *library* unit tests.
-  virtual StatusOr<ResumableUploadResponse> UploadSessionChunk(
-      UploadChunkRequest const&);
-  virtual StatusOr<ResumableUploadResponse> QueryResumableSession(
-      QueryResumableUploadRequest const&);
-  StatusOr<CreateResumableSessionResponse> FullyRestoreResumableSession(
-      ResumableUploadRequest const& request, std::string const& session_id);
-  //@}
-
   ClientOptions const& client_options() const override {
     return backwards_compatibility_options_;
   }
@@ -123,8 +107,6 @@ class CurlClient : public RawClient,
       PatchObjectRequest const& request) override;
   StatusOr<ObjectMetadata> ComposeObject(
       ComposeObjectRequest const& request) override;
-  StatusOr<CreateResumableSessionResponse> CreateResumableSession(
-      ResumableUploadRequest const& request) override;
 
   StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) override;

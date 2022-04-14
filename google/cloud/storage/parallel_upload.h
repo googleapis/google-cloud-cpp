@@ -160,11 +160,12 @@ class ParallelUploadStateImpl
   ~ParallelUploadStateImpl();
 
   StatusOr<ObjectWriteStream> CreateStream(
-      RawClient& raw_client, ResumableUploadRequest const& request);
+      std::shared_ptr<RawClient> raw_client,
+      ResumableUploadRequest const& request);
 
   void AllStreamsFinished(std::unique_lock<std::mutex>& lk);
   void StreamFinished(std::size_t stream_idx,
-                      StatusOr<ResumableUploadResponse> const& response);
+                      StatusOr<QueryResumableUploadResponse> const& response);
 
   void StreamDestroyed(std::size_t stream_idx);
 
@@ -702,13 +703,13 @@ NonResumableParallelUploadState::Create(Client client,
       Among<ContentEncoding, ContentType, DisableCrc32cChecksum, DisableMD5Hash,
             EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
             WithObjectMetadata>::TPred>(std::move(options));
-  auto& raw_client = *client.raw_client_;
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
         bucket_name, prefix + ".upload_shard_" + std::to_string(i));
     google::cloud::internal::apply(SetOptionsApplyHelper(request),
                                    upload_options);
-    auto stream = internal_state->CreateStream(raw_client, request);
+    auto stream = internal_state->CreateStream(
+        internal::ClientImplDetails::GetRawClient(client), request);
     if (!stream) {
       return stream.status();
     }
@@ -808,13 +809,13 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
                 DisableMD5Hash, EncryptionKey, KmsKeyName, PredefinedAcl,
                 UserProject, WithObjectMetadata>::TPred>(options),
       std::make_tuple(UseResumableUploadSession("")));
-  auto& raw_client = *client.raw_client_;
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
         bucket_name, prefix + ".upload_shard_" + std::to_string(i));
     google::cloud::internal::apply(SetOptionsApplyHelper(request),
                                    upload_options);
-    auto stream = internal_state->CreateStream(raw_client, request);
+    auto stream = internal_state->CreateStream(
+        internal::ClientImplDetails::GetRawClient(client), request);
     if (!stream) {
       return stream.status();
     }
@@ -914,7 +915,6 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
       Among<ContentEncoding, ContentType, DisableCrc32cChecksum, DisableMD5Hash,
             EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
             WithObjectMetadata>::TPred>(std::move(options));
-  auto& raw_client = *client.raw_client_;
   for (auto& stream_desc : persistent_state->streams) {
     ResumableUploadRequest request(bucket_name,
                                    std::move(stream_desc.object_name));
@@ -923,7 +923,8 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
         std::tuple_cat(upload_options,
                        std::make_tuple(UseResumableUploadSession(
                            std::move(stream_desc.resumable_session_id)))));
-    auto stream = internal_state->CreateStream(raw_client, request);
+    auto stream = internal_state->CreateStream(
+        internal::ClientImplDetails::GetRawClient(client), request);
     if (!stream) {
       internal_state->AllowFinishing();
       return stream.status();

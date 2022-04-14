@@ -27,7 +27,6 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/oauth2/credentials.h"
@@ -44,7 +43,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 class ObjectReadStreambuf;
-class ObjectWriteStreambuf;
 
 /**
  * Defines the interface used to communicate with Google Cloud Storage.
@@ -95,13 +93,6 @@ class RawClient {
       ComposeObjectRequest const&) = 0;
   virtual StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) = 0;
-
-  virtual StatusOr<CreateResumableSessionResponse> CreateResumableSession(
-      ResumableUploadRequest const& request) = 0;
-  /// @deprecated this function is no longer used, see #7282 for details.
-  GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()
-  virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
-  RestoreResumableSession(std::string const& session_id);
 
   virtual StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) = 0;

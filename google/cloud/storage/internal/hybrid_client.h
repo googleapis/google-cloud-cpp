@@ -74,8 +74,6 @@ class HybridClient : public RawClient {
       ComposeObjectRequest const& request) override;
   StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) override;
-  StatusOr<CreateResumableSessionResponse> CreateResumableSession(
-      ResumableUploadRequest const& request) override;
 
   StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) override;

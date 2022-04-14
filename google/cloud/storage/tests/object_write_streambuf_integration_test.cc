@@ -46,15 +46,14 @@ class ObjectWriteStreambufIntegrationTest
     ResumableUploadRequest request(bucket_name_, object_name);
     request.set_multiple_options(IfGenerationMatch(0));
 
-    auto create = internal::ClientImplDetails::GetRawClient(*client)
-                      ->CreateResumableSession(request);
+    auto raw_client = internal::ClientImplDetails::GetRawClient(*client);
+    auto create = raw_client->CreateResumableUpload(request);
     ASSERT_STATUS_OK(create);
 
+    auto constexpr kTestUploadBufferSize = 16 * 1024 * 1024L;
     ObjectWriteStream writer(absl::make_unique<ObjectWriteStreambuf>(
-        std::move(create->session), std::move(create->state),
-        internal::ClientImplDetails::GetRawClient(*client)
-            ->client_options()
-            .upload_buffer_size(),
+        raw_client, request, std::move(create->upload_id), /*committed_size=*/0,
+        /*metadata=*/absl::nullopt, kTestUploadBufferSize,
         CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
         AutoFinalizeConfig::kEnabled));
 

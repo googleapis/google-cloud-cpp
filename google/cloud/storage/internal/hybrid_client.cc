@@ -133,11 +133,6 @@ StatusOr<RewriteObjectResponse> HybridClient::RewriteObject(
   return curl_->RewriteObject(request);
 }
 
-StatusOr<CreateResumableSessionResponse> HybridClient::CreateResumableSession(
-    ResumableUploadRequest const& request) {
-  return grpc_->CreateResumableSession(request);
-}
-
 StatusOr<CreateResumableUploadResponse> HybridClient::CreateResumableUpload(
     ResumableUploadRequest const&) {
   return Status(StatusCode::kUnimplemented, "TODO(#8621)");

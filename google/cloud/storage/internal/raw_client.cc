@@ -20,11 +20,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-RawClient::RestoreResumableSession(std::string const& /*session_id*/) {
-  return Status(StatusCode::kUnimplemented, "removed, see #7282 for details");
-}
-
 StatusOr<CreateOrResumeResponse> CreateOrResume(
     RawClient& client, ResumableUploadRequest const& request) {
   auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");

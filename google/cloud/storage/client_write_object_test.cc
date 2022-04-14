@@ -36,7 +36,6 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
 
 /**
@@ -51,33 +50,16 @@ TEST_F(WriteObjectTest, WriteObject) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, CreateResumableSession)
-      .WillOnce([&expected](internal::ResumableUploadRequest const& request) {
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock_, CreateResumableUpload)
+      .WillOnce([&](internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
-
-        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-        using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, UploadChunk)
-            .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", ResumableUploadResponse::kInProgress, 0, {}, {}})));
-        EXPECT_CALL(*mock, ResetSession())
-            .WillOnce(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", ResumableUploadResponse::kInProgress, 0, {}, {}})));
-        EXPECT_CALL(*mock, UploadFinalChunk)
-            .WillOnce(
-                Return(StatusOr<ResumableUploadResponse>(TransientError())))
-            .WillOnce(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", ResumableUploadResponse::kDone, 0, expected, {}})));
-
-        return make_status_or(internal::CreateResumableSessionResponse{
-            std::move(mock),
-            ResumableUploadResponse{"fake-url",
-                                    ResumableUploadResponse::kInProgress,
-                                    /*committed_size=*/absl::nullopt,
-                                    /*object_metadata=*/absl::nullopt,
-                                    /*.annotations=*/std::string{}}});
+        return internal::CreateResumableUploadResponse{"test-only-upload-id"};
       });
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillRepeatedly(Return(
+          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
 
   auto client = ClientForMock();
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
@@ -93,13 +75,9 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
       ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                std::chrono::milliseconds(1), 2.0));
 
-  auto returner = [](internal::ResumableUploadRequest const&) {
-    return StatusOr<internal::CreateResumableSessionResponse>(TransientError());
-  };
-  EXPECT_CALL(*mock_, CreateResumableSession)
-      .WillOnce(returner)
-      .WillOnce(returner)
-      .WillOnce(returner);
+  EXPECT_CALL(*mock_, CreateResumableUpload)
+      .Times(3)
+      .WillRepeatedly(Return(TransientError()));
 
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
@@ -107,10 +85,7 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
 }
 
 TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
-  auto returner = [](internal::ResumableUploadRequest const&) {
-    return StatusOr<internal::CreateResumableSessionResponse>(PermanentError());
-  };
-  EXPECT_CALL(*mock_, CreateResumableSession).WillOnce(returner);
+  EXPECT_CALL(*mock_, CreateResumableUpload).WillOnce(Return(PermanentError()));
   auto client = ClientForMock();
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
@@ -118,29 +93,15 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
 }
 
 TEST_F(WriteObjectTest, WriteObjectErrorInChunk) {
-  auto const session_id = std::string{"test-session-id"};
-  EXPECT_CALL(*mock_, CreateResumableSession)
+  EXPECT_CALL(*mock_, CreateResumableUpload)
       .WillOnce([&](internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
-
-        auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-        using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, UploadChunk)
-            .WillOnce(Return(Status(StatusCode::kDataLoss, "ooops")));
-        EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(session_id));
-        // The call to Close() below should have no effect and no "final" chunk
-        // should be uploaded.
-        EXPECT_CALL(*mock, UploadFinalChunk).Times(0);
-
-        return make_status_or(internal::CreateResumableSessionResponse{
-            std::move(mock),
-            ResumableUploadResponse{"fake-url",
-                                    ResumableUploadResponse::kInProgress,
-                                    /*committed_size=*/absl::nullopt,
-                                    /*object_metadata=*/absl::nullopt,
-                                    /*.annotations=*/std::string{}}});
+        return internal::CreateResumableUploadResponse{"test-session-id"};
       });
+  EXPECT_CALL(*mock_, UploadChunk)
+      .WillOnce(Return(Status(StatusCode::kDataLoss, "ooops")));
+
   auto constexpr kQuantum = internal::UploadChunkRequest::kChunkSizeQuantum;
   client_options_.SetUploadBufferSize(kQuantum);
   auto client = ClientForMock();
@@ -163,22 +124,10 @@ TEST_F(WriteObjectTest, WriteObjectErrorInChunk) {
 }
 
 TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
-  std::string const empty;
-  auto create_mock = [&](internal::ResumableUploadRequest const&) {
-    auto mock = absl::make_unique<testing::MockResumableUploadSession>();
-    EXPECT_CALL(*mock, UploadChunk).WillRepeatedly(Return(PermanentError()));
-    EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(empty));
-
-    return make_status_or(internal::CreateResumableSessionResponse{
-        std::move(mock),
-        internal::ResumableUploadResponse{
-            "fake-url", internal::ResumableUploadResponse::kInProgress,
-            /*committed_size=*/absl::nullopt,
-            /*object_metadata=*/absl::nullopt,
-            /*.annotations=*/std::string{}}});
-  };
-
-  EXPECT_CALL(*mock_, CreateResumableSession).WillOnce(create_mock);
+  EXPECT_CALL(*mock_, CreateResumableUpload)
+      .WillOnce(Return(
+          internal::CreateResumableUploadResponse{"test-only-upload-id"}));
+  EXPECT_CALL(*mock_, UploadChunk).WillOnce(Return(PermanentError()));
   auto client = ClientForMock();
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
 

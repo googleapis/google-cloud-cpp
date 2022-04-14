@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
@@ -178,44 +177,6 @@ CurlClient::CurlClient(google::cloud::Options options)
       xml_upload_factory_(CreateHandleFactory(opts_)),
       xml_download_factory_(CreateHandleFactory(opts_)) {
   CurlInitializeOnce(opts_);
-}
-
-StatusOr<ResumableUploadResponse> CurlClient::UploadSessionChunk(
-    UploadChunkRequest const& request) {
-  auto response = UploadChunk(request);
-  if (!response) return std::move(response).status();
-  auto state = response->payload.has_value()
-                   ? ResumableUploadResponse::kDone
-                   : ResumableUploadResponse::kInProgress;
-  return ResumableUploadResponse{request.upload_session_url(), state,
-                                 std::move(response->committed_size),
-                                 std::move(response->payload),
-                                 /*.annotations=*/std::string{}};
-}
-
-StatusOr<ResumableUploadResponse> CurlClient::QueryResumableSession(
-    QueryResumableUploadRequest const& request) {
-  auto response = QueryResumableUpload(request);
-  if (!response) return std::move(response).status();
-
-  auto state = response->payload.has_value()
-                   ? ResumableUploadResponse::kDone
-                   : ResumableUploadResponse::kInProgress;
-  return ResumableUploadResponse{request.upload_session_url(), state,
-                                 std::move(response->committed_size),
-                                 std::move(response->payload),
-                                 /*.annotations=*/std::string{}};
-}
-
-StatusOr<CreateResumableSessionResponse>
-CurlClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
-                                         std::string const& session_id) {
-  auto session = absl::make_unique<CurlResumableUploadSession>(
-      shared_from_this(), request, session_id);
-  auto response = session->ResetSession();
-  if (!response) return std::move(response).status();
-  return CreateResumableSessionResponse{std::move(session),
-                                        *std::move(response)};
 }
 
 StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
@@ -575,26 +536,6 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   // This one does not use the common "ParseFromHttpResponse" function because
   // it takes different arguments.
   return RewriteObjectResponse::FromHttpResponse(response->payload);
-}
-
-StatusOr<CreateResumableSessionResponse> CurlClient::CreateResumableSession(
-    ResumableUploadRequest const& request) {
-  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
-  if (!session_id.empty()) {
-    return FullyRestoreResumableSession(request, session_id);
-  }
-
-  auto create = CreateResumableUpload(request);
-  if (!create) return std::move(create).status();
-
-  auto session_url = create->upload_id;
-  return CreateResumableSessionResponse{
-      absl::make_unique<CurlResumableUploadSession>(shared_from_this(), request,
-                                                    std::move(session_url)),
-      ResumableUploadResponse{std::move(create->upload_id),
-                              ResumableUploadResponse::kInProgress,
-                              /*.committed_size=*/0, /*.payload=*/absl::nullopt,
-                              /*.annotations=*/{}}};
 }
 
 StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
