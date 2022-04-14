@@ -14,8 +14,6 @@
 
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/admin/instance_admin_client.h"
-#include "google/cloud/project.h"
-#include <regex>
 
 namespace google {
 namespace cloud {
@@ -23,31 +21,33 @@ namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string PickInstanceConfig(
-    std::string const& project_id, std::regex const& filter_regex,
-    google::cloud::internal::DefaultPRNG& generator) {
-  spanner_admin::InstanceAdminClient client(
-      spanner_admin::MakeInstanceAdminConnection());
-  std::string instance_config_name{};
-  auto instance_configs =
-      [&client, &instance_config_name, &project_id,
-       &filter_regex]() mutable -> std::vector<std::string> {
-    std::vector<std::string> ret;
+    Project const& project, google::cloud::internal::DefaultPRNG& generator,
+    std::function<
+        bool(google::spanner::admin::instance::v1::InstanceConfig const&)>
+        predicate) {
+  std::string instance_config_name;
+  auto instance_configs = [&instance_config_name, &project,
+                           &predicate]() mutable -> std::vector<std::string> {
+    std::vector<std::string> instance_configs;
+    spanner_admin::InstanceAdminClient client(
+        spanner_admin::MakeInstanceAdminConnection());
     for (auto const& instance_config :
-         client.ListInstanceConfigs(Project(project_id).FullName())) {
-      if (!instance_config) return ret;
-      if (instance_config_name.empty()) {
-        instance_config_name = instance_config->name();
-      }
-      if (std::regex_match(instance_config->name(), filter_regex)) {
-        ret.push_back(instance_config->name());
+         client.ListInstanceConfigs(project.FullName())) {
+      if (instance_config) {
+        if (instance_config_name.empty()) {
+          instance_config_name = instance_config->name();
+        }
+        if (predicate(*instance_config)) {
+          instance_configs.push_back(instance_config->name());
+        }
       }
     }
-    return ret;
+    return instance_configs;
   }();
   if (!instance_configs.empty()) {
     auto random_index = std::uniform_int_distribution<std::size_t>(
         0, instance_configs.size() - 1);
-    instance_config_name = instance_configs[random_index(generator)];
+    instance_config_name = std::move(instance_configs[random_index(generator)]);
   }
   return instance_config_name;
 }
