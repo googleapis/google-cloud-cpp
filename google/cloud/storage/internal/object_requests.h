@@ -416,26 +416,19 @@ class UploadChunkRequest
       : upload_session_url_(std::move(upload_session_url)),
         offset_(offset),
         upload_size_(offset + TotalBytes(payload)),
-        last_chunk_(true),
         payload_(std::move(payload)),
         full_object_hashes_(std::move(full_object_hashes)) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
   std::uint64_t offset() const { return offset_; }
-  absl::optional<std::uint64_t> upload_size() const {
-    return last_chunk_ ? absl::make_optional(upload_size_) : absl::nullopt;
-  }
-
-  UploadChunkRequest RemainingChunk(std::uint64_t new_offset) const;
-
-  std::uint64_t range_begin() const { return offset_; }
-  std::uint64_t range_end() const { return range_begin() + payload_size() - 1; }
-  std::uint64_t source_size() const { return upload_size_; }
-  bool last_chunk() const { return last_chunk_; }
-  std::size_t payload_size() const { return TotalBytes(payload_); }
+  absl::optional<std::uint64_t> upload_size() const { return upload_size_; }
   ConstBufferSequence const& payload() const { return payload_; }
   HashValues const& full_object_hashes() const { return full_object_hashes_; }
+
+  bool last_chunk() const { return upload_size_.has_value(); }
+  std::size_t payload_size() const { return TotalBytes(payload_); }
   std::string RangeHeader() const;
+  UploadChunkRequest RemainingChunk(std::uint64_t new_offset) const;
 
   // Chunks must be multiples of 256 KiB:
   //  https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
@@ -455,8 +448,7 @@ class UploadChunkRequest
  private:
   std::string upload_session_url_;
   std::uint64_t offset_ = 0;
-  std::uint64_t upload_size_ = 0;
-  bool last_chunk_ = false;
+  absl::optional<std::uint64_t> upload_size_;
   ConstBufferSequence payload_;
   HashValues full_object_hashes_;
 };
