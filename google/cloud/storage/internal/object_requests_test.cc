@@ -532,9 +532,8 @@ TEST(ObjectRequestsTest, UploadChunk) {
   auto const payload = std::string(2048, 'A');
   UploadChunkRequest request(url, 0, {{payload}}, HashValues{});
   EXPECT_EQ(url, request.upload_session_url());
-  EXPECT_EQ(0, request.range_begin());
-  EXPECT_EQ(2047, request.range_end());
-  EXPECT_EQ(2048, request.source_size());
+  EXPECT_EQ(0, request.offset());
+  EXPECT_EQ(2048, request.upload_size().value_or(0));
   EXPECT_EQ("Content-Range: bytes 0-2047/2048", request.RangeHeader());
 
   std::ostringstream os;

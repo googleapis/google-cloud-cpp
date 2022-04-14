@@ -396,19 +396,10 @@ std::ostream& operator<<(std::ostream& os,
             << "}";
 }
 
-UploadChunkRequest UploadChunkRequest::RemainingChunk(
-    std::uint64_t new_offset) const {
-  UploadChunkRequest result = *this;
-  if (new_offset < offset()) return result;
-  PopFrontBytes(result.payload_, new_offset - result.offset_);
-  result.offset_ = new_offset;
-  return result;
-}
-
 std::string UploadChunkRequest::RangeHeader() const {
   std::ostringstream os;
   os << "Content-Range: bytes ";
-  auto const size = payload_size();
+  auto const size = upload_size().value_or(0);
   if (size == 0) {
     // This typically happens when the sender realizes too late that the
     // previous chunk was really the last chunk (e.g. the file is exactly a
@@ -417,14 +408,23 @@ std::string UploadChunkRequest::RangeHeader() const {
     // the range is special in this case.
     os << "*";
   } else {
-    os << range_begin() << "-" << range_begin() + size - 1;
+    os << offset() << "-" << offset() + size - 1;
   }
-  if (!last_chunk_) {
+  if (!upload_size().has_value()) {
     os << "/*";
   } else {
-    os << "/" << source_size();
+    os << "/" << *upload_size();
   }
   return std::move(os).str();
+}
+
+UploadChunkRequest UploadChunkRequest::RemainingChunk(
+    std::uint64_t new_offset) const {
+  UploadChunkRequest result = *this;
+  if (new_offset < offset()) return result;
+  PopFrontBytes(result.payload_, new_offset - result.offset_);
+  result.offset_ = new_offset;
+  return result;
 }
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {

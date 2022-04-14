@@ -494,7 +494,7 @@ StatusOr<QueryResumableUploadResponse> GrpcClient::UploadChunk(
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
   std::string chunk;
   chunk.reserve(maximum_chunk_size);
-  auto offset = static_cast<google::protobuf::int64>(request.range_begin());
+  auto offset = static_cast<google::protobuf::int64>(request.offset());
 
   auto flush_chunk = [&](bool has_more) {
     if (chunk.size() < maximum_chunk_size && has_more) return true;
