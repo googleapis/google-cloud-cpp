@@ -192,7 +192,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
-  auto rows = client.ExecuteQuery(SqlStatement("select * from table;"));
+  auto rows = client.ExecuteQuery(SqlStatement("SELECT * FROM Table;"));
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
@@ -233,7 +233,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
-  auto rows = client.ExecuteQuery(SqlStatement("select * from table;"));
+  auto rows = client.ExecuteQuery(SqlStatement("SELECT * FROM Table;"));
 
   auto tups = StreamOf<std::tuple<std::string>>(rows);
   auto iter = tups.begin();
@@ -821,7 +821,7 @@ TEST(ClientTest, CommitMutatorWithTags) {
   Client client(conn);
   auto mutator = [&client](Transaction const& txn) -> StatusOr<Mutations> {
     auto query_rows = client.ExecuteQuery(
-        txn, SqlStatement("select * from table;"),
+        txn, SqlStatement("SELECT * FROM Table;"),
         QueryOptions{}.set_request_tag("action=ExecuteQuery"));
     auto result = client.ExecuteBatchDml(
         txn, {SqlStatement("UPDATE Foo SET Bar = 2")},
@@ -1004,7 +1004,7 @@ TEST(ClientTest, ProfileQuerySuccess) {
       .WillOnce(Return(ByMove(ProfileQueryResult(std::move(source)))));
 
   KeySet keys = KeySet::All();
-  auto rows = client.ProfileQuery(SqlStatement("select * from table;"));
+  auto rows = client.ProfileQuery(SqlStatement("SELECT * FROM Table;"));
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
@@ -1071,7 +1071,7 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
   auto rows = client.ProfileQuery(
       Transaction::SingleUseOptions(
           /*max_staleness=*/std::chrono::nanoseconds(std::chrono::minutes(5))),
-      SqlStatement("select * from table;"));
+      SqlStatement("SELECT * FROM Table;"));
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
