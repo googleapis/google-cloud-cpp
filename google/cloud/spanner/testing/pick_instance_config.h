@@ -37,8 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 std::string PickInstanceConfig(
     Project const& project, google::cloud::internal::DefaultPRNG& generator,
-    std::function<
-        bool(google::spanner::admin::instance::v1::InstanceConfig const&)>
+    std::function<bool(
+        google::spanner::admin::instance::v1::InstanceConfig const&)> const&
         predicate);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

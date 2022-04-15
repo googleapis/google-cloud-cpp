@@ -22,28 +22,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string PickInstanceConfig(
     Project const& project, google::cloud::internal::DefaultPRNG& generator,
-    std::function<
-        bool(google::spanner::admin::instance::v1::InstanceConfig const&)>
+    std::function<bool(
+        google::spanner::admin::instance::v1::InstanceConfig const&)> const&
         predicate) {
   std::string instance_config_name;
-  auto instance_configs = [&instance_config_name, &project,
-                           &predicate]() mutable -> std::vector<std::string> {
-    std::vector<std::string> instance_configs;
-    spanner_admin::InstanceAdminClient client(
-        spanner_admin::MakeInstanceAdminConnection());
-    for (auto const& instance_config :
-         client.ListInstanceConfigs(project.FullName())) {
-      if (instance_config) {
-        if (instance_config_name.empty()) {
-          instance_config_name = instance_config->name();
-        }
-        if (predicate(*instance_config)) {
-          instance_configs.push_back(instance_config->name());
-        }
+  std::vector<std::string> instance_configs;
+  spanner_admin::InstanceAdminClient client(
+      spanner_admin::MakeInstanceAdminConnection());
+  for (auto const& instance_config :
+       client.ListInstanceConfigs(project.FullName())) {
+    if (instance_config) {
+      if (instance_config_name.empty()) {
+        // The fallback for when nothing satisfies the predicate, which is
+        // only really useful for the emulator, which has a single config.
+        instance_config_name = instance_config->name();
+      }
+      if (predicate(*instance_config)) {
+        instance_configs.push_back(instance_config->name());
       }
     }
-    return instance_configs;
-  }();
+  }
   if (!instance_configs.empty()) {
     auto random_index = std::uniform_int_distribution<std::size_t>(
         0, instance_configs.size() - 1);
