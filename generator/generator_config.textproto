@@ -304,6 +304,28 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Dataplex
+service {
+  service_proto_path: "google/cloud/dataplex/v1/content.proto"
+  product_path: "google/cloud/dataplex"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataplex/v1/metadata.proto"
+  product_path: "google/cloud/dataplex"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataplex/v1/service.proto"
+  product_path: "google/cloud/dataplex"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Dataproc
 service {
   service_proto_path: "google/cloud/dataproc/v1/autoscaling_policies.proto"

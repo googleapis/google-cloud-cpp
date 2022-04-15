@@ -21,7 +21,8 @@ exports_files([
 ])
 
 EXPERIMENTAL_LIBRARIES = [
-    # Introduced around 2022-04-08
+    # Introduced in 2022-04
+    "dataplex",
     "dialogflow_cx",
     "dialogflow_es",
     # This is WIP, it needs a number of hand-crafted APIs.
