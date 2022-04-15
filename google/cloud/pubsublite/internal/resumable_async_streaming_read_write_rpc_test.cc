@@ -244,7 +244,10 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   std::function<void()> loop = [&] {
     stream.Read().then([&](future<absl::optional<FakeResponse>>) {
       to_call();
-      if (status_future.is_ready()) return;
+      if (status_future.is_ready()) {
+        EXPECT_FALSE(status_future.get().ok());
+        return;
+      }
       loop();
     });
   };
