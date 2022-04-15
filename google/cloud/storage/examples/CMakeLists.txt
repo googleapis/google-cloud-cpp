@@ -94,7 +94,6 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE storage_examples_common google_cloud_cpp_testing
-                    google-cloud-cpp::experimental-storage-grpc
                     google-cloud-cpp::storage google-cloud-cpp::common)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
