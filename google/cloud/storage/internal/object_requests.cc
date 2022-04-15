@@ -427,7 +427,7 @@ UploadChunkRequest UploadChunkRequest::RemainingChunk(
     return result;
   }
   // No chunk can be larger than what fits in memory, and because `new_offset`
-  // is the [offset_, offset_ + payload_size()], this static_cast<> is safe:
+  // is in `[offset_, offset_ + payload_size())`, this static_cast<> is safe:
   PopFrontBytes(result.payload_,
                 static_cast<std::size_t>(new_offset - result.offset_));
   result.offset_ = new_offset;
