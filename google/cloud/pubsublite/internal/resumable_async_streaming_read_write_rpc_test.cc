@@ -216,19 +216,6 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        SingleStartFailurePermanentErrorWithAsyncLoop) {
-  struct Loop {
-    // this should run if and only if the stream is not shutdown
-    void InvokeLoop() {
-      stream->Read().then([this](future<absl::optional<FakeResponse>>) {
-        to_call();
-        if (status_future.is_ready() && !status_future.get().ok()) return;
-        InvokeLoop();
-      });
-    }
-    ResumableAsyncReadWriteStream stream;
-    std::function<void()> to_call;
-    future<Status> status_future;
-  };
   InSequence seq;
 
   auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
@@ -252,9 +239,16 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 
   auto& stream = *stream_;
   StrictMock<MockFunction<void()>> placeholder_func;
-  Loop loop{std::move(stream_), placeholder_func.AsStdFunction(),
-            stream.Start()};
-  loop.InvokeLoop();
+  auto to_call = placeholder_func.AsStdFunction();
+  auto status_future = stream_->Start();
+  std::function<void()> loop = [&] {
+    stream.Read().then([&](future<absl::optional<FakeResponse>>) {
+      to_call();
+      if (status_future.is_ready()) return;
+      loop();
+    });
+  };
+  loop();
 
   EXPECT_CALL(stream1_ref, Finish)
       .WillOnce(Return(ByMove(make_ready_future(FailStatus()))));
@@ -264,7 +258,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(placeholder_func, Call);
 
   start_promise.set_value(false);
-  auto shutdown = stream.Shutdown();
+  auto shutdown = stream_->Shutdown();
   shutdown.get();
 }
 
