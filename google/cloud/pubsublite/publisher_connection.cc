@@ -49,7 +49,6 @@ using google::cloud::pubsublite_internal::AlarmRegistryImpl;
 using google::cloud::pubsublite_internal::AsyncSleeper;
 using google::cloud::pubsublite_internal::BatchingOptions;
 using google::cloud::pubsublite_internal::ClientMetadata;
-using google::cloud::pubsublite_internal::CreateDefaultAdminServiceStub;
 using google::cloud::pubsublite_internal::CreateDefaultPublisherServiceStub;
 using google::cloud::pubsublite_internal::DefaultPublishMessageTransformer;
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
@@ -118,6 +117,8 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
     // requests per-channel.
     opts.set<GrpcNumChannelsOption>(20);
   }
+
+  opts = google::cloud::internal::PopulateGrpcOptions(std::move(opts), "");
   if (!opts.has<EndpointOption>()) {
     auto endpoint = GetEndpoint(topic.location());
     if (!endpoint) {
@@ -125,6 +126,10 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
     }
     opts.set<EndpointOption>(*std::move(endpoint));
   }
+  opts = google::cloud::internal::PopulateCommonOptions(
+      std::move(opts), "GOOGLE_CLOUD_PUBSUBLITE_IGNORED_OVERRIDE", "",
+      "pubsublite.googleapis.com");
+
   std::unique_ptr<BackgroundThreads> background_threads =
       MakeBackgroundThreadsFactory(opts)();
   CompletionQueue cq = background_threads->cq();
@@ -179,9 +184,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
           std::move(background_threads),
           absl::make_unique<PublisherConnectionImpl>(
               absl::make_unique<MultipartitionPublisher>(
-                  partition_publisher_factory,
-                  MakeAdminServiceConnection(
-                      CreateDefaultAdminServiceStub(cq, opts), opts),
+                  partition_publisher_factory, MakeAdminServiceConnection(opts),
                   alarm_registry, absl::make_unique<DefaultRoutingPolicy>(),
                   std::move(topic)),
               transformer, failure_handler)));
