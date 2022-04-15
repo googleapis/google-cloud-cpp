@@ -25,6 +25,7 @@
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/instance_location.h"
+#include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -35,6 +36,8 @@
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
+#include "absl/strings/match.h"
+#include "absl/strings/string_view.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
@@ -76,13 +79,13 @@ void CreateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& display_name,
-                    std::string const& config) {
+                    std::string const& config_id) {
   namespace spanner = ::google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
   auto project = google::cloud::Project(project_id);
   std::string instance_config =
-      project.FullName() + "/instanceConfigs/" + config;
+      project.FullName() + "/instanceConfigs/" + config_id;
   auto instance =
       client
           .CreateInstance(
@@ -101,13 +104,13 @@ void CreateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
 void CreateInstanceWithProcessingUnits(
     google::cloud::spanner_admin::InstanceAdminClient client,
     std::string const& project_id, std::string const& instance_id,
-    std::string const& display_name, std::string const& config) {
+    std::string const& display_name, std::string const& config_id) {
   namespace spanner = ::google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
   auto project = google::cloud::Project(project_id);
   std::string instance_config =
-      project.FullName() + "/instanceConfigs/" + config;
+      project.FullName() + "/instanceConfigs/" + config_id;
   auto instance =
       client
           .CreateInstance(
@@ -133,16 +136,16 @@ void CreateInstanceCommand(std::vector<std::string> argv) {
   if (argv.size() != 3 && argv.size() != 4) {
     throw std::runtime_error(
         "create-instance [--low-cost] <project-id> <instance-id>"
-        " <display_name> [config]");
+        " <display-name> [config-id]");
   }
   google::cloud::spanner_admin::InstanceAdminClient client(
       google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  std::string config = argv.size() == 4 ? argv[3] : "regional-us-central1";
+  std::string config_id = argv.size() == 4 ? argv[3] : "regional-us-central1";
   if (low_cost) {
     CreateInstanceWithProcessingUnits(std::move(client), argv[0], argv[1],
-                                      argv[2], config);
+                                      argv[2], config_id);
   } else {
-    CreateInstance(std::move(client), argv[0], argv[1], argv[2], config);
+    CreateInstance(std::move(client), argv[0], argv[1], argv[2], config_id);
   }
 }
 
@@ -166,7 +169,7 @@ void UpdateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
 void UpdateInstanceCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
-        "update-instance <project-id> <instance-id> <new_display_name>");
+        "update-instance <project-id> <instance-id> <new-display-name>");
   }
   google::cloud::spanner_admin::InstanceAdminClient client(
       google::cloud::spanner_admin::MakeInstanceAdminConnection());
@@ -227,10 +230,10 @@ void ListInstanceConfigsCommand(std::vector<std::string> argv) {
 //! [START spanner_get_instance_config] [get-instance-config]
 void GetInstanceConfig(google::cloud::spanner_admin::InstanceAdminClient client,
                        std::string const& project_id,
-                       std::string const& instance_config_name) {
+                       std::string const& config_id) {
   auto project = google::cloud::Project(project_id);
   auto instance_config = client.GetInstanceConfig(
-      project.FullName() + "/instanceConfigs/" + instance_config_name);
+      project.FullName() + "/instanceConfigs/" + config_id);
   if (!instance_config) {
     throw std::runtime_error(instance_config.status().message());
   }
@@ -243,8 +246,7 @@ void GetInstanceConfig(google::cloud::spanner_admin::InstanceAdminClient client,
 
 void GetInstanceConfigCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
-    throw std::runtime_error(
-        "get-instance-config <project-id> <instance-config-name>");
+    throw std::runtime_error("get-instance-config <project-id> <config-id>");
   }
   google::cloud::spanner_admin::InstanceAdminClient client(
       google::cloud::spanner_admin::MakeInstanceAdminConnection());
@@ -3463,6 +3465,12 @@ void QueryInformationSchemaDatabaseOptions(
 }
 // [END spanner_query_information_schema_database_options]
 
+std::string Basename(absl::string_view name) {
+  auto last_sep = name.find_last_of("/\\");
+  if (last_sep != absl::string_view::npos) name.remove_prefix(last_sep + 1);
+  return std::string(name);
+}
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
 
@@ -3646,11 +3654,9 @@ int RunOneCommand(std::vector<std::string> argv) {
   };
 
   static std::string usage_msg = [&argv, &commands] {
-    auto last_slash = std::string(argv[0]).find_last_of("/\\");
-    auto program = argv[0].substr(last_slash + 1);
     std::string usage;
     usage += "Usage: ";
-    usage += program;
+    usage += Basename(argv[0]);
     usage += " <command> [arguments]\n\n";
     usage += "Commands:\n";
     for (auto&& kv : commands) {
@@ -3693,45 +3699,6 @@ void SampleBanner(std::string const& name) {
   GCP_LOG(DEBUG) << "Running " << name << " sample";
 }
 
-std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
-                       std::string const& project_id,
-                       google::cloud::internal::DefaultPRNG& generator) {
-  // Skip non-US configs. They are too slow.
-  std::string const included_prefix = "regional-us-";
-  // Exclude the US configs where we keep most of our test instances.
-  std::vector<std::string> const excluded{"regional-us-central1",
-                                          "regional-us-east1"};
-
-  auto project = google::cloud::Project(project_id);
-  std::string const config_prefix = project.FullName() + "/instanceConfigs/";
-
-  // Log the config names to aid in troubleshooting. This is only used during
-  // an AutoRun() invocation, so it will not pollute the output for users.
-  std::cout << "\n" << __func__ << ":\n";
-
-  std::string ret;
-  std::string last;
-  int i = 0;
-  for (auto const& instance_config :
-       client.ListInstanceConfigs(project.FullName())) {
-    if (!instance_config) break;
-    if (instance_config->name().rfind(config_prefix, 0) != 0) continue;
-    auto const config = instance_config->name().substr(config_prefix.size());
-    last = config;
-    if (config.rfind(included_prefix, 0) != 0) continue;
-    if (std::find(excluded.begin(), excluded.end(), config) != excluded.end()) {
-      continue;
-    }
-    // Use a reservoir sampler of size k==1 to pick a region at random.
-    auto const selected =
-        std::uniform_int_distribution<int>(1, ++i)(generator) == 1;
-    if (selected) ret = config;
-    std::cout << "    " << i << " " << config << " " << selected << " " << ret
-              << "\n";
-  }
-  return ret.empty() ? last : ret;
-}
-
 std::vector<std::string> LeaderOptions(
     google::cloud::spanner_admin::InstanceAdminClient client,
     std::string const& project_id, std::string const& instance_id) {
@@ -3765,15 +3732,30 @@ void RunAllSlowInstanceTests(
 
   if (!run_slow_instance_tests) return;
 
+  auto const config =
+      Basename(google::cloud::spanner_testing::PickInstanceConfig(
+          google::cloud::Project(project_id), generator,
+          [](google::spanner::admin::instance::v1::InstanceConfig const&
+                 instance_config) {
+            auto config_id = Basename(instance_config.name());
+            // Skip non-US configs. They are too slow.
+            if (absl::StartsWith(config_id, "regional-us-")) {
+              // Exclude US configs where we keep most test instances.
+              if (config_id != "regional-us-central1" &&
+                  config_id != "regional-us-east1") {
+                return true;
+              }
+            }
+            return false;
+          }));
+  if (config.empty()) throw std::runtime_error("Failed to pick a config");
+
   auto const crud_instance_id =
       google::cloud::spanner_testing::RandomInstanceName(generator);
   auto const database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
-  auto const config = PickConfig(instance_admin_client, project_id, generator);
-  if (config.empty()) throw std::runtime_error("Failed to pick a config");
-
-  SampleBanner("create-instance");
+  SampleBanner("spanner_create_instance");
   CreateInstance(instance_admin_client, project_id, crud_instance_id,
                  "Test Instance", config);
 
@@ -3953,11 +3935,11 @@ void RunAll(bool emulator) {
   SampleBanner("get-instance");
   GetInstance(instance_admin_client, project_id, instance_id);
 
-  SampleBanner("get-instance-config");
+  SampleBanner("spanner_get_instance_config");
   GetInstanceConfig(instance_admin_client, project_id,
                     emulator ? "emulator-config" : "regional-us-central1");
 
-  SampleBanner("list-instance-configs");
+  SampleBanner("spanner_list_instance_configs");
   ListInstanceConfigs(instance_admin_client, project_id);
 
   SampleBanner("list-instances");
@@ -4050,7 +4032,7 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_get_database_ddl");
   GetDatabaseDdl(database_admin_client, project_id, instance_id, database_id);
 
-  SampleBanner("list-databases");
+  SampleBanner("spanner_list_databases");
   ListDatabases(database_admin_client, project_id, instance_id);
 
   SampleBanner("spanner_add_column");
@@ -4388,7 +4370,6 @@ int main(int ac, char* av[]) try {
     RunAll(Emulator());
     return 0;
   }
-
   return RunOneCommand({av, av + ac});
 } catch (std::exception const& ex) {
   std::cerr << ex.what() << "\n";

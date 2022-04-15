@@ -463,17 +463,15 @@ GrpcObjectRequestParser::ToProto(InsertObjectMediaRequest const& request) {
   return r;
 }
 
-ResumableUploadResponse GrpcObjectRequestParser::FromProto(
+QueryResumableUploadResponse GrpcObjectRequestParser::FromProto(
     google::storage::v2::WriteObjectResponse const& p, Options const& options) {
-  ResumableUploadResponse response;
-  response.upload_state = ResumableUploadResponse::kInProgress;
+  QueryResumableUploadResponse response;
   if (p.has_persisted_size()) {
     response.committed_size = static_cast<std::uint64_t>(p.persisted_size());
   }
   if (p.has_resource()) {
     response.payload =
         GrpcObjectMetadataParser::FromProto(p.resource(), options);
-    response.upload_state = ResumableUploadResponse::kDone;
   }
   return response;
 }

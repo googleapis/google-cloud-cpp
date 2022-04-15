@@ -632,7 +632,7 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
   auto ro_transaction = MakeReadOnlyTransaction();
   auto query_partitions = client_->PartitionQuery(
       ro_transaction,
-      SqlStatement("select SingerId, FirstName, LastName from Singers"));
+      SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers"));
   ASSERT_STATUS_OK(query_partitions);
 
   std::vector<std::string> serialized_partitions;

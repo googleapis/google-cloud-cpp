@@ -134,21 +134,22 @@ absl::Span<T> WriteToBuffer(absl::Span<T> destination,
 
 }  // namespace
 
-extern "C" std::size_t CurlRequestWrite(char* ptr, size_t size, size_t nmemb,
-                                        void* userdata) {
+extern "C" std::size_t RestCurlRequestWrite(char* ptr, size_t size,
+                                            size_t nmemb, void* userdata) {
   auto* request = reinterpret_cast<CurlImpl*>(userdata);
   return request->WriteCallback(ptr, size, nmemb);
 }
 
-extern "C" std::size_t CurlRequestHeader(char* contents, std::size_t size,
-                                         std::size_t nitems, void* userdata) {
+extern "C" std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
+                                             std::size_t nitems,
+                                             void* userdata) {
   auto* request = reinterpret_cast<CurlImpl*>(userdata);
   return request->HeaderCallback(contents, size, nitems);
 }
 
-extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
-                                             std::size_t nitems,
-                                             void* userdata) {
+extern "C" std::size_t RestCurlRequestOnReadData(char* ptr, std::size_t size,
+                                                 std::size_t nitems,
+                                                 void* userdata) {
   auto* v = reinterpret_cast<WriteVector*>(userdata);
   return v->OnRead(ptr, size, nitems);
 }
@@ -566,9 +567,9 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   auto bytes_read = DrainSpillBuffer();
   if (curl_closed_) return bytes_read;
 
-  handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestWrite);
+  handle_.SetOption(CURLOPT_WRITEFUNCTION, &RestCurlRequestWrite);
   handle_.SetOption(CURLOPT_WRITEDATA, this);
-  handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestHeader);
+  handle_.SetOption(CURLOPT_HEADERFUNCTION, &RestCurlRequestHeader);
   handle_.SetOption(CURLOPT_HEADERDATA, this);
   handle_.FlushDebug(__func__);
 
@@ -692,7 +693,7 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
 
   if (method == HttpMethod::kPut || method == HttpMethod::kPatch) {
     WriteVector writev{std::move(payload)};
-    handle_.SetOption(CURLOPT_READFUNCTION, &CurlRequestOnReadData);
+    handle_.SetOption(CURLOPT_READFUNCTION, &RestCurlRequestOnReadData);
     handle_.SetOption(CURLOPT_READDATA, &writev);
     handle_.SetOption(CURLOPT_UPLOAD, 1L);
     return MakeRequestImpl();

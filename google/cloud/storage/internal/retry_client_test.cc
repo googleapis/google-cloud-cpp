@@ -26,39 +26,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-class RetryClientTest : public ::testing::Test {
- protected:
-  void SetUp() override { mock_ = std::make_shared<testing::MockClient>(); }
-  void TearDown() override { mock_.reset(); }
-
-  std::shared_ptr<testing::MockClient> mock_;
-};
-
 Options BasicTestPolicies() {
+  using us = std::chrono::microseconds;
   return Options{}
       .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
       .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
       .set<BackoffPolicyOption>(
           // Make the tests faster.
-          ExponentialBackoffPolicy(1_us, 2_us, 2).clone())
+          ExponentialBackoffPolicy(us(1), us(2), 2).clone())
       .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy{}.clone());
 }
 
 /// @test Verify that non-idempotent operations return on the first failure.
-TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
+TEST(RetryClientTest, NonIdempotentErrorHandling) {
+  auto mock = std::make_shared<testing::MockClient>();
   auto client =
-      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock_),
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
                           BasicTestPolicies().set<IdempotencyPolicyOption>(
                               StrictIdempotencyPolicy().clone()));
 
-  EXPECT_CALL(*mock_, DeleteObject)
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
 
   // Use a delete operation because this is idempotent only if the it has
@@ -69,12 +62,13 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
-TEST_F(RetryClientTest, PermanentErrorHandling) {
-  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock_),
+TEST(RetryClientTest, PermanentErrorHandling) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
                                     BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
-  EXPECT_CALL(*mock_, GetObjectMetadata)
+  EXPECT_CALL(*mock, GetObjectMetadata)
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Return(StatusOr<ObjectMetadata>(PermanentError())));
 
@@ -84,12 +78,13 @@ TEST_F(RetryClientTest, PermanentErrorHandling) {
 }
 
 /// @test Verify that the retry loop returns on the first permanent failure.
-TEST_F(RetryClientTest, TooManyTransientsHandling) {
-  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock_),
+TEST(RetryClientTest, TooManyTransientsHandling) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
                                     BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
-  EXPECT_CALL(*mock_, GetObjectMetadata)
+  EXPECT_CALL(*mock, GetObjectMetadata)
       .WillRepeatedly(Return(StatusOr<ObjectMetadata>(TransientError())));
 
   StatusOr<ObjectMetadata> result = client->GetObjectMetadata(
@@ -98,9 +93,10 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
 }
 
 /// @test Verify that the retry loop works with exhausted retry policy.
-TEST_F(RetryClientTest, ExpiredRetryPolicy) {
+TEST(RetryClientTest, ExpiredRetryPolicy) {
+  auto mock = std::make_shared<testing::MockClient>();
   auto client = RetryClient::Create(
-      std::shared_ptr<internal::RawClient>(mock_),
+      std::shared_ptr<internal::RawClient>(mock),
       BasicTestPolicies().set<RetryPolicyOption>(
           LimitedTimeRetryPolicy{std::chrono::milliseconds(0)}.clone()));
 
@@ -111,6 +107,51 @@ TEST_F(RetryClientTest, ExpiredRetryPolicy) {
       result,
       StatusIs(StatusCode::kDeadlineExceeded,
                HasSubstr("Retry policy exhausted before first attempt")));
+}
+
+/// @test Verify that `CreateResumableUpload()` handles transients.
+TEST(RetryClientTest, CreateResumableUploadHandlesTransient) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
+                          BasicTestPolicies().set<IdempotencyPolicyOption>(
+                              AlwaysRetryIdempotencyPolicy().clone()));
+
+  EXPECT_CALL(*mock, CreateResumableUpload)
+      .WillOnce(
+          Return(StatusOr<CreateResumableUploadResponse>(TransientError())))
+      .WillOnce(
+          Return(StatusOr<CreateResumableUploadResponse>(TransientError())))
+      .WillOnce(Return(make_status_or(
+          CreateResumableUploadResponse{"test-only-upload-id"})));
+
+  auto response = client->CreateResumableUpload(
+      ResumableUploadRequest("test-bucket", "test-object"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->upload_id, "test-only-upload-id");
+}
+
+/// @test Verify that `QueryResumableUpload()` handles transients.
+TEST(RetryClientTest, QueryResumableUploadHandlesTransient) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock),
+                          BasicTestPolicies().set<IdempotencyPolicyOption>(
+                              StrictIdempotencyPolicy().clone()));
+
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(
+          Return(StatusOr<QueryResumableUploadResponse>(TransientError())))
+      .WillOnce(
+          Return(StatusOr<QueryResumableUploadResponse>(TransientError())))
+      .WillOnce(Return(make_status_or(QueryResumableUploadResponse{
+          /*.committed_size=*/1234, /*.payload=*/absl::nullopt})));
+
+  auto response = client->QueryResumableUpload(
+      QueryResumableUploadRequest("test-only-upload-id"));
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->committed_size.value_or(0), 1234);
+  EXPECT_FALSE(response->payload.has_value());
 }
 
 }  // namespace

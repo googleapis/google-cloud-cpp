@@ -78,16 +78,17 @@ TEST(CurlResumableUploadSessionTest, Simple) {
                   "none-match-etag");
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));
-        EXPECT_EQ(0, request.source_size());
-        EXPECT_EQ(0, request.range_begin());
+        EXPECT_FALSE(request.upload_size().has_value());
+        EXPECT_EQ(0, request.offset());
         return make_status_or(ResumableUploadResponse{
             "", ResumableUploadResponse::kInProgress, size, {}, {}});
       })
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));
-        EXPECT_EQ(2 * size, request.source_size());
-        EXPECT_EQ(size, request.range_begin());
+        EXPECT_TRUE(request.upload_size().has_value());
+        EXPECT_EQ(2 * size, request.upload_size().value_or(0));
+        EXPECT_EQ(size, request.offset());
         return make_status_or(ResumableUploadResponse{
             "", ResumableUploadResponse::kDone, 2 * size, {}, {}});
       });
@@ -168,8 +169,9 @@ TEST(CurlResumableUploadSessionTest, Empty) {
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));
-        EXPECT_EQ(0, request.source_size());
-        EXPECT_EQ(0, request.range_begin());
+        EXPECT_TRUE(request.upload_size().has_value());
+        EXPECT_EQ(0, request.upload_size().value_or(0));
+        EXPECT_EQ(0, request.offset());
         return make_status_or(ResumableUploadResponse{
             "", ResumableUploadResponse::kDone, size, {}, {}});
       });

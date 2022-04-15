@@ -428,8 +428,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         std::shared_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>
             stream = std::move(stream_);
         CompleteUnsatisfiedOps(Status(), lk);
-        root_future = root_future.then(
-            [stream](future<void>) { return future<void>(stream->Finish()); });
+        root_future = root_future.then([stream](future<void>) {
+          // need to keep stream alive until `Finish` is satisfied
+          return stream->Finish().then([stream](future<Status>) {});
+        });
     }
     return root_future;
   }
@@ -449,10 +451,14 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   void CompleteUnsatisfiedOps(Status status, std::unique_lock<std::mutex>& lk) {
-    SetReadWriteFutures(lk);
     lk.unlock();
+    // this should occur first to indicate to any entity outside the class
+    // consuming the `Start` future that the object is shutdown before setting
+    // the read and write futures which may have downcalls outside the class
+    // and/or may upcall back into the class
     status_promise_.set_value(std::move(status));
     lk.lock();
+    SetReadWriteFutures(lk);
   }
 
   void FinishRetryPromise(std::unique_lock<std::mutex>& lk) {

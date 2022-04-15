@@ -17,7 +17,6 @@
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
-#include <openssl/md5.h>
 #include <openssl/opensslv.h>
 #include <openssl/pem.h>
 #include <memory>
@@ -172,17 +171,13 @@ StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
 }
 
 std::vector<std::uint8_t> MD5Hash(std::string const& payload) {
-  MD5_CTX md5;
-  MD5_Init(&md5);
-  MD5_Update(&md5, payload.c_str(), payload.size());
+  std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
 
-  std::vector<std::uint8_t> hash(MD5_DIGEST_LENGTH, 0);
-  // Note: MD5_Final consumes a `unsigned char*` in its first parameter, on some
-  // platforms (PowerPC and ARM I read), the default `char` is unsigned. In
-  // those platforms it is possible that `std::uint8_t != unsigned char` and
-  // the `reinterpret_cast<>` is not trivial (but still safe I think).
-  MD5_Final(reinterpret_cast<unsigned char*>(hash.data()), &md5);
-  return hash;
+  unsigned int size = 0;
+  EVP_Digest(payload.data(), payload.size(), digest.data(), &size, EVP_md5(),
+             nullptr);
+  return std::vector<std::uint8_t>{digest.begin(),
+                                   std::next(digest.begin(), size)};
 }
 
 }  // namespace internal

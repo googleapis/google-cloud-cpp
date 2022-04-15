@@ -47,7 +47,7 @@ namespace {
 std::vector<std::mutex> ssl_locks;
 
 // A callback to lock and unlock the mutexes needed by the SSL library.
-extern "C" void SslLockingCb(int mode, int type, char const*, int) {
+extern "C" void RestSslLockingCb(int mode, int type, char const*, int) {
   if ((mode & CRYPTO_LOCK) != 0) {
     ssl_locks[type].lock();
   } else {
@@ -123,7 +123,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
   GCP_LOG(INFO) << "Installing SSL locking callbacks.";
   ssl_locks =
       std::vector<std::mutex>(static_cast<std::size_t>(CRYPTO_num_locks()));
-  CRYPTO_set_locking_callback(SslLockingCb);
+  CRYPTO_set_locking_callback(RestSslLockingCb);
 
   // The documentation also recommends calling CRYPTO_THREADID_set_callback() to
   // setup a function to return thread ids as integers (or pointers). Writing a
